@@ -1,0 +1,382 @@
+---
+import { vtlModules } from '../data/index.js';
+---
+
+<section class="vtl" aria-labelledby="vtl-title">
+  <header class="vtl__header">
+    <p class="vtl__eyebrow">03 · VTL</p>
+    <h2 id="vtl-title" class="vtl__title">Tensors that remember their graph</h2>
+    <p class="vtl__desc">
+      Every <code>Tensor[T]</code> is a view. Wrap it in a <code>Variable</code> via <code>Context</code> and each op records a gate. Call <code>backprop()</code> and gradients flow backward — scalars first, then generalized. Hover or focus the graph to see forward (solid) vs backward (dashed) edges.
+    </p>
+  </header>
+
+  <div class="vtl__grid">
+    <div class="vtl__diagram">
+      <svg
+        viewBox="0 0 640 380"
+        role="img"
+        aria-labelledby="vtlSvgTitle vtlSvgDesc"
+        xmlns="http://www.w3.org/2000/svg"
+        class="vtl__svg"
+      >
+        <title id="vtlSvgTitle">VTL — autograd forward and backward graph</title>
+        <desc id="vtlSvgDesc">
+          Forward pass left to right: Input Tensor[64,784] via Context variable, Linear 784→256, ReLU, Linear 256→10, MSE loss. Backward pass right to left dashed: gradients propagate through gates to variables. Optimizer step at far right. Keyboard focus per node shows shape and gate type.
+        </desc>
+        <rect x="0" y="0" width="640" height="380" rx="14" fill="#0f2a44"></rect>
+        <rect x="0" y="0" width="640" height="18" rx="6" fill="rgba(91,155,213,0.16)" aria-hidden="true"></rect>
+
+        <!-- forward labels -->
+        <text x="18" y="34" font-size="10" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">forward →</text>
+        <text x="522" y="34" text-anchor="end" font-size="10" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">← backward</text>
+
+        <!-- nodes row -->
+        <!-- Input -->
+        <g tabindex="0" role="listitem" aria-label="Input — Tensor[64,784] — Context variable — requires_grad false → true">
+          <title>Input — zeros[64,784] — ctx.variable()</title>
+          <rect x="18" y="58" width="108" height="72" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.3)"></rect>
+          <rect x="18" y="58" width="108" height="4" rx="2" fill="#5b9bd5"></rect>
+          <text x="32" y="76" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">input</text>
+          <text x="32" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">Tensor</text>
+          <text x="32" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">[64, 784]</text>
+          <text x="32" y="122" font-size="9.5" fill="#8bb8e0">ctx.variable()</text>
+        </g>
+
+        <!-- arrow 1 -->
+        <g aria-hidden="true">
+          <line x1="126" y1="94" x2="152" y2="94" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="155,94 149,90 149,98" fill="#5b9bd5"></polygon>
+          <!-- backward dashed -->
+          <line x1="152" y1="102" x2="126" y2="102" stroke="rgba(124,183,201,0.95)" stroke-width="1.7" stroke-dasharray="5 5" stroke-linecap="round"></line>
+          <polygon points="124,102 130,98 130,106" fill="#7cb7c9"></polygon>
+        </g>
+
+        <!-- Linear 1 -->
+        <g tabindex="0" role="listitem" aria-label="Linear 784 to 256 — Gate matmul + add bias — params 200k">
+          <title>Linear 784→256 — gate matmul</title>
+          <rect x="160" y="58" width="108" height="72" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
+          <text x="174" y="76" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">layer 1</text>
+          <text x="174" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">Linear</text>
+          <text x="174" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">784 → 256</text>
+          <text x="174" y="122" font-size="9.5" fill="#8bb8e0">200,960 params</text>
+        </g>
+
+        <!-- arrow -->
+        <g aria-hidden="true">
+          <line x1="268" y1="94" x2="294" y2="94" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="297,94 291,90 291,98" fill="#5b9bd5"></polygon>
+          <line x1="294" y1="102" x2="268" y2="102" stroke="rgba(124,183,201,0.95)" stroke-width="1.7" stroke-dasharray="5 5" stroke-linecap="round"></line>
+          <polygon points="266,102 272,98 272,106" fill="#7cb7c9"></polygon>
+        </g>
+
+        <!-- ReLU -->
+        <g tabindex="0" role="listitem" aria-label="ReLU activation — gate relu — sparsity, no params">
+          <title>ReLU — gate relu — elementwise max(0,x)</title>
+          <rect x="302" y="66" width="82" height="56" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(91,155,213,0.28)"></rect>
+          <text x="316" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" aria-hidden="true">◐</text>
+          <text x="343" y="90" font-size="11" font-weight="700" fill="#e6f0fb">ReLU</text>
+          <text x="316" y="106" font-size="9.5" fill="#8bb8e0">gate</text>
+        </g>
+
+        <!-- arrow -->
+        <g aria-hidden="true">
+          <line x1="384" y1="94" x2="410" y2="94" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="413,94 407,90 407,98" fill="#5b9bd5"></polygon>
+          <line x1="410" y1="102" x2="384" y2="102" stroke="rgba(124,183,201,0.95)" stroke-width="1.7" stroke-dasharray="5 5" stroke-linecap="round"></line>
+          <polygon points="382,102 388,98 388,106" fill="#7cb7c9"></polygon>
+        </g>
+
+        <!-- Linear 2 -->
+        <g tabindex="0" role="listitem" aria-label="Linear 256 to 10 — logits — 2,570 params">
+          <title>Linear 256→10 — classifiers</title>
+          <rect x="418" y="58" width="108" height="72" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
+          <text x="432" y="76" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">layer 2</text>
+          <text x="432" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">Linear</text>
+          <text x="432" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">256 → 10</text>
+          <text x="432" y="122" font-size="9.5" fill="#8bb8e0">logits</text>
+        </g>
+
+        <!-- Loss row second line -->
+        <!-- arrow down to loss -->
+        <g aria-hidden="true">
+          <line x1="472" y1="130" x2="472" y2="162" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="472,166 468,160 476,160" fill="#5b9bd5"></polygon>
+          <line x1="480" y1="162" x2="480" y2="130" stroke="rgba(124,183,201,0.95)" stroke-width="1.7" stroke-dasharray="5 5" stroke-linecap="round"></line>
+          <polygon points="480,126 476,132 484,132" fill="#7cb7c9"></polygon>
+        </g>
+
+        <g tabindex="0" role="listitem" aria-label="Loss — MSE or CrossEntropy — scalar Variable — backprop starts here">
+          <title>Loss — scalar — backprop()!</title>
+          <rect x="392" y="172" width="160" height="62" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.35)" stroke-width="1.1"></rect>
+          <rect x="392" y="172" width="160" height="4" rx="2" fill="#7cb7c9"></rect>
+          <text x="408" y="192" font-size="11" font-weight="800" fill="#e6f0fb">Loss</text>
+          <text x="408" y="208" font-size="10" fill="#b8d0e6">MSE / CrossEntropy</text>
+          <text x="535" y="204" text-anchor="end" font-size="11" font-weight="700" fill="#7cb7c9" font-family="ui-monospace, monospace">.backprop()!</text>
+        </g>
+
+        <!-- target tensor left of loss -->
+        <g tabindex="0" role="listitem" aria-label="Target — Tensor[64,10] — ground truth labels">
+          <title>Target — zeros[64,10]</title>
+          <rect x="198" y="172" width="140" height="62" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="212" y="192" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">target</text>
+          <text x="212" y="208" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">[64, 10]</text>
+          <text x="212" y="222" font-size="9.5" fill="#8bb8e0">ground truth</text>
+        </g>
+
+        <!-- connection target to loss -->
+        <g aria-hidden="true">
+          <line x1="338" y1="203" x2="392" y2="203" stroke="#5b9bd5" stroke-width="1.8" stroke-linecap="round"></line>
+          <polygon points="395,203 389,199 389,207" fill="#5b9bd5"></polygon>
+        </g>
+
+        <!-- optimizer bottom -->
+        <rect x="18" y="258" width="604" height="62" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(91,155,213,0.2)"></rect>
+        <text x="32" y="278" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">optimizer · update</text>
+        <text x="32" y="296" font-size="11.5" font-weight="700" fill="#e6f0fb">Adam · AdamW · RMSProp · SGD</text>
+        <text x="32" y="310" font-size="10" fill="#b8d0e6">lr + build_params(layers) + update()!</text>
+        <g aria-hidden="true">
+          <rect x="430" y="268" width="178" height="42" rx="10" fill="#0d223a" stroke="rgba(91,155,213,0.28)"></rect>
+          <text x="444" y="284" font-size="10" font-weight="700" fill="#e6f0fb" font-family="ui-monospace, monospace">opt.update()!</text>
+          <text x="444" y="298" font-size="9.5" fill="#8bb8e0">applies ∇ to params</text>
+        </g>
+
+        <!-- backprop dashed loop up -->
+        <path d="M 160 288 C 80 288 80 150 130 112" fill="none" stroke="rgba(124,183,201,0.62)" stroke-width="1.6" stroke-dasharray="6 5" stroke-linecap="round" aria-hidden="true"></path>
+        <polygon points="134,110 126,114 132,122" fill="#7cb7c9" aria-hidden="true"></polygon>
+
+        <!-- legend bottom -->
+        <g aria-hidden="true">
+          <line x1="18" y1="350" x2="44" y2="350" stroke="#5b9bd5" stroke-width="2.2" stroke-linecap="round"></line>
+          <text x="50" y="354" font-size="9.5" fill="#b8d0e6">forward</text>
+          <line x1="104" y1="350" x2="130" y2="350" stroke="#7cb7c9" stroke-width="1.7" stroke-dasharray="5 4" stroke-linecap="round"></line>
+          <text x="136" y="354" font-size="9.5" fill="#b8d0e6">backward</text>
+          <rect x="206" y="342" width="10" height="10" rx="3" fill="#5b9bd5"></rect>
+          <text x="222" y="351" font-size="9.5" fill="#b8d0e6">gate records op</text>
+        </g>
+      </svg>
+
+      <div class="vtl__legend" role="list" aria-label="VTL modules">
+        {
+          vtlModules.map((m) => (
+            <span class="vtl__chip" role="listitem">
+              <strong>{m.title}</strong> {m.desc}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="vtl__cards">
+      <article class="vtl__card">
+        <h3 class="vtl__card-title">From Tensor[T] to graph</h3>
+        <p class="vtl__card-text">Create zeros, ones, or from_slice. Slice and broadcast without copy. When you need learning, wrap via Context and let every op emit a gate.</p>
+        <div class="vtl__code" role="region" aria-label="VTL quick start code snippet">
+          <pre><code><span class="vtl__c-kw">mut</span> ctx := autograd.<span class="vtl__c-fn">ctx</span>[<span class="vtl__c-ty">f64</span>]()
+<span class="vtl__c-kw">mut</span> x := ctx.<span class="vtl__c-fn">variable</span>(vtl.<span class="vtl__c-fn">zeros</span>[<span class="vtl__c-ty">f64</span>]([<span class="vtl__c-nu">64</span>, <span class="vtl__c-nu">784</span>]))
+y := model.<span class="vtl__c-fn">forward</span>(x)!
+loss.<span class="vtl__c-fn">backprop</span>()!</code></pre>
+        </div>
+      </article>
+      <article class="vtl__card">
+        <h3 class="vtl__card-title">Neural nets are just compositions</h3>
+        <p class="vtl__card-text">Sequential piles Linear → Activation. Losses are variables too — pick MSE, BCE, or CrossEntropy and the graph knows how to differentiate it.</p>
+        <ul class="vtl__list">
+          <li><code>Sequential</code>: input([784]).linear(256).linear(10)</li>
+          <li>Losses: MSE / BCE / CrossEntropy / Huber</li>
+          <li>Optimizers: Adam, AdamW, RMSProp, AdaGrad, SGD + schedulers</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vtl {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem;
+    border-radius: 16px;
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .vtl__header {
+    max-width: 48rem;
+  }
+
+  .vtl__eyebrow {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .vtl__title {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .vtl__desc {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .vtl__desc code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.82rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.08rem 0.3rem;
+  }
+
+  .vtl__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 920px) {
+    .vtl__grid {
+      grid-template-columns: 1.45fr 0.95fr;
+      align-items: start;
+    }
+  }
+
+  .vtl__diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .vtl__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid var(--color-sand, #e9d8c3);
+    overflow: hidden;
+  }
+
+  .vtl__svg g[tabindex="0"]:focus-visible {
+    outline: none;
+  }
+
+  .vtl__svg g[tabindex="0"]:focus-visible rect {
+    stroke: var(--color-focus, #005fcc) !important;
+    stroke-width: 2.2 !important;
+  }
+
+  .vtl__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .vtl__chip {
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: baseline;
+    font-size: 0.76rem;
+    line-height: 1.4;
+    color: var(--color-deep-ink, #181512);
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 6%, #f7f0e6));
+    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+    border-radius: 999px;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .vtl__chip strong {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-weight: 700;
+    font-size: 0.74rem;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .vtl__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .vtl__card {
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
+    border: 1px solid var(--theme-border-accent);
+  }
+
+  .vtl__card-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .vtl__card-text {
+    margin: 0 0 0.6rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .vtl__list {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .vtl__list code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.08rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .vtl__code {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 42, 68, 0.12);
+    background: #0f2a44;
+  }
+
+  .vtl__code pre {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    overflow-x: auto;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #cfe1f5;
+  }
+
+  .vtl__c-kw { color: #7cb7c9; font-weight: 600; }
+  .vtl__c-fn { color: #e6f0fb; }
+  .vtl__c-ty { color: #f4c7a5; }
+  .vtl__c-nu { color: #a8d8ea; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vtl__svg * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

@@ -1,45 +1,355 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta } from '@/data/routes';
+import {
+  VOverview,
+  VCards,
+  EcosystemDiagram,
+  VSLDiagram,
+  VTLDiagram,
+  RxVDiagram,
+  SetupVDiagram,
+  licenseEntries,
+} from '@/features/v';
+
 const meta = getRouteMeta('/v')!;
 ---
 
-<SectionLayout title={meta.title} description={meta.description} theme="v">
-  <h1>V Ecosystem — Fast, clear, scientific</h1>
-  <p>Laboratorio computacional — Core Team Member @ V, contribuciones verificadas (no vanity counts).</p>
-  <section>
-    <h2>VSL — Scientific Library</h2>
-    <p>
-      Álgebra lineal, métodos numéricos, estadística, visualización, backends CPU y aceleración opcional. Fractal
-      determinístico (ver repo <a href="https://github.com/vlang/vsl" target="_blank" rel="noreferrer">vsl</a>).
-    </p>
-    <div style="padding:1rem; border:1px solid var(--color-border); border-radius:8px; background:var(--color-paper);">
-      <p>
-        <em>Visualización fractal placeholder — backend selector (CPU/GPU) con fallback estático y reduced-motion.</em>
-      </p>
+<SectionLayout
+  title={meta.title}
+  description={meta.description}
+  theme="v"
+  hero={{
+    eyebrow: 'Core Team @ V · vlang/v · scientific · reactive · CI',
+    title: 'V Ecosystem — Fast, clear, scientific',
+    description:
+      'Laboratorio computacional — cuatro bibliotecas, una Action y un lenguaje. Contribuciones verificadas (no vanity counts), diagramas como codigo, y backend pure-V por defecto.',
+  }}
+>
+  <Fragment slot="hero-actions">
+    <div class="v-hero-actions">
+      <a href="#ecosystem" class="v-hero-cta v-hero-cta--primary">Explore ecosystem</a>
+      <a href="#vsl" class="v-hero-cta v-hero-cta--secondary">VSL pure-V →</a>
+      <a href="https://github.com/vlang/v" class="v-hero-cta v-hero-cta--ghost" target="_blank" rel="noreferrer">vlang/v ↗</a>
     </div>
-  </section>
-  <section>
-    <h2>VTL — Tensor Library</h2>
-    <p>Tensores, autograd, grafos computacionales, capas, optimizadores. Interacción: grafo forward/backward.</p>
-  </section>
-  <section>
-    <h2>RxV — Reactive</h2>
-    <p>Observables, canales, operadores. Flujo: <code>source → filter → map → merge/reduce → subscriber</code></p>
-  </section>
-  <section>
-    <h2>setup-v</h2>
-    <p>GitHub Action para V — pipeline: versión, arquitectura, caché, build, outputs.</p>
-  </section>
-  <p>
-    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">RxV →</a> · <a
-      href="https://github.com/vlang/setup-v"
-      target="_blank"
-      rel="noreferrer">setup-v →</a
-    >
-  </p>
-  <p style="color:var(--color-muted); font-size:0.9rem;">
-    <strong>Nota licencia:</strong> Veasel solo si <code>vlang/v-mascot/LICENSE</code> lo permite con atribución; caso ambiguo
-    usa ilustración original V-inspirada (no derivada).
-  </p>
+  </Fragment>
+
+  <div class="v-page">
+    <section id="overview" class="v-page__section" aria-label="Overview">
+      <VOverview />
+    </section>
+
+    <section id="ecosystem" class="v-page__section" aria-label="Ecosystem architecture">
+      <EcosystemDiagram />
+    </section>
+
+    <section id="projects" class="v-page__section" aria-label="Projects">
+      <VCards />
+    </section>
+
+    <section id="vsl" class="v-page__section" aria-label="VSL scientific library">
+      <VSLDiagram />
+    </section>
+
+    <section id="vtl" class="v-page__section" aria-label="VTL tensor library">
+      <VTLDiagram />
+    </section>
+
+    <section id="rxv" class="v-page__section" aria-label="RxV reactive">
+      <RxVDiagram />
+    </section>
+
+    <section id="setup-v" class="v-page__section" aria-label="setup-v GitHub Action">
+      <SetupVDiagram />
+    </section>
+
+    <section id="licencias" class="v-page__section" aria-labelledby="licencias-title">
+      <div class="v-licenses">
+        <header class="v-licenses__header">
+          <p class="v-licenses__eyebrow">Verificacion de licencias</p>
+          <h2 id="licencias-title" class="v-licenses__title">Licencias verificadas — MIT con Veasel responsable</h2>
+          <p class="v-licenses__desc">
+            Este sitio y el ecosistema V comparten MIT. Veasel (mascota) solo se incluye si
+            <code>vlang/v-mascot/LICENSE</code> lo permite con atribucion; caso ambiguo usa ilustracion original V-inspirada (no derivada) — ningun binario Veasel esta embebido aqui.
+          </p>
+        </header>
+        <div class="v-licenses__grid" role="list">
+          {
+            licenseEntries.map((entry) => (
+              <article class="v-licenses__card" role="listitem">
+                <h3 class="v-licenses__card-title">{entry.component}</h3>
+                <p class="v-licenses__card-license">
+                  <span class="v-licenses__badge">{entry.license}</span>
+                  <span class="v-licenses__source">{entry.source}</span>
+                </p>
+                <p class="v-licenses__card-notes">{entry.notes}</p>
+              </article>
+            ))
+          }
+        </div>
+        <p class="v-licenses__links">
+          <a href="https://github.com/vlang/v" target="_blank" rel="noreferrer">v ↗</a> ·
+          <a href="https://github.com/vlang/vsl" target="_blank" rel="noreferrer">vsl ↗</a> ·
+          <a href="https://github.com/vlang/vtl" target="_blank" rel="noreferrer">vtl ↗</a> ·
+          <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">rxv ↗</a> ·
+          <a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">setup-v ↗</a> ·
+          <a href="https://github.com/vlang/awesome-v" target="_blank" rel="noreferrer">awesome-v ↗</a>
+        </p>
+      </div>
+    </section>
+
+    <nav class="v-page__nav" aria-label="Related worlds">
+      <a href="/" class="v-page__nav-link">← Digital Nest</a>
+      <a href="/agent-toolkit" class="v-page__nav-link">Agent Toolkit →</a>
+      <a href="/projects" class="v-page__nav-link">Projects →</a>
+      <a href="/open-source" class="v-page__nav-link">Open Source →</a>
+    </nav>
+  </div>
 </SectionLayout>
+
+<style>
+  .v-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .v-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition:
+      transform 150ms ease,
+      box-shadow 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .v-hero-cta:focus-visible {
+    outline: 2px solid var(--color-focus, #005fcc);
+    outline-offset: 2px;
+  }
+
+  .v-hero-cta--primary {
+    background: var(--theme-accent, #1e5a8a);
+    color: white;
+    border-color: var(--theme-accent-strong, #16446a);
+  }
+
+  .v-hero-cta--primary:hover {
+    background: var(--theme-accent-strong, #16446a);
+    transform: translateY(-1px);
+  }
+
+  .v-hero-cta--secondary {
+    background: var(--color-warm-white, #fffdf9);
+    color: var(--theme-accent-strong, #16446a);
+    border-color: var(--theme-accent, #1e5a8a);
+  }
+
+  .v-hero-cta--secondary:hover {
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 7%, #f7f0e6));
+    transform: translateY(-1px);
+  }
+
+  .v-hero-cta--ghost {
+    background: transparent;
+    color: var(--color-deep-ink, #181512);
+    border-color: var(--color-sand, #e9d8c3);
+  }
+
+  .v-hero-cta--ghost:hover {
+    background: var(--color-warm-white, #fffdf9);
+    border-color: var(--theme-accent, #1e5a8a);
+  }
+
+  .v-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: 1.2rem 0 2rem 0;
+  }
+
+  .v-page__section {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .v-licenses {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem;
+    border-radius: 16px;
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .v-licenses__eyebrow {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .v-licenses__title {
+    margin: 0 0 0.4rem 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-licenses__desc {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+    max-width: 48rem;
+  }
+
+  .v-licenses__desc code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.82rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.08rem 0.3rem;
+  }
+
+  .v-licenses__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  @media (min-width: 720px) {
+    .v-licenses__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .v-licenses__card {
+    padding: 0.9rem 0.95rem;
+    border-radius: 12px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
+    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+  }
+
+  .v-licenses__card-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-licenses__card-license {
+    margin: 0 0 0.4rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .v-licenses__badge {
+    display: inline-flex;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--theme-accent, #1e5a8a);
+    color: white;
+    letter-spacing: 0.02em;
+  }
+
+  .v-licenses__source {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.76rem;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .v-licenses__card-notes {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .v-licenses__links {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .v-licenses__links a {
+    color: var(--theme-accent-strong, #16446a);
+    font-weight: 600;
+    text-decoration: none;
+    font-family: var(--font-mono, ui-monospace, monospace);
+  }
+
+  .v-licenses__links a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .v-licenses__links a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .v-page__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--color-sand, #e9d8c3);
+  }
+
+  .v-page__nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.85rem;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-deep-ink, #181512);
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .v-page__nav-link:hover {
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 7%, #f7f0e6));
+    border-color: var(--theme-accent, #1e5a8a);
+    transform: translateY(-1px);
+  }
+
+  .v-page__nav-link:focus-visible {
+    outline: 2px solid var(--color-focus, #005fcc);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v-hero-cta,
+    .v-page__nav-link {
+      transition: none;
+    }
+  }
+</style>
