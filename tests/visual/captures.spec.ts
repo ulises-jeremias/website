@@ -27,8 +27,8 @@ const captures: Array<{ path: string; name: string; width: number; height: numbe
   { path: '/projects', name: 'routes/projects', width: 390, height: 844 },
   { path: '/open-source', name: 'routes/open-source', width: 1440, height: 1100 },
   { path: '/open-source', name: 'routes/open-source', width: 390, height: 844 },
-  { path: '/missing-page-for-404', name: 'routes/404', width: 1440, height: 1100 },
-  { path: '/missing-page-for-404', name: 'routes/404', width: 390, height: 844 },
+  { path: '/404.html', name: 'routes/404', width: 1440, height: 1100 },
+  { path: '/404.html', name: 'routes/404', width: 390, height: 844 },
 ];
 
 test('capture ZIP-fidelity final screenshots', async ({ page }) => {
