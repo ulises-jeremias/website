@@ -1,0 +1,219 @@
+---
+import { workstationLayers } from '../data/index.js';
+import ThinWorkstationBadge from './ThinWorkstationBadge.astro';
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Agentic Workstation — four-layer DX',
+  description = 'From desktop pixels to runtime memory: a thin, composable ecosystem.',
+} = Astro.props as Props;
+---
+
+<section class="ws-hero" aria-labelledby="ws-hero-title">
+  <div class="ws-hero__bg" aria-hidden="true"></div>
+  <div class="ws-hero__inner">
+    <div class="ws-hero__eyebrow">
+      <ThinWorkstationBadge />
+      <span class="ws-hero__eyebrow-text"
+        >Ecosystem · midnight #020617 · cyan #22D3EE · violet #A78BFA · lime #84CC16</span
+      >
+    </div>
+
+    <h1 id="ws-hero-title" class="ws-hero__title">
+      {title.split('—')[0]}<span class="ws-hero__title-accent">— {title.split('—')[1]}</span>
+    </h1>
+
+    <p class="ws-hero__lead">{description}</p>
+
+    <p class="ws-hero__flow" aria-label="Ecosystem flow">
+      {
+        workstationLayers.map((l, i) => (
+          <>
+            <span class="ws-hero__flow-item" style={`--accent:${l.accent}`}>
+              <span class="ws-hero__flow-dot" />
+              {l.mapping}
+            </span>
+            {i < workstationLayers.length - 1 && <span class="ws-hero__flow-arrow">→</span>}
+          </>
+        ))
+      }
+    </p>
+
+    <div class="ws-hero__actions">
+      <a href="#ecosystem" class="ws-hero__btn ws-hero__btn--primary">Explore 4 layers ↓</a>
+      <a href="#provisioning" class="ws-hero__btn ws-hero__btn--ghost">Provisioning &amp; doctor</a>
+      <code class="ws-hero__code">chezmoi init --apply ulises-jeremias/agentic-workstation</code>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ws-hero {
+    position: relative;
+    overflow: clip;
+    border-radius: 1.75rem;
+    background: #020617;
+    border: 1px solid rgba(51, 65, 85, 0.8);
+    isolation: isolate;
+  }
+  .ws-hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 15% 10%, rgba(34, 211, 238, 0.16), transparent 55%),
+      radial-gradient(ellipse 70% 45% at 88% 90%, rgba(167, 139, 250, 0.14), transparent 50%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(132, 204, 22, 0.08), transparent 60%),
+      linear-gradient(180deg, rgba(15, 23, 42, 0.5), transparent);
+    z-index: 0;
+  }
+  .ws-hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask: radial-gradient(ellipse 90% 70% at 50% 20%, black 50%, transparent 85%);
+  }
+  .ws-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding: 2.6rem 1.6rem 2rem;
+  }
+  @media (min-width: 860px) {
+    .ws-hero__inner {
+      padding: 3.2rem 2.8rem 2.6rem;
+    }
+  }
+  .ws-hero__eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.2rem;
+  }
+  .ws-hero__eyebrow-text {
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+  }
+  .ws-hero__title {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.9rem, 4.8vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: #f8fafc;
+    font-weight: 850;
+    max-width: 22ch;
+  }
+  .ws-hero__title-accent {
+    background: linear-gradient(90deg, #22d3ee 0%, #a78bfa 55%, #84cc16 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .ws-hero__lead {
+    margin: 0 0 1.2rem;
+    color: #94a3b8;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+  .ws-hero__flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.6rem;
+    margin: 0 0 1.6rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.9rem;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    width: fit-content;
+    max-width: 100%;
+  }
+  .ws-hero__flow-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    white-space: nowrap;
+  }
+  .ws-hero__flow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 55%, transparent);
+    flex-shrink: 0;
+  }
+  .ws-hero__flow-arrow {
+    color: #475569;
+    font-weight: 700;
+  }
+  .ws-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .ws-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.15rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition:
+      transform 0.18s,
+      box-shadow 0.18s,
+      background 0.18s,
+      border-color 0.18s;
+  }
+  .ws-hero__btn--primary {
+    background: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 45%, #a78bfa 100%);
+    color: #020617;
+    box-shadow: 0 8px 24px rgba(34, 211, 238, 0.22);
+  }
+  .ws-hero__btn--primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(34, 211, 238, 0.28);
+  }
+  .ws-hero__btn--ghost {
+    background: rgba(15, 23, 42, 0.9);
+    color: #e2e8f0;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+  }
+  .ws-hero__btn--ghost:hover {
+    border-color: rgba(34, 211, 238, 0.35);
+    transform: translateY(-1px);
+  }
+  .ws-hero__code {
+    padding: 0.45rem 0.65rem;
+    border-radius: 0.6rem;
+    background: rgba(2, 6, 23, 0.9);
+    border: 1px solid rgba(51, 65, 85, 0.7);
+    color: #a5f3fc;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 640px) {
+    .ws-hero__code {
+      width: 100%;
+      white-space: normal;
+      word-break: break-all;
+    }
+  }
+</style>
