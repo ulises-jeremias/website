@@ -4,14 +4,14 @@ import { dotfilesLayers } from '../data/index.js';
 
 <section class="layers-diagram" aria-labelledby="layers-title">
   <header class="layers-diagram__header">
-    <p class="layers-diagram__eyebrow">Arquitectura</p>
+    <p class="layers-diagram__eyebrow">Architecture</p>
     <h2 id="layers-title" class="layers-diagram__title">
-      Stack en capas — shell · compositor · terminal · scripts · chezmoi
+      Layered stack — shell · compositor · terminal · scripts · chezmoi
     </h2>
     <p id="layers-desc" class="layers-diagram__desc">
-      Cinco capas aislables que chezmoi une en un sistema atomico. De abajo arriba: fundacion declarativa (chezmoi) →
-      automatizacion (scripts) → render (terminal + compositor) → interaccion (shell). Tabula o usa lectores para
-      explorar cada capa.
+      Five isolatable layers that chezmoi unites into an atomic system. Bottom-up: declarative foundation (chezmoi) →
+      automation (scripts) → render (terminal + compositor) → interaction (shell). Tab or use screen readers to explore
+      each layer.
     </p>
   </header>
 
@@ -23,11 +23,11 @@ import { dotfilesLayers } from '../data/index.js';
       aria-labelledby="layersSvgTitle layersSvgDesc"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title id="layersSvgTitle">Diagrama de capas HorneroConfig</title>
+      <title id="layersSvgTitle">HorneroConfig layers diagram</title>
       <desc id="layersSvgDesc">
-        Diagrama vertical de cinco capas: shell (zsh/p10k) en la cima, luego compositor (Hyprland + Quickshell),
-        terminal (Kitty), scripts (dots-*) y chezmoi como base. Flechas indican que cada capa superior depende de la
-        inferior; toda la pila se distribuye via chezmoi.
+        Vertical diagram of five layers: shell (zsh/p10k) on top, then compositor (Hyprland + Quickshell), terminal
+        (Kitty), scripts (dots-*) and chezmoi as base. Arrows show each upper layer depends on the lower; the entire
+        stack is distributed via chezmoi.
       </desc>
 
       <!-- background rail -->

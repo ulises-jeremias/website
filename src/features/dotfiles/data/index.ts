@@ -5,7 +5,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
     id: 'chezmoi',
     label: 'chezmoi',
     shortLabel: 'chezmoi',
-    description: 'Fundacion declarativa e idempotente',
+    description: 'Declarative and idempotent foundation',
     details: [
       '.chezmoiroot → home/',
       '.chezmoi.toml.tmpl + run_onchange_*',
@@ -17,7 +17,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
     id: 'scripts',
     label: 'scripts',
     shortLabel: 'dots',
-    description: 'Orquestacion 100+ utilidades',
+    description: 'Orchestration of 100+ utilities',
     details: [
       'dots-* con EasyOptions y set -euo pipefail',
       'dots-appearance, dots-wallpaper-set, dots-rice',
@@ -53,7 +53,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
     id: 'shell',
     label: 'shell',
     shortLabel: 'zsh',
-    description: 'Interaccion diaria fluida',
+    description: 'Fluid daily interaction',
     details: [
       'Zsh + Powerlevel10k instant prompt',
       'config.d/plugins, keybindings, paths',
@@ -66,26 +66,26 @@ export const dotfilesLayers: DotfilesLayer[] = [
 export const narrativeSections: NarrativeSection[] = [
   {
     id: 'origen',
-    title: 'El nido del hornero',
+    title: 'The hornero nest',
     paragraphs: [
-      'HorneroConfig toma su nombre del hornero, el ave que construye nidos robustos, funcionales y adaptados al entorno. Cada capa — desde chezmoi hasta el shell — cumple un rol estructural, como barro y paja entrelazados: aislada en desarrollo, integrada en uso.',
-      'La filosofia es modular y resiliente: degradacion elegante sin dependencias opcionales, single source of truth en ~/.cache/dots/ y ~/.config/, y automatizacion que convierte un sistema vacio en un escritorio productivo en minutos (dots, install.sh, AUR dots-stable).',
+      'HorneroConfig is named after the hornero, the bird that builds robust, functional nests adapted to its environment. Each layer — from chezmoi to shell — plays a structural role, like interwoven mud and straw: isolated in development, integrated in use.',
+      'The philosophy is modular and resilient: graceful degradation without optional dependencies, single source of truth in ~/.cache/dots/ and ~/.config/, and automation that turns an empty system into a productive desktop in minutes (dots, install.sh, AUR dots-stable).',
     ],
   },
   {
     id: 'stack',
-    title: 'Stack vivo, no coleccion de configs',
+    title: 'Live stack, not a config collection',
     paragraphs: [
-      'El stack une Hyprland/Wayland con Quickshell (QML + plugin C++ Hornero), Kitty acelerada por GPU, Zsh/Powerlevel10k y 100+ scripts dots-*. Cada rice — 13 temas en Cyberpunk, Cozy, Vaporwave, Nature y Cosmic — es un directorio autocontenido con config.sh, apply.sh, backgrounds/ y preview.png.',
-      'Chezmoi orquesta todo: plantillas, scripts run_onchange_before/after idempotentes y external.toml para binarios. El resultado es cero mantenimiento: chezmoi init --apply ulises-jeremias y el nido queda listo, actualizable via dots-update y dots-eject para exportar a uso manual.',
+      'The stack unites Hyprland/Wayland with Quickshell (QML + Hornero C++ plugin), GPU-accelerated Kitty, Zsh/Powerlevel10k and 100+ dots-* scripts. Each rice — 13 themes across Cyberpunk, Cozy, Vaporwave, Nature and Cosmic — is a self-contained directory with config.sh, apply.sh, backgrounds/ and preview.png.',
+      'Chezmoi orchestrates everything: templates, idempotent run_onchange_before/after scripts and external.toml for binaries. The result is zero maintenance: chezmoi init --apply ulises-jeremias and the nest is ready, updatable via dots-update and dots-eject to export to manual use.',
     ],
   },
   {
     id: 'smart-colors',
-    title: 'Color con intencionalidad',
+    title: 'Color with purpose',
     paragraphs: [
-      'Smart Colors es el sistema nervioso. Analiza el wallpaper con ciencia de color, detecta luminancia para modo claro/oscuro, mapea semanticamente (rojo→error, verde→success) y optimiza contraste WCAG. Genera una unica vez y cachea en scheme.json (Material Design 3) y variantes para Hyprland, shell y GTK.',
-      'Al cambiar wallpaper con dots-wallpaper-set, el servicio Colours de Quickshell regenera la paleta y la aplica de forma atomica a bar, borders, kitty y lock — sin valores hardcodeados, con fallbacks por distancia cuando la paleta es limitada.',
+      'Smart Colors is the nervous system. It analyzes the wallpaper with color science, detects luminance for light/dark mode, maps semantically (red→error, green→success) and optimizes WCAG contrast. It generates once and caches in scheme.json (Material Design 3) and variants for Hyprland, shell and GTK.',
+      'When you change wallpaper with dots-wallpaper-set, the Quickshell Colours service regenerates the palette and applies it atomically to bar, borders, kitty and lock — no hardcoded values, with distance-based fallbacks when the palette is limited.',
     ],
   },
 ];
@@ -94,31 +94,32 @@ export const smartColorSteps: SmartColorStep[] = [
   {
     id: 'wallpaper',
     title: 'Wallpaper',
-    description: 'Imagen curada por rice en backgrounds/',
+    description: 'Image curated per rice in backgrounds/',
     icon: '🖼️',
-    detail: 'Quickshell + wpgtk gestionan el fondo. dots-wallpaper-set registra el cambio y dispara el pipeline.',
+    detail:
+      'Quickshell + wpgtk manage the background. dots-wallpaper-set records the change and triggers the pipeline.',
   },
   {
     id: 'extraction',
-    title: 'Extraccion',
-    description: 'Cuantizacion y analisis de luminancia',
+    title: 'Extraction',
+    description: 'Quantization and luminance analysis',
     icon: '🔬',
-    detail: 'material-color-utilities extrae dominantes, calcula luminancia y decide light/dark con fallbacks.',
+    detail: 'material-color-utilities extracts dominants, computes luminance and decides light/dark with fallbacks.',
   },
   {
     id: 'palette',
     title: 'Palette',
     description: 'Material Design 3 scheme.json',
     icon: '🎨',
-    detail: 'Genera primary/secondary/tertiary/error/neutral en ~/.cache/dots/smart-colors/ — cacheado y versionado.',
+    detail: 'Generates primary/secondary/tertiary/error/neutral in ~/.cache/dots/smart-colors/ — cached and versioned.',
   },
   {
     id: 'apps',
     title: 'Apps',
-    description: 'Aplicacion atomica a todo el escritorio',
+    description: 'Atomic application to the whole desktop',
     icon: '🚀',
     detail:
-      'Quickshell Colours, Hyprland, Kitty, GTK y Hyprlock consumen la misma fuente. Live reload sin reiniciar sesion.',
+      'Quickshell Colours, Hyprland, Kitty, GTK and Hyprlock consume the same source. Live reload without restarting session.',
   },
 ];
 
@@ -216,6 +217,6 @@ export const dotfilesMeta = {
   pinkMuted: '#d5c2c6',
   title: 'HorneroConfig — dotfiles framework',
   description:
-    'Framework de dotfiles por Ulises Jeremias: Hyprland + Quickshell + Kitty + Zsh + chezmoi + 100+ dots-*. Smart Colors, 13 rices, instalacion en un comando.',
-  quote: 'Como el hornero, construye tu nido digital: robusto, bello y adaptado a ti.',
+    'Dotfiles framework by Ulises Jeremias: Hyprland + Quickshell + Kitty + Zsh + chezmoi + 100+ dots-*. Smart Colors, 13 rices, one-command install.',
+  quote: 'Like the hornero, build your digital nest: robust, beautiful and tailored to you.',
 };
