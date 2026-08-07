@@ -1,0 +1,263 @@
+---
+import { worldsByPriority } from '@/data/project-worlds';
+
+// Desktop header — visible at ≥768px, hidden below (MobileNav takes over).
+// Uses `worldsByPriority` for ordering; splits into visible (7) + overflow (rest).
+// Tokens are preliminary (Epic C owns final values) — uses --color-*, --space-*, --max-width.
+
+const pathname = Astro.url.pathname;
+
+// Split worlds: 7 visible, rest in overflow ("More")
+const VISIBLE_COUNT = 7;
+const visibleWorlds = worldsByPriority.slice(0, VISIBLE_COUNT);
+const overflowWorlds = worldsByPriority.slice(VISIBLE_COUNT);
+
+function isActive(path: string, current: string): boolean {
+  if (path === '/blog') return current === '/blog' || current.startsWith('/blog/');
+  return current === path || current.startsWith(path + '/');
+}
+---
+
+<header class="site-header" role="banner">
+  <nav class="site-header__nav" aria-label="Primary">
+    <a href="/" class="site-header__brand" aria-label="Ulises Jeremias — home">
+      <span class="site-header__mark" aria-hidden="true">◉</span>
+      <span class="site-header__brand-text">Ulises Jeremias</span>
+    </a>
+
+    <ul class="site-header__list" role="list">
+      {visibleWorlds.map((w) => {
+        const active = isActive(w.path, pathname);
+        return (
+          <li class="site-header__item">
+            <a
+              href={w.path}
+              class:list={['site-header__link', active && 'is-active']}
+              aria-current={active ? 'page' : undefined}
+            >
+              {w.title}
+            </a>
+          </li>
+        );
+      })}
+      {overflowWorlds.length > 0 && (
+        <li class="site-header__item site-header__item--overflow">
+          <details class="site-header__more">
+            <summary class="site-header__link site-header__more-summary" aria-haspopup="true">
+              More <span aria-hidden="true">▾</span>
+            </summary>
+            <ul class="site-header__overflow-list" role="list">
+              {overflowWorlds.map((w) => {
+                const active = isActive(w.path, pathname);
+                return (
+                  <li>
+                    <a
+                      href={w.path}
+                      class:list={['site-header__link', 'site-header__link--overflow', active && 'is-active']}
+                      aria-current={active ? 'page' : undefined}
+                    >
+                      {w.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </details>
+        </li>
+      )}
+    </ul>
+
+    <a href="mailto:ulisescf.24@gmail.com" class="site-header__cta">Collaborate</a>
+  </nav>
+</header>
+
+<style>
+  /* Preliminary tokens — Epic C finalizes values in src/styles/tokens.css */
+  :root {
+    /* Fallbacks if tokens.css not yet loaded (Epic C) */
+    --header-color-bg: var(--color-bg, #fffdf9);
+    --header-color-text: var(--color-text, #181512);
+    --header-color-muted: var(--color-muted, #4a4a4a);
+    --header-color-border: var(--color-border, #d5c2c6);
+    --header-color-accent: var(--color-accent, #b85c38);
+    --header-color-paper: var(--color-paper, #f7f0e6);
+    --header-color-focus: var(--color-focus, #005fcc);
+    --header-max-width: var(--max-width, 72rem);
+    --header-space-2: var(--space-2, 0.5rem);
+    --header-space-3: var(--space-3, 0.75rem);
+    --header-space-4: var(--space-4, 1rem);
+    --header-space-8: var(--space-8, 2rem);
+  }
+
+  .site-header {
+    border-bottom: 1px solid var(--header-color-border);
+    background: var(--header-color-bg);
+  }
+
+  .site-header__nav {
+    max-width: var(--header-max-width);
+    margin: 0 auto;
+    padding: var(--header-space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--header-space-4);
+    flex-wrap: wrap;
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--header-space-2);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--header-color-text);
+    flex-shrink: 0;
+  }
+
+  .site-header__brand:focus-visible {
+    outline: 2px solid var(--header-color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .site-header__mark {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .site-header__list {
+    display: flex;
+    align-items: center;
+    gap: var(--header-space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .site-header__item {
+    display: inline-flex;
+  }
+
+  .site-header__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.625rem;
+    border-radius: var(--radius-sm, 6px);
+    text-decoration: none;
+    color: var(--header-color-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .site-header__link:hover {
+    color: var(--header-color-text);
+    background: var(--header-color-paper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .site-header__link.is-active {
+    color: var(--header-color-text);
+    background: var(--header-color-paper);
+    box-shadow: inset 0 -2px 0 var(--header-color-accent);
+  }
+
+  .site-header__link:focus-visible,
+  .site-header__more-summary:focus-visible {
+    outline: 2px solid var(--header-color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Overflow: <details> pattern */
+  .site-header__more {
+    position: relative;
+  }
+
+  .site-header__more-summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .site-header__more-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-header__more[open] .site-header__more-summary {
+    color: var(--header-color-text);
+    background: var(--header-color-paper);
+  }
+
+  .site-header__overflow-list {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    background: var(--header-color-bg);
+    border: 1px solid var(--header-color-border);
+    border-radius: var(--radius-md, 10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    list-style: none;
+    margin: 0;
+    padding: var(--header-space-2);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 20;
+  }
+
+  .site-header__link--overflow {
+    width: 100%;
+  }
+
+  .site-header__cta {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: var(--header-color-text);
+    color: var(--header-color-bg);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    flex-shrink: 0;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+
+  .site-header__cta:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .site-header__cta:focus-visible {
+    outline: 2px solid var(--header-color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Hidden on mobile (<768px) — MobileNav handles that viewport */
+  @media (max-width: 767px) {
+    .site-header__list {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__link,
+    .site-header__cta {
+      transition: none;
+    }
+  }
+</style>

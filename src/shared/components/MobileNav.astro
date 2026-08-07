@@ -1,0 +1,408 @@
+---
+import { worldsByPriority } from '@/data/project-worlds';
+
+// Mobile nav — visible at <768px, hidden at ≥768px (Header takes over).
+// Implements drawer with focus trap, ESC, scroll lock, reduced-motion.
+// No framework — vanilla JS inline, <2KB.
+// Tokens are preliminary (Epic C finalizes).
+---
+
+<nav class="mobile-nav" aria-label="Mobile">
+  <div class="mobile-nav__bar">
+    <a href="/" class="mobile-nav__brand" aria-label="Ulises Jeremias — home">
+      <span class="mobile-nav__mark" aria-hidden="true">◉</span>
+      <span class="mobile-nav__brand-text">Ulises</span>
+    </a>
+    <button
+      type="button"
+      class="mobile-nav__trigger"
+      aria-expanded="false"
+      aria-controls="mobile-drawer"
+      aria-label="Open menu"
+    >
+      <span class="mobile-nav__trigger-icon" aria-hidden="true">
+        <span class="mobile-nav__icon-bar"></span>
+        <span class="mobile-nav__icon-bar"></span>
+        <span class="mobile-nav__icon-bar"></span>
+      </span>
+      <span class="mobile-nav__trigger-text">Menu</span>
+    </button>
+  </div>
+
+  <div class="mobile-nav__backdrop" hidden aria-hidden="true"></div>
+
+  <div
+    id="mobile-drawer"
+    class="mobile-nav__drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+    hidden
+  >
+    <div class="mobile-nav__drawer-header">
+      <span class="mobile-nav__drawer-title">Menu</span>
+      <button type="button" class="mobile-nav__close" aria-label="Close menu">
+        <span aria-hidden="true">✕</span>
+      </button>
+    </div>
+
+    <ul class="mobile-nav__list" role="list">
+      {worldsByPriority.map((w) => (
+        <li class="mobile-nav__item">
+          <a href={w.path} class="mobile-nav__link">
+            {w.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mobile-nav__footer">
+      <a href="mailto:ulisescf.24@gmail.com" class="mobile-nav__cta">Collaborate</a>
+      <div class="mobile-nav__social">
+        <a href="https://github.com/ulises-jeremias" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/ulises-jeremias/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://discord.gg/bR5VyATgka" target="_blank" rel="noreferrer">Discord</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    var trigger = document.querySelector('.mobile-nav__trigger') as HTMLButtonElement | null;
+    var drawer = document.getElementById('mobile-drawer') as HTMLElement | null;
+    var backdrop = document.querySelector('.mobile-nav__backdrop') as HTMLElement | null;
+    var closeBtn = document.querySelector('.mobile-nav__close') as HTMLButtonElement | null;
+    if (!trigger || !drawer || !backdrop || !closeBtn) return;
+
+    var focusableSelector =
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    var previouslyFocused: HTMLElement | null = null;
+
+    function getFocusable(): HTMLElement[] {
+      return Array.from(drawer!.querySelectorAll<HTMLElement>(focusableSelector)).filter(
+        function (el) {
+          return el.offsetParent !== null || el === document.activeElement;
+        }
+      );
+    }
+
+    function open() {
+      previouslyFocused = document.activeElement as HTMLElement | null;
+      trigger!.setAttribute('aria-expanded', 'true');
+      trigger!.setAttribute('aria-label', 'Close menu');
+      drawer!.hidden = false;
+      backdrop!.hidden = false;
+      backdrop!.removeAttribute('aria-hidden');
+      document.documentElement.style.overflow = 'hidden';
+      // Force reflow for transition
+      void drawer!.offsetWidth;
+      drawer!.classList.add('is-open');
+      closeBtn!.focus();
+      document.addEventListener('keydown', onKeydown);
+    }
+
+    function close() {
+      trigger!.setAttribute('aria-expanded', 'false');
+      trigger!.setAttribute('aria-label', 'Open menu');
+      drawer!.classList.remove('is-open');
+      backdrop!.hidden = true;
+      backdrop!.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('keydown', onKeydown);
+      // Delay hiding for transition (except reduced-motion)
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var delay = reduced ? 0 : 240;
+      window.setTimeout(function () {
+        if (trigger!.getAttribute('aria-expanded') === 'false') {
+          drawer!.hidden = true;
+        }
+      }, delay);
+      if (previouslyFocused && previouslyFocused.focus) {
+        previouslyFocused.focus();
+      } else {
+        trigger!.focus();
+      }
+    }
+
+    function onKeydown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var focusable = getFocusable();
+      if (focusable.length === 0) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      var active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey) {
+        if (active === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    trigger.addEventListener('click', function () {
+      var expanded = trigger.getAttribute('aria-expanded') === 'true';
+      if (expanded) close();
+      else open();
+    });
+
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+
+    drawer.addEventListener('click', function (e) {
+      var target = e.target as HTMLElement;
+      var link = target.closest('a');
+      if (link && link.getAttribute('href')?.startsWith('/')) {
+        close();
+      }
+    });
+  })();
+</script>
+
+<style>
+  :root {
+    --mobile-color-bg: var(--color-bg, #fffdf9);
+    --mobile-color-text: var(--color-text, #181512);
+    --mobile-color-muted: var(--color-muted, #4a4a4a);
+    --mobile-color-border: var(--color-border, #d5c2c6);
+    --mobile-color-accent: var(--color-accent, #b85c38);
+    --mobile-color-paper: var(--color-paper, #f7f0e6);
+    --mobile-color-focus: var(--color-focus, #005fcc);
+  }
+
+  .mobile-nav {
+    border-bottom: 1px solid var(--mobile-color-border);
+    background: var(--mobile-color-bg);
+  }
+
+  .mobile-nav__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+
+  .mobile-nav__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--mobile-color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .mobile-nav__brand:focus-visible {
+    outline: 2px solid var(--mobile-color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .mobile-nav__mark {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .mobile-nav__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    border: 1px solid var(--mobile-color-border);
+    border-radius: 8px;
+    background: var(--mobile-color-bg);
+    color: var(--mobile-color-text);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .mobile-nav__trigger:focus-visible {
+    outline: 2px solid var(--mobile-color-focus);
+    outline-offset: 2px;
+  }
+
+  .mobile-nav__trigger-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .mobile-nav__icon-bar {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+
+  .mobile-nav__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(24, 21, 18, 0.45);
+    z-index: 40;
+  }
+
+  .mobile-nav__backdrop[hidden] {
+    display: none;
+  }
+
+  .mobile-nav__drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 85%;
+    max-width: 320px;
+    background: var(--mobile-color-bg);
+    border-left: 1px solid var(--mobile-color-border);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-nav__drawer[hidden] {
+    display: none;
+  }
+
+  .mobile-nav__drawer.is-open {
+    transform: translateX(0);
+  }
+
+  .mobile-nav__drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--mobile-color-border);
+    flex-shrink: 0;
+  }
+
+  .mobile-nav__drawer-title {
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+
+  .mobile-nav__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid var(--mobile-color-border);
+    border-radius: 8px;
+    background: var(--mobile-color-bg);
+    color: var(--mobile-color-text);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .mobile-nav__close:focus-visible {
+    outline: 2px solid var(--mobile-color-focus);
+    outline-offset: 2px;
+  }
+
+  .mobile-nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .mobile-nav__link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--mobile-color-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  .mobile-nav__link:hover {
+    background: var(--mobile-color-paper);
+  }
+
+  .mobile-nav__link:focus-visible {
+    outline: 2px solid var(--mobile-color-focus);
+    outline-offset: 2px;
+  }
+
+  .mobile-nav__footer {
+    padding: 1rem;
+    border-top: 1px solid var(--mobile-color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .mobile-nav__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: var(--mobile-color-text);
+    color: var(--mobile-color-bg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .mobile-nav__cta:focus-visible {
+    outline: 2px solid var(--mobile-color-focus);
+    outline-offset: 2px;
+  }
+
+  .mobile-nav__social {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .mobile-nav__social a {
+    color: var(--mobile-color-muted);
+    text-decoration: none;
+  }
+
+  .mobile-nav__social a:hover {
+    color: var(--mobile-color-text);
+    text-decoration: underline;
+  }
+
+  /* Hidden on desktop (≥768px) — Header takes over */
+  @media (min-width: 768px) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav__drawer {
+      transition: none;
+    }
+  }
+</style>
