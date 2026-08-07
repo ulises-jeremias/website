@@ -1,0 +1,308 @@
+---
+import { beginnerPathway, experiencedPathway } from '../data/index.js';
+---
+
+<section class="community-pathways" aria-labelledby="pathways-title" data-testid="contribution-pathways">
+  <header class="community-pathways__header">
+    <p class="community-pathways__eyebrow">Contribution pathways</p><h2
+      id="pathways-title"
+      class="community-pathways__title"
+    >
+      Two trails, same workshop
+    </h2><p class="community-pathways__lead">
+      Pick the trail that matches your time and depth. Both end with a reviewed, reviewable PR — not with a badge.
+    </p>
+  </header>
+  <div class="community-pathways__grid">
+    <article class="community-pathway" aria-labelledby="pathway-beginner-title">
+      <div class="community-pathway__head">
+        <span class="community-pathway__badge community-pathway__badge--beginner" aria-label="Beginner level"
+          >🌱 Beginner</span
+        ><h3 id="pathway-beginner-title" class="community-pathway__title">{beginnerPathway.title}</h3><p
+          class="community-pathway__desc"
+        >
+          {beginnerPathway.description}
+        </p><p class="community-pathway__audience"><strong>Audience:</strong> {beginnerPathway.audience}</p>
+      </div><ol class="community-pathway__steps" aria-label="Beginner steps">
+        {
+          beginnerPathway.steps.map((step, idx) => (
+            <li class="community-pathway__step">
+              <>
+                <span class="community-pathway__step-index" aria-hidden="true">
+                  {idx + 1}
+                </span>
+                <div class="community-pathway__step-body">
+                  <span class="community-pathway__step-text">{step.description}</span>
+                  {step.href && (
+                    <a href={step.href} class="community-pathway__step-link" target="_blank" rel="noreferrer noopener">
+                      {step.label ?? 'Learn more'} →<span class="sr-only"> (opens in new tab)</span>
+                    </a>
+                  )}
+                </div>
+              </>
+            </li>
+          ))
+        }
+      </ol><a
+        href={beginnerPathway.ctaHref}
+        class="community-pathway__cta"
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label="Find a good first issue on GitHub (opens in new tab)"
+        >{beginnerPathway.ctaLabel} →<span class="sr-only"> (opens in new tab)</span></a>
+    </article>
+    <article class="community-pathway" aria-labelledby="pathway-experienced-title">
+      <div class="community-pathway__head">
+        <span class="community-pathway__badge community-pathway__badge--experienced" aria-label="Experienced level"
+          >🛠️ Experienced</span
+        ><h3 id="pathway-experienced-title" class="community-pathway__title">{experiencedPathway.title}</h3><p
+          class="community-pathway__desc"
+        >
+          {experiencedPathway.description}
+        </p><p class="community-pathway__audience"><strong>Audience:</strong> {experiencedPathway.audience}</p>
+      </div><ol class="community-pathway__steps" aria-label="Experienced steps">
+        {
+          experiencedPathway.steps.map((step, idx) => (
+            <li class="community-pathway__step">
+              <>
+                <span class="community-pathway__step-index" aria-hidden="true">
+                  {idx + 1}
+                </span>
+                <div class="community-pathway__step-body">
+                  <span class="community-pathway__step-text">{step.description}</span>
+                  {step.href && (
+                    <a href={step.href} class="community-pathway__step-link" target="_blank" rel="noreferrer noopener">
+                      {step.label ?? 'Learn more'} →<span class="sr-only"> (opens in new tab)</span>
+                    </a>
+                  )}
+                </div>
+              </>
+            </li>
+          ))
+        }
+      </ol><a
+        href={experiencedPathway.ctaHref}
+        class="community-pathway__cta community-pathway__cta--secondary"
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label="Open a template proposal on GitHub (opens in new tab)"
+        >{experiencedPathway.ctaLabel} →<span class="sr-only"> (opens in new tab)</span></a>
+    </article>
+  </div>
+  <p class="community-pathways__note">
+    Both pathways follow <code>Conventional Commits</code>, <code>pnpm type-check</code>, and <code>pnpm build</code> — the
+    same gates that protect <code>main</code>.
+  </p>
+</section>
+<style>
+  .community-pathways {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+  }
+  .community-pathways__eyebrow {
+    display: inline-flex;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: var(--color-clay-muted, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    color: var(--color-clay-strong, #a14e2f);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+  }
+  .community-pathways__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-ink, #181512);
+  }
+  .community-pathways__lead {
+    margin: 0.5rem 0 0;
+    max-width: 62ch;
+    color: var(--color-text-muted, #3a352f);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  .community-pathways__grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) {
+    .community-pathways__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .community-pathway {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e9d8c3);
+    box-shadow: var(--shadow-sm);
+  }
+  .community-pathway__head {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .community-pathway__badge {
+    justify-self: start;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--color-border, #e9d8c3);
+  }
+  .community-pathway__badge--beginner {
+    background: color-mix(in srgb, var(--color-success-bg, #e6f2eb) 70%, white);
+    color: var(--color-success-text, #1e4a33);
+    border-color: var(--color-success-border, #b7d6c4);
+  }
+  .community-pathway__badge--experienced {
+    background: var(--color-paper, #f7f0e6);
+    color: var(--color-ink, #181512);
+  }
+  .community-pathway__title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 750;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--color-ink, #181512);
+  }
+  .community-pathway__desc {
+    margin: 0;
+    color: var(--color-text-muted, #3a352f);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .community-pathway__audience {
+    margin: 0;
+    color: var(--color-text-faint, #6b715e);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  .community-pathway__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+  .community-pathway__step {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0.65rem;
+    align-items: start;
+  }
+  .community-pathway__step-index {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-ink, #181512);
+    color: var(--color-warm-paper, #f7f0e6);
+    font-weight: 750;
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+  .community-pathway__step-body {
+    display: grid;
+    gap: 0.25rem;
+  }
+  .community-pathway__step-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--color-ink, #181512);
+  }
+  .community-pathway__step-text {
+    color: var(--color-text-muted, #3a352f);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .community-pathway__step-link {
+    justify-self: start;
+    color: var(--color-link, #a14e2f);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .community-pathway__step-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .community-pathway__step-link:focus-visible {
+    outline: 2px solid var(--color-focus, #a14e2f);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+  .community-pathway__cta {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: 999px;
+    background: var(--color-ink, #181512);
+    color: var(--color-warm-paper, #f7f0e6);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    border: 1px solid var(--color-ink, #181512);
+  }
+  .community-pathway__cta:hover {
+    background: #2a241f;
+    border-color: #2a241f;
+  }
+  .community-pathway__cta:focus-visible {
+    outline: 2px solid var(--color-focus, #181512);
+    outline-offset: 2px;
+  }
+  .community-pathway__cta--secondary {
+    background: transparent;
+    color: var(--color-ink, #181512);
+  }
+  .community-pathway__cta--secondary:hover {
+    background: var(--color-paper, #f7f0e6);
+    color: var(--color-ink, #181512);
+  }
+  .community-pathways__note {
+    margin: 0.9rem 0 0;
+    color: var(--color-text-faint, #6b715e);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .community-pathways__note code {
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.3rem;
+    background: var(--color-paper, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    font-size: 0.85rem;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

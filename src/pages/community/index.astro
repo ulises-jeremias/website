@@ -1,42 +1,157 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import {
+  ContributionPathways,
+  DiscordCTA,
+  ModerationPrivacy,
+  ProjectFamilies,
+  SupportChannels,
+  WorkshopNarrative,
+} from '@/features/community';
 import { getRouteMeta } from '@/data/routes';
 const meta = getRouteMeta('/community')!;
 ---
 
-<SectionLayout title={meta.title} description={meta.description} theme="community">
-  <h1>Community — Shared workshop</h1>
-  <p>El taller compartido conectado a los mundos del proyecto.</p>
-  <section>
-    <h2>Discord</h2>
-    <p>
-      <a
-        href="https://discord.gg/bR5VyATgka"
-        target="_blank"
-        rel="noreferrer"
-        style="background:#5865F2; color:white; padding:0.6rem 1rem; border-radius:999px; text-decoration:none;"
-        >Unirse a Discord →</a
+<SectionLayout
+  title={meta.title}
+  description={meta.description}
+  theme="community"
+  hero={{
+    eyebrow: 'Community · shared workshop',
+    title: 'Community — shared workshop that connects every world',
+    description:
+      'El taller compartido conectado a los mundos del proyecto. The bench where drafts, reviews, and small PRs become documentation — with Discord for live help and GitHub for the trail.',
+    align: 'left',
+  }}
+>
+  <div class="community-page">
+    <WorkshopNarrative />
+    <DiscordCTA />
+    <ProjectFamilies />
+    <ContributionPathways />
+    <SupportChannels />
+    <ModerationPrivacy />
+    <section class="community-closing" aria-labelledby="closing-title">
+      <h2 id="closing-title" class="community-closing__title">Bring a question, leave a link</h2><p
+        class="community-closing__lead"
       >
-    </p>
-    <p style="color:var(--color-muted); font-size:0.9rem;">
-      Blurple solo como acento. No se muestran conteos de miembros sin fuente autoritativa refrescable.
-    </p>
-  </section>
-  <section>
-    <h2>Cómo contribuir</h2>
-    <ul>
-      <li><strong>Familias:</strong> Node, Python, V</li>
-      <li><strong>Oportunidades semanales</strong> — issues etiquetados</li>
-      <li><strong>Principiante:</strong> docs, templates, addons pequeños</li>
-      <li><strong>Experimentado:</strong> CLI, scaffolding, pipelines</li>
-      <li>
+        Whether you fix a typo, add an addon, or review a VSL method — the workshop is open. Start with a labeled issue
+        or ask in <code>#help</code>.
+      </p><div class="community-closing__actions">
         <a
+          href="https://discord.gg/bR5VyATgka"
+          class="community-closing__cta community-closing__cta--discord"
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label="Join Discord — Create-Awesome workshop (opens in new tab)"
+          >Join Discord →<span class="sr-only"> (opens in new tab)</span></a
+        ><a href="https://github.com/ulises-jeremias/website/issues" class="community-closing__cta">Open an issue →</a
+        ><a href="/blog" class="community-closing__cta community-closing__cta--ghost">Read field notes →</a>
+      </div><p class="community-closing__note">
+        All links verified 2026-08-07 · Invite <code>discord.gg/bR5VyATgka</code> · Code of Conduct <a
           href="https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md"
           target="_blank"
-          rel="noreferrer">Código de Conducta</a
-        > · <a href="https://github.com/ulises-jeremias/dotfiles/wiki" target="_blank" rel="noreferrer">Soporte</a>
-      </li>
-    </ul>
-    <p style="color:var(--color-muted);">Comunidad distinta de empleador. Privacidad y moderación documentadas.</p>
-  </section>
+          rel="noreferrer noopener">→</a>
+      </p>
+    </section>
+  </div>
 </SectionLayout>
+<style>
+  .community-page {
+    display: grid;
+    gap: 0.5rem;
+    padding-bottom: 2rem;
+  }
+  .community-closing {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    width: 100%;
+  }
+  .community-closing__title {
+    margin: 0;
+    font-size: clamp(1.4rem, 3vw, 1.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-ink, #181512);
+  }
+  .community-closing__lead {
+    margin: 0.5rem 0 0;
+    max-width: 62ch;
+    color: var(--color-text-muted, #3a352f);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  .community-closing__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .community-closing__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: 999px;
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e9d8c3);
+    color: var(--color-ink, #181512);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+  .community-closing__cta:hover {
+    background: var(--color-paper, #f7f0e6);
+  }
+  .community-closing__cta:focus-visible {
+    outline: 2px solid var(--color-focus, #181512);
+    outline-offset: 2px;
+  }
+  .community-closing__cta--discord {
+    background: #5865f2;
+    border-color: #5865f2;
+    color: #fff;
+  }
+  .community-closing__cta--discord:hover {
+    background: #4752c4;
+    border-color: #4752c4;
+    color: #fff;
+  }
+  .community-closing__cta--ghost {
+    background: transparent;
+  }
+  .community-closing__cta--ghost:hover {
+    background: var(--color-paper, #f7f0e6);
+  }
+  .community-closing__note {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint, #6b715e);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .community-closing__note code {
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.35rem;
+    background: var(--color-paper, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    font-size: 0.85rem;
+  }
+  .community-closing__note a {
+    color: var(--color-link, #a14e2f);
+    font-weight: 600;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

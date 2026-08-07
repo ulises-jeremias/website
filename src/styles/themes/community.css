@@ -1,0 +1,15 @@
+/**
+ * community.css — Community / shared workshop section theme (K-02)
+ */
+[data-section='community'],
+[data-theme='community'] {
+  --theme-accent: #6b5a4a;
+  --theme-accent-strong: #5a4b3e;
+  --theme-accent-light: #8a7560;
+  --theme-accent-subtle: color-mix(in srgb, #6b5a4a 8%, var(--color-warm-paper));
+  --theme-border-accent: color-mix(in srgb, #6b5a4a 18%, var(--color-sand));
+  --theme-surface-tint: color-mix(in srgb, #6b5a4a 4%, var(--color-warm-paper));
+  --theme-illustration: 'workshop boards, labeled issues, review trails';
+  --theme-shape: 'rounded cards, board chips, workshop callouts';
+  --theme-texture: 'subtle paper, workshop grid';
+}
