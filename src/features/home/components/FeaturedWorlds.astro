@@ -1,0 +1,33 @@
+---
+/**
+ * Featured worlds — E-07 / E-04 project-universe navigation
+ */
+import Section from '@/shared/components/Section.astro';
+import { featuredWorlds } from '../data/index.js';
+---
+
+<Section
+  id="worlds"
+  eyebrow="Featured worlds · project universe"
+  title="A universe of worlds, woven together"
+  lead="Each world is a documentation-ready section — dotfiles, workstation, toolkit, V, templates, and community — connected, not scattered."
+>
+  <div class="worlds__grid">
+    {
+      featuredWorlds.map((world) => (
+        <a href={world.href} class="world-card" target="_blank" rel="noreferrer noopener">
+          <span class="world-card__eyebrow">
+            <span aria-hidden="true">{world.icon}</span> {world.eyebrow}
+          </span>
+          <h3 class="world-card__title">{world.title}</h3>
+          <p class="world-card__desc">{world.description}</p>
+          <div class="world-card__meta" aria-label="Tags">
+            {world.tags.map((tag) => (
+              <span class="world-card__tag">{tag}</span>
+            ))}
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</Section>

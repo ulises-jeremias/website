@@ -5,3 +5,12 @@ cna
 islands
 frontmatter
 vitest
+hornero
+Cornejo
+Fandos
+klass
+Fraunces
+Herdr
+autograd
+opencode
+vlang

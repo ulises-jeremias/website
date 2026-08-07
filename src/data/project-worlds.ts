@@ -47,7 +47,7 @@ export const projectWorldSchema = z.object({
       z.object({
         id: z.string().min(1),
         title: z.string().min(1),
-        path: z.string().regex(/^\/[a-z0-9-]*(\/#?[a-z0-9-]+)*$/),
+        path: z.string().regex(/^\/[a-z0-9-]*(\/[a-z0-9-]+)*(#[a-z0-9-]+)?$/),
         description: z.string().optional(),
       }),
     )
@@ -129,7 +129,12 @@ export const projectWorlds: ProjectWorld[] = [
     relatedWorlds: ['community', 'open-source'],
     subWorlds: [
       { id: 'create-node', title: 'create-node-app', path: '/create-awesome#node', description: 'Node templates' },
-      { id: 'create-python', title: 'create-python-app', path: '/create-awesome#python', description: 'Python templates' },
+      {
+        id: 'create-python',
+        title: 'create-python-app',
+        path: '/create-awesome#python',
+        description: 'Python templates',
+      },
       { id: 'create-v', title: 'create-vlang-app', path: '/create-awesome#v', description: 'V templates' },
     ],
   },

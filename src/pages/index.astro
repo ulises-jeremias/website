@@ -1,45 +1,34 @@
 ---
-import SectionLayout from '@/layouts/SectionLayout.astro';
-import { Hero } from '@/features/home';
-import { Worlds } from '@/features/home';
-import { profile } from '@/data/profile';
-import { getRouteMeta } from '@/data/routes';
-const meta = getRouteMeta('/')!;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../shared/components/Header.astro';
+import Footer from '../shared/components/Footer.astro';
+import Hero from '../features/home/components/Hero.astro';
+import ProfileSection from '../features/home/components/ProfileSection.astro';
+import CurrentlyBuilding from '../features/home/components/CurrentlyBuilding.astro';
+import FeaturedWorlds from '../features/home/components/FeaturedWorlds.astro';
+import Strengths from '../features/home/components/Strengths.astro';
+import OpenSourceProof from '../features/home/components/OpenSourceProof.astro';
+import Contact from '../features/home/components/Contact.astro';
+import '../styles/tokens.css';
+import '../styles/home.css';
+
+const pageTitle = 'Ulises Jeremias — Solutions Architect @ NaNLABS · V Core Team · AUR Maintainer';
+const pageDescription =
+  'Solutions Architect at NaNLABS, Core Team Member at V, and AUR Maintainer. I build developer tooling, AI-powered workflows, CLI apps, and infrastructure automation — mostly in TypeScript, Go, Shell, and Python. Explore the Digital Nest.';
 ---
 
-<SectionLayout title={meta.title} description={meta.description} theme="home">
-  <Hero />
-  <Worlds />
-  <section aria-labelledby="profile-title">
-    <h2 id="profile-title">Who is Ulises</h2>
-    <p><strong>{profile.name}</strong> — {profile.tagline}</p>
-    <ul>
-      {
-        profile.roles.map((r) => (
-          <li>
-            {r.title} @ {r.org}
-          </li>
-        ))
-      }
-    </ul>
-    <p>Focus: {profile.focus.join(' · ')}</p>
-    <p>Strengths: {profile.strengths.join(' · ')}</p>
-    <p><em>{profile.funFact}</em> — Build your own nest.</p>
-  </section>
-  <section aria-labelledby="contact-title">
-    <h2 id="contact-title">Collaborate</h2>
-    <p>Open to collaborating on Linux tooling, CLI, AI agents, scientific computing.</p>
-    <ul>
-      {
-        profile.socials.map((s) => (
-          <li>
-            <a href={s.href} target="_blank" rel="noreferrer">
-              {s.label}
-            </a>
-          </li>
-        ))
-      }
-      <li><a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a> — {profile.pronouns}</li>
-    </ul>
-  </section>
-</SectionLayout>
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="home">
+    <Header currentPath="/" />
+    <main id="main-content">
+      <Hero />
+      <ProfileSection />
+      <CurrentlyBuilding />
+      <FeaturedWorlds />
+      <Strengths />
+      <OpenSourceProof />
+      <Contact />
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

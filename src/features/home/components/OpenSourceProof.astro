@@ -1,0 +1,33 @@
+---
+/**
+ * Open-source / community proof — E-09 evidence-based, not stars/forks
+ */
+import Section from '@/shared/components/Section.astro';
+import { openSourceProofs } from '../data/index.js';
+---
+
+<Section
+  id="proof"
+  eyebrow="Proof · evidence over vanity"
+  title="Open source, verified"
+  lead="No vanity metrics. Every claim links to a repo, commit, or org you can inspect — not a star count."
+>
+  <div class="proof__grid">
+    {
+      openSourceProofs.map((proof) => (
+        <article class="proof-card">
+          <h3 class="proof-card__title">{proof.title}</h3>
+          <p class="proof-card__desc">{proof.description}</p>
+          <div class="proof-card__links">
+            {proof.links.map((link) => (
+              <a href={link.href} class="proof-card__link" target="_blank" rel="noreferrer noopener">
+                {link.label} <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+          {proof.note && <p class="proof-card__stats">{proof.note}</p>}
+        </article>
+      ))
+    }
+  </div>
+</Section>

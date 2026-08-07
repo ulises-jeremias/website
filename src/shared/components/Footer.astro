@@ -1,45 +1,26 @@
 ---
-import { projectWorlds } from '@/data/project-worlds';
-import { profile } from '@/data/profile';
+const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-inner">
-    <nav aria-label="Footer">
-      <ul class="footer-links">
-        {
-          projectWorlds.map((w) => (
-            <li>
-              <a href={w.path}>{w.title}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-    <div class="footer-social">
-      {
-        profile.socials.map((s) => (
-          <a href={s.href} target="_blank" rel="noreferrer">
-            {s.label}
-          </a>
-        ))
-      }
-      <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
-    </div>
-    <p>© {new Date().getFullYear()} Ulises Jeremias — Digital Nest.</p>
+<footer class="home-footer" role="contentinfo">
+  <div class="home-footer__inner">
+    <p>© {year} Ulises Jeremias — Built from scratch, like a hornero&apos;s nest. <span aria-hidden="true">🐦</span></p>
+    <ul class="home-footer__links" aria-label="Footer">
+      <li>
+        <a href="https://github.com/ulises-jeremias" class="home-footer__link" target="_blank" rel="noreferrer noopener"
+          >GitHub</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://www.linkedin.com/in/ulisesjcf/"
+          class="home-footer__link"
+          target="_blank"
+          rel="noreferrer noopener">LinkedIn</a
+        >
+      </li>
+      <li><a href="mailto:ulisescf.24@gmail.com" class="home-footer__link">Email</a></li>
+      <li><a href="/blog" class="home-footer__link">Blog</a></li>
+    </ul>
   </div>
 </footer>
-<style>
-  .site-footer {
-    border-top: 1px solid var(--color-border);
-    margin-top: var(--space-12);
-    padding: var(--space-8) var(--space-4);
-  }
-  .footer-links {
-    display: flex;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-  }
-</style>

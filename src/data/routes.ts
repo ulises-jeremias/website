@@ -55,7 +55,7 @@ export const routeMetaSchema = z.object({
   subdomain: z.string().optional(),
 });
 
-export type RouteMeta = z.infer<typeof routeMetaSchema>;
+export type RouteMeta = z.input<typeof routeMetaSchema>;
 
 /**
  * Canonical route table — covers all B-01 preferred paths.
