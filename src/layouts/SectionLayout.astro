@@ -1,0 +1,28 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '@/shared/components/Header.astro';
+import Footer from '@/shared/components/Footer.astro';
+import '@/styles/tokens.css';
+import '@/styles/semantic.css';
+interface Props {
+  title: string;
+  description: string;
+  theme?: string;
+}
+const { title, description, theme } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div data-theme={theme}>
+    <Header />
+    <main id="main" class="section-main"><slot /></main>
+    <Footer />
+  </div>
+</BaseLayout>
+<style>
+  .section-main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+  }
+</style>

@@ -1,0 +1,22 @@
+:root {
+  --semantic-bg: var(--color-bg);
+  --semantic-surface: #fff;
+  --semantic-text: var(--color-text);
+  --semantic-accent: var(--color-clay);
+}
+[data-theme='dotfiles'] {
+  --semantic-accent: #ffb0ca;
+  --semantic-bg: #191114;
+}
+[data-theme='workstation'] {
+  --semantic-accent: #22d3ee;
+  --semantic-bg: #020617;
+}
+[data-theme='toolkit'] {
+  --semantic-accent: #7c3aed;
+  --semantic-bg: #1f2937;
+}
+[data-theme='v'] {
+  --semantic-accent: #4b6c88;
+  --semantic-bg: #202e3b;
+}

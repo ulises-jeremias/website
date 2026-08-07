@@ -1,0 +1,67 @@
+---
+import { projectWorlds } from '@/data/project-worlds';
+import { profile } from '@/data/profile';
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header" role="banner">
+  <nav class="site-nav" aria-label="Primary">
+    <a href="/" class="brand">◉ Ulises Jeremias</a>
+    <ul class="nav-list">
+      {
+        projectWorlds.map((w) => (
+          <li>
+            <a
+              href={w.path}
+              class:list={['nav-link', pathname.startsWith(w.path) ? 'is-active' : '']}
+              aria-current={pathname.startsWith(w.path) ? 'page' : undefined}
+            >
+              {w.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={`mailto:${profile.contact.email}`} class="cta">Collaborate</a>
+  </nav>
+</header>
+<style>
+  .site-header {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--space-4);
+  }
+  .site-nav {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .nav-list {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    color: var(--color-muted);
+    text-decoration: none;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+  .nav-link.is-active,
+  .nav-link:hover {
+    background: var(--color-paper);
+    color: var(--color-text);
+  }
+  .cta {
+    margin-left: auto;
+    background: var(--color-ink);
+    color: white;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+</style>

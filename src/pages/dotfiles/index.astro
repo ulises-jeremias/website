@@ -1,0 +1,37 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+import SmartColors from '@/features/dotfiles/components/SmartColors.astro';
+const meta = getRouteMeta('/dotfiles')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="dotfiles">
+  <section class="world-hero" data-theme="dotfiles">
+    <h1>HorneroConfig — dotfiles</h1>
+    <p>La capa personal del sistema — Hyprland, Quickshell, Smart Colors, chezmoi. Construir el nido, no copiarlo.</p>
+  </section>
+  <SmartColors />
+  <section>
+    <h2>Filosofía</h2>
+    <p>
+      HorneroConfig transforma tu desktop Linux en una obra de funcionalidad y belleza. 13 temas, 100+ scripts <code
+        >dots</code
+      >, seguridad primero, cero mantenimiento con chezmoi.
+    </p>
+    <ul>
+      <li><strong>Chezmoi:</strong> reproducibilidad, <code>chezmoi init --apply ulises-jeremias</code></li>
+      <li><strong>Hyprland + Quickshell:</strong> Wayland, QML shell unificada</li>
+      <li><strong>Smart Colors:</strong> extracción semántica automática</li>
+      <li>
+        <strong>Instalación:</strong>
+        <code
+          >sh -c "$(curl -fsSL
+          https://github.com/ulises-jeremias/dotfiles/blob/main/scripts/install_dotfiles.sh?raw=true)"</code>
+      </li>
+    </ul>
+    <p>
+      <a href="https://github.com/ulises-jeremias/dotfiles" target="_blank" rel="noreferrer">Repositorio dotfiles →</a> ·
+      <a href="https://github.com/ulises-jeremias/dotfiles/wiki" target="_blank" rel="noreferrer">Wiki</a>
+    </p>
+  </section>
+</SectionLayout>

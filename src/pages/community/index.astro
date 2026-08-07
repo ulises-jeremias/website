@@ -1,0 +1,41 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+const meta = getRouteMeta('/community')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="community">
+  <h1>Community — Shared workshop</h1>
+  <p>El taller compartido conectado a los mundos del proyecto.</p>
+  <section>
+    <h2>Discord</h2>
+    <p>
+      <a
+        href="https://discord.gg/bR5VyATgka"
+        target="_blank"
+        rel="noreferrer"
+        style="background:#5865F2; color:white; padding:0.6rem 1rem; border-radius:999px; text-decoration:none;"
+        >Unirse a Discord →</a>
+    </p>
+    <p style="color:var(--color-muted); font-size:0.9rem;">
+      Blurple solo como acento. No se muestran conteos de miembros sin fuente autoritativa refrescable.
+    </p>
+  </section>
+  <section>
+    <h2>Cómo contribuir</h2>
+    <ul>
+      <li><strong>Familias:</strong> Node, Python, V</li>
+      <li><strong>Oportunidades semanales</strong> — issues etiquetados</li>
+      <li><strong>Principiante:</strong> docs, templates, addons pequeños</li>
+      <li><strong>Experimentado:</strong> CLI, scaffolding, pipelines</li>
+      <li>
+        <a
+          href="https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md"
+          target="_blank"
+          rel="noreferrer">Código de Conducta</a
+        > · <a href="https://github.com/ulises-jeremias/dotfiles/wiki" target="_blank" rel="noreferrer">Soporte</a>
+      </li>
+    </ul>
+    <p style="color:var(--color-muted);">Comunidad distinta de empleador. Privacidad y moderación documentadas.</p>
+  </section>
+</SectionLayout>

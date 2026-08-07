@@ -1,0 +1,60 @@
+---
+import { profile } from '@/data/profile';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div>
+    <p class="eyebrow">Digital Nest — Digital workshop · Documentation atlas · Living portfolio</p>
+    <h1 id="hero-title">Ulises Jeremias</h1>
+    <p>{profile.tagline}</p>
+    <p><em>{profile.funFact}</em></p>
+    <div style="display:flex; gap:1rem; margin-top:1rem;">
+      <a
+        href="/agent-toolkit"
+        style="background:var(--color-ink); color:white; padding:0.6rem 1rem; border-radius:999px; text-decoration:none;"
+        >Explore Toolkit</a
+      >
+      <a
+        href="/dotfiles"
+        style="border:1px solid var(--color-border); padding:0.6rem 1rem; border-radius:999px; text-decoration:none;"
+        >Enter Workshop</a
+      >
+    </div>
+  </div>
+  <div aria-hidden="true">
+    <svg viewBox="0 0 400 300" style="width:100%; height:auto;">
+      <ellipse cx="200" cy="150" rx="140" ry="90" fill="none" stroke="var(--color-clay)" opacity="0.3" stroke-width="2"
+      ></ellipse>
+      <ellipse cx="200" cy="150" rx="110" ry="70" fill="none" stroke="var(--color-clay)" opacity="0.5" stroke-width="2"
+      ></ellipse>
+      <ellipse cx="200" cy="150" rx="80" ry="50" fill="none" stroke="var(--color-clay)" opacity="0.7" stroke-width="2"
+      ></ellipse>
+      <circle cx="200" cy="150" r="35" fill="var(--color-ink)"></circle><text
+        x="200"
+        y="155"
+        text-anchor="middle"
+        fill="white"
+        font-size="9">Nest</text
+      >
+    </svg>
+  </div>
+</section>
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--space-8);
+    padding: var(--space-12) 0;
+  }
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--color-moss);
+    letter-spacing: 0.08em;
+  }
+</style>

@@ -1,0 +1,25 @@
+---
+import { projectWorlds } from '@/data/project-worlds';
+---
+
+<section aria-labelledby="worlds-title">
+  <h2 id="worlds-title">Project worlds</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1rem;">
+    {
+      projectWorlds
+        .filter((w) => w.featured)
+        .map((w) => (
+          <a
+            href={w.path}
+            style="display:block; padding:1rem; border:1px solid var(--color-border); border-radius:10px; text-decoration:none; color:inherit; background:var(--color-paper);"
+          >
+            <>
+              <h3>{w.title}</h3>
+              <p style="color:var(--color-muted); font-size:0.9rem;">{w.description}</p>
+              <span>Enter →</span>
+            </>
+          </a>
+        ))
+    }
+  </div>
+</section>
