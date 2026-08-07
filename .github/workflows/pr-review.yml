@@ -28,7 +28,7 @@ jobs:
       - name: Setup Danger Files
         run: |
           echo "Setting up Danger files..."
-          cp tools/danger/dangerfile.ts ./dangerfile.ts
+          cp tools/danger/dangerfile.js ./dangerfile.js
           cp tools/danger/package.json ./danger-package.json
 
       - name: Setup pnpm
