@@ -223,6 +223,6 @@ export const vMeta = {
   accent: '#1e5a8a',
   accentStrong: '#16446a',
   accentLight: '#5b9bd5',
-  accentSubtle: 'color-mix(in srgb, #1e5a8a 7%, var(--color-warm-paper))',
+  accentSubtle: 'var(--world-accent-subtle)',
   quote: 'Simple enough for a Friday afternoon. Fast enough for a production pipeline.',
 };

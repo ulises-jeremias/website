@@ -106,9 +106,9 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     display: inline-flex;
     padding: 0.25rem 0.65rem;
     border-radius: 999px;
-    background: var(--color-clay-muted, #f7f0e6);
-    border: 1px solid var(--color-border, #e9d8c3);
-    color: var(--color-clay-strong, #a14e2f);
+    background: var(--world-accent-subtle);
+    border: 1px solid var(--color-border);
+    color: var(--world-accent);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -121,12 +121,12 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .community-pathways__lead {
     margin: 0.5rem 0 0;
     max-width: 62ch;
-    color: var(--color-text-muted, #3a352f);
+    color: var(--color-text-muted);
     line-height: 1.6;
     font-size: 1rem;
   }
@@ -147,8 +147,8 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     gap: 1rem;
     padding: 1.25rem;
     border-radius: 1rem;
-    background: var(--color-surface, #fff);
-    border: 1px solid var(--color-border, #e9d8c3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     box-shadow: var(--shadow-sm);
   }
   .community-pathway__head {
@@ -162,7 +162,7 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    border: 1px solid var(--color-border, #e9d8c3);
+    border: 1px solid var(--color-border);
   }
   .community-pathway__badge--beginner {
     background: color-mix(in srgb, var(--color-success-bg, #e6f2eb) 70%, white);
@@ -170,8 +170,8 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     border-color: var(--color-success-border, #b7d6c4);
   }
   .community-pathway__badge--experienced {
-    background: var(--color-paper, #f7f0e6);
-    color: var(--color-ink, #181512);
+    background: var(--color-surface);
+    color: var(--color-text);
   }
   .community-pathway__title {
     margin: 0;
@@ -179,17 +179,17 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     font-weight: 750;
     line-height: 1.25;
     letter-spacing: -0.02em;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .community-pathway__desc {
     margin: 0;
-    color: var(--color-text-muted, #3a352f);
+    color: var(--color-text-muted);
     font-size: 0.9rem;
     line-height: 1.5;
   }
   .community-pathway__audience {
     margin: 0;
-    color: var(--color-text-faint, #6b715e);
+    color: var(--color-text-faint);
     font-size: 0.85rem;
     line-height: 1.4;
   }
@@ -212,8 +212,8 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     display: grid;
     place-items: center;
     border-radius: 999px;
-    background: var(--color-ink, #181512);
-    color: var(--color-warm-paper, #f7f0e6);
+    background: var(--world-accent);
+    color: var(--color-text-on-accent);
     font-weight: 750;
     font-size: 0.85rem;
     line-height: 1;
@@ -225,16 +225,16 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
   .community-pathway__step-title {
     font-weight: 700;
     font-size: 0.92rem;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .community-pathway__step-text {
-    color: var(--color-text-muted, #3a352f);
+    color: var(--color-text-muted);
     font-size: 0.88rem;
     line-height: 1.5;
   }
   .community-pathway__step-link {
     justify-self: start;
-    color: var(--color-link, #a14e2f);
+    color: var(--color-link);
     font-weight: 600;
     font-size: 0.85rem;
     text-decoration: none;
@@ -247,7 +247,7 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     text-underline-offset: 3px;
   }
   .community-pathway__step-link:focus-visible {
-    outline: 2px solid var(--color-focus, #a14e2f);
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
     border-radius: 0.25rem;
   }
@@ -260,40 +260,40 @@ import { beginnerPathway, experiencedPathway } from '../data/index.js';
     min-height: 44px;
     padding: 0 1rem;
     border-radius: 999px;
-    background: var(--color-ink, #181512);
-    color: var(--color-warm-paper, #f7f0e6);
+    background: var(--world-accent);
+    color: var(--color-text-on-accent);
     font-weight: 700;
     font-size: 0.92rem;
     text-decoration: none;
-    border: 1px solid var(--color-ink, #181512);
+    border: 1px solid var(--world-accent);
   }
   .community-pathway__cta:hover {
-    background: #2a241f;
-    border-color: #2a241f;
+    background: var(--world-accent-strong);
+    border-color: var(--world-accent-strong);
   }
   .community-pathway__cta:focus-visible {
-    outline: 2px solid var(--color-focus, #181512);
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
   .community-pathway__cta--secondary {
     background: transparent;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .community-pathway__cta--secondary:hover {
-    background: var(--color-paper, #f7f0e6);
-    color: var(--color-ink, #181512);
+    background: var(--color-surface);
+    color: var(--color-text);
   }
   .community-pathways__note {
     margin: 0.9rem 0 0;
-    color: var(--color-text-faint, #6b715e);
+    color: var(--color-text-faint);
     font-size: 0.85rem;
     line-height: 1.5;
   }
   .community-pathways__note code {
     padding: 0.1rem 0.3rem;
     border-radius: 0.3rem;
-    background: var(--color-paper, #f7f0e6);
-    border: 1px solid var(--color-border, #e9d8c3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     font-size: 0.85rem;
   }
   .sr-only {

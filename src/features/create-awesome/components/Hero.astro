@@ -40,7 +40,7 @@ import { familyIntro } from '../data/index.js';
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     margin: 0 0 var(--space-2);
   }
   .ca-hero__title {
@@ -50,13 +50,13 @@ import { familyIntro } from '../data/index.js';
   }
   .ca-hero__lead {
     font-size: 1.05rem;
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     margin: 0 0 var(--space-2);
     max-width: 60ch;
   }
   .ca-hero__principle {
     font-size: 0.95rem;
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     margin: 0;
   }
   .ca-hero__visual {
@@ -82,23 +82,23 @@ import { familyIntro } from '../data/index.js';
     border: 1px solid var(--color-border);
   }
   .ca-hero__chip--amber {
-    background: #fffbeb;
-    border-color: #f59e0b;
-    color: #92400e;
+    background: color-mix(in srgb, var(--nest-sunset-orange) 16%, var(--nest-midnight-900));
+    border-color: color-mix(in srgb, var(--nest-sunset-orange) 45%, transparent);
+    color: var(--nest-sunset-orange);
   }
   .ca-hero__chip--teal {
-    background: #f0fdfa;
-    border-color: #14b8a6;
-    color: #115e59;
+    background: color-mix(in srgb, var(--nest-cyan) 14%, var(--nest-midnight-900));
+    border-color: color-mix(in srgb, var(--nest-cyan) 45%, transparent);
+    color: var(--nest-cyan);
   }
   .ca-hero__chip--ink {
-    background: var(--color-ink, #181512);
-    color: white;
-    border-color: var(--color-ink, #181512);
+    background: var(--world-accent);
+    color: var(--color-text-on-accent);
+    border-color: var(--world-accent-strong);
   }
   .ca-hero__plus,
   .ca-hero__arrow {
     font-weight: 700;
-    color: var(--color-muted);
+    color: var(--color-text-muted);
   }
 </style>

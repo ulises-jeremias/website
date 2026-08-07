@@ -211,9 +211,9 @@ agent-toolkit swarm doctor</code></pre>
     color: #020617;
   }
   .ws-btn--ghost {
-    background: var(--color-paper, #f7f0e6);
-    color: var(--color-ink, #181512);
-    border-color: var(--color-border, #e9d8c3);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
   }
   .ws-hero-code {
     padding: 0.4rem 0.6rem;
@@ -236,20 +236,20 @@ agent-toolkit swarm doctor</code></pre>
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-muted, #6b715e);
+    color: var(--color-text-muted);
   }
   .ws-toc a {
     padding: 0.28rem 0.6rem;
     border-radius: 999px;
-    background: var(--color-paper, #f7f0e6);
-    border: 1px solid var(--color-border, #e9d8c3);
-    color: var(--color-ink, #181512);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
     font-size: 0.8rem;
     font-weight: 600;
     text-decoration: none;
   }
   .ws-toc a:hover {
-    border-color: var(--theme-accent, #1e5a8a);
+    border-color: var(--world-accent);
   }
   .ws-page {
     display: flex;
@@ -267,25 +267,25 @@ agent-toolkit swarm doctor</code></pre>
     font-size: clamp(1.35rem, 3vw, 1.85rem);
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .ws-narrative__lead {
     margin: 0 0 1rem;
-    color: var(--color-muted, #6b715e);
+    color: var(--color-text-muted);
     line-height: 1.65;
     font-size: 0.98rem;
   }
   .ws-narrative__lead strong {
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .ws-narrative__lead code {
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.84rem;
-    background: var(--color-paper, #f7f0e6);
+    background: var(--color-surface);
     padding: 0.1rem 0.3rem;
     border-radius: 0.35rem;
-    border: 1px solid var(--color-border, #e9d8c3);
+    border: 1px solid var(--color-border);
   }
   .ws-facts {
     display: flex;
@@ -297,9 +297,9 @@ agent-toolkit swarm doctor</code></pre>
     grid-template-columns: 160px 1fr;
     gap: 0.75rem;
     padding: 0.65rem 0.75rem;
-    border-radius: 0.75rem;
-    background: var(--color-paper, #f7f0e6);
-    border: 1px solid var(--color-border, #e9d8c3);
+    background: var(--world-surface-tint);
+    border: 1px solid var(--world-border-accent);
+    clip-path: var(--clip-corner-sm);
     font-size: 0.88rem;
     line-height: 1.5;
   }
@@ -313,10 +313,10 @@ agent-toolkit swarm doctor</code></pre>
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-size: 0.72rem;
-    color: var(--theme-accent, #1e5a8a);
+    color: var(--world-accent);
   }
   .ws-fact__v {
-    color: var(--color-muted, #6b715e);
+    color: var(--color-text-muted);
   }
   .ws-diagram-wrap {
     display: flex;
@@ -330,46 +330,47 @@ agent-toolkit swarm doctor</code></pre>
     margin: 0 0 0.35rem;
     font-size: 1rem;
     font-weight: 800;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .ws-diagram-desc {
     margin: 0;
-    color: var(--color-muted, #6b715e);
+    color: var(--color-text-muted);
     font-size: 0.92rem;
     line-height: 1.6;
   }
   .ws-diagram-desc code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.82rem;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .ws-diagram-meta {
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-size: 0.78rem;
   }
   .ws-diagram-meta code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    color: #475569;
+    color: var(--color-text-faint);
   }
   .ws-ctas {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding: 1.25rem;
-    border-radius: 1.25rem;
-    background: var(--color-paper, #f7f0e6);
-    border: 1px solid var(--color-border, #e9d8c3);
+    background: var(--world-surface-tint);
+    border: 1px solid var(--world-border-accent);
+    clip-path: var(--clip-corner-md);
+    box-shadow: var(--effect-glow-soft);
   }
   .ws-ctas__title {
     margin: 0;
     font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .ws-ctas__lead {
     margin: 0;
-    color: var(--color-muted, #6b715e);
+    color: var(--color-text-muted);
     line-height: 1.6;
   }
   .ws-ctas__grid {
@@ -384,20 +385,20 @@ agent-toolkit swarm doctor</code></pre>
   }
   .ws-cta-card {
     padding: 1rem;
-    border-radius: 1rem;
-    background: var(--color-warm-white, #fffdf9);
-    border: 1px solid var(--color-border, #e9d8c3);
-    border-left: 3px solid var(--theme-accent, #1e5a8a);
+    background: var(--color-surface);
+    border: 1px solid var(--world-border-accent);
+    border-left: 3px solid var(--world-accent);
+    clip-path: var(--clip-corner-sm);
   }
   .ws-cta-card--accent {
     border-left-color: #22d3ee;
-    background: #f8fafc;
+    background: var(--world-surface-tint);
   }
   .ws-cta-card__title {
     margin: 0 0 0.5rem;
     font-size: 0.95rem;
     font-weight: 800;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .ws-cta-card__code {
     margin: 0 0 0.55rem;
@@ -418,19 +419,19 @@ agent-toolkit swarm doctor</code></pre>
   }
   .ws-cta-card__desc {
     margin: 0 0 0.6rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     font-size: 0.86rem;
     line-height: 1.5;
   }
   .ws-cta-card__desc code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.78rem;
-    color: #475569;
+    color: var(--color-text-faint);
   }
   .ws-cta-card__link {
     font-size: 0.84rem;
     font-weight: 700;
-    color: var(--theme-accent, #1e5a8a);
+    color: var(--world-accent);
     text-decoration: none;
   }
   .ws-cta-card__link:hover {
@@ -439,13 +440,13 @@ agent-toolkit swarm doctor</code></pre>
   .ws-ctas__foot {
     margin: 0;
     padding-top: 0.75rem;
-    border-top: 1px dashed var(--color-border, #e9d8c3);
-    color: #6b7280;
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
     font-size: 0.78rem;
     line-height: 1.5;
   }
   .ws-ctas__foot code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    color: #475569;
+    color: var(--color-text-faint);
   }
 </style>

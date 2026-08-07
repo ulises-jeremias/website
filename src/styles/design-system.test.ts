@@ -323,6 +323,7 @@ describe('global design system architecture', () => {
     const baseLayout = resolve(sourceDirectory, 'layouts/BaseLayout.astro');
     const indexLayers = [
       'reset.css',
+      'fonts.css',
       'tokens.css',
       'typography.css',
       'spacing.css',
@@ -357,6 +358,7 @@ describe('global design system architecture', () => {
 
     expect(getCssImports(entryPoint)).toEqual([
       './reset.css',
+      './fonts.css',
       './tokens.css',
       './typography.css',
       './spacing.css',
@@ -417,9 +419,9 @@ describe('global design system architecture', () => {
     expect(style).toContain('--hero-muted: var(--color-text-muted);');
     expect(style).toContain('background: var(--color-bg);');
     expect(style).toContain('color: var(--color-text);');
-    expect(style).toContain('border-bottom: 1px solid var(--color-border);');
+    expect(style).toMatch(/border-bottom:\s*1px solid color-mix\(in srgb, var\(--world-accent\)/);
     expect(style).toMatch(
-      /\.section-content\s*\{[\s\S]*?background:\s*var\(--color-surface-inverse\);[\s\S]*?color:\s*var\(--color-text-inverse\);/,
+      /\.section-content\s*\{[\s\S]*?background:\s*var\(--nest-midnight-950\);[\s\S]*?color:\s*var\(--color-text\);/,
     );
     expect(style).not.toMatch(/var\(--color-(?:paper|ink|ink-soft|muted|warm-white)\b/);
   });
@@ -502,7 +504,7 @@ describe('global design system architecture', () => {
     expect(unresolvedVariables).toEqual([]);
   });
 
-  it('classifies current route theme consumers as light-surface usages', async () => {
+  it('classifies current route theme consumers as dark world-surface usages', async () => {
     const [workstationRoute, vRoute, vCard] = await Promise.all([
       readSource('../pages/agentic-workstation/index.astro'),
       readSource('../pages/v/index.astro'),
@@ -510,10 +512,11 @@ describe('global design system architecture', () => {
     ]);
     const currentRouteSources = `${workstationRoute}\n${vRoute}\n${vCard}`;
 
-    expect(currentRouteSources).toMatch(/background:\s*var\(--color-(?:paper|warm-white)/);
-    expect(currentRouteSources).toMatch(/color:\s*var\(--theme-accent-strong/);
-    expect(vRoute).toMatch(/background:\s*var\(--theme-accent/);
-    expect(vRoute).toMatch(/color:\s*white/);
+    expect(currentRouteSources).toMatch(/background:\s*var\(--(?:color-surface|nest-midnight-900|world-surface-tint)/);
+    expect(currentRouteSources).not.toMatch(/background:\s*var\(--color-(?:paper|warm-white)/);
+    expect(currentRouteSources).toMatch(/color:\s*var\(--(?:color-text|world-accent)/);
+    expect(vRoute).toMatch(/background:\s*var\(--world-accent/);
+    expect(vRoute).toMatch(/color:\s*var\(--color-text-on-accent/);
   });
 
   it('uses the legacy theme contract for current global theme utilities', async () => {
@@ -570,10 +573,18 @@ describe('global design system architecture', () => {
     });
   }
 
-  it('uses delivered system-stack variables in legacy route styles', async () => {
-    const [blog, cna] = await Promise.all([readSource('./blog.css'), readSource('./cna-landing.css')]);
+  it('uses delivered identity fonts through CSS variables', async () => {
+    const [blog, cna, typography, fonts] = await Promise.all([
+      readSource('./blog.css'),
+      readSource('./cna-landing.css'),
+      readSource('./typography.css'),
+      readSource('./fonts.css'),
+    ]);
 
-    expect(`${blog}\n${cna}`).not.toMatch(/\b(?:Inter|JetBrains Mono)\b/);
+    expect(fonts).toContain("font-family: 'Orbitron'");
+    expect(fonts).toContain("font-family: 'JetBrains Mono'");
+    expect(typography).toContain("'Orbitron'");
+    expect(typography).toContain("'JetBrains Mono'");
     expect(blog).toMatch(/\.blog-page\s*\{[\s\S]*?font-family:\s*var\(--font-sans\);/);
     expect(cna).toMatch(/\.cna-landing\s*\{[\s\S]*?font-family:\s*var\(--font-sans\);/);
     expect(cna).toMatch(/\.cna-landing__code\s*\{[\s\S]*?font-family:\s*var\(--font-mono\);/);

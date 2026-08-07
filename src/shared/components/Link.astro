@@ -38,13 +38,13 @@ const target = isExternal ? '_blank' : undefined;
 const rel = isExternal ? 'noopener noreferrer' : undefined;
 
 const base =
-  'link inline-flex items-center gap-1 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-accent,#181512)] rounded-sm';
+  'link inline-flex items-center gap-1 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-focus)] rounded-sm';
 
 const variants: Record<string, string> = {
   default:
-    'text-[var(--color-link,#B85C38)] hover:text-[var(--color-link-hover,#8a4428)] underline decoration-[var(--color-border,#E9D8C3)] hover:decoration-current',
-  subtle: 'text-[var(--color-ink,#181512)] hover:text-[var(--color-link,#B85C38)] no-underline hover:underline',
-  nav: 'text-[var(--color-ink,#181512)] no-underline hover:text-[var(--color-link,#B85C38)] font-medium aria-[current=page]:text-[var(--color-link,#B85C38)] aria-[current=page]:underline',
+    'text-[var(--color-link)] hover:text-[var(--color-link-hover)] underline decoration-[var(--color-border)] hover:decoration-current',
+  subtle: 'text-[var(--color-text)] hover:text-[var(--color-link)] no-underline hover:underline',
+  nav: 'text-[var(--color-text)] no-underline hover:text-[var(--color-link)] font-medium aria-[current=page]:text-[var(--color-link)] aria-[current=page]:underline',
 };
 
 const classes = cn(base, variants[variant], className);

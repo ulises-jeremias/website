@@ -135,13 +135,41 @@ const pagePath = currentPath ?? Astro.url.pathname;
     }
   }
 
-  /* Hero */
   .section-hero {
-    background: var(--hero-bg);
-    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background:
+      radial-gradient(
+        ellipse 70% 50% at 12% 0%,
+        color-mix(in srgb, var(--world-accent) 16%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 90% 10%,
+        color-mix(in srgb, var(--world-accent-secondary) 12%, transparent),
+        transparent 55%
+      ),
+      var(--nest-midnight-950);
+    border-bottom: 1px solid color-mix(in srgb, var(--world-accent) 28%, transparent);
+  }
+
+  .section-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.28;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--nest-cyan) 5%, transparent) 0 1px,
+      transparent 1px 3px
+    );
   }
 
   .section-hero__inner {
+    position: relative;
+    z-index: 1;
     max-width: var(--content-max);
     margin: 0 auto;
     padding: var(--hero-pad-y) var(--content-pad);
@@ -157,28 +185,32 @@ const pagePath = currentPath ?? Astro.url.pathname;
   }
 
   .section-hero__eyebrow {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--hero-muted);
+    color: var(--world-accent-secondary, var(--nest-cyan));
+    text-shadow: 0 0 12px color-mix(in srgb, var(--world-accent-secondary, var(--nest-cyan)) 40%, transparent);
     margin: 0 0 0.75rem 0;
   }
 
   .section-hero__title {
-    font-size: clamp(1.875rem, 5vw, 2.5rem);
+    font-family: var(--font-display);
+    font-size: clamp(1.875rem, 5vw, 3rem);
     font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    color: var(--hero-fg);
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--nest-paper);
     margin: 0;
     overflow-wrap: break-word;
   }
 
   .section-hero__description {
-    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
     line-height: 1.6;
-    color: var(--hero-muted);
+    color: var(--color-text-muted);
     margin: 0.75rem 0 0 0;
     max-width: 42rem;
   }
@@ -191,8 +223,8 @@ const pagePath = currentPath ?? Astro.url.pathname;
   /* Content */
   .section-content {
     flex: 1;
-    background: var(--color-surface-inverse);
-    color: var(--color-text-inverse);
+    background: var(--nest-midnight-950);
+    color: var(--color-text);
   }
 
   .section-layout--immersive .section-content {

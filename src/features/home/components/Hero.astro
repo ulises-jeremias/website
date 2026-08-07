@@ -1,8 +1,11 @@
 ---
 import { profile } from '@/data/profile.js';
-import { heroKeywords } from '../data/index.js';
-import DigitalNestMark from '@/shared/components/DigitalNestMark.astro';
+import { heroKeywords, terminalQuote } from '../data/index.js';
 import SynthwaveEnvironment from './SynthwaveEnvironment.astro';
+
+const [firstName, ...restName] = profile.displayName.split(' ');
+const lastName = restName.join(' ');
+const keywordRows = [heroKeywords.slice(0, 3), heroKeywords.slice(3)] as const;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -10,41 +13,75 @@ import SynthwaveEnvironment from './SynthwaveEnvironment.astro';
 
   <div class="hero__stage">
     <div class="hero__identity">
-      <p class="hero__nest-mark" aria-hidden="true">
-        <DigitalNestMark />
-      </p>
-      <p class="hero__wordmark">— DIGITAL NEST —</p>
       <h1 id="hero-title" class="hero__name">
-        <span class="hero__name-line">{profile.displayName.split(' ')[0]}</span>
-        <span class="hero__name-line hero__name-line--accent">{profile.displayName.split(' ').slice(1).join(' ')}</span>
+        <span class="hero__name-line">{firstName}</span>
+        <span class="hero__name-line hero__name-line--accent">{lastName}</span>
       </h1>
+
+      <div class="hero__nest-divider" aria-hidden="true">
+        <span class="hero__nest-rule"></span>
+        <span class="hero__wordmark text-glow-primary">DIGITAL NEST</span>
+        <span class="hero__nest-rule"></span>
+      </div>
+
       <p class="hero__role">{profile.title}</p>
-      <p class="hero__summary">{profile.summary}</p>
-      <p class="hero__keywords">
+      <p class="hero__summary">
+        Solutions Architect. Open Source Maintainer.
+        <br />
+        Builder of Developer Tooling &amp; AI Workflows.
+      </p>
+
+      <div class="hero__keywords" role="list">
         {
-          heroKeywords.map((keyword, index) => (
-            <>
-              {index > 0 && (
-                <span class="hero__keyword-sep" aria-hidden="true">
-                  /
-                </span>
-              )}
-              <span>{keyword}</span>
-            </>
+          keywordRows.map((row) => (
+            <p class="hero__keyword-row" role="listitem">
+              {row.map((keyword, index) => (
+                <>
+                  {index > 0 && (
+                    <span class="hero__keyword-sep" aria-hidden="true">
+                      •
+                    </span>
+                  )}
+                  <span>{keyword}</span>
+                </>
+              ))}
+            </p>
           ))
         }
-      </p>
+      </div>
+
       <div class="hero__actions">
-        <a class="hero__cta hero__cta--primary" href="#project-atlas">Explore the atlas</a>
-        <a class="hero__cta hero__cta--secondary" href={profile.links.github} target="_blank" rel="noopener noreferrer">
-          GitHub
+        <a class="hero__cta hero__cta--primary neon-frame clip-corner-sm" href="#project-atlas">
+          <svg class="hero__cta-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2.5" y="4" width="19" height="16" rx="2" stroke="currentColor" stroke-width="1.6"></rect>
+            <path d="m7 10 2.5 2L7 14M12.5 15h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            ></path>
+          </svg>
+          Explore Projects
         </a>
-        <a class="hero__cta hero__cta--secondary" href={`mailto:${profile.contact.email}`}>Collaborate</a>
+        <a
+          class="hero__cta hero__cta--secondary clip-corner-sm"
+          href={profile.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="hero__cta-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path
+              d="M12 1.8a10.2 10.2 0 0 0-3.23 19.88c.51.1.7-.22.7-.44v-1.7c-2.84.62-3.44-1.2-3.44-1.2-.46-1.19-1.13-1.5-1.13-1.5-.93-.64.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.9 1.56 2.37 1.11 2.95.85.09-.66.35-1.11.64-1.37-2.27-.26-4.65-1.14-4.65-5.06 0-1.12.4-2.03 1.06-2.75-.11-.26-.46-1.3.1-2.71 0 0 .86-.28 2.82 1.05a9.7 9.7 0 0 1 5.14 0c1.96-1.33 2.82-1.05 2.82-1.05.56 1.41.21 2.45.1 2.71.66.72 1.06 1.63 1.06 2.75 0 3.93-2.39 4.8-4.67 5.05.36.32.68.94.68 1.9v2.81c0 .22.19.55.71.44A10.2 10.2 0 0 0 12 1.8Z"
+            ></path>
+          </svg>
+          View on GitHub
+        </a>
       </div>
       <p class="hero__location">{profile.location}</p>
     </div>
 
     <div class="hero__atlas-slot">
+      <blockquote class="hero__quote neon-frame clip-corner">
+        <span class="hero__quote-prompt" aria-hidden="true">&gt;</span>
+        {terminalQuote}
+        <footer class="hero__quote-footer" aria-hidden="true">—</footer>
+      </blockquote>
       <slot name="atlas" />
     </div>
   </div>

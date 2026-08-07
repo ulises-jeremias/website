@@ -1,4 +1,23 @@
+---
+/**
+ * ZIP hero plate + CSS atmosphere layers.
+ * Plate supplies striped sun, palms, city, constellation; CSS reinforces
+ * readability gradients, scanlines, and perspective grid fade under content.
+ */
+---
+
 <div class="synthwave-environment" aria-hidden="true">
+  <img
+    class="synthwave-environment__plate"
+    src="/assets/nest/hero-bg.webp"
+    width="1920"
+    height="1080"
+    alt=""
+    decoding="async"
+    fetchpriority="high"
+  />
+  <div class="synthwave-environment__veil"></div>
+  <div class="synthwave-environment__scanlines scanlines"></div>
   <div class="synthwave-environment__stars"></div>
   <div class="synthwave-environment__haze"></div>
   <div class="synthwave-environment__sun"></div>
@@ -39,4 +58,5 @@
 
   <div class="synthwave-environment__grid"></div>
   <div class="synthwave-environment__horizon"></div>
+  <div class="synthwave-environment__floor-fade"></div>
 </div>

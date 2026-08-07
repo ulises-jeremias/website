@@ -9,6 +9,8 @@ export type AtlasWorld = {
   theme: string;
   accent: WorldAccent;
   illustration: WorldIllustration;
+  /** ZIP island art basename under /assets/nest/ (without extension). */
+  island: string;
   relatedWorlds: string[];
 };
 
@@ -18,7 +20,10 @@ export type NestStatusItem = {
   tone: 'magenta' | 'cyan' | 'violet' | 'muted';
 };
 
-export type FeaturedProjectRow = Pick<AtlasWorld, 'id' | 'title' | 'description' | 'path' | 'accent' | 'illustration'>;
+export type FeaturedProjectRow = Pick<
+  AtlasWorld,
+  'id' | 'title' | 'description' | 'path' | 'accent' | 'illustration' | 'island'
+>;
 
 export type ContactLink = {
   label: string;

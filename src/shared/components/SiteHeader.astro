@@ -21,10 +21,20 @@ const emailHref = `mailto:${profile.contact.email}`;
   <div class="site-header__inner">
     <a href="/" class="site-header__brand" aria-label="Digital Nest — Ulises Jeremias, home">
       <span class="site-header__mark">
-        <DigitalNestMark />
+        <img
+          class="site-header__logo art-fade"
+          src="/assets/nest/logo-nest.webp"
+          width="56"
+          height="56"
+          alt=""
+          decoding="async"
+        />
+        <span class="site-header__mark-fallback">
+          <DigitalNestMark />
+        </span>
       </span>
       <span class="site-header__identity">
-        <strong>Digital Nest</strong>
+        <strong class="text-glow-primary">Digital Nest</strong>
         <span>by Ulises Jeremias</span>
       </span>
     </a>
@@ -126,9 +136,21 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   .site-header__mark {
-    inline-size: 2.5rem;
-    block-size: 2.5rem;
-    filter: drop-shadow(0 0 0.75rem color-mix(in srgb, var(--nest-magenta) 32%, transparent));
+    position: relative;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+  }
+
+  .site-header__logo {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  .site-header__mark-fallback {
+    display: none;
   }
 
   .site-header__identity {
@@ -137,9 +159,11 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   .site-header__identity strong {
+    font-family: var(--font-display);
     font-size: var(--text-sm);
-    letter-spacing: 0.13em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
+    color: var(--nest-magenta);
   }
 
   .site-header__identity span {
@@ -147,6 +171,7 @@ const emailHref = `mailto:${profile.contact.email}`;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
     font-size: 0.62rem;
+    letter-spacing: 0.16em;
   }
 
   .site-header__desktop-nav {
@@ -196,6 +221,18 @@ const emailHref = `mailto:${profile.contact.email}`;
     inset-inline: 0;
   }
 
+  .site-header__link.is-active {
+    color: var(--nest-magenta);
+    text-shadow:
+      0 0 8px color-mix(in srgb, var(--nest-magenta) 55%, transparent),
+      0 0 18px color-mix(in srgb, var(--nest-magenta) 30%, transparent);
+  }
+
+  .site-header__link.is-active::after {
+    background: var(--nest-magenta);
+    box-shadow: 0 0 10px 2px var(--nest-magenta);
+  }
+
   .site-header__utilities {
     display: flex;
     align-items: center;
@@ -205,13 +242,18 @@ const emailHref = `mailto:${profile.contact.email}`;
   .site-header__github {
     display: none;
     place-items: center;
-    inline-size: var(--touch-min);
-    block-size: var(--touch-min);
-    color: var(--color-text-muted);
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    color: var(--nest-cyan);
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 25%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 40%, transparent);
+    border-radius: 0.15rem;
   }
 
   .site-header__github:hover {
     color: var(--nest-cyan);
+    border-color: color-mix(in srgb, var(--nest-cyan) 60%, transparent);
+    box-shadow: 0 0 14px -2px var(--nest-cyan);
   }
 
   .site-header__github svg {

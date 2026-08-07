@@ -39,11 +39,77 @@
   box-shadow: var(--effect-glow-active);
 }
 
+/* ZIP neon shell utilities */
+.neon-frame {
+  border: 1px solid color-mix(in srgb, var(--nest-magenta) 45%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--nest-magenta) 10%, transparent),
+    0 0 18px -4px color-mix(in srgb, var(--nest-magenta) 45%, transparent),
+    inset 0 0 24px -12px color-mix(in srgb, var(--nest-magenta) 40%, transparent);
+  background: color-mix(in srgb, var(--nest-midnight-950) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.neon-frame-accent {
+  border: 1px solid color-mix(in srgb, var(--nest-cyan) 45%, transparent);
+  box-shadow:
+    0 0 18px -4px color-mix(in srgb, var(--nest-cyan) 45%, transparent),
+    inset 0 0 24px -12px color-mix(in srgb, var(--nest-cyan) 40%, transparent);
+  background: color-mix(in srgb, var(--nest-midnight-950) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.text-glow-primary {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--nest-magenta) 70%, transparent),
+    0 0 24px color-mix(in srgb, var(--nest-magenta) 45%, transparent);
+}
+
+.text-glow-accent {
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--nest-cyan) 70%, transparent),
+    0 0 22px color-mix(in srgb, var(--nest-cyan) 40%, transparent);
+}
+
+.art-fade {
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(closest-side, #000 55%, transparent 92%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 92%);
+}
+
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--nest-cyan) 6%, transparent) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+.clip-corner {
+  clip-path: var(--clip-corner-md);
+}
+
+.clip-corner-sm {
+  clip-path: var(--clip-corner-sm);
+}
+
 @media (forced-colors: active) {
   :root {
     --effect-glow-soft: none;
     --effect-glow-accent: none;
     --effect-glow-active: none;
     --focus-glow: none;
+  }
+
+  .neon-frame,
+  .neon-frame-accent {
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .art-fade {
+    mix-blend-mode: normal;
+    mask-image: none;
+    -webkit-mask-image: none;
   }
 }
