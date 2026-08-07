@@ -46,19 +46,19 @@ All other preferred segments are accepted as-is.
 
 ## Route table
 
-| Path | Purpose | Content source | Owner | Future subdomain candidate | Canonical helper needs |
-| --- | --- | --- | --- | --- | --- |
-| `/` | Digital Nest — homepage, hero, world switcher, featured entry points | `src/features/home`, `src/data/project-worlds.ts` | Ulises | `ulises.dev` (apex) | `canonicalUrl('/', site)` |
-| `/dotfiles` | HorneroConfig — personal operating layer (Hyprland, Quickshell, Smart Colors, chezmoi) | `src/features/dotfiles`, `src/content/dotfiles` (future) | Ulises | `dotfiles.ulises.dev` | `canonicalUrl('/dotfiles', site)`, section helper |
-| `/agentic-workstation` | Agentic Workstation — thin provisioning that delegates to Toolkit | `src/features/workstation` (G) | Ulises | `workstation.ulises.dev` | canonical + delegation banner link to `/agent-toolkit` |
-| `/agent-toolkit` | Agent Toolkit — `agent-toolkit` CLI: skills, agents, loops, swarms, Herdr/tmux | `src/features/toolkit` (future) | Ulises | `agents.ulises.dev` or `toolkit.ulises.dev` | canonical + CLI install snippet source |
-| `/v` | V ecosystem — `v`, `vsl`, `vtl`, `rxv`, `setup-v`, awesome-v | `src/features/v` | Ulises / V community | `v.ulises.dev` | canonical + sub-world anchors (`/v#vsl`) |
-| `/create-awesome` | Create Awesome family — `create-node-app`, `create-python-app`, `create-vlang-app` + catalog `cna-templates` | `src/features/create-awesome` | Ulises / Create Awesome org | `create.ulises.dev` | canonical + external catalog links |
-| `/community` | Shared workshop — Discord, contribution paths, collaboration | `src/features/community` | Ulises | `community.ulises.dev` | canonical + external Discord invite (verify reachable) |
-| `/blog` | Writing desk — index of field notes | `src/content/blog` (collection), `src/features/blog` | Ulises | `blog.ulises.dev` | canonical + feed (`/rss.xml` future) + pagination helper |
-| `/blog/[slug]` | Blog post — dynamic detail route | `src/content/blog/*.md` via `getCollection('blog')` | Ulises | (same host as `/blog`) | `canonicalUrl('/blog/${slug}', site)` per post |
-| `/projects` | Curated additional & archived projects (non-world projects) | `src/data/projects.ts` (future) | Ulises | (stays on apex — catalog view) | canonical + filter query helper |
-| `/open-source` | Evidence-based OSS contributions — owned, maintained, external PRs | `src/data/open-source.ts` (future, sourced from inventory A-02) | Ulises | (stays on apex — aggregated view) | canonical + external GitHub links (noindex for duplicates) |
+| Path                   | Purpose                                                                                                      | Content source                                                  | Owner                       | Future subdomain candidate                  | Canonical helper needs                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- | --------------------------- | ------------------------------------------- | ---------------------------------------------------------- |
+| `/`                    | Digital Nest — homepage, hero, world switcher, featured entry points                                         | `src/features/home`, `src/data/project-worlds.ts`               | Ulises                      | `ulises.dev` (apex)                         | `canonicalUrl('/', site)`                                  |
+| `/dotfiles`            | HorneroConfig — personal operating layer (Hyprland, Quickshell, Smart Colors, chezmoi)                       | `src/features/dotfiles`, `src/content/dotfiles` (future)        | Ulises                      | `dotfiles.ulises.dev`                       | `canonicalUrl('/dotfiles', site)`, section helper          |
+| `/agentic-workstation` | Agentic Workstation — thin provisioning that delegates to Toolkit                                            | `src/features/workstation` (G)                                  | Ulises                      | `workstation.ulises.dev`                    | canonical + delegation banner link to `/agent-toolkit`     |
+| `/agent-toolkit`       | Agent Toolkit — `agent-toolkit` CLI: skills, agents, loops, swarms, Herdr/tmux                               | `src/features/toolkit` (future)                                 | Ulises                      | `agents.ulises.dev` or `toolkit.ulises.dev` | canonical + CLI install snippet source                     |
+| `/v`                   | V ecosystem — `v`, `vsl`, `vtl`, `rxv`, `setup-v`, awesome-v                                                 | `src/features/v`                                                | Ulises / V community        | `v.ulises.dev`                              | canonical + sub-world anchors (`/v#vsl`)                   |
+| `/create-awesome`      | Create Awesome family — `create-node-app`, `create-python-app`, `create-vlang-app` + catalog `cna-templates` | `src/features/create-awesome`                                   | Ulises / Create Awesome org | `create.ulises.dev`                         | canonical + external catalog links                         |
+| `/community`           | Shared workshop — Discord, contribution paths, collaboration                                                 | `src/features/community`                                        | Ulises                      | `community.ulises.dev`                      | canonical + external Discord invite (verify reachable)     |
+| `/blog`                | Writing desk — index of field notes                                                                          | `src/content/blog` (collection), `src/features/blog`            | Ulises                      | `blog.ulises.dev`                           | canonical + feed (`/rss.xml` future) + pagination helper   |
+| `/blog/[slug]`         | Blog post — dynamic detail route                                                                             | `src/content/blog/*.md` via `getCollection('blog')`             | Ulises                      | (same host as `/blog`)                      | `canonicalUrl('/blog/${slug}', site)` per post             |
+| `/projects`            | Curated additional & archived projects (non-world projects)                                                  | `src/data/projects.ts` (future)                                 | Ulises                      | (stays on apex — catalog view)              | canonical + filter query helper                            |
+| `/open-source`         | Evidence-based OSS contributions — owned, maintained, external PRs                                           | `src/data/open-source.ts` (future, sourced from inventory A-02) | Ulises                      | (stays on apex — aggregated view)           | canonical + external GitHub links (noindex for duplicates) |
 
 ### Notes on the table
 
@@ -74,15 +74,15 @@ All other preferred segments are accepted as-is.
 
 ## Alternatives considered
 
-| Alternative | Why rejected |
-| --- | --- |
-| `/hornero-config` as canonical for dotfiles | Breaks existing GitHub search (`dotfiles`), repo name `ulises-jeremias/dotfiles`, and chezmoi install mnemonic. Display label remains HorneroConfig. |
-| `/workstation` short form | Ambiguous (workstation could refer to any machine). Explicit `agentic-workstation` matches repo `agentic-workstation` and differentiates from dotfiles. |
-| `/toolkit` short form | Collides with generic term; `agent-toolkit` is the npm/Cargo package name. |
-| `/open-source` → `/contributions` or `/oss` | `contributions` conflates owned vs external PRs; `oss` is jargon. `open-source` is explicit and matches nav label. |
-| `/labs` or `/workshop` for community | Less discoverable than `community`; external Discord branding uses *Create Awesome Discord* and *community* as verb. |
-| Nested `/projects/dotfiles` | Hides worlds behind a catalog hub; worlds must be top-level for direct linking and future subdomain mapping. |
-| Locale-prefixed `/en/...` or versioned `/v2/...` | Out of scope for single-language personal site; introduce only if i18n required. |
+| Alternative                                      | Why rejected                                                                                                                                            |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/hornero-config` as canonical for dotfiles      | Breaks existing GitHub search (`dotfiles`), repo name `ulises-jeremias/dotfiles`, and chezmoi install mnemonic. Display label remains HorneroConfig.    |
+| `/workstation` short form                        | Ambiguous (workstation could refer to any machine). Explicit `agentic-workstation` matches repo `agentic-workstation` and differentiates from dotfiles. |
+| `/toolkit` short form                            | Collides with generic term; `agent-toolkit` is the npm/Cargo package name.                                                                              |
+| `/open-source` → `/contributions` or `/oss`      | `contributions` conflates owned vs external PRs; `oss` is jargon. `open-source` is explicit and matches nav label.                                      |
+| `/labs` or `/workshop` for community             | Less discoverable than `community`; external Discord branding uses _Create Awesome Discord_ and _community_ as verb.                                    |
+| Nested `/projects/dotfiles`                      | Hides worlds behind a catalog hub; worlds must be top-level for direct linking and future subdomain mapping.                                            |
+| Locale-prefixed `/en/...` or versioned `/v2/...` | Out of scope for single-language personal site; introduce only if i18n required.                                                                        |
 
 ## Subdomain migration strategy
 
@@ -96,15 +96,15 @@ All other preferred segments are accepted as-is.
 
 ### Candidate matrix
 
-| World | Subdomain candidate | Priority | Notes |
-| --- | --- | --- | --- |
-| dotfiles | `dotfiles.ulises.dev` | P1 | Highest standalone audience; frequent external links from GitHub README |
-| blog | `blog.ulises.dev` | P1 | Standard pattern; RSS/feed benefits |
-| agent-toolkit | `agents.ulises.dev` or `toolkit.ulises.dev` | P2 | `agents` is shorter; `toolkit` matches package name — decide at migration time |
-| agentic-workstation | `workstation.ulises.dev` | P2 | Thin; likely stays on apex longer |
-| V ecosystem | `v.ulises.dev` | P2 | May stay aggregated at `/v` unless V docs warrant split |
-| create-awesome | `create.ulises.dev` | P2 | Create Awesome has separate marketing site today — keep apex until consolidation |
-| community | `community.ulises.dev` | P3 | Social hub — stays apex initially |
+| World               | Subdomain candidate                         | Priority | Notes                                                                            |
+| ------------------- | ------------------------------------------- | -------- | -------------------------------------------------------------------------------- |
+| dotfiles            | `dotfiles.ulises.dev`                       | P1       | Highest standalone audience; frequent external links from GitHub README          |
+| blog                | `blog.ulises.dev`                           | P1       | Standard pattern; RSS/feed benefits                                              |
+| agent-toolkit       | `agents.ulises.dev` or `toolkit.ulises.dev` | P2       | `agents` is shorter; `toolkit` matches package name — decide at migration time   |
+| agentic-workstation | `workstation.ulises.dev`                    | P2       | Thin; likely stays on apex longer                                                |
+| V ecosystem         | `v.ulises.dev`                              | P2       | May stay aggregated at `/v` unless V docs warrant split                          |
+| create-awesome      | `create.ulises.dev`                         | P2       | Create Awesome has separate marketing site today — keep apex until consolidation |
+| community           | `community.ulises.dev`                      | P3       | Social hub — stays apex initially                                                |
 
 ### Enablers (implemented or planned)
 
@@ -132,9 +132,9 @@ All other preferred segments are accepted as-is.
 ## Validation
 
 - [x] Walk through 3 audience JTBD:
-  - *New user discovering dotfiles* → lands `/` → clicks Dotfiles → `/dotfiles` → install flow (`chezmoi init ulises-jeremias/dotfiles`).
-  - *Toolkit user adding a skill* → lands `/agent-toolkit` → skills catalog → `/agent-toolkit/skills` (future nested) — path does not assume subdomain.
-  - *V contributor exploring RxV* → lands `/v` → sub-world anchor `/v#rxv` → external GitHub — no host assumption.
+  - _New user discovering dotfiles_ → lands `/` → clicks Dotfiles → `/dotfiles` → install flow (`chezmoi init ulises-jeremias/dotfiles`).
+  - _Toolkit user adding a skill_ → lands `/agent-toolkit` → skills catalog → `/agent-toolkit/skills` (future nested) — path does not assume subdomain.
+  - _V contributor exploring RxV_ → lands `/v` → sub-world anchor `/v#rxv` → external GitHub — no host assumption.
 - [x] No path assumes single deployment — all helpers use `canonicalUrl(path, site)`.
 - [x] Astro collision check: none of the 10 paths conflict with `/_astro`, `/api`, or collection slugs.
 
@@ -146,6 +146,6 @@ All other preferred segments are accepted as-is.
 
 ## History
 
-| Date | Change |
-| --- | --- |
+| Date       | Change                                      |
+| ---------- | ------------------------------------------- |
 | 2026-08-07 | Initial acceptance — preferred IA validated |

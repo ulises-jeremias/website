@@ -19,17 +19,17 @@ Primary sources:
 
 ## World labels (from B-02)
 
-| Priority | id | Label | Path |
-| --- | --- | --- | --- |
-| 10 | dotfiles | Dotfiles | `/dotfiles` |
-| 20 | workstation | Workstation | `/agentic-workstation` |
-| 30 | toolkit | Toolkit | `/agent-toolkit` |
-| 40 | v | V | `/v` |
-| 50 | create-awesome | Create Awesome | `/create-awesome` |
-| 60 | community | Community | `/community` |
-| 70 | blog | Blog | `/blog` |
-| 80 | projects | Projects | `/projects` |
-| 90 | open-source | Open Source | `/open-source` |
+| Priority | id             | Label          | Path                   |
+| -------- | -------------- | -------------- | ---------------------- |
+| 10       | dotfiles       | Dotfiles       | `/dotfiles`            |
+| 20       | workstation    | Workstation    | `/agentic-workstation` |
+| 30       | toolkit        | Toolkit        | `/agent-toolkit`       |
+| 40       | v              | V              | `/v`                   |
+| 50       | create-awesome | Create Awesome | `/create-awesome`      |
+| 60       | community      | Community      | `/community`           |
+| 70       | blog           | Blog           | `/blog`                |
+| 80       | projects       | Projects       | `/projects`            |
+| 90       | open-source    | Open Source    | `/open-source`         |
 
 Home (`/`) is the brand link, not a world. Nav shows worlds in priority order.
 
@@ -55,21 +55,21 @@ Home (`/`) is the brand link, not a world. Nav shows worlds in priority order.
 
 ### Breakpoints
 
-| Viewport | Behavior |
-| --- | --- |
-| ≥1440px | All spacing at `--space-4`, nav gap `--space-4`, brand + 7 visible + More + CTA |
-| 1024–1439px | Same, but CTA may collapse to icon-only on narrow 1024 if needed |
-| 768–1023px | Hide secondary labels? No — keep 5 visible + More. Use CSS `flex-wrap` only as fallback. |
+| Viewport    | Behavior                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------- |
+| ≥1440px     | All spacing at `--space-4`, nav gap `--space-4`, brand + 7 visible + More + CTA          |
+| 1024–1439px | Same, but CTA may collapse to icon-only on narrow 1024 if needed                         |
+| 768–1023px  | Hide secondary labels? No — keep 5 visible + More. Use CSS `flex-wrap` only as fallback. |
 
 ### States
 
-| State | Visual | Non-color affordance |
-| --- | --- | --- |
-| Default | `color: var(--color-muted)`, no background | — |
-| Hover | `color: var(--color-text)`, `background: var(--color-paper)` soft | background change + underline on hover (not color-only) |
-| Active (`aria-current="page"`) | `color: var(--color-text)`, `background: var(--color-paper)`, `box-shadow: inset 0 -2px 0 var(--color-accent)` | underline (2px solid) + `aria-current` |
-| Focus | `outline: 2px solid var(--color-focus)` , `outline-offset: 2px` | outline always visible, no `:focus { outline:none }` |
-| Pressed | same as hover, slight scale 0.98 | — |
+| State                          | Visual                                                                                                         | Non-color affordance                                    |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Default                        | `color: var(--color-muted)`, no background                                                                     | —                                                       |
+| Hover                          | `color: var(--color-text)`, `background: var(--color-paper)` soft                                              | background change + underline on hover (not color-only) |
+| Active (`aria-current="page"`) | `color: var(--color-text)`, `background: var(--color-paper)`, `box-shadow: inset 0 -2px 0 var(--color-accent)` | underline (2px solid) + `aria-current`                  |
+| Focus                          | `outline: 2px solid var(--color-focus)` , `outline-offset: 2px`                                                | outline always visible, no `:focus { outline:none }`    |
+| Pressed                        | same as hover, slight scale 0.98                                                                               | —                                                       |
 
 All states respect `prefers-reduced-motion: reduce` — no transition, instant.
 
@@ -140,33 +140,33 @@ Open (drawer from right, 85% width, backdrop):
 
 ### Breakpoints
 
-| Viewport | Behavior |
-| --- | --- |
-| 375px (iPhone) | Drawer 85% / 320px max, backdrop 15%, all touch targets ≥44px |
-| 360px (Android small) | Same, drawer scrolls internally if height overflows |
+| Viewport              | Behavior                                                      |
+| --------------------- | ------------------------------------------------------------- |
+| 375px (iPhone)        | Drawer 85% / 320px max, backdrop 15%, all touch targets ≥44px |
+| 360px (Android small) | Same, drawer scrolls internally if height overflows           |
 
 ### Open / closed states
 
-| State | DOM | Animation |
-| --- | --- | --- |
-| Closed | `hidden` attribute on drawer, `aria-expanded="false"` on trigger, backdrop hidden | — |
-| Opening | Remove `hidden`, set `aria-expanded="true"`, add `is-open` class | `transform: translateX(0)` with `transition: transform 240ms cubic-bezier(0.16,1,0.3,1)` |
-| Open | `aria-expanded="true"`, drawer focus on first link or Close button | — |
-| Closing | `is-closing` class, `transform: translateX(100%)` | same transition reversed |
-| Reduced motion | No transform, instant show/hide | `@media (prefers-reduced-motion: reduce) { transition: none }` |
+| State          | DOM                                                                               | Animation                                                                                |
+| -------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Closed         | `hidden` attribute on drawer, `aria-expanded="false"` on trigger, backdrop hidden | —                                                                                        |
+| Opening        | Remove `hidden`, set `aria-expanded="true"`, add `is-open` class                  | `transform: translateX(0)` with `transition: transform 240ms cubic-bezier(0.16,1,0.3,1)` |
+| Open           | `aria-expanded="true"`, drawer focus on first link or Close button                | —                                                                                        |
+| Closing        | `is-closing` class, `transform: translateX(100%)`                                 | same transition reversed                                                                 |
+| Reduced motion | No transform, instant show/hide                                                   | `@media (prefers-reduced-motion: reduce) { transition: none }`                           |
 
 No layout shift: drawer uses `position: fixed`, `inset: 0`, `transform` only (no width/height reflow).
 
 ### Interaction
 
-| Input | Behavior |
-| --- | --- |
-| Tap hamburger | Toggle drawer, trap focus inside drawer |
-| Tap backdrop | Close drawer, return focus to trigger |
-| Tap link | Navigate, close drawer |
-| Swipe (future) | Optional swipe-to-close, not required for B-04 |
-| ESC | Close drawer, return focus to trigger, remove trap |
-| Focus Tab / Shift+Tab | Cycle within drawer when open (trap) |
+| Input                 | Behavior                                           |
+| --------------------- | -------------------------------------------------- |
+| Tap hamburger         | Toggle drawer, trap focus inside drawer            |
+| Tap backdrop          | Close drawer, return focus to trigger              |
+| Tap link              | Navigate, close drawer                             |
+| Swipe (future)        | Optional swipe-to-close, not required for B-04     |
+| ESC                   | Close drawer, return focus to trigger, remove trap |
+| Focus Tab / Shift+Tab | Cycle within drawer when open (trap)               |
 
 ### Accessibility (mobile)
 

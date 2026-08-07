@@ -22,13 +22,7 @@ export const routeThemeSchema = z.enum([
 
 export type RouteTheme = z.infer<typeof routeThemeSchema>;
 
-export const structuredDataTypeSchema = z.enum([
-  'WebSite',
-  'CollectionPage',
-  'BlogPosting',
-  'ProfilePage',
-  'ItemList',
-]);
+export const structuredDataTypeSchema = z.enum(['WebSite', 'CollectionPage', 'BlogPosting', 'ProfilePage', 'ItemList']);
 
 export const routeMetaSchema = z.object({
   id: z.string().min(1),
@@ -78,8 +72,7 @@ export const routes: RouteMeta[] = [
     id: 'dotfiles',
     path: '/dotfiles',
     title: 'HorneroConfig — Dotfiles & Workstation OS',
-    description:
-      'HorneroConfig: reproducible operating layer — Hyprland, Quickshell, Smart Colors, chezmoi.',
+    description: 'HorneroConfig: reproducible operating layer — Hyprland, Quickshell, Smart Colors, chezmoi.',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'dotfiles',
@@ -214,8 +207,7 @@ export function getSiteUrl(explicit?: string): string {
   const astroSite = (import.meta.env.SITE as string | undefined)?.replace(/\/$/, '');
   if (astroSite) return astroSite;
   const envUrl =
-    (typeof process !== 'undefined' &&
-      (process.env.PUBLIC_SITE_URL ?? process.env.SITE ?? process.env.URL)) ||
+    (typeof process !== 'undefined' && (process.env.PUBLIC_SITE_URL ?? process.env.SITE ?? process.env.URL)) ||
     undefined;
   if (envUrl) return envUrl.replace(/\/$/, '');
   return DEFAULT_SITE_URL;

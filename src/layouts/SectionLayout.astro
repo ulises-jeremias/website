@@ -36,17 +36,7 @@ export interface Props {
   ogImage?: string;
 }
 
-const {
-  title,
-  description,
-  world,
-  theme,
-  hero,
-  currentPath,
-  canonical,
-  noIndex,
-  ogImage,
-} = Astro.props as Props;
+const { title, description, world, theme, hero, currentPath, canonical, noIndex, ogImage } = Astro.props as Props;
 
 const canonicalUrl = canonical ?? getCanonicalUrl(currentPath ?? Astro.url.pathname);
 const themeAttr = theme ?? world ?? 'home';
@@ -70,7 +60,11 @@ const pagePath = currentPath ?? Astro.url.pathname;
     {
       hero && (
         <section
-          class:list={['section-hero', `section-hero--${hero.align ?? 'left'}`, `section-hero--${hero.variant ?? 'default'}`]}
+          class:list={[
+            'section-hero',
+            `section-hero--${hero.align ?? 'left'}`,
+            `section-hero--${hero.variant ?? 'default'}`,
+          ]}
           aria-labelledby="hero-title"
         >
           <div class="section-hero__inner">
