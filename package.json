@@ -27,7 +27,8 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "astro": "^7.2.0"
+    "astro": "^7.2.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "eslint-plugin-jsx-a11y": "^6.10.2",

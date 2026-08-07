@@ -1,0 +1,41 @@
+# Verified profile — mirror of src/data/profile.ts (Zod-validated at build)
+# Source: https://github.com/ulises-jeremias — README.md (2026-08-07)
+name: Ulises Jeremias
+displayName: Ulises Jeremias
+pronouns: He/Him
+title: Solutions Architect @ NaNLABS
+location: La Plata, Buenos Aires, Argentina
+bio: Solutions Architect at NaNLABS, Core Team Member at V, and AUR Maintainer. I build developer tooling, AI-powered workflows, CLI apps, and infrastructure automation — mostly in TypeScript, Go, Shell, and Python.
+summary: 'I help teams ship reliable tooling: from workstation foundations (HorneroConfig) and AI workspaces to scientific libraries for the V language and community-driven CLIs.'
+roles:
+  - label: Solutions Architect
+    organization: NaNLABS
+    href: https://github.com/nanlabs
+    icon: 🏢
+  - label: Core Team Member
+    organization: V Language
+    href: https://github.com/vlang
+    icon: 🦄
+  - label: AUR Maintainer
+    organization: Arch User Repository
+    href: https://aur.archlinux.org/account/ulises-jeremias
+    icon: 📦
+  - label: Open Source Enthusiast
+    icon: 🌱
+links:
+  github: https://github.com/ulises-jeremias
+  linkedin: https://www.linkedin.com/in/ulisesjcf/
+  email: ulisescf.24@gmail.com
+  discord: https://discord.gg/bR5VyATgka
+  twitter: https://twitter.com/ulisesjcf
+focusAreas:
+  - Linux tooling & workstation automation
+  - CLI apps & composable Node/Python/V tooling
+  - AI agents, skills, and agentic workstations
+  - Scientific computing (VSL, VTL)
+languages:
+  - TypeScript
+  - Go
+  - Shell
+  - Python
+  - V

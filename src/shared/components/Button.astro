@@ -1,0 +1,78 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md';
+  external?: boolean;
+  ariaLabel?: string;
+}
+
+const { href, variant = 'primary', size = 'md', external = false, ariaLabel } = Astro.props as Props;
+const klass = ['home-button', `home-button--${variant}`, `home-button--${size}`].join(' ');
+const rel = external ? 'noreferrer noopener' : undefined;
+const target = external ? '_blank' : undefined;
+---
+
+{
+  href ? (
+    <a href={href} class={klass} rel={rel} target={target} aria-label={ariaLabel}>
+      <slot />
+    </a>
+  ) : (
+    <button type="button" class={klass} aria-label={ariaLabel}>
+      <slot />
+    </button>
+  )
+}
+<style>
+  .home-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 0.7rem 1.15rem;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+    cursor: pointer;
+  }
+  .home-button--primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .home-button--primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  .home-button--secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .home-button--secondary:hover {
+    background: var(--surface-raised);
+    transform: translateY(-1px);
+  }
+  .home-button--ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border-color: var(--border);
+  }
+  .home-button--ghost:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+  }
+  .home-button--sm {
+    padding: 0.5rem 0.9rem;
+    font-size: var(--text-xs);
+  }
+</style>

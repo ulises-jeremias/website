@@ -1,0 +1,173 @@
+/* Tokens — Umbrella brand and design system (Epic C) — Digital Nest
+   Global + semantic + section-theme tokens.
+   Palette hypothesis: Warm paper #F7F0E6, Soft sand #E9D8C3, Clay #B85C38,
+   Copper #D99058, Deep ink #181512, Cool sky #7CB7C9, Moss #6B715E, Warm white #FFFDF9
+   All light values meet WCAG AA on warm white; dark flips via prefers-color-scheme.
+*/
+
+:root {
+  /* Global primitives */
+  --color-paper: #f7f0e6;
+  --color-sand: #e9d8c3;
+  --color-clay: #b85c38;
+  --color-clay-deep: #8a3a1e;
+  --color-copper: #d99058;
+  --color-ink: #181512;
+  --color-ink-soft: #2b241f;
+  --color-sky: #7cb7c9;
+  --color-sky-deep: #3a7a8c;
+  --color-moss: #6b715e;
+  --color-moss-deep: #3f4436;
+  --color-white: #fffdf9;
+  --color-white-elevated: #ffffff;
+
+  /* Semantic — light (default) */
+  --bg: var(--color-white);
+  --bg-subtle: var(--color-paper);
+  --surface: var(--color-white-elevated);
+  --surface-raised: var(--color-paper);
+  --surface-sand: #fdf6eb;
+  --text: var(--color-ink);
+  --text-muted: #57534e;
+  --text-faint: #78716c;
+  --border: var(--color-sand);
+  --border-strong: #d6b89a;
+  --accent: var(--color-clay);
+  --accent-hover: var(--color-clay-deep);
+  --accent-soft: #fdf0e6;
+  --accent-copper: var(--color-copper);
+  --accent-sky: var(--color-sky-deep);
+  --accent-moss: var(--color-moss-deep);
+  --focus: var(--color-sky-deep);
+  --code-bg: #1c1917;
+  --code-text: #f5f5f4;
+  --shadow-sm: 0 1px 2px 0 rgb(24 21 18 / 0.06);
+  --shadow-md: 0 4px 12px -2px rgb(24 21 18 / 0.08), 0 2px 6px -2px rgb(24 21 18 / 0.06);
+  --shadow-lg: 0 12px 32px -8px rgb(24 21 18 / 0.12), 0 4px 12px -4px rgb(24 21 18 / 0.08);
+  --shadow-glow: 0 0 40px -12px rgba(184, 92, 56, 0.18);
+  --glow-paper: rgba(184, 92, 56, 0.08);
+  --glow-sky: rgba(124, 183, 201, 0.12);
+
+  /* Typography — warm editorial + mono */
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-display: Fraunces, Newsreader, Georgia, serif;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: clamp(2rem, 5vw, 3.25rem);
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.25;
+  --leading-normal: 1.65;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.03em;
+  --tracking-snug: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.08em;
+
+  /* Spacing & layout */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --container-max: 1120px;
+  --container-narrow: 720px;
+  --container-wide: 1280px;
+  --section-padding-y: clamp(2.5rem, 6vw, 5rem);
+  --section-padding-x: clamp(1rem, 4vw, 2rem);
+  --grid-gap: clamp(1rem, 2vw, 1.5rem);
+  --header-height: 64px;
+
+  /* Shape & illustration language — nest arcs, woven lines, modular tiles */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 1.75rem;
+  --radius-pill: 999px;
+
+  --border-width: 1px;
+  --border-width-strong: 1.5px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* Section theme accents — shared rhythm, varying accent */
+  --theme-accent: var(--accent);
+  --theme-accent-soft: var(--accent-soft);
+  --theme-illustration: var(--color-copper);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0d0b;
+    --bg-subtle: #1a1612;
+    --surface: #1e1a16;
+    --surface-raised: #252019;
+    --surface-sand: #252019;
+    --text: #fdf6eb;
+    --text-muted: #a8a29e;
+    --text-faint: #78716c;
+    --border: #3a2e24;
+    --border-strong: #4a3d2f;
+    --accent: #e8a87c;
+    --accent-hover: #f0b994;
+    --accent-soft: rgba(184, 92, 56, 0.18);
+    --accent-copper: #e8a87c;
+    --accent-sky: #7cb7c9;
+    --accent-moss: #a8b5a0;
+    --focus: #7cb7c9;
+    --code-bg: #1c1917;
+    --code-text: #f5f5f4;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.4), 0 2px 6px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.5), 0 4px 12px -4px rgb(0 0 0 / 0.4);
+    --shadow-glow: 0 0 40px -12px rgba(232, 168, 124, 0.12);
+    --glow-paper: rgba(232, 168, 124, 0.08);
+    --glow-sky: rgba(124, 183, 201, 0.08);
+  }
+}
+
+/* Legacy CNA aliases — map to new tokens for pages still using cna-* */
+:root {
+  --cna-bg: var(--bg);
+  --cna-surface: var(--surface);
+  --cna-surface-elevated: var(--surface-raised);
+  --cna-text: var(--text);
+  --cna-text-muted: var(--text-muted);
+  --cna-border: var(--border);
+  --cna-amber: var(--accent);
+  --cna-amber-soft: var(--accent-copper);
+  --cna-amber-dark: var(--color-clay-deep);
+  --cna-teal: var(--accent-sky);
+  --cna-glow: var(--glow-paper);
+  --cna-shadow-sm: var(--shadow-sm);
+  --cna-shadow-md: var(--shadow-md);
+  --cna-shadow-lg: var(--shadow-lg);
+  --cna-shadow-glow: var(--shadow-glow);
+}

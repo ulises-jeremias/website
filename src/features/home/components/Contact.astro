@@ -1,0 +1,76 @@
+---
+/**
+ * Contact & collaboration CTA — E-11 / E-12
+ * Verified GH, LinkedIn, email, Discord.
+ */
+import Section from '@/shared/components/Section.astro';
+import { contactLinks } from '../data/index.js';
+import { profile } from '@/data/profile';
+---
+
+<Section
+  id="contact"
+  eyebrow="Contact · let’s collaborate"
+  title="Open to collaborating"
+  lead="Linux tooling, CLI apps, AI agents, and science computing — if you build in those worlds, I’d love to compare notes."
+>
+  <div class="contact">
+    <div class="contact__card">
+      <h3 class="contact__title">Reach me</h3>
+      <p class="contact__lead">
+        The fastest way is email or Discord. For code, open an issue on any repo — I review every one.
+      </p>
+      <div class="contact__links">
+        {
+          contactLinks.map((link) => (
+            <a
+              href={link.href}
+              class="contact__link"
+              target="_blank"
+              rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer noopener'}
+            >
+              <span class="contact__link-icon" aria-hidden="true">
+                {link.icon}
+              </span>
+              <span>
+                <span class="contact__link-label">{link.label}</span>
+                <br />
+                <span class="contact__link-hint">{link.hint}</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="contact__cta" aria-labelledby="contact-cta-title">
+      <h3 id="contact-cta-title" class="contact__cta-title">Collaboration CTA</h3>
+      <p class="contact__cta-text">
+        Have an idea that needs a workstation, a CLI, or a scientific library? I help teams ship the first reliable
+        version and the docs that keep it alive.
+      </p>
+      <ul
+        style="margin:0 0 var(--space-4);padding-left:1.2rem;color:rgba(255,255,255,0.9);font-size:var(--text-sm);line-height:var(--leading-relaxed);"
+      >
+        <li>Advisory on reproducible workstations & dotfiles</li>
+        <li>CLI / toolkit architecture and reviews</li>
+        <li>AI workspace & agentic harness setup</li>
+        <li>V scientific computing — VSL / VTL</li>
+      </ul>
+      <div class="contact__cta-actions">
+        <a href={`mailto:${profile.links.email}`} class="contact__cta-button"
+          >Email me <span aria-hidden="true">→</span></a
+        >
+        <a
+          href={profile.links.discord}
+          class="contact__cta-button contact__cta-button--ghost"
+          target="_blank"
+          rel="noreferrer noopener">Join Discord</a
+        >
+      </div>
+      <p style="margin-top:var(--space-4);color:rgba(255,255,255,0.7);font-size:var(--text-xs);">
+        Response time: usually within 24h — or open a GH issue for async.
+      </p>
+    </div>
+  </div>
+</Section>
