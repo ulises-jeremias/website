@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: Begin CI...
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: TODO to Issue
-        uses: alstr/todo-to-issue-action@v5.1.10
+        uses: alstr/todo-to-issue-action@v5.1.15
         id: todo
         with:
           INSERT_ISSUE_URLS: 'true'
