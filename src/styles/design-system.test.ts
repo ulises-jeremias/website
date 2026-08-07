@@ -594,7 +594,8 @@ describe('global design system architecture', () => {
     const home = await readSource('./home.css');
 
     expect(home).not.toMatch(/@media\s*\(prefers-color-scheme:\s*light\)/);
-    expect(home).toContain('.synthwave-environment__sun');
+    expect(home).toContain('.synthwave-environment__plate');
+    expect(home).toContain('object-position: center 38%');
     expect(home).toContain('.project-atlas__worlds');
     expect(home).toContain('.atlas-world:focus-visible');
     expect(home).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);

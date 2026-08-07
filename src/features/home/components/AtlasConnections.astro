@@ -1,80 +1,25 @@
 ---
-import { atlasWorlds } from '../data/index.js';
-import { crossLinks } from '@/data/project-worlds.js';
-
 /**
- * Approximate atlas coordinates (percent of the 100×100 connection plane).
- * Kept in sync with `.atlas-world` grid placement in home.css.
+ * ZIP constellation: dashed cyan links across the 3-column project-world grid.
+ * Coordinates match the digital-nest-portfolio mock (viewBox 600×460).
  */
-const positions: Record<string, { x: number; y: number }> = {
-  hub: { x: 50, y: 46 },
-  dotfiles: { x: 16, y: 16 },
-  workstation: { x: 50, y: 12 },
-  toolkit: { x: 84, y: 18 },
-  v: { x: 12, y: 48 },
-  'create-awesome': { x: 88, y: 48 },
-  community: { x: 22, y: 78 },
-  blog: { x: 42, y: 86 },
-  projects: { x: 64, y: 82 },
-  'open-source': { x: 86, y: 74 },
-};
-
-const worldIds = new Set(atlasWorlds.map((world) => world.id));
-
-const edges = [
-  ...crossLinks
-    .filter((link) => worldIds.has(link.from) && worldIds.has(link.to))
-    .map((link) => ({ from: link.from, to: link.to, label: link.label })),
-  ...atlasWorlds.flatMap((world) =>
-    world.relatedWorlds
-      .filter((related) => worldIds.has(related))
-      .map((related) => ({
-        from: world.id,
-        to: related,
-        label: `${world.title} ↔ ${related}`,
-      })),
-  ),
-];
-
-const uniqueEdges = edges.filter((edge, index, list) => {
-  const key = [edge.from, edge.to].sort().join('::');
-  return list.findIndex((candidate) => [candidate.from, candidate.to].sort().join('::') === key) === index;
-});
 ---
 
-<svg class="atlas-connections" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-  {
-    uniqueEdges.map((edge) => {
-      const from = positions[edge.from] ?? positions.hub;
-      const to = positions[edge.to] ?? positions.hub;
-      const midX = (from.x + to.x) / 2;
-      const midY = (from.y + to.y) / 2 - 4;
-      const d = `M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}`;
-
-      return (
-        <path
-          class="atlas-connection"
-          d={d}
-          data-from={edge.from}
-          data-to={edge.to}
-          data-connects={`${edge.from} ${edge.to}`}
-        />
-      );
-    })
-  }
-
-  {
-    atlasWorlds.map((world) => {
-      const point = positions[world.id] ?? positions.hub;
-      return (
-        <path
-          class="atlas-connection atlas-connection--hub"
-          d={`M ${positions.hub.x} ${positions.hub.y} L ${point.x} ${point.y}`}
-          data-from="hub"
-          data-to={world.id}
-          data-connects={`hub ${world.id}`}
-        />
-      );
-    })
-  }
+<svg
+  class="atlas-connections"
+  viewBox="0 0 600 460"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  focusable="false"
+  fill="none"
+>
+  <g class="atlas-connections__group">
+    <path class="atlas-connection" d="M110 90 L300 120 L490 155" data-connects="dotfiles workstation toolkit"></path>
+    <path class="atlas-connection" d="M60 210 L300 230 L520 250" data-connects="v hub create-awesome"></path>
+    <path class="atlas-connection" d="M110 90 L60 210 L120 355" data-connects="dotfiles v community"></path>
+    <path class="atlas-connection" d="M490 155 L520 250 L470 370" data-connects="toolkit create-awesome open-source"
+    ></path>
+    <path class="atlas-connection" d="M120 355 L300 380 L470 370" data-connects="community projects open-source"></path>
+    <path class="atlas-connection" d="M300 120 L300 230 L300 380" data-connects="workstation hub projects"></path>
+  </g>
 </svg>

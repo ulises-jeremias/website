@@ -2,6 +2,9 @@
 import { atlasWorlds } from '../data/index.js';
 import AtlasConnections from './AtlasConnections.astro';
 import ProjectWorld from './ProjectWorld.astro';
+
+/** ZIP staggered Y offsets cycling across the 3-column grid. */
+const offsetClasses = ['atlas-world--rise', 'atlas-world--mid', 'atlas-world--drop'] as const;
 ---
 
 <section id="project-atlas" class="project-atlas" aria-labelledby="project-atlas-title">
@@ -11,16 +14,17 @@ import ProjectWorld from './ProjectWorld.astro';
       <p id="project-atlas-title" class="project-atlas__eyebrow text-glow-accent">Project Worlds</p>
       <span class="project-atlas__label-rule project-atlas__label-rule--flip" aria-hidden="true"></span>
     </div>
-    <p class="project-atlas__lede">
-      Floating mini-environments on a connected atlas. Each island is a real route — hover or focus to illuminate its
-      edges.
-    </p>
+    <span class="project-atlas__chevron" aria-hidden="true"></span>
   </header>
 
   <div class="project-atlas__stage">
     <AtlasConnections />
     <div class="project-atlas__worlds">
-      {atlasWorlds.map((world) => <ProjectWorld world={world} />)}
+      {
+        atlasWorlds.map((world, index) => (
+          <ProjectWorld world={world} offsetClass={offsetClasses[index % offsetClasses.length]} />
+        ))
+      }
     </div>
   </div>
 </section>

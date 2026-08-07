@@ -21,14 +21,21 @@ const emailHref = `mailto:${profile.contact.email}`;
   <div class="site-header__inner">
     <a href="/" class="site-header__brand" aria-label="Digital Nest — Ulises Jeremias, home">
       <span class="site-header__mark">
-        <img
-          class="site-header__logo art-fade"
-          src="/assets/nest/logo-nest.webp"
-          width="56"
-          height="56"
-          alt=""
-          decoding="async"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/assets/nest/logo-nest-sm.webp 112w, /assets/nest/logo-nest.webp 256w"
+            sizes="44px"
+          />
+          <img
+            class="site-header__logo art-fade"
+            src="/assets/logo-nest.png"
+            width="56"
+            height="56"
+            alt=""
+            decoding="async"
+          />
+        </picture>
         <span class="site-header__mark-fallback">
           <DigitalNestMark />
         </span>
@@ -75,6 +82,24 @@ const emailHref = `mailto:${profile.contact.email}`;
       <MobileNav items={navigation} githubHref={profile.links.github} emailHref={emailHref} />
     </div>
   </div>
+
+  <nav class="site-header__compact-nav" aria-label="Primary (compact)">
+    <ul>
+      {
+        navigation.map((item) => (
+          <li>
+            <a
+              href={item.path}
+              class:list={[{ 'is-active': item.isActive }]}
+              aria-current={item.isActive ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 </header>
 
 <style>
@@ -126,6 +151,43 @@ const emailHref = `mailto:${profile.contact.email}`;
     margin-inline: auto;
   }
 
+  .site-header__compact-nav {
+    display: none;
+    inline-size: min(calc(100% - 2 * var(--gutter)), var(--container-full));
+    margin: 0 auto;
+    padding-block: 0 0.65rem;
+  }
+
+  .site-header__compact-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0 0.15rem 0.15rem;
+    list-style: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .site-header__compact-nav a {
+    display: inline-flex;
+    white-space: nowrap;
+    color: color-mix(in srgb, var(--nest-paper) 70%, transparent);
+    font-size: 0.8125rem;
+    text-decoration: none;
+  }
+
+  .site-header__compact-nav a:hover {
+    color: var(--nest-cyan);
+  }
+
+  .site-header__compact-nav a.is-active {
+    color: var(--nest-magenta);
+    text-shadow:
+      0 0 8px color-mix(in srgb, var(--nest-magenta) 55%, transparent),
+      0 0 18px color-mix(in srgb, var(--nest-magenta) 30%, transparent);
+  }
+
   .site-header__brand {
     display: inline-flex;
     align-items: center;
@@ -139,6 +201,12 @@ const emailHref = `mailto:${profile.contact.email}`;
     position: relative;
     inline-size: 2.75rem;
     block-size: 2.75rem;
+  }
+
+  .site-header__mark picture {
+    position: absolute;
+    inset: 0;
+    display: block;
   }
 
   .site-header__logo {
@@ -269,6 +337,12 @@ const emailHref = `mailto:${profile.contact.email}`;
     .site-header__desktop-nav,
     .site-header__github {
       display: grid;
+    }
+  }
+
+  @media (width < 860px) {
+    .site-header__compact-nav {
+      display: block;
     }
   }
 

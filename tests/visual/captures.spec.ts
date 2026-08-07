@@ -27,8 +27,8 @@ const captures: Array<{ path: string; name: string; width: number; height: numbe
   { path: '/projects', name: 'routes/projects', width: 390, height: 844 },
   { path: '/open-source', name: 'routes/open-source', width: 1440, height: 1100 },
   { path: '/open-source', name: 'routes/open-source', width: 390, height: 844 },
-  { path: '/missing-page-for-404', name: 'routes/404', width: 1440, height: 1100 },
-  { path: '/missing-page-for-404', name: 'routes/404', width: 390, height: 844 },
+  { path: '/404.html', name: 'routes/404', width: 1440, height: 1100 },
+  { path: '/404.html', name: 'routes/404', width: 390, height: 844 },
 ];
 
 test('capture ZIP-fidelity final screenshots', async ({ page }) => {
@@ -38,7 +38,8 @@ test('capture ZIP-fidelity final screenshots', async ({ page }) => {
 
   for (const shot of captures) {
     await page.setViewportSize({ width: shot.width, height: shot.height });
-    await page.goto(shot.path, { waitUntil: 'networkidle' });
+    await page.goto(shot.path, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(200);
     const file = path.join(outDir, `${shot.name}-${shot.width}.png`);
     await mkdir(path.dirname(file), { recursive: true });
     await page.screenshot({ path: file, fullPage: Boolean(shot.fullPage) });

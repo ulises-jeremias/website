@@ -3,9 +3,10 @@ import type { AtlasWorld } from '../types/index.js';
 
 export interface Props {
   world: AtlasWorld;
+  offsetClass?: string;
 }
 
-const { world } = Astro.props as Props;
+const { world, offsetClass = '' } = Astro.props as Props;
 const accentTokens = {
   magenta: 'var(--nest-magenta)',
   pink: 'var(--nest-pink)',
@@ -16,43 +17,32 @@ const accentTokens = {
 } as const;
 const islandSrc = `/assets/nest/${world.island}.webp`;
 const islandSrcSm = `/assets/nest/${world.island}-sm.webp`;
+const islandPng = `/assets/${world.island}.png`;
 const frameClass = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-frame-accent' : 'neon-frame';
 ---
 
 <a
   href={world.path}
-  class:list={['atlas-world', frameClass]}
+  class:list={['atlas-world', frameClass, offsetClass]}
   style={`--world-color: ${accentTokens[world.accent]}`}
   data-world-id={world.id}
   data-related-worlds={world.relatedWorlds.join(' ')}
   aria-label={`${world.number} — ${world.title}: ${world.description}`}
 >
-  <span class="atlas-world__platform" aria-hidden="true">
-    <span class="atlas-world__glow"></span>
-    <span class="atlas-world__base atlas-world__base--lower"></span>
-    <span class="atlas-world__base atlas-world__base--mid"></span>
-    <span class="atlas-world__deck"></span>
-  </span>
+  <span class="atlas-world__number">{world.number}</span>
+  <strong class="atlas-world__title">{world.title}</strong>
+  <span class="atlas-world__description">{world.description}</span>
 
-  <span class="atlas-world__body">
-    <span class="atlas-world__copy">
-      <span class="atlas-world__number">{world.number}</span>
-      <strong>{world.title}</strong>
-      <span class="atlas-world__description">{world.description}</span>
-    </span>
-
-    <span class="atlas-world__visual">
-      <img
-        class="atlas-world__island art-fade"
-        src={islandSrcSm}
-        srcset={`${islandSrcSm} 480w, ${islandSrc} 960w`}
-        sizes="(max-width: 640px) 96px, 128px"
-        width="220"
-        height="220"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-    </span>
-  </span>
+  <picture class="atlas-world__visual">
+    <source type="image/webp" srcset={`${islandSrcSm} 256w, ${islandSrc} 512w`} sizes="88px" />
+    <img
+      class="atlas-world__island art-fade"
+      src={islandPng}
+      width="220"
+      height="220"
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
 </a>

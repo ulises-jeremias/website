@@ -42,27 +42,27 @@ describe('Synthwave Systems Atlas homepage', () => {
     const environment = await readSource('features/home/components/SynthwaveEnvironment.astro');
 
     expect(environment).toContain('hero-bg.webp');
-    expect(environment).toContain('synthwave-environment__sun');
-    expect(environment).toContain('synthwave-environment__grid');
-    expect(environment).toContain('synthwave-environment__mountains');
-    expect(environment).toContain('synthwave-environment__skyline');
+    expect(environment).toContain('synthwave-environment__veil');
+    expect(environment).toContain('synthwave-environment__scanlines');
+    expect(environment).toContain('synthwave-environment__floor-fade');
     expect(environment).toContain('aria-hidden="true"');
   });
 
-  it('renders all canonical worlds as floating platforms with ZIP island art', async () => {
+  it('renders all canonical worlds as ZIP-style island cards with constellation overlay', async () => {
     const atlas = await readSource('features/home/components/ProjectAtlas.astro');
     const world = await readSource('features/home/components/ProjectWorld.astro');
 
     expect(atlas).toContain('atlasWorlds');
     expect(atlas).toContain('<AtlasConnections');
     expect(atlas).toContain('<ProjectWorld');
+    expect(atlas).toContain('project-atlas__chevron');
     expect(atlas).not.toContain('<WorldIllustration');
     expect(world).toContain('data-world-id');
     expect(world).toContain('href={world.path}');
     expect(world).toContain('data-related-worlds');
-    expect(world).toContain('atlas-world__platform');
     expect(world).toContain('/assets/nest/');
     expect(world).toContain('art-fade');
+    expect(world).toContain('atlas-world__island');
   });
 
   it('keeps original SVG illustration vocabulary available for non-atlas uses', async () => {
@@ -92,17 +92,27 @@ describe('Synthwave Systems Atlas homepage', () => {
     ).join('\n');
 
     expect(evidence).toContain('nestStatus');
+    expect(evidence).toContain('nest-status__spark');
     expect(evidence).toContain("from '@/data/profile");
     expect(evidence).toContain('featuredProjectLedger');
     expect(evidence).not.toMatch(/commits|stars|downloads|coffee|generated portrait/i);
+    expect(evidence).not.toMatch(/avatar\.png|placeholder-user/i);
   });
 
-  it('recomposes the atlas for mobile and reduced motion', async () => {
-    const styles = await readSource('styles/home.css');
+  it('applies chrome-text and recomposes the atlas for mobile and reduced motion', async () => {
+    const [styles, effects, hero] = await Promise.all([
+      readSource('styles/home.css'),
+      readSource('styles/effects.css'),
+      readSource('features/home/components/Hero.astro'),
+    ]);
 
+    expect(hero).toContain('chrome-text');
+    expect(effects).toContain('.chrome-text');
     expect(styles).toMatch(/@media\s*\(width\s*<\s*768px\)/);
     expect(styles).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
     expect(styles).toContain('.project-atlas__worlds');
     expect(styles).toContain('.atlas-world:focus-visible');
+    expect(styles).toContain('atlas-world--drop');
+    expect(styles).toContain('object-position: center 38%');
   });
 });

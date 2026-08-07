@@ -28,7 +28,9 @@ const accentTokens = {
             <span class="featured-ledger__mark clip-corner-sm" aria-hidden="true">
               <img
                 class="art-fade"
-                src={`/assets/nest/${row.island}-sm.webp`}
+                src={`/assets/${row.island}.png`}
+                srcset={`/assets/nest/${row.island}-sm.webp 320w, /assets/nest/${row.island}.webp 640w`}
+                sizes="40px"
                 width="40"
                 height="40"
                 alt=""
