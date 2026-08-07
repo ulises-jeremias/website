@@ -1,0 +1,804 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import {
+  DotfilesNarrative,
+  LayersDiagram,
+  ScreenshotGallery,
+  SmartColorsAnimation,
+  licenseEntries,
+} from '@/features/dotfiles';
+import '@/styles/dotfiles.css';
+
+const pageTitle = 'HorneroConfig — dotfiles framework · ulises-jeremias';
+const pageDescription =
+  'HorneroConfig: framework de dotfiles Hyprland + Quickshell + Kitty + Zsh + chezmoi. Smart Colors, 13 rices, 100+ scripts dots-*. Instalacion en un comando. Plum #191114 / pink #FFB0CA.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="dotfiles-page">
+    <a href="#contenido" class="dotfiles-skip">Saltar al contenido</a>
+
+    <header class="dotfiles-hero" role="banner">
+      <nav class="dotfiles-hero__nav" aria-label="Navegacion principal">
+        <a href="/" class="dotfiles-hero__brand" aria-label="Volver al inicio">
+          <span class="dotfiles-hero__brand-mark" aria-hidden="true">◉</span>
+          <span>ulises-jeremias</span>
+        </a>
+        <div class="dotfiles-hero__nav-links">
+          <a href="/" class="dotfiles-hero__nav-link">Inicio</a>
+          <a href="/blog" class="dotfiles-hero__nav-link">Blog</a>
+          <a
+            href="https://github.com/ulises-jeremias/dotfiles"
+            class="dotfiles-hero__nav-link dotfiles-hero__nav-link--external"
+            target="_blank"
+            rel="noreferrer">dotfiles ↗</a
+          >
+        </div>
+      </nav>
+
+      <div class="dotfiles-hero__main">
+        <div class="dotfiles-hero__copy">
+          <p class="dotfiles-hero__eyebrow">Epic F · HorneroConfig · dotfiles framework</p>
+          <h1 class="dotfiles-hero__title">
+            <span class="dotfiles-hero__title-accent">Hornero</span>Config
+          </h1>
+          <p class="dotfiles-hero__subtitle">
+            El framework que construye tu nido digital. <strong>Hyprland + Quickshell + Kitty + Zsh</strong> orquestados por
+            <strong>chezmoi</strong> y <strong>100+ scripts dots-*</strong>. Smart Colors adapta cada pixel de tu
+            wallpaper a todo el escritorio.
+          </p>
+
+          <div class="dotfiles-hero__badges" role="list" aria-label="Badges del proyecto">
+            <span class="dotfiles-hero__badge" role="listitem">MIT · 2019-2025</span>
+            <span class="dotfiles-hero__badge" role="listitem">13 rices</span>
+            <span class="dotfiles-hero__badge" role="listitem">Quickshell · Material 3</span>
+            <span class="dotfiles-hero__badge dotfiles-hero__badge--plum" role="listitem"
+              >plum #191114 · pink #FFB0CA</span
+            >
+          </div>
+
+          <div class="dotfiles-hero__actions">
+            <a href="#galeria" class="dotfiles-hero__cta dotfiles-hero__cta--primary">Ver galeria</a>
+            <a href="#smart-colors" class="dotfiles-hero__cta dotfiles-hero__cta--secondary">Smart Colors →</a>
+            <a
+              href="https://github.com/ulises-jeremias/dotfiles/wiki"
+              class="dotfiles-hero__cta dotfiles-hero__cta--ghost"
+              target="_blank"
+              rel="noreferrer">Docs wiki</a
+            >
+          </div>
+
+          <div class="dotfiles-hero__install" role="region" aria-label="Instalacion rapida">
+            <p class="dotfiles-hero__install-label">Instalacion en un comando</p>
+            <pre
+              class="dotfiles-hero__install-code"><code>sh -c "$(curl -fsSL https://github.com/ulises-jeremias/dotfiles/blob/main/scripts/install_dotfiles.sh?raw=true)"</code></pre>
+            <div class="dotfiles-hero__install-alts">
+              <code>yay -S dots-stable</code>
+              <code>chezmoi init --apply ulises-jeremias</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="dotfiles-hero__visual" aria-hidden="true">
+          <div class="dotfiles-hero__card">
+            <div class="dotfiles-hero__card-bar">
+              <span></span><span></span><span></span>
+              <span class="dotfiles-hero__card-title">dots rice apply flowers</span>
+            </div>
+            <div class="dotfiles-hero__card-body">
+              <div class="dotfiles-hero__mini-grid">
+                <span style="background:#FFB0CA"></span>
+                <span style="background:#e2bdc7"></span>
+                <span style="background:#7a4a5f"></span>
+                <span style="background:#191114; border:1px solid rgba(255,176,202,0.3)"></span>
+              </div>
+              <p class="dotfiles-hero__card-text">
+                Rice aplicado · scheme.json regenerado · Hyprland borders + Kitty + Quickshell sincronizados.
+              </p>
+            </div>
+          </div>
+          <p class="dotfiles-hero__visual-caption">
+            Identidad plum #191114 / pink #FFB0CA — usada en badges, bar y scheme.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <main id="contenido" class="dotfiles-main" tabindex="-1">
+      <section class="dotfiles-section" aria-label="Narrativa">
+        <DotfilesNarrative />
+      </section>
+
+      <section id="stack" class="dotfiles-section dotfiles-section--alt" aria-label="Diagrama de capas">
+        <LayersDiagram />
+      </section>
+
+      <section id="smart-colors" class="dotfiles-section" aria-label="Smart Colors">
+        <SmartColorsAnimation />
+      </section>
+
+      <section id="galeria" class="dotfiles-section dotfiles-section--alt" aria-label="Galeria de screenshots">
+        <ScreenshotGallery />
+      </section>
+
+      <section id="licencias" class="dotfiles-section" aria-labelledby="licencias-title">
+        <div class="dotfiles-licenses">
+          <header class="dotfiles-licenses__header">
+            <p class="dotfiles-licenses__eyebrow">Verificacion de licencias</p>
+            <h2 id="licencias-title" class="dotfiles-licenses__title">
+              Licencias verificadas — MIT + GPL-3.0 con atribucion
+            </h2>
+            <p class="dotfiles-licenses__desc">
+              Este sitio y HorneroConfig comparten autor y licencia base MIT, con una excepcion atribuida para
+              Quickshell adaptado de <code>caelestia-dots/shell</code> (GPL-3.0). Verifica antes de redistribuir binarios
+              o wallpapers.
+            </p>
+          </header>
+
+          <div class="dotfiles-licenses__grid" role="list">
+            {
+              licenseEntries.map((entry) => (
+                <article class="dotfiles-licenses__card" role="listitem">
+                  <h3 class="dotfiles-licenses__card-title">{entry.component}</h3>
+                  <p class="dotfiles-licenses__card-license">
+                    <span class="dotfiles-licenses__badge">{entry.license}</span>
+                    <span class="dotfiles-licenses__source">{entry.source}</span>
+                  </p>
+                  <p class="dotfiles-licenses__card-notes">{entry.notes}</p>
+                </article>
+              ))
+            }
+          </div>
+
+          <div class="dotfiles-licenses__verify" role="note" aria-label="Resultado de verificacion">
+            <h3 class="dotfiles-licenses__verify-title">✓ Verificacion local 2026-08-07</h3>
+            <ul class="dotfiles-licenses__verify-list">
+              <li>
+                <code>website/LICENSE</code> existe — MIT Copyright (c) 2025-2026 Ulises Jeremias Cornejo Fandos — valido.
+              </li>
+              <li><code>dotfiles/LICENSE</code> (repo hermano) — MIT 2019-2025 — mismo autor — compatible.</li>
+              <li>
+                <code>caelestia-dots/shell</code> referenciado en dotfiles README con atribucion y GPL-3.0 — se respeta en
+                /dotfiles.
+              </li>
+              <li>
+                Screenshots <code>dotfiles/static/*</code> — MIT — safe para placeholders; wallpapers per-rice — verificar
+                individualmente.
+              </li>
+              <li>
+                No se redistribuye binario GPL en este sitio (solo docs/placeholder) — no se dispara clausula de fuente;
+                si embebes plugin C++ Hornero, publica fuente.
+              </li>
+            </ul>
+            <p class="dotfiles-licenses__verify-foot">
+              Herramientas: <code>cat LICENSE</code> + revision manual de README dotfiles + <code>pnpm knip</code> sin dependencias
+              extra con licencias conflictivas. Esta pagina no es asesoramiento legal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dotfiles-cta" aria-label="Llamada a la accion">
+        <div class="dotfiles-cta__inner">
+          <h2 class="dotfiles-cta__title">¿Listo para anidar?</h2>
+          <p class="dotfiles-cta__text">
+            Clona, aplica un rice y deja que Smart Colors haga el resto. Tu nido, tus reglas.
+          </p>
+          <div class="dotfiles-cta__actions">
+            <a
+              href="https://github.com/ulises-jeremias/dotfiles"
+              target="_blank"
+              rel="noreferrer"
+              class="dotfiles-cta__btn dotfiles-cta__btn--primary">Abrir dotfiles en GitHub</a
+            >
+            <a
+              href="https://github.com/ulises-jeremias/dotfiles/wiki/Smart-Colors-System"
+              target="_blank"
+              rel="noreferrer"
+              class="dotfiles-cta__btn">Explorar Smart Colors</a
+            >
+            <a href="/" class="dotfiles-cta__btn dotfiles-cta__btn--ghost">← Volver al inicio</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="dotfiles-footer" role="contentinfo">
+      <p>
+        Hecho con <span aria-hidden="true" style="color:#FFB0CA">♥</span> por <a
+          href="https://github.com/ulises-jeremias">ulises-jeremias</a
+        > — HorneroConfig · MIT · plum
+        <code>#191114</code> · pink <code>#FFB0CA</code> — Quickshell adaptado de <a
+          href="https://github.com/caelestia-dots/shell"
+          target="_blank"
+          rel="noreferrer">caelestia-dots/shell</a
+        > (GPL-3.0).
+      </p>
+    </footer>
+  </div>
+
+  <style>
+    .dotfiles-hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.1rem 1.2rem 2rem;
+    }
+
+    .dotfiles-hero__nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: 999px;
+      background: rgba(25, 17, 20, 0.82);
+      border: 1px solid rgba(255, 176, 202, 0.16);
+      backdrop-filter: blur(10px);
+    }
+
+    .dotfiles-hero__brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: #fbe7ec;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .dotfiles-hero__brand-mark {
+      width: 1.7rem;
+      height: 1.7rem;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #ffb0ca;
+      color: #191114;
+      font-size: 0.9rem;
+    }
+
+    .dotfiles-hero__nav-links {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .dotfiles-hero__nav-link {
+      color: #d5c2c6;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .dotfiles-hero__nav-link:hover {
+      color: #fbe7ec;
+      border-color: rgba(255, 176, 202, 0.28);
+      background: rgba(255, 176, 202, 0.08);
+    }
+
+    .dotfiles-hero__main {
+      display: grid;
+      gap: 1.6rem;
+      margin-top: 1.8rem;
+      align-items: start;
+    }
+
+    @media (min-width: 920px) {
+      .dotfiles-hero__main {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    .dotfiles-hero__eyebrow {
+      display: inline-flex;
+      padding: 0.32rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 176, 202, 0.14);
+      border: 1px solid rgba(255, 176, 202, 0.28);
+      color: #ffb0ca;
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 0.9rem;
+    }
+
+    .dotfiles-hero__title {
+      margin: 0 0 0.65rem;
+      font-size: clamp(2.3rem, 5vw, 3.6rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: #fbe7ec;
+    }
+
+    .dotfiles-hero__title-accent {
+      color: #ffb0ca;
+    }
+
+    .dotfiles-hero__subtitle {
+      margin: 0 0 1rem;
+      color: #d5c2c6;
+      line-height: 1.65;
+      font-size: 1.02rem;
+      max-width: 62ch;
+    }
+
+    .dotfiles-hero__subtitle strong {
+      color: #fbe7ec;
+      font-weight: 750;
+    }
+
+    .dotfiles-hero__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .dotfiles-hero__badge {
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(25, 17, 20, 0.9);
+      border: 1px solid rgba(255, 176, 202, 0.18);
+      color: #e2bdc7;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .dotfiles-hero__badge--plum {
+      background: #ffb0ca;
+      color: #191114;
+      border-color: #ffb0ca;
+    }
+
+    .dotfiles-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .dotfiles-hero__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1rem;
+      border-radius: 0.85rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+    }
+
+    .dotfiles-hero__cta:hover {
+      transform: translateY(-1px);
+    }
+
+    .dotfiles-hero__cta--primary {
+      background: #ffb0ca;
+      color: #191114;
+      border-color: #ffb0ca;
+    }
+
+    .dotfiles-hero__cta--primary:hover {
+      background: #ffc6d8;
+    }
+
+    .dotfiles-hero__cta--secondary {
+      background: rgba(25, 17, 20, 0.92);
+      color: #fbe7ec;
+      border-color: rgba(255, 176, 202, 0.28);
+    }
+
+    .dotfiles-hero__cta--ghost {
+      background: transparent;
+      color: #d5c2c6;
+      border-color: rgba(255, 176, 202, 0.16);
+    }
+
+    .dotfiles-hero__install {
+      background: rgba(25, 17, 20, 0.92);
+      border: 1px solid rgba(255, 176, 202, 0.16);
+      border-radius: 1rem;
+      padding: 0.9rem;
+    }
+
+    .dotfiles-hero__install-label {
+      margin: 0 0 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #ffb0ca;
+    }
+
+    .dotfiles-hero__install-code {
+      margin: 0;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.7rem;
+      background: #191114;
+      border: 1px solid rgba(255, 176, 202, 0.14);
+      overflow-x: auto;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: #fbe7ec;
+    }
+
+    .dotfiles-hero__install-code code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: nowrap;
+    }
+
+    .dotfiles-hero__install-alts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .dotfiles-hero__install-alts code {
+      padding: 0.28rem 0.5rem;
+      border-radius: 0.45rem;
+      background: rgba(255, 176, 202, 0.12);
+      border: 1px solid rgba(255, 176, 202, 0.16);
+      color: #e2bdc7;
+      font-size: 0.76rem;
+      font-family: ui-monospace, monospace;
+    }
+
+    .dotfiles-hero__visual {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .dotfiles-hero__card {
+      background: linear-gradient(180deg, #2d2027, #241a1f);
+      border: 1px solid rgba(255, 176, 202, 0.18);
+      border-radius: 1.1rem;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+    }
+
+    .dotfiles-hero__card-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 0.75rem;
+      background: rgba(255, 176, 202, 0.12);
+      border-bottom: 1px solid rgba(255, 176, 202, 0.14);
+    }
+
+    .dotfiles-hero__card-bar span:not(.dotfiles-hero__card-title) {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #ffb0ca;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .dotfiles-hero__card-bar span:nth-child(2) {
+      background: #e2bdc7;
+    }
+    .dotfiles-hero__card-bar span:nth-child(3) {
+      background: #7a4a5f;
+    }
+
+    .dotfiles-hero__card-title {
+      margin-left: 0.5rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #fbe7ec;
+      font-family: ui-monospace, monospace;
+    }
+
+    .dotfiles-hero__card-body {
+      padding: 1rem;
+    }
+
+    .dotfiles-hero__mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 0.8rem;
+    }
+
+    .dotfiles-hero__mini-grid span {
+      height: 44px;
+      border-radius: 10px;
+      display: block;
+      border: 1px solid rgba(255, 176, 202, 0.14);
+    }
+
+    .dotfiles-hero__card-text {
+      margin: 0;
+      font-size: 0.84rem;
+      color: #c9a8b2;
+      line-height: 1.55;
+    }
+
+    .dotfiles-hero__visual-caption {
+      margin: 0;
+      font-size: 0.74rem;
+      color: #c9a8b2;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .dotfiles-main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+    }
+
+    .dotfiles-section {
+      padding: 1.2rem;
+      border-radius: 1.25rem;
+      background: rgba(25, 17, 20, 0.42);
+      border: 1px solid rgba(255, 176, 202, 0.08);
+    }
+
+    .dotfiles-section--alt {
+      background: rgba(45, 32, 39, 0.28);
+      border-color: rgba(255, 176, 202, 0.1);
+    }
+
+    .dotfiles-licenses {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .dotfiles-licenses__eyebrow {
+      display: inline-flex;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 176, 202, 0.12);
+      border: 1px solid rgba(255, 176, 202, 0.26);
+      color: #ffb0ca;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 0.7rem;
+    }
+
+    .dotfiles-licenses__title {
+      margin: 0 0 0.45rem;
+      font-size: clamp(1.35rem, 2.8vw, 1.95rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fbe7ec;
+      line-height: 1.2;
+    }
+
+    .dotfiles-licenses__desc {
+      margin: 0;
+      color: #d5c2c6;
+      line-height: 1.65;
+      font-size: 0.92rem;
+      max-width: 72ch;
+    }
+
+    .dotfiles-licenses__desc code {
+      padding: 0.12rem 0.32rem;
+      border-radius: 0.3rem;
+      background: rgba(255, 176, 202, 0.13);
+      color: #ffb0ca;
+      font-size: 0.88em;
+    }
+
+    .dotfiles-licenses__grid {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1.1rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 820px) {
+      .dotfiles-licenses__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .dotfiles-licenses__card {
+      background: linear-gradient(180deg, rgba(45, 32, 39, 0.92), rgba(25, 17, 20, 0.98));
+      border: 1px solid rgba(255, 176, 202, 0.16);
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    .dotfiles-licenses__card-title {
+      margin: 0 0 0.4rem;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #ffb0ca;
+    }
+
+    .dotfiles-licenses__card-license {
+      margin: 0 0 0.45rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
+    .dotfiles-licenses__badge {
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: #ffb0ca;
+      color: #191114;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .dotfiles-licenses__source {
+      font-size: 0.78rem;
+      color: #e2bdc7;
+      font-family: ui-monospace, monospace;
+    }
+
+    .dotfiles-licenses__card-notes {
+      margin: 0;
+      font-size: 0.84rem;
+      color: #c9a8b2;
+      line-height: 1.6;
+    }
+
+    .dotfiles-licenses__verify {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: rgba(255, 176, 202, 0.08);
+      border: 1px solid rgba(255, 176, 202, 0.18);
+    }
+
+    .dotfiles-licenses__verify-title {
+      margin: 0 0 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffb0ca;
+    }
+
+    .dotfiles-licenses__verify-list {
+      margin: 0 0 0.6rem;
+      padding-left: 1.15rem;
+      color: #d5c2c6;
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    .dotfiles-licenses__verify-list code {
+      padding: 0.12rem 0.3rem;
+      border-radius: 0.3rem;
+      background: rgba(25, 17, 20, 0.9);
+      color: #e2bdc7;
+      font-size: 0.86em;
+    }
+
+    .dotfiles-licenses__verify-foot {
+      margin: 0;
+      font-size: 0.76rem;
+      color: #c9a8b2;
+      font-style: italic;
+    }
+
+    .dotfiles-cta {
+      padding: 1.4rem;
+      border-radius: 1.25rem;
+      background: linear-gradient(135deg, rgba(255, 176, 202, 0.18), rgba(45, 32, 39, 0.9));
+      border: 1px solid rgba(255, 176, 202, 0.22);
+      text-align: center;
+    }
+
+    .dotfiles-cta__inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .dotfiles-cta__title {
+      margin: 0 0 0.4rem;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #fbe7ec;
+    }
+
+    .dotfiles-cta__text {
+      margin: 0 0 1rem;
+      color: #d5c2c6;
+      line-height: 1.6;
+    }
+
+    .dotfiles-cta__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      justify-content: center;
+    }
+
+    .dotfiles-cta__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.05rem;
+      border-radius: 0.85rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition:
+        transform 0.15s ease,
+        background 0.15s ease;
+    }
+
+    .dotfiles-cta__btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .dotfiles-cta__btn--primary {
+      background: #ffb0ca;
+      color: #191114;
+      border-color: #ffb0ca;
+    }
+
+    .dotfiles-cta__btn:not(.dotfiles-cta__btn--primary):not(.dotfiles-cta__btn--ghost) {
+      background: rgba(25, 17, 20, 0.92);
+      color: #fbe7ec;
+      border-color: rgba(255, 176, 202, 0.22);
+    }
+
+    .dotfiles-cta__btn--ghost {
+      background: transparent;
+      color: #d5c2c6;
+      border-color: rgba(255, 176, 202, 0.16);
+    }
+
+    .dotfiles-footer {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.2rem 1.2rem 2rem;
+      border-top: 1px solid rgba(255, 176, 202, 0.14);
+      color: #c9a8b2;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .dotfiles-footer a {
+      color: #ffb0ca;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .dotfiles-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .dotfiles-footer code {
+      padding: 0.12rem 0.28rem;
+      border-radius: 0.3rem;
+      background: rgba(255, 176, 202, 0.12);
+      color: #ffb0ca;
+      font-size: 0.86em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dotfiles-hero__cta,
+      .dotfiles-cta__btn {
+        transition: none;
+      }
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,168 @@
+---
+import { narrativeSections, dotfilesMeta } from '../data/index.js';
+---
+
+<section class="dotfiles-narrative" aria-labelledby="narrative-title">
+  <header class="dotfiles-narrative__header">
+    <p class="dotfiles-narrative__eyebrow">Narrativa</p>
+    <h2 id="narrative-title" class="dotfiles-narrative__title">Construir el nido, no copiarlo</h2>
+    <blockquote class="dotfiles-narrative__quote">
+      <p>“{dotfilesMeta.quote}”</p>
+    </blockquote>
+  </header>
+
+  <div class="dotfiles-narrative__grid">
+    {
+      narrativeSections.map((section) => (
+        <article class="dotfiles-narrative__card" aria-labelledby={`narrative-${section.id}`}>
+          <h3 id={`narrative-${section.id}`} class="dotfiles-narrative__card-title">
+            {section.title}
+          </h3>
+          {section.paragraphs.map((p) => (
+            <p class="dotfiles-narrative__card-text">{p}</p>
+          ))}
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="dotfiles-narrative__facts" role="list" aria-label="Hechos clave">
+    <div class="dotfiles-narrative__fact" role="listitem">
+      <span class="dotfiles-narrative__fact-number">13</span>
+      <span class="dotfiles-narrative__fact-label">rices tematicos</span>
+    </div>
+    <div class="dotfiles-narrative__fact" role="listitem">
+      <span class="dotfiles-narrative__fact-number">100+</span>
+      <span class="dotfiles-narrative__fact-label">scripts dots-*</span>
+    </div>
+    <div class="dotfiles-narrative__fact" role="listitem">
+      <span class="dotfiles-narrative__fact-number">1</span>
+      <span class="dotfiles-narrative__fact-label">comando para instalar</span>
+    </div>
+    <div class="dotfiles-narrative__fact" role="listitem">
+      <span class="dotfiles-narrative__fact-number">0</span>
+      <span class="dotfiles-narrative__fact-label">mantenimiento manual (chezmoi)</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dotfiles-narrative {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  .dotfiles-narrative__eyebrow {
+    display: inline-flex;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 176, 202, 0.12);
+    border: 1px solid rgba(255, 176, 202, 0.28);
+    color: var(--dotfiles-pink, #ffb0ca);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.9rem;
+  }
+
+  .dotfiles-narrative__title {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--dotfiles-text, #fbe7ec);
+  }
+
+  .dotfiles-narrative__quote {
+    margin: 0 0 1.6rem;
+    padding: 0.9rem 1.1rem;
+    border-left: 3px solid var(--dotfiles-pink, #ffb0ca);
+    background: rgba(255, 176, 202, 0.07);
+    border-radius: 0 0.6rem 0.6rem 0;
+    color: var(--dotfiles-text-muted, #d5c2c6);
+    font-style: italic;
+  }
+
+  .dotfiles-narrative__quote p {
+    margin: 0;
+  }
+
+  .dotfiles-narrative__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 820px) {
+    .dotfiles-narrative__grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  .dotfiles-narrative__card {
+    background: linear-gradient(180deg, rgba(45, 32, 39, 0.95), rgba(36, 26, 31, 0.98));
+    border: 1px solid rgba(255, 176, 202, 0.18);
+    border-radius: 1rem;
+    padding: 1.15rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .dotfiles-narrative__card-title {
+    margin: 0 0 0.6rem;
+    font-size: 1.02rem;
+    font-weight: 750;
+    color: var(--dotfiles-pink, #ffb0ca);
+    letter-spacing: -0.02em;
+  }
+
+  .dotfiles-narrative__card-text {
+    margin: 0 0 0.7rem;
+    color: var(--dotfiles-text-muted, #d5c2c6);
+    line-height: 1.65;
+    font-size: 0.94rem;
+  }
+
+  .dotfiles-narrative__card-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .dotfiles-narrative__facts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .dotfiles-narrative__facts {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .dotfiles-narrative__fact {
+    text-align: center;
+    padding: 0.9rem 0.6rem;
+    border-radius: 0.9rem;
+    background: rgba(255, 176, 202, 0.07);
+    border: 1px solid rgba(255, 176, 202, 0.16);
+  }
+
+  .dotfiles-narrative__fact-number {
+    display: block;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--dotfiles-pink, #ffb0ca);
+    line-height: 1;
+  }
+
+  .dotfiles-narrative__fact-label {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.78rem;
+    color: var(--dotfiles-text-muted, #c9a8b2);
+    letter-spacing: 0.02em;
+  }
+</style>
