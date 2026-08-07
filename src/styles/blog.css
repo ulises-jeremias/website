@@ -113,3 +113,120 @@
 .blog-post__content a {
   color: var(--blog-accent);
 }
+/* Intentional empty state — writing desk ready (Epic L) */
+.blog-empty {
+  margin-top: 2.5rem;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  background: var(--blog-surface);
+  border: 1px solid var(--blog-border);
+  border-radius: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.blog-empty__desk {
+  width: 4rem;
+  height: 4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+  background: var(--blog-bg);
+  border: 1px solid var(--blog-border);
+  margin-bottom: 0.5rem;
+}
+
+.blog-empty__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.blog-empty__title {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--blog-text);
+}
+
+.blog-empty__text {
+  margin: 0;
+  max-width: 32rem;
+  color: var(--blog-muted);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.blog-empty__hint {
+  margin: 0;
+  max-width: 32rem;
+  color: var(--blog-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.blog-empty__hint a {
+  color: var(--blog-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-empty__actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.blog-empty__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--blog-border);
+  background: transparent;
+  color: var(--blog-text);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.blog-empty__link:hover {
+  border-color: var(--blog-accent);
+  color: var(--blog-accent);
+  transform: translateY(-1px);
+}
+
+.blog-empty__link--primary {
+  background: var(--blog-text);
+  color: var(--blog-bg);
+  border-color: var(--blog-text);
+}
+
+.blog-empty__link--primary:hover {
+  background: var(--blog-accent);
+  border-color: var(--blog-accent);
+  color: #fff;
+}
+
+.blog-empty__link:focus-visible {
+  outline: 2px solid var(--color-focus, #005fcc);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-empty__link {
+    transition: none;
+  }
+}
