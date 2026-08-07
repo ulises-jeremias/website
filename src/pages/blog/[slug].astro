@@ -18,33 +18,85 @@ type Props = {
 };
 
 const { post } = Astro.props as Props;
-const { Content } = await render(post);
-const pageTitle = post.data.title + ' — my-project';
+
+const hasPost = Boolean(post);
+
+let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
+let pageTitle = 'Note not found — Blog';
+let pageDescription = 'This note has not been published yet. The writing desk is ready for future field notes.';
+
+if (hasPost) {
+  const rendered = await render(post);
+  Content = rendered.Content;
+  pageTitle = post.data.title + ' — Blog';
+  pageDescription = post.data.description;
+}
 ---
 
-<BaseLayout title={pageTitle} description={post.data.description}>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <div class="blog-page">
-    <article class="blog-page__inner">
+    <div class="blog-page__inner">
       <nav class="blog-page__nav" aria-label="Site">
         <a href="/blog">← Blog</a>
       </nav>
 
-      <h1 class="blog-page__title">{post.data.title}</h1>
-      <p class="blog-post__meta">
-        <time datetime={post.data.pubDate.toISOString()}>
-          {
-            post.data.pubDate.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })
-          }
-        </time>
-      </p>
+      {
+        hasPost && Content ? (
+          <article>
+            <h1 class="blog-page__title">{post.data.title}</h1>
+            <p class="blog-post__meta">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+              {post.data.updatedDate && (
+                <span>
+                  {' '}
+                  · Updated{' '}
+                  <time datetime={post.data.updatedDate.toISOString()}>
+                    {post.data.updatedDate.toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
+                </span>
+              )}
+            </p>
 
-      <div class="blog-post__content">
-        <Content />
-      </div>
-    </article>
+            <div class="blog-post__content">
+              <Content />
+            </div>
+          </article>
+        ) : (
+          <section class="blog-empty" aria-labelledby="blog-empty-title">
+            <div class="blog-empty__desk" aria-hidden="true">
+              <span class="blog-empty__icon">✍️</span>
+            </div>
+            <h1 id="blog-empty-title" class="blog-empty__title">
+              Writing desk is ready
+            </h1>
+            <p class="blog-empty__text">
+              This note hasn’t been published yet. The blog collection is intentionally empty — the writing desk is
+              ready for future field notes.
+            </p>
+            <p class="blog-empty__hint">
+              Head back to the <a href="/blog">writing desk</a> or explore other worlds.
+            </p>
+            <div class="blog-empty__actions">
+              <a href="/blog" class="blog-empty__link blog-empty__link--primary">
+                ← Go to Blog
+              </a>
+              <a href="/" class="blog-empty__link">
+                Home
+              </a>
+            </div>
+          </section>
+        )
+      }
+    </div>
   </div>
 </BaseLayout>

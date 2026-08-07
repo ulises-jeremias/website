@@ -1,0 +1,81 @@
+---
+import { vProjects } from '../data/index.js';
+import VCard from './VCard.astro';
+---
+
+<section class="v-cards" aria-labelledby="v-cards-title">
+  <header class="v-cards__header">
+    <p class="v-cards__eyebrow">Ecosystem</p>
+    <h2 id="v-cards-title" class="v-cards__title">Six surfaces — one language</h2>
+    <p class="v-cards__lead">
+      V is the root. VSL and VTL handle numbers and learning. RxV handles time. setup-v and Awesome V handle
+      distribution and discovery. Each ships MIT, each stands alone.
+    </p>
+  </header>
+
+  <div class="v-cards__grid" role="list">
+    {
+      vProjects.map((p) => (
+        <div role="listitem">
+          <VCard {...p} />
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .v-cards {
+    padding: 0;
+  }
+
+  .v-cards__header {
+    max-width: 46rem;
+    margin: 0 0 1.25rem 0;
+  }
+
+  .v-cards__eyebrow {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .v-cards__title {
+    margin: 0 0 0.5rem 0;
+    font-size: clamp(1.35rem, 3vw, 1.7rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-cards__lead {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .v-cards__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 680px) {
+    .v-cards__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+  }
+
+  @media (min-width: 1060px) {
+    .v-cards__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

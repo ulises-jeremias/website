@@ -1,0 +1,255 @@
+---
+import { doctorChecks } from '../data/index.js';
+---
+
+<section id="doctor" class="ws-doctor" aria-labelledby="ws-doctor-title">
+  <div class="ws-section-head">
+    <span class="ws-kicker" style="color:#A78BFA">Health checks · doctor keeps the thin boundary honest</span>
+    <h2 id="ws-doctor-title" class="ws-section-title">dots-doctor — the workstation heartbeat</h2>
+    <p class="ws-section-lead">
+      <code>dots-doctor</code> is the single health gate for the thin workstation. It prints a snapshot for humans and machines,
+      validates swarm prerequisites profile-aware, and delegates deep checks to <code
+        >agent-toolkit doctor / swarm doctor</code
+      >.
+    </p>
+  </div>
+
+  <div class="ws-doctor__matrix" role="list">
+    {
+      doctorChecks.map((c) => (
+        <article class="ws-doctor__card" role="listitem">
+          <h3 class="ws-doctor__card-title">{c.name}</h3>
+          <pre class="ws-doctor__code">
+            <code>{c.command}</code>
+          </pre>
+          <p class="ws-doctor__desc">{c.description}</p>
+          <p class="ws-doctor__when">
+            <span>When:</span> {c.when}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="ws-doctor__table-wrap">
+    <table class="ws-doctor__table">
+      <caption>dots-doctor flags & subcommands</caption>
+      <thead>
+        <tr>
+          <th>Flag</th>
+          <th>Effect</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>dots-doctor</code></td>
+          <td>Default + snapshot (OS, df, chezmoi, env.d, gh auth, skill count, swarm)</td>
+          <td>Human, color when TTY</td>
+        </tr>
+        <tr>
+          <td><code>--json</code></td>
+          <td>Machine-readable snapshot line (stderr stays human)</td>
+          <td>JSON · pipe to <code>jq</code></td>
+        </tr>
+        <tr>
+          <td><code>--issue / --paste</code></td>
+          <td>No colors, markdown-safe — for GitHub / Slack</td>
+          <td>Paste-ready report</td>
+        </tr>
+        <tr>
+          <td><code>--no-snapshot</code></td>
+          <td>Checks only; skips snapshot block (CI narrow parsing)</td>
+          <td>OK / FAIL lines only</td>
+        </tr>
+        <tr>
+          <td><code>drift</code></td>
+          <td>Registry vs deployed skill.json — thin-workstation passthrough to toolkit</td>
+          <td>Drift report</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ws-doctor__profile" role="note">
+    <h3 class="ws-doctor__profile-title">Profile-aware swarm gate</h3>
+    <p>
+      <code>install_group_swarm=false</code> → missing <code>herdr</code> is a warning (tmux fallback exists).<br />
+      <code>install_group_swarm=true</code> → missing <code>tmux</code> is a <strong>FAIL</strong>, missing <code
+        >herdr</code
+      > is a WARN. Verification: <code>tmux -V</code>, <code>herdr --version</code>, <code
+        >herdr integration list --json</code
+      >, <code>agent-toolkit swarm doctor</code>.
+    </p>
+    <p class="ws-doctor__profile-hint">
+      Toolkit owns orchestration — <code
+        >agent-toolkit swarm start --recipe pair --ui herdr|tmux --runner opencode "Task"</code
+      >. Workstation only ensures host tools exist (isolated socket <code>agent-toolkit-swarm-&lt;run-id&gt;</code>,
+      never touches <code>~/.tmux.conf</code>).
+    </p>
+  </div>
+</section>
+
+<style>
+  .ws-doctor {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+  .ws-section-head {
+    max-width: 72ch;
+  }
+  .ws-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #22d3ee;
+    margin-bottom: 0.45rem;
+  }
+  .ws-section-title {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.18;
+    color: #f8fafc;
+  }
+  .ws-section-lead {
+    margin: 0;
+    color: #94a3b8;
+    line-height: 1.65;
+    font-size: 0.96rem;
+  }
+  .ws-section-lead code {
+    color: #cbd5e1;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.84rem;
+  }
+  .ws-doctor__matrix {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .ws-doctor__matrix {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .ws-doctor__card {
+    padding: 1.05rem 1.05rem 1rem;
+    border-radius: 1.05rem;
+    background: rgba(15, 23, 42, 0.68);
+    border: 1px solid rgba(51, 65, 85, 0.62);
+    border-left: 2px solid #a78bfa;
+  }
+  .ws-doctor__card-title {
+    margin: 0 0 0.45rem;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+  .ws-doctor__code {
+    margin: 0 0 0.5rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 0.6rem;
+    background: #020617;
+    border: 1px solid rgba(51, 65, 85, 0.65);
+    overflow-x: auto;
+  }
+  .ws-doctor__code code {
+    color: #ddd6fe;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+  }
+  .ws-doctor__desc {
+    margin: 0 0 0.4rem;
+    color: #cbd5e1;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .ws-doctor__when {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .ws-doctor__when span {
+    color: #94a3b8;
+    font-weight: 700;
+  }
+  .ws-doctor__table-wrap {
+    overflow-x: auto;
+    border-radius: 1rem;
+    border: 1px solid rgba(51, 65, 85, 0.65);
+    background: rgba(15, 23, 42, 0.55);
+  }
+  .ws-doctor__table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+  .ws-doctor__table caption {
+    text-align: left;
+    padding: 0.85rem 1rem 0.5rem;
+    font-weight: 800;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+  }
+  .ws-doctor__table th {
+    text-align: left;
+    padding: 0.6rem 1rem;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+    background: rgba(2, 6, 23, 0.6);
+  }
+  .ws-doctor__table td {
+    padding: 0.65rem 1rem;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.35);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .ws-doctor__table td code {
+    color: #a5f3fc;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem;
+  }
+  .ws-doctor__profile {
+    padding: 1.05rem 1.15rem;
+    border-radius: 1rem;
+    background: rgba(2, 6, 23, 0.7);
+    border: 1px solid rgba(167, 139, 250, 0.22);
+  }
+  .ws-doctor__profile-title {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #ede9fe;
+  }
+  .ws-doctor__profile p {
+    margin: 0 0 0.5rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .ws-doctor__profile p:last-child {
+    margin-bottom: 0;
+  }
+  .ws-doctor__profile code {
+    color: #cbd5e1;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem;
+  }
+  .ws-doctor__profile strong {
+    color: #f87171;
+  }
+  .ws-doctor__profile-hint {
+    color: #64748b !important;
+  }
+</style>

@@ -1,0 +1,139 @@
+---
+import { variants } from '../data/index.js';
+---
+
+<section aria-labelledby="ca-variants-title" class="ca-variants" data-testid="ca-variants">
+  <h2 id="ca-variants-title">Familia — tres variantes, un principio</h2>
+  <p class="ca-variants__intro">
+    Mismo modelo mental en Node, Python y V: eliges <code>template</code> y sumas <code>addons</code>. Archivos reales,
+    sin runtime oculto.
+  </p>
+  <div class="ca-variants__grid">
+    {
+      variants.map((v) => (
+        <article class="ca-variant" style={`--v-accent:${v.accent}; --v-bg:${v.bg}`}>
+          <header class="ca-variant__head">
+            <h3 class="ca-variant__name">{v.title}</h3>
+            <span class={`ca-variant__status ca-variant__status--${v.status}`}>{v.status}</span>
+          </header>
+          <p class="ca-variant__desc">{v.description}</p>
+          <div class="ca-variant__templates">
+            <strong>Templates</strong>
+            <ul>
+              {v.templates.map((t) => (
+                <li>
+                  <code>{t.id}</code> — {t.description} {t.featured ? <span class="ca-badge">featured</span> : null}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="ca-variant__addons">
+            <strong>Addons</strong>
+            <ul>
+              {v.addons.map((a) => (
+                <li>
+                  <code>{a.id}</code> — {a.description} <span class="ca-muted">({a.category})</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <pre class="ca-variant__install">
+            <code>{v.install}</code>
+          </pre>
+          <a href={v.href} target="_blank" rel="noreferrer" class="ca-variant__link">
+            Catálogo →
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ca-variants {
+    margin: var(--space-8) 0;
+  }
+  .ca-variants__intro {
+    color: var(--color-muted);
+    max-width: 70ch;
+  }
+  .ca-variants__grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+  @media (min-width: 900px) {
+    .ca-variants__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .ca-variant {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--v-bg, var(--color-surface));
+    border-top: 3px solid var(--v-accent);
+  }
+  .ca-variant__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .ca-variant__name {
+    font-size: 1rem;
+    margin: 0;
+  }
+  .ca-variant__status {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+  }
+  .ca-variant__status--stable {
+    background: #ecfdf5;
+    color: #065f46;
+    border-color: #6ee7b7;
+  }
+  .ca-variant__status--beta {
+    background: #f5f3ff;
+    color: #5b21b6;
+    border-color: #c4b5fd;
+  }
+  .ca-variant__desc {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    min-height: 3rem;
+  }
+  .ca-variant ul {
+    margin: 0.5rem 0;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+  }
+  .ca-badge {
+    font-size: 0.65rem;
+    background: var(--v-accent);
+    color: white;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    margin-left: 0.3rem;
+  }
+  .ca-muted {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+  .ca-variant__install {
+    margin: var(--space-3) 0;
+    padding: var(--space-2);
+    background: var(--color-ink, #181512);
+    color: #f8fafc;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+  .ca-variant__link {
+    font-size: 0.9rem;
+  }
+</style>

@@ -1,0 +1,546 @@
+---
+import { setupVPipeline } from '../data/index.js';
+---
+
+<section class="setup" aria-labelledby="setup-title">
+  <header class="setup__header">
+    <p class="setup__eyebrow">05 · setup-v</p>
+    <h2 id="setup-title" class="setup__title">From workflow line to verified binary</h2>
+    <p class="setup__desc">
+      <code>uses: vlang/setup-v@v1</code> resolves version, detects arch, restores cache, fetches the prebuilt binary, writes
+      it to PATH, and exposes outputs. On exotic arches it warns and falls back gracefully — no sudo, no build unless you
+      ask.
+    </p>
+  </header>
+
+  <div class="setup__grid">
+    <div class="setup__diagram">
+      <svg
+        viewBox="0 0 720 340"
+        role="img"
+        aria-labelledby="setupSvgTitle setupSvgDesc"
+        xmlns="http://www.w3.org/2000/svg"
+        class="setup__svg"
+      >
+        <title id="setupSvgTitle">setup-v — GH Action pipeline 5 steps</title>
+        <desc id="setupSvgDesc">
+          Horizontal five-stage pipeline: Resolve version, Arch detection, Cache restore, Install binary, Verify. Each
+          stage is a node with input and output; cache hit short-circuits install; error paths use rollback.
+        </desc>
+        <rect x="0" y="0" width="720" height="340" rx="14" fill="#0f2a44"></rect>
+        <rect x="0" y="0" width="720" height="18" rx="6" fill="rgba(91,155,213,0.16)" aria-hidden="true"></rect>
+        <text
+          x="16"
+          y="29"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">pipeline · 5 stages · cache-aware</text
+        >
+
+        <!-- workflow line top -->
+        <rect x="16" y="38" width="688" height="32" rx="8" fill="#0d223a" stroke="rgba(91,155,213,0.22)"></rect>
+        <text
+          x="30"
+          y="52"
+          font-size="9.5"
+          font-weight="700"
+          letter-spacing="0.06em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">workflow.yml</text
+        >
+        <text x="132" y="58" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace"
+          >- uses: vlang/setup-v@v1</text
+        >
+        <text x="340" y="58" font-size="10" fill="#8bb8e0">with: version / arch / cache</text>
+        <text x="580" y="58" font-size="10" fill="#5b9bd5" font-weight="700">runs: 5 stages →</text>
+
+        <!-- stages -->
+        <!-- Resolve -->
+        <g tabindex="0" role="listitem" aria-label="1 Resolve — version tag, branch, commit, or .v-version file">
+          <title>Resolve — version input or .v-version</title>
+          <rect x="16" y="88" width="128" height="96" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.3)"></rect>
+          <rect x="16" y="88" width="128" height="4" rx="2" fill="#5b9bd5"></rect>
+          <circle cx="30" cy="106" r="9" fill="#5b9bd5" aria-hidden="true"></circle>
+          <text x="30" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">1</text>
+          <text
+            x="48"
+            y="108"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">resolve</text
+          >
+          <text x="30" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Version</text>
+          <text x="30" y="144" font-size="9.5" fill="#b8d0e6">stable / nightly</text>
+          <text x="30" y="158" font-size="9" fill="#8bb8e0" font-family="ui-monospace, monospace">.v-version</text>
+          <text x="120" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ 0.4.9</text>
+        </g>
+        <g aria-hidden="true">
+          <line x1="144" y1="136" x2="168" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="171,136 165,132 165,140" fill="#5b9bd5"></polygon>
+        </g>
+
+        <!-- Arch -->
+        <g tabindex="0" role="listitem" aria-label="2 Arch — detect runner arch x64 or arm64, warn on exotic">
+          <title>Arch — x64 / arm64 — fallback warning</title>
+          <rect x="176" y="88" width="128" height="96" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
+          <circle cx="190" cy="106" r="9" fill="rgba(91,155,213,0.92)"></circle>
+          <text x="190" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">2</text>
+          <text
+            x="208"
+            y="108"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">arch</text
+          >
+          <text x="190" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Arch</text>
+          <text x="190" y="144" font-size="9.5" fill="#b8d0e6">x64 · arm64</text>
+          <text x="190" y="158" font-size="9" fill="#8bb8e0">detect + warn</text>
+          <text x="280" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ linux/amd64</text>
+        </g>
+        <g aria-hidden="true">
+          <line x1="304" y1="136" x2="328" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="331,136 325,132 325,140" fill="#5b9bd5"></polygon>
+        </g>
+
+        <!-- Cache -->
+        <g
+          tabindex="0"
+          role="listitem"
+          aria-label="3 Cache — restore binary from GitHub cache, key version-os-arch, hit skips install"
+        >
+          <title>Cache — key: version + os + arch</title>
+          <rect x="336" y="88" width="128" height="96" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.32)"></rect>
+          <rect x="336" y="88" width="128" height="4" rx="2" fill="#7cb7c9"></rect>
+          <circle cx="350" cy="106" r="9" fill="#7cb7c9"></circle>
+          <text x="350" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">3</text>
+          <text
+            x="368"
+            y="108"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">cache</text
+          >
+          <text x="350" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Cache</text>
+          <text x="350" y="144" font-size="9.5" fill="#b8d0e6">restore</text>
+          <text x="350" y="158" font-size="9" fill="#8bb8e0">key: v+os+arch</text>
+          <text x="440" y="166" text-anchor="end" font-size="8.5" fill="#7cb7c9">hit → skip</text>
+        </g>
+        <g aria-hidden="true">
+          <line x1="464" y1="136" x2="488" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="491,136 485,132 485,140" fill="#5b9bd5"></polygon>
+          <!-- cache bypass dashed -->
+          <path
+            d="M 400 184 L 400 212 L 560 212 L 560 136"
+            fill="none"
+            stroke="#7cb7c9"
+            stroke-width="1.4"
+            stroke-dasharray="6 5"
+            stroke-linecap="round"
+            opacity="0.85"></path>
+          <text x="464" y="206" font-size="8.5" fill="#7cb7c9">cache hit path</text>
+        </g>
+
+        <!-- Install -->
+        <g tabindex="0" role="listitem" aria-label="4 Install — fetch prebuilt binary, unpack, add to PATH, no sudo">
+          <title>Install — fetch + unpack + PATH</title>
+          <rect x="496" y="88" width="100" height="96" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
+          <circle cx="510" cy="106" r="9" fill="rgba(91,155,213,0.92)"></circle>
+          <text x="510" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">4</text>
+          <text
+            x="528"
+            y="108"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">install</text
+          >
+          <text x="510" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Fetch</text>
+          <text x="510" y="144" font-size="9.5" fill="#b8d0e6">binary</text>
+          <text x="510" y="158" font-size="9" fill="#8bb8e0">+ PATH</text>
+        </g>
+        <g aria-hidden="true">
+          <line x1="596" y1="136" x2="620" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="623,136 617,132 617,140" fill="#5b9bd5"></polygon>
+        </g>
+
+        <!-- Verify -->
+        <g tabindex="0" role="listitem" aria-label="5 Verify — run v version, expose outputs v-version and cache-hit">
+          <title>Verify — v version + outputs</title>
+          <rect x="628" y="88" width="76" height="96" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
+          <circle cx="642" cy="106" r="9" fill="#5b9bd5"></circle>
+          <text x="642" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">5</text>
+          <text
+            x="660"
+            y="108"
+            font-size="9"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">verify</text
+          >
+          <text x="642" y="128" font-size="10.5" font-weight="800" fill="#e6f0fb">Verify</text>
+          <text x="642" y="144" font-size="9" fill="#b8d0e6">v -v</text>
+          <text x="642" y="158" font-size="8.5" fill="#8bb8e0">outputs</text>
+        </g>
+
+        <!-- bottom outputs -->
+        <rect
+          x="16"
+          y="202"
+          width="688"
+          height="62"
+          rx="12"
+          fill="rgba(255,255,255,0.05)"
+          stroke="rgba(91,155,213,0.18)"></rect>
+        <text
+          x="30"
+          y="222"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.06em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">outputs · used by later steps</text
+        >
+        <g aria-hidden="true">
+          <rect x="30" y="230" width="140" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="44" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
+            >v-version: 0.4.9</text
+          >
+          <rect x="180" y="230" width="136" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
+            >cache-hit: true</text
+          >
+          <rect x="326" y="230" width="160" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="340" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">v path: /…/v/v</text
+          >
+        </g>
+        <text x="508" y="247" font-size="10" fill="#8bb8e0"
+          >→ <tspan font-family="ui-monospace, monospace">v install</tspan> or <tspan
+            font-family="ui-monospace, monospace">v test</tspan
+          ></text
+        >
+
+        <!-- bottom platforms -->
+        <rect x="16" y="278" width="688" height="46" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.22)"></rect>
+        <text
+          x="30"
+          y="296"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.06em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">runners</text
+        >
+        <g aria-hidden="true">
+          <rect x="112" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
+          <text x="158" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">ubuntu-latest</text>
+          <rect x="212" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
+          <text x="258" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">macos-latest</text>
+          <rect x="312" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
+          <text x="358" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">windows-latest</text>
+          <text x="420" y="304" font-size="10" fill="#8bb8e0">+ self-hosted · arch auto</text>
+        </g>
+      </svg>
+
+      <div class="setup__fallback" role="list" aria-label="setup-v pipeline steps">
+        {
+          setupVPipeline.map((s, idx) => (
+            <span class="setup__chip" role="listitem">
+              <span class="setup__chip-num">{idx + 1}</span>
+              <strong>{s.label}</strong>
+              <span>{s.description}</span>
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="setup__cards">
+      <article class="setup__card">
+        <h3 class="setup__card-title">Cache is the feature</h3>
+        <p class="setup__card-text">
+          GitHub cache keyed by version+OS+arch. Cache hit skips the binary download — CI goes from ~40s to ~4s. Core
+          Team keeps prebuilts for x64 + arm64 on every tag.
+        </p>
+        <div class="setup__code" role="region" aria-label="setup-v usage yaml">
+          <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">vlang/setup-v@v1</span>
+  <span class="setup__c-kw">with</span>:
+    <span class="setup__c-kw">version</span>: <span class="setup__c-str">'0.4.9'</span>  <span class="setup__c-cmt"># or .v-version</span>
+    <span class="setup__c-kw">cache</span>: <span class="setup__c-kw">true</span></code></pre>
+        </div>
+      </article>
+      <article class="setup__card">
+        <h3 class="setup__card-title">Version is flexible</h3>
+        <p class="setup__card-text">
+          Accepts tag (<code>0.4.9</code>), branch (<code>master</code>), commit SHA, or file path (<code
+            >.v-version</code
+          >). No token needed for tags — uses blob fetch.
+        </p>
+        <ul class="setup__list">
+          <li>Also: <code>latest</code>, <code>stable</code>, semver range</li>
+          <li>Self-hosted: respects pre-installed V</li>
+          <li>Post-job: cleanup via <code>action.yml</code> post entry</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+
+  <p class="setup__note">
+    Action: <a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">vlang/setup-v ↗</a> · Marketplace:
+    <code>vlang/setup-v@v1</code> · Cache docs via <code>README.md</code> inputs table.
+  </p>
+</section>
+
+<style>
+  .setup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem;
+    border-radius: 16px;
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .setup__header {
+    max-width: 48rem;
+  }
+
+  .setup__eyebrow {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .setup__title {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .setup__desc {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .setup__desc code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.82rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.08rem 0.3rem;
+  }
+
+  .setup__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 920px) {
+    .setup__grid {
+      grid-template-columns: 1.45fr 0.95fr;
+      align-items: start;
+    }
+  }
+
+  .setup__diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .setup__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid var(--color-sand, #e9d8c3);
+    overflow: hidden;
+  }
+
+  .setup__svg g[tabindex='0']:focus-visible {
+    outline: none;
+  }
+
+  .setup__svg g[tabindex='0']:focus-visible rect {
+    stroke: var(--color-focus, #005fcc) !important;
+    stroke-width: 2.2 !important;
+  }
+
+  .setup__fallback {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .setup__chip {
+    display: inline-flex;
+    gap: 0.35rem;
+    align-items: center;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--color-deep-ink, #181512);
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 6%, #f7f0e6));
+    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+    border-radius: 999px;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .setup__chip-num {
+    display: inline-grid;
+    place-items: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 999px;
+    background: var(--theme-accent, #1e5a8a);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .setup__chip strong {
+    font-weight: 800;
+  }
+
+  .setup__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .setup__card {
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
+    border: 1px solid var(--theme-border-accent);
+  }
+
+  .setup__card-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .setup__card-text {
+    margin: 0 0 0.6rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .setup__card-text code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.08rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .setup__list {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .setup__list code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.08rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .setup__code {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 42, 68, 0.12);
+    background: #0f2a44;
+  }
+
+  .setup__code pre {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    overflow-x: auto;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: #cfe1f5;
+  }
+
+  .setup__c-kw {
+    color: #7cb7c9;
+    font-weight: 600;
+  }
+  .setup__c-str {
+    color: #f4c7a5;
+  }
+  .setup__c-cmt {
+    color: #8bb8e0;
+    opacity: 0.9;
+  }
+
+  .setup__note {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+    border-top: 1px dashed var(--theme-border-accent);
+    padding-top: 0.7rem;
+  }
+
+  .setup__note a {
+    color: var(--theme-accent-strong, #16446a);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .setup__note a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .setup__note code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.08rem 0.3rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .setup__svg * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

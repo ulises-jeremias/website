@@ -1,0 +1,453 @@
+---
+import { vslBackends } from '../data/index.js';
+---
+
+<section class="vsl" aria-labelledby="vsl-title">
+  <header class="vsl__header">
+    <p class="vsl__eyebrow">02 · VSL</p>
+    <h2 id="vsl-title" class="vsl__title">Pure-V by default, C when you ask</h2>
+    <p class="vsl__desc">
+      VSL ships pure-V BLAS/LAPACK with no system deps. Flip a compile flag and it delegates to OpenBLAS / LAPACKE.
+      Deterministic fractals (Sierpinski, Mandelbrot, Julia) prove both paths pixel-identical — with graceful CPU
+      fallback and <code>prefers-reduced-motion</code> support.
+    </p>
+  </header>
+
+  <div class="vsl__grid">
+    <!-- fractal + backend selector -->
+    <div class="vsl__diagram">
+      <svg
+        viewBox="0 0 560 360"
+        role="img"
+        aria-labelledby="vslSvgTitle vslSvgDesc"
+        xmlns="http://www.w3.org/2000/svg"
+        class="vsl__svg"
+      >
+        <title id="vslSvgTitle">VSL — fractal backends and pure-V pipeline</title>
+        <desc id="vslSvgDesc">
+          Left: Sierpinski triangle levels showing deterministic subdivision. Right: two backend pills (Pure V default,
+          CBLAS/LAPACKe optional) feeding into LA pipeline via arrow. Bottom: visualization row with mandelbrot/julia
+          mini previews.
+        </desc>
+        <!-- backdrop -->
+        <rect x="0" y="0" width="560" height="360" rx="14" fill="#0f2a44"></rect>
+        <rect x="0" y="0" width="560" height="18" rx="6" fill="rgba(91,155,213,0.18)" aria-hidden="true"></rect>
+
+        <!-- fractal panel left -->
+        <rect
+          x="14"
+          y="28"
+          width="258"
+          height="258"
+          rx="12"
+          fill="#102e4e"
+          stroke="rgba(91,155,213,0.22)"
+          aria-hidden="true"></rect>
+        <text
+          x="28"
+          y="46"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">fractal · deterministic</text
+        >
+        <text x="28" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">Sierpinski · lvl 4</text>
+
+        <!-- Sierpinski via triangles -->
+        <!-- level 0 big -->
+        <polygon points="143,78 56,228 230,228" fill="none" stroke="#5b9bd5" stroke-width="1.8" opacity="0.95"
+        ></polygon>
+        <!-- level 1 inverted -->
+        <polygon points="143,153 99.5,228 186.5,228" fill="rgba(91,155,213,0.14)" stroke="#5b9bd5" stroke-width="1.25"
+        ></polygon>
+        <polygon points="99.5,78 56,153 143,153" fill="none" stroke="#5b9bd5" stroke-width="1.1" opacity="0.9"
+        ></polygon>
+        <polygon points="186.5,78 143,153 230,153" fill="none" stroke="#5b9bd5" stroke-width="1.1" opacity="0.9"
+        ></polygon>
+        <!-- level 2 smaller -->
+        <polygon
+          points="77.5,115.5 56,153 99.5,153"
+          fill="rgba(91,155,213,0.08)"
+          stroke="rgba(91,155,213,0.7)"
+          stroke-width="0.9"></polygon>
+        <polygon
+          points="121,115.5 99.5,153 143,153"
+          fill="rgba(91,155,213,0.08)"
+          stroke="rgba(91,155,213,0.7)"
+          stroke-width="0.9"></polygon>
+        <polygon
+          points="165,115.5 143,153 186.5,153"
+          fill="rgba(91,155,213,0.08)"
+          stroke="rgba(91,155,213,0.7)"
+          stroke-width="0.9"></polygon>
+        <polygon
+          points="208.5,115.5 186.5,153 230,153"
+          fill="rgba(91,155,213,0.08)"
+          stroke="rgba(91,155,213,0.7)"
+          stroke-width="0.9"></polygon>
+
+        <!-- backend selector right -->
+        <rect x="286" y="28" width="260" height="258" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.22)"></rect>
+        <text
+          x="300"
+          y="46"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">backends · flag select</text
+        >
+        <text x="300" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">LA pipeline</text>
+
+        <!-- Pure V pill -->
+        <g tabindex="0" role="listitem" aria-label="Pure V — default — zero deps — competitive speed">
+          <title>Pure V — zero deps</title>
+          <rect x="300" y="76" width="232" height="44" rx="11" fill="#5b9bd5" stroke="rgba(255,255,255,0.18)"></rect>
+          <text x="318" y="96" font-size="11.5" font-weight="800" fill="#0f2a44">Pure V</text>
+          <text x="318" y="110" font-size="10.5" fill="#0f2a44" opacity="0.85">default · zero deps</text>
+          <text x="514" y="102" text-anchor="end" font-size="11" font-weight="700" fill="#0f2a44">✓</text>
+        </g>
+
+        <!-- CBLAS -->
+        <g tabindex="0" role="listitem" aria-label="OpenBLAS CBLAS — flag dash d vsl_blas_cblas — max throughput">
+          <title>CBLAS — -d vsl_blas_cblas</title>
+          <rect
+            x="300"
+            y="128"
+            width="232"
+            height="44"
+            rx="11"
+            fill="rgba(255,255,255,0.06)"
+            stroke="rgba(91,155,213,0.3)"></rect>
+          <text x="318" y="148" font-size="11.5" font-weight="700" fill="#e6f0fb">OpenBLAS</text>
+          <text x="318" y="162" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace"
+            >-d vsl_blas_cblas</text
+          >
+          <text x="514" y="154" text-anchor="end" font-size="10" fill="#8bb8e0">optional</text>
+        </g>
+
+        <!-- LAPACKE -->
+        <g tabindex="0" role="listitem" aria-label="LAPACKE — flag dash d vsl_lapack_lapacke — standard C interface">
+          <title>LAPACKE — -d vsl_lapack_lapacke</title>
+          <rect
+            x="300"
+            y="180"
+            width="232"
+            height="44"
+            rx="11"
+            fill="rgba(255,255,255,0.06)"
+            stroke="rgba(91,155,213,0.3)"></rect>
+          <text x="318" y="200" font-size="11.5" font-weight="700" fill="#e6f0fb">LAPACKE</text>
+          <text x="318" y="214" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace"
+            >-d vsl_lapack_lapacke</text
+          >
+          <text x="514" y="206" text-anchor="end" font-size="10" fill="#8bb8e0">optional</text>
+        </g>
+
+        <!-- arrow to vis row -->
+        <line
+          x1="272"
+          y1="160"
+          x2="286"
+          y2="160"
+          stroke="rgba(91,155,213,0.45)"
+          stroke-width="1.8"
+          stroke-dasharray="5 5"
+          stroke-linecap="round"
+          aria-hidden="true"></line>
+        <polygon points="288,160 282,156 282,164" fill="#5b9bd5" aria-hidden="true"></polygon>
+
+        <!-- vis row bottom -->
+        <rect
+          x="14"
+          y="296"
+          width="532"
+          height="50"
+          rx="12"
+          fill="rgba(255,255,255,0.06)"
+          stroke="rgba(91,155,213,0.18)"></rect>
+        <text
+          x="28"
+          y="314"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">visualization</text
+        >
+        <text x="28" y="330" font-size="11" fill="#cfe1f5">Plotly-style · 2D/3D · FFT · stats</text>
+        <g aria-hidden="true">
+          <rect x="360" y="304" width="68" height="34" rx="8" fill="#102e4e" stroke="rgba(91,155,213,0.25)"></rect>
+          <polyline
+            points="368,326 376,316 384,322 392,310 400,318 408,312 416,324"
+            fill="none"
+            stroke="#5b9bd5"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"></polyline>
+          <rect x="436" y="304" width="68" height="34" rx="8" fill="#102e4e" stroke="rgba(91,155,213,0.25)"></rect>
+          <circle cx="470" cy="321" r="10" fill="none" stroke="#7cb7c9" stroke-width="1.3"></circle>
+          <circle cx="470" cy="321" r="4" fill="#7cb7c9" opacity="0.9"></circle>
+          <rect x="460" y="318" width="20" height="2" fill="#7cb7c9" opacity="0.7"></rect>
+        </g>
+        <text x="520" y="322" font-size="9.5" fill="#8bb8e0" aria-hidden="true">→</text>
+      </svg>
+
+      <div class="vsl__fallback" role="list" aria-label="VSL backends fallback">
+        {
+          vslBackends.slice(0, 3).map((b) => (
+            <span class="vsl__chip" role="listitem">
+              <strong>{b.label}</strong> <code>{b.flag}</code> · {b.bestFor}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="vsl__cards">
+      <article class="vsl__card">
+        <h3 class="vsl__card-title">Linear algebra as compiled V</h3>
+        <p class="vsl__card-text">
+          Matrices, vectors, eigen, SVD, QR, Cholesky — same APIs whether pure-V or C-backed. Tests are the spec;
+          benchmarks prove parity.
+        </p>
+        <ul class="vsl__list">
+          <li>Level 1-3 BLAS, LAPACK solvers, eig, SVD</li>
+          <li>MPI + optional OpenCL (roadmap) — same Tensor data</li>
+          <li><code>v run benchmarks/blas_bench.v</code> to compare backends</li>
+        </ul>
+      </article>
+      <article class="vsl__card">
+        <h3 class="vsl__card-title">Visualization without magic</h3>
+        <p class="vsl__card-text">
+          Scientific plotting with a Plotly-shaped API. Heatmaps, histograms, spectrograms — CPU path first,
+          acceleration opt-in.
+        </p>
+        <ul class="vsl__list">
+          <li>Deterministic palettes, no hidden state</li>
+          <li>Graceful CPU fallback, reduced-motion static preview</li>
+          <li>Examples: FFT, geometry playground, GM binning</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+
+  <p class="vsl__note">
+    Try locally: <code>v install vsl</code> → <code>v run examples/*/main.v</code>. Docs: <a
+      href="https://vlang.github.io/vsl"
+      target="_blank"
+      rel="noreferrer">vlang.github.io/vsl ↗</a
+    >. Source: <a href="https://github.com/vlang/vsl" target="_blank" rel="noreferrer">vlang/vsl ↗</a>.
+  </p>
+</section>
+
+<style>
+  .vsl {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem;
+    border-radius: 16px;
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .vsl__header {
+    max-width: 48rem;
+  }
+
+  .vsl__eyebrow {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .vsl__title {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .vsl__desc {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .vsl__desc code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.82rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.1rem 0.3rem;
+  }
+
+  .vsl__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 860px) {
+    .vsl__grid {
+      grid-template-columns: 1.45fr 0.95fr;
+      align-items: start;
+    }
+  }
+
+  .vsl__diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .vsl__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid var(--color-sand, #e9d8c3);
+    overflow: hidden;
+  }
+
+  .vsl__svg g[tabindex='0']:focus-visible {
+    outline: none;
+  }
+
+  .vsl__svg g[tabindex='0']:focus-visible rect {
+    stroke: var(--color-focus, #005fcc) !important;
+    stroke-width: 2.2 !important;
+  }
+
+  .vsl__fallback {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .vsl__chip {
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: baseline;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--color-deep-ink, #181512);
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 6%, #f7f0e6));
+    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+    border-radius: 999px;
+    padding: 0.32rem 0.6rem;
+  }
+
+  .vsl__chip strong {
+    font-weight: 800;
+  }
+
+  .vsl__chip code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.74rem;
+    background: rgba(15, 42, 68, 0.07);
+    border-radius: 6px;
+    padding: 0.1rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .vsl__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .vsl__card {
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
+    border: 1px solid var(--theme-border-accent);
+  }
+
+  .vsl__card-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .vsl__card-text {
+    margin: 0 0 0.6rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .vsl__list {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .vsl__list code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.08rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .vsl__note {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+    border-top: 1px dashed var(--theme-border-accent);
+    padding-top: 0.7rem;
+  }
+
+  .vsl__note a {
+    color: var(--theme-accent-strong, #16446a);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .vsl__note a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .vsl__note a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .vsl__note code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.1rem 0.3rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vsl__svg * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,320 @@
+---
+import { toolkitRationale, thinWorkstationVerification } from '../data/index.js';
+---
+
+<section id="toolkit" class="ws-toolkit" aria-labelledby="ws-toolkit-title">
+  <div class="ws-section-head">
+    <span class="ws-kicker" style="color:#84CC16">Why capabilities live in toolkit · thin boundary</span>
+    <h2 id="ws-toolkit-title" class="ws-section-title">Capabilities belong to the toolkit — workstation stays thin</h2>
+    <p class="ws-section-lead">
+      The thin workstation is not a branding choice. It is a contract: the workstation provisions the machine and runs
+      the queue — the toolkit distributes every skill, agent, loop, MCP template and prompt that an AI tool can consume.
+      No duplication. No drift.
+    </p>
+  </div>
+
+  <div class="ws-rationale-grid" role="list">
+    {
+      toolkitRationale.map((p) => (
+        <article class="ws-rationale-card" role="listitem">
+          <div class="ws-rationale-card__icon" aria-hidden="true">
+            {p.icon}
+          </div>
+          <h3 class="ws-rationale-card__title">{p.title}</h3>
+          <p class="ws-rationale-card__desc">{p.description}</p>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="ws-verification" role="note" aria-labelledby="ws-verif-title">
+    <div class="ws-verification__head">
+      <span class="ws-verification__badge">Verified · thin workstation</span>
+      <h3 id="ws-verif-title" class="ws-verification__title">Terminology check — what “thin” means in this repo</h3>
+    </div>
+
+    <blockquote class="ws-verification__quote">“{thinWorkstationVerification.statement}”</blockquote>
+
+    <div class="ws-verification__grid">
+      <div class="ws-verification__col">
+        <h4 class="ws-verification__col-title">No embedded</h4>
+        <ul class="ws-verification__list ws-verification__list--bad">
+          {
+            thinWorkstationVerification.noEmbedded.map((n) => (
+              <li>
+                <code>{n}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="ws-verification__col">
+        <h4 class="ws-verification__col-title">Workstation keeps only</h4>
+        <ul class="ws-verification__list ws-verification__list--good">
+          {
+            thinWorkstationVerification.kept.map((n) => (
+              <li>
+                <code>{n}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="ws-verification__col ws-verification__col--full">
+        <h4 class="ws-verification__col-title">Install path (sole)</h4>
+        <pre class="ws-verification__code"><code>{thinWorkstationVerification.installPath}</code></pre>
+        <p class="ws-verification__refs">
+          Sources:
+          {
+            thinWorkstationVerification.references.map((r, i) => (
+              <>
+                <code>{r}</code>
+                {i < thinWorkstationVerification.references.length - 1 ? ' · ' : ''}
+              </>
+            ))
+          }
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ws-toolkit__flow" role="note">
+    <h3 class="ws-toolkit__flow-title">Delivery flow — workstation installs, toolkit owns orchestration</h3>
+    <ol class="ws-toolkit__flow-steps">
+      <li>
+        <code>chezmoi init --apply</code> → <code>run_once_after_50-install-agent-toolkit.sh.tmpl</code> →
+        <code>uv tool install --force agent-toolkit-cli</code>
+      </li>
+      <li>
+        <code>agent-toolkit install</code> → catalog (<code>SKILL.md</code>) + symlinks (<code>dots-skills sync</code> delegated)
+      </li>
+      <li>
+        <code>agent-toolkit loop run / swarm start --recipe pair --ui herdr|tmux</code> → isolated
+        <code>agent-toolkit-swarm-&lt;run-id&gt;</code> worktree + trace
+      </li>
+      <li>
+        <code>dots-doctor --json | jq</code> + <code>agent-toolkit swarm doctor</code> → heartbeat after every upgrade
+      </li>
+    </ol>
+  </div>
+</section>
+
+<style>
+  .ws-toolkit {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+  }
+  .ws-section-head {
+    max-width: 72ch;
+  }
+  .ws-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #22d3ee;
+    margin-bottom: 0.45rem;
+  }
+  .ws-section-title {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.18;
+    color: #f8fafc;
+  }
+  .ws-section-lead {
+    margin: 0;
+    color: #94a3b8;
+    line-height: 1.65;
+    font-size: 0.96rem;
+  }
+  .ws-rationale-grid {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 760px) {
+    .ws-rationale-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .ws-rationale-card {
+    padding: 1.15rem 1.1rem 1.05rem;
+    border-radius: 1.05rem;
+    background: rgba(15, 23, 42, 0.68);
+    border: 1px solid rgba(51, 65, 85, 0.62);
+    border-left: 2px solid #84cc16;
+  }
+  .ws-rationale-card__icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 0.7rem;
+    background: rgba(132, 204, 22, 0.12);
+    border: 1px solid rgba(132, 204, 22, 0.22);
+    color: #84cc16;
+    font-weight: 800;
+    margin-bottom: 0.6rem;
+  }
+  .ws-rationale-card__title {
+    margin: 0 0 0.4rem;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: #f8fafc;
+    line-height: 1.3;
+  }
+  .ws-rationale-card__desc {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .ws-verification {
+    padding: 1.25rem 1.2rem 1.15rem;
+    border-radius: 1.25rem;
+    background: #020617;
+    border: 1px solid rgba(132, 204, 22, 0.28);
+    box-shadow: 0 0 32px rgba(132, 204, 22, 0.08);
+  }
+  .ws-verification__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+  .ws-verification__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #84cc16;
+    color: #020617;
+  }
+  .ws-verification__title {
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+  .ws-verification__quote {
+    margin: 0 0 1rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: 0.9rem;
+    background: rgba(15, 23, 42, 0.9);
+    border-left: 3px solid #84cc16;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .ws-verification__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 720px) {
+    .ws-verification__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .ws-verification__col--full {
+    grid-column: 1 / -1;
+  }
+  .ws-verification__col-title {
+    margin: 0 0 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e2e8f0;
+  }
+  .ws-verification__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .ws-verification__list li code {
+    display: inline-block;
+    padding: 0.28rem 0.55rem;
+    border-radius: 0.6rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+    border: 1px solid rgba(51, 65, 85, 0.6);
+  }
+  .ws-verification__list--bad li code {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.22);
+    color: #fca5a5;
+    text-decoration: line-through;
+    text-decoration-color: rgba(239, 68, 68, 0.5);
+  }
+  .ws-verification__list--good li code {
+    background: rgba(132, 204, 22, 0.11);
+    border-color: rgba(132, 204, 22, 0.24);
+    color: #bef264;
+  }
+  .ws-verification__code {
+    margin: 0 0 0.55rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.7rem;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    overflow-x: auto;
+  }
+  .ws-verification__code code {
+    color: #bef264;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8rem;
+    white-space: pre;
+  }
+  .ws-verification__refs {
+    margin: 0;
+    color: #475569;
+    font-size: 0.78rem;
+  }
+  .ws-verification__refs code {
+    color: #64748b;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.74rem;
+  }
+  .ws-toolkit__flow {
+    padding: 1.1rem 1.15rem;
+    border-radius: 1.05rem;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px dashed rgba(51, 65, 85, 0.6);
+  }
+  .ws-toolkit__flow-title {
+    margin: 0 0 0.6rem;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #e2e8f0;
+  }
+  .ws-toolkit__flow-steps {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #94a3b8;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .ws-toolkit__flow-steps code {
+    color: #cbd5e1;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem;
+  }
+</style>

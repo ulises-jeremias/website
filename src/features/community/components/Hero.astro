@@ -1,18 +1,186 @@
 ---
-
+/**
+ * Community Hero — workshop identity (K-02)
+ */
 ---
 
-<section class="world-hero" data-theme="community">
-  <h1>Community</h1>
-  <p>Shared workshop — Discord</p>
-  <p><em>Digital Nest — community world. Estructura base M1, contenido detallado en progreso.</em></p>
+<section class="community-hero" aria-labelledby="community-hero-title" data-testid="community-hero">
+  <div class="community-hero__inner">
+    <div class="community-hero__copy">
+      <p class="community-hero__eyebrow">Epic K · Community · shared workshop</p>
+      <h1 id="community-hero-title" class="community-hero__title">
+        Community — <span class="community-hero__accent">shared workshop</span>
+      </h1>
+      <p class="community-hero__lead">
+        El taller compartido conectado a los mundos del proyecto. A bench for drafts, reviews, and small PRs that become
+        documentation — not a broadcast feed.
+      </p>
+      <div class="community-hero__meta" role="list" aria-label="Community facts">
+        <span class="community-hero__meta-item" role="listitem"
+          ><span aria-hidden="true">🛠️</span> Workshop tone — evidence over claims</span
+        ><span class="community-hero__meta-item" role="listitem"
+          ><span aria-hidden="true">📋</span> Typed at the edge — Zod, Astro check, tests</span
+        ><span class="community-hero__meta-item" role="listitem"
+          ><span aria-hidden="true">🔗</span> Linked provenance — every pattern has a PR</span
+        >
+      </div>
+    </div>
+    <div class="community-hero__visual" aria-hidden="true">
+      <div class="community-hero__card">
+        <div class="community-hero__card-bar">
+          <span class="community-hero__dot"></span><span class="community-hero__dot"></span><span
+            class="community-hero__dot"></span><span class="community-hero__card-title"
+            >workshop board · weekly triage</span
+          >
+        </div>
+        <div class="community-hero__card-body">
+          <div class="community-hero__board">
+            <span class="community-hero__board-chip">good first issue</span><span class="community-hero__board-chip"
+              >documentation</span
+            ><span class="community-hero__board-chip">templates</span><span class="community-hero__board-chip"
+              >V · VSL</span
+            >
+          </div><p class="community-hero__card-text">
+            Pick a labeled issue · reproduce · PR with tests · review → merge.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <style>
-  .world-hero {
-    padding: var(--space-8) 0;
-    border-bottom: 1px solid var(--color-border);
+  .community-hero {
+    padding: clamp(2rem, 5vw, 3rem) 0;
+    border-bottom: 1px solid var(--color-border, #e9d8c3);
+    background: var(--color-bg, #fffdf9);
   }
-  .world-hero h1 {
-    font-size: 2.5rem;
+  .community-hero__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 860px) {
+    .community-hero__inner {
+      grid-template-columns: 1.15fr 0.85fr;
+      padding: 0 1.5rem;
+      gap: 2rem;
+    }
+  }
+  .community-hero__eyebrow {
+    display: inline-flex;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: var(--color-clay-muted, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    color: var(--color-clay-strong, #a14e2f);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.85rem;
+  }
+  .community-hero__title {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--color-ink, #181512);
+    text-wrap: balance;
+  }
+  .community-hero__accent {
+    color: var(--color-clay-strong, #a14e2f);
+  }
+  .community-hero__lead {
+    margin: 0.75rem 0 0;
+    max-width: 60ch;
+    color: var(--color-text-muted, #3a352f);
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    line-height: 1.6;
+  }
+  .community-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    margin-top: 1rem;
+  }
+  .community-hero__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-paper, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    color: var(--color-text-muted, #3a352f);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .community-hero__visual {
+    display: grid;
+    place-items: center;
+  }
+  .community-hero__card {
+    width: min(100%, 22rem);
+    border-radius: 1rem;
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e9d8c3);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+  .community-hero__card-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--color-paper, #f7f0e6);
+    border-bottom: 1px solid var(--color-border, #e9d8c3);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted, #3a352f);
+  }
+  .community-hero__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--color-border-strong, #d4c4b2);
+    display: inline-block;
+  }
+  .community-hero__card-title {
+    margin-left: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted, #3a352f);
+  }
+  .community-hero__card-body {
+    padding: 1rem;
+  }
+  .community-hero__board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .community-hero__board-chip {
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    background: var(--color-paper, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    color: var(--color-text-faint, #6b715e);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .community-hero__card-text {
+    margin: 0.85rem 0 0;
+    color: var(--color-text-muted, #3a352f);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .community-hero {
+      transition: none;
+    }
   }
 </style>

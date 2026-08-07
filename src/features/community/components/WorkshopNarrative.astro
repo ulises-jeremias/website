@@ -1,0 +1,139 @@
+---
+import { workshopSections, communityMeta } from '../data/index.js';
+---
+
+<section class="community-workshop" aria-labelledby="workshop-title" data-testid="workshop-narrative">
+  <header class="community-workshop__header">
+    <p class="community-workshop__eyebrow">Workshop narrative</p><h2
+      id="workshop-title"
+      class="community-workshop__title"
+    >
+      A workshop, not a feed
+    </h2><p class="community-workshop__lead">
+      The Digital Nest is built like a hornero nest — stick by stick, with reviewable joints. Community is where that
+      work is visible before it is finished.
+    </p>
+  </header>
+  <div class="community-workshop__grid">
+    {
+      workshopSections.map((section) => (
+        <article class="community-workshop__card" aria-labelledby={`workshop-${section.id}`}>
+          <h3 id={`workshop-${section.id}`} class="community-workshop__card-title">
+            {section.title}
+          </h3>
+          {section.paragraphs.map((p) => (
+            <p class="community-workshop__card-text">{p}</p>
+          ))}
+        </article>
+      ))
+    }
+  </div>
+  <div class="community-workshop__callout" role="note" aria-label="Workshop principles">
+    <p class="community-workshop__callout-title">Principles you can check</p><ul
+      class="community-workshop__callout-list"
+    >
+      <li>Evidence over claims — every pattern links to a commit, PR, or doc.</li><li>
+        Typed boundaries — Zod at the edge, static HTML by default, islands only when justified.
+      </li><li>One concern per PR — small boards that a single reviewer can hold in mind.</li>
+    </ul><p class="community-workshop__callout-note">{communityMeta.communityDistinctNote}</p>
+  </div>
+</section>
+<style>
+  .community-workshop {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+  }
+  .community-workshop__eyebrow {
+    display: inline-flex;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: var(--color-clay-muted, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+    color: var(--color-clay-strong, #a14e2f);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+  }
+  .community-workshop__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-ink, #181512);
+  }
+  .community-workshop__lead {
+    margin: 0.5rem 0 0;
+    max-width: 62ch;
+    color: var(--color-text-muted, #3a352f);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  .community-workshop__grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 860px) {
+    .community-workshop__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .community-workshop__card {
+    padding: 1.15rem;
+    border-radius: 1rem;
+    background: var(--color-surface, #fff);
+    border: 1px solid var(--color-border, #e9d8c3);
+    box-shadow: var(--shadow-sm);
+  }
+  .community-workshop__card-title {
+    margin: 0 0 0.6rem;
+    font-size: 1.02rem;
+    font-weight: 750;
+    color: var(--color-ink, #181512);
+    letter-spacing: -0.02em;
+  }
+  .community-workshop__card-text {
+    margin: 0 0 0.7rem;
+    color: var(--color-text-muted, #3a352f);
+    line-height: 1.65;
+    font-size: 0.94rem;
+  }
+  .community-workshop__card-text:last-child {
+    margin-bottom: 0;
+  }
+  .community-workshop__callout {
+    margin-top: 1.25rem;
+    padding: 1rem 1.15rem;
+    border-radius: 0.9rem;
+    background: var(--color-paper, #f7f0e6);
+    border: 1px solid var(--color-border, #e9d8c3);
+  }
+  .community-workshop__callout-title {
+    margin: 0 0 0.5rem;
+    font-weight: 750;
+    font-size: 0.95rem;
+    color: var(--color-ink, #181512);
+  }
+  .community-workshop__callout-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--color-text-muted, #3a352f);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+  .community-workshop__callout-list li {
+    margin-bottom: 0.25rem;
+  }
+  .community-workshop__callout-note {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint, #6b715e);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    font-style: italic;
+  }
+</style>

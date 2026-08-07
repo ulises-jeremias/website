@@ -7,6 +7,7 @@
 @import './toolkit.css';
 @import './v.css';
 @import './create-awesome.css';
+@import './community.css';
 
 :root {
   --theme-accent: var(--color-clay);
@@ -68,4 +69,9 @@ a.theme-accent:hover {
 
 [data-theme]:focus-within {
   --color-focus: var(--theme-accent-strong);
+}
+
+[data-section='community'],
+[data-theme='community'] {
+  --theme-id: 'community';
 }
