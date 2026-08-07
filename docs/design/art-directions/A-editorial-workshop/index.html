@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PROTOTYPE — Direction A · Editorial Workshop — Digital Nest</title>
+    <style>
+      :root {
+        --paper: #f7f0e6;
+        --paper-deep: #efe6d8;
+        --ink: #181512;
+        --ink-soft: #3a342e;
+        --rule: #c9bba8;
+        --clay: #a14e2f;
+        --clay-deco: #b85c38;
+        --copper: #9c5f2e;
+        --plum: #7a4458;
+        --moss: #5a5e4f;
+        --margin: clamp(1rem, 4vw, 3.5rem);
+        --measure: 38rem;
+        --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        --sans: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+        --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 1.0625rem;
+        line-height: 1.65;
+      }
+      a {
+        color: var(--clay);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.18em;
+      }
+      a:hover {
+        color: var(--ink);
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--clay);
+        outline-offset: 3px;
+      }
+      .proto-banner {
+        background: var(--ink);
+        color: var(--paper);
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        padding: 0.55rem var(--margin);
+        text-align: center;
+      }
+      .screen-nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        padding: 0.65rem var(--margin);
+        background: color-mix(in srgb, var(--paper) 92%, transparent);
+        border-bottom: 1px solid var(--rule);
+        backdrop-filter: blur(6px);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .screen-nav a {
+        color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .screen-nav a:hover {
+        color: var(--clay);
+      }
+      .screen {
+        border-bottom: 1px solid var(--rule);
+        padding: 2.5rem var(--margin) 3.5rem;
+      }
+      .screen-label {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--moss);
+        margin: 0 0 1.5rem;
+      }
+      .masthead {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.85fr);
+        gap: 2rem 3rem;
+        align-items: end;
+        min-height: calc(100vh - 6.5rem);
+        padding-bottom: 2rem;
+      }
+      @media (max-width: 900px) {
+        .masthead {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+      }
+      .brand-mark {
+        font-family: var(--serif);
+        font-size: clamp(2.8rem, 7vw, 5.2rem);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.75rem;
+        font-weight: 400;
+      }
+      .brand-mark em {
+        font-style: italic;
+        color: var(--clay);
+        font-weight: 400;
+      }
+      .lede {
+        font-family: var(--serif);
+        font-size: 1.25rem;
+        max-width: 28rem;
+        color: var(--ink-soft);
+        margin: 0 0 1.5rem;
+      }
+      .meta-line {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--moss);
+        margin: 0 0 0.35rem;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.5rem;
+        align-items: baseline;
+        margin-top: 1.75rem;
+      }
+      .cta-primary {
+        display: inline-block;
+        border: 1.5px solid var(--ink);
+        padding: 0.55rem 1.1rem;
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+      }
+      .cta-primary:hover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .cta-ghost {
+        font-size: 0.9rem;
+      }
+      .margin-note {
+        border-left: 1px solid var(--clay-deco);
+        padding-left: 1rem;
+        font-family: var(--serif);
+        font-size: 0.95rem;
+        font-style: italic;
+        color: var(--copper);
+        max-width: 16rem;
+      }
+      .margin-note .ann {
+        font-style: normal;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--clay);
+        display: block;
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.05em;
+      }
+      .world-tease {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--rule);
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem 1.5rem;
+        font-size: 0.88rem;
+      }
+      .world-tease dt {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--moss);
+        padding-top: 0.2rem;
+      }
+      .world-tease dd {
+        margin: 0;
+      }
+      .world-tease a {
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid var(--rule);
+      }
+      .world-tease a:hover {
+        border-color: var(--clay);
+        color: var(--clay);
+      }
+
+      /* Worlds editorial index */
+      .atlas-index {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr 1.3fr;
+        gap: 0 2rem;
+      }
+      @media (max-width: 960px) {
+        .atlas-index {
+          grid-template-columns: 1fr;
+        }
+      }
+      .fig-num {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: var(--clay);
+        letter-spacing: 0.08em;
+        margin: 0 0 0.35rem;
+      }
+      .atlas-lead h2 {
+        font-family: var(--serif);
+        font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+        font-weight: 400;
+        line-height: 1.15;
+        margin: 0 0 0.75rem;
+      }
+      .atlas-lead p {
+        max-width: var(--measure);
+        color: var(--ink-soft);
+        margin: 0 0 1.25rem;
+      }
+      .atlas-entry {
+        padding: 1.25rem 0;
+        border-top: 1px solid var(--rule);
+      }
+      .atlas-entry h3 {
+        font-family: var(--serif);
+        font-size: 1.35rem;
+        font-weight: 400;
+        margin: 0 0 0.35rem;
+      }
+      .atlas-entry.featured h3 {
+        font-size: 1.85rem;
+      }
+      .atlas-entry p {
+        margin: 0;
+        font-size: 0.92rem;
+        color: var(--ink-soft);
+        max-width: 32rem;
+      }
+      .atlas-col-side .atlas-entry h3 {
+        font-size: 1.05rem;
+      }
+      .atlas-col-side .atlas-entry {
+        padding: 0.85rem 0;
+      }
+      .hairline {
+        height: 1px;
+        background: var(--rule);
+        margin: 1.5rem 0;
+        border: 0;
+      }
+
+      /* Toolkit field plate */
+      .field-plate {
+        display: grid;
+        grid-template-columns: 1fr 2.2fr 1fr;
+        gap: 1.5rem 2rem;
+        border: 1px solid var(--rule);
+        padding: 1.5rem;
+        background: var(--paper-deep);
+      }
+      @media (max-width: 900px) {
+        .field-plate {
+          grid-template-columns: 1fr;
+        }
+      }
+      .plate-side {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        line-height: 1.55;
+        color: var(--moss);
+      }
+      .plate-side strong {
+        display: block;
+        color: var(--clay);
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.05em;
+      }
+      .plate-main h2 {
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        margin: 0 0 0.5rem;
+      }
+      .plate-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem 2rem;
+        margin: 1.25rem 0;
+        padding: 0.85rem 0;
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        font-family: var(--mono);
+        font-size: 0.8rem;
+      }
+      .plate-stats span {
+        color: var(--moss);
+      }
+      .plate-stats b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .annotation {
+        position: relative;
+        margin: 1rem 0;
+        padding-left: 1.25rem;
+        border-left: 2px solid var(--copper);
+        font-family: var(--serif);
+        font-size: 0.95rem;
+        font-style: italic;
+        color: var(--copper);
+      }
+      .flow-list {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0 0;
+      }
+      .flow-list li {
+        display: grid;
+        grid-template-columns: 2.5rem 1fr;
+        gap: 0.5rem;
+        padding: 0.45rem 0;
+        border-bottom: 1px dotted var(--rule);
+        font-size: 0.9rem;
+      }
+      .flow-list .n {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--clay);
+        padding-top: 0.15rem;
+      }
+
+      /* HorneroConfig field notes */
+      .field-notes {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 2rem;
+      }
+      @media (max-width: 800px) {
+        .field-notes {
+          grid-template-columns: 1fr;
+        }
+      }
+      .notes-header h2 {
+        font-family: var(--serif);
+        font-size: 2rem;
+        font-weight: 400;
+        margin: 0 0 0.5rem;
+      }
+      .plum-rule {
+        border: 0;
+        border-top: 2px solid var(--plum);
+        width: 3rem;
+        margin: 1rem 0;
+      }
+      .note-block {
+        padding: 1rem 0 1rem 1rem;
+        border-left: 1px solid var(--plum);
+        margin-bottom: 1rem;
+      }
+      .note-block h3 {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--plum);
+        margin: 0 0 0.4rem;
+        font-weight: 600;
+      }
+      .note-block p,
+      .note-block pre {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+      .note-block pre {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        background: transparent;
+        color: var(--ink-soft);
+        white-space: pre-wrap;
+        line-height: 1.5;
+      }
+
+      /* Mobile framed panel */
+      .mobile-frame-wrap {
+        display: flex;
+        justify-content: center;
+        padding: 1rem 0 2rem;
+      }
+      .mobile-frame {
+        width: 100%;
+        max-width: 390px;
+        border: 1px solid var(--ink);
+        background: var(--paper);
+        padding: 1.25rem 1.1rem 2rem;
+        box-shadow: 6px 6px 0 var(--paper-deep);
+      }
+      .mobile-frame .brand-mark {
+        font-size: 2.1rem;
+      }
+      .mobile-nav-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.25rem 0 0;
+      }
+      .mobile-nav-list li {
+        border-top: 1px solid var(--rule);
+        padding: 0.65rem 0;
+        font-family: var(--serif);
+        font-size: 1.05rem;
+      }
+      .mobile-nav-list a {
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .mobile-nav-list .hint {
+        display: block;
+        font-family: var(--sans);
+        font-size: 0.75rem;
+        color: var(--moss);
+        margin-top: 0.15rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="proto-banner" role="status">PROTOTYPE — Direction A — not production. For C-02 review.</div>
+    <nav class="screen-nav" aria-label="Prototype screens">
+      <a href="#home-desktop">01 Home</a>
+      <a href="#home-worlds">02 Worlds</a>
+      <a href="#toolkit">03 Toolkit</a>
+      <a href="#extra">04 HorneroConfig</a>
+      <a href="#home-mobile">05 Mobile</a>
+    </nav>
+
+    <section class="screen" id="home-desktop" aria-labelledby="home-title">
+      <p class="screen-label">Screen · #home-desktop</p>
+      <div class="masthead">
+        <div>
+          <p class="meta-line">The Digital Nest · field guide · La Plata, Buenos Aires, Argentina</p>
+          <h1 class="brand-mark" id="home-title">Ulises<br /><em>Jeremias</em></h1>
+          <p class="lede">
+            Solutions Architect @ NaNLABS · Core Team @ V · AUR Maintainer. Builds developer tooling, AI-powered
+            workflows, CLI apps, and infrastructure automation.
+          </p>
+          <p class="meta-line">TypeScript · Go · Shell · Python · V</p>
+          <div class="cta-row">
+            <a class="cta-primary" href="mailto:ulisescf.24@gmail.com">Collaborate</a>
+            <a class="cta-ghost" href="https://discord.gg/bR5VyATgka">Discord</a>
+            <a class="cta-ghost" href="https://github.com/ulises-jeremias">GitHub ↗</a>
+          </div>
+          <dl class="world-tease">
+            <dt>01</dt>
+            <dd><a href="#extra">HorneroConfig</a> — portable nest, not a bird product</dd>
+            <dt>02</dt>
+            <dd><a href="#toolkit">Agent Toolkit</a> — one source → many assistants</dd>
+            <dt>03</dt>
+            <dd><a href="#home-worlds">Atlas of worlds</a> — Workstation, V, Create Awesome, Community…</dd>
+          </dl>
+        </div>
+        <aside class="margin-note" aria-label="Marginal note">
+          <span class="ann">fig. i — metaphor</span>
+          The hornero builds by layering mud and straw. The Digital Nest is craft and construction: reusable
+          capabilities assembled into working systems — not literal avian SaaS.
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="home-worlds" aria-labelledby="worlds-title">
+      <p class="screen-label">Screen · #home-worlds · editorial index</p>
+      <div class="atlas-index">
+        <div class="atlas-lead">
+          <p class="fig-num">Plate 01 · Atlas of worlds</p>
+          <h2 id="worlds-title">Unequal weight, intentional order</h2>
+          <p>
+            Worlds are indexed like a field guide — featured nesting sites first, supporting habitats afterward. Not a
+            grid of identical cards.
+          </p>
+          <article class="atlas-entry featured">
+            <p class="fig-num">01 · flagship</p>
+            <h3><a href="#toolkit">Agent Toolkit</a></h3>
+            <p>
+              61 skills · 16 agents · 10 loops · 6 profiles. One reusable source of agent capabilities for Cursor,
+              Claude Code, OpenCode, and more.
+            </p>
+          </article>
+          <article class="atlas-entry">
+            <p class="fig-num">02</p>
+            <h3><a href="#extra">HorneroConfig</a></h3>
+            <p>Dotfiles as field notes: shell, editors, and workstation wiring under one portable nest.</p>
+          </article>
+          <article class="atlas-entry">
+            <p class="fig-num">03</p>
+            <h3>Agentic Workstation</h3>
+            <p>Machine provisioning — chezmoi, packages, LLM policy — the L1 layer the nest sits on.</p>
+          </article>
+        </div>
+        <div class="atlas-col-side">
+          <p class="fig-num">Supporting</p>
+          <article class="atlas-entry">
+            <h3>V ecosystem</h3>
+            <p>Core Team work, tooling, and community around the V language.</p>
+          </article>
+          <article class="atlas-entry">
+            <h3>Create Awesome</h3>
+            <p>Scaffold Node, Python, or V projects with templates and addons.</p>
+          </article>
+          <article class="atlas-entry">
+            <h3>Community</h3>
+            <p>Workshop space and Discord for builders in the nest.</p>
+          </article>
+        </div>
+        <div class="atlas-col-side">
+          <p class="fig-num">Writing &amp; code</p>
+          <article class="atlas-entry">
+            <h3>Blog</h3>
+            <p>Long-form notes on tooling, AI workflows, and infrastructure.</p>
+          </article>
+          <article class="atlas-entry">
+            <h3>Projects</h3>
+            <p>Selected builds across CLI, automation, and agent systems.</p>
+          </article>
+          <article class="atlas-entry">
+            <h3>Open Source</h3>
+            <p>AUR packages, libraries, and contributions beyond the nest.</p>
+          </article>
+          <hr class="hairline" />
+          <p style="font-family: var(--mono); font-size: 0.7rem; color: var(--moss); margin: 0">
+            External · <a href="https://github.com/ulises-jeremias">github.com/ulises-jeremias</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="toolkit" aria-labelledby="toolkit-title">
+      <p class="screen-label">Screen · #toolkit · annotated field plate</p>
+      <div class="field-plate">
+        <aside class="plate-side">
+          <strong>FIELD NOTES</strong>
+          Specimens are skills, agents, loops, and profiles — not marketing tiles.
+          <br /><br />
+          Distribution: write once in the toolkit, mount into many coding assistants.
+        </aside>
+        <div class="plate-main">
+          <p class="fig-num">Plate 02 · Agent Toolkit</p>
+          <h2 id="toolkit-title">One source → many assistants</h2>
+          <p style="margin: 0; color: var(--ink-soft); max-width: 36rem">
+            Reusable agent capabilities: skills, subagents, loops, and profiles that install into Cursor, Claude Code,
+            OpenCode, and Gemini CLI without rewriting the nest for each tool.
+          </p>
+          <div class="plate-stats" role="list">
+            <div role="listitem"><b>61</b> <span>skills</span></div>
+            <div role="listitem"><b>16</b> <span>agents</span></div>
+            <div role="listitem"><b>10</b> <span>loops</span></div>
+            <div role="listitem"><b>6</b> <span>profiles</span></div>
+          </div>
+          <p class="annotation">
+            Copper note — causality, not chrome: a request selects a recipe (pair / team / full), which assigns roles,
+            opens worktrees, and produces governed artifacts.
+          </p>
+          <ol class="flow-list">
+            <li><span class="n">01</span><span>Request arrives with intent and constraints</span></li>
+            <li><span class="n">02</span><span>Recipe: pair · team · full swarm</span></li>
+            <li><span class="n">03</span><span>Roles bind to skills; worktrees isolate change</span></li>
+            <li><span class="n">04</span><span>Handoffs + state → governance → artifact</span></li>
+          </ol>
+        </div>
+        <aside class="plate-side">
+          <strong>INSTALL</strong>
+          <code style="color: var(--ink); display: block; margin-top: 0.35rem">uvx agent-toolkit-cli</code>
+          <br />
+          or permanent:
+          <code style="color: var(--ink); display: block">uv tool install agent-toolkit-cli</code>
+          <br /><br />
+          Arch: <code style="color: var(--ink)">yay -S agent-toolkit-cli</code>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="extra" aria-labelledby="extra-title">
+      <p class="screen-label">Screen · #extra · HorneroConfig field notes</p>
+      <div class="field-notes">
+        <div class="notes-header">
+          <p class="fig-num">Plate 03 · /dotfiles</p>
+          <h2 id="extra-title">HorneroConfig</h2>
+          <hr class="plum-rule" />
+          <p style="color: var(--ink-soft); max-width: 24rem; margin: 0">
+            Portable nest configuration — shell, editors, and environment wiring. Plum accents mark specimen notes; the
+            rest stays paper and ink.
+          </p>
+        </div>
+        <div>
+          <div class="note-block">
+            <h3>Specimen · shell nest</h3>
+            <p>
+              Zsh + starship + shared aliases across machines. The nest migrates; the machine does not own the craft.
+            </p>
+          </div>
+          <div class="note-block">
+            <h3>Specimen · install sketch</h3>
+            <pre>
+# Clone the nest
+git clone https://github.com/ulises-jeremias/dotfiles ~/.config/hornero
+cd ~/.config/hornero && ./install.sh</pre>
+          </div>
+          <div class="note-block">
+            <h3>Cross-link</h3>
+            <p>
+              Pairs with <a href="#toolkit">Agent Toolkit</a> and Agentic Workstation — L3 overlay on L1 machine, L1.5
+              capabilities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="home-mobile" aria-labelledby="mobile-title">
+      <p class="screen-label">Screen · #home-mobile · 390px composition</p>
+      <div class="mobile-frame-wrap">
+        <div class="mobile-frame" role="img" aria-label="Mobile homepage composition at 390px">
+          <p class="meta-line" style="margin-bottom: 0.5rem">Digital Nest</p>
+          <h2 class="brand-mark" id="mobile-title" style="margin-bottom: 0.5rem">Ulises<br /><em>Jeremias</em></h2>
+          <p style="font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 1rem">
+            Solutions Architect @ NaNLABS · Core Team @ V
+          </p>
+          <a class="cta-primary" href="mailto:ulisescf.24@gmail.com" style="font-size: 0.85rem">Collaborate</a>
+          <ul class="mobile-nav-list">
+            <li><a href="#toolkit">Agent Toolkit</a><span class="hint">61 skills · one source</span></li>
+            <li><a href="#extra">HorneroConfig</a><span class="hint">dotfiles nest</span></li>
+            <li><a href="#home-worlds">Workstation</a><span class="hint">L1 provisioning</span></li>
+            <li><a href="#home-worlds">V · Create Awesome · Community</a><span class="hint">more worlds</span></li>
+            <li><a href="#home-worlds">Blog · Projects · Open Source</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

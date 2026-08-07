@@ -7,3 +7,16 @@ package-lock.json
 yarn.lock
 *.lock
 .cspell-words.txt
+.gitignore
+# Binary / visual baselines (prettier has no parser)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+*.pdf
+*.woff
+*.woff2
+*.ttf
+*.otf
