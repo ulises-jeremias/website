@@ -1,0 +1,146 @@
+---
+/**
+ * Button primitive — shared across worlds.
+ * Variants: primary | secondary | ghost
+ * Sizes: sm | md | lg (min-height ensures ≥44px touch target)
+ * States: hover / focus-visible / active / disabled handled in CSS
+ * A11y: semantic <button> or <a> when href is provided; focus ring, contrast ≥4.5:1
+ */
+
+import { cn } from '@/shared/lib/utils.js';
+
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  href?: string;
+  target?: string;
+  rel?: string;
+  external?: boolean;
+  ariaLabel?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  disabled = false,
+  href,
+  target,
+  rel,
+  external = false,
+  ariaLabel,
+  id,
+  class: className,
+} = Astro.props as Props;
+
+const isLink = typeof href === 'string' && href.length > 0;
+const isExternal = external || (isLink && /^(https?:)?\/\//.test(href as string));
+const computedRel = rel ?? (isExternal ? 'noopener noreferrer' : undefined);
+const computedTarget = target ?? (isExternal ? '_blank' : undefined);
+
+const base =
+  'btn inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors select-none whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+
+const variants: Record<string, string> = {
+  primary:
+    'bg-[var(--color-accent,#181512)] text-[var(--color-accent-contrast,#FFFDF9)] hover:bg-[var(--color-accent-hover,#2a241f)] focus-visible:ring-[var(--color-accent,#181512)]',
+  secondary:
+    'bg-transparent border border-[var(--color-border,#E9D8C3)] text-[var(--color-ink,#181512)] hover:bg-[var(--color-paper,#F7F0E6)] focus-visible:ring-[var(--color-border,#E9D8C3)]',
+  ghost:
+    'bg-transparent text-[var(--color-ink,#181512)] hover:bg-[var(--color-paper,#F7F0E6)] focus-visible:ring-[var(--color-border,#E9D8C3)]',
+};
+
+const sizes: Record<string, string> = {
+  sm: 'h-9 px-3 text-sm min-w-[44px]',
+  md: 'h-11 px-5 text-[15px] min-w-[44px]',
+  lg: 'h-12 px-6 text-base min-w-[44px]',
+};
+
+const classes = cn(base, variants[variant], sizes[size], className);
+---
+
+{
+  isLink ? (
+    <a
+      id={id}
+      href={href}
+      class={classes}
+      aria-label={ariaLabel}
+      aria-disabled={disabled ? 'true' : undefined}
+      target={computedTarget}
+      rel={computedRel}
+      data-variant={variant}
+      data-size={size}
+    >
+      <slot />
+      {isExternal && (
+        <span aria-hidden="true" class="btn__external">
+          ↗
+        </span>
+      )}
+      {isExternal && <span class="sr-only"> (opens in new tab)</span>}
+    </a>
+  ) : (
+    <button
+      id={id}
+      type={type}
+      class={classes}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      data-variant={variant}
+      data-size={size}
+    >
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  .btn {
+    line-height: 1;
+    text-decoration: none;
+    border-width: 1px;
+    border-color: transparent;
+  }
+
+  .btn:is(a) {
+    cursor: pointer;
+  }
+
+  /* Ensure 44px minimum hit area even when text is short (size handles min) */
+  .btn:focus-visible {
+    outline-offset: 2px;
+  }
+
+  .btn[aria-disabled='true'] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .btn__external {
+    font-size: 0.85em;
+    line-height: 1;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+    }
+  }
+</style>

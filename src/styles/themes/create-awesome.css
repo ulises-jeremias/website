@@ -1,0 +1,22 @@
+/**
+ * create-awesome.css — Create Awesome App family hub section theme (C-06)
+ */
+
+[data-section='create-awesome'],
+[data-theme='create-awesome'] {
+  --theme-accent: #9a6200;
+  --theme-accent-strong: #7a4d00;
+  --theme-accent-light: #fbbf24;
+  --theme-accent-subtle: color-mix(in srgb, #9a6200 7%, var(--color-warm-paper));
+  --theme-border-accent: color-mix(in srgb, #9a6200 16%, var(--color-sand));
+  --theme-surface-tint: color-mix(in srgb, #9a6200 4%, var(--color-warm-paper));
+  --theme-teal: #0d7a6e;
+  --theme-teal-light: #14b8a6;
+  --theme-blue: #1e5a8a;
+  --theme-green: #2e6b4a;
+  --theme-violet: #6b4a9c;
+  --theme-cyan: #0e7490;
+  --theme-illustration: 'template preview cards, scaffolding diagrams';
+  --theme-shape: 'rounded cards with amber top border';
+  --theme-texture: 'confetti of template icons on tint';
+}

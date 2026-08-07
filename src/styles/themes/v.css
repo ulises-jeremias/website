@@ -1,0 +1,19 @@
+/**
+ * v.css — V ecosystem section theme (C-06)
+ */
+
+[data-section='v'],
+[data-theme='v'] {
+  --theme-accent: #1e5a8a;
+  --theme-accent-strong: #16446a;
+  --theme-accent-light: #5b9bd5;
+  --theme-accent-subtle: color-mix(in srgb, #1e5a8a 7%, var(--color-warm-paper));
+  --theme-border-accent: color-mix(in srgb, #1e5a8a 16%, var(--color-sand));
+  --theme-surface-tint: color-mix(in srgb, #1e5a8a 3%, var(--color-warm-paper));
+  --theme-blue-gray: #475569;
+  --theme-peach: #f4c7a5;
+  --theme-cyan: #7cb7c9;
+  --theme-illustration: 'node graphs, pipeline diagrams, infrastructure glyphs';
+  --theme-shape: 'angular cards, rule-heavy layout';
+  --theme-texture: 'subtle topographic lines';
+}

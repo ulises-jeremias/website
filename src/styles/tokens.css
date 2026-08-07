@@ -1,72 +1,115 @@
-/* Preliminary design tokens for Epic B navigation — Epic C owns final palette.
-   These fallbacks ensure Header/MobileNav render correctly even before C lands.
-   Values are WCAG AA vetted placeholders; C will replace with Digital Nest palette. */
+/**
+ * tokens.css — Digital Nest global design tokens (C-04)
+ *
+ * Primitives: 8 umbrella brand colors + derived accessible variants.
+ * All foreground/background pairs are tested for WCAG 2.1 AA:
+ *   - Normal text 4.5:1
+ *   - Large text (≥18pt bold / ≥24pt) and UI 3:1
+ *   - Focus ring 3:1 against adjacent background
+ *
+ * Contrast reference (sRGB, relative luminance per WCAG):
+ *
+ * | Pair                          | Ratio | AA normal | AA large/UI |
+ * |-------------------------------|------:|:---------:|:-----------:|
+ * | Deep ink #181512 on Warm paper #F7F0E6 | 16.07 |   yes AAA | yes |
+ * | Deep ink on Warm white #FFFDF9        | 17.90 |   yes AAA | yes |
+ * | Deep ink on Sand #E9D8C3              | 13.05 |   yes AAA | yes |
+ * | Clay #B85C38 on Warm paper            |  4.01 |   no      | yes |
+ * | Clay on Warm white                    |  4.47 |   no*     | yes |
+ * | Moss #6B715E on Warm paper            |  4.47 |   no*     | yes |
+ * | Moss on Warm white                    |  4.98 |   yes     | yes |
+ * | Copper #D99058 on Deep ink            |  7.00 |   yes     | yes |
+ * | Cool sky #7CB7C9 on Deep ink          |  8.20 |   yes AAA | yes |
+ * | Clay on Deep ink                      |  4.01 |   no      | yes |
+ * | Moss on Deep ink                      |  3.59 |   no      | yes |
+ * | Copper on Warm paper                  |  2.30 |   no      | no  |
+ * | Cool sky on Warm paper                |  1.96 |   no      | no  |
+ *   * 4.47 is 0.03 below AA for normal text — use --color-*-strong on light.
+ *
+ * Rules:
+ * - Copper and Cool sky are NOT body text on light backgrounds (fail 3:1).
+ *   Use only on Deep ink or as border/icon on light.
+ * - Clay and Moss normal text on light must use --color-clay-strong / --color-moss-strong.
+ * - Copper / Cool sky text on dark uses the primitive directly (passes AA).
+ * - No mid-tone passes AA on both light and dark simultaneously (L must be
+ *   ≤0.156 for warm paper AA and ≥0.210 for deep ink AA) — use light/dark variants.
+ */
 
 :root {
-  --color-paper: #f7f0e6;
+  --color-warm-paper: #f7f0e6;
   --color-sand: #e9d8c3;
   --color-clay: #b85c38;
   --color-copper: #d99058;
-  --color-ink: #181512;
-  --color-sky: #7cb7c9;
+  --color-deep-ink: #181512;
+  --color-cool-sky: #7cb7c9;
   --color-moss: #6b715e;
   --color-warm-white: #fffdf9;
-  --color-bg: var(--color-warm-white);
-  --color-text: var(--color-ink);
-  --color-muted: #4a4a4a;
-  --color-border: #d5c2c6;
-  --color-accent: var(--color-clay);
-  --color-focus: #005fcc;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --color-warm-paper-rgb: 247 240 230;
+  --color-sand-rgb: 233 216 195;
+  --color-clay-rgb: 184 92 56;
+  --color-copper-rgb: 217 144 88;
+  --color-deep-ink-rgb: 24 21 18;
+  --color-cool-sky-rgb: 124 183 201;
+  --color-moss-rgb: 107 113 94;
+  --color-warm-white-rgb: 255 253 249;
+  --color-clay-strong: #a14e2f;
+  --color-moss-strong: #5a5e4f;
+  --color-cool-sky-strong: #3e6572;
+  --color-copper-strong: #9c5f2e;
+  --color-clay-light: #e07a5f;
+  --color-moss-light: #a8ad9a;
+  --color-sand-light: #f0e0cc;
+  --color-sand-muted: color-mix(in srgb, var(--color-sand) 65%, white);
+  --color-clay-muted: color-mix(in srgb, var(--color-clay) 12%, var(--color-warm-paper));
+  --color-moss-muted: color-mix(in srgb, var(--color-moss) 10%, var(--color-warm-paper));
+  --color-deep-ink-faint: color-mix(in srgb, var(--color-deep-ink) 8%, var(--color-warm-paper));
+  --color-neutral-0: #fffdf9;
+  --color-neutral-50: #f7f0e6;
+  --color-neutral-100: #e9d8c3;
+  --color-neutral-200: #d4c4b2;
+  --color-neutral-700: #3a352f;
+  --color-neutral-900: #181512;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 10px 30px rgb(0 0 0 / 0.1), 0 4px 12px rgb(0 0 0 / 0.06);
+  --shadow-focus: 0 0 0 3px color-mix(in srgb, var(--color-clay) 22%, transparent);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+  --space-0: 0;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
   --space-12: 3rem;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --max-width: 72rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-section-y: var(--space-24);
+  --space-section-y-sm: var(--space-16);
+  --space-content-gap: var(--space-6);
+  --space-card-gap: var(--space-4);
+  --space-card-padding: var(--space-6);
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 320ms;
+  --ease-default: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (forced-colors: active) {
   :root {
-    --color-bg: #181512;
-    --color-text: #fffdf9;
-    --color-muted: #b0a8a0;
-    --color-border: #3a2a24;
-  }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: var(--font-sans);
-  background: var(--color-bg);
-  color: var(--color-text);
-}
-
-a {
-  color: var(--color-accent);
-}
-
-a:focus-visible,
-button:focus-visible,
-summary:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
+    --shadow-focus: 0 0 0 3px CanvasText;
   }
 }

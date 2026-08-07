@@ -1,0 +1,21 @@
+/**
+ * workstation.css — Workstation / HorneroConfig section theme (C-06)
+ */
+
+[data-section='workstation'],
+[data-theme='workstation'] {
+  --theme-accent: #1e5a8a;
+  --theme-accent-strong: #16446a;
+  --theme-accent-light: #38bdf8;
+  --theme-accent-subtle: color-mix(in srgb, #1e5a8a 8%, var(--color-warm-paper));
+  --theme-border-accent: color-mix(in srgb, #1e5a8a 18%, var(--color-sand));
+  --theme-surface-tint: color-mix(in srgb, #1e5a8a 4%, var(--color-warm-paper));
+  --theme-accent-secondary: #a78bfa;
+  --theme-accent-tertiary: #84cc16;
+  --theme-violet: #a78bfa;
+  --theme-lime: #84cc16;
+  --theme-midnight: #0f1a2e;
+  --theme-illustration: 'terminal frames, tiling WM diagrams, key-hint glyphs';
+  --theme-shape: 'sharp corners, grid, monospace badges';
+  --theme-texture: 'thin rules, caret blinking accent';
+}
