@@ -66,7 +66,13 @@ export const variants: CreateAwesomeVariant[] = [
     href: 'https://create-awesome-node-app.vercel.app',
     repo: 'Create-Node-App/create-awesome-node-app',
     templates: [
-      { id: 'react-vite', name: 'React + Vite', description: 'SPA with Vite, React 18, ESLint', stack: ['React', 'Vite'], featured: true },
+      {
+        id: 'react-vite',
+        name: 'React + Vite',
+        description: 'SPA with Vite, React 18, ESLint',
+        stack: ['React', 'Vite'],
+        featured: true,
+      },
       { id: 'nextjs', name: 'Next.js', description: 'SSR/SSG with App Router', stack: ['Next.js'] },
       { id: 'express', name: 'Express', description: 'API with Express + Zod', stack: ['Express', 'Zod'] },
       { id: 'monorepo', name: 'Monorepo', description: 'Turborepo + pnpm workspaces', stack: ['Turborepo', 'pnpm'] },
@@ -92,7 +98,13 @@ export const variants: CreateAwesomeVariant[] = [
     href: 'https://create-awesome-python-app.vercel.app',
     repo: 'Create-Python-App/create-awesome-python-app',
     templates: [
-      { id: 'fastapi', name: 'FastAPI', description: 'Async API with Pydantic', stack: ['FastAPI', 'Pydantic'], featured: true },
+      {
+        id: 'fastapi',
+        name: 'FastAPI',
+        description: 'Async API with Pydantic',
+        stack: ['FastAPI', 'Pydantic'],
+        featured: true,
+      },
       { id: 'django', name: 'Django', description: 'Batteries-included web', stack: ['Django', 'ORM'] },
       { id: 'cli', name: 'CLI', description: 'Typer + Rich CLI', stack: ['Typer', 'Rich'] },
       { id: 'celery', name: 'Celery Worker', description: 'Task queue', stack: ['Celery', 'Redis'] },
@@ -160,9 +172,23 @@ export const compositionExamples: CompositionExample[] = [
 
 export const contributionSteps: ContributionStep[] = [
   { step: 1, title: 'Pick a family', description: 'Node, Python, or V — each lives in its own c*-templates repo.' },
-  { step: 2, title: 'Add template or addon', description: 'PR a template (full stack) or addon (slice) with schema + docs.', href: 'https://github.com/Create-Node-App/cna-templates' },
-  { step: 3, title: 'Build-time sync', description: 'Catalog stays in c*-templates; website composes at build, no duplication.' },
-  { step: 4, title: 'Ship', description: 'Reviewed PR → new version → npm/pipx/AUR/Docker.', href: 'https://github.com/ulises-jeremias/website' },
+  {
+    step: 2,
+    title: 'Add template or addon',
+    description: 'PR a template (full stack) or addon (slice) with schema + docs.',
+    href: 'https://github.com/Create-Node-App/cna-templates',
+  },
+  {
+    step: 3,
+    title: 'Build-time sync',
+    description: 'Catalog stays in c*-templates; website composes at build, no duplication.',
+  },
+  {
+    step: 4,
+    title: 'Ship',
+    description: 'Reviewed PR → new version → npm/pipx/AUR/Docker.',
+    href: 'https://github.com/ulises-jeremias/website',
+  },
 ];
 
 export const comparisonRows: ComparisonRow[] = [

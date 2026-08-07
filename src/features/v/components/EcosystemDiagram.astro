@@ -7,7 +7,8 @@ import { vEcosystemSteps } from '../data/index.js';
     <p class="eco__eyebrow">Architecture</p>
     <h2 id="eco-title" class="eco__title">One toolchain, five surfaces</h2>
     <p class="eco__desc">
-      V compiles it. VSL and VTL compute it. RxV streams it. setup-v installs it. Tab or use a screen reader to walk each node — SVG has title, desc, and keyboard focus per surface.
+      V compiles it. VSL and VTL compute it. RxV streams it. setup-v installs it. Tab or use a screen reader to walk
+      each node — SVG has title, desc, and keyboard focus per surface.
     </p>
   </header>
 
@@ -21,67 +22,186 @@ import { vEcosystemSteps } from '../data/index.js';
     >
       <title id="ecoSvgTitle">V ecosystem — core, libraries, reactive and CI</title>
       <desc id="ecoSvgDesc">
-        Central V node at top center, four library nodes below (VSL, VTL, RxV), and setup-v pipeline at bottom spanning full width. Arrows show dependencies: libraries depend on V, RxV is independent channel pipeline, setup-v distributes all.
+        Central V node at top center, four library nodes below (VSL, VTL, RxV), and setup-v pipeline at bottom spanning
+        full width. Arrows show dependencies: libraries depend on V, RxV is independent channel pipeline, setup-v
+        distributes all.
       </desc>
 
       <!-- rail -->
-      <rect x="434" y="96" width="12" height="132" rx="6" fill="color-mix(in srgb, #1e5a8a 12%, transparent)" aria-hidden="true"></rect>
-      <rect x="0" y="238" width="880" height="12" rx="6" fill="color-mix(in srgb, #1e5a8a 8%, transparent)" aria-hidden="true"></rect>
+      <rect
+        x="434"
+        y="96"
+        width="12"
+        height="132"
+        rx="6"
+        fill="color-mix(in srgb, #1e5a8a 12%, transparent)"
+        aria-hidden="true"></rect>
+      <rect
+        x="0"
+        y="238"
+        width="880"
+        height="12"
+        rx="6"
+        fill="color-mix(in srgb, #1e5a8a 8%, transparent)"
+        aria-hidden="true"></rect>
 
       <!-- V core top -->
-      <g class="eco__node" tabindex="0" role="listitem" aria-label="V — compiler and tooling — vlang/v — single bootstrap, C output">
+      <g
+        class="eco__node"
+        tabindex="0"
+        role="listitem"
+        aria-label="V — compiler and tooling — vlang/v — single bootstrap, C output"
+      >
         <title>V — vlang/v</title>
         <desc>Compiler, formatter, checker, docs. Single bootstrap.</desc>
-        <rect x="300" y="12" width="280" height="72" rx="16" fill="#0f2a44" stroke="rgba(91,155,213,0.35)" stroke-width="1.2"></rect>
+        <rect
+          x="300"
+          y="12"
+          width="280"
+          height="72"
+          rx="16"
+          fill="#0f2a44"
+          stroke="rgba(91,155,213,0.35)"
+          stroke-width="1.2"></rect>
         <rect x="300" y="12" width="280" height="5" rx="2.5" fill="#5b9bd5"></rect>
-        <rect x="316" y="30" width="36" height="36" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(91,155,213,0.25)"></rect>
+        <rect x="316" y="30" width="36" height="36" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(91,155,213,0.25)"
+        ></rect>
         <text x="334" y="53" text-anchor="middle" dominant-baseline="middle" font-size="18" aria-hidden="true">🦄</text>
-        <text x="364" y="36" font-size="11" font-weight="700" letter-spacing="0.08em" fill="#8bb8e0" style="text-transform: uppercase;">language</text>
+        <text
+          x="364"
+          y="36"
+          font-size="11"
+          font-weight="700"
+          letter-spacing="0.08em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">language</text
+        >
         <text x="364" y="54" font-size="17" font-weight="800" letter-spacing="-0.02em" fill="#e6f0fb">V</text>
         <text x="364" y="70" font-size="11.5" fill="#a8c4df">compiler · tooling · vlang/v</text>
       </g>
 
       <!-- arrows down to libs -->
       <g aria-hidden="true">
-        <path d="M 340 84 L 180 120 L 180 140" fill="none" stroke="rgba(30,90,138,0.45)" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round"></path>
-        <path d="M 440 84 L 440 140" fill="none" stroke="rgba(30,90,138,0.55)" stroke-width="2.2" stroke-dasharray="6 6" stroke-linecap="round"></path>
-        <path d="M 540 84 L 700 120 L 700 140" fill="none" stroke="rgba(30,90,138,0.45)" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round"></path>
+        <path
+          d="M 340 84 L 180 120 L 180 140"
+          fill="none"
+          stroke="rgba(30,90,138,0.45)"
+          stroke-width="2"
+          stroke-dasharray="6 6"
+          stroke-linecap="round"></path>
+        <path
+          d="M 440 84 L 440 140"
+          fill="none"
+          stroke="rgba(30,90,138,0.55)"
+          stroke-width="2.2"
+          stroke-dasharray="6 6"
+          stroke-linecap="round"></path>
+        <path
+          d="M 540 84 L 700 120 L 700 140"
+          fill="none"
+          stroke="rgba(30,90,138,0.45)"
+          stroke-width="2"
+          stroke-dasharray="6 6"
+          stroke-linecap="round"></path>
         <polygon points="180,146 174,138 186,138" fill="#1e5a8a"></polygon>
         <polygon points="440,146 434,138 446,138" fill="#1e5a8a"></polygon>
         <polygon points="700,146 694,138 706,138" fill="#1e5a8a"></polygon>
       </g>
 
       <!-- VSL -->
-      <g class="eco__node" tabindex="0" role="listitem" aria-label="VSL — scientific library — pure-V BLAS/LAPACK, fractals — vlang/vsl">
+      <g
+        class="eco__node"
+        tabindex="0"
+        role="listitem"
+        aria-label="VSL — scientific library — pure-V BLAS/LAPACK, fractals — vlang/vsl"
+      >
         <title>VSL — vlang/vsl</title>
         <desc>Pure-V BLAS/LAPACK, stats, FFT, visualization.</desc>
-        <rect x="40" y="152" width="260" height="78" rx="16" fill="#122f4f" stroke="rgba(91,155,213,0.28)" stroke-width="1.1"></rect>
+        <rect
+          x="40"
+          y="152"
+          width="260"
+          height="78"
+          rx="16"
+          fill="#122f4f"
+          stroke="rgba(91,155,213,0.28)"
+          stroke-width="1.1"></rect>
         <rect x="40" y="152" width="260" height="4" rx="2" fill="rgba(91,155,213,0.9)"></rect>
-        <text x="62" y="172" font-size="10.5" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">scientific</text>
+        <text
+          x="62"
+          y="172"
+          font-size="10.5"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">scientific</text
+        >
         <text x="62" y="190" font-size="15.5" font-weight="800" fill="#e6f0fb">VSL</text>
         <text x="62" y="210" font-size="11" fill="#b8d0e6">BLAS · LAPACK · fractals</text>
         <text x="268" y="190" text-anchor="end" font-size="17" aria-hidden="true">🔬</text>
       </g>
 
       <!-- VTL -->
-      <g class="eco__node" tabindex="0" role="listitem" aria-label="VTL — tensor library — Tensor[T], autograd, nn — vlang/vtl">
+      <g
+        class="eco__node"
+        tabindex="0"
+        role="listitem"
+        aria-label="VTL — tensor library — Tensor[T], autograd, nn — vlang/vtl"
+      >
         <title>VTL — vlang/vtl</title>
         <desc>Tensor[T], autograd graph, Sequential.</desc>
-        <rect x="310" y="152" width="260" height="78" rx="16" fill="#14365a" stroke="rgba(91,155,213,0.32)" stroke-width="1.2"></rect>
+        <rect
+          x="310"
+          y="152"
+          width="260"
+          height="78"
+          rx="16"
+          fill="#14365a"
+          stroke="rgba(91,155,213,0.32)"
+          stroke-width="1.2"></rect>
         <rect x="310" y="152" width="260" height="4" rx="2" fill="#5b9bd5"></rect>
-        <text x="332" y="172" font-size="10.5" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">tensors</text>
+        <text
+          x="332"
+          y="172"
+          font-size="10.5"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">tensors</text
+        >
         <text x="332" y="190" font-size="15.5" font-weight="800" fill="#e6f0fb">VTL</text>
         <text x="332" y="210" font-size="11" fill="#b8d0e6">autograd · nn · VSL</text>
         <text x="538" y="190" text-anchor="end" font-size="17" aria-hidden="true">🧮</text>
       </g>
 
       <!-- RxV -->
-      <g class="eco__node" tabindex="0" role="listitem" aria-label="RxV — reactive — Observable[T] via channels — ulises-jeremias/rxv">
+      <g
+        class="eco__node"
+        tabindex="0"
+        role="listitem"
+        aria-label="RxV — reactive — Observable[T] via channels — ulises-jeremias/rxv"
+      >
         <title>RxV — ulises-jeremias/rxv</title>
         <desc>Observable[T] pipelines via chan Item[T].</desc>
-        <rect x="580" y="152" width="260" height="78" rx="16" fill="#122f4f" stroke="rgba(91,155,213,0.28)" stroke-width="1.1"></rect>
+        <rect
+          x="580"
+          y="152"
+          width="260"
+          height="78"
+          rx="16"
+          fill="#122f4f"
+          stroke="rgba(91,155,213,0.28)"
+          stroke-width="1.1"></rect>
         <rect x="580" y="152" width="260" height="4" rx="2" fill="rgba(91,155,213,0.85)"></rect>
-        <text x="602" y="172" font-size="10.5" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">reactive</text>
+        <text
+          x="602"
+          y="172"
+          font-size="10.5"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">reactive</text
+        >
         <text x="602" y="190" font-size="15.5" font-weight="800" fill="#e6f0fb">RxV</text>
         <text x="602" y="210" font-size="11" fill="#b8d0e6">channels · operators</text>
         <text x="808" y="190" text-anchor="end" font-size="17" aria-hidden="true">⚡</text>
@@ -89,26 +209,87 @@ import { vEcosystemSteps } from '../data/index.js';
 
       <!-- down arrows to setup-v -->
       <g aria-hidden="true">
-        <line x1="170" y1="230" x2="170" y2="250" stroke="rgba(30,90,138,0.35)" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"></line>
-        <line x1="440" y1="230" x2="440" y2="250" stroke="rgba(30,90,138,0.45)" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"></line>
-        <line x1="710" y1="230" x2="710" y2="250" stroke="rgba(30,90,138,0.35)" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"></line>
+        <line
+          x1="170"
+          y1="230"
+          x2="170"
+          y2="250"
+          stroke="rgba(30,90,138,0.35)"
+          stroke-width="2"
+          stroke-dasharray="5 5"
+          stroke-linecap="round"></line>
+        <line
+          x1="440"
+          y1="230"
+          x2="440"
+          y2="250"
+          stroke="rgba(30,90,138,0.45)"
+          stroke-width="2"
+          stroke-dasharray="5 5"
+          stroke-linecap="round"></line>
+        <line
+          x1="710"
+          y1="230"
+          x2="710"
+          y2="250"
+          stroke="rgba(30,90,138,0.35)"
+          stroke-width="2"
+          stroke-dasharray="5 5"
+          stroke-linecap="round"></line>
         <polygon points="170,256 164,248 176,248" fill="#1e5a8a" opacity="0.9"></polygon>
         <polygon points="440,256 434,248 446,248" fill="#1e5a8a" opacity="0.95"></polygon>
         <polygon points="710,256 704,248 716,248" fill="#1e5a8a" opacity="0.9"></polygon>
       </g>
 
       <!-- setup-v bottom -->
-      <g class="eco__node" tabindex="0" role="listitem" aria-label="setup-v — GitHub Action — version, arch, cache, install — vlang/setup-v">
+      <g
+        class="eco__node"
+        tabindex="0"
+        role="listitem"
+        aria-label="setup-v — GitHub Action — version, arch, cache, install — vlang/setup-v"
+      >
         <title>setup-v — vlang/setup-v</title>
         <desc>One-line install for every runner.</desc>
-        <rect x="160" y="262" width="560" height="78" rx="16" fill="#0f2a44" stroke="rgba(91,155,213,0.3)" stroke-width="1.2"></rect>
+        <rect
+          x="160"
+          y="262"
+          width="560"
+          height="78"
+          rx="16"
+          fill="#0f2a44"
+          stroke="rgba(91,155,213,0.3)"
+          stroke-width="1.2"></rect>
         <rect x="160" y="262" width="560" height="5" rx="2.5" fill="#5b9bd5" opacity="0.95"></rect>
-        <rect x="176" y="280" width="36" height="36" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(91,155,213,0.22)"></rect>
-        <text x="194" y="303" text-anchor="middle" dominant-baseline="middle" font-size="17" aria-hidden="true">⚙️</text>
-        <text x="224" y="286" font-size="11" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">CI · action</text>
+        <rect
+          x="176"
+          y="280"
+          width="36"
+          height="36"
+          rx="10"
+          fill="rgba(255,255,255,0.07)"
+          stroke="rgba(91,155,213,0.22)"></rect>
+        <text x="194" y="303" text-anchor="middle" dominant-baseline="middle" font-size="17" aria-hidden="true">⚙️</text
+        >
+        <text
+          x="224"
+          y="286"
+          font-size="11"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">CI · action</text
+        >
         <text x="224" y="304" font-size="15.5" font-weight="800" fill="#e6f0fb">setup-v</text>
         <text x="224" y="320" font-size="11" fill="#a8c4df">version · arch · cache · PATH · vlang/setup-v@v1</text>
-        <text x="700" y="302" text-anchor="end" font-size="11" font-weight="600" fill="#cfe1f5" font-family="ui-monospace, monospace">uses: vlang/setup-v@v1</text>
+        <text
+          x="700"
+          y="302"
+          text-anchor="end"
+          font-size="11"
+          font-weight="600"
+          fill="#cfe1f5"
+          font-family="ui-monospace, monospace">uses: vlang/setup-v@v1</text
+        >
       </g>
     </svg>
 
@@ -123,11 +304,16 @@ import { vEcosystemSteps } from '../data/index.js';
       }
     </div>
 
-    <p class="eco__sr">Structure: V at the top, VSL/VTL/RxV in the middle row, setup-v distributing at the bottom. Arrows show dependency flow.</p>
+    <p class="eco__sr">
+      Structure: V at the top, VSL/VTL/RxV in the middle row, setup-v distributing at the bottom. Arrows show dependency
+      flow.
+    </p>
   </div>
 
   <p class="eco__note">
-    All projects MIT. Install V via <code>vlang/setup-v@v1</code> and add libraries with <code>v install vsl</code> / <code>v install vtl</code> / <code>v install ulises-jeremias.rxv</code>.
+    All projects MIT. Install V via <code>vlang/setup-v@v1</code> and add libraries with <code>v install vsl</code> / <code
+      >v install vtl</code
+    > / <code>v install ulises-jeremias.rxv</code>.
   </p>
 </section>
 

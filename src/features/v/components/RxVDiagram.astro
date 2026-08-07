@@ -7,7 +7,9 @@ import { rxvOperatorGroups } from '../data/index.js';
     <p class="rxv__eyebrow">04 · RxV</p>
     <h2 id="rxv-title" class="rxv__title">Streams as channels, operators as threads</h2>
     <p class="rxv__desc">
-      Create an <code>Observable[T]</code> and chain: <code>source → filter → map → merge/reduce → subscriber</code>. Each step spawns one thread, communicates via <code>chan Item[T]</code>, and forwards error + completion. Deterministic, generic, zero-deps.
+      Create an <code>Observable[T]</code> and chain: <code>source → filter → map → merge/reduce → subscriber</code>.
+      Each step spawns one thread, communicates via <code>chan Item[T]</code>, and forwards error + completion.
+      Deterministic, generic, zero-deps.
     </p>
   </header>
 
@@ -22,18 +24,36 @@ import { rxvOperatorGroups } from '../data/index.js';
       >
         <title id="rxvSvgTitle">RxV — source through operators to subscriber</title>
         <desc id="rxvSvgDesc">
-          Horizontal pipeline: source range emits 1..10, filter even, map double, merge with timer channel, reduce sum, subscriber for_each prints sum. Arrows show item flow; error and completion follow same channel. Bottom row shows thread-per-operator model via chan Item[T].
+          Horizontal pipeline: source range emits 1..10, filter even, map double, merge with timer channel, reduce sum,
+          subscriber for_each prints sum. Arrows show item flow; error and completion follow same channel. Bottom row
+          shows thread-per-operator model via chan Item[T].
         </desc>
         <rect x="0" y="0" width="720" height="320" rx="14" fill="#0f2a44"></rect>
         <rect x="0" y="0" width="720" height="18" rx="6" fill="rgba(91,155,213,0.16)" aria-hidden="true"></rect>
-        <text x="16" y="28" font-size="10" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">pipeline · chan Item[T]</text>
+        <text
+          x="16"
+          y="28"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.07em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">pipeline · chan Item[T]</text
+        >
 
         <!-- source -->
         <g tabindex="0" role="listitem" aria-label="Source — range 1 to 10 — emits integers sequentially">
           <title>Source — rxv.range(1,10)</title>
           <rect x="16" y="42" width="108" height="78" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.3)"></rect>
           <rect x="16" y="42" width="108" height="4" rx="2" fill="#5b9bd5"></rect>
-          <text x="30" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">source</text>
+          <text
+            x="30"
+            y="60"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">source</text
+          >
           <text x="30" y="78" font-size="12.5" font-weight="800" fill="#e6f0fb">range</text>
           <text x="30" y="94" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">1 → 10</text>
           <text x="30" y="110" font-size="9.5" fill="#8bb8e0">emits 10 items</text>
@@ -43,7 +63,15 @@ import { rxvOperatorGroups } from '../data/index.js';
         <g tabindex="0" role="listitem" aria-label="Filter — keep even numbers only — predicate v percent 2 equals 0">
           <title>filter — v % 2 == 0</title>
           <rect x="152" y="42" width="108" height="78" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
-          <text x="166" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">filter</text>
+          <text
+            x="166"
+            y="60"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">filter</text
+          >
           <text x="166" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">v % 2 == 0</text>
           <text x="166" y="96" font-size="9.5" fill="#b8d0e6">keeps 5 · drops 5</text>
           <text x="166" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">.filter(fn)</text>
@@ -60,7 +88,15 @@ import { rxvOperatorGroups } from '../data/index.js';
         <g tabindex="0" role="listitem" aria-label="Map — double each value — free function map_ generic">
           <title>map_ — v * 2 — free function due to V generics</title>
           <rect x="288" y="42" width="108" height="78" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
-          <text x="302" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">map</text>
+          <text
+            x="302"
+            y="60"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">map</text
+          >
           <text x="302" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">× 2</text>
           <text x="302" y="96" font-size="9.5" fill="#b8d0e6">5 items → doubled</text>
           <text x="302" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">map_[T,T](…)</text>
@@ -78,7 +114,15 @@ import { rxvOperatorGroups } from '../data/index.js';
           <title>reduce — sum — acc 0</title>
           <rect x="424" y="42" width="108" height="78" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.32)"></rect>
           <rect x="424" y="42" width="108" height="4" rx="2" fill="#7cb7c9"></rect>
-          <text x="438" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">reduce</text>
+          <text
+            x="438"
+            y="60"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">reduce</text
+          >
           <text x="438" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">sum</text>
           <text x="438" y="96" font-size="9.5" fill="#b8d0e6">acc 0 → 60</text>
           <text x="438" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">reduce_[T,U]</text>
@@ -92,11 +136,23 @@ import { rxvOperatorGroups } from '../data/index.js';
         </g>
 
         <!-- subscriber -->
-        <g tabindex="0" role="listitem" aria-label="Subscriber — for_each prints Sum 60 — receives error and completion callbacks">
+        <g
+          tabindex="0"
+          role="listitem"
+          aria-label="Subscriber — for_each prints Sum 60 — receives error and completion callbacks"
+        >
           <title>Subscriber — for_each — done channel</title>
           <rect x="560" y="42" width="144" height="78" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
           <rect x="560" y="42" width="144" height="4" rx="2" fill="#5b9bd5"></rect>
-          <text x="574" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">subscribe</text>
+          <text
+            x="574"
+            y="60"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.06em"
+            fill="#8bb8e0"
+            style="text-transform: uppercase;">subscribe</text
+          >
           <text x="574" y="78" font-size="11.5" font-weight="700" fill="#e6f0fb">for_each</text>
           <text x="574" y="94" font-size="9.5" fill="#b8d0e6">prints 60 · done</text>
           <text x="574" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">&lt;- done</text>
@@ -110,31 +166,67 @@ import { rxvOperatorGroups } from '../data/index.js';
         </g>
 
         <!-- bottom thread row -->
-        <rect x="16" y="144" width="688" height="84" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(91,155,213,0.18)"></rect>
-        <text x="30" y="162" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">thread per operator · chan Item[T]</text>
-        <text x="30" y="178" font-size="10" fill="#b8d0e6">Each operator spawns 1 lightweight thread → reads chan[T], writes chan[T] → error/completion are Item tags → for_each blocks on done.</text>
+        <rect
+          x="16"
+          y="144"
+          width="688"
+          height="84"
+          rx="12"
+          fill="rgba(255,255,255,0.05)"
+          stroke="rgba(91,155,213,0.18)"></rect>
+        <text
+          x="30"
+          y="162"
+          font-size="10"
+          font-weight="700"
+          letter-spacing="0.06em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">thread per operator · chan Item[T]</text
+        >
+        <text x="30" y="178" font-size="10" fill="#b8d0e6"
+          >Each operator spawns 1 lightweight thread → reads chan[T], writes chan[T] → error/completion are Item tags →
+          for_each blocks on done.</text
+        >
         <!-- thread dots -->
         <g aria-hidden="true">
           <rect x="30" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="42" cy="202" r="4" fill="#5b9bd5"></circle>
-          <text x="50" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 1: source</text>
+          <text x="50" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
+            >thread 1: source</text
+          >
           <rect x="164" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="176" cy="202" r="4" fill="#5b9bd5"></circle>
-          <text x="184" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 2: filter</text>
+          <text x="184" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
+            >thread 2: filter</text
+          >
           <rect x="298" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="310" cy="202" r="4" fill="#5b9bd5"></circle>
           <text x="318" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 3: map</text>
           <rect x="432" y="188" width="136" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="444" cy="202" r="4" fill="#7cb7c9"></circle>
-          <text x="452" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 4: reduce</text>
+          <text x="452" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
+            >thread 4: reduce</text
+          >
         </g>
 
         <!-- example code line bottom -->
         <rect x="16" y="242" width="688" height="62" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.18)"></rect>
-        <text x="30" y="262" font-size="9.5" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">example · sum even doubles 1..10</text>
-        <text x="30" y="282" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace">range(1,10) → filter(even) → map(×2) → reduce(0, sum) → for_each(print)</text>
+        <text
+          x="30"
+          y="262"
+          font-size="9.5"
+          font-weight="700"
+          letter-spacing="0.06em"
+          fill="#8bb8e0"
+          style="text-transform: uppercase;">example · sum even doubles 1..10</text
+        >
+        <text x="30" y="282" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace"
+          >range(1,10) → filter(even) → map(×2) → reduce(0, sum) → for_each(print)</text
+        >
         <text x="30" y="298" font-size="10" fill="#8bb8e0">Output: </text>
-        <text x="68" y="298" font-size="10" font-weight="700" fill="#5b9bd5" font-family="ui-monospace, monospace">Sum 1..10 even×2 = 60</text>
+        <text x="68" y="298" font-size="10" font-weight="700" fill="#5b9bd5" font-family="ui-monospace, monospace"
+          >Sum 1..10 even×2 = 60</text
+        >
         <text x="224" y="298" font-size="10" fill="#8bb8e0">(5 items: 4,8,12,16,20 → sum)</text>
       </svg>
 
@@ -153,7 +245,10 @@ import { rxvOperatorGroups } from '../data/index.js';
     <div class="rxv__cards">
       <article class="rxv__card">
         <h3 class="rxv__card-title">Why channels?</h3>
-        <p class="rxv__card-text">V channels are typed, buffered, and cheap. RxV leans on them — no global scheduler, no hidden queue. If you know <code>go</code> or <code>spawn</code>, you know RxV.</p>
+        <p class="rxv__card-text">
+          V channels are typed, buffered, and cheap. RxV leans on them — no global scheduler, no hidden queue. If you
+          know <code>go</code> or <code>spawn</code>, you know RxV.
+        </p>
         <ul class="rxv__list">
           <li><code>ObservableImpl[T]</code> generic over any T</li>
           <li>Errors as <code>Item[T]&#123; error: IError &#125;</code></li>
@@ -162,7 +257,11 @@ import { rxvOperatorGroups } from '../data/index.js';
       </article>
       <article class="rxv__card">
         <h3 class="rxv__card-title">From V generics to free fns</h3>
-        <p class="rxv__card-text">V doesn’t allow generic methods with extra type params, so <code>.map</code> is <code>rxv.map_[T,U](mut obs, fn)</code>. Verbose once, clear forever — types stay explicit.</p>
+        <p class="rxv__card-text">
+          V doesn’t allow generic methods with extra type params, so <code>.map</code> is <code
+            >rxv.map_[T,U](mut obs, fn)</code
+          >. Verbose once, clear forever — types stay explicit.
+        </p>
         <div class="rxv__code" role="region" aria-label="RxV snippet">
           <pre><code><span class="rxv__c-kw">mut</span> obs := rxv.<span class="rxv__c-fn">range</span>(<span class="rxv__c-nu">1</span>, <span class="rxv__c-nu">10</span>)
 <span class="rxv__c-kw">mut</span> evens := obs.<span class="rxv__c-fn">filter</span>(fn (v <span class="rxv__c-ty">int</span>) <span class="rxv__c-ty">bool</span> &#123; <span class="rxv__c-kw">return</span> v % <span class="rxv__c-nu">2</span> == <span class="rxv__c-nu">0</span> &#125;)
@@ -175,7 +274,11 @@ _ = &lt;-done</code></pre>
   </div>
 
   <p class="rxv__note">
-    Install: <code>v install ulises-jeremias.rxv</code> → <code>import ulises_jeremias.rxv</code>. Docs: <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">ulises-jeremias/rxv ↗</a>. Operators reference: <code>docs/OPERATORS.md</code>.
+    Install: <code>v install ulises-jeremias.rxv</code> → <code>import ulises_jeremias.rxv</code>. Docs: <a
+      href="https://github.com/ulises-jeremias/rxv"
+      target="_blank"
+      rel="noreferrer">ulises-jeremias/rxv ↗</a
+    >. Operators reference: <code>docs/OPERATORS.md</code>.
   </p>
 </section>
 
@@ -256,11 +359,11 @@ _ = &lt;-done</code></pre>
     overflow: hidden;
   }
 
-  .rxv__svg g[tabindex="0"]:focus-visible {
+  .rxv__svg g[tabindex='0']:focus-visible {
     outline: none;
   }
 
-  .rxv__svg g[tabindex="0"]:focus-visible rect {
+  .rxv__svg g[tabindex='0']:focus-visible rect {
     stroke: var(--color-focus, #005fcc) !important;
     stroke-width: 2.2 !important;
   }
@@ -376,10 +479,19 @@ _ = &lt;-done</code></pre>
     color: #cfe1f5;
   }
 
-  .rxv__c-kw { color: #7cb7c9; font-weight: 600; }
-  .rxv__c-fn { color: #e6f0fb; }
-  .rxv__c-ty { color: #f4c7a5; }
-  .rxv__c-nu { color: #a8d8ea; }
+  .rxv__c-kw {
+    color: #7cb7c9;
+    font-weight: 600;
+  }
+  .rxv__c-fn {
+    color: #e6f0fb;
+  }
+  .rxv__c-ty {
+    color: #f4c7a5;
+  }
+  .rxv__c-nu {
+    color: #a8d8ea;
+  }
 
   .rxv__note {
     margin: 0;

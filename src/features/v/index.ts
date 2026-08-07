@@ -20,11 +20,4 @@ export {
   vMeta,
 } from './data/index.js';
 
-export type {
-  VProject,
-  VSection,
-  VDiagramStep,
-  VLicenseEntry,
-  VBackend,
-  VOperatorGroup,
-} from './types/index.js';
+export type { VProject, VSection, VDiagramStep, VLicenseEntry, VBackend, VOperatorGroup } from './types/index.js';

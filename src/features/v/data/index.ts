@@ -1,11 +1,4 @@
-import type {
-  VBackend,
-  VDiagramStep,
-  VLicenseEntry,
-  VOperatorGroup,
-  VProject,
-  VSection,
-} from '../types/index.js';
+import type { VBackend, VDiagramStep, VLicenseEntry, VOperatorGroup, VProject, VSection } from '../types/index.js';
 
 export const vProjects: VProject[] = [
   {
@@ -87,14 +80,20 @@ export const vSections: VSection[] = [
     id: 'v',
     title: 'V — language core',
     eyebrow: '01 · language',
-    description: 'V is a compiled language built to be simple and fast. One self-hosted compiler, C output, tcc bootstrap, predictable performance.',
-    bullets: ['Static typing, sum types, option/result, no null', 'C interop without header pain, fast incremental', 'vfmt, vvet, docs via doc/comment → markdown'],
+    description:
+      'V is a compiled language built to be simple and fast. One self-hosted compiler, C output, tcc bootstrap, predictable performance.',
+    bullets: [
+      'Static typing, sum types, option/result, no null',
+      'C interop without header pain, fast incremental',
+      'vfmt, vvet, docs via doc/comment → markdown',
+    ],
   },
   {
     id: 'vsl',
     title: 'VSL — pure-V scientific stack',
     eyebrow: '02 · scientific',
-    description: 'High-performance numerics without system deps. Pure-V BLAS/LAPACK ships by default; drop in OpenBLAS/LAPACKe with a flag when you need peak throughput.',
+    description:
+      'High-performance numerics without system deps. Pure-V BLAS/LAPACK ships by default; drop in OpenBLAS/LAPACKe with a flag when you need peak throughput.',
     bullets: [
       'BLAS Level 1-3 + LAPACK (pure-V, 0 deps)',
       'Flags: -d vsl_blas_cblas / -d vsl_lapack_lapacke',
@@ -105,28 +104,48 @@ export const vSections: VSection[] = [
     id: 'vtl',
     title: 'VTL — tensors & autograd',
     eyebrow: '03 · tensors',
-    description: 'Tensor[T] with slicing, broadcasting, and reverse-mode autograd. Build arbitrary graphs — then let nn layers compose them for you.',
-    bullets: ['Context + Variable + gates → backprop()', 'Sequential API: Linear/Conv2D/LSTM/Attention', 'Optimizers: Adam, AdamW, RMSProp, AdaGrad, SGD'],
+    description:
+      'Tensor[T] with slicing, broadcasting, and reverse-mode autograd. Build arbitrary graphs — then let nn layers compose them for you.',
+    bullets: [
+      'Context + Variable + gates → backprop()',
+      'Sequential API: Linear/Conv2D/LSTM/Attention',
+      'Optimizers: Adam, AdamW, RMSProp, AdaGrad, SGD',
+    ],
   },
   {
     id: 'rxv',
     title: 'RxV — observables as channels',
     eyebrow: '04 · reactive',
-    description: 'Each operator spawns a lightweight thread and connects via chan Item[T]. No scheduler, no hidden state — just V channels.',
-    bullets: ['Creating: just / range / from_slice / interval / timer', 'Filtering, transforming, combining', 'Error + completion as first-class events'],
+    description:
+      'Each operator spawns a lightweight thread and connects via chan Item[T]. No scheduler, no hidden state — just V channels.',
+    bullets: [
+      'Creating: just / range / from_slice / interval / timer',
+      'Filtering, transforming, combining',
+      'Error + completion as first-class events',
+    ],
   },
   {
     id: 'setup-v',
     title: 'setup-v — one line, every runner',
     eyebrow: '05 · CI',
-    description: 'The Action resolves version (tag, branch, commit, or .v-version), detects arch, restores cache, installs the binary, and verifies v version.',
-    bullets: ['Uses PAT-less binary fetch for tags (no rate-limit pain)', 'Arch-aware (x64, arm64) with warning fallback', 'Cache key: version + os + arch → ~seconds restores'],
+    description:
+      'The Action resolves version (tag, branch, commit, or .v-version), detects arch, restores cache, installs the binary, and verifies v version.',
+    bullets: [
+      'Uses PAT-less binary fetch for tags (no rate-limit pain)',
+      'Arch-aware (x64, arm64) with warning fallback',
+      'Cache key: version + os + arch → ~seconds restores',
+    ],
   },
 ];
 
 export const vslBackends: VBackend[] = [
   { id: 'pure-v', label: 'Pure V', flag: 'default', bestFor: 'Zero-dep deploy, cross-platform' },
-  { id: 'cblas', label: 'OpenBLAS (CBLAS)', flag: '-d vsl_blas_cblas', bestFor: 'Max throughput when C libs available' },
+  {
+    id: 'cblas',
+    label: 'OpenBLAS (CBLAS)',
+    flag: '-d vsl_blas_cblas',
+    bestFor: 'Max throughput when C libs available',
+  },
   { id: 'lapacke', label: 'LAPACKE', flag: '-d vsl_lapack_lapacke', bestFor: 'LAPACK at C speed' },
   { id: 'opencl', label: 'OpenCL', flag: 'experimental', bestFor: 'GPU kernels (VSL roadmap)' },
   { id: 'mpi', label: 'MPI', flag: 'optional', bestFor: 'Cluster linear algebra' },
@@ -149,7 +168,12 @@ export const rxvOperatorGroups: VOperatorGroup[] = [
 ];
 
 export const setupVPipeline: VDiagramStep[] = [
-  { id: 'resolve', label: 'Resolve', description: 'version / .v-version / stable', detail: 'Semver tag, branch, commit or file' },
+  {
+    id: 'resolve',
+    label: 'Resolve',
+    description: 'version / .v-version / stable',
+    detail: 'Semver tag, branch, commit or file',
+  },
   { id: 'arch', label: 'Arch', description: 'detect x64 / arm64', detail: 'Warn + fallback for exotic arches' },
   { id: 'cache', label: 'Cache', description: 'restore cached binary', detail: 'Key: v-version + os + arch' },
   { id: 'install', label: 'Install', description: 'fetch + unpack + PATH', detail: 'Prebuilt binary, no sudo' },
@@ -187,7 +211,8 @@ export const licenseEntries: VLicenseEntry[] = [
     component: 'Veasel / V mascot',
     license: 'Revisar vlang/v-mascot/LICENSE',
     source: 'github.com/vlang/v-mascot',
-    notes: 'Veasel solo si LICENSE lo permite con atribucion; caso ambiguo usa ilustracion original V-inspirada (no derivada). Este sitio no incluye binario Veasel.',
+    notes:
+      'Veasel solo si LICENSE lo permite con atribucion; caso ambiguo usa ilustracion original V-inspirada (no derivada). Este sitio no incluye binario Veasel.',
   },
 ];
 

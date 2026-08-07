@@ -7,22 +7,34 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
     <h2>Composición</h2>
     <p class="ca-muted">No es scaffolding opaco — compone archivos reales. Ejemplos verificables:</p>
     <div class="ca-examples">
-      {compositionExamples.map((e) => (
-        <div class="ca-example">
-          <h3>{e.title} <span class="ca-chip">{e.variant}</span></h3>
-          <p class="ca-muted">template <code>{e.template}</code> + addons <code>{e.addons.join(', ')}</code></p>
-          <pre><code>{e.command}</code></pre>
-        </div>
-      ))}
+      {
+        compositionExamples.map((e) => (
+          <div class="ca-example">
+            <h3>
+              {e.title} <span class="ca-chip">{e.variant}</span>
+            </h3>
+            <p class="ca-muted">
+              template <code>{e.template}</code> + addons <code>{e.addons.join(', ')}</code>
+            </p>
+            <pre>
+              <code>{e.command}</code>
+            </pre>
+          </div>
+        ))
+      }
     </div>
   </div>
 
   <div class="ca-block">
     <h2>Distribución</h2>
     <ul class="ca-channels">
-      {distributionChannels.map((c) => (
-        <li><strong>{c.label}</strong> <code>{c.command}</code> <span class="ca-muted">— {c.note}</span></li>
-      ))}
+      {
+        distributionChannels.map((c) => (
+          <li>
+            <strong>{c.label}</strong> <code>{c.command}</code> <span class="ca-muted">— {c.note}</span>
+          </li>
+        ))
+      }
     </ul>
   </div>
 
@@ -32,9 +44,18 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
       <table class="ca-table">
         <thead><tr><th>Feature</th><th>Node</th><th>Python</th><th>V</th></tr></thead>
         <tbody>
-          {comparisonRows.map((r) => (
-            <tr><td>{r.feature}</td><td>{r.node}</td><td>{r.python}</td><td>{r.v}</td></tr>
-          ))}
+          {
+            comparisonRows.map((r) => (
+              <tr>
+                <>
+                  <td>{r.feature}</td>
+                  <td>{r.node}</td>
+                  <td>{r.python}</td>
+                  <td>{r.v}</td>
+                </>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>
@@ -43,32 +64,118 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
   <div class="ca-block">
     <h2>Cómo contribuir</h2>
     <ol class="ca-steps">
-      {contributionSteps.map((s) => (
-        <li>
-          <strong>{s.step}. {s.title}</strong> — {s.description}
-          {s.href ? <span> <a href={s.href} target="_blank" rel="noreferrer">→</a></span> : null}
-        </li>
-      ))}
+      {
+        contributionSteps.map((s) => (
+          <li>
+            <strong>
+              {s.step}. {s.title}
+            </strong>{' '}
+            — {s.description}
+            {s.href ? (
+              <span>
+                {' '}
+                <a href={s.href} target="_blank" rel="noreferrer">
+                  →
+                </a>
+              </span>
+            ) : null}
+          </li>
+        ))
+      }
     </ol>
-    <p class="ca-muted">Sync build-time: catálogo vive en <code>cna-templates / cpa-templates / cva-templates</code>, el sitio solo compone. Sin duplicación.</p>
+    <p class="ca-muted">
+      Sync build-time: catálogo vive en <code>cna-templates / cpa-templates / cva-templates</code>, el sitio solo
+      compone. Sin duplicación.
+    </p>
   </div>
 </section>
 
 <style>
-  .ca-details { margin: var(--space-8) 0; display: grid; gap: var(--space-8); }
-  .ca-block h2 { font-size: 1.3rem; margin-bottom: var(--space-2); }
-  .ca-muted { color: var(--color-muted); font-size: 0.9rem; }
-  .ca-examples { display: grid; gap: var(--space-3); }
-  @media (min-width: 800px) { .ca-examples { grid-template-columns: repeat(3, 1fr); } }
-  .ca-example { padding: var(--space-3); border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface); }
-  .ca-example h3 { font-size: 0.95rem; margin: 0 0 var(--space-1); display: flex; align-items: center; gap: 0.5rem; }
-  .ca-chip { font-size: 0.65rem; text-transform: uppercase; padding: 0.15rem 0.4rem; border-radius: 999px; background: var(--color-surface); border: 1px solid var(--color-border); }
-  .ca-example pre { margin: var(--space-2) 0 0; padding: var(--space-2); background: var(--color-ink, #181512); color: #F8FAFC; border-radius: 8px; font-size: 0.75rem; overflow-x: auto; }
-  .ca-channels { display: grid; gap: 0.5rem; padding-left: 1.1rem; }
-  .ca-channels li code { font-size: 0.8rem; }
-  .ca-table-wrap { overflow-x: auto; border: 1px solid var(--color-border); border-radius: 10px; }
-  .ca-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-  .ca-table th, .ca-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--color-border); text-align: left; }
-  .ca-table th { background: var(--color-surface); font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; }
-  .ca-steps { display: grid; gap: 0.5rem; padding-left: 1.2rem; }
+  .ca-details {
+    margin: var(--space-8) 0;
+    display: grid;
+    gap: var(--space-8);
+  }
+  .ca-block h2 {
+    font-size: 1.3rem;
+    margin-bottom: var(--space-2);
+  }
+  .ca-muted {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+  .ca-examples {
+    display: grid;
+    gap: var(--space-3);
+  }
+  @media (min-width: 800px) {
+    .ca-examples {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .ca-example {
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-surface);
+  }
+  .ca-example h3 {
+    font-size: 0.95rem;
+    margin: 0 0 var(--space-1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .ca-chip {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 999px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  .ca-example pre {
+    margin: var(--space-2) 0 0;
+    padding: var(--space-2);
+    background: var(--color-ink, #181512);
+    color: #f8fafc;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    overflow-x: auto;
+  }
+  .ca-channels {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.1rem;
+  }
+  .ca-channels li code {
+    font-size: 0.8rem;
+  }
+  .ca-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+  }
+  .ca-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .ca-table th,
+  .ca-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+  }
+  .ca-table th {
+    background: var(--color-surface);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .ca-steps {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.2rem;
+  }
 </style>
