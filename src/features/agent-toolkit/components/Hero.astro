@@ -1,18 +1,14 @@
 ---
-
+import { toolkitStats } from '../data/index.js';
 ---
 
-<section class="world-hero" data-theme="toolkit">
-  <h1>Agent Toolkit</h1>
-  <p>One source → many assistants</p>
-  <p><em>Digital Nest — toolkit world. Estructura base M1, contenido detallado en progreso.</em></p>
+<section class="toolkit-hero">
+  <h2>Hero</h2><div>{toolkitStats.map((s) => <span>{s.value}</span>)}</div><svg viewBox="0 0 100 100"
+    ><circle cx="50" cy="50" r="40"></circle></svg>
 </section>
 <style>
-  .world-hero {
-    padding: var(--space-8) 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .world-hero h1 {
-    font-size: 2.5rem;
+  .toolkit-hero {
+    max-width: 72rem;
+    margin: 0 auto;
   }
 </style>
