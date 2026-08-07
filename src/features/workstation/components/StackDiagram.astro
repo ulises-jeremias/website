@@ -1,29 +1,290 @@
 ---
-
+/**
+ * StackDiagram — 4-layer DX stack (Epic G).
+ * Accessible inline SVG: dotfiles → machine provisioning → LLM policy → tooling → harness.
+ * Uses existing tokens via CSS variables (src/styles/tokens.css) and workstation theme.
+ * Role img with title/desc for a11y. No external assets.
+ */
 ---
 
-<section aria-labelledby="stack-title">
-  <h2 id="stack-title">Las 4 capas — Personal DX Stack</h2>
-  <div style="display:grid; gap:1rem; margin:1rem 0;">
-    <div
-      style="border:1px solid var(--color-border); padding:1rem; border-radius:10px; background:#020617; color:#E2E8F0;"
-    >
-      <strong>L1 — HorneroConfig</strong> — desktop personal
-    </div>
-    <div
-      style="border:1px solid var(--color-border); padding:1rem; border-radius:10px; background:#020617; color:#22D3EE; border-left:4px solid #22D3EE;"
-    >
-      <strong>L1 — Agentic Workstation (thin)</strong> — provisioning, doctor
-    </div>
-    <div
-      style="border:1px solid var(--color-border); padding:1rem; border-radius:10px; background:#1F2937; color:#A78BFA; border-left:4px solid #A78BFA;"
-    >
-      <strong>L1.5 — Agent Toolkit</strong> — 61 skills, 16 agents, 10 loops, MCP
-    </div>
-    <div
-      style="border:1px solid var(--color-border); padding:1rem; border-radius:10px; background:#030712; color:#06B6D4; border-left:4px solid #84CC16;"
-    >
-      <strong>L2 — Agentic Harness</strong> — runtime — memoria, contexto, loops
-    </div>
+<section aria-labelledby="stack-title" class="ws-stack">
+  <div class="ws-stack__head">
+    <h2 id="stack-title" class="ws-stack__title">The 4-layer DX stack</h2>
+    <p class="ws-stack__lead">
+      Four layers, one continuous system: <strong>dotfiles</strong> paint the desktop, <strong
+        >machine provisioning</strong
+      > boots the host,
+      <strong>LLM policy</strong> gates the model, <strong>tooling</strong> delivers every capability. Delegation only — no
+      duplication.
+    </p>
   </div>
+
+  <figure class="ws-stack__figure" aria-labelledby="ws-stack-svg-title ws-stack-svg-desc">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 860 520"
+      role="img"
+      aria-labelledby="ws-stack-svg-title ws-stack-svg-desc"
+      class="ws-stack__svg"
+    >
+      <title id="ws-stack-svg-title">Agentic Workstation — 4-layer DX stack</title>
+      <desc id="ws-stack-svg-desc"
+        >Dotfiles layer provides HorneroConfig desktop. Machine provisioning layer uses chezmoi to install packages and
+        shell. LLM policy layer enforces provider allowlist via env.d. Tooling layer distributes 52 skills and 16 agents
+        via agent-toolkit. Harness runtime consumes all layers.</desc
+      >
+      <defs>
+        <linearGradient id="ws-stack-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#020617"></stop>
+          <stop offset="1" stop-color="#0F172A"></stop>
+        </linearGradient>
+        <linearGradient id="ws-stack-accent" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#22D3EE"></stop>
+          <stop offset="0.5" stop-color="#A78BFA"></stop>
+          <stop offset="1" stop-color="#84CC16"></stop>
+        </linearGradient>
+      </defs>
+
+      <rect width="860" height="520" rx="20" fill="url(#ws-stack-bg)"></rect>
+      <text
+        x="28"
+        y="28"
+        fill="#64748B"
+        font-family="Inter, ui-sans-serif, sans-serif"
+        font-size="10"
+        font-weight="700"
+        letter-spacing="2">DX STACK · 4 LAYERS · THIN WORKSTATION</text
+      >
+
+      <!-- L0 Dotfiles -->
+      <g transform="translate(24 44)">
+        <rect width="800" height="92" rx="14" fill="#0F172A" stroke="#22D3EE" stroke-opacity="0.45"></rect>
+        <rect x="14" y="14" width="84" height="22" rx="11" fill="#0B1220" stroke="#22D3EE" stroke-opacity="0.35"></rect>
+        <text
+          x="56"
+          y="29"
+          text-anchor="middle"
+          fill="#A5F3FC"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="10"
+          font-weight="800">L0 DOTFILES</text
+        >
+        <text
+          x="14"
+          y="58"
+          fill="#F8FAFC"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="15"
+          font-weight="800">HorneroConfig</text
+        >
+        <text x="210" y="58" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="12"
+          >Hyprland + Quickshell · smart-colors · 13+ rices · chezmoi home/</text
+        >
+        <text x="14" y="78" fill="#64748B" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10"
+          >dotfiles — desktop personalization · theme-intelligence · delivers ~/.config/hypr &amp; quickshell</text
+        >
+      </g>
+
+      <!-- L1 Machine Provisioning -->
+      <g transform="translate(24 152)">
+        <rect width="800" height="92" rx="14" fill="#111827" stroke="#A78BFA" stroke-opacity="0.48"></rect>
+        <rect x="14" y="14" width="166" height="22" rx="11" fill="#1E1B4B" stroke="#A78BFA" stroke-opacity="0.35"
+        ></rect>
+        <text
+          x="97"
+          y="29"
+          text-anchor="middle"
+          fill="#EDE9FE"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="10"
+          font-weight="800">L1 MACHINE PROVISIONING</text
+        >
+        <text
+          x="14"
+          y="58"
+          fill="#F8FAFC"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="15"
+          font-weight="800">Agentic Workstation</text
+        >
+        <text x="250" y="58" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="12"
+          >chezmoi apply · packages · shell · dots-doctor · thin helpers</text
+        >
+        <text x="14" y="78" fill="#64748B" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10"
+          >thin — ships no embedded skills · keeps only dev-companion/runner · chezmoi init --apply</text
+        >
+      </g>
+
+      <!-- L1.5 LLM Policy -->
+      <g transform="translate(24 260)">
+        <rect width="800" height="92" rx="14" fill="#0F172A" stroke="#FACC15" stroke-opacity="0.40"></rect>
+        <rect x="14" y="14" width="104" height="22" rx="11" fill="#1A1605" stroke="#FACC15" stroke-opacity="0.35"
+        ></rect>
+        <text
+          x="66"
+          y="29"
+          text-anchor="middle"
+          fill="#FEF08A"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="10"
+          font-weight="800">L1 LLM POLICY</text
+        >
+        <text
+          x="14"
+          y="58"
+          fill="#F8FAFC"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="15"
+          font-weight="800">LLM Policy</text
+        >
+        <text x="160" y="58" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="12"
+          >env.d · provider allowlist · DOTS_AI_DEVCOMPANION_LLM_STRICT</text
+        >
+        <text x="14" y="78" fill="#64748B" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10"
+          >~/.config/agentic-workstation/env.d/*.env · never committed · dots-devcompanion llm-status</text
+        >
+      </g>
+
+      <!-- L1.5 Tooling -->
+      <g transform="translate(24 368)">
+        <rect width="800" height="92" rx="14" fill="#0F1A12" stroke="#84CC16" stroke-opacity="0.45"></rect>
+        <rect x="14" y="14" width="92" height="22" rx="11" fill="#1A2E05" stroke="#84CC16" stroke-opacity="0.35"></rect>
+        <text
+          x="60"
+          y="29"
+          text-anchor="middle"
+          fill="#ECFCCB"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="10"
+          font-weight="800">L1.5 TOOLING</text
+        >
+        <text
+          x="14"
+          y="58"
+          fill="#F8FAFC"
+          font-family="Inter, ui-sans-serif, sans-serif"
+          font-size="15"
+          font-weight="800">Agent Toolkit</text
+        >
+        <text x="200" y="58" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="12"
+          >52 skills · 16 agents · 10 loops · 6 MCP · profiles · SKILL.md catalog</text
+        >
+        <text x="14" y="78" fill="#64748B" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10"
+          >sole source via uv tool install --force agent-toolkit-cli &amp;&amp; agent-toolkit install</text
+        >
+      </g>
+
+      <!-- Connector line -->
+      <line
+        x1="430"
+        y1="136"
+        x2="430"
+        y2="152"
+        stroke="url(#ws-stack-accent)"
+        stroke-width="2"
+        stroke-dasharray="6 4"
+        opacity="0.7"></line>
+      <line
+        x1="430"
+        y1="244"
+        x2="430"
+        y2="260"
+        stroke="url(#ws-stack-accent)"
+        stroke-width="2"
+        stroke-dasharray="6 4"
+        opacity="0.7"></line>
+      <line
+        x1="430"
+        y1="352"
+        x2="430"
+        y2="368"
+        stroke="url(#ws-stack-accent)"
+        stroke-width="2"
+        stroke-dasharray="6 4"
+        opacity="0.7"></line>
+
+      <!-- Footer -->
+      <text x="28" y="500" fill="#475569" font-family="Inter, ui-sans-serif, sans-serif" font-size="10"
+        >Identity · midnight #020617 · cyan #22D3EE · violet #A78BFA · lime #84CC16 · thin after L1</text
+      >
+    </svg>
+    <figcaption class="ws-stack__caption">
+      Four-layer stack: <strong>dotfiles</strong> (HorneroConfig) → <strong>machine provisioning</strong> (chezmoi) →
+      <strong>LLM policy</strong> (env.d allowlist) → <strong>tooling</strong> (agent-toolkit). Harness runtime overlays all
+      four. Thin boundary after L1 — no embedded capabilities in workstation.
+    </figcaption>
+  </figure>
+
+  <!-- Fallback list for no-CSS / SR linearization -->
+  <ul class="ws-stack__fallback" aria-hidden="false">
+    <li><strong>Layer 0 — dotfiles:</strong> HorneroConfig · Hyprland + Quickshell · chezmoi home/</li>
+    <li>
+      <strong>Layer 1 — machine provisioning:</strong> agentic-workstation · chezmoi apply · packages · shell · thin
+    </li>
+    <li>
+      <strong>Layer 1 — LLM policy:</strong> env.d · provider allowlist · DOTS_AI_DEVCOMPANION_LLM_STRICT · dots-devcompanion
+      llm-status
+    </li>
+    <li><strong>Layer 1.5 — tooling:</strong> agent-toolkit · 52 skills · 16 agents · uv install</li>
+  </ul>
 </section>
+
+<style>
+  .ws-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .ws-stack__head {
+    max-width: 72ch;
+  }
+  .ws-stack__title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.25rem, 3vw, 1.65rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-ink, #181512);
+  }
+  .ws-stack__lead {
+    margin: 0;
+    color: var(--color-muted, #6b715e);
+    line-height: 1.6;
+    font-size: 0.96rem;
+  }
+  .ws-stack__lead strong {
+    color: var(--color-ink, #181512);
+  }
+  .ws-stack__figure {
+    margin: 0;
+  }
+  .ws-stack__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    border: 1px solid var(--color-border, #e9d8c3);
+    background: #020617;
+  }
+  .ws-stack__caption {
+    margin-top: 0.6rem;
+    color: #64748b;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .ws-stack__caption strong {
+    color: #94a3b8;
+  }
+  .ws-stack__fallback {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ws-stack__svg * {
+      animation: none !important;
+    }
+  }
+</style>
