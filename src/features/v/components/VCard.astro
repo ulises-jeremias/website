@@ -44,12 +44,10 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     flex-direction: column;
     gap: 0.65rem;
     padding: 1.1rem 1.15rem;
-    border-radius: 14px;
-    background: var(--color-warm-white, #fffdf9);
-    border: 1px solid var(--color-sand, #e9d8c3);
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.05),
-      0 4px 12px rgba(0, 0, 0, 0.04);
+    background: var(--world-surface-tint);
+    border: 1px solid var(--world-border-accent);
+    clip-path: var(--clip-corner-sm);
+    box-shadow: var(--effect-glow-soft);
     transition:
       transform 160ms ease,
       box-shadow 160ms ease,
@@ -58,7 +56,7 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
 
   .v-card:hover {
     transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--theme-accent, #1e5a8a) 22%, var(--color-sand));
+    border-color: var(--world-border-accent);
     box-shadow:
       0 10px 24px rgba(0, 0, 0, 0.08),
       0 4px 12px rgba(0, 0, 0, 0.05);
@@ -81,8 +79,8 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 10px;
-    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 7%, #f7f0e6));
-    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 12%, #e9d8c3));
+    background: var(--world-accent-subtle);
+    border: 1px solid var(--world-border-accent);
     font-size: 1.1rem;
     flex-shrink: 0;
   }
@@ -97,7 +95,7 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     font-size: 1.02rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--color-deep-ink, #181512);
+    color: var(--color-text);
     line-height: 1.2;
   }
 
@@ -105,7 +103,7 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     margin: 0;
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.76rem;
-    color: var(--theme-accent-strong, #16446a);
+    color: var(--world-accent-strong);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -117,16 +115,16 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     display: inline-grid;
     place-items: center;
     border-radius: 999px;
-    border: 1px solid var(--color-sand, #e9d8c3);
+    border: 1px solid var(--color-border);
     text-decoration: none;
-    color: var(--color-deep-ink, #181512);
+    color: var(--color-text);
     font-size: 0.9rem;
     flex-shrink: 0;
   }
 
   .v-card__ext:hover {
-    background: var(--theme-accent-subtle);
-    border-color: var(--theme-border-accent);
+    background: var(--world-accent-subtle);
+    border-color: var(--world-border-accent);
   }
 
   .v-card__ext:focus-visible {
@@ -138,14 +136,14 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     margin: 0;
     font-size: 0.92rem;
     line-height: 1.55;
-    color: var(--color-deep-ink, #181512);
+    color: var(--color-text);
   }
 
   .v-card__role {
     margin: 0;
     font-size: 0.8rem;
     font-weight: 600;
-    color: var(--color-moss-strong, #5a5e4f);
+    color: var(--color-text-muted);
     letter-spacing: 0.01em;
   }
 
@@ -163,14 +161,14 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     padding-left: 1rem;
     font-size: 0.82rem;
     line-height: 1.45;
-    color: var(--color-text, #181512);
+    color: var(--color-text);
   }
 
   .v-card__item::before {
     content: '·';
     position: absolute;
     left: 0.15rem;
-    color: var(--theme-accent, #1e5a8a);
+    color: var(--world-accent);
     font-weight: 800;
   }
 
@@ -182,7 +180,7 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.82rem;
     font-weight: 600;
-    color: var(--theme-accent-strong, #16446a);
+    color: var(--world-accent-strong);
     text-decoration: none;
     padding-top: 0.35rem;
   }

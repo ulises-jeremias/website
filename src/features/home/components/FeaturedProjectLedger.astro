@@ -1,6 +1,5 @@
 ---
 import { featuredProjectLedger } from '../data/index.js';
-import WorldIllustration from './WorldIllustration.astro';
 
 const accentTokens = {
   magenta: 'var(--nest-magenta)',
@@ -12,10 +11,13 @@ const accentTokens = {
 } as const;
 ---
 
-<section class="featured-ledger" aria-labelledby="featured-ledger-title">
+<section class="featured-ledger neon-frame clip-corner" aria-labelledby="featured-ledger-title">
+  <span class="featured-ledger__corner" aria-hidden="true"></span>
+
   <header class="featured-ledger__header">
-    <p class="featured-ledger__eyebrow">Featured worlds</p>
-    <h2 id="featured-ledger-title">Selected project ledger</h2>
+    <h2 id="featured-ledger-title" class="featured-ledger__eyebrow text-glow-accent">
+      <span aria-hidden="true">/</span> Recent Projects
+    </h2>
   </header>
 
   <ol class="featured-ledger__list">
@@ -23,22 +25,39 @@ const accentTokens = {
       featuredProjectLedger.map((row, index) => (
         <li class="featured-ledger__row" style={`--world-color: ${accentTokens[row.accent]}`}>
           <a href={row.path} class="featured-ledger__link">
-            <span class="featured-ledger__index" aria-hidden="true">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <span class="featured-ledger__visual" aria-hidden="true">
-              <WorldIllustration illustration={row.illustration} />
+            <span class="featured-ledger__mark clip-corner-sm" aria-hidden="true">
+              <img
+                class="art-fade"
+                src={`/assets/nest/${row.island}-sm.webp`}
+                width="40"
+                height="40"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="featured-ledger__copy">
-              <strong>{row.title}</strong>
+              <strong>
+                <span class="featured-ledger__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                {row.title}
+              </strong>
               <span>{row.description}</span>
             </span>
             <span class="featured-ledger__enter" aria-hidden="true">
-              Open
+              Open →
             </span>
           </a>
         </li>
       ))
     }
   </ol>
+
+  <a class="featured-ledger__all" href="/projects">
+    <span aria-hidden="true">/</span> view all projects
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 12h15m-6.5-5.5 6 5.5-6 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+    </svg>
+  </a>
 </section>

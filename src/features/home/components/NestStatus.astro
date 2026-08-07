@@ -1,21 +1,48 @@
 ---
-import { nestStatus } from '../data/index.js';
+import { nestStack, nestStatus } from '../data/index.js';
 ---
 
-<section class="nest-status" aria-labelledby="nest-status-title">
+<section class="nest-status neon-frame clip-corner" aria-labelledby="nest-status-title">
   <header class="nest-status__header">
-    <p class="nest-status__eyebrow">Nest status</p>
-    <h2 id="nest-status-title">Current operating picture</h2>
+    <h2 id="nest-status-title" class="nest-status__eyebrow text-glow-accent">Digital Nest Status</h2>
+    <span class="nest-status__rule" aria-hidden="true"></span>
   </header>
 
   <dl class="nest-status__grid">
     {
       nestStatus.map((item) => (
         <div class:list={['nest-status__item', `nest-status__item--${item.tone}`]}>
-          <dt>{item.label}</dt>
+          <dt>
+            <span class="nest-status__prompt" aria-hidden="true">
+              &gt;
+            </span>
+            {item.label}
+          </dt>
           <dd>{item.value}</dd>
         </div>
       ))
     }
   </dl>
+
+  <div class="nest-status__stack">
+    {
+      nestStack.map((row) => (
+        <p>
+          <span class="nest-status__prompt" aria-hidden="true">
+            &gt;
+          </span>
+          {row.map((item, index) => (
+            <>
+              {index > 0 && (
+                <span class="nest-status__sep" aria-hidden="true">
+                  •
+                </span>
+              )}
+              <span>{item}</span>
+            </>
+          ))}
+        </p>
+      ))
+    }
+  </div>
 </section>

@@ -307,8 +307,8 @@ import { setupVPipeline } from '../data/index.js';
     gap: 1rem;
     padding: 1.15rem;
     border-radius: 16px;
-    background: var(--color-warm-white, #fffdf9);
-    border: 1px solid var(--color-sand, #e9d8c3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
@@ -322,7 +322,7 @@ import { setupVPipeline } from '../data/index.js';
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--theme-accent-strong, #16446a);
+    color: var(--world-accent-strong);
   }
 
   .setup__title {
@@ -330,21 +330,21 @@ import { setupVPipeline } from '../data/index.js';
     font-size: 1.18rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--color-deep-ink, #181512);
+    color: var(--color-text);
   }
 
   .setup__desc {
     margin: 0;
     font-size: 0.92rem;
     line-height: 1.6;
-    color: var(--color-moss-strong, #5a5e4f);
+    color: var(--color-text-muted);
   }
 
   .setup__desc code {
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.82rem;
-    background: rgba(15, 42, 68, 0.06);
-    border: 1px solid rgba(15, 42, 68, 0.08);
+    background: var(--world-accent-subtle);
+    border: 1px solid var(--world-border-accent);
     border-radius: 6px;
     padding: 0.08rem 0.3rem;
   }
@@ -373,7 +373,7 @@ import { setupVPipeline } from '../data/index.js';
     height: auto;
     display: block;
     border-radius: 14px;
-    border: 1px solid var(--color-sand, #e9d8c3);
+    border: 1px solid var(--color-border);
     overflow: hidden;
   }
 
@@ -398,9 +398,9 @@ import { setupVPipeline } from '../data/index.js';
     align-items: center;
     font-size: 0.78rem;
     line-height: 1.4;
-    color: var(--color-deep-ink, #181512);
-    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 6%, #f7f0e6));
-    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+    color: var(--color-text);
+    background: var(--world-accent-subtle);
+    border: 1px solid var(--world-border-accent);
     border-radius: 999px;
     padding: 0.3rem 0.55rem;
   }
@@ -411,7 +411,7 @@ import { setupVPipeline } from '../data/index.js';
     width: 1.2rem;
     height: 1.2rem;
     border-radius: 999px;
-    background: var(--theme-accent, #1e5a8a);
+    background: var(--world-accent);
     color: white;
     font-size: 0.7rem;
     font-weight: 800;
@@ -431,8 +431,8 @@ import { setupVPipeline } from '../data/index.js';
   .setup__card {
     padding: 0.95rem 1rem;
     border-radius: 12px;
-    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
-    border: 1px solid var(--theme-border-accent);
+    background: var(--world-accent-subtle);
+    border: 1px solid var(--world-border-accent);
   }
 
   .setup__card-title {
@@ -440,23 +440,23 @@ import { setupVPipeline } from '../data/index.js';
     font-size: 0.98rem;
     font-weight: 800;
     letter-spacing: -0.01em;
-    color: var(--color-deep-ink, #181512);
+    color: var(--color-text);
   }
 
   .setup__card-text {
     margin: 0 0 0.6rem 0;
     font-size: 0.88rem;
     line-height: 1.6;
-    color: var(--color-moss-strong, #5a5e4f);
+    color: var(--color-text-muted);
   }
 
   .setup__card-text code {
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.8rem;
-    background: rgba(15, 42, 68, 0.06);
+    background: var(--world-accent-subtle);
     border-radius: 5px;
     padding: 0.08rem 0.28rem;
-    border: 1px solid rgba(15, 42, 68, 0.08);
+    border: 1px solid var(--world-border-accent);
   }
 
   .setup__list {
@@ -467,16 +467,16 @@ import { setupVPipeline } from '../data/index.js';
     gap: 0.28rem;
     font-size: 0.84rem;
     line-height: 1.5;
-    color: var(--color-deep-ink, #181512);
+    color: var(--color-text);
   }
 
   .setup__list code {
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.8rem;
-    background: rgba(15, 42, 68, 0.06);
+    background: var(--world-accent-subtle);
     border-radius: 5px;
     padding: 0.08rem 0.28rem;
-    border: 1px solid rgba(15, 42, 68, 0.08);
+    border: 1px solid var(--world-border-accent);
   }
 
   .setup__code {
@@ -512,13 +512,13 @@ import { setupVPipeline } from '../data/index.js';
     margin: 0;
     font-size: 0.82rem;
     line-height: 1.6;
-    color: var(--color-moss-strong, #5a5e4f);
-    border-top: 1px dashed var(--theme-border-accent);
+    color: var(--color-text-muted);
+    border-top: 1px dashed var(--world-border-accent);
     padding-top: 0.7rem;
   }
 
   .setup__note a {
-    color: var(--theme-accent-strong, #16446a);
+    color: var(--world-accent-strong);
     font-weight: 600;
     text-decoration: none;
   }
@@ -531,8 +531,8 @@ import { setupVPipeline } from '../data/index.js';
   .setup__note code {
     font-family: var(--font-mono, ui-monospace, monospace);
     font-size: 0.78rem;
-    background: rgba(15, 42, 68, 0.06);
-    border: 1px solid rgba(15, 42, 68, 0.08);
+    background: var(--world-accent-subtle);
+    border: 1px solid var(--world-border-accent);
     border-radius: 6px;
     padding: 0.08rem 0.3rem;
   }

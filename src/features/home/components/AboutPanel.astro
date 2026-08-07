@@ -1,17 +1,32 @@
 ---
 import { profile } from '@/data/profile.js';
-import DigitalNestMark from '@/shared/components/DigitalNestMark.astro';
 ---
 
-<section class="about-panel" aria-labelledby="about-panel-title">
-  <div class="about-panel__mark" aria-hidden="true">
-    <DigitalNestMark />
-  </div>
+<section class="about-panel neon-frame clip-corner" aria-labelledby="about-panel-title">
+  <span class="about-panel__corner" aria-hidden="true"></span>
+
+  <p class="about-panel__eyebrow text-glow-accent">
+    <span class="about-panel__slash" aria-hidden="true">/</span> About Ulises
+  </p>
+  <h2 id="about-panel-title" class="sr-only">{profile.displayName}</h2>
 
   <div class="about-panel__body">
-    <p class="about-panel__eyebrow">About</p>
-    <h2 id="about-panel-title">{profile.displayName}</h2>
     <p class="about-panel__bio">{profile.bio}</p>
+    <p class="about-panel__summary">{profile.summary}</p>
+
+    <ul class="about-panel__tags">
+      {
+        [
+          'Solutions Architect',
+          'Open Source',
+          'AI Workflows',
+          'Developer Experience',
+          'Linux Enthusiast',
+          'V Core Team',
+        ].map((tag) => <li class="clip-corner-sm">{tag}</li>)
+      }
+    </ul>
+
     <ul class="about-panel__roles">
       {
         profile.roles.map((role) => (
@@ -34,6 +49,7 @@ import DigitalNestMark from '@/shared/components/DigitalNestMark.astro';
         ))
       }
     </ul>
+
     <p class="about-panel__fun">{profile.funFact}</p>
   </div>
 </section>

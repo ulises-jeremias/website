@@ -32,14 +32,16 @@ describe('Synthwave Systems Atlas homepage', () => {
 
     expect(hero).toContain("from '@/data/profile");
     expect(hero).toContain('heroKeywords');
+    expect(hero).toContain('terminalQuote');
     expect(hero).toContain('<SynthwaveEnvironment');
-    expect(hero).toMatch(/<h1[^>]*>[\s\S]*profile\.(?:name|displayName)/);
-    expect(hero).not.toMatch(/<img[^>]+(?:Ulises|portrait)/i);
+    expect(hero).toMatch(/hero__name/);
+    expect(hero).not.toMatch(/avatar\.png|placeholder-user/i);
   });
 
-  it('builds the atmosphere from lightweight CSS and original SVG layers', async () => {
+  it('builds the atmosphere from the ZIP hero plate plus CSS/SVG layers', async () => {
     const environment = await readSource('features/home/components/SynthwaveEnvironment.astro');
 
+    expect(environment).toContain('hero-bg.webp');
     expect(environment).toContain('synthwave-environment__sun');
     expect(environment).toContain('synthwave-environment__grid');
     expect(environment).toContain('synthwave-environment__mountains');
@@ -47,20 +49,23 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(environment).toContain('aria-hidden="true"');
   });
 
-  it('renders all canonical worlds as links with keyboard-equivalent relationship state', async () => {
+  it('renders all canonical worlds as floating platforms with ZIP island art', async () => {
     const atlas = await readSource('features/home/components/ProjectAtlas.astro');
     const world = await readSource('features/home/components/ProjectWorld.astro');
 
     expect(atlas).toContain('atlasWorlds');
     expect(atlas).toContain('<AtlasConnections');
     expect(atlas).toContain('<ProjectWorld');
-    expect(atlas).toContain('<WorldIllustration');
+    expect(atlas).not.toContain('<WorldIllustration');
     expect(world).toContain('data-world-id');
     expect(world).toContain('href={world.path}');
     expect(world).toContain('data-related-worlds');
+    expect(world).toContain('atlas-world__platform');
+    expect(world).toContain('/assets/nest/');
+    expect(world).toContain('art-fade');
   });
 
-  it('supports every original project-world illustration vocabulary item', async () => {
+  it('keeps original SVG illustration vocabulary available for non-atlas uses', async () => {
     const illustrations = await readSource('features/home/components/WorldIllustration.astro');
     const expected = [
       'desktop',

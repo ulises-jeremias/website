@@ -2,6 +2,19 @@ import { profile } from '@/data/profile.js';
 import { featuredWorlds as canonicalFeaturedWorlds, worldsByPriority } from '@/data/project-worlds.js';
 import type { AtlasWorld, ContactLink, FeaturedProjectRow, NestStatusItem } from '../types/index.js';
 
+/** ZIP island art filenames (under /assets/nest/), mapped from project-world ids. */
+export const islandArtByWorldId: Record<string, string> = {
+  dotfiles: 'island-dotfiles',
+  workstation: 'island-workstation',
+  toolkit: 'island-agent',
+  v: 'island-v',
+  'create-awesome': 'island-scaffold',
+  community: 'island-community',
+  blog: 'island-blog',
+  projects: 'island-projects',
+  'open-source': 'island-oss',
+};
+
 export const atlasWorlds: AtlasWorld[] = worldsByPriority.map((world, index) => ({
   id: world.id,
   number: String(index + 1).padStart(2, '0'),
@@ -11,6 +24,7 @@ export const atlasWorlds: AtlasWorld[] = worldsByPriority.map((world, index) => 
   theme: world.theme,
   accent: world.accent,
   illustration: world.illustration,
+  island: islandArtByWorldId[world.id] ?? 'island-projects',
   relatedWorlds: [...world.relatedWorlds],
 }));
 
@@ -22,6 +36,9 @@ export const heroKeywords = [
   'Linux Tooling',
   'Scientific Computing',
 ] as const;
+
+/** ZIP terminal quote — positioning statement, not invented telemetry. */
+export const terminalQuote = "Building tools that empower developers and expand what's possible.";
 
 export const nestStatus: NestStatusItem[] = [
   {
@@ -35,9 +52,14 @@ export const nestStatus: NestStatusItem[] = [
     tone: 'cyan',
   },
   {
-    label: 'operating_mode',
-    value: 'Open source · systems · documentation',
+    label: 'toolkit_inventory',
+    value: '61 skills · 16 agents · 10 loops · 7 profiles',
     tone: 'violet',
+  },
+  {
+    label: 'dotfiles_rices',
+    value: '22 HorneroConfig rices',
+    tone: 'magenta',
   },
   {
     label: 'home_base',
@@ -46,6 +68,11 @@ export const nestStatus: NestStatusItem[] = [
   },
 ];
 
+export const nestStack = [
+  ['Linux', 'Neovim', 'Tmux', 'Zsh', 'Git'],
+  ['TypeScript', 'Go', 'Shell', 'Python', 'V'],
+] as const;
+
 export const featuredProjectLedger: FeaturedProjectRow[] = canonicalFeaturedWorlds.map((world) => ({
   id: world.id,
   title: world.title,
@@ -53,6 +80,7 @@ export const featuredProjectLedger: FeaturedProjectRow[] = canonicalFeaturedWorl
   path: world.path,
   accent: world.accent,
   illustration: world.illustration,
+  island: islandArtByWorldId[world.id] ?? 'island-projects',
 }));
 
 export const contactLinks: ContactLink[] = [

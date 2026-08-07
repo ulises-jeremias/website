@@ -18,20 +18,6 @@
   --cna-shadow-glow: 0 0 40px -10px rgba(245, 158, 11, 0.25);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --cna-bg: #fffcf5;
-    --cna-surface: #ffffff;
-    --cna-surface-elevated: #fffbeb;
-    --cna-text: #1f2937;
-    --cna-text-muted: #6b7280;
-    --cna-border: #fed7aa;
-    --cna-amber-soft: #d97706;
-    --cna-glow: rgba(245, 158, 11, 0.08);
-    --cna-shadow-glow: 0 0 40px -10px rgba(245, 158, 11, 0.18);
-  }
-}
-
 @keyframes cna-fade-in-up {
   from {
     opacity: 0;

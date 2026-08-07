@@ -3,14 +3,12 @@
  */
 
 :root {
-  --font-sans:
-    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji';
-  --font-display: ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
+  /* ZIP fidelity: JetBrains Mono for UI chrome; Orbitron for display identity */
+  --font-sans: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', menlo, monaco, consolas, 'Liberation Mono', monospace;
+  --font-display: 'Orbitron', ui-sans-serif, system-ui, sans-serif;
   --font-sans-display: var(--font-display);
   --font-serif: ui-serif, georgia, cambria, 'Times New Roman', times, serif;
-  --font-mono:
-    ui-monospace, 'SFMono-Regular', 'SF Mono', menlo, monaco, consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', menlo, monaco, consolas, monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.8125rem;
   --text-sm-plus: 0.875rem;
