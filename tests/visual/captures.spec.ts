@@ -38,7 +38,8 @@ test('capture ZIP-fidelity final screenshots', async ({ page }) => {
 
   for (const shot of captures) {
     await page.setViewportSize({ width: shot.width, height: shot.height });
-    await page.goto(shot.path, { waitUntil: 'networkidle' });
+    await page.goto(shot.path, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(200);
     const file = path.join(outDir, `${shot.name}-${shot.width}.png`);
     await mkdir(path.dirname(file), { recursive: true });
     await page.screenshot({ path: file, fullPage: Boolean(shot.fullPage) });
