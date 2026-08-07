@@ -1,0 +1,27 @@
+# Codecov configuration
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 2%
+    patch:
+      default:
+        target: 80%
+
+ignore:
+  - '**/*.d.ts'
+  - '**/__mocks__/**'
+  - '**/node_modules/**'
+  - '**/*.stories.tsx'
+  - '**/*.stories.ts'
+  - 'dist/**'
+  - '.astro/**'
+
+comment:
+  layout: 'reach,diff,flags,files'
+  behavior: default
+  require_changes: false
+
+github_checks:
+  annotations: true

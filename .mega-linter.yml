@@ -1,0 +1,16 @@
+# MegaLinter configuration — Astro personal website
+# https://megalinter.io/latest/config-file/
+
+FILTER_REGEX_EXCLUDE: >-
+  (\.git/|node_modules/|\.astro/|dist/|build/|coverage/|pnpm-lock\.yaml)
+
+COPYPASTE_JSCPD_ARGUMENTS: '--min-lines 20 --min-tokens 150 --threshold 5'
+
+CSS_STYLELINT_CONFIG_FILE: .stylelintrc.json
+SPELL_CSPELL_CONFIG_FILE: cspell.json
+TYPESCRIPT_TS_STANDARD_DISABLE_ERRORS: true
+REPOSITORY_GRYPE_DISABLE_ERRORS: true
+REPOSITORY_TRIVY_DISABLE_ERRORS: true
+
+# Disable formatters already covered by Prettier/ESLint to avoid conflicts
+DISABLE_LINTERS: TYPESCRIPT_ES, JAVASCRIPT_ES

@@ -1,0 +1,4 @@
+dist
+.astro
+coverage
+node_modules

@@ -1,0 +1,66 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+}
+
+const { slug, title, description, pubDate } = Astro.props as Props;
+
+const formattedDate = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="blog-card">
+  <a href={`/blog/${slug}`} class="blog-card__link">
+    <h2 class="blog-card__title">{title}</h2>
+    <p class="blog-card__description">{description}</p>
+    <time class="blog-card__date" datetime={pubDate.toISOString()}>
+      {formattedDate}
+    </time>
+  </a>
+</article>
+
+<style>
+  .blog-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .blog-card:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+  }
+
+  .blog-card__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .blog-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #111827;
+  }
+
+  .blog-card__description {
+    color: #6b7280;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.6;
+  }
+
+  .blog-card__date {
+    font-size: 0.875rem;
+    color: #9ca3af;
+  }
+</style>

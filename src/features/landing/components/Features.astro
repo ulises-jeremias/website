@@ -1,0 +1,44 @@
+---
+import { docsLinks, landingFeatures } from '../data/index.js';
+
+interface Props {
+  projectName: string;
+}
+
+const { projectName } = Astro.props as Props;
+---
+
+<div class="cna-landing__hero-features">
+  <section class="cna-landing__features">
+    <h2 class="cna-landing__section-title">What ships in this starter</h2>
+    <div class="cna-landing__grid">
+      {
+        landingFeatures.map((feature, index) => (
+          <article class="cna-landing__card" style={`--index: ${String(index + 1)}`}>
+            <span class="cna-landing__card-icon" aria-hidden="true">
+              {feature.icon}
+            </span>
+            <h3 class="cna-landing__card-title">{feature.title}</h3>
+            <p class="cna-landing__card-text">{feature.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="cna-landing__docs" style={`--index: ${String(landingFeatures.length + 1)}`}>
+    <h2 class="cna-landing__section-title">Next steps — {projectName}</h2>
+    <nav class="cna-landing__doc-list" aria-label="Documentation">
+      {
+        docsLinks.map((doc) => (
+          <a href={doc.href} class="cna-landing__doc-link">
+            <span class="cna-landing__doc-label">{doc.label}</span>
+            <span class="cna-landing__doc-arrow" aria-hidden="true">
+              →
+            </span>
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+</div>

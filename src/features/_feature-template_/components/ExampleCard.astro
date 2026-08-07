@@ -1,0 +1,50 @@
+---
+import type { ExampleProps } from '../types/index.js';
+
+interface Props extends ExampleProps {}
+
+const { title, description, href } = Astro.props as Props;
+---
+
+<article class="example-card">
+  <h3 class="example-card__title">{title}</h3>
+  <p class="example-card__description">{description}</p>
+  {
+    href && (
+      <a href={href} class="example-card__link">
+        Learn more →
+      </a>
+    )
+  }
+</article>
+
+<style>
+  .example-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    background: white;
+  }
+
+  .example-card__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .example-card__description {
+    color: #6b7280;
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+  }
+
+  .example-card__link {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .example-card__link:hover {
+    text-decoration: underline;
+  }
+</style>
