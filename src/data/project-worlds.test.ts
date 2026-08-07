@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
-  projectWorlds,
-  worldsByPriority,
+  crossLinks,
   featuredWorlds,
   getWorldById,
   getWorldByPath,
   getWorldBySlug,
-  crossLinks,
-  validateTaxonomy,
+  projectWorlds,
   projectWorldSchema,
+  validateTaxonomy,
+  worldsByPriority,
 } from '@/data/project-worlds';
 
 describe('project-world taxonomy', () => {
