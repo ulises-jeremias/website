@@ -20,7 +20,7 @@ export const communityMeta = {
 export const workshopSections: WorkshopSection[] = [
   {
     id: 'shared-workshop',
-    title: 'El taller compartido — shared workshop',
+    title: 'The shared workshop — connected to every world',
     paragraphs: [
       'Community is the shared workshop that connects every world in the Digital Nest — dotfiles, workstation, toolkit, V, and Create Awesome. It is not a broadcast channel: it is a bench where questions, drafts, and fixes circulate before they become documentation.',
       'The principle is simple: work in the open, link the evidence, and leave a path for the next person. Every pattern in this site has a provenance — a PR, a discussion, or a commit you can open. If you cannot verify it, it is not on the page.',

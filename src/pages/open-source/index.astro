@@ -7,31 +7,31 @@ const meta = getRouteMeta('/open-source')!;
 <SectionLayout title={meta.title} description={meta.description} theme="open-source">
   <h1>Open Source — Evidence-based contributions</h1>
   <p>
-    Distingue: owned, maintained, org role, external PRs. Solo evidencia: <em>merged authored PRs</em> primaria. No stars/forks/watching.
+    Distinguishing: owned, maintained, org role, external PRs. Only evidence: <em>merged authored PRs</em> primary. No stars/forks/watching.
   </p>
   <div style="padding:1rem; border:1px solid var(--color-border); border-radius:8px; background:var(--color-paper);">
     <p>
       <strong>Pipeline:</strong> Raw GitHub evidence → Normalized → Editorial overrides → Static data → Rendered views
     </p>
     <p style="color:var(--color-muted); font-size:0.9rem;">
-      Build-time generación, token nunca en browser, scheduled refresh, cache last-known-good, deduplicación, filtros
-      bot, exclusión privada, provenance.
+      Build-time generation, token never in browser, scheduled refresh, cache last-known-good, deduplication, bot
+      filters, private exclusion, provenance.
     </p>
   </div>
   <section>
-    <h2>Timeline (ejemplo)</h2>
+    <h2>Timeline (example)</h2>
     <ul>
       <li>
         <a href="https://github.com/vlang/v/pulls?q=author:ulises-jeremias" target="_blank" rel="noreferrer"
-          >V — PRs merged</a
-        > — validado
+          >V — merged PRs</a
+        > — validated
       </li>
       <li><a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">rxv — owned</a></li>
       <li><a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">setup-v — maintained</a></li>
     </ul>
     <p style="color:var(--color-muted); font-size:0.9rem;">
-      Última actualización: 2026-08-07. Fuente: GitHub GraphQL + Search, paginado, rate-limit + retry, fixtures
-      determinísticos. Ver pipeline N.
+      Last updated: 2026-08-07. Source: GitHub GraphQL + Search, pagination, rate-limit + retry, deterministic fixtures.
+      See pipeline N.
     </p>
   </section>
 </SectionLayout>
