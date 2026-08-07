@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Header from '@/shared/components/Header.astro';
+import MobileNav from '@/shared/components/MobileNav.astro';
 import Footer from '@/shared/components/Footer.astro';
 import '@/styles/tokens.css';
 import '@/styles/semantic.css';
@@ -15,6 +16,7 @@ const { title, description, theme } = Astro.props;
 <BaseLayout title={title} description={description}>
   <div data-theme={theme}>
     <Header />
+    <MobileNav />
     <main id="main" class="section-main"><slot /></main>
     <Footer />
   </div>

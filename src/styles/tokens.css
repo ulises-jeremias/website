@@ -1,3 +1,7 @@
+/* Preliminary design tokens for Epic B navigation — Epic C owns final palette.
+   These fallbacks ensure Header/MobileNav render correctly even before C lands.
+   Values are WCAG AA vetted placeholders; C will replace with Digital Nest palette. */
+
 :root {
   --color-paper: #f7f0e6;
   --color-sand: #e9d8c3;
@@ -13,8 +17,8 @@
   --color-border: #d5c2c6;
   --color-accent: var(--color-clay);
   --color-focus: #005fcc;
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -27,31 +31,42 @@
   --radius-lg: 16px;
   --max-width: 72rem;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #181512;
     --color-text: #fffdf9;
     --color-muted: #b0a8a0;
+    --color-border: #3a2a24;
   }
 }
+
 * {
   box-sizing: border-box;
 }
+
 html {
   font-family: var(--font-sans);
   background: var(--color-bg);
   color: var(--color-text);
 }
+
 a {
   color: var(--color-accent);
 }
-a:focus-visible {
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
 }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation: none !important;
+    transition: none !important;
   }
 }
