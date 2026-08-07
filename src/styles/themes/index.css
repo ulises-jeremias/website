@@ -10,14 +10,37 @@
 @import './community.css';
 
 :root {
-  --theme-accent: var(--color-clay);
+  --theme-accent: var(--color-clay-strong);
   --theme-accent-strong: var(--color-clay-strong);
-  --theme-accent-light: var(--color-clay-light);
-  --theme-accent-subtle: var(--color-clay-muted);
-  --theme-border-accent: color-mix(in srgb, var(--theme-accent) 35%, transparent);
-  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 6%, var(--color-bg));
-  --theme-illustration: 'warm / hand-drawn / paper texture';
+  --theme-accent-light: var(--color-clay);
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 10%, var(--color-warm-paper));
+  --theme-accent-secondary: var(--color-moss-strong);
+  --theme-accent-tertiary: var(--color-cool-sky-strong);
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 5%, var(--color-warm-paper));
+  --world-accent: var(--nest-magenta);
+  --world-accent-strong: var(--nest-pink);
+  --world-accent-secondary: var(--nest-cyan);
+  --world-accent-tertiary: var(--nest-sunset-orange);
+  --theme-illustration: 'thin geometric strokes, clipped platforms, orbital arcs';
   --theme-motion: var(--ease-default);
+}
+
+:root,
+[data-section],
+[data-theme] {
+  /* Route aliases target current light compositions. */
+  --route-accent: var(--theme-accent);
+  --route-accent-strong: var(--theme-accent-strong);
+  --route-accent-subtle: var(--theme-accent-subtle);
+  --route-border-accent: var(--theme-border-accent);
+  --route-surface-tint: var(--theme-surface-tint);
+
+  /* World roles target redesigned midnight compositions. */
+  --world-accent-subtle: color-mix(in srgb, var(--world-accent) 13%, transparent);
+  --world-border-accent: color-mix(in srgb, var(--world-accent) 38%, transparent);
+  --world-surface-tint: color-mix(in srgb, var(--world-accent) 7%, var(--color-bg));
+  --world-focus: var(--world-accent-secondary);
 }
 
 [data-section='dotfiles'],
@@ -45,6 +68,11 @@
   --theme-id: 'create-awesome';
 }
 
+[data-section='community'],
+[data-theme='community'] {
+  --theme-id: 'community';
+}
+
 .theme-tint {
   background: var(--theme-surface-tint);
   border-block: 1px solid var(--theme-border-accent);
@@ -64,14 +92,9 @@ a.theme-accent {
 }
 
 a.theme-accent:hover {
-  color: color-mix(in srgb, var(--theme-accent-strong) 85%, black);
+  color: var(--theme-accent);
 }
 
 [data-theme]:focus-within {
-  --color-focus: var(--theme-accent-strong);
-}
-
-[data-section='community'],
-[data-theme='community'] {
-  --theme-id: 'community';
+  --color-focus: var(--theme-accent-light);
 }

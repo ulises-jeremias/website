@@ -16,6 +16,8 @@ const meta = getRouteMeta('/v')!;
 ---
 
 <SectionLayout
+  currentPath="/v"
+  world="V Ecosystem"
   title={meta.title}
   description={meta.description}
   theme="v"
@@ -23,7 +25,7 @@ const meta = getRouteMeta('/v')!;
     eyebrow: 'Core Team @ V · vlang/v · scientific · reactive · CI',
     title: 'V Ecosystem — Fast, clear, scientific',
     description:
-      'Laboratorio computacional — cuatro bibliotecas, una Action y un lenguaje. Contribuciones verificadas (no vanity counts), diagramas como codigo, y backend pure-V por defecto.',
+      'Computational lab — four libraries, one Action, and a language. Verified contributions (no vanity counts), diagrams as code, pure-V backends by default.',
   }}
 >
   <Fragment slot="hero-actions">
@@ -65,15 +67,15 @@ const meta = getRouteMeta('/v')!;
       <SetupVDiagram />
     </section>
 
-    <section id="licencias" class="v-page__section" aria-labelledby="licencias-title">
+    <section id="licenses" class="v-page__section" aria-labelledby="licenses-title">
       <div class="v-licenses">
         <header class="v-licenses__header">
-          <p class="v-licenses__eyebrow">Verificacion de licencias</p>
-          <h2 id="licencias-title" class="v-licenses__title">Licencias verificadas — MIT con Veasel responsable</h2>
+          <p class="v-licenses__eyebrow">License verification</p>
+          <h2 id="licenses-title" class="v-licenses__title">Verified licenses — MIT with responsible Veasel policy</h2>
           <p class="v-licenses__desc">
-            Este sitio y el ecosistema V comparten MIT. Veasel (mascota) solo se incluye si
-            <code>vlang/v-mascot/LICENSE</code> lo permite con atribucion; caso ambiguo usa ilustracion original V-inspirada
-            (no derivada) — ningun binario Veasel esta embebido aqui.
+            This site and the V ecosystem share MIT. Veasel (mascot) is included only if
+            <code>vlang/v-mascot/LICENSE</code> allows it with attribution; otherwise use an original V-inspired illustration
+            (non-derivative) — no Veasel binary is embedded here.
           </p>
         </header>
         <div class="v-licenses__grid" role="list">

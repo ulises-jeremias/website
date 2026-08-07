@@ -6,10 +6,16 @@
 [data-theme='create-awesome'] {
   --theme-accent: #9a6200;
   --theme-accent-strong: #7a4d00;
-  --theme-accent-light: #fbbf24;
-  --theme-accent-subtle: color-mix(in srgb, #9a6200 7%, var(--color-warm-paper));
-  --theme-border-accent: color-mix(in srgb, #9a6200 16%, var(--color-sand));
-  --theme-surface-tint: color-mix(in srgb, #9a6200 4%, var(--color-warm-paper));
+  --theme-accent-light: #9a6200;
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 7%, var(--color-warm-paper));
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 4%, var(--color-warm-paper));
+  --theme-accent-secondary: #0d7a6e;
+  --theme-accent-tertiary: #1e5a8a;
+  --world-accent: var(--nest-sunset-orange);
+  --world-accent-strong: var(--nest-sunset-orange);
+  --world-accent-secondary: var(--nest-cyan);
+  --world-accent-tertiary: var(--nest-violet);
   --theme-teal: #0d7a6e;
   --theme-teal-light: #14b8a6;
   --theme-blue: #1e5a8a;

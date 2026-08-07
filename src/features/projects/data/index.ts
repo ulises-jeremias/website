@@ -46,7 +46,7 @@ export const projects: Project[] = [
     tags: ['v', 'github-actions', 'ci'],
     kind: 'tool',
     role: 'Author',
-    links: [{ label: 'Repo', href: 'https://github.com/ulises-jeremias/setup-v', kind: 'repo' }],
+    links: [{ label: 'Repo', href: 'https://github.com/vlang/setup-v', kind: 'repo' }],
     lastVerified: '2026-08-07',
   },
   {
@@ -63,7 +63,7 @@ export const projects: Project[] = [
   {
     slug: 'hello-vsl',
     title: 'hello-vsl',
-    summary: 'Minimal VSL example — hello world for V Standard Library.',
+    summary: 'Minimal VSL example — hello world for V Scientific Library.',
     status: 'experimental',
     tags: ['v', 'vsl', 'example'],
     kind: 'template',

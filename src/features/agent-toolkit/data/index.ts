@@ -1,218 +1,314 @@
-import type { BudgetItem, CapabilityItem, InstallSnippet, SwarmScene, ToolkitOverviewSection } from '../types/index.js';
+import type {
+  BudgetItem,
+  CapabilityNode,
+  DistributionTarget,
+  InstallSnippet,
+  QueueVsSwarmItem,
+  SkillDomain,
+  SwarmRecipe,
+  SwarmStage,
+  ToolkitOverviewSection,
+  ToolkitStat,
+  UiBackend,
+} from '../types/index.js';
+
+/**
+ * Inventory verified against agent-toolkit HEAD (b6700ca, 2026-08-07):
+ * skills 61 across 9 domains (core 8), agents 16, loops 10,
+ * profiles/targets 7, MCP templates 6, packs 3, plugins 4.
+ */
+export const inventoryVerifiedAt = '2026-08-07';
+export const inventoryCommit = 'b6700ca';
+
+export const toolkitStats: ToolkitStat[] = [
+  { label: 'skills', value: '61', hint: '9 domains · core 8' },
+  { label: 'agents', value: '16', hint: 'persona constraints' },
+  { label: 'loops', value: '10', hint: 'L1 / L2 / L3' },
+  { label: 'profiles', value: '7', hint: 'native tool targets' },
+  { label: 'MCP', value: '6', hint: 'registry templates' },
+];
+
+export const skillDomains: SkillDomain[] = [
+  { id: 'core', count: 8 },
+  { id: 'delivery', count: 21 },
+  { id: 'forge', count: 8 },
+  { id: 'design', count: 6 },
+  { id: 'ops', count: 6 },
+  { id: 'integrations', count: 5 },
+  { id: 'tooling', count: 4 },
+  { id: 'data', count: 2 },
+  { id: 'loops', count: 1 },
+];
+
+export const capabilityNodes: CapabilityNode[] = [
+  {
+    id: 'skills',
+    title: 'Skills',
+    count: '61',
+    summary: 'Reusable capability units — one SKILL.md directory each.',
+    detail: 'core 8 · delivery 21 · forge 8 · design 6 · ops 6 · integrations 5 · tooling 4 · data 2 · loops 1',
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/skills',
+    color: '#a05cff',
+  },
+  {
+    id: 'agents',
+    title: 'Agents',
+    count: '16',
+    summary: 'Persona constraints that scope allow/deny actions and handoffs.',
+    detail: 'architect · planner · code-reviewer · security-reviewer · tdd-guide · …',
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/agents',
+    color: '#ff84f1',
+  },
+  {
+    id: 'loops',
+    title: 'Loops',
+    count: '10',
+    summary: 'Recurring workflows declared as loops/<name>/loop.yaml.',
+    detail: 'L1 report-only · L2 controlled · L3 high-autonomy · resumable budgets',
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/blob/main/docs/LOOPS.md',
+    color: '#ff9a4d',
+  },
+  {
+    id: 'packs',
+    title: 'Packs',
+    count: '3',
+    summary: 'Client/project context bundles loaded into the harness overlay.',
+    detail: 'delivery-discipline · engineering-workflow · oss-maintenance',
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/packs',
+    color: '#1cefff',
+  },
+  {
+    id: 'plugins',
+    title: 'Plugins',
+    count: '4',
+    summary: 'Native marketplace products compiled from the same catalog.',
+    detail: 'agent-toolkit-core · agents · forge · complete',
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/plugins',
+    color: '#55b9ff',
+  },
+  {
+    id: 'mcp',
+    title: 'MCP',
+    count: '6',
+    summary: 'Registry + installable templates for external tool servers.',
+    detail: 'github · slack · clickup · linear · notion · figma',
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/mcp',
+    color: '#7358ff',
+  },
+];
+
+export const distributionTargets: DistributionTarget[] = [
+  { id: 'claude-code', label: 'Claude Code', path: '~/.claude/skills + marketplace plugins' },
+  { id: 'cursor', label: 'Cursor', path: 'profiles/cursor/rules/*.mdc' },
+  { id: 'opencode', label: 'OpenCode', path: 'profiles/opencode/agents + opencode.json' },
+  { id: 'copilot', label: 'Copilot', path: 'profiles/copilot' },
+  { id: 'windsurf', label: 'Windsurf', path: 'profiles/windsurf/memories' },
+  { id: 'pi', label: 'Pi', path: 'profiles/pi/skills' },
+  { id: 'muse-code', label: 'Muse Code', path: 'profiles/muse-code' },
+];
 
 export const toolkitOverview: ToolkitOverviewSection[] = [
   {
     id: 'principle',
     title: 'One source → many assistants',
-    paragraphs: ['Agent Toolkit is a composable collection.', 'The design is explicit over implicit.'],
+    paragraphs: [
+      'Agent Toolkit is the L1.5 capability catalog for the Personal DX graph.',
+      'Write a skill, agent, or loop once; compile it into every supported tool target.',
+    ],
   },
   {
     id: 'layers',
-    title: 'Three-layer stack — workstation · toolkit · overlay',
-    paragraphs: ['L1 (Workstation) provisions.', 'Precedence is project overlay > toolkit defaults.'],
+    title: 'Workstation · toolkit · overlay',
+    paragraphs: [
+      'L1 provisions the machine. L1.5 distributes capabilities. The overlay holds memory and run state.',
+      'Precedence is project overlay → toolkit defaults. HorneroConfig is an optional desktop sibling, not a hard dependency.',
+    ],
   },
   {
     id: 'delivery',
     title: 'Delivery, not demo',
-    paragraphs: ['Toolkit capabilities are built for agentic-harness.', 'Install is one command.'],
+    paragraphs: [
+      'Capabilities ship for agentic harnesses: budgets, handoffs, inventories, and doctor checks.',
+      'Install is one command; verification is inventory + doctor — not marketing counters.',
+    ],
   },
 ];
 
-export const toolkitStats = [
-  { label: 'skills', value: '61', hint: 'across 9 domains' },
-  { label: 'agents', value: '16', hint: 'persona constraints' },
-  { label: 'loops', value: '10', hint: 'L1/L2/L3 templates' },
-  { label: 'profiles', value: '6', hint: 'native tool targets' },
-];
-
-export const capabilities: CapabilityItem[] = [
-  {
-    id: 'skills',
-    title: 'Skills — reusable capability units',
-    description: 'A skill is a directory with one SKILL.md.',
-    icon: '🧰',
-    color: '#6b4a9c',
-    stats: [
-      { label: 'total', value: '61' },
-      { label: 'domains', value: '9' },
-      { label: 'spec', value: 'SKILL.md' },
-    ],
-    highlights: ['delivery 21 · core 6', 'frontmatter-only', 'single source'],
-    details: ['Domains: core', 'Deploy: Claude Code', 'Verify: agent-toolkit inventory'],
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/skills',
-  },
-  {
-    id: 'loops',
-    title: 'Loops — recurring workflows',
-    description: 'A loop is loops/<name>/loop.yaml.',
-    icon: '🔄',
-    color: '#ea7a18',
-    stats: [
-      { label: 'templates', value: '10' },
-      { label: 'tiers', value: 'L1·L2·L3' },
-      { label: 'cadence', value: '15m → 1w' },
-    ],
-    highlights: ['L1 report-only', 'L2 controlled', 'L3 high-autonomy'],
-    details: ['Each loop declares allowlist', 'Resumable', 'Run: agent-toolkit loop run'],
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/blob/main/docs/LOOPS.md',
-  },
-  {
-    id: 'knowledge',
-    title: 'Knowledge — persistent memory',
-    description: 'Filesystem-first memory.',
-    icon: '🧠',
-    color: '#2e6b4a',
-    stats: [
-      { label: 'stores', value: 'knowledge/' },
-      { label: 'packs', value: '3' },
-      { label: 'personas', value: '16' },
-    ],
-    highlights: ['memory search/add/inject', 'packs: oss-maintenance', 'personas: architect'],
-    details: ['Memory lifecycle', 'Packs compose', 'Profiles never store secrets'],
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/blob/main/docs/ARCHITECTURE.md',
-  },
+export const queueVsSwarm: QueueVsSwarmItem[] = [
   {
     id: 'devcompanion',
-    title: 'DevCompanion — queued background work',
-    description: 'A queue for heavy work.',
-    icon: '📡',
-    color: '#475569',
-    stats: [
-      { label: 'templates', value: '5+' },
-      { label: 'backends', value: 'herdr·tmux' },
-      { label: 'harness', value: 'queue→run-once' },
+    title: 'DevCompanion — durable queue',
+    summary:
+      'Background job queue for heavy work: review, PR, CI fix, investigate, refactor. Not a multi-agent runtime.',
+    bullets: [
+      'queue → outbox → run-once → status / done / log',
+      'Templates: code-review, create-pr, fix-ci, investigate, refactor',
+      'LLM policy gate before client jobs (llm-status)',
     ],
-    highlights: ['queue: outbox→queued', 'run-once', 'status/done/log'],
-    details: ['Wire workspace CLI', 'One command', 'Use for code review'],
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/blob/main/docs/SWARMS.md',
+    command: 'agent-toolkit devcompanion queue <project> --template code-review',
+  },
+  {
+    id: 'swarm',
+    title: 'Swarm — multi-role orchestration',
+    summary:
+      'Recipe-driven role topology with isolated worktrees, SHA handoffs, budgets, and governance. Separate from the queue.',
+    bullets: [
+      'REQUEST → recipe → roles → worktrees → handoffs → state → governance → artifact',
+      'pair / team / full recipes with promote without losing run ID',
+      'Herdr and tmux are UI backends over the same run state',
+    ],
+    command: 'agent-toolkit swarm plan --recipe pair --ui tmux "…" --json',
   },
 ];
 
-export const swarmScenes: SwarmScene[] = [
+export const swarmStages: SwarmStage[] = [
   {
-    id: 'catalog',
+    id: 'request',
     index: 1,
-    eyebrow: 'Scene 1 · Origin',
-    title: 'Single catalog — one capability, many formats',
-    description: 'Skills, agents, loops escritos una vez.',
-    detail: 'Fuente: skills/ · agents/ · loops/',
-    icon: '📦',
-    color: '#6b4a9c',
-    bullets: ['SKILL.md single → plugin', 'Validation', 'Products in plugins/'],
-  },
-  {
-    id: 'compile',
-    index: 2,
-    eyebrow: 'Scene 2 · Compilation',
-    title: 'Tool-target compilation',
-    description: 'agent-toolkit build compiles.',
-    detail: 'Targets: Claude Code',
-    icon: '🔀',
-    color: '#7c3aed',
-    bullets: ['Install detects', 'profiles/ is fallback', 'One change propagates'],
-  },
-  {
-    id: 'knowledge',
-    index: 3,
-    eyebrow: 'Scene 3 · Memory',
-    title: 'Persistent knowledge',
-    description: 'knowledge/ + personas + packs inject.',
-    detail: 'Cycle: memory search',
-    icon: '🧠',
-    color: '#2e6b4a',
-    bullets: ['memory search', 'Personas', 'MCP templates'],
-  },
-  {
-    id: 'loops',
-    index: 4,
-    eyebrow: 'Scene 4 · Loops',
-    title: 'Loops by tier',
-    description: 'L1 report-only → L2 → L3.',
-    detail: 'Ejemplo L2 ci-sweeper',
-    icon: '🔄',
-    color: '#ea7a18',
-    bullets: ['Budgets', 'Resumable', 'Verifier'],
-  },
-  {
-    id: 'queue',
-    index: 5,
-    eyebrow: 'Scene 5 · Queue',
-    title: 'DevCompanion — durable queue',
-    description: 'Queue heavy work.',
-    detail: 'Before queueing: llm-status',
-    icon: '📡',
-    color: '#475569',
-    bullets: ['Handoffs', 'Trace', 'Artifacts'],
+    title: 'Request',
+    summary: 'A concrete task enters the swarm planner.',
+    detail: 'swarm plan --recipe <pair|team|full>',
   },
   {
     id: 'recipe',
+    index: 2,
+    title: 'Recipe',
+    summary: 'Topology is selected by risk; roles stay inactive until inputs are ready.',
+    detail: 'pair · team · full — promote preserves run ID',
+  },
+  {
+    id: 'roles',
+    index: 3,
+    title: 'Roles',
+    summary: 'Each role maps to a persona, policy, and model profile.',
+    detail: 'policies: read-only · writer · reviewer-writer · integrator',
+  },
+  {
+    id: 'worktrees',
+    index: 4,
+    title: 'Worktrees',
+    summary: 'Isolated git worktrees per active role — no shared dirty trees.',
+    detail: 'one worktree per role · runner skeleton or live',
+  },
+  {
+    id: 'handoffs',
+    index: 5,
+    title: 'Handoffs',
+    summary: 'Code moves only via validated 40-char commit SHAs.',
+    detail: 'never uncommitted code · receive_mode task|batch',
+  },
+  {
+    id: 'state',
     index: 6,
-    eyebrow: 'Scene 6 · Recipe',
-    title: 'Recipe + roles — pair · team · full',
-    description: 'Choose recipe by risk.',
-    detail: 'Roles: planner → implementer',
-    icon: '🧩',
-    color: '#1e5a8a',
-    bullets: ['Handoff por SHA', 'Persona + model', 'Plan approval'],
+    title: 'State',
+    summary: 'run.yaml, trace.jsonl, budget.json, ownership, and approvals.',
+    detail: 'atomic writes · fail closed on unclear ownership',
   },
   {
-    id: 'runtime',
+    id: 'governance',
     index: 7,
-    eyebrow: 'Scene 7 · Runtime',
-    title: 'Runtime — isolated worktrees',
-    description: 'Un worktree por rol.',
-    detail: 'Backends: herdr ↔ tmux',
-    icon: '🖥️',
-    color: '#7c3aed',
-    bullets: ['Herdr recomendado', 'Budgets', 'Permisos'],
+    title: 'Governance',
+    summary: 'Budgets, permissions, and human approval gates.',
+    detail: 'push/release/base-merge denied by default',
   },
   {
-    id: 'observe',
+    id: 'artifact',
     index: 8,
-    eyebrow: 'Scene 8 · Observability',
-    title: 'Observability — trace, budgets',
-    description: 'Cada run deja run.yaml.',
-    detail: 'Consultas: swarm status',
-    icon: '📊',
-    color: '#0f766e',
-    bullets: ['Machine-readable', 'Control', 'Offline'],
+    title: 'Artifact',
+    summary: 'Reviewable outputs: diffs, plans, reports, and logs.',
+    detail: 'swarm status / logs / artifacts for the run',
+  },
+];
+
+export const swarmRecipes: SwarmRecipe[] = [
+  {
+    id: 'pair',
+    label: 'pair',
+    useWhen: 'Bugs, features, refactors — default risk.',
+    roles: [
+      { id: 'implementer', policy: 'writer' },
+      { id: 'reviewer', policy: 'reviewer-writer' },
+      { id: 'integrator', policy: 'integrator' },
+    ],
+  },
+  {
+    id: 'team',
+    label: 'team',
+    useWhen: 'Medium features, schema or API changes — plan approval required.',
+    roles: [
+      { id: 'planner', policy: 'read-only' },
+      { id: 'implementer', policy: 'writer' },
+      { id: 'reviewer', policy: 'reviewer-writer' },
+      { id: 'architect', policy: 'integrator' },
+    ],
+  },
+  {
+    id: 'full',
+    label: 'full',
+    useWhen: 'Security-sensitive work, releases, migrations.',
+    roles: [
+      { id: 'planner', policy: 'read-only' },
+      { id: 'implementer', policy: 'writer' },
+      { id: 'refactorer', policy: 'writer' },
+      { id: 'architect', policy: 'integrator' },
+      { id: 'hardener', policy: 'specialist' },
+      { id: 'qa', policy: 'reviewer-writer' },
+    ],
+  },
+];
+
+export const uiBackends: UiBackend[] = [
+  {
+    id: 'herdr',
+    title: 'Herdr',
+    summary: 'Preferred workspace GUI over the same run state, approvals, and artifacts.',
+  },
+  {
+    id: 'tmux',
+    title: 'tmux',
+    summary: 'Terminal panes on an isolated socket — parity view, not a fork of the product.',
   },
 ];
 
 export const installSnippets: InstallSnippet[] = [
   {
-    label: 'Preferido (uv)',
+    label: 'Preferred (uv)',
     command: 'uvx --from agent-toolkit-cli agent-toolkit install\nagent-toolkit doctor',
-    note: 'Autodetecta.',
+    note: 'Autodetects supported tool targets.',
   },
   {
     label: 'Persistent install',
     command: 'uv tool install agent-toolkit-cli\nagent-toolkit install',
-    note: 'Persistente.',
+    note: 'Keeps the CLI on PATH across shells.',
   },
   {
     label: 'Claude Code marketplace',
     command: '/plugin marketplace add ulises-jeremias/agent-toolkit\n/plugin install agent-toolkit-core@agent-toolkit',
-    note: 'Plugins nativos.',
+    note: 'Native plugins compiled from the same catalog.',
   },
 ];
 
 export const budgetItems: BudgetItem[] = [
   { label: 'tokens', value: 'max_total_tokens / max_role_tokens', description: 'cap per run' },
-  { label: 'cost', value: 'max_cost_usd', description: 'gate' },
-  { label: 'time', value: 'max_wall_seconds', description: 'wall-clock' },
-  { label: 'concurrency', value: 'max_concurrency 2', description: 'limit' },
-  { label: 'round-trips', value: 'max_role_round_trips 2', description: 'max' },
-  { label: 'artifacts', value: 'artifact_size + handoffs', description: 'limit' },
+  { label: 'cost', value: 'max_cost_usd', description: 'spend gate' },
+  { label: 'time', value: 'max_wall_seconds', description: 'wall-clock limit' },
+  { label: 'concurrency', value: 'max_concurrency 2', description: 'parallel roles' },
+  { label: 'round-trips', value: 'max_role_round_trips 2', description: 'pair default' },
+  { label: 'artifacts', value: 'artifact_size + handoffs', description: 'size gates' },
 ];
 
 export const toolkitMeta = {
   title: 'Agent Toolkit — Skills, Agents, Loops, Swarms',
-  description: 'One source.',
-  accent: '#6b4a9c',
-  accentStrong: '#543a7d',
-  violet: '#6b4a9c',
-  cyan: '#38bdf8',
-  orange: '#ea7a18',
-  slate: '#475569',
+  description:
+    'One source catalog: 61 skills, 16 agents, 10 loops, 7 profiles, 6 MCP templates — compiled into every assistant target.',
+  accent: '#a05cff',
+  accentStrong: '#7358ff',
+  violet: '#a05cff',
+  cyan: '#1cefff',
+  orange: '#ff9a4d',
+  slate: '#8f88b4',
 };
+
+/** Transitional aliases for older imports */
+export const capabilities = capabilityNodes;
+export const swarmScenes = swarmStages;

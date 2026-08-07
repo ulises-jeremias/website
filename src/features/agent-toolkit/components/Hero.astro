@@ -2,14 +2,83 @@
 import { toolkitStats } from '../data/index.js';
 ---
 
-<section class="toolkit-hero">
-  <h2>Hero</h2><div>{toolkitStats.map((s) => <span>{s.value}</span>)}</div><svg viewBox="0 0 100 100"
-    ><circle cx="50" cy="50" r="40"></circle></svg
-  >
+<section class="toolkit-hero" aria-labelledby="toolkit-hero-title">
+  <p class="toolkit-hero__eyebrow">Agent Toolkit · L1.5 capability distribution</p>
+  <h2 id="toolkit-hero-title">One source → many assistants</h2>
+  <p class="toolkit-hero__lede">
+    Skills, agents, loops, packs, plugins, and MCP templates compile into Claude Code, Cursor, OpenCode, and more —
+    without duplicating the catalog into the workstation.
+  </p>
+  <ul class="toolkit-hero__stats" role="list">
+    {
+      toolkitStats.slice(0, 4).map((stat) => (
+        <li>
+          <strong>{stat.value}</strong>
+          <span>{stat.label}</span>
+        </li>
+      ))
+    }
+  </ul>
 </section>
+
 <style>
   .toolkit-hero {
-    max-width: 72rem;
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
     margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .toolkit-hero__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .toolkit-hero h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .toolkit-hero__lede {
+    margin: 0;
+    max-inline-size: 62ch;
+    color: var(--color-text-muted);
+  }
+
+  .toolkit-hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toolkit-hero__stats li {
+    display: grid;
+    gap: 0.15rem;
+    min-inline-size: 6.5rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .toolkit-hero__stats strong {
+    color: var(--nest-magenta);
+    font-size: 1.25rem;
+  }
+
+  .toolkit-hero__stats span {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
   }
 </style>

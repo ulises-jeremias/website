@@ -5,11 +5,17 @@
 [data-theme='community'] {
   --theme-accent: #6b5a4a;
   --theme-accent-strong: #5a4b3e;
-  --theme-accent-light: #8a7560;
-  --theme-accent-subtle: color-mix(in srgb, #6b5a4a 8%, var(--color-warm-paper));
-  --theme-border-accent: color-mix(in srgb, #6b5a4a 18%, var(--color-sand));
-  --theme-surface-tint: color-mix(in srgb, #6b5a4a 4%, var(--color-warm-paper));
+  --theme-accent-light: #6b5a4a;
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 8%, var(--color-warm-paper));
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 4%, var(--color-warm-paper));
+  --theme-accent-secondary: #8a7560;
+  --theme-accent-tertiary: #6b4a9c;
+  --world-accent: var(--nest-sunset-orange);
+  --world-accent-strong: var(--nest-sunset-orange);
+  --world-accent-secondary: var(--nest-magenta);
+  --world-accent-tertiary: var(--nest-cyan);
   --theme-illustration: 'workshop boards, labeled issues, review trails';
   --theme-shape: 'rounded cards, board chips, workshop callouts';
-  --theme-texture: 'subtle paper, workshop grid';
+  --theme-texture: 'faint workshop grid over a midnight surface';
 }

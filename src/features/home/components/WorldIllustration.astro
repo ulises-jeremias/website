@@ -1,0 +1,201 @@
+---
+import type { WorldIllustration } from '@/data/project-worlds.js';
+
+export interface Props {
+  illustration: WorldIllustration;
+}
+
+const { illustration } = Astro.props as Props;
+---
+
+<svg class="world-illustration" viewBox="0 0 160 104" fill="none" aria-hidden="true" focusable="false">
+  <path class="world-illustration__floor" d="m18 83 60-19 66 17-61 20Z"></path>
+  <path class="world-illustration__floor-edge" d="m18 83 65 18 61-20v8l-61 14-65-14Z"></path>
+
+  {
+    illustration === 'desktop' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__solid" d="M44 25h70v48H44z" />
+        <path class="world-illustration__line" d="M44 25h70v48H44zM50 31h26v15H50zm31 0h27v33H81zM50 51h26v13H50z" />
+        <path class="world-illustration__accent" d="m56 57 5 4 9-8M62 73v8m-12 0h25" />
+        <path class="world-illustration__fine" d="M86 38h15m-15 6h11m-11 6h17" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'workstation' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__solid" d="M36 28h72v45H36z" />
+        <path class="world-illustration__line" d="M36 28h72v45H36zM44 36h56v28H44zM62 73v8m-13 0h26" />
+        <path class="world-illustration__accent" d="m50 44 7 6-7 6m12 0h16" />
+        <circle class="world-illustration__node" cx="121" cy="36" r="5" />
+        <circle class="world-illustration__node" cx="128" cy="54" r="4" />
+        <circle class="world-illustration__node" cx="118" cy="70" r="5" />
+        <path class="world-illustration__fine" d="m106 43 11-5m-9 17 16-1m-18 11 8 4" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'capability-core' && (
+      <g class="world-illustration__scene">
+        <circle class="world-illustration__solid" cx="80" cy="51" r="18" />
+        <circle class="world-illustration__line" cx="80" cy="51" r="18" />
+        <circle class="world-illustration__accent-fill" cx="80" cy="51" r="6" />
+        <circle class="world-illustration__node" cx="41" cy="32" r="6" />
+        <circle class="world-illustration__node" cx="118" cy="28" r="5" />
+        <circle class="world-illustration__node" cx="124" cy="70" r="6" />
+        <circle class="world-illustration__node" cx="46" cy="73" r="5" />
+        <path class="world-illustration__fine" d="m58 41-12-6m51 5 16-9m-16 31 21 7M62 63l-12 8" />
+        <path class="world-illustration__accent" d="M73 51h14m-7-7v14" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'computation-lab' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__grid" d="M37 68 63 28l25 40 27-40m-69 9h62M40 48h70M34 59h80" />
+        <path class="world-illustration__accent" d="m55 30 21 43h9l22-43" />
+        <circle class="world-illustration__node" cx="41" cy="68" r="4" />
+        <circle class="world-illustration__node" cx="116" cy="68" r="4" />
+        <circle class="world-illustration__node" cx="80" cy="28" r="4" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'scaffold' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__solid" d="m45 60 22-12 22 12-22 12zm35-24 18-10 18 10-18 10z" />
+        <path
+          class="world-illustration__line"
+          d="m45 60 22-12 22 12-22 12zm0 0v13l22 12 22-12V60M80 36l18-10 18 10-18 10zm0 0v12l18 10 18-10V36"
+        />
+        <path class="world-illustration__accent" d="M38 35h19m-9-9v19m51 23h20m-10-10v20" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'contributor-network' && (
+      <g class="world-illustration__scene">
+        <circle class="world-illustration__solid" cx="80" cy="59" r="15" />
+        <circle class="world-illustration__line" cx="80" cy="59" r="15" />
+        <circle class="world-illustration__node" cx="43" cy="35" r="7" />
+        <circle class="world-illustration__node" cx="79" cy="24" r="7" />
+        <circle class="world-illustration__node" cx="117" cy="37" r="7" />
+        <circle class="world-illustration__node" cx="119" cy="74" r="7" />
+        <circle class="world-illustration__node" cx="42" cy="72" r="7" />
+        <path class="world-illustration__fine" d="m49 40 18 11m12-12V31m14 21 18-11m-17 25 18 6m-45-5-18 5" />
+        <path class="world-illustration__accent" d="M73 59h14m-7-7v14" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'field-notes' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__solid" d="M53 22h55v61H53z" />
+        <path class="world-illustration__line" d="M53 22h40l15 15v46H53zm40 0v15h15" />
+        <path class="world-illustration__fine" d="M64 45h32M64 54h26M64 63h32M64 72h18" />
+        <path class="world-illustration__accent" d="M64 36h16" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'project-ledger' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__solid" d="M42 54h76v28H42zm9-17h58v17H51zm11-14h37v14H62z" />
+        <path class="world-illustration__line" d="M42 54h76v28H42zm9-17h58v17H51zm11-14h37v14H62z" />
+        <path class="world-illustration__fine" d="M52 64h33m-33 8h48M61 45h25M70 30h17" />
+        <circle class="world-illustration__accent-fill" cx="108" cy="64" r="4" />
+      </g>
+    )
+  }
+
+  {
+    illustration === 'source-branch' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__line" d="M53 26v48m0-29c20 0 20-17 40-17m-40 34c24 0 28 19 50 19" />
+        <circle class="world-illustration__node" cx="53" cy="26" r="7" />
+        <circle class="world-illustration__node" cx="53" cy="49" r="7" />
+        <circle class="world-illustration__node" cx="53" cy="74" r="7" />
+        <circle class="world-illustration__node" cx="94" cy="28" r="7" />
+        <circle class="world-illustration__node" cx="104" cy="81" r="7" />
+        <path class="world-illustration__accent" d="m49 49 3 3 6-7" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .world-illustration {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .world-illustration__floor {
+    fill: color-mix(in srgb, var(--world-color) 9%, var(--nest-midnight-900));
+    stroke: color-mix(in srgb, var(--world-color) 48%, transparent);
+    stroke-width: 1.2;
+  }
+
+  .world-illustration__floor-edge {
+    fill: color-mix(in srgb, var(--world-color) 5%, var(--nest-midnight-950));
+    stroke: color-mix(in srgb, var(--world-color) 32%, transparent);
+    stroke-width: 1;
+  }
+
+  .world-illustration__solid {
+    fill: color-mix(in srgb, var(--world-color) 7%, var(--nest-midnight-850));
+  }
+
+  .world-illustration__line,
+  .world-illustration__fine,
+  .world-illustration__accent,
+  .world-illustration__grid,
+  .world-illustration__node {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .world-illustration__line {
+    stroke: color-mix(in srgb, var(--world-color) 84%, var(--nest-paper));
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .world-illustration__fine,
+  .world-illustration__grid {
+    stroke: color-mix(in srgb, var(--world-color) 50%, var(--nest-paper));
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .world-illustration__grid {
+    opacity: 0.55;
+  }
+
+  .world-illustration__accent {
+    stroke: var(--world-color);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .world-illustration__node {
+    fill: var(--nest-midnight-900);
+    stroke: var(--world-color);
+    stroke-width: 1.5;
+  }
+
+  .world-illustration__accent-fill {
+    fill: var(--world-color);
+  }
+</style>

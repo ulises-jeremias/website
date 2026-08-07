@@ -8,7 +8,7 @@ export const vProjects: VProject[] = [
     description: 'Simple, fast, safe compiled language — Go-like syntax, C-like speed, single bootstrap.',
     href: 'https://github.com/vlang/v',
     repo: 'vlang/v',
-    icon: '\u{1F984}',
+    icon: 'v',
     role: 'Core Team — compiler, tooling, docs, ecosystem',
     highlights: ['Single-file bootstrap via C + tcc', 'Immutable by default, fast compile', '4M+ LoC compiled <1 s'],
     license: 'MIT',
@@ -20,7 +20,7 @@ export const vProjects: VProject[] = [
     description: 'V Scientific Library — pure-V BLAS/LAPACK, linear algebra, stats, visualization.',
     href: 'https://github.com/vlang/vsl',
     repo: 'vlang/vsl',
-    icon: '\u{1F52C}',
+    icon: 'vsl',
     role: 'Maintainer — pure-V backends, fractals, benchmarks',
     highlights: ['Pure-V default, zero deps', 'Optional CBLAS/LAPACKe', 'Sierpinski + Mandelbrot + Julia'],
     license: 'MIT',
@@ -32,7 +32,7 @@ export const vProjects: VProject[] = [
     description: 'V Tensor Library — n-dimensional Tensor[T], autograd, neural networks, VSL-backed LA.',
     href: 'https://github.com/vlang/vtl',
     repo: 'vlang/vtl',
-    icon: '\u{1F9EE}',
+    icon: 'vtl',
     role: 'Maintainer — Tensor core, autograd graph, Sequential API',
     highlights: ['Reverse-mode autograd', 'Layers, losses, optimizers', 'Broadcast + map/reduce'],
     license: 'MIT',
@@ -44,7 +44,7 @@ export const vProjects: VProject[] = [
     description: 'ReactiveX for V — generic Observable[T], channel pipelines, composable operators.',
     href: 'https://github.com/ulises-jeremias/rxv',
     repo: 'ulises-jeremias/rxv',
-    icon: '\u{26A1}',
+    icon: 'rxv',
     role: 'Author — channels, operators, specs',
     highlights: ['chan Item[T] per operator', 'filter / map / merge / reduce', 'Zero dependencies'],
     license: 'MIT',
@@ -56,9 +56,9 @@ export const vProjects: VProject[] = [
     description: 'GitHub Action for V — version, arch, cache, install, verify. One line, every OS.',
     href: 'https://github.com/vlang/setup-v',
     repo: 'vlang/setup-v',
-    icon: '\u{2699}',
+    icon: 'ci',
     role: 'Maintainer — install flow, caching, arch detection',
-    highlights: ['vlang/setup-v@v1', 'Version file + cache', 'Linux / macOS / Windows'],
+    highlights: ['vlang/setup-v@v1.7', 'Version file + cache', 'Linux / macOS / Windows'],
     license: 'MIT',
   },
   {
@@ -68,10 +68,10 @@ export const vProjects: VProject[] = [
     description: 'Curated catalog — libraries, tools, and community picks for the V ecosystem.',
     href: 'https://github.com/vlang/awesome-v',
     repo: 'vlang/awesome-v',
-    icon: '\u{2B50}',
+    icon: 'list',
     role: 'Curator — scientific + template picks',
-    highlights: ['Community curated', 'Scientific + templates', 'Weekly ecosystem scan'],
-    license: 'CC0 / MIT (list)',
+    highlights: ['Community curated', 'Scientific + templates', 'CC0 1.0 list license'],
+    license: 'CC0 1.0',
   },
 ];
 
@@ -190,36 +190,36 @@ export const vEcosystemSteps: VDiagramStep[] = [
 
 export const licenseEntries: VLicenseEntry[] = [
   {
-    component: 'website (este sitio)',
+    component: 'website (this site)',
     license: 'MIT',
     source: 'LICENSE — Copyright (c) 2025-2026 Ulises Jeremias Cornejo Fandos',
-    notes: 'Contenido del feature v y pagina /v bajo MIT del sitio.',
+    notes: 'V feature content and /v page under the site MIT license.',
   },
   {
     component: 'V + VSL + VTL + setup-v + Awesome V',
-    license: 'MIT',
-    source: 'vlang/* LICENSE (MIT)',
-    notes: 'Librerias core V mantenidas por V community. Uso y atribucion MIT estandar.',
+    license: 'MIT / CC0 (awesome-v list)',
+    source: 'vlang/* LICENSE (MIT); awesome-v CC0 1.0',
+    notes: 'Core V libraries maintained with the V community. awesome-v catalog is CC0.',
   },
   {
     component: 'RxV',
     license: 'MIT',
     source: 'ulises-jeremias/rxv/LICENSE (MIT)',
-    notes: 'ReactiveX para V por Ulises Jeremias. Sin dependencias, public API MIT.',
+    notes: 'ReactiveX for V by Ulises Jeremias. Zero dependencies, public API MIT.',
   },
   {
     component: 'Veasel / V mascot',
-    license: 'Revisar vlang/v-mascot/LICENSE',
+    license: 'CC BY-NC 4.0 — not used commercially here',
     source: 'github.com/vlang/v-mascot',
     notes:
-      'Veasel solo si LICENSE lo permite con atribucion; caso ambiguo usa ilustracion original V-inspirada (no derivada). Este sitio no incluye binario Veasel.',
+      'This site does not ship Veasel assets. Commercial or derivative use requires checking v-mascot LICENSE (CC BY-NC). Prefer original V-inspired diagrams.',
   },
 ];
 
 export const vMeta = {
   title: 'V Ecosystem — Fast, clear, scientific',
   description:
-    'V, VSL, VTL, RxV, setup-v — laboratorio computacional. Core Team @ V, contribuciones verificadas (no vanity counts).',
+    'V, VSL, VTL (V Tensor Library), RxV, setup-v@v1.7 — computational lab. Core Team @ V; verified contributions only.',
   accent: '#1e5a8a',
   accentStrong: '#16446a',
   accentLight: '#5b9bd5',

@@ -1,196 +1,273 @@
 ---
-/**
- * SiteFooter — global footer per B-07 (D-05).
- * - Sitemap links from route config (verified paths only)
- * - Verified social: GitHub, LinkedIn, Email, Discord (no invented usernames)
- * - Contact CTA, copyright, colophon / provenance
- * - Tokens: CSS variables with warm-paper fallbacks
- * - A11y: <footer> landmark, headings for sections, contrast, focus-visible
- * - Responsive: grid → stacked, no layout shift
- */
-
-import { getNavRoutes, getNavLabel } from '@/data/routes.js';
-import Link from './Link.astro';
+import { getFooterRoutes, getNavLabel } from '@/data/routes.js';
+import { profile } from '@/data/profile.js';
+import DigitalNestMark from './DigitalNestMark.astro';
 
 export interface Props {
   id?: string;
 }
 
 const { id } = Astro.props as Props;
-
-const navRoutes = getNavRoutes();
-
-// Verified links only — no invented handles. Update when socials are confirmed.
-const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/ulises-jeremias', external: true },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ulises-jeremias', external: true },
-  { label: 'Email', href: 'mailto:ulises.jeremias@gmail.com', external: false },
-  { label: 'Discord', href: 'https://discord.gg/bR5VyATgka', external: true },
-] as const;
-
-const legalLinks = [{ label: 'Source', href: 'https://github.com/ulises-jeremias/website' }] as const;
-
+const routes = getFooterRoutes();
 const year = new Date().getFullYear();
+const emailHref = `mailto:${profile.contact.email}`;
+const sourceHref = 'https://github.com/ulises-jeremias/website';
+const socialLinks = [
+  { label: 'GitHub', href: profile.links.github, external: true },
+  { label: 'LinkedIn', href: profile.links.linkedin, external: true },
+  { label: 'Discord', href: profile.links.discord, external: true },
+  { label: 'Email', href: emailHref, external: false },
+] as const;
 ---
 
 <footer id={id} class="site-footer" data-testid="site-footer">
   <div class="site-footer__inner">
-    <div class="site-footer__grid">
-      <section class="site-footer__section" aria-labelledby="footer-nav-heading">
-        <h2 id="footer-nav-heading" class="site-footer__heading">Explore</h2>
-        <ul class="site-footer__list">
-          {
-            navRoutes.map((route) => (
-              <li>
-                <Link href={route.path} variant="subtle" class="site-footer__link">
-                  {getNavLabel(route)}
-                </Link>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+    <div class="site-footer__lead">
+      <a href="/" class="site-footer__brand" aria-label="Digital Nest, home">
+        <span class="site-footer__mark"><DigitalNestMark /></span>
+        <span>
+          <strong>Digital Nest</strong>
+          <small>Systems atlas · open-source workshop</small>
+        </span>
+      </a>
+      <p>{profile.summary}</p>
+    </div>
 
-      <section class="site-footer__section" aria-labelledby="footer-connect-heading">
-        <h2 id="footer-connect-heading" class="site-footer__heading">Connect</h2>
-        <ul class="site-footer__list">
-          {
-            socialLinks.map((link) => (
-              <li>
-                <Link href={link.href} variant="subtle" external={link.external} class="site-footer__link">
-                  {link.label}
-                </Link>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="site-footer__cta">
-          <Link href="mailto:ulises.jeremias@gmail.com" variant="default">Get in touch →</Link>
-        </p>
-      </section>
+    <nav class="site-footer__atlas" aria-label="Digital Nest worlds">
+      <p class="site-footer__label">Atlas index</p>
+      <ol>
+        {
+          routes.map((route, index) => (
+            <li>
+              <a href={route.path}>
+                <span aria-hidden="true">{String(index).padStart(2, '0')}</span>
+                {getNavLabel(route)}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
 
-      <section class="site-footer__section" aria-labelledby="footer-colophon-heading">
-        <h2 id="footer-colophon-heading" class="site-footer__heading">Colophon</h2>
-        <p class="site-footer__text">Built with Astro 7 · TypeScript · pnpm. Crafted in the Digital Nest.</p>
-        <ul class="site-footer__list site-footer__list--inline">
-          {
-            legalLinks.map((link) => (
-              <li>
-                <Link href={link.href} variant="subtle" external>
-                  {link.label}
-                </Link>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+    <div class="site-footer__meta">
+      <p class="site-footer__label">Open channels</p>
+      <ul>
+        {
+          socialLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+              >
+                {link.label}
+                {link.external && <span class="sr-only"> (opens in new tab)</span>}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="site-footer__source" href={sourceHref} target="_blank" rel="noopener noreferrer">
+        View source
+        <span class="sr-only"> (opens in new tab)</span>
+      </a>
     </div>
 
     <div class="site-footer__bottom">
-      <p class="site-footer__copy">
-        © {year} Ulises Jeremias. Content is curated; generated data shows provenance and last-updated.
-      </p>
+      <p>© {year} Ulises Jeremias</p>
+      <p>Built with Astro, TypeScript, and open-source tools.</p>
     </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    --footer-bg: var(--color-paper, #f7f0e6);
-    --footer-fg: var(--color-ink, #181512);
-    --footer-border: var(--color-border, #e9d8c3);
-    --footer-muted: var(--color-muted, #6b715e);
-    background: var(--footer-bg);
-    color: var(--footer-fg);
-    border-top: 1px solid var(--footer-border);
-    margin-top: 4rem;
+    position: relative;
+    color: var(--color-text);
+    background:
+      radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--nest-magenta) 7%, transparent), transparent 28%),
+      var(--nest-midnight-950);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: -1px;
+    block-size: 1px;
+    background: linear-gradient(90deg, transparent, var(--nest-magenta), var(--nest-cyan), transparent);
+    opacity: 0.55;
   }
 
   .site-footer__inner {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 2.5rem 1rem 1.5rem;
-  }
-
-  .site-footer__grid {
     display: grid;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    inline-size: min(calc(100% - 2 * var(--gutter)), var(--container-full));
+    margin-inline: auto;
+    padding-block: clamp(var(--space-10), 6vw, var(--space-16)) var(--space-5);
   }
 
-  @media (min-width: 768px) {
-    .site-footer__inner {
-      padding: 3rem 1.5rem 2rem;
-    }
-
-    .site-footer__grid {
-      grid-template-columns: 1fr 1fr 1.25fr;
-      gap: 2rem 1.5rem;
-    }
+  .site-footer__lead {
+    max-inline-size: 34rem;
   }
 
-  .site-footer__heading {
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--footer-muted);
-    margin: 0 0 0.75rem 0;
-  }
-
-  .site-footer__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.5rem;
-  }
-
-  .site-footer__list--inline {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-  }
-
-  .site-footer__link {
-    min-height: 28px;
+  .site-footer__brand {
     display: inline-flex;
     align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text);
+    text-decoration: none;
   }
 
-  .site-footer__link:focus-visible {
-    outline: 2px solid var(--color-accent, #181512);
-    outline-offset: 2px;
-    border-radius: 0.25rem;
+  .site-footer__mark {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
   }
 
-  .site-footer__text {
-    color: var(--footer-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
+  .site-footer__brand > span:last-child {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .site-footer__brand strong {
+    font-size: var(--text-sm);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__brand small {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+
+  .site-footer__lead > p {
+    margin: var(--space-5) 0 0;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+
+  .site-footer__label {
+    margin: 0 0 var(--space-3);
+    color: var(--nest-magenta);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .site-footer__atlas ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) var(--space-4);
     margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .site-footer__cta {
-    margin: 1rem 0 0 0;
+  .site-footer__atlas a {
+    display: inline-flex;
+    gap: var(--space-2);
+    min-block-size: 2rem;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .site-footer__atlas a span {
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+  }
+
+  .site-footer__atlas a:hover {
+    color: var(--color-text);
+  }
+
+  .site-footer__meta ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__meta a {
+    min-block-size: 2rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-underline-offset: 0.3em;
+  }
+
+  .site-footer__meta a:hover {
+    color: var(--nest-cyan);
+  }
+
+  .site-footer__source {
+    margin-block-start: var(--space-4);
   }
 
   .site-footer__bottom {
-    margin-top: 2rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--footer-border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block-start: var(--space-5);
+    color: var(--color-text-faint);
+    border-block-start: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
   }
 
-  .site-footer__copy {
-    color: var(--footer-muted);
-    font-size: 0.875rem;
-    line-height: 1.6;
+  .site-footer__bottom p {
     margin: 0;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .site-footer__link {
-      transition: none;
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (width >= 760px) {
+    .site-footer__inner {
+      grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 1.3fr);
+    }
+
+    .site-footer__meta {
+      grid-column: 1 / -1;
+    }
+
+    .site-footer__bottom {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (width >= 1120px) {
+    .site-footer__inner {
+      grid-template-columns: minmax(0, 1.05fr) minmax(26rem, 1.35fr) minmax(12rem, 0.65fr);
+    }
+
+    .site-footer__meta {
+      grid-column: auto;
+    }
+
+    .site-footer__bottom {
+      grid-column: 1 / -1;
     }
   }
 </style>

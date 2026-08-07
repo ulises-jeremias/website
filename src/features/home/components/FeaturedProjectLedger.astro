@@ -1,0 +1,44 @@
+---
+import { featuredProjectLedger } from '../data/index.js';
+import WorldIllustration from './WorldIllustration.astro';
+
+const accentTokens = {
+  magenta: 'var(--nest-magenta)',
+  pink: 'var(--nest-pink)',
+  violet: 'var(--nest-violet)',
+  blue: 'var(--nest-blue)',
+  cyan: 'var(--nest-cyan)',
+  orange: 'var(--nest-sunset-orange)',
+} as const;
+---
+
+<section class="featured-ledger" aria-labelledby="featured-ledger-title">
+  <header class="featured-ledger__header">
+    <p class="featured-ledger__eyebrow">Featured worlds</p>
+    <h2 id="featured-ledger-title">Selected project ledger</h2>
+  </header>
+
+  <ol class="featured-ledger__list">
+    {
+      featuredProjectLedger.map((row, index) => (
+        <li class="featured-ledger__row" style={`--world-color: ${accentTokens[row.accent]}`}>
+          <a href={row.path} class="featured-ledger__link">
+            <span class="featured-ledger__index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span class="featured-ledger__visual" aria-hidden="true">
+              <WorldIllustration illustration={row.illustration} />
+            </span>
+            <span class="featured-ledger__copy">
+              <strong>{row.title}</strong>
+              <span>{row.description}</span>
+            </span>
+            <span class="featured-ledger__enter" aria-hidden="true">
+              Open
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</section>

@@ -3,10 +3,10 @@ import { variants } from '../data/index.js';
 ---
 
 <section aria-labelledby="ca-variants-title" class="ca-variants" data-testid="ca-variants">
-  <h2 id="ca-variants-title">Familia — tres variantes, un principio</h2>
+  <h2 id="ca-variants-title">Family — three runtimes, one composition model</h2>
   <p class="ca-variants__intro">
-    Mismo modelo mental en Node, Python y V: eliges <code>template</code> y sumas <code>addons</code>. Archivos reales,
-    sin runtime oculto.
+    Same mental model across Node, Python, and V: pick a <code>template</code>, add <code>addons</code>. Real files, no
+    hidden runtime. Catalog counts verified: CNA 10+53, CPA 6+18, CVA 7+11.
   </p>
   <div class="ca-variants__grid">
     {
@@ -61,18 +61,23 @@ import { variants } from '../data/index.js';
     display: grid;
     gap: var(--space-4);
     margin-top: var(--space-4);
+    width: 100%;
+    max-width: 100%;
   }
   @media (min-width: 900px) {
     .ca-variants__grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .ca-variant {
+    min-width: 0;
+    max-width: 100%;
     padding: var(--space-4);
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    background: var(--v-bg, var(--color-surface));
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, var(--v-accent));
     border-top: 3px solid var(--v-accent);
+    color: var(--color-text);
   }
   .ca-variant__head {
     display: flex;
@@ -83,6 +88,7 @@ import { variants } from '../data/index.js';
   .ca-variant__name {
     font-size: 1rem;
     margin: 0;
+    overflow-wrap: anywhere;
   }
   .ca-variant__status {
     font-size: 0.7rem;
@@ -91,19 +97,20 @@ import { variants } from '../data/index.js';
     padding: 0.2rem 0.5rem;
     border-radius: 999px;
     border: 1px solid var(--color-border);
+    flex-shrink: 0;
   }
   .ca-variant__status--stable {
-    background: #ecfdf5;
-    color: #065f46;
-    border-color: #6ee7b7;
+    background: color-mix(in srgb, #75e6b2 18%, transparent);
+    color: #b9f7d9;
+    border-color: color-mix(in srgb, #75e6b2 44%, transparent);
   }
   .ca-variant__status--beta {
-    background: #f5f3ff;
-    color: #5b21b6;
-    border-color: #c4b5fd;
+    background: color-mix(in srgb, var(--nest-violet) 18%, transparent);
+    color: var(--nest-pink);
+    border-color: color-mix(in srgb, var(--nest-violet) 44%, transparent);
   }
   .ca-variant__desc {
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     font-size: 0.95rem;
     min-height: 3rem;
   }
@@ -121,17 +128,20 @@ import { variants } from '../data/index.js';
     margin-left: 0.3rem;
   }
   .ca-muted {
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     font-size: 0.8rem;
   }
   .ca-variant__install {
     margin: var(--space-3) 0;
     padding: var(--space-2);
-    background: var(--color-ink, #181512);
-    color: #f8fafc;
+    background: var(--nest-midnight-950);
+    color: var(--nest-paper);
     border-radius: 8px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     overflow-x: auto;
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   .ca-variant__link {
     font-size: 0.9rem;

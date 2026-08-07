@@ -10,6 +10,7 @@ import {
   validateTaxonomy,
   worldsByPriority,
 } from '@/data/project-worlds';
+import { routes } from '@/data/routes';
 
 describe('project-world taxonomy', () => {
   it('has 9 worlds', () => {
@@ -19,6 +20,20 @@ describe('project-world taxonomy', () => {
   it('all worlds validate against Zod schema', () => {
     for (const w of projectWorlds) {
       expect(projectWorldSchema.safeParse(w).success).toBe(true);
+    }
+  });
+
+  it('gives every world a typed illustration and synthwave accent', () => {
+    for (const world of projectWorlds) {
+      expect(world.illustration).toMatch(/^[a-z][a-z0-9-]+$/);
+      expect(world.accent).toMatch(/^(magenta|pink|violet|blue|cyan|orange)$/);
+    }
+  });
+
+  it('keeps every world path aligned with canonical route metadata', () => {
+    const routePaths = new Set(routes.map((route) => route.path));
+    for (const world of projectWorlds) {
+      expect(routePaths.has(world.path), `${world.id} should resolve through routes.ts`).toBe(true);
     }
   });
 
@@ -110,6 +125,6 @@ describe('project-world taxonomy', () => {
   it('homepage can render worlds in defined priority order', () => {
     // Simulate homepage hero rendering: featuredWorlds in priority order
     const rendered = featuredWorlds.map((w) => w.title);
-    expect(rendered).toEqual(['Dotfiles', 'Workstation', 'Toolkit', 'V', 'Create Awesome']);
+    expect(rendered).toEqual(['Dotfiles', 'Agentic Workstation', 'Agent Toolkit', 'V Ecosystem', 'Create Awesome']);
   });
 });

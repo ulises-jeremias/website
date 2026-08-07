@@ -1,40 +1,24 @@
 /**
- * index.css — Design system entry point (C-04 → C-08)
+ * index.css — Single global design-system entry point.
  */
 
+@import './reset.css';
 @import './tokens.css';
 @import './typography.css';
 @import './spacing.css';
 @import './semantic.css';
+@import './motion.css';
+@import './effects.css';
 @import './themes/index.css';
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
-  color-scheme: light dark;
+  color-scheme: dark;
+  background: var(--color-bg);
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 body {
-  margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
 }
@@ -42,7 +26,7 @@ body {
 :where(:focus-visible) {
   outline: var(--focus-ring-width) solid var(--color-focus);
   outline-offset: var(--focus-ring-offset);
-  box-shadow: 0 0 0 calc(var(--focus-ring-width) + var(--focus-ring-offset)) var(--color-focus-ring);
+  box-shadow: var(--focus-glow);
 }
 
 :where(:focus:not(:focus-visible)) {
@@ -54,8 +38,9 @@ body {
   inset-block-start: var(--space-2);
   inset-inline-start: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  background: var(--color-deep-ink);
-  color: var(--color-warm-paper);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   transform: translateY(-200%);
   transition: transform var(--duration-normal) var(--ease-default);
@@ -64,4 +49,11 @@ body {
 
 .skip-link:focus-visible {
   transform: translateY(0);
+}
+
+@media (forced-colors: active) {
+  :where(:focus-visible) {
+    outline-color: Highlight;
+    box-shadow: none;
+  }
 }

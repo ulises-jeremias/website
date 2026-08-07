@@ -1,133 +1,51 @@
 ---
-/**
- * Hero — E-03 Digital Nest (SVG nest arcs + modulos)
- * Static-first, understandable without motion, with reduced-motion fallback.
- * Uses tokens (C) and section layout (D).
- */
-import { profile } from '@/data/profile';
+import { profile } from '@/data/profile.js';
+import { heroKeywords } from '../data/index.js';
+import DigitalNestMark from '@/shared/components/DigitalNestMark.astro';
+import SynthwaveEnvironment from './SynthwaveEnvironment.astro';
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__inner">
-    <div class="hero__content">
-      <span class="hero__eyebrow">Digital Nest · Warm, precise, reproducible</span>
-      <h1 id="hero-title" class="hero__title">
-        Build your nest <span class="hero__title-accent">from scratch</span>
+  <SynthwaveEnvironment />
+
+  <div class="hero__stage">
+    <div class="hero__identity">
+      <p class="hero__nest-mark" aria-hidden="true">
+        <DigitalNestMark />
+      </p>
+      <p class="hero__wordmark">— DIGITAL NEST —</p>
+      <h1 id="hero-title" class="hero__name">
+        <span class="hero__name-line">{profile.displayName.split(' ')[0]}</span>
+        <span class="hero__name-line hero__name-line--accent">{profile.displayName.split(' ').slice(1).join(' ')}</span>
       </h1>
-      <p class="hero__lead">
-        I&apos;m <strong>{profile.displayName}</strong> — {profile.bio}
-        <br />
-        {profile.summary}
+      <p class="hero__role">{profile.title}</p>
+      <p class="hero__summary">{profile.summary}</p>
+      <p class="hero__keywords">
+        {
+          heroKeywords.map((keyword, index) => (
+            <>
+              {index > 0 && (
+                <span class="hero__keyword-sep" aria-hidden="true">
+                  /
+                </span>
+              )}
+              <span>{keyword}</span>
+            </>
+          ))
+        }
       </p>
       <div class="hero__actions">
-        <a href="#worlds" class="hero__cta hero__cta--primary">Explore the worlds →</a>
-        <a href="#contact" class="hero__cta hero__cta--secondary">Collaborate</a>
-        <a href="/blog" class="hero__cta hero__cta--secondary">Read the blog</a>
+        <a class="hero__cta hero__cta--primary" href="#project-atlas">Explore the atlas</a>
+        <a class="hero__cta hero__cta--secondary" href={profile.links.github} target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        <a class="hero__cta hero__cta--secondary" href={`mailto:${profile.contact.email}`}>Collaborate</a>
       </div>
-      <div class="hero__meta" aria-label="Quick facts">
-        <span class="hero__meta-item"><span class="hero__meta-dot" aria-hidden="true"></span> {profile.location}</span>
-        <span class="hero__meta-item"
-          ><span class="hero__meta-dot" aria-hidden="true"></span> {profile.languages.join(' · ')}</span
-        >
-        <span class="hero__meta-item"
-          ><span class="hero__meta-dot" aria-hidden="true"></span> Fun: hornero 🐦 — I always build my own nest</span
-        >
-      </div>
+      <p class="hero__location">{profile.location}</p>
     </div>
 
-    <div
-      class="hero__visual"
-      aria-hidden="false"
-      role="img"
-      aria-label="Digital Nest diagram — concentric nest arcs with modular tiles for workstation, agents, V, CLIs, and community, woven together"
-    >
-      <svg
-        class="hero__nest-svg"
-        viewBox="0 0 520 380"
-        xmlns="http://www.w3.org/2000/svg"
-        role="img"
-        aria-labelledby="nestTitle nestDesc"
-      >
-        <title id="nestTitle">Digital Nest — system diagram</title>
-        <desc id="nestDesc"
-          >Concentric woven arcs form a nest; modular tiles for HorneroConfig, Agentic Workstation, Agent Toolkit, V,
-          Create Awesome, and Community are connected with woven lines to a central hub.</desc
-        >
-
-        <!-- Woven nest arcs — outer -->
-        <path
-          class="nest-arc"
-          d="M 60 300 C 90 260, 130 220, 200 200 C 270 180, 340 190, 400 230 C 440 250, 470 280, 480 320"></path>
-        <path
-          class="nest-arc"
-          d="M 70 315 C 100 275, 135 235, 200 218 C 265 200, 330 210, 390 245 C 430 265, 460 295, 470 335"></path>
-        <path
-          class="nest-arc nest-arc--accent"
-          d="M 80 330 C 110 290, 145 250, 205 235 C 265 220, 320 228, 380 260 C 420 280, 450 310, 460 350"></path>
-        <path
-          class="nest-arc"
-          d="M 90 345 C 120 305, 155 265, 210 250 C 265 235, 315 243, 370 275 C 405 295, 435 325, 450 360"></path>
-
-        <!-- Central hub -->
-        <g class="nest-module">
-          <rect x="210" y="150" width="100" height="64" rx="14" class="nest-module__card"></rect>
-          <text x="260" y="176" text-anchor="middle" class="nest-module__label">Digital Nest</text>
-          <text x="260" y="190" text-anchor="middle" class="nest-module__sub">Ulises · 2026</text>
-          <circle cx="260" cy="205" r="3" fill="var(--accent)"></circle>
-        </g>
-
-        <!-- Connectors — woven dashed + solid -->
-        <path class="nest-connector" d="M 220 155 L 165 105"></path>
-        <path class="nest-connector nest-connector--solid" d="M 260 150 L 260 95"></path>
-        <path class="nest-connector" d="M 300 155 L 360 105"></path>
-        <path class="nest-connector nest-connector--solid" d="M 310 180 L 400 180"></path>
-        <path class="nest-connector" d="M 305 200 L 365 255"></path>
-        <path class="nest-connector nest-connector--solid" d="M 260 214 L 260 285"></path>
-        <path class="nest-connector" d="M 210 200 L 145 255"></path>
-        <path class="nest-connector nest-connector--solid" d="M 210 180 L 115 180"></path>
-
-        <!-- Modules -->
-        <g class="nest-module">
-          <rect x="95" y="70" width="110" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="150" y="92" text-anchor="middle" class="nest-module__label">HorneroConfig</text>
-          <text x="150" y="105" text-anchor="middle" class="nest-module__sub">dotfiles · chezmoi</text>
-        </g>
-        <g class="nest-module">
-          <rect x="205" y="50" width="110" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="260" y="72" text-anchor="middle" class="nest-module__label">Workstation</text>
-          <text x="260" y="85" text-anchor="middle" class="nest-module__sub">4 layers · doctor</text>
-        </g>
-        <g class="nest-module">
-          <rect x="315" y="70" width="110" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="370" y="92" text-anchor="middle" class="nest-module__label">Toolkit</text>
-          <text x="370" y="105" text-anchor="middle" class="nest-module__sub">52 skills · loops</text>
-        </g>
-        <g class="nest-module">
-          <rect x="370" y="152" width="100" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="420" y="174" text-anchor="middle" class="nest-module__label">V Language</text>
-          <text x="420" y="187" text-anchor="middle" class="nest-module__sub">VSL · VTL · core</text>
-        </g>
-        <g class="nest-module">
-          <rect x="315" y="260" width="110" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="370" y="282" text-anchor="middle" class="nest-module__label">Create Awesome</text>
-          <text x="370" y="295" text-anchor="middle" class="nest-module__sub">CLI · templates</text>
-        </g>
-        <g class="nest-module">
-          <rect x="205" y="285" width="110" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="260" y="307" text-anchor="middle" class="nest-module__label">Community</text>
-          <text x="260" y="320" text-anchor="middle" class="nest-module__sub">blog · OSS · Discord</text>
-        </g>
-        <g class="nest-module">
-          <rect x="45" y="152" width="100" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="95" y="174" text-anchor="middle" class="nest-module__label">Infrastructure</text>
-          <text x="95" y="187" text-anchor="middle" class="nest-module__sub">CLI · automation</text>
-        </g>
-        <g class="nest-module">
-          <rect x="95" y="260" width="110" height="56" rx="12" class="nest-module__card"></rect>
-          <text x="150" y="282" text-anchor="middle" class="nest-module__label">Agents</text>
-          <text x="150" y="295" text-anchor="middle" class="nest-module__sub">harness · memory</text>
-        </g>
-      </svg>
+    <div class="hero__atlas-slot">
+      <slot name="atlas" />
     </div>
   </div>
 </section>

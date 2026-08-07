@@ -1,0 +1,48 @@
+---
+import type { AtlasWorld } from '../types/index.js';
+import WorldIllustration from './WorldIllustration.astro';
+
+export interface Props {
+  world: AtlasWorld;
+}
+
+const { world } = Astro.props as Props;
+const accentTokens = {
+  magenta: 'var(--nest-magenta)',
+  pink: 'var(--nest-pink)',
+  violet: 'var(--nest-violet)',
+  blue: 'var(--nest-blue)',
+  cyan: 'var(--nest-cyan)',
+  orange: 'var(--nest-sunset-orange)',
+} as const;
+---
+
+<a
+  href={world.path}
+  class="atlas-world"
+  style={`--world-color: ${accentTokens[world.accent]}`}
+  data-world-id={world.id}
+  data-related-worlds={world.relatedWorlds.join(' ')}
+  aria-label={`${world.number} — ${world.title}: ${world.description}`}
+>
+  <span class="atlas-world__platform" aria-hidden="true">
+    <span class="atlas-world__glow"></span>
+    <span class="atlas-world__base atlas-world__base--lower"></span>
+    <span class="atlas-world__base atlas-world__base--mid"></span>
+    <span class="atlas-world__deck"></span>
+  </span>
+  <span class="atlas-world__visual">
+    <WorldIllustration illustration={world.illustration} />
+  </span>
+  <span class="atlas-world__copy">
+    <span class="atlas-world__number">{world.number}</span>
+    <strong>{world.title}</strong>
+    <span class="atlas-world__description">{world.description}</span>
+  </span>
+  <span class="atlas-world__enter" aria-hidden="true">
+    Enter world
+    <svg viewBox="0 0 20 20" fill="none">
+      <path d="M4 10h11m-4-4 4 4-4 4"></path>
+    </svg>
+  </span>
+</a>

@@ -34,9 +34,21 @@ export interface Props {
   canonical?: string;
   noIndex?: boolean;
   ogImage?: string;
+  immersive?: boolean;
 }
 
-const { title, description, world, theme, hero, currentPath, canonical, noIndex, ogImage } = Astro.props as Props;
+const {
+  title,
+  description,
+  world,
+  theme,
+  hero,
+  currentPath,
+  canonical,
+  noIndex,
+  ogImage,
+  immersive = false,
+} = Astro.props as Props;
 
 const canonicalUrl = canonical ?? getCanonicalUrl(currentPath ?? Astro.url.pathname);
 const themeAttr = theme ?? world ?? 'home';
@@ -54,8 +66,13 @@ const pagePath = currentPath ?? Astro.url.pathname;
     {world && <meta name="world" content={world} />}
   </Fragment>
 
-  <div class="section-layout" data-world={world} data-theme={themeAttr} data-path={pagePath}>
-    <SiteHeader currentPath={pagePath} />
+  <div
+    class:list={['section-layout', { 'section-layout--immersive': immersive }]}
+    data-world={world}
+    data-theme={themeAttr}
+    data-path={pagePath}
+  >
+    <SiteHeader currentPath={pagePath} transparent={immersive} />
 
     {
       hero && (
@@ -97,14 +114,18 @@ const pagePath = currentPath ?? Astro.url.pathname;
     --content-max: 72rem;
     --content-pad: 1rem;
     --hero-pad-y: 3rem;
-    --hero-bg: var(--color-paper, #fffdf9);
-    --hero-fg: var(--color-ink, #181512);
-    --hero-muted: var(--color-muted, #6b715e);
+    --hero-bg: var(--color-surface);
+    --hero-fg: var(--color-text);
+    --hero-muted: var(--color-text-muted);
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    background: var(--color-bg, #fffdf9);
-    color: var(--color-ink, #181512);
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .section-layout--immersive {
+    background: var(--color-bg);
   }
 
   @media (min-width: 768px) {
@@ -117,7 +138,7 @@ const pagePath = currentPath ?? Astro.url.pathname;
   /* Hero */
   .section-hero {
     background: var(--hero-bg);
-    border-bottom: 1px solid var(--color-border, #e9d8c3);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .section-hero__inner {
@@ -170,12 +191,24 @@ const pagePath = currentPath ?? Astro.url.pathname;
   /* Content */
   .section-content {
     flex: 1;
+    background: var(--color-surface-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .section-layout--immersive .section-content {
+    color: var(--color-text);
+    background: transparent;
   }
 
   .section-content__inner {
     max-width: var(--content-max);
     margin: 0 auto;
     padding: 2rem var(--content-pad) 0;
+  }
+
+  .section-layout--immersive .section-content__inner {
+    max-width: none;
+    padding: 0;
   }
 
   .section-content__inner > :first-child {
@@ -188,13 +221,8 @@ const pagePath = currentPath ?? Astro.url.pathname;
   }
 
   .section-content:focus-visible {
-    outline: 2px solid var(--color-accent, #181512);
+    outline: 2px solid var(--color-focus);
     outline-offset: -2px;
-  }
-
-  /* World/theme hooks — no hard-coded colors; override via CSS variables per-world */
-  .section-layout[data-theme='dotfiles'] {
-    --hero-bg: var(--color-paper, #f7f0e6);
   }
 
   @media (prefers-reduced-motion: reduce) {

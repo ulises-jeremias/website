@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PROTOTYPE — Direction F · Vaporwave / Softwave — Digital Nest</title>
+    <style>
+      :root {
+        --bg: #1a1224;
+        --bg2: #241833;
+        --panel: #2a1f3a;
+        --line: #3d2f52;
+        --text: #e8eef5;
+        --muted: #b6a8c9;
+        --lavender: #c4b5fd;
+        --aqua: #67e8f9;
+        --pink: #f9a8d4;
+        --marble: #e8e0f0;
+        --m: clamp(0.85rem, 3vw, 2rem);
+        --sans: 'Segoe UI', system-ui, sans-serif;
+        --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+        --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 1rem/1.6 var(--sans);
+        background-image:
+          radial-gradient(ellipse 70% 50% at 15% 10%, rgba(196, 181, 253, 0.08), transparent 55%),
+          radial-gradient(ellipse 50% 40% at 90% 80%, rgba(103, 232, 249, 0.06), transparent 50%);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .glitch-soft,
+        .glow-pulse {
+          animation: none !important;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+      a {
+        color: var(--aqua);
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--lavender);
+        outline-offset: 3px;
+      }
+      .proto-banner {
+        background: #120c1a;
+        color: var(--lavender);
+        font: 0.7rem/1.4 var(--mono);
+        letter-spacing: 0.05em;
+        padding: 0.55rem var(--m);
+        text-align: center;
+        border-bottom: 1px solid color-mix(in srgb, var(--pink) 50%, transparent);
+      }
+      .screen-nav {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem 1.1rem;
+        padding: 0.55rem var(--m);
+        background: color-mix(in srgb, var(--bg) 90%, transparent);
+        border-bottom: 1px solid var(--line);
+        font: 0.68rem/1.4 var(--mono);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+      }
+      .screen-nav a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .screen-nav a:hover {
+        color: var(--pink);
+      }
+      .screen {
+        padding: 2.25rem var(--m) 3.25rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .scr-label {
+        font: 0.68rem/1.4 var(--mono);
+        color: var(--lavender);
+        letter-spacing: 0.08em;
+        margin: 0 0 1.15rem;
+        text-transform: uppercase;
+      }
+
+      .editorial {
+        display: grid;
+        grid-template-columns: 1.55fr 0.85fr;
+        gap: 2rem 2.5rem;
+        min-height: calc(100vh - 7rem);
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .editorial {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+      }
+      .kicker {
+        font: 0.72rem/1.4 var(--mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--pink);
+        margin: 0 0 0.85rem;
+      }
+      .editorial h1 {
+        font: 400 clamp(2.6rem, 6vw, 4rem)/1.05 var(--serif);
+        margin: 0 0 0.85rem;
+        color: var(--marble);
+        letter-spacing: -0.01em;
+      }
+      .editorial h1 em {
+        font-style: italic;
+        color: var(--lavender);
+      }
+      .glitch-soft {
+        position: relative;
+        display: inline-block;
+      }
+      .glitch-soft::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 1px;
+        top: 0;
+        color: var(--aqua);
+        opacity: 0.35;
+        clip-path: inset(40% 0 20% 0);
+        animation: soft-glitch 5s steps(2, end) infinite;
+        pointer-events: none;
+      }
+      @keyframes soft-glitch {
+        0%,
+        90%,
+        100% {
+          transform: translate(0);
+          opacity: 0;
+        }
+        92% {
+          transform: translate(2px, -1px);
+          opacity: 0.4;
+        }
+        94% {
+          transform: translate(-1px, 1px);
+          opacity: 0.25;
+        }
+      }
+      .role {
+        margin: 0 0 0.75rem;
+        color: var(--muted);
+        max-width: 36rem;
+      }
+      .bio {
+        margin: 0 0 0.9rem;
+        color: var(--text);
+        max-width: 38rem;
+        font-size: 1.02rem;
+      }
+      .langs {
+        font: 0.78rem/1.4 var(--mono);
+        color: var(--aqua);
+        margin: 0 0 1.35rem;
+        letter-spacing: 0.04em;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+      }
+      .btn {
+        display: inline-block;
+        font: 0.75rem/1.3 var(--sans);
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        padding: 0.55rem 1rem;
+        border: 1px solid var(--lavender);
+        color: #1a1224;
+        background: var(--lavender);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--text);
+        border-color: var(--line);
+      }
+      .btn-ghost:hover {
+        border-color: var(--aqua);
+        color: var(--aqua);
+      }
+      .margin-plate {
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--panel) 70%, transparent);
+        padding: 1.25rem 1.35rem;
+        position: relative;
+      }
+      .margin-plate::before {
+        content: '';
+        position: absolute;
+        inset: 6px;
+        border: 1px solid color-mix(in srgb, var(--lavender) 25%, transparent);
+        pointer-events: none;
+      }
+      .margin-plate .ann {
+        font: 0.65rem/1.3 var(--mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--aqua);
+        display: block;
+        margin-bottom: 0.65rem;
+      }
+      .margin-plate p {
+        margin: 0;
+        font: 0.95rem/1.55 var(--serif);
+        color: var(--muted);
+      }
+      .margin-plate p strong {
+        color: var(--text);
+        font-weight: 600;
+        font-family: var(--sans);
+      }
+
+      .atlas {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr 0.8fr;
+        gap: 1.5rem 2rem;
+      }
+      @media (max-width: 960px) {
+        .atlas {
+          grid-template-columns: 1fr 1fr;
+        }
+        .atlas-lead {
+          grid-column: 1 / -1;
+        }
+      }
+      @media (max-width: 640px) {
+        .atlas {
+          grid-template-columns: 1fr;
+        }
+      }
+      .atlas h2 {
+        font: 400 1.75rem/1.15 var(--serif);
+        margin: 0 0 0.5rem;
+        color: var(--marble);
+      }
+      .atlas-lead > p {
+        color: var(--muted);
+        margin: 0 0 1.25rem;
+        max-width: 34rem;
+      }
+      .fig {
+        font: 0.65rem/1.3 var(--mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--pink);
+        margin: 0 0 0.35rem;
+      }
+      .entry {
+        padding: 0.85rem 0;
+        border-top: 1px solid var(--line);
+      }
+      .entry.featured {
+        border-top: 2px solid var(--lavender);
+        padding-top: 1rem;
+      }
+      .entry h3 {
+        font: 600 1.05rem/1.25 var(--sans);
+        margin: 0 0 0.35rem;
+      }
+      .entry h3 a {
+        color: var(--text);
+        text-decoration: none;
+      }
+      .entry h3 a:hover {
+        color: var(--lavender);
+      }
+      .entry p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .col-side .fig {
+        margin-bottom: 0.65rem;
+      }
+
+      .toolkit-plate {
+        display: grid;
+        grid-template-columns: 0.75fr 1.5fr 0.85fr;
+        gap: 1.25rem;
+        border: 1px solid var(--line);
+        background: var(--bg2);
+        padding: 1.35rem 1.25rem;
+        position: relative;
+      }
+      .toolkit-plate::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        box-shadow: inset 0 0 60px rgba(196, 181, 253, 0.06);
+      }
+      @media (max-width: 900px) {
+        .toolkit-plate {
+          grid-template-columns: 1fr;
+        }
+      }
+      .plate-side {
+        font: 0.78rem/1.55 var(--mono);
+        color: var(--muted);
+      }
+      .plate-side strong {
+        display: block;
+        color: var(--lavender);
+        letter-spacing: 0.08em;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .plate-main h2 {
+        font: 400 1.7rem/1.15 var(--serif);
+        margin: 0 0 0.5rem;
+        color: var(--marble);
+      }
+      .pitch {
+        margin: 0 0 1rem;
+        color: var(--muted);
+        max-width: 36rem;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      @media (max-width: 500px) {
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .stat {
+        text-align: center;
+        padding: 0.65rem 0.35rem;
+        border: 1px solid color-mix(in srgb, var(--lavender) 35%, var(--line));
+        background: color-mix(in srgb, var(--panel) 60%, transparent);
+      }
+      .stat b {
+        display: block;
+        font: 600 1.35rem/1 var(--serif);
+        color: var(--aqua);
+      }
+      .stat span {
+        font: 0.6rem/1.3 var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .flow {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .flow li {
+        display: grid;
+        grid-template-columns: 2.4rem 1fr;
+        gap: 0.55rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.9rem;
+        color: var(--text);
+      }
+      .flow .n {
+        font: 0.7rem/1.3 var(--mono);
+        color: var(--pink);
+      }
+      .glow-pulse {
+        text-shadow: 0 0 12px rgba(103, 232, 249, 0.25);
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .glow-pulse {
+          animation: soft-glow 4s ease-in-out infinite alternate;
+        }
+      }
+      @keyframes soft-glow {
+        from {
+          text-shadow: 0 0 8px rgba(103, 232, 249, 0.15);
+        }
+        to {
+          text-shadow: 0 0 16px rgba(196, 181, 253, 0.3);
+        }
+      }
+      .plate-side code {
+        color: var(--aqua);
+        display: block;
+        margin-top: 0.25rem;
+      }
+
+      .ritual {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 1.5rem 2rem;
+      }
+      @media (max-width: 800px) {
+        .ritual {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ritual h2 {
+        font: 400 1.65rem/1.15 var(--serif);
+        margin: 0 0 0.5rem;
+        color: var(--marble);
+      }
+      .ritual-intro {
+        color: var(--muted);
+        max-width: 28rem;
+        margin: 0 0 1rem;
+      }
+      .compose {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        gap: 0.65rem;
+        align-items: stretch;
+      }
+      @media (max-width: 700px) {
+        .compose {
+          grid-template-columns: 1fr;
+        }
+        .compose .arrow {
+          display: none;
+        }
+      }
+      .compose-block {
+        border: 1px solid var(--line);
+        background: color-mix(in srgb, var(--panel) 50%, transparent);
+        padding: 0.9rem 1rem;
+      }
+      .compose-block h3 {
+        font: 0.65rem/1.3 var(--mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--lavender);
+        margin: 0 0 0.55rem;
+      }
+      .compose-block ul {
+        margin: 0;
+        padding: 0 0 0 1rem;
+        color: var(--text);
+        font-size: 0.88rem;
+      }
+      .compose-block pre {
+        margin: 0.5rem 0 0;
+        font: 0.68rem/1.5 var(--mono);
+        color: var(--muted);
+        white-space: pre-wrap;
+        background: #120c1a;
+        padding: 0.5rem;
+        border: 1px solid var(--line);
+      }
+      .arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pink);
+        font-family: var(--serif);
+        font-size: 1.25rem;
+      }
+      .ritual-aside {
+        font: 0.9rem/1.55 var(--serif);
+        color: var(--muted);
+        border-left: 2px solid var(--aqua);
+        padding-left: 1rem;
+        margin-top: 1rem;
+      }
+
+      .mobile-wrap {
+        display: flex;
+        justify-content: center;
+      }
+      .mobile-frame {
+        width: 100%;
+        max-width: 390px;
+        border: 1px solid var(--line);
+        background: var(--bg2);
+        overflow: hidden;
+      }
+      .mobile-top {
+        padding: 1.2rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .mobile-top h2 {
+        font: 400 1.85rem/1.1 var(--serif);
+        margin: 0.35rem 0 0.5rem;
+        color: var(--marble);
+      }
+      .mobile-bit {
+        padding: 0.95rem 1.1rem;
+        font: 0.72rem/1.65 var(--mono);
+        color: var(--muted);
+      }
+      .mobile-bit a {
+        color: var(--lavender);
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="proto-banner" role="status">
+      PROTOTYPE — Direction F — dark family — not production. For C-03 review.
+    </div>
+    <nav class="screen-nav" aria-label="Prototype screens">
+      <a href="#home-desktop">01 Home</a>
+      <a href="#home-worlds">02 Worlds</a>
+      <a href="#toolkit">03 Toolkit</a>
+      <a href="#extra">04 Create Awesome</a>
+      <a href="#home-mobile">05 Mobile</a>
+    </nav>
+
+    <section class="screen" id="home-desktop" aria-labelledby="home-title">
+      <p class="scr-label">Screen · #home-desktop · dreamy digital nostalgia + precision</p>
+      <div class="editorial">
+        <div>
+          <p class="kicker">The Digital Nest · La Plata, Buenos Aires, Argentina</p>
+          <h1 id="home-title"><span class="glitch-soft" data-text="Ulises">Ulises</span><br /><em>Jeremias</em></h1>
+          <p class="role">Solutions Architect @ NaNLABS · Core Team @ V · AUR Maintainer</p>
+          <p class="bio">
+            Builds developer tooling, AI-powered workflows, CLI apps, and infrastructure automation. The Digital Nest is
+            craft and construction — layered like a hornero’s work, rendered here as soft neon nostalgia without meme
+            spam.
+          </p>
+          <p class="langs">TypeScript · Go · Shell · Python · V</p>
+          <div class="cta-row">
+            <a class="btn" href="mailto:ulisescf.24@gmail.com">Collaborate</a>
+            <a class="btn btn-ghost" href="https://discord.gg/bR5VyATgka">Discord</a>
+            <a class="btn btn-ghost" href="https://github.com/ulises-jeremias">GitHub ↗</a>
+          </div>
+        </div>
+        <aside class="margin-plate" aria-label="Marginal metaphor">
+          <span class="ann">fig. i — metaphor</span>
+          <p>
+            <strong>Nest as composition.</strong> Mud and straw become skills and profiles. Softwave chrome frames the
+            craft; the body stays readable — off-white on plum, not illegible neon-on-black.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="home-worlds" aria-labelledby="worlds-title">
+      <p class="scr-label">Screen · #home-worlds · unequal editorial density</p>
+      <div class="atlas">
+        <div class="atlas-lead">
+          <p class="fig">Plate 01 · Atlas of worlds</p>
+          <h2 id="worlds-title">Unequal weight, intentional order</h2>
+          <p>
+            Featured nesting sites first; supporting habitats afterward. Editorial density on dark — not a grid of
+            identical cards.
+          </p>
+          <article class="entry featured">
+            <p class="fig">01 · flagship</p>
+            <h3><a href="#toolkit">Agent Toolkit</a></h3>
+            <p>
+              61 skills · 16 agents · 10 loops · 6 profiles. One reusable source of agent capabilities for Cursor,
+              Claude Code, OpenCode, and more.
+            </p>
+          </article>
+          <article class="entry">
+            <p class="fig">02</p>
+            <h3><a href="#extra">Create Awesome</a></h3>
+            <p>Composition ritual: pick a runtime, bind template + addons, emit a project.</p>
+          </article>
+          <article class="entry">
+            <p class="fig">03</p>
+            <h3>HorneroConfig · Agentic Workstation</h3>
+            <p>Portable nest /dotfiles and L1 machine provisioning — chezmoi, packages, LLM policy.</p>
+          </article>
+        </div>
+        <div class="col-side">
+          <p class="fig">Supporting</p>
+          <article class="entry">
+            <h3>V ecosystem</h3>
+            <p>Core Team work, tooling, and community around the V language.</p>
+          </article>
+          <article class="entry">
+            <h3>Community</h3>
+            <p>Workshop space and Discord for builders in the nest.</p>
+          </article>
+        </div>
+        <div class="col-side">
+          <p class="fig">Writing &amp; code</p>
+          <article class="entry">
+            <h3>Blog</h3>
+            <p>Long-form notes on tooling, AI workflows, and infrastructure.</p>
+          </article>
+          <article class="entry">
+            <h3>Projects · Open Source</h3>
+            <p>Selected builds, AUR packages, libraries, and contributions.</p>
+          </article>
+          <p style="font: 0.7rem/1.4 var(--mono); color: var(--muted); margin: 1rem 0 0">
+            External · <a href="https://github.com/ulises-jeremias">github.com/ulises-jeremias</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="toolkit" aria-labelledby="toolkit-title">
+      <p class="scr-label">Screen · #toolkit · soft neon annotated plate</p>
+      <div class="toolkit-plate">
+        <aside class="plate-side">
+          <strong>Field notes</strong>
+          Specimens are skills, agents, loops, and profiles — not marketing tiles.
+          <br /><br />
+          Distribution: write once in the toolkit, mount into many coding assistants.
+        </aside>
+        <div class="plate-main">
+          <p class="fig">Plate 02 · Agent Toolkit</p>
+          <h2 id="toolkit-title" class="glow-pulse">One source → many assistants</h2>
+          <p class="pitch">
+            Reusable agent capabilities that install into Cursor, Claude Code, OpenCode, and Gemini CLI without
+            rewriting the nest for each tool.
+          </p>
+          <div class="stats" role="list">
+            <div class="stat" role="listitem"><b>61</b><span>skills</span></div>
+            <div class="stat" role="listitem"><b>16</b><span>agents</span></div>
+            <div class="stat" role="listitem"><b>10</b><span>loops</span></div>
+            <div class="stat" role="listitem"><b>6</b><span>profiles</span></div>
+          </div>
+          <ol class="flow">
+            <li><span class="n">01</span><span>Request arrives with intent and constraints</span></li>
+            <li><span class="n">02</span><span>Recipe: pair · team · full swarm</span></li>
+            <li><span class="n">03</span><span>Roles bind to skills; worktrees isolate change</span></li>
+            <li><span class="n">04</span><span>Handoffs + state → governance → artifact</span></li>
+          </ol>
+        </div>
+        <aside class="plate-side">
+          <strong>Install</strong>
+          <code>uvx agent-toolkit-cli</code>
+          <br />
+          or permanent:
+          <code>uv tool install agent-toolkit-cli</code>
+          <br /><br />
+          Arch: <code>yay -S agent-toolkit-cli</code>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="extra" aria-labelledby="extra-title">
+      <p class="scr-label">Screen · #extra · Create Awesome as composition ritual</p>
+      <div class="ritual">
+        <div>
+          <h2 id="extra-title">Create Awesome</h2>
+          <p class="ritual-intro">
+            Composition, not three equal product cards: pick a runtime, bind template + addons, emit a project. Softwave
+            frames the ritual; the steps stay precise.
+          </p>
+          <p class="ritual-aside">
+            The scaffold is a quiet ceremony — Node, Python, or V enters; a named workspace leaves ready to extend.
+          </p>
+        </div>
+        <div class="compose" role="img" aria-label="Create Awesome flow from runtime through template to project">
+          <div class="compose-block">
+            <h3>01 · Runtime</h3>
+            <ul>
+              <li>Node</li>
+              <li>Python</li>
+              <li>V</li>
+            </ul>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="compose-block">
+            <h3>02 · Template + addons</h3>
+            <ul>
+              <li>Base scaffold</li>
+              <li>CI / lint / test addons</li>
+              <li>Optional toolkit profile</li>
+            </ul>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="compose-block">
+            <h3>03 · Project</h3>
+            <p style="margin: 0; color: var(--muted); font-size: 0.88rem">Named workspace ready to clone and extend.</p>
+            <pre>
+npx create-awesome my-app --template node
+# or: --lang python | --lang v</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="home-mobile" aria-labelledby="mobile-title">
+      <p class="scr-label">Screen · #home-mobile · 390px softwave frame</p>
+      <div class="mobile-wrap">
+        <div class="mobile-frame">
+          <div class="mobile-top">
+            <p class="kicker" style="margin-bottom: 0.25rem">Digital Nest · La Plata</p>
+            <h2 id="mobile-title">Ulises <em style="color: var(--lavender); font-style: italic">Jeremias</em></h2>
+            <p style="margin: 0 0 0.85rem; font-size: 0.88rem; color: var(--muted)">
+              Solutions Architect @ NaNLABS · Core Team @ V
+            </p>
+            <a class="btn" href="mailto:ulisescf.24@gmail.com" style="font-size: 0.75rem">Collaborate</a>
+          </div>
+          <div class="mobile-bit">
+            <div style="color: var(--pink); margin-bottom: 0.45rem">WORLDS</div>
+            <div><a href="#toolkit">Agent Toolkit</a> · soft neon plate</div>
+            <div style="margin-top: 0.35rem"><a href="#extra">Create Awesome</a> · ritual</div>
+            <div style="margin-top: 0.35rem">HorneroConfig · Workstation · V</div>
+            <div style="margin-top: 0.35rem">Community · Blog · Projects · OSS</div>
+            <div style="margin-top: 0.75rem; color: var(--aqua)">$ uvx agent-toolkit-cli</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

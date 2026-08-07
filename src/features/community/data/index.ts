@@ -50,9 +50,9 @@ export const projectFamilies: ProjectFamily[] = [
     title: 'Create Awesome — Node',
     description: 'Templates + addons for frontend, backend, and full-stack. Compose files, not black boxes.',
     href: 'https://github.com/Create-Node-App/cna-templates',
-    icon: '⬢',
+    icon: 'node',
     languages: ['TypeScript', 'Node'],
-    installHint: 'npx create-awesome-node-app my-app --template react-vite --addons tailwind',
+    installHint: 'npm create awesome-node-app@latest my-app -- --template react-vite-starter',
   },
   {
     id: 'python',
@@ -60,9 +60,9 @@ export const projectFamilies: ProjectFamily[] = [
     title: 'Create Awesome — Python',
     description: 'FastAPI, Django, CLI, Celery with uv. Same composition model, Python idioms.',
     href: 'https://github.com/Create-Python-App/cpa-templates',
-    icon: '🐍',
+    icon: 'python',
     languages: ['Python', 'uv'],
-    installHint: 'pipx run create-awesome-python-app my-app --template fastapi',
+    installHint: 'uvx create-awesome-python-app@latest my-app --template fastapi-starter',
   },
   {
     id: 'v',
@@ -70,9 +70,9 @@ export const projectFamilies: ProjectFamily[] = [
     title: 'Create Awesome — V',
     description: 'Native, fast scaffolding for the V ecosystem — experimental, typed, and reviewable.',
     href: 'https://github.com/Create-Vlang-App/cva-templates',
-    icon: '⚡',
+    icon: 'v',
     languages: ['V'],
-    installHint: 'v run create-awesome-vlang-app my-app --template vweb',
+    installHint: 'create-vlang-app my-app --template web-server',
   },
 ];
 export const weeklyOpportunities: WeeklyOpportunity[] = [

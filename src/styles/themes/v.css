@@ -6,10 +6,16 @@
 [data-theme='v'] {
   --theme-accent: #1e5a8a;
   --theme-accent-strong: #16446a;
-  --theme-accent-light: #5b9bd5;
-  --theme-accent-subtle: color-mix(in srgb, #1e5a8a 7%, var(--color-warm-paper));
-  --theme-border-accent: color-mix(in srgb, #1e5a8a 16%, var(--color-sand));
-  --theme-surface-tint: color-mix(in srgb, #1e5a8a 3%, var(--color-warm-paper));
+  --theme-accent-light: #236f9e;
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 7%, var(--color-warm-paper));
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 3%, var(--color-warm-paper));
+  --theme-accent-secondary: #7cb7c9;
+  --theme-accent-tertiary: #f4c7a5;
+  --world-accent: var(--nest-blue);
+  --world-accent-strong: var(--nest-cyan);
+  --world-accent-secondary: var(--nest-cyan);
+  --world-accent-tertiary: var(--nest-sunset-orange);
   --theme-blue-gray: #475569;
   --theme-peach: #f4c7a5;
   --theme-cyan: #7cb7c9;

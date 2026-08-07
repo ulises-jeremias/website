@@ -1,0 +1,233 @@
+---
+import { variants } from '../data/index.js';
+
+const defaultVariant = variants[0]!;
+---
+
+<section class="ca-composer" aria-labelledby="ca-composer-title">
+  <header>
+    <p class="ca-composer__eyebrow">Composer</p>
+    <h2 id="ca-composer-title">Runtime + template + addons → command</h2>
+    <p>
+      Native controls only. Selecting a family updates templates and addons from verified catalogs (CNA 10+53, CPA 6+18,
+      CVA 7+11). No invented IDs.
+    </p>
+  </header>
+
+  <form class="ca-composer__form" data-ca-composer>
+    <fieldset>
+      <legend>Runtime</legend>
+      {
+        variants.map((variant, index) => (
+          <>
+            <input
+              type="radio"
+              name="ca-runtime"
+              id={`ca-runtime-${variant.id}`}
+              value={variant.id}
+              data-install={variant.install}
+              checked={index === 0}
+            />
+            <label for={`ca-runtime-${variant.id}`}>{variant.label}</label>
+          </>
+        ))
+      }
+    </fieldset>
+
+    {
+      variants.map((variant) => (
+        <div class={`ca-composer__panel ca-composer__panel--${variant.id}`} data-runtime={variant.id}>
+          <label>
+            Template
+            <select name={`template-${variant.id}`} aria-label={`${variant.label} template`}>
+              {variant.templates.map((template) => (
+                <option value={template.id} selected={template.featured}>
+                  {template.name} ({template.id})
+                </option>
+              ))}
+            </select>
+          </label>
+          <fieldset class="ca-composer__addons">
+            <legend>Addons</legend>
+            {variant.addons.map((addon) => (
+              <label>
+                <input type="checkbox" name={`addon-${variant.id}`} value={addon.id} />
+                <code>{addon.id}</code> — {addon.description}
+              </label>
+            ))}
+          </fieldset>
+          <p class="ca-composer__preview">
+            <span>Install baseline</span>
+            <code>{variant.install}</code>
+          </p>
+        </div>
+      ))
+    }
+
+    <p class="ca-composer__note">
+      Default family: {defaultVariant.title}. Without CSS <code>:has()</code>, all panels remain visible as static
+      documentation.
+    </p>
+  </form>
+</section>
+
+<style>
+  .ca-composer {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .ca-composer__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nest-sunset-orange);
+  }
+
+  .ca-composer h2 {
+    margin: 0 0 var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .ca-composer header p {
+    margin: 0 0 1rem;
+    max-inline-size: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .ca-composer__form {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .ca-composer fieldset {
+    margin: 0 0 1rem;
+    padding: 0;
+    border: 0;
+  }
+
+  .ca-composer legend {
+    margin-bottom: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .ca-composer input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ca-composer fieldset > label {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+    margin: 0 0.35rem 0.35rem 0;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--color-border);
+    clip-path: var(--clip-corner-sm);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .ca-composer input[type='radio']:checked + label {
+    border-color: var(--nest-magenta);
+    color: var(--nest-magenta);
+  }
+
+  .ca-composer input[type='radio']:focus-visible + label {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .ca-composer__panel {
+    display: none;
+    gap: 0.85rem;
+  }
+
+  .ca-composer__form:has(#ca-runtime-node:checked) .ca-composer__panel--node,
+  .ca-composer__form:has(#ca-runtime-python:checked) .ca-composer__panel--python,
+  .ca-composer__form:has(#ca-runtime-v:checked) .ca-composer__panel--v {
+    display: grid;
+  }
+
+  @supports not selector(:has(*)) {
+    .ca-composer__panel {
+      display: grid;
+      margin-block-end: 1rem;
+      padding-block-end: 1rem;
+      border-block-end: 1px solid var(--color-border);
+    }
+  }
+
+  .ca-composer__panel > label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  .ca-composer select {
+    min-block-size: 44px;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--color-border);
+    background: var(--nest-midnight-950);
+    color: var(--color-text);
+  }
+
+  .ca-composer__addons {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .ca-composer__addons label {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    min-block-size: 44px;
+    padding: 0.35rem 0;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  .ca-composer__preview {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .ca-composer__preview span {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .ca-composer__preview code {
+    display: block;
+    padding: 0.7rem;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    background: var(--color-code-bg, color-mix(in srgb, var(--nest-midnight-950) 88%, transparent));
+    clip-path: var(--clip-corner-sm);
+    font-size: 0.78rem;
+  }
+
+  .ca-composer__note {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.82rem;
+  }
+</style>

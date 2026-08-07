@@ -1,0 +1,21 @@
+---
+import { nestStatus } from '../data/index.js';
+---
+
+<section class="nest-status" aria-labelledby="nest-status-title">
+  <header class="nest-status__header">
+    <p class="nest-status__eyebrow">Nest status</p>
+    <h2 id="nest-status-title">Current operating picture</h2>
+  </header>
+
+  <dl class="nest-status__grid">
+    {
+      nestStatus.map((item) => (
+        <div class:list={['nest-status__item', `nest-status__item--${item.tone}`]}>
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

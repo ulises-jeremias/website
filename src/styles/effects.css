@@ -1,0 +1,49 @@
+/**
+ * effects.css — Lightweight glow, atmosphere, and shape primitives.
+ */
+
+:root {
+  --effect-glow-soft: 0 0 18px color-mix(in srgb, var(--nest-violet) 18%, transparent);
+  --effect-glow-accent: 0 0 24px color-mix(in srgb, var(--color-accent) 28%, transparent);
+  --effect-glow-active:
+    0 0 10px color-mix(in srgb, var(--color-accent-secondary) 32%, transparent),
+    0 0 28px color-mix(in srgb, var(--color-accent) 20%, transparent);
+  --focus-glow: 0 0 0 calc(var(--focus-ring-width) + var(--focus-ring-offset)) var(--color-focus-ring);
+  --clip-corner-sm: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  --clip-corner-md: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  --clip-corner-lg: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+  --atmosphere-haze-magenta: color-mix(in srgb, var(--nest-magenta) 16%, transparent);
+  --atmosphere-haze-cyan: color-mix(in srgb, var(--nest-cyan) 12%, transparent);
+  --atmosphere-horizon: color-mix(in srgb, var(--nest-sunset-orange) 10%, transparent);
+  --atmosphere-field:
+    radial-gradient(ellipse 70% 42% at 18% 4%, var(--atmosphere-haze-magenta), transparent 66%),
+    radial-gradient(ellipse 60% 38% at 88% 94%, var(--atmosphere-haze-cyan), transparent 68%),
+    linear-gradient(to top, var(--atmosphere-horizon), transparent 28%);
+
+  /* Compatibility aliases used by existing route styles. */
+  --shadow-glow: var(--effect-glow-accent);
+  --shadow-focus: var(--focus-glow);
+  --glow-paper: var(--atmosphere-haze-magenta);
+  --glow-sky: var(--atmosphere-haze-cyan);
+}
+
+.effect-atmosphere {
+  background-image: var(--atmosphere-field);
+}
+
+.effect-clipped {
+  clip-path: var(--clip-corner-md);
+}
+
+.effect-glow-active {
+  box-shadow: var(--effect-glow-active);
+}
+
+@media (forced-colors: active) {
+  :root {
+    --effect-glow-soft: none;
+    --effect-glow-accent: none;
+    --effect-glow-active: none;
+    --focus-glow: none;
+  }
+}

@@ -1,7 +1,14 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta } from '@/data/routes';
-import { Hero, Overview, Capabilities, SwarmVisualization } from '@/features/agent-toolkit';
+import {
+  Hero,
+  Overview,
+  CapabilityAnatomy,
+  DistributionMap,
+  QueueSeparation,
+  SwarmStory,
+} from '@/features/agent-toolkit';
 import { budgetItems, installSnippets } from '@/features/agent-toolkit/data/index.js';
 const meta = getRouteMeta('/agent-toolkit')!;
 ---
@@ -9,21 +16,155 @@ const meta = getRouteMeta('/agent-toolkit')!;
 <SectionLayout
   title={meta.title}
   description={meta.description}
+  currentPath="/agent-toolkit"
+  world="Agent Toolkit"
   theme="toolkit"
-  hero={{ eyebrow: 'Agent Toolkit', title: 'One source → many assistants', description: '61 skills' }}
+  hero={{
+    eyebrow: 'Agent Toolkit',
+    title: 'One source → many assistants',
+    description:
+      '61 skills · 16 agents · 10 loops · 7 profiles · 6 MCP — capability distribution for the Personal DX graph.',
+  }}
 >
   <Fragment slot="hero"><Hero /></Fragment>
   <Overview />
-  <Capabilities />
-  <SwarmVisualization />
-  <div>
-    {
-      budgetItems.map((b) => (
+  <CapabilityAnatomy />
+  <DistributionMap />
+  <QueueSeparation />
+  <SwarmStory />
+
+  <section class="toolkit-ops" aria-labelledby="toolkit-ops-title">
+    <div class="toolkit-ops__inner">
+      <header>
+        <p class="toolkit-ops__eyebrow">Install · budgets</p>
+        <h2 id="toolkit-ops-title">Ship the catalog, then constrain the swarm</h2>
+      </header>
+      <div class="toolkit-ops__grid">
         <div>
-          {b.label} {b.value}
+          <h3>Install</h3>
+          {
+            installSnippets.map((snippet) => (
+              <figure>
+                <figcaption>
+                  {snippet.label} — {snippet.note}
+                </figcaption>
+                <pre>
+                  <code>{snippet.command}</code>
+                </pre>
+              </figure>
+            ))
+          }
         </div>
-      ))
-    }
-    {installSnippets.map((s) => <div>{s.label}</div>)}
-  </div>
+        <div>
+          <h3>Budgets</h3>
+          <dl>
+            {
+              budgetItems.map((item) => (
+                <>
+                  <dt>{item.label}</dt>
+                  <dd>
+                    <code>{item.value}</code> — {item.description}
+                  </dd>
+                </>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
 </SectionLayout>
+
+<style>
+  .toolkit-ops {
+    padding-block: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .toolkit-ops__inner {
+    width: min(100% - 2 * var(--section-padding-x), 72rem);
+    margin: 0 auto;
+  }
+
+  .toolkit-ops__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .toolkit-ops h2 {
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .toolkit-ops__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .toolkit-ops__grid > * {
+    min-width: 0;
+  }
+
+  .toolkit-ops h3 {
+    margin: 0 0 0.75rem;
+    color: var(--nest-cyan);
+  }
+
+  .toolkit-ops figure {
+    margin: 0 0 0.85rem;
+    max-width: 100%;
+  }
+
+  .toolkit-ops figcaption {
+    margin-bottom: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .toolkit-ops pre {
+    margin: 0;
+    padding: 0.75rem;
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    background: var(--color-code-bg);
+    clip-path: var(--clip-corner-sm);
+    font-size: 0.78rem;
+  }
+
+  .toolkit-ops pre code {
+    white-space: pre;
+    word-break: normal;
+  }
+
+  .toolkit-ops dl {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+  }
+
+  .toolkit-ops dt {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .toolkit-ops dd {
+    margin: 0.15rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (width < 800px) {
+    .toolkit-ops__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

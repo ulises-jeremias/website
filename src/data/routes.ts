@@ -43,13 +43,24 @@ export const routeMetaSchema = z.object({
   theme: routeThemeSchema.optional(),
   /** Label shown in nav; defaults to title if omitted. */
   navLabel: z.string().optional(),
-  /** Order in primary nav; omitted means not in primary nav. */
+  /** Order in the complete route directory; omitted means not listed. */
   navOrder: z.number().int().optional(),
+  /** Order in the compact global header; omitted means represented by a parent route. */
+  headerNavOrder: z.number().int().optional(),
+  /** Header route that represents this route, for example project worlds → Projects. */
+  headerParentId: z.string().min(1).optional(),
   /** Future subdomain, e.g. "dotfiles" → dotfiles.<domain>. */
   subdomain: z.string().optional(),
 });
 
 export type RouteMeta = z.input<typeof routeMetaSchema>;
+
+export type PrimaryNavigationItem = {
+  id: string;
+  path: string;
+  label: string;
+  isActive: boolean;
+};
 
 /**
  * Canonical route table — covers all B-01 preferred paths.
@@ -67,6 +78,7 @@ export const routes: RouteMeta[] = [
     theme: 'home',
     navLabel: 'Home',
     navOrder: 0,
+    headerNavOrder: 0,
   },
   {
     id: 'dotfiles',
@@ -78,6 +90,7 @@ export const routes: RouteMeta[] = [
     theme: 'dotfiles',
     navLabel: 'Dotfiles',
     navOrder: 1,
+    headerParentId: 'projects',
     subdomain: 'dotfiles',
   },
   {
@@ -90,6 +103,7 @@ export const routes: RouteMeta[] = [
     theme: 'workstation',
     navLabel: 'Workstation',
     navOrder: 2,
+    headerParentId: 'projects',
     subdomain: 'workstation',
   },
   {
@@ -102,6 +116,7 @@ export const routes: RouteMeta[] = [
     theme: 'toolkit',
     navLabel: 'Toolkit',
     navOrder: 3,
+    headerParentId: 'projects',
     subdomain: 'agents',
   },
   {
@@ -114,6 +129,7 @@ export const routes: RouteMeta[] = [
     theme: 'v',
     navLabel: 'V',
     navOrder: 4,
+    headerParentId: 'projects',
     subdomain: 'v',
   },
   {
@@ -126,6 +142,7 @@ export const routes: RouteMeta[] = [
     theme: 'create-awesome',
     navLabel: 'Create Awesome',
     navOrder: 5,
+    headerParentId: 'projects',
     subdomain: 'create',
   },
   {
@@ -138,6 +155,7 @@ export const routes: RouteMeta[] = [
     theme: 'community',
     navLabel: 'Community',
     navOrder: 6,
+    headerNavOrder: 4,
     subdomain: 'community',
   },
   {
@@ -150,6 +168,7 @@ export const routes: RouteMeta[] = [
     theme: 'blog',
     navLabel: 'Blog',
     navOrder: 7,
+    headerNavOrder: 2,
     subdomain: 'blog',
   },
   {
@@ -160,6 +179,7 @@ export const routes: RouteMeta[] = [
     structuredDataType: 'BlogPosting',
     dataSource: 'collection',
     theme: 'blog',
+    headerParentId: 'blog',
     subdomain: 'blog',
   },
   {
@@ -170,8 +190,9 @@ export const routes: RouteMeta[] = [
     structuredDataType: 'CollectionPage',
     dataSource: 'generated',
     theme: 'projects',
-    navLabel: 'Projects',
+    navLabel: 'Worlds',
     navOrder: 8,
+    headerNavOrder: 1,
   },
   {
     id: 'open-source',
@@ -183,6 +204,7 @@ export const routes: RouteMeta[] = [
     theme: 'open-source',
     navLabel: 'Open Source',
     navOrder: 9,
+    headerNavOrder: 3,
   },
 ];
 
@@ -191,6 +213,12 @@ for (const route of routes) {
   const parsed = routeMetaSchema.safeParse(route);
   if (!parsed.success) {
     throw new Error(`Invalid route meta for id="${route.id}": ${parsed.error.message}`);
+  }
+  if (route.headerParentId) {
+    const parent = routes.find((candidate) => candidate.id === route.headerParentId);
+    if (!parent || typeof parent.headerNavOrder !== 'number') {
+      throw new Error(`Invalid header parent "${route.headerParentId}" for route id="${route.id}"`);
+    }
   }
 }
 
@@ -243,11 +271,60 @@ export function getRouteById(id: string): RouteMeta | undefined {
   return routes.find((r) => r.id === id);
 }
 
-/** Routes that appear in primary navigation, sorted by navOrder. */
+/** Routes that appear in the compact global header, sorted by headerNavOrder. */
 export function getNavRoutes(): RouteMeta[] {
+  return routes
+    .filter((r) => typeof r.headerNavOrder === 'number')
+    .sort((a, b) => (a.headerNavOrder as number) - (b.headerNavOrder as number));
+}
+
+/** Complete public route directory, used by the footer and world indexes. */
+export function getFooterRoutes(): RouteMeta[] {
   return routes
     .filter((r) => typeof r.navOrder === 'number')
     .sort((a, b) => (a.navOrder as number) - (b.navOrder as number));
+}
+
+function normalizePathname(path: string): string {
+  const pathname = path.split(/[?#]/, 1)[0] || '/';
+  const withLeadingSlash = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  return withLeadingSlash === '/' ? withLeadingSlash : withLeadingSlash.replace(/\/+$/, '');
+}
+
+function routePatternMatches(routePath: string, currentPath: string): boolean {
+  if (!routePath.includes('[')) return false;
+  const pattern = routePath
+    .split('/')
+    .map((segment) => (segment.startsWith('[') && segment.endsWith(']') ? '[^/]+' : segment))
+    .join('/');
+  return new RegExp(`^${pattern}/?$`).test(currentPath);
+}
+
+function getRouteForCurrentPath(currentPath: string): RouteMeta | undefined {
+  const normalized = normalizePathname(currentPath);
+  const exact = routes.find((route) => !route.path.includes('[') && normalizePathname(route.path) === normalized);
+  if (exact) return exact;
+
+  const dynamic = routes.find((route) => routePatternMatches(route.path, normalized));
+  if (dynamic) return dynamic;
+
+  return routes
+    .filter((route) => route.path !== '/' && !route.path.includes('['))
+    .sort((a, b) => b.path.length - a.path.length)
+    .find((route) => normalized.startsWith(`${normalizePathname(route.path)}/`));
+}
+
+/** Canonical header items with parent-aware active state for worlds and dynamic routes. */
+export function getPrimaryNavigation(currentPath: string): PrimaryNavigationItem[] {
+  const currentRoute = getRouteForCurrentPath(currentPath);
+  const activeId = currentRoute?.headerParentId ?? currentRoute?.id;
+
+  return getNavRoutes().map((route) => ({
+    id: route.id,
+    path: route.path,
+    label: getNavLabel(route),
+    isActive: route.id === activeId,
+  }));
 }
 
 /** Whether a href is external (http(s) or protocol-relative). */

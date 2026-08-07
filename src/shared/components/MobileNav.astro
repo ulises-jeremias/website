@@ -1,400 +1,407 @@
 ---
-import { worldsByPriority } from '@/data/project-worlds';
+import type { PrimaryNavigationItem } from '@/data/routes.js';
 
-// Mobile nav — visible at <768px, hidden at ≥768px (Header takes over).
-// Implements drawer with focus trap, ESC, scroll lock, reduced-motion.
-// No framework — vanilla JS inline, <2KB.
-// Tokens are preliminary (Epic C finalizes).
+export interface Props {
+  items: PrimaryNavigationItem[];
+  githubHref: string;
+  emailHref: string;
+}
+
+const { items, githubHref, emailHref } = Astro.props as Props;
 ---
 
-<nav class="mobile-nav" aria-label="Mobile">
-  <div class="mobile-nav__bar">
-    <a href="/" class="mobile-nav__brand" aria-label="Ulises Jeremias — home">
-      <span class="mobile-nav__mark" aria-hidden="true">◉</span>
-      <span class="mobile-nav__brand-text">Ulises</span>
-    </a>
-    <button
-      type="button"
-      class="mobile-nav__trigger"
-      aria-expanded="false"
-      aria-controls="mobile-drawer"
-      aria-label="Open menu"
-    >
-      <span class="mobile-nav__trigger-icon" aria-hidden="true">
-        <span class="mobile-nav__icon-bar"></span>
-        <span class="mobile-nav__icon-bar"></span>
-        <span class="mobile-nav__icon-bar"></span>
-      </span>
-      <span class="mobile-nav__trigger-text">Menu</span>
-    </button>
-  </div>
+<div class="mobile-nav" data-mobile-nav>
+  <button
+    type="button"
+    class="mobile-nav__trigger"
+    aria-expanded="false"
+    aria-controls="site-navigation-drawer"
+    aria-label="Open navigation"
+    data-mobile-trigger
+  >
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16"></path>
+    </svg>
+    <span>Menu</span>
+  </button>
 
-  <div class="mobile-nav__backdrop" hidden aria-hidden="true"></div>
+  <div class="mobile-nav__backdrop" data-mobile-backdrop hidden aria-hidden="true"></div>
 
-  <div id="mobile-drawer" class="mobile-nav__drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
-    <div class="mobile-nav__drawer-header">
-      <span class="mobile-nav__drawer-title">Menu</span>
-      <button type="button" class="mobile-nav__close" aria-label="Close menu">
-        <span aria-hidden="true">✕</span>
+  <aside
+    id="site-navigation-drawer"
+    class="mobile-nav__drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="site-navigation-title"
+    data-mobile-drawer
+    hidden
+  >
+    <div class="mobile-nav__drawer-head">
+      <div>
+        <p class="mobile-nav__eyebrow">Digital Nest</p>
+        <h2 id="site-navigation-title">Navigate the atlas</h2>
+      </div>
+      <button type="button" class="mobile-nav__close" aria-label="Close navigation" data-mobile-close>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="m6 6 12 12M18 6 6 18"></path>
+        </svg>
       </button>
     </div>
 
-    <ul class="mobile-nav__list" role="list">
-      {
-        worldsByPriority.map((w) => (
-          <li class="mobile-nav__item">
-            <a href={w.path} class="mobile-nav__link">
-              {w.title}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <nav aria-label="Primary">
+      <ol class="mobile-nav__list">
+        {
+          items.map((item, index) => (
+            <li>
+              <a
+                href={item.path}
+                class:list={['mobile-nav__link', { 'is-active': item.isActive }]}
+                aria-current={item.isActive ? 'page' : undefined}
+              >
+                <span class="mobile-nav__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span>{item.label}</span>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M4 10h11m-4-4 4 4-4 4" />
+                </svg>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
 
     <div class="mobile-nav__footer">
-      <a href="mailto:ulisescf.24@gmail.com" class="mobile-nav__cta">Collaborate</a>
-      <div class="mobile-nav__social">
-        <a href="https://github.com/ulises-jeremias" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/ulises-jeremias/" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href="https://discord.gg/bR5VyATgka" target="_blank" rel="noreferrer">Discord</a>
-      </div>
+      <a href={githubHref} target="_blank" rel="noopener noreferrer"
+        >GitHub <span class="sr-only">(opens in new tab)</span></a
+      >
+      <a href={emailHref}>Start a conversation</a>
     </div>
-  </div>
-</nav>
+  </aside>
+</div>
 
 <script>
-  (function () {
-    const trigger = document.querySelector('.mobile-nav__trigger') as HTMLButtonElement | null;
-    const drawer = document.getElementById('mobile-drawer') as HTMLElement | null;
-    const backdrop = document.querySelector('.mobile-nav__backdrop') as HTMLElement | null;
-    const closeBtn = document.querySelector('.mobile-nav__close') as HTMLButtonElement | null;
-    if (!trigger || !drawer || !backdrop || !closeBtn) return;
+  function initializeMobileNavigation(root: Element) {
+    if (root.hasAttribute('data-mobile-nav-ready')) return;
 
+    const trigger = root.querySelector<HTMLButtonElement>('[data-mobile-trigger]');
+    const drawer = root.querySelector<HTMLElement>('[data-mobile-drawer]');
+    const backdrop = root.querySelector<HTMLElement>('[data-mobile-backdrop]');
+    const closeButton = root.querySelector<HTMLButtonElement>('[data-mobile-close]');
+    if (!trigger || !drawer || !backdrop || !closeButton) return;
+
+    const navTrigger = trigger;
+    const navDrawer = drawer;
+    const navBackdrop = backdrop;
+    const navCloseButton = closeButton;
+    root.setAttribute('data-mobile-nav-ready', '');
     const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    let previouslyFocused: HTMLElement | null = null;
+    let previousFocus: HTMLElement | null = null;
+    let hideTimer = 0;
 
-    function getFocusable(): HTMLElement[] {
-      return Array.from(drawer!.querySelectorAll<HTMLElement>(focusableSelector)).filter(function (el) {
-        return el.offsetParent !== null || el === document.activeElement;
+    const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const focusableElements = () =>
+      Array.from(navDrawer.querySelectorAll<HTMLElement>(focusableSelector)).filter((element) => !element.hidden);
+
+    function openNavigation() {
+      window.clearTimeout(hideTimer);
+      previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      navDrawer.hidden = false;
+      navBackdrop.hidden = false;
+      navBackdrop.removeAttribute('aria-hidden');
+      navTrigger.setAttribute('aria-expanded', 'true');
+      navTrigger.setAttribute('aria-label', 'Close navigation');
+      document.documentElement.classList.add('mobile-nav-open');
+      requestAnimationFrame(() => {
+        navDrawer.classList.add('is-open');
+        navBackdrop.classList.add('is-open');
+        navCloseButton.focus();
       });
+      document.addEventListener('keydown', handleKeydown);
     }
 
-    function open() {
-      previouslyFocused = document.activeElement as HTMLElement | null;
-      trigger!.setAttribute('aria-expanded', 'true');
-      trigger!.setAttribute('aria-label', 'Close menu');
-      drawer!.hidden = false;
-      backdrop!.hidden = false;
-      backdrop!.removeAttribute('aria-hidden');
-      document.documentElement.style.overflow = 'hidden';
-      // Force reflow for transition
-      void drawer!.offsetWidth;
-      drawer!.classList.add('is-open');
-      closeBtn!.focus();
-      document.addEventListener('keydown', onKeydown);
+    function finishClose() {
+      navDrawer.hidden = true;
+      navBackdrop.hidden = true;
+      navBackdrop.setAttribute('aria-hidden', 'true');
     }
 
-    function close() {
-      trigger!.setAttribute('aria-expanded', 'false');
-      trigger!.setAttribute('aria-label', 'Open menu');
-      drawer!.classList.remove('is-open');
-      backdrop!.hidden = true;
-      backdrop!.setAttribute('aria-hidden', 'true');
-      document.documentElement.style.overflow = '';
-      document.removeEventListener('keydown', onKeydown);
-      // Delay hiding for transition (except reduced-motion)
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const delay = reduced ? 0 : 240;
-      window.setTimeout(function () {
-        if (trigger!.getAttribute('aria-expanded') === 'false') {
-          drawer!.hidden = true;
-        }
-      }, delay);
-      if (previouslyFocused && previouslyFocused.focus) {
-        previouslyFocused.focus();
-      } else {
-        trigger!.focus();
-      }
+    function closeNavigation({ restoreFocus = true } = {}) {
+      navDrawer.classList.remove('is-open');
+      navBackdrop.classList.remove('is-open');
+      navTrigger.setAttribute('aria-expanded', 'false');
+      navTrigger.setAttribute('aria-label', 'Open navigation');
+      document.documentElement.classList.remove('mobile-nav-open');
+      document.removeEventListener('keydown', handleKeydown);
+      hideTimer = window.setTimeout(finishClose, reducedMotion() ? 0 : 220);
+      if (restoreFocus) (previousFocus ?? navTrigger).focus();
     }
 
-    function onKeydown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        close();
+    function handleKeydown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeNavigation();
         return;
       }
-      if (e.key !== 'Tab') return;
-      const focusable = getFocusable();
-      if (focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-      if (e.shiftKey) {
-        if (active === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (active === last) {
-          e.preventDefault();
-          first.focus();
-        }
+      if (event.key !== 'Tab') return;
+
+      const focusable = focusableElements();
+      const first = focusable.at(0);
+      const last = focusable.at(-1);
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     }
 
-    trigger!.addEventListener('click', function () {
-      const expanded = trigger!.getAttribute('aria-expanded') === 'true';
-      if (expanded) close();
-      else open();
+    navTrigger.addEventListener('click', () => {
+      if (navTrigger.getAttribute('aria-expanded') === 'true') closeNavigation();
+      else openNavigation();
+    });
+    navCloseButton.addEventListener('click', () => closeNavigation());
+    navBackdrop.addEventListener('click', () => closeNavigation());
+    navDrawer.addEventListener('click', (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a') : null;
+      if (link?.getAttribute('href')?.startsWith('/')) closeNavigation({ restoreFocus: false });
     });
 
-    closeBtn!.addEventListener('click', close);
-    backdrop!.addEventListener('click', close);
-
-    drawer!.addEventListener('click', function (e) {
-      const target = e.target as HTMLElement;
-      const link = target.closest('a');
-      if (link && link.getAttribute('href')?.startsWith('/')) {
-        close();
-      }
+    window.matchMedia('(min-width: 860px)').addEventListener('change', (event) => {
+      if (event.matches && navTrigger.getAttribute('aria-expanded') === 'true')
+        closeNavigation({ restoreFocus: false });
     });
-  })();
+  }
+
+  document.querySelectorAll('[data-mobile-nav]').forEach(initializeMobileNavigation);
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('[data-mobile-nav]').forEach(initializeMobileNavigation);
+  });
 </script>
 
 <style>
-  :root {
-    --mobile-color-bg: var(--color-bg, #fffdf9);
-    --mobile-color-text: var(--color-text, #181512);
-    --mobile-color-muted: var(--color-muted, #4a4a4a);
-    --mobile-color-border: var(--color-border, #d5c2c6);
-    --mobile-color-accent: var(--color-accent, #b85c38);
-    --mobile-color-paper: var(--color-paper, #f7f0e6);
-    --mobile-color-focus: var(--color-focus, #005fcc);
-  }
-
   .mobile-nav {
-    border-bottom: 1px solid var(--mobile-color-border);
-    background: var(--mobile-color-bg);
+    display: block;
   }
 
-  .mobile-nav__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    gap: 1rem;
-  }
-
-  .mobile-nav__brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    text-decoration: none;
-    color: var(--mobile-color-text);
-    letter-spacing: -0.02em;
-  }
-
-  .mobile-nav__brand:focus-visible {
-    outline: 2px solid var(--mobile-color-focus);
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  .mobile-nav__mark {
-    font-size: 1.25rem;
-    line-height: 1;
+  .mobile-nav__trigger,
+  .mobile-nav__close {
+    min-inline-size: var(--touch-min);
+    min-block-size: var(--touch-min);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    cursor: pointer;
   }
 
   .mobile-nav__trigger {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    min-width: 44px;
-    min-height: 44px;
-    padding: 0 0.75rem;
-    border: 1px solid var(--mobile-color-border);
-    border-radius: 8px;
-    background: var(--mobile-color-bg);
-    color: var(--mobile-color-text);
-    font-size: 0.875rem;
-    font-weight: 600;
-    cursor: pointer;
+    justify-content: center;
+    gap: var(--space-2);
+    padding-inline: var(--space-3);
+    clip-path: var(--clip-corner-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
   }
 
-  .mobile-nav__trigger:focus-visible {
-    outline: 2px solid var(--mobile-color-focus);
-    outline-offset: 2px;
+  .mobile-nav__trigger svg,
+  .mobile-nav__close svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
   }
 
-  .mobile-nav__trigger-icon {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .mobile-nav__icon-bar {
-    display: block;
-    width: 16px;
-    height: 2px;
-    background: currentColor;
-    border-radius: 1px;
+  .mobile-nav__trigger path,
+  .mobile-nav__close path {
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
   }
 
   .mobile-nav__backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(24, 21, 18, 0.45);
-    z-index: 40;
+    z-index: 70;
+    background: rgb(2 1 10 / 0.74);
+    opacity: 0;
+    transition: opacity var(--motion-duration-base) var(--motion-ease-standard);
   }
 
-  .mobile-nav__backdrop[hidden] {
+  .mobile-nav__backdrop.is-open {
+    opacity: 1;
+  }
+
+  .mobile-nav__backdrop[hidden],
+  .mobile-nav__drawer[hidden] {
     display: none;
   }
 
   .mobile-nav__drawer {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 85%;
-    max-width: 320px;
-    background: var(--mobile-color-bg);
-    border-left: 1px solid var(--mobile-color-border);
-    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
-    z-index: 50;
+    inset-block: 0;
+    inset-inline-end: 0;
+    z-index: 80;
     display: flex;
     flex-direction: column;
+    inline-size: min(88vw, 24rem);
     overflow-y: auto;
+    color: var(--color-text);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--nest-violet) 9%, transparent), transparent 28%),
+      var(--nest-midnight-900);
+    border-inline-start: 1px solid var(--color-border-strong);
+    box-shadow: -1.5rem 0 4rem rgb(0 0 0 / 0.5);
     transform: translateX(100%);
-    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .mobile-nav__drawer[hidden] {
-    display: none;
+    transition: transform var(--motion-duration-base) var(--motion-ease-emphasized);
   }
 
   .mobile-nav__drawer.is-open {
     transform: translateX(0);
   }
 
-  .mobile-nav__drawer-header {
+  .mobile-nav__drawer-head {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--mobile-color-border);
-    flex-shrink: 0;
+    gap: var(--space-4);
+    padding: var(--space-6) var(--space-5);
+    border-block-end: 1px solid var(--color-border);
   }
 
-  .mobile-nav__drawer-title {
-    font-weight: 700;
-    font-size: 0.9375rem;
+  .mobile-nav__eyebrow {
+    margin: 0 0 var(--space-1);
+    color: var(--nest-magenta);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+  }
+
+  .mobile-nav__drawer h2 {
+    margin: 0;
+    font-size: var(--text-lg);
+    letter-spacing: var(--tracking-snug);
   }
 
   .mobile-nav__close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    border: 1px solid var(--mobile-color-border);
-    border-radius: 8px;
-    background: var(--mobile-color-bg);
-    color: var(--mobile-color-text);
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  .mobile-nav__close:focus-visible {
-    outline: 2px solid var(--mobile-color-focus);
-    outline-offset: 2px;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    padding: 0;
   }
 
   .mobile-nav__list {
-    list-style: none;
+    display: grid;
+    gap: var(--space-2);
     margin: 0;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+    padding: var(--space-5);
+    list-style: none;
   }
 
   .mobile-nav__link {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    min-height: 44px;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
+    gap: var(--space-3);
+    min-block-size: var(--touch-min-large);
+    padding: var(--space-3);
+    color: var(--color-text-muted);
+    border: 1px solid transparent;
     text-decoration: none;
-    color: var(--mobile-color-text);
-    font-size: 0.9375rem;
-    font-weight: 500;
+    clip-path: var(--clip-corner-sm);
   }
 
-  .mobile-nav__link:hover {
-    background: var(--mobile-color-paper);
+  .mobile-nav__link:hover,
+  .mobile-nav__link.is-active {
+    color: var(--color-text);
+    background: var(--color-accent-subtle);
+    border-color: var(--color-border);
   }
 
-  .mobile-nav__link:focus-visible {
-    outline: 2px solid var(--mobile-color-focus);
-    outline-offset: 2px;
+  .mobile-nav__link.is-active {
+    border-inline-start-color: var(--nest-magenta);
+  }
+
+  .mobile-nav__index {
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .mobile-nav__link svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  .mobile-nav__link path {
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .mobile-nav__footer {
-    padding: 1rem;
-    border-top: 1px solid var(--mobile-color-border);
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-block-start: auto;
+    padding: var(--space-5);
+    border-block-start: 1px solid var(--color-border);
   }
 
-  .mobile-nav__cta {
+  .mobile-nav__footer a {
+    min-block-size: var(--touch-min);
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    background: var(--mobile-color-text);
-    color: var(--mobile-color-bg);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-underline-offset: 0.25em;
   }
 
-  .mobile-nav__cta:focus-visible {
-    outline: 2px solid var(--mobile-color-focus);
-    outline-offset: 2px;
+  .mobile-nav__footer a:hover {
+    color: var(--nest-cyan);
   }
 
-  .mobile-nav__social {
-    display: flex;
-    gap: 0.75rem;
-    font-size: 0.8125rem;
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
-  .mobile-nav__social a {
-    color: var(--mobile-color-muted);
-    text-decoration: none;
+  :global(html.mobile-nav-open) {
+    overflow: hidden;
   }
 
-  .mobile-nav__social a:hover {
-    color: var(--mobile-color-text);
-    text-decoration: underline;
-  }
-
-  /* Hidden on desktop (≥768px) — Header takes over */
-  @media (min-width: 768px) {
+  @media (width >= 860px) {
     .mobile-nav {
       display: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mobile-nav__drawer {
-      transition: none;
+    .mobile-nav__drawer,
+    .mobile-nav__backdrop {
+      transition-duration: var(--motion-duration-instant);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .mobile-nav__drawer,
+    .mobile-nav__link.is-active {
+      border-color: Highlight;
     }
   }
 </style>

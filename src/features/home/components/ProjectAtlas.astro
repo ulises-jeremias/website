@@ -1,0 +1,38 @@
+---
+import DigitalNestMark from '@/shared/components/DigitalNestMark.astro';
+import { atlasWorlds } from '../data/index.js';
+import AtlasConnections from './AtlasConnections.astro';
+import ProjectWorld from './ProjectWorld.astro';
+import WorldIllustration from './WorldIllustration.astro';
+
+const hubIllustration = atlasWorlds.find((world) => world.id === 'toolkit')?.illustration ?? 'capability-core';
+---
+
+<section id="project-atlas" class="project-atlas" aria-labelledby="project-atlas-title">
+  <header class="project-atlas__header">
+    <p class="project-atlas__eyebrow">Systems atlas</p>
+    <h2 id="project-atlas-title">Nine connected project worlds</h2>
+    <p>
+      Each island is a real route. Relationships come from verified cross-links — hover or focus a world to illuminate
+      its edges.
+    </p>
+  </header>
+
+  <div class="project-atlas__stage">
+    <AtlasConnections />
+
+    <div class="project-atlas__hub" aria-hidden="true">
+      <span class="project-atlas__hub-mark">
+        <DigitalNestMark />
+      </span>
+      <span class="project-atlas__hub-label">Digital Nest</span>
+      <span class="project-atlas__hub-illustration">
+        <WorldIllustration illustration={hubIllustration} />
+      </span>
+    </div>
+
+    <div class="project-atlas__worlds">
+      {atlasWorlds.map((world) => <ProjectWorld world={world} />)}
+    </div>
+  </div>
+</section>

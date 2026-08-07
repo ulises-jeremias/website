@@ -13,27 +13,29 @@ const meta = getRouteMeta('/agentic-workstation')!;
 ---
 
 <SectionLayout
+  currentPath="/agentic-workstation"
+  world="Agentic Workstation"
   title={meta.title}
   description={meta.description}
   theme="workstation"
   hero={{
-    eyebrow: 'Epic G · Agentic Workstation · 4-layer DX stack',
+    eyebrow: 'Epic G · Agentic Workstation · Personal DX graph',
     title: 'Agentic Workstation — thin machine, fat capabilities',
     description:
-      'Four-layer ecosystem: HorneroConfig desktop → Workstation machine → Toolkit capabilities → Harness runtime. Provisioning via chezmoi, health checks via dots-doctor, and why capabilities live in agent-toolkit (thin workstation verified).',
+      'Graph-like Personal DX: optional HorneroConfig desktop, Workstation machine (L1), Toolkit capabilities (L1.5), Harness runtime (L2), and project overlay (L3). Provisioning via chezmoi; capabilities live in agent-toolkit.',
   }}
 >
   <Fragment slot="hero-actions">
     <div class="ws-hero-actions">
       <ThinWorkstationBadge />
       <div class="ws-hero-cta">
-        <a href="#stack" class="ws-btn ws-btn--primary">Explore 4 layers ↓</a>
+        <a href="#stack" class="ws-btn ws-btn--primary">Explore layers ↓</a>
         <a href="#provisioning" class="ws-btn ws-btn--ghost">Provisioning &amp; doctor</a>
         <code class="ws-hero-code">chezmoi init --apply ulises-jeremias/agentic-workstation</code>
       </div>
       <nav class="ws-toc" aria-label="On this page">
         <span class="ws-toc__label">On this page</span>
-        <a href="#stack">Stack · 4 layers</a>
+        <a href="#stack">Stack · layers</a>
         <a href="#ecosystem">Ecosystem SVG</a>
         <a href="#provisioning">Provisioning</a>
         <a href="#doctor">Health checks</a>
@@ -45,19 +47,20 @@ const meta = getRouteMeta('/agentic-workstation')!;
   <div class="ws-page">
     <!-- Narrative -->
     <section class="ws-narrative" aria-labelledby="ws-narrative-title">
-      <h2 id="ws-narrative-title" class="ws-narrative__title">Four layers, one continuous system</h2>
+      <h2 id="ws-narrative-title" class="ws-narrative__title">A graph, not a forced ladder</h2>
       <p class="ws-narrative__lead">
-        The <strong>Digital Nest</strong> is built as a 4-layer DX stack. <em>Dotfiles</em> are where you type,
-        <em>machine provisioning</em> is what boots, <em>LLM policy</em> is what gates the model, and
-        <em>tooling</em> is what the agent can do. Each layer delegates — never duplicates. The workstation stays
-        <strong>thin</strong>: it ships no <code>skills/*</code>, <code>loops/*</code>, <code>mcp/*</code> — only
+        The <strong>Digital Nest</strong> Personal DX stack is graph-like. <em>HorneroConfig</em> is an optional desktop surface
+        (L0), not a required predecessor. <em>Workstation</em> provisions the machine (L1),
+        <em>agent-toolkit</em> distributes capabilities (L1.5), and the <em>harness/overlay</em> holds memory and run state
+        (L2/L3). The workstation stays <strong>thin</strong>: it ships no embedded
+        <code>skills/*</code>, <code>loops/*</code>, or <code>mcp/*</code> — only
         <code>dev-companion/runner</code>. Everything else is delegated to <code>agent-toolkit</code> via
         <code>uv tool install --force agent-toolkit-cli &amp;&amp; agent-toolkit install</code>.
       </p>
       <div class="ws-narrative__facts" role="list">
         <div class="ws-fact" role="listitem">
           <span class="ws-fact__k">Dotfiles</span><span class="ws-fact__v"
-            >HorneroConfig · Hyprland + Quickshell · 13+ rices · smart-colors</span
+            >HorneroConfig · Hyprland + Quickshell · 22 rices · smart-colors</span
           >
         </div>
         <div class="ws-fact" role="listitem">
@@ -72,7 +75,7 @@ const meta = getRouteMeta('/agentic-workstation')!;
         </div>
         <div class="ws-fact" role="listitem">
           <span class="ws-fact__k">Tooling</span><span class="ws-fact__v"
-            >agent-toolkit · 52 skills · 16 agents · 10 loops · MCP · SKILL.md catalog</span
+            >agent-toolkit · 61 skills · 16 agents · 10 loops · MCP · SKILL.md catalog</span
           >
         </div>
       </div>
@@ -134,13 +137,13 @@ const meta = getRouteMeta('/agentic-workstation')!;
           <pre
             class="ws-cta-card__code ws-cta-card__code--highlight"><code>uv tool install --force agent-toolkit-cli &amp;&amp; agent-toolkit install</code></pre>
           <p class="ws-cta-card__desc">
-            52 skills · 16 agents · 10 loops · 6 MCP · plugins. Delegated via toolkit — no AUR/pipx fallback.
+            61 skills · 16 agents · 10 loops · MCP · plugins. Delegated via toolkit — no AUR/pipx fallback.
           </p>
           <a
             href="https://github.com/ulises-jeremias/agent-toolkit"
             target="_blank"
             rel="noreferrer"
-            class="ws-cta-card__link">agent-toolkit → 52+ skills ↗</a
+            class="ws-cta-card__link">agent-toolkit → 61 skills ↗</a
           >
         </div>
         <div class="ws-cta-card">

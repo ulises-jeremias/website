@@ -6,12 +6,16 @@
 [data-theme='workstation'] {
   --theme-accent: #1e5a8a;
   --theme-accent-strong: #16446a;
-  --theme-accent-light: #38bdf8;
-  --theme-accent-subtle: color-mix(in srgb, #1e5a8a 8%, var(--color-warm-paper));
-  --theme-border-accent: color-mix(in srgb, #1e5a8a 18%, var(--color-sand));
-  --theme-surface-tint: color-mix(in srgb, #1e5a8a 4%, var(--color-warm-paper));
+  --theme-accent-light: #236f9e;
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 8%, var(--color-warm-paper));
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 4%, var(--color-warm-paper));
   --theme-accent-secondary: #a78bfa;
   --theme-accent-tertiary: #84cc16;
+  --world-accent: var(--nest-cyan);
+  --world-accent-strong: var(--nest-cyan);
+  --world-accent-secondary: var(--nest-violet);
+  --world-accent-tertiary: var(--nest-blue);
   --theme-violet: #a78bfa;
   --theme-lime: #84cc16;
   --theme-midnight: #0f1a2e;

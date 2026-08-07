@@ -1,0 +1,76 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<svg class:list={['digital-nest-mark', className]} viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+  <circle class="digital-nest-mark__orbit digital-nest-mark__orbit--outer" cx="32" cy="30" r="21"></circle>
+  <path class="digital-nest-mark__orbit" d="M12 29c8-8 17-12 28-12 5 0 9 1 13 3"></path>
+  <path class="digital-nest-mark__orbit digital-nest-mark__orbit--reverse" d="M13 38c7 5 14 7 23 7 7 0 12-1 17-4"
+  ></path>
+  <path class="digital-nest-mark__strand digital-nest-mark__strand--magenta" d="M12 31c7 0 11-4 20-4s13 4 20 4"></path>
+  <path class="digital-nest-mark__strand digital-nest-mark__strand--cyan" d="M16 38c5 0 9-3 16-3s11 3 16 3"></path>
+  <path class="digital-nest-mark__strand digital-nest-mark__strand--pink" d="M22 45c3 0 5-2 10-2s7 2 10 2"></path>
+  <circle class="digital-nest-mark__core" cx="32" cy="19" r="5"></circle>
+  <path class="digital-nest-mark__spark digital-nest-mark__spark--left" d="M24 14 17 8"></path>
+  <path class="digital-nest-mark__spark digital-nest-mark__spark--right" d="m40 14 7-6"></path>
+</svg>
+
+<style>
+  .digital-nest-mark {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+  }
+
+  .digital-nest-mark__orbit,
+  .digital-nest-mark__strand,
+  .digital-nest-mark__spark,
+  .digital-nest-mark__core {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .digital-nest-mark__orbit {
+    stroke: color-mix(in srgb, var(--nest-violet) 62%, transparent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .digital-nest-mark__orbit--outer {
+    stroke-dasharray: 2 5;
+  }
+
+  .digital-nest-mark__orbit--reverse {
+    stroke: color-mix(in srgb, var(--nest-cyan) 52%, transparent);
+  }
+
+  .digital-nest-mark__strand,
+  .digital-nest-mark__spark {
+    stroke-width: 2.4;
+    stroke-linecap: round;
+  }
+
+  .digital-nest-mark__strand--magenta,
+  .digital-nest-mark__spark--left {
+    stroke: var(--nest-magenta);
+  }
+
+  .digital-nest-mark__strand--cyan,
+  .digital-nest-mark__spark--right {
+    stroke: var(--nest-cyan);
+  }
+
+  .digital-nest-mark__strand--pink {
+    stroke: var(--nest-pink);
+  }
+
+  .digital-nest-mark__core {
+    fill: var(--nest-midnight-950);
+    stroke: var(--nest-cyan);
+    stroke-width: 2;
+  }
+</style>

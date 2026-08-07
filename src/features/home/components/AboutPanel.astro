@@ -1,0 +1,39 @@
+---
+import { profile } from '@/data/profile.js';
+import DigitalNestMark from '@/shared/components/DigitalNestMark.astro';
+---
+
+<section class="about-panel" aria-labelledby="about-panel-title">
+  <div class="about-panel__mark" aria-hidden="true">
+    <DigitalNestMark />
+  </div>
+
+  <div class="about-panel__body">
+    <p class="about-panel__eyebrow">About</p>
+    <h2 id="about-panel-title">{profile.displayName}</h2>
+    <p class="about-panel__bio">{profile.bio}</p>
+    <ul class="about-panel__roles">
+      {
+        profile.roles.map((role) => (
+          <li>
+            <strong>{role.label}</strong>
+            {role.organization && (
+              <>
+                {' '}
+                <span aria-hidden="true">·</span>{' '}
+                {role.href ? (
+                  <a href={role.href} target="_blank" rel="noopener noreferrer">
+                    {role.organization}
+                  </a>
+                ) : (
+                  <span>{role.organization}</span>
+                )}
+              </>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="about-panel__fun">{profile.funFact}</p>
+  </div>
+</section>

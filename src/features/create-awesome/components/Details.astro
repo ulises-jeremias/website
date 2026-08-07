@@ -95,25 +95,34 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
     margin: var(--space-8) 0;
     display: grid;
     gap: var(--space-8);
+    max-width: 100%;
+    min-width: 0;
+  }
+  .ca-block {
+    max-width: 100%;
+    min-width: 0;
   }
   .ca-block h2 {
     font-size: 1.3rem;
     margin-bottom: var(--space-2);
   }
   .ca-muted {
-    color: var(--color-muted);
+    color: var(--color-text-muted);
     font-size: 0.9rem;
   }
   .ca-examples {
     display: grid;
     gap: var(--space-3);
+    max-width: 100%;
+    min-width: 0;
   }
   @media (min-width: 800px) {
     .ca-examples {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .ca-example {
+    min-width: 0;
     padding: var(--space-3);
     border: 1px solid var(--color-border);
     border-radius: 10px;
@@ -137,24 +146,34 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
   .ca-example pre {
     margin: var(--space-2) 0 0;
     padding: var(--space-2);
-    background: var(--color-ink, #181512);
-    color: #f8fafc;
+    background: var(--nest-midnight-950);
+    color: var(--nest-paper);
     border-radius: 8px;
     font-size: 0.75rem;
     overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   .ca-channels {
     display: grid;
     gap: 0.5rem;
     padding-left: 1.1rem;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .ca-channels li {
+    overflow-wrap: anywhere;
   }
   .ca-channels li code {
     font-size: 0.8rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
   .ca-table-wrap {
     overflow-x: auto;
     border: 1px solid var(--color-border);
     border-radius: 10px;
+    max-width: 100%;
   }
   .ca-table {
     width: 100%;

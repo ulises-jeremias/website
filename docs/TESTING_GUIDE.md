@@ -66,12 +66,12 @@ Guidelines:
 
 ## Future: E2E
 
-When personal site needs E2E (forms, islands), add Playwright:
+Visual and shell smoke coverage lives under `tests/visual/` and runs with Playwright:
 
 ```sh
-pnpm add -D @playwright/test
-npx playwright init
-# add .github/workflows/e2e.yml similar to tests.yml
+pnpm build
+pnpm test:visual:update   # write baselines
+pnpm test:visual          # compare against baselines
 ```
 
-Document E2E in this file when added.
+Config: `playwright.config.ts` (Chromium, dark scheme, reduced motion by default, local `astro preview` on `127.0.0.1:4321`).

@@ -1,5 +1,6 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes.js';
 import {
   DotfilesNarrative,
   LayersDiagram,
@@ -9,57 +10,43 @@ import {
 } from '@/features/dotfiles';
 import '@/styles/dotfiles.css';
 
-const pageTitle = 'HorneroConfig — dotfiles framework · ulises-jeremias';
-const pageDescription =
-  'HorneroConfig: framework de dotfiles Hyprland + Quickshell + Kitty + Zsh + chezmoi. Smart Colors, 13 rices, 100+ scripts dots-*. Instalacion en un comando. Plum #191114 / pink #FFB0CA.';
+const meta = getRouteMeta('/dotfiles')!;
+const pageTitle = meta.title;
+const pageDescription = meta.description;
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<SectionLayout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/dotfiles"
+  world="HorneroConfig"
+  theme="dotfiles"
+>
   <div class="dotfiles-page">
-    <a href="#contenido" class="dotfiles-skip">Saltar al contenido</a>
-
     <header class="dotfiles-hero" role="banner">
-      <nav class="dotfiles-hero__nav" aria-label="Navegacion principal">
-        <a href="/" class="dotfiles-hero__brand" aria-label="Back to home">
-          <span class="dotfiles-hero__brand-mark" aria-hidden="true">◉</span>
-          <span>ulises-jeremias</span>
-        </a>
-        <div class="dotfiles-hero__nav-links">
-          <a href="/" class="dotfiles-hero__nav-link">Inicio</a>
-          <a href="/blog" class="dotfiles-hero__nav-link">Blog</a>
-          <a
-            href="https://github.com/ulises-jeremias/dotfiles"
-            class="dotfiles-hero__nav-link dotfiles-hero__nav-link--external"
-            target="_blank"
-            rel="noreferrer">dotfiles ↗</a
-          >
-        </div>
-      </nav>
-
       <div class="dotfiles-hero__main">
         <div class="dotfiles-hero__copy">
-          <p class="dotfiles-hero__eyebrow">Epic F · HorneroConfig · dotfiles framework</p>
+          <p class="dotfiles-hero__eyebrow">HorneroConfig · Personal DX desktop</p>
           <h1 class="dotfiles-hero__title">
             <span class="dotfiles-hero__title-accent">Hornero</span>Config
           </h1>
           <p class="dotfiles-hero__subtitle">
             The framework that builds your digital nest. <strong>Hyprland + Quickshell + Kitty + Zsh</strong> orchestrated
-            by
-            <strong>chezmoi</strong> y <strong>100+ scripts dots-*</strong>. Smart Colors adapta cada pixel de tu
-            wallpaper a todo el escritorio.
+            by <strong>chezmoi</strong> and <strong>~46 dots-*</strong> scripts. Smart Colors maps wallpaper → palette → scheme
+            → apps with <strong>python-materialyoucolor</strong>.
           </p>
 
-          <div class="dotfiles-hero__badges" role="list" aria-label="Badges del proyecto">
+          <div class="dotfiles-hero__badges" role="list" aria-label="Project facts">
             <span class="dotfiles-hero__badge" role="listitem">MIT · 2019-2025</span>
-            <span class="dotfiles-hero__badge" role="listitem">13 rices</span>
-            <span class="dotfiles-hero__badge" role="listitem">Quickshell · Material 3</span>
+            <span class="dotfiles-hero__badge" role="listitem">22 rices</span>
+            <span class="dotfiles-hero__badge" role="listitem">config.json · no apply.sh</span>
             <span class="dotfiles-hero__badge dotfiles-hero__badge--plum" role="listitem"
               >plum #191114 · pink #FFB0CA</span
             >
           </div>
 
           <div class="dotfiles-hero__actions">
-            <a href="#galeria" class="dotfiles-hero__cta dotfiles-hero__cta--primary">Ver galeria</a>
+            <a href="#galeria" class="dotfiles-hero__cta dotfiles-hero__cta--primary">View gallery</a>
             <a href="#smart-colors" class="dotfiles-hero__cta dotfiles-hero__cta--secondary">Smart Colors →</a>
             <a
               href="https://github.com/ulises-jeremias/dotfiles/wiki"
@@ -69,13 +56,14 @@ const pageDescription =
             >
           </div>
 
-          <div class="dotfiles-hero__install" role="region" aria-label="Instalacion rapida">
-            <p class="dotfiles-hero__install-label">Instalacion en un comando</p>
+          <div class="dotfiles-hero__install" role="region" aria-label="Quick install">
+            <p class="dotfiles-hero__install-label">One-command install</p>
             <pre
               class="dotfiles-hero__install-code"><code>sh -c "$(curl -fsSL https://github.com/ulises-jeremias/dotfiles/blob/main/scripts/install_dotfiles.sh?raw=true)"</code></pre>
             <div class="dotfiles-hero__install-alts">
               <code>yay -S dots-stable</code>
               <code>chezmoi init --apply ulises-jeremias</code>
+              <code>dots appearance</code>
             </div>
           </div>
         </div>
@@ -84,7 +72,7 @@ const pageDescription =
           <div class="dotfiles-hero__card">
             <div class="dotfiles-hero__card-bar">
               <span></span><span></span><span></span>
-              <span class="dotfiles-hero__card-title">dots rice apply flowers</span>
+              <span class="dotfiles-hero__card-title">dots appearance · flowers</span>
             </div>
             <div class="dotfiles-hero__card-body">
               <div class="dotfiles-hero__mini-grid">
@@ -94,19 +82,19 @@ const pageDescription =
                 <span style="background:#191114; border:1px solid rgba(255,176,202,0.3)"></span>
               </div>
               <p class="dotfiles-hero__card-text">
-                Rice aplicado · scheme.json regenerado · Hyprland borders + Kitty + Quickshell sincronizados.
+                Rice via config.json · scheme.json regenerated · Hyprland borders + Kitty + Quickshell synced.
               </p>
             </div>
           </div>
           <p class="dotfiles-hero__visual-caption">
-            Identidad plum #191114 / pink #FFB0CA — usada en badges, bar y scheme.
+            Brand plum #191114 / pink #FFB0CA — badges, bar, and Material scheme.
           </p>
         </div>
       </div>
     </header>
 
     <main id="contenido" class="dotfiles-main" tabindex="-1">
-      <section class="dotfiles-section" aria-label="Narrativa">
+      <section class="dotfiles-section" aria-label="Narrative">
         <DotfilesNarrative />
       </section>
 
@@ -118,7 +106,7 @@ const pageDescription =
         <SmartColorsAnimation />
       </section>
 
-      <section id="galeria" class="dotfiles-section dotfiles-section--alt" aria-label="Galeria de screenshots">
+      <section id="gallery" class="dotfiles-section dotfiles-section--alt" aria-label="Screenshot gallery">
         <ScreenshotGallery />
       </section>
 
@@ -151,7 +139,7 @@ const pageDescription =
           </div>
 
           <div class="dotfiles-licenses__verify" role="note" aria-label="Verification result">
-            <h3 class="dotfiles-licenses__verify-title">✓ Local verification 2026-08-07</h3>
+            <h3 class="dotfiles-licenses__verify-title">Local verification 2026-08-07</h3>
             <ul class="dotfiles-licenses__verify-list">
               <li>
                 <code>website/LICENSE</code> exists — MIT Copyright (c) 2025-2026 Ulises Jeremias Cornejo Fandos — valid.
@@ -201,19 +189,6 @@ const pageDescription =
         </div>
       </section>
     </main>
-
-    <footer class="dotfiles-footer" role="contentinfo">
-      <p>
-        Hecho con <span aria-hidden="true" style="color:#FFB0CA">♥</span> por <a
-          href="https://github.com/ulises-jeremias">ulises-jeremias</a
-        > — HorneroConfig · MIT · plum
-        <code>#191114</code> · pink <code>#FFB0CA</code> — Quickshell adaptado de <a
-          href="https://github.com/caelestia-dots/shell"
-          target="_blank"
-          rel="noreferrer">caelestia-dots/shell</a
-        > (GPL-3.0).
-      </p>
-    </footer>
   </div>
 
   <style>
@@ -433,7 +408,8 @@ const pageDescription =
 
     .dotfiles-hero__install-code code {
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      white-space: nowrap;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
 
     .dotfiles-hero__install-alts {
@@ -800,4 +776,4 @@ const pageDescription =
       }
     }
   </style>
-</BaseLayout>
+</SectionLayout>

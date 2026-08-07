@@ -1,37 +1,189 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta } from '@/data/routes';
+
 const meta = getRouteMeta('/open-source')!;
+
+const evidenceRows = [
+  {
+    kind: 'owned',
+    subject: 'ulises-jeremias/rxv',
+    evidence: 'Repository ownership',
+    href: 'https://github.com/ulises-jeremias/rxv',
+  },
+  {
+    kind: 'maintained',
+    subject: 'vlang/setup-v',
+    evidence: 'Maintainer role · Action @v1.7',
+    href: 'https://github.com/vlang/setup-v',
+  },
+  {
+    kind: 'maintained',
+    subject: 'vlang/vtl',
+    evidence: 'V Tensor Library maintainer',
+    href: 'https://github.com/vlang/vtl',
+  },
+  {
+    kind: 'external',
+    subject: 'vlang/v',
+    evidence: 'Merged authored PRs (search link)',
+    href: 'https://github.com/vlang/v/pulls?q=author:ulises-jeremias+is:merged',
+  },
+  {
+    kind: 'org',
+    subject: 'Create-Node-App / Create-Python-App / Create-Vlang-App',
+    evidence: 'Organization maintainer',
+    href: 'https://github.com/Create-Node-App',
+  },
+] as const;
 ---
 
-<SectionLayout title={meta.title} description={meta.description} theme="open-source">
-  <h1>Open Source — Evidence-based contributions</h1>
-  <p>
-    Distinguishing: owned, maintained, org role, external PRs. Only evidence: <em>merged authored PRs</em> primary. No stars/forks/watching.
-  </p>
-  <div style="padding:1rem; border:1px solid var(--color-border); border-radius:8px; background:var(--color-paper);">
-    <p>
-      <strong>Pipeline:</strong> Raw GitHub evidence → Normalized → Editorial overrides → Static data → Rendered views
+<SectionLayout
+  currentPath="/open-source"
+  world="Open Source"
+  title={meta.title}
+  description={meta.description}
+  theme="open-source"
+>
+  <section class="oss" aria-labelledby="oss-title">
+    <p class="oss__eyebrow">Open Source · provenance</p>
+    <h1 id="oss-title">Evidence-driven contributions</h1>
+    <p class="oss__lede">
+      Distinguishing owned, maintained, organization, and external merged work. Primary evidence is merged authored PRs
+      and repository roles — not stars, forks, or watchers.
     </p>
-    <p style="color:var(--color-muted); font-size:0.9rem;">
-      Build-time generation, token never in browser, scheduled refresh, cache last-known-good, deduplication, bot
-      filters, private exclusion, provenance.
-    </p>
-  </div>
-  <section>
-    <h2>Timeline (example)</h2>
-    <ul>
-      <li>
-        <a href="https://github.com/vlang/v/pulls?q=author:ulises-jeremias" target="_blank" rel="noreferrer"
-          >V — merged PRs</a
-        > — validated
-      </li>
-      <li><a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">rxv — owned</a></li>
-      <li><a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">setup-v — maintained</a></li>
-    </ul>
-    <p style="color:var(--color-muted); font-size:0.9rem;">
-      Last updated: 2026-08-07. Source: GitHub GraphQL + Search, pagination, rate-limit + retry, deterministic fixtures.
-      See pipeline N.
-    </p>
+
+    <div class="oss__pipeline" role="note">
+      <p>
+        <strong>Pipeline:</strong> Raw GitHub evidence → Normalized → Editorial overrides → Static data → Rendered views
+      </p>
+      <p>
+        Build-time generation, token never in browser, scheduled refresh, cache last-known-good, deduplication, bot
+        filters, private exclusion, provenance.
+      </p>
+    </div>
+
+    <div class="oss__ledger" role="table" aria-label="Contribution evidence">
+      <div class="oss__row oss__row--head" role="row">
+        <span role="columnheader">Kind</span>
+        <span role="columnheader">Subject</span>
+        <span role="columnheader">Evidence</span>
+      </div>
+      {
+        evidenceRows.map((row) => (
+          <a class="oss__row" role="row" href={row.href} target="_blank" rel="noreferrer">
+            <span role="cell" class="oss__kind">
+              {row.kind}
+            </span>
+            <span role="cell">{row.subject}</span>
+            <span role="cell">{row.evidence}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="oss__foot">Last curated: 2026-08-07. No vanity metrics. Counts omitted unless refreshable and sourced.</p>
   </section>
 </SectionLayout>
+
+<style>
+  .oss {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .oss__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nest-sunset-orange);
+  }
+
+  .oss h1 {
+    margin: 0 0 var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .oss__lede {
+    margin: 0 0 1.25rem;
+    max-inline-size: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .oss__pipeline {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 90%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .oss__pipeline p {
+    margin: 0 0 0.45rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .oss__ledger {
+    display: grid;
+    border: 1px solid var(--color-border);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .oss__row {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1.4fr) minmax(0, 1.2fr);
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    border-block-end: 1px solid var(--color-border);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .oss__row:last-child {
+    border-block-end: 0;
+  }
+
+  .oss__row--head {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    background: color-mix(in srgb, var(--nest-violet) 8%, transparent);
+  }
+
+  .oss__row:not(.oss__row--head):hover,
+  .oss__row:not(.oss__row--head):focus-visible {
+    background: color-mix(in srgb, var(--nest-cyan) 8%, transparent);
+    outline: none;
+  }
+
+  .oss__kind {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .oss__foot {
+    margin: 1rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.82rem;
+  }
+
+  @media (width < 720px) {
+    .oss__row--head {
+      display: none;
+    }
+
+    .oss__row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

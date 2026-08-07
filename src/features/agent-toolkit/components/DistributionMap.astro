@@ -1,0 +1,194 @@
+---
+import { distributionTargets, inventoryCommit } from '../data/index.js';
+---
+
+<section class="dist-map" aria-labelledby="dist-map-title">
+  <header class="dist-map__header">
+    <p class="dist-map__eyebrow">Source → targets</p>
+    <h2 id="dist-map-title">Compile once. Land in seven native profiles.</h2>
+    <p class="dist-map__lede">
+      <code>skills/</code>, <code>agents/</code>, and <code>loops/</code> are the source of truth. Profiles under
+      <code>profiles/</code> are compiled views for each assistant — verified at {inventoryCommit}.
+    </p>
+  </header>
+
+  <div class="dist-map__diagram" role="img" aria-label="Source catalog distributing into seven tool targets">
+    <div class="dist-map__source">
+      <p class="dist-map__label">Source</p>
+      <p class="dist-map__source-title">agent-toolkit catalog</p>
+      <ul>
+        <li>skills/ · 61</li>
+        <li>agents/ · 16</li>
+        <li>loops/ · 10</li>
+        <li>packs/ · 3</li>
+        <li>plugins/ · 4</li>
+        <li>mcp/ · 6</li>
+      </ul>
+    </div>
+
+    <div class="dist-map__flow" aria-hidden="true">
+      <svg viewBox="0 0 120 220" preserveAspectRatio="none">
+        <path d="M8 110 H48" stroke="currentColor" stroke-width="2" fill="none"></path>
+        <path d="M48 24 V196" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.55"></path>
+        {
+          [24, 52, 80, 110, 140, 168, 196].map((y) => (
+            <path d={`M48 ${y} H112`} stroke="currentColor" stroke-width="1.25" fill="none" opacity="0.7" />
+          ))
+        }
+      </svg>
+    </div>
+
+    <ol class="dist-map__targets">
+      {
+        distributionTargets.map((target) => (
+          <li>
+            <span class="dist-map__target-name">{target.label}</span>
+            <span class="dist-map__target-path">{target.path}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+
+  <p class="dist-map__note">
+    Distribution is graph-like: the workstation provisions the machine; the toolkit compiles capability; overlays hold
+    memory. No skill is copied by hand into each tool.
+  </p>
+</section>
+
+<style>
+  .dist-map {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .dist-map__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .dist-map__header h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .dist-map__lede {
+    margin: 0;
+    max-inline-size: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .dist-map__lede code {
+    color: var(--nest-cyan);
+    font-size: 0.88em;
+  }
+
+  .dist-map__diagram {
+    display: grid;
+    grid-template-columns: minmax(12rem, 18rem) 5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: stretch;
+    margin-block: 1.35rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 28%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .dist-map__source {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 40%, transparent);
+    background: color-mix(in srgb, var(--nest-magenta) 8%, var(--nest-midnight-950));
+    clip-path: var(--clip-corner-md);
+  }
+
+  .dist-map__label {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--nest-magenta);
+  }
+
+  .dist-map__source-title {
+    margin: 0 0 0.75rem;
+    font-weight: 650;
+  }
+
+  .dist-map__source ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .dist-map__flow {
+    color: var(--nest-cyan);
+    display: grid;
+    place-items: center;
+  }
+
+  .dist-map__flow svg {
+    width: 100%;
+    height: 100%;
+    min-block-size: 12rem;
+  }
+
+  .dist-map__targets {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .dist-map__targets li {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-inline-start: 3px solid var(--nest-cyan);
+    background: color-mix(in srgb, var(--nest-midnight-950) 75%, transparent);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .dist-map__target-name {
+    font-weight: 650;
+    letter-spacing: 0.03em;
+  }
+
+  .dist-map__target-path {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+  }
+
+  .dist-map__note {
+    margin: 0;
+    max-inline-size: 72ch;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  @media (width < 800px) {
+    .dist-map__diagram {
+      grid-template-columns: 1fr;
+    }
+
+    .dist-map__flow {
+      display: none;
+    }
+  }
+</style>

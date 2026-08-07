@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import '../../styles/blog.css';
+import '@/styles/blog.css';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -33,10 +33,10 @@ if (hasPost) {
 }
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<SectionLayout title={pageTitle} description={pageDescription} currentPath="/blog" theme="blog" world="Blog">
   <div class="blog-page">
     <div class="blog-page__inner">
-      <nav class="blog-page__nav" aria-label="Site">
+      <nav class="blog-page__nav" aria-label="Blog">
         <a href="/blog">← Blog</a>
       </nav>
 
@@ -52,51 +52,21 @@ if (hasPost) {
                   day: 'numeric',
                 })}
               </time>
-              {post.data.updatedDate && (
-                <span>
-                  {' '}
-                  · Updated{' '}
-                  <time datetime={post.data.updatedDate.toISOString()}>
-                    {post.data.updatedDate.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </time>
-                </span>
-              )}
             </p>
-
             <div class="blog-post__content">
               <Content />
             </div>
           </article>
         ) : (
-          <section class="blog-empty" aria-labelledby="blog-empty-title">
-            <div class="blog-empty__desk" aria-hidden="true">
-              <span class="blog-empty__icon">✍️</span>
-            </div>
-            <h1 id="blog-empty-title" class="blog-empty__title">
-              Writing desk is ready
-            </h1>
-            <p class="blog-empty__text">
-              This note hasn’t been published yet. The blog collection is intentionally empty — the writing desk is
-              ready for future field notes.
+          <article>
+            <h1 class="blog-page__title">Note not found</h1>
+            <p>This note has not been published yet. The writing desk is ready for future field notes.</p>
+            <p>
+              <a href="/blog">Back to the blog index</a>
             </p>
-            <p class="blog-empty__hint">
-              Head back to the <a href="/blog">writing desk</a> or explore other worlds.
-            </p>
-            <div class="blog-empty__actions">
-              <a href="/blog" class="blog-empty__link blog-empty__link--primary">
-                ← Go to Blog
-              </a>
-              <a href="/" class="blog-empty__link">
-                Home
-              </a>
-            </div>
-          </section>
+          </article>
         )
       }
     </div>
   </div>
-</BaseLayout>
+</SectionLayout>

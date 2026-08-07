@@ -1,20 +1,27 @@
 /**
- * dotfiles.css — Dotfiles section theme (C-06)
+ * dotfiles.css — HorneroConfig world — plum / pink / peach
+ * Light route roles (--theme-*) stay legacy-compatible.
+ * Dark world roles use plum/pink brand accents.
  */
 
 [data-section='dotfiles'],
 [data-theme='dotfiles'] {
   --theme-accent: #8a4d6a;
   --theme-accent-strong: #6f3d55;
-  --theme-accent-light: #c080a0;
-  --theme-accent-subtle: color-mix(in srgb, #8a4d6a 10%, var(--color-warm-paper));
-  --theme-border-accent: color-mix(in srgb, #8a4d6a 22%, var(--color-sand));
-  --theme-surface-tint: color-mix(in srgb, #8a4d6a 5%, var(--color-warm-paper));
+  --theme-accent-light: #8a4d6a;
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 8%, var(--color-warm-paper));
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 4%, var(--color-warm-paper));
   --theme-accent-secondary: #e8a0bf;
   --theme-accent-tertiary: #f4c7a5;
+  --world-accent: var(--nest-sunset-pink);
+  --world-accent-strong: var(--nest-pink);
+  --world-accent-secondary: var(--nest-magenta);
+  --world-accent-tertiary: var(--nest-sunset-orange);
   --theme-peach: #f4c7a5;
-  --theme-pink: #e8a0bf;
-  --theme-illustration: 'dot matrix, terminal glyphs, file-tree diagrams';
-  --theme-shape: 'rounded terminal windows, folder tabs';
-  --theme-texture: 'subtle paper on light, faint grid on dark';
+  --theme-pink: #ffb0ca;
+  --theme-plum: #191114;
+  --theme-illustration: 'desktop layers, smart-color pipeline, rice previews';
+  --theme-shape: 'clipped desktop panels, terminal frames';
+  --theme-texture: 'faint plum grid and peach horizon haze';
 }

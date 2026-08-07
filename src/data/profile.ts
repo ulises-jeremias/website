@@ -72,23 +72,23 @@ const _base = profileSchema.parse({
       label: 'Solutions Architect',
       organization: 'NaNLABS',
       href: 'https://github.com/nanlabs',
-      icon: '🏢',
+      icon: 'architecture',
     },
     {
       label: 'Core Team Member',
       organization: 'V Language',
       href: 'https://github.com/vlang',
-      icon: '🦄',
+      icon: 'v-language',
     },
     {
       label: 'AUR Maintainer',
       organization: 'Arch User Repository',
       href: 'https://aur.archlinux.org/account/ulises-jeremias',
-      icon: '📦',
+      icon: 'package',
     },
     {
       label: 'Open Source Enthusiast',
-      icon: '🌱',
+      icon: 'open-source',
     },
   ],
   links: {

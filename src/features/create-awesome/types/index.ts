@@ -16,7 +16,7 @@ export interface AddonSummary {
 }
 
 export interface DistributionChannel {
-  id: 'npm' | 'aur' | 'brew' | 'docker' | 'pipx' | 'uvx';
+  id: 'npm' | 'aur' | 'brew' | 'docker' | 'pipx' | 'uvx' | 'cva-release';
   label: string;
   command: string;
   note: string;

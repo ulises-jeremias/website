@@ -13,6 +13,8 @@ const meta = getRouteMeta('/community')!;
 ---
 
 <SectionLayout
+  currentPath="/community"
+  world="Community"
   title={meta.title}
   description={meta.description}
   theme="community"
@@ -75,12 +77,12 @@ const meta = getRouteMeta('/community')!;
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: var(--color-ink, #181512);
+    color: var(--color-text);
   }
   .community-closing__lead {
     margin: 0.5rem 0 0;
     max-width: 62ch;
-    color: var(--color-text-muted, #3a352f);
+    color: var(--color-text-muted);
     line-height: 1.6;
     font-size: 1rem;
   }
@@ -96,19 +98,19 @@ const meta = getRouteMeta('/community')!;
     justify-content: center;
     min-height: 44px;
     padding: 0 1rem;
-    border-radius: 999px;
-    background: var(--color-surface, #fff);
-    border: 1px solid var(--color-border, #e9d8c3);
-    color: var(--color-ink, #181512);
+    clip-path: var(--clip-corner-sm);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
     font-weight: 700;
     font-size: 0.92rem;
     text-decoration: none;
   }
   .community-closing__cta:hover {
-    background: var(--color-paper, #f7f0e6);
+    border-color: var(--nest-cyan);
   }
   .community-closing__cta:focus-visible {
-    outline: 2px solid var(--color-focus, #181512);
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
   .community-closing__cta--discord {
@@ -124,24 +126,21 @@ const meta = getRouteMeta('/community')!;
   .community-closing__cta--ghost {
     background: transparent;
   }
-  .community-closing__cta--ghost:hover {
-    background: var(--color-paper, #f7f0e6);
-  }
   .community-closing__note {
     margin: 0.75rem 0 0;
-    color: var(--color-text-faint, #6b715e);
+    color: var(--color-text-faint);
     font-size: 0.85rem;
     line-height: 1.5;
   }
   .community-closing__note code {
     padding: 0.1rem 0.35rem;
-    border-radius: 0.35rem;
-    background: var(--color-paper, #f7f0e6);
-    border: 1px solid var(--color-border, #e9d8c3);
+    clip-path: var(--clip-corner-sm);
+    background: color-mix(in srgb, var(--nest-violet) 12%, transparent);
+    border: 1px solid var(--color-border);
     font-size: 0.85rem;
   }
   .community-closing__note a {
-    color: var(--color-link, #a14e2f);
+    color: var(--nest-cyan);
     font-weight: 600;
   }
   .sr-only {

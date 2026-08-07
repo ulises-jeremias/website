@@ -5,15 +5,15 @@ import { smartColorSteps } from '../data/index.js';
 <section class="smart-colors" aria-labelledby="smart-colors-title">
   <header class="smart-colors__header">
     <p class="smart-colors__eyebrow">Smart Colors</p>
-    <h2 id="smart-colors-title" class="smart-colors__title">Del wallpaper a tus apps en un flujo continuo</h2>
+    <h2 id="smart-colors-title" class="smart-colors__title">From wallpaper to apps in one continuous pipeline</h2>
     <p class="smart-colors__desc">
-      Cuatro etapas animadas: wallpaper → extraccion → palette → apps. Pausa, repite o ve el fallback estatico. Respeta
+      Four stages: wallpaper → extraction → palette → apps. Pause, replay, or use the static fallback. Honors
       <code>prefers-reduced-motion</code>.
     </p>
   </header>
 
-  <!-- Fallback estatico: visible por defecto, oculto cuando animacion esta activa y motion ok -->
-  <div class="smart-colors__static" role="list" aria-label="Smart Colors — vista estatica (fallback)">
+  <!-- Static fallback: visible by default; hidden when animation is active and motion is allowed -->
+  <div class="smart-colors__static" role="list" aria-label="Smart Colors — static view (fallback)">
     {
       smartColorSteps.map((step) => (
         <article class="smart-colors__static-card" role="listitem">
@@ -27,16 +27,17 @@ import { smartColorSteps } from '../data/index.js';
       ))
     }
     <p class="smart-colors__static-note">
-      ↳ Flujo completo visible sin animacion. Activa la version animada con “Ver animacion” si tu sistema lo permite.
+      ↳ Full pipeline visible without animation. Enable the animated view with “Show animation” if your system allows
+      it.
     </p>
   </div>
 
-  <!-- Animacion -->
+  <!-- Motion-enhanced pipeline -->
   <div
     class="smart-colors__animated"
     data-smart-colors
     role="region"
-    aria-label="Smart Colors — animacion interactiva"
+    aria-label="Smart Colors — interactive animation"
     aria-live="polite"
     aria-atomic="true"
   >
@@ -136,11 +137,11 @@ import { smartColorSteps } from '../data/index.js';
       </div>
 
       <p class="smart-colors__live" data-live-region aria-live="polite">
-        Paso 1 de 4: Wallpaper — Imagen curada por rice en backgrounds/
+        Step 1 of 4: Wallpaper — Image curated per rice in backgrounds/
       </p>
     </div>
 
-    <div class="smart-colors__controls" role="group" aria-label="Controles de animacion">
+    <div class="smart-colors__controls" role="group" aria-label="Animation controls">
       <button
         type="button"
         class="smart-colors__btn smart-colors__btn--primary"
@@ -148,27 +149,27 @@ import { smartColorSteps } from '../data/index.js';
         aria-controls="smart-colors-track"
         aria-pressed="false"
       >
-        <span data-toggle-label>Pausar</span>
+        <span data-toggle-label>Pause</span>
       </button>
       <button
         type="button"
         class="smart-colors__btn"
         data-action="replay"
-        aria-label="Reiniciar animacion desde el inicio">↻ Repetir</button
+        aria-label="Restart animation from the beginning">↻ Replay</button
       >
       <button
         type="button"
         class="smart-colors__btn smart-colors__btn--ghost"
         data-action="toggle-static"
-        aria-pressed="false">Ver estatico</button
+        aria-pressed="false">Show static</button
       >
       <span class="smart-colors__hint" aria-hidden="true">Teclado: Espacio pausar · R repetir</span>
     </div>
 
     <noscript>
       <p class="smart-colors__noscript">
-        Animacion requiere JavaScript. Se muestra el fallback estatico arriba. Activa JS para ver la secuencia wallpaper
-        → extraccion → palette → apps.
+        Animation requires JavaScript. The static fallback is shown above. Enable JS to see the wallpaper sequence →
+        extraccion → palette → apps.
       </p>
     </noscript>
   </div>
@@ -189,10 +190,10 @@ import { smartColorSteps } from '../data/index.js';
     const rootEl = root as HTMLElement;
 
     const labels = [
-      'Paso 1 de 4: Wallpaper — Imagen curada por rice en backgrounds/',
-      'Paso 2 de 4: Extraccion — Cuantizacion y luminancia',
-      'Paso 3 de 4: Palette — Material Design 3 scheme.json',
-      'Paso 4 de 4: Apps — Aplicacion atomica a Hyprland, Quickshell, Kitty',
+      'Step 1 of 4: Wallpaper — Image curated per rice in backgrounds/',
+      'Step 2 of 4: Extraction — Quantization and luminance',
+      'Step 3 of 4: Palette — Material Design 3 scheme.json',
+      'Step 4 of 4: Apps — Atomic apply to Hyprland, Quickshell, Kitty',
     ];
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -215,7 +216,7 @@ import { smartColorSteps } from '../data/index.js';
       if (live) live.textContent = labels[index] || labels[0];
       if (toggleBtn) {
         toggleBtn.setAttribute('aria-pressed', String(!playing));
-        if (toggleLabel) toggleLabel.textContent = playing ? 'Pausar' : 'Reanudar';
+        if (toggleLabel) toggleLabel.textContent = playing ? 'Pause' : 'Resume';
       }
       rootEl.classList.toggle('is-paused', !playing);
       rootEl.classList.toggle('is-static-alt', showStaticAlt);
@@ -271,7 +272,7 @@ import { smartColorSteps } from '../data/index.js';
           el.style.transform = 'none';
         });
         if (progressBar) progressBar.style.width = '100%';
-        if (live) live.textContent = 'Vista estatica: las 4 etapas visibles sin animacion.';
+        if (live) live.textContent = 'Static view: all 4 stages visible without animation.';
       } else {
         steps.forEach((el) => el.classList.remove('is-static-visible'));
         playing = !prefersReduced;
@@ -284,8 +285,7 @@ import { smartColorSteps } from '../data/index.js';
     // Respect reduced motion: do not autoplay, show hint
     if (prefersReduced) {
       playing = false;
-      if (live)
-        live.textContent = 'Movimiento reducido detectado: animacion pausada. Usa Reanudar si deseas reproducir.';
+      if (live) live.textContent = 'Reduced motion detected: animation paused. Use Resume if you want playback.';
     }
 
     // Init

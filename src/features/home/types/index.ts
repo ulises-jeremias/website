@@ -1,43 +1,29 @@
-export interface HomeLink {
+import type { WorldAccent, WorldIllustration } from '@/data/project-worlds.js';
+
+export type AtlasWorld = {
+  id: string;
+  number: string;
+  title: string;
+  description: string;
+  path: string;
+  theme: string;
+  accent: WorldAccent;
+  illustration: WorldIllustration;
+  relatedWorlds: string[];
+};
+
+export type NestStatusItem = {
   label: string;
-  href: string;
-  external?: boolean;
-}
+  value: string;
+  tone: 'magenta' | 'cyan' | 'violet' | 'muted';
+};
 
-export interface BuildingItem {
-  title: string;
-  description: string;
-  href: string;
-  icon: string;
-  tag?: string;
-}
+export type FeaturedProjectRow = Pick<AtlasWorld, 'id' | 'title' | 'description' | 'path' | 'accent' | 'illustration'>;
 
-export interface World {
-  title: string;
-  description: string;
-  href: string;
-  icon: string;
-  eyebrow: string;
-  tags: string[];
-}
-
-export interface Strength {
-  title: string;
-  description: string;
-  icon: string;
-  points: string[];
-}
-
-export interface Proof {
-  title: string;
-  description: string;
-  links: HomeLink[];
-  note?: string;
-}
-
-export interface ContactLink {
+export type ContactLink = {
   label: string;
   href: string;
   hint: string;
-  icon: string;
-}
+  illustration: 'github' | 'linkedin' | 'email' | 'discord';
+  external: boolean;
+};

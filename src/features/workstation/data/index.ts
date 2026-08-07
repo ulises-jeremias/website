@@ -17,16 +17,16 @@ export const workstationLayers: LayerMeta[] = [
   {
     id: 'hornero',
     index: 0,
-    label: 'L0 · DESKTOP',
+    label: 'L0 · DESKTOP (optional)',
     title: 'HorneroConfig',
     subtitle: 'desktop · dotfiles',
-    mapping: 'HorneroConfig / desktop',
+    mapping: 'HorneroConfig / desktop (optional Personal DX surface)',
     accent: '#22D3EE',
     description:
-      'Dotfiles framework named after the hornero bird. Transforms Linux desktop into a functional, beautiful workspace via Hyprland + Quickshell + smart-colors. The physical surface where code is typed.',
+      'Optional desktop surface in the Personal DX graph — not a required linear predecessor of the workstation. Transforms Linux desktop into a functional workspace via Hyprland + Quickshell + smart-colors when you want the physical nest.',
     responsibilities: [
       'Hyprland / Wayland compositor + Quickshell shell',
-      '13+ rices, smart-colors (pywal → dots/smart-colors)',
+      '22 rices, smart-colors (python-materialyoucolor → dots/smart-colors)',
       'chezmoi home/ source state (dotfiles)',
       'Theme-intelligence: light/dark, semantic mapping',
     ],
@@ -65,11 +65,11 @@ export const workstationLayers: LayerMeta[] = [
     mapping: 'Toolkit / capabilities',
     accent: '#84CC16',
     description:
-      'Sole capability distribution. agent-toolkit provides 52+ skills, 16 agents, 10 loops, 6 MCP templates and profiles via uv. Single source of truth — versioned independently from the workstation.',
+      'Sole capability distribution. agent-toolkit provides 61 skills, 16 agents, 10 loops, MCP templates and 7 profiles via uv. Single source of truth — versioned independently from the workstation.',
     responsibilities: [
-      '52 skills (9 domains) + 16 agent personas',
-      '10 loop templates + 6 tool profiles (Claude/Cursor/OpenCode…)',
-      '6 MCP templates + packs/prompts/schemas',
+      '61 skills (9 domains) + 16 agent personas',
+      '10 loop templates + 7 tool profiles (Claude/Cursor/OpenCode…)',
+      'MCP templates + packs/prompts/schemas',
       'Symlink sync via dots-skills (delegated)',
     ],
     delivers: [

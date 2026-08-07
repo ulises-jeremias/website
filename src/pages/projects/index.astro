@@ -5,6 +5,12 @@ import { getRouteMeta } from '@/data/routes';
 const meta = getRouteMeta('/projects')!;
 ---
 
-<SectionLayout title={meta.title} description={meta.description} theme="projects">
+<SectionLayout
+  currentPath="/projects"
+  world="Projects"
+  title={meta.title}
+  description={meta.description}
+  theme="projects"
+>
   <Catalog />
 </SectionLayout>

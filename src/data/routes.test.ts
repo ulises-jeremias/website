@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import * as routeModule from './routes.js';
 import {
   getCanonicalUrl,
   getCanonicalUrlForSlug,
@@ -10,6 +11,19 @@ import {
   routeMetaSchema,
   routes,
 } from './routes.js';
+
+type PrimaryNavigationItem = {
+  id: string;
+  path: string;
+  label: string;
+  isActive: boolean;
+};
+
+const getPrimaryNavigation = (
+  routeModule as unknown as {
+    getPrimaryNavigation?: (currentPath: string) => PrimaryNavigationItem[];
+  }
+).getPrimaryNavigation;
 
 describe('routes', () => {
   it('all routes validate against Zod schema', () => {
@@ -53,13 +67,42 @@ describe('routes', () => {
     expect(getRouteById('unknown')).toBeUndefined();
   });
 
-  it('getNavRoutes returns sorted primary nav', () => {
+  it('getNavRoutes returns the compact canonical header navigation', () => {
     const nav = getNavRoutes();
-    expect(nav.length).toBeGreaterThanOrEqual(9);
+    expect(nav.map((route) => route.id)).toEqual(['home', 'projects', 'blog', 'open-source', 'community']);
     for (let i = 1; i < nav.length; i++) {
-      expect((nav[i].navOrder as number) >= (nav[i - 1].navOrder as number)).toBe(true);
+      expect((nav[i].headerNavOrder as number) >= (nav[i - 1].headerNavOrder as number)).toBe(true);
     }
     expect(nav[0].path).toBe('/');
+  });
+
+  it('projects known routes into exactly one active header item', () => {
+    expect(getPrimaryNavigation).toBeTypeOf('function');
+    if (!getPrimaryNavigation) return;
+
+    const expectations = new Map([
+      ['/', 'home'],
+      ['/dotfiles', 'projects'],
+      ['/agentic-workstation', 'projects'],
+      ['/agent-toolkit/', 'projects'],
+      ['/v', 'projects'],
+      ['/create-awesome', 'projects'],
+      ['/projects', 'projects'],
+      ['/blog', 'blog'],
+      ['/blog/a-field-note', 'blog'],
+      ['/open-source', 'open-source'],
+      ['/community', 'community'],
+    ]);
+
+    for (const [path, expectedId] of expectations) {
+      const navigation = getPrimaryNavigation(path);
+      expect(
+        navigation.filter((item) => item.isActive).map((item) => item.id),
+        `active header item for ${path}`,
+      ).toEqual([expectedId]);
+    }
+
+    expect(getPrimaryNavigation('/not-found').filter((item) => item.isActive)).toEqual([]);
   });
 
   it('getNavLabel falls back to title', () => {

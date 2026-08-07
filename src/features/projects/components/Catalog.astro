@@ -4,48 +4,61 @@ import { statusLabels } from '../types/index.js';
 ---
 
 <section class="projects-hero" aria-labelledby="projects-hero-title" data-testid="projects-hero">
-  <p class="projects-hero__eyebrow">Epic M · Projects · curated catalog</p>
-  <h1 id="projects-hero-title" class="projects-hero__title">Projects — curated, not auto-scraped</h1>
+  <p class="projects-hero__eyebrow">Projects · curated ledger</p>
+  <h1 id="projects-hero-title" class="projects-hero__title">Projects — dense ledger, not giant cards</h1>
   <p class="projects-hero__lead">
-    Projects that don’t need a dedicated world. Manual curation, source + verified date, states with text (not color
-    alone) color) y tratamiento sutil para archivados.
+    Manual curation with source links and verification dates. Status uses text labels, not color alone. Stars appear
+    only when verified against GitHub (recoil-devtools: 49, 2026-08-07).
   </p>
 </section>
 
-<section class="projects-grid" aria-labelledby="projects-active-title">
+<section class="projects-ledger" aria-labelledby="projects-active-title">
   <h2 id="projects-active-title">Active &amp; maintained</h2>
-  <div class="projects-grid__list">
+  <div class="projects-ledger__table" role="table" aria-label="Active projects">
+    <div class="projects-ledger__row projects-ledger__row--head" role="row">
+      <span role="columnheader">Project</span>
+      <span role="columnheader">Kind</span>
+      <span role="columnheader">Status</span>
+      <span role="columnheader">Verified</span>
+      <span role="columnheader">Links</span>
+    </div>
     {
       activeProjects.map((p) => (
-        <article class="project-card" data-status={p.status} data-testid="project-card">
-          <header class="project-card__head">
-            <h3 class="project-card__title">{p.title}</h3>
+        <article class="projects-ledger__row" role="row" data-status={p.status} data-testid="project-row">
+          <div role="cell">
+            <h3>{p.title}</h3>
+            <p>{p.summary}</p>
+            <p class="projects-ledger__tags">
+              {p.tags.map((t) => (
+                <span>#{t}</span>
+              ))}
+              {p.stars ? <span class="projects-ledger__stars">{p.stars} stars · verified</span> : null}
+            </p>
+          </div>
+          <div role="cell">
+            <span class="projects-ledger__kind">
+              {p.kind} · {p.role}
+            </span>
+          </div>
+          <div role="cell">
             <span
-              class={`project-card__badge project-card__badge--${p.status}`}
+              class={`projects-ledger__badge projects-ledger__badge--${p.status}`}
               aria-label={`Status ${statusLabels[p.status]}`}
             >
               {statusLabels[p.status]}
             </span>
-          </header>
-          <p class="project-card__summary">{p.summary}</p>
-          <div class="project-card__meta">
-            <span class="project-card__kind">{p.kind}</span> · <span>{p.role}</span>
-            {p.stars ? <span> · {p.stars}★</span> : null}
-            <span> · verified {p.lastVerified}</span>
           </div>
-          <div class="project-card__tags">
-            {p.tags.map((t) => (
-              <span class="project-card__tag">#{t}</span>
-            ))}
+          <div role="cell">
+            <time datetime={p.lastVerified}>{p.lastVerified}</time>
           </div>
-          <div class="project-card__links">
+          <div role="cell" class="projects-ledger__links">
             {p.links.map((l) => (
               <a
                 href={l.href}
                 target={l.href.startsWith('http') ? '_blank' : undefined}
                 rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
               >
-                {l.label} →
+                {l.label}
               </a>
             ))}
           </div>
@@ -57,25 +70,31 @@ import { statusLabels } from '../types/index.js';
 
 {
   archivedProjects.length > 0 && (
-    <section class="projects-archived" aria-labelledby="projects-archived-title">
+    <section class="projects-ledger projects-ledger--archived" aria-labelledby="projects-archived-title">
       <h2 id="projects-archived-title">Archived — preserved</h2>
-      <p class="projects-archived__note">No ocultos, pero distinguido con opacidad y nota. Sin inventar claims.</p>
-      <div class="projects-grid__list projects-grid__list--archived">
+      <p class="projects-ledger__note">Not hidden — distinguished with lower emphasis. No invented claims.</p>
+      <div class="projects-ledger__table" role="table" aria-label="Archived projects">
         {archivedProjects.map((p) => (
-          <article class="project-card project-card--archived" data-status={p.status}>
-            <header class="project-card__head">
-              <h3 class="project-card__title">{p.title}</h3>
-              <span class={`project-card__badge project-card__badge--${p.status}`}>{statusLabels[p.status]}</span>
-            </header>
-            <p class="project-card__summary">{p.summary}</p>
-            {p.archivedNote ? (
-              <p class="project-card__archived-note">
-                <em>{p.archivedNote}</em>
-              </p>
-            ) : null}
-            <div class="project-card__links">
+          <article class="projects-ledger__row" role="row" data-status={p.status}>
+            <div role="cell">
+              <h3>{p.title}</h3>
+              <p>{p.summary}</p>
+              {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
+            </div>
+            <div role="cell">
+              <span class="projects-ledger__kind">
+                {p.kind} · {p.role}
+              </span>
+            </div>
+            <div role="cell">
+              <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>{statusLabels[p.status]}</span>
+            </div>
+            <div role="cell">
+              <time datetime={p.lastVerified}>{p.lastVerified}</time>
+            </div>
+            <div role="cell" class="projects-ledger__links">
               {p.links.map((l) => (
-                <a href={l.href}>{l.label} →</a>
+                <a href={l.href}>{l.label}</a>
               ))}
             </div>
           </article>
@@ -87,133 +106,179 @@ import { statusLabels } from '../types/index.js';
 
 <style>
   .projects-hero {
-    padding: var(--space-8) 0;
-    border-bottom: 1px solid var(--color-border);
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.5rem);
   }
+
   .projects-hero__eyebrow {
-    font-size: 0.8rem;
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--nest-sunset-orange);
+  }
+
+  .projects-hero__title {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .projects-hero__lead {
+    margin: 0;
+    max-inline-size: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .projects-ledger {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: 1.5rem 2.5rem;
+  }
+
+  .projects-ledger h2 {
+    margin: 0 0 0.85rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .projects-ledger__note {
+    margin: 0 0 0.85rem;
+    color: var(--color-text-faint);
+    font-size: 0.88rem;
+  }
+
+  .projects-ledger__table {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .projects-ledger__row {
+    display: grid;
+    grid-template-columns: minmax(14rem, 2.4fr) 0.9fr 0.8fr 0.7fr 0.9fr;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-block-end: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+  }
+
+  .projects-ledger__row:last-child {
+    border-block-end: 0;
+  }
+
+  .projects-ledger__row--head {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    background: color-mix(in srgb, var(--nest-violet) 8%, transparent);
+  }
+
+  .projects-ledger__row h3 {
+    margin: 0 0 0.25rem;
+    font-size: 0.98rem;
+  }
+
+  .projects-ledger__row p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.86rem;
+  }
+
+  .projects-ledger__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-block-start: 0.35rem !important;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--color-text-faint);
+  }
+
+  .projects-ledger__stars {
+    color: var(--nest-cyan);
+  }
+
+  .projects-ledger__kind {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .projects-ledger__badge {
+    display: inline-flex;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-muted);
-    margin: 0 0 var(--space-2);
   }
-  .projects-hero__title {
-    font-size: 2.2rem;
-    line-height: 1.1;
-    margin: 0 0 var(--space-2);
+
+  .projects-ledger__badge--active {
+    border-color: color-mix(in srgb, var(--nest-cyan) 50%, transparent);
+    color: var(--nest-cyan);
   }
-  .projects-hero__lead {
-    color: var(--color-muted);
-    max-width: 70ch;
-    margin: 0;
+
+  .projects-ledger__badge--maintained {
+    border-color: color-mix(in srgb, var(--nest-pink) 45%, transparent);
+    color: var(--nest-pink);
   }
-  .projects-grid {
-    margin: var(--space-8) 0;
+
+  .projects-ledger__badge--experimental {
+    border-color: color-mix(in srgb, var(--nest-sunset-orange) 45%, transparent);
+    color: var(--nest-sunset-orange);
   }
-  .projects-grid h2 {
-    font-size: 1.2rem;
-    margin-bottom: var(--space-3);
+
+  .projects-ledger__badge--archived {
+    color: var(--color-text-faint);
   }
-  .projects-grid__list {
-    display: grid;
-    gap: var(--space-3);
-  }
-  @media (min-width: 800px) {
-    .projects-grid__list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (min-width: 1200px) {
-    .projects-grid__list {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  .project-card {
-    padding: var(--space-3);
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    background: var(--color-surface);
-  }
-  .project-card--archived {
-    opacity: 0.85;
-    background: color-mix(in srgb, var(--color-surface) 80%, var(--color-border));
-  }
-  .project-card__head {
+
+  .projects-ledger__links {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-2);
-  }
-  .project-card__title {
-    font-size: 1rem;
-    margin: 0;
-  }
-  .project-card__badge {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.2rem 0.5rem;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
-  }
-  .project-card__badge--active {
-    background: #ecfdf5;
-    color: #065f46;
-    border-color: #6ee7b7;
-  }
-  .project-card__badge--maintained {
-    background: #eff6ff;
-    color: #1e40af;
-    border-color: #93c5fd;
-  }
-  .project-card__badge--experimental {
-    background: #fffbeb;
-    color: #92400e;
-    border-color: #fcd34d;
-  }
-  .project-card__badge--archived {
-    background: #f3f4f6;
-    color: #374151;
-    border-color: #d1d5db;
-  }
-  .project-card__summary {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-    margin: var(--space-2) 0;
-  }
-  .project-card__meta {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-  }
-  .project-card__tags {
-    display: flex;
-    gap: 0.4rem;
     flex-wrap: wrap;
-    margin-top: var(--space-2);
+    gap: 0.45rem;
   }
-  .project-card__tag {
-    font-size: 0.75rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: 0.15rem 0.4rem;
-    border-radius: 999px;
+
+  .projects-ledger__links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+    text-decoration: none;
   }
-  .project-card__links {
-    margin-top: var(--space-2);
-    font-size: 0.85rem;
-    display: flex;
-    gap: var(--space-2);
+
+  .projects-ledger__links a:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
   }
-  .project-card__archived-note {
-    font-size: 0.85rem;
-    color: var(--color-muted);
-    margin: var(--space-1) 0;
+
+  .projects-ledger--archived {
+    opacity: 0.82;
   }
-  .projects-archived {
-    margin-top: var(--space-8);
+
+  .projects-ledger__archived-note {
+    margin-block-start: 0.35rem !important;
+    font-style: italic;
+    color: var(--color-text-faint) !important;
   }
-  .projects-archived__note {
-    color: var(--color-muted);
-    font-size: 0.9rem;
+
+  @media (width < 900px) {
+    .projects-ledger__row--head {
+      display: none;
+    }
+
+    .projects-ledger__row {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
   }
 </style>

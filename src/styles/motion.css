@@ -1,0 +1,47 @@
+/**
+ * motion.css — Feedback, transition, and ambient motion primitives.
+ */
+
+:root {
+  --motion-duration-instant: 1ms;
+  --motion-duration-fast: 140ms;
+  --motion-duration-base: 200ms;
+  --motion-duration-slow: 320ms;
+  --motion-duration-ambient: 7s;
+  --motion-distance-ambient: 5px;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Compatibility aliases used by existing route styles. */
+  --duration-fast: var(--motion-duration-fast);
+  --duration-normal: var(--motion-duration-base);
+  --duration-slow: var(--motion-duration-slow);
+  --ease-default: var(--motion-ease-standard);
+  --ease-emphasized: var(--motion-ease-emphasized);
+  --ease-out: var(--motion-ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-fast: var(--motion-duration-instant);
+    --motion-duration-base: var(--motion-duration-instant);
+    --motion-duration-slow: var(--motion-duration-instant);
+    --motion-duration-ambient: var(--motion-duration-instant);
+    --motion-distance-ambient: 0px;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

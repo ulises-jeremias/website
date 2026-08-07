@@ -1,21 +1,28 @@
 /**
- * toolkit.css — Agent Toolkit section theme (C-06)
+ * toolkit.css — Agent Toolkit section theme
+ * Light route roles (--theme-*) stay legacy-compatible.
+ * Dark world roles (--world-*) use Synthwave Systems Atlas accents.
  */
 
 [data-section='toolkit'],
 [data-theme='toolkit'] {
   --theme-accent: #6b4a9c;
   --theme-accent-strong: #543a7d;
-  --theme-accent-light: #a78bfa;
-  --theme-accent-subtle: color-mix(in srgb, #6b4a9c 8%, var(--color-warm-paper));
-  --theme-border-accent: color-mix(in srgb, #6b4a9c 18%, var(--color-sand));
-  --theme-surface-tint: color-mix(in srgb, #6b4a9c 4%, var(--color-warm-paper));
+  --theme-accent-light: #6b4a9c;
+  --theme-accent-subtle: color-mix(in srgb, var(--theme-accent) 8%, var(--color-warm-paper));
+  --theme-border-accent: var(--theme-accent-light);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 4%, var(--color-warm-paper));
+  --theme-accent-secondary: #38bdf8;
+  --theme-accent-tertiary: #ea7a18;
+  --world-accent: var(--nest-violet);
+  --world-accent-strong: var(--nest-pink);
+  --world-accent-secondary: var(--nest-cyan);
+  --world-accent-tertiary: var(--nest-sunset-orange);
   --theme-slate: #475569;
   --theme-cyan: #38bdf8;
   --theme-orange: #ea7a18;
   --theme-green: #2e6b4a;
-  --theme-claude-orange: #d97706;
-  --theme-illustration: 'network diagrams, flow arrows, plugin cards';
-  --theme-shape: 'rounded cards with colored left borders';
-  --theme-texture: 'dotted grid, connector lines';
+  --theme-illustration: 'capability orbits, distribution fan-out, swarm pipelines';
+  --theme-shape: 'clipped technical panels, pipeline stages, role chains';
+  --theme-texture: 'connector strokes, domain ticks, shared-state rails';
 }

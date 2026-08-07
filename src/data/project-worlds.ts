@@ -21,6 +21,22 @@ export const themeIdSchema = z.enum([
 
 export type ThemeId = z.infer<typeof themeIdSchema>;
 
+export const worldAccentSchema = z.enum(['magenta', 'pink', 'violet', 'blue', 'cyan', 'orange']);
+export type WorldAccent = z.infer<typeof worldAccentSchema>;
+
+export const worldIllustrationSchema = z.enum([
+  'desktop',
+  'workstation',
+  'capability-core',
+  'computation-lab',
+  'scaffold',
+  'contributor-network',
+  'field-notes',
+  'project-ledger',
+  'source-branch',
+]);
+export type WorldIllustration = z.infer<typeof worldIllustrationSchema>;
+
 // ---------------------------------------------------------------------------
 // Project world taxonomy
 // ---------------------------------------------------------------------------
@@ -38,6 +54,8 @@ export const projectWorldSchema = z.object({
     .regex(/^\/[a-z0-9-]*(\/[a-z0-9-]+)*\/?$/, 'Must be an absolute path like /dotfiles')
     .describe('Absolute path, e.g. /dotfiles'),
   theme: themeIdSchema.describe('Theme token reference'),
+  accent: worldAccentSchema.describe('Synthwave atlas accent family'),
+  illustration: worldIllustrationSchema.describe('Original SVG environment identifier'),
   priority: z.number().int().min(0).max(100).describe('Ordering weight — lower is earlier'),
   featured: z.boolean().default(false).describe('Whether featured on homepage hero'),
   subdomain: z.string().min(1).optional().describe('Future subdomain label, e.g. dotfiles for dotfiles.ulises.dev'),
@@ -69,6 +87,8 @@ export const projectWorlds: ProjectWorld[] = [
     description: 'HorneroConfig — Hyprland, Quickshell, Smart Colors',
     path: '/dotfiles',
     theme: 'dotfiles',
+    accent: 'magenta',
+    illustration: 'desktop',
     priority: 10,
     featured: true,
     subdomain: 'dotfiles',
@@ -77,10 +97,12 @@ export const projectWorlds: ProjectWorld[] = [
   {
     id: 'workstation',
     slug: 'agentic-workstation',
-    title: 'Workstation',
-    description: 'Agentic Workstation — one command to AI-native workstation',
+    title: 'Agentic Workstation',
+    description: 'Provisioning, policy, and tooling for an AI-native developer workstation',
     path: '/agentic-workstation',
     theme: 'workstation',
+    accent: 'cyan',
+    illustration: 'workstation',
     priority: 20,
     featured: true,
     subdomain: 'workstation',
@@ -89,10 +111,12 @@ export const projectWorlds: ProjectWorld[] = [
   {
     id: 'toolkit',
     slug: 'agent-toolkit',
-    title: 'Toolkit',
-    description: 'Agent Toolkit — skills, agents, loops, swarms, Herdr/tmux',
+    title: 'Agent Toolkit',
+    description: '61 skills · 16 agents · 10 loops · 7 profiles · 6 MCP — swarm recipes included',
     path: '/agent-toolkit',
     theme: 'toolkit',
+    accent: 'violet',
+    illustration: 'capability-core',
     priority: 30,
     featured: true,
     subdomain: 'agents',
@@ -101,17 +125,19 @@ export const projectWorlds: ProjectWorld[] = [
   {
     id: 'v',
     slug: 'v',
-    title: 'V',
-    description: 'V ecosystem — V, VSL, VTL, RxV, setup-v',
+    title: 'V Ecosystem',
+    description: 'VSL, VTL, RxV, and setup-v across scientific and systems tooling',
     path: '/v',
     theme: 'v',
+    accent: 'blue',
+    illustration: 'computation-lab',
     priority: 40,
     featured: true,
     subdomain: 'v',
     relatedWorlds: ['open-source', 'community'],
     subWorlds: [
       { id: 'vsl', title: 'VSL', path: '/v#vsl', description: 'V Scientific Library' },
-      { id: 'vtl', title: 'VTL', path: '/v#vtl', description: 'V Templating Library' },
+      { id: 'vtl', title: 'VTL', path: '/v#vtl', description: 'Tensor and autograd experiments for V' },
       { id: 'rxv', title: 'RxV', path: '/v#rxv', description: 'Reactive extensions for V' },
       { id: 'setup-v', title: 'setup-v', path: '/v#setup-v', description: 'GitHub Action & installer for V' },
     ],
@@ -123,6 +149,8 @@ export const projectWorlds: ProjectWorld[] = [
     description: 'Create Awesome — Node / Python / V templates + catalog',
     path: '/create-awesome',
     theme: 'create-awesome',
+    accent: 'orange',
+    illustration: 'scaffold',
     priority: 50,
     featured: true,
     subdomain: 'create',
@@ -145,6 +173,8 @@ export const projectWorlds: ProjectWorld[] = [
     description: 'Community — Discord, contributions, shared workshop',
     path: '/community',
     theme: 'community',
+    accent: 'pink',
+    illustration: 'contributor-network',
     priority: 60,
     featured: false,
     subdomain: 'community',
@@ -157,6 +187,8 @@ export const projectWorlds: ProjectWorld[] = [
     description: 'Blog — field notes on tooling, systems, scientific computing',
     path: '/blog',
     theme: 'blog',
+    accent: 'blue',
+    illustration: 'field-notes',
     priority: 70,
     featured: false,
     subdomain: 'blog',
@@ -169,6 +201,8 @@ export const projectWorlds: ProjectWorld[] = [
     description: 'Projects — curated additional & archived projects',
     path: '/projects',
     theme: 'projects',
+    accent: 'violet',
+    illustration: 'project-ledger',
     priority: 80,
     featured: false,
     relatedWorlds: ['open-source', 'blog'],
@@ -180,6 +214,8 @@ export const projectWorlds: ProjectWorld[] = [
     description: 'Open Source — evidence-based contributions',
     path: '/open-source',
     theme: 'open-source',
+    accent: 'cyan',
+    illustration: 'source-branch',
     priority: 90,
     featured: false,
     relatedWorlds: ['projects', 'community'],

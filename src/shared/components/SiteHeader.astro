@@ -1,17 +1,8 @@
 ---
-/**
- * SiteHeader — global navigation surface across worlds (D-04).
- * - API: `currentPath` for active state (`aria-current="page"`), optional `transparent` variant.
- * - Tokens: uses CSS variables with fallbacks; integrates future C-04/C-08 tokens.
- * - A11y: <header> landmark, <nav aria-label="Primary">, keyboard focus-visible, skip-link target via main#main-content,
- *   focus trap not needed (no drawer JS); contrast via ink/paper.
- * - Responsive: desktop ≥768px shows full nav; mobile stacks and exposes toggle via <details> (no JS required),
- *   ≥44px touch targets, no layout shift, respects prefers-reduced-motion.
- * - Minimal JS: none by default; drawer via native <details>. Enhance with JS later for focus trap/ESC if needed.
- */
-
-import { getNavRoutes, getNavLabel } from '@/data/routes.js';
-import Link from './Link.astro';
+import { getPrimaryNavigation } from '@/data/routes.js';
+import { profile } from '@/data/profile.js';
+import DigitalNestMark from './DigitalNestMark.astro';
+import MobileNav from './MobileNav.astro';
 
 export interface Props {
   currentPath?: string;
@@ -20,256 +11,248 @@ export interface Props {
 }
 
 const { currentPath = '/', transparent = false, id } = Astro.props as Props;
-
-const navRoutes = getNavRoutes();
-
-function isActive(routePath: string, current: string): boolean {
-  if (routePath === '/') return current === '/' || current === '';
-  return current === routePath || current.startsWith(`${routePath}/`);
-}
+const navigation = getPrimaryNavigation(currentPath);
+const emailHref = `mailto:${profile.contact.email}`;
 ---
 
 <header id={id} class:list={['site-header', { 'site-header--transparent': transparent }]} data-testid="site-header">
   <a href="#main-content" class="site-header__skip">Skip to content</a>
+
   <div class="site-header__inner">
-    <a href="/" class="site-header__brand" aria-label="Home — Digital Nest">
-      <span class="site-header__mark" aria-hidden="true">⬢</span>
-      <span class="site-header__wordmark">Digital Nest</span>
+    <a href="/" class="site-header__brand" aria-label="Digital Nest — Ulises Jeremias, home">
+      <span class="site-header__mark">
+        <DigitalNestMark />
+      </span>
+      <span class="site-header__identity">
+        <strong>Digital Nest</strong>
+        <span>by Ulises Jeremias</span>
+      </span>
     </a>
 
-    {/* Mobile toggle via details — no JS, keyboard + SR accessible, respects reduced-motion */}
-    <details class="site-header__details">
-      <summary class="site-header__toggle" aria-label="Toggle navigation">
-        <span aria-hidden="true" class="site-header__toggle-icon">☰</span>
-        <span class="site-header__toggle-label">Menu</span>
-      </summary>
-
-      <nav aria-label="Primary" class="site-header__nav">
-        <ul class="site-header__list">
-          {
-            navRoutes.map((route) => {
-              const active = isActive(route.path, currentPath);
-              return (
-                <li class="site-header__item">
-                  <Link
-                    href={route.path}
-                    variant="nav"
-                    ariaCurrent={active ? 'page' : undefined}
-                    class:list={['site-header__link', { 'is-active': active }]}
-                  >
-                    {getNavLabel(route)}
-                  </Link>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </nav>
-    </details>
-
-    {/* Desktop nav (always visible ≥768px, hidden on mobile when details closed via CSS) */}
-    <nav aria-label="Primary" class="site-header__nav site-header__nav--desktop">
-      <ul class="site-header__list">
+    <nav class="site-header__desktop-nav" aria-label="Primary">
+      <ul>
         {
-          navRoutes.map((route) => {
-            const active = isActive(route.path, currentPath);
-            return (
-              <li class="site-header__item">
-                <Link
-                  href={route.path}
-                  variant="nav"
-                  ariaCurrent={active ? 'page' : undefined}
-                  class:list={['site-header__link', { 'is-active': active }]}
-                >
-                  {getNavLabel(route)}
-                </Link>
-              </li>
-            );
-          })
+          navigation.map((item) => (
+            <li>
+              <a
+                href={item.path}
+                class:list={['site-header__link', { 'is-active': item.isActive }]}
+                aria-current={item.isActive ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
         }
       </ul>
     </nav>
+
+    <div class="site-header__utilities">
+      <a
+        class="site-header__github"
+        href={profile.links.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Ulises Jeremias on GitHub (opens in new tab)"
+      >
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M12 2.8a9.2 9.2 0 0 0-2.9 17.9c.5.1.6-.2.6-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.6 1.1 1.6 1.1.9 1.6 2.4 1.1 2.9.9.1-.7.4-1.1.7-1.4-2.3-.3-4.7-1.1-4.7-5.1 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.3.1-2.8 0 0 .9-.3 2.9 1.1a10 10 0 0 1 5.3 0c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.4 4.8-4.7 5.1.4.3.7 1 .7 1.9v2.6c0 .3.2.6.7.5A9.2 9.2 0 0 0 12 2.8Z"
+          ></path>
+        </svg>
+      </a>
+
+      <MobileNav items={navigation} githubHref={profile.links.github} emailHref={emailHref} />
+    </div>
   </div>
 </header>
 
 <style>
   .site-header {
-    --header-bg: var(--color-paper, #fffdf9);
-    --header-fg: var(--color-ink, #181512);
-    --header-border: var(--color-border, #e9d8c3);
+    --header-bg: color-mix(in srgb, var(--nest-midnight-950) 94%, transparent);
     position: sticky;
-    top: 0;
-    z-index: 40;
+    inset-block-start: 0;
+    z-index: 60;
+    color: var(--color-text);
     background: var(--header-bg);
-    border-bottom: 1px solid var(--header-border);
-    backdrop-filter: saturate(1.1);
+    border-block-end: 1px solid var(--color-border);
+  }
+
+  @supports (backdrop-filter: blur(1rem)) {
+    .site-header {
+      backdrop-filter: blur(1rem) saturate(1.08);
+    }
   }
 
   .site-header--transparent {
-    background: color-mix(in srgb, var(--header-bg) 85%, transparent);
+    --header-bg: color-mix(in srgb, var(--nest-midnight-950) 82%, transparent);
   }
 
   .site-header__skip {
-    position: absolute;
-    left: -9999px;
-    top: 0.5rem;
-    background: var(--header-bg);
-    color: var(--header-fg);
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid var(--header-border);
-    z-index: 50;
-  }
-
-  .site-header__skip:focus {
-    left: 0.75rem;
+    position: fixed;
+    inset-block-start: var(--space-2);
+    inset-inline-start: var(--space-2);
+    z-index: 100;
+    padding: var(--space-2) var(--space-4);
+    color: var(--color-text);
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-strong);
+    clip-path: var(--clip-corner-sm);
+    transform: translateY(-180%);
+    transition: transform var(--motion-duration-fast) var(--motion-ease-out);
   }
 
   .site-header__skip:focus-visible {
-    outline: 2px solid var(--color-accent, #181512);
-    outline-offset: 2px;
+    transform: translateY(0);
   }
 
   .site-header__inner {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-    height: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: var(--space-4);
+    inline-size: min(calc(100% - 2 * var(--gutter)), var(--container-full));
+    min-block-size: 4.25rem;
+    margin-inline: auto;
   }
 
   .site-header__brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    color: var(--header-fg);
+    gap: var(--space-3);
+    min-block-size: var(--touch-min);
+    color: var(--color-text);
     text-decoration: none;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    border-radius: 0.5rem;
-  }
-
-  .site-header__brand:focus-visible {
-    outline: 2px solid var(--color-accent, #181512);
-    outline-offset: 2px;
   }
 
   .site-header__mark {
-    font-size: 1.25rem;
-    line-height: 1;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    filter: drop-shadow(0 0 0.75rem color-mix(in srgb, var(--nest-magenta) 32%, transparent));
   }
 
-  .site-header__wordmark {
-    font-size: 1.05rem;
+  .site-header__identity {
+    display: grid;
+    line-height: 1.1;
   }
 
-  .site-header__list {
-    list-style: none;
+  .site-header__identity strong {
+    font-size: var(--text-sm);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .site-header__identity span {
+    margin-block-start: 0.18rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+  }
+
+  .site-header__desktop-nav {
+    display: none;
+    margin-inline-start: auto;
+  }
+
+  .site-header__desktop-nav ul {
+    display: flex;
+    align-items: stretch;
+    gap: clamp(var(--space-2), 1.6vw, var(--space-5));
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 0.75rem;
+    list-style: none;
   }
 
   .site-header__link {
-    min-height: 44px;
+    position: relative;
     display: inline-flex;
     align-items: center;
-    padding: 0 0.5rem;
-    border-radius: 0.5rem;
+    min-block-size: var(--touch-min);
+    padding-inline: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: color var(--motion-duration-fast) var(--motion-ease-standard);
   }
 
-  .site-header__link:focus-visible {
-    outline: 2px solid var(--color-accent, #181512);
-    outline-offset: 2px;
+  .site-header__link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 50%;
+    inset-block-end: 0.2rem;
+    block-size: 2px;
+    background: linear-gradient(90deg, var(--nest-magenta), var(--nest-cyan));
+    box-shadow: 0 0 0.75rem color-mix(in srgb, var(--nest-magenta) 55%, transparent);
+    transition: inset-inline var(--motion-duration-base) var(--motion-ease-emphasized);
   }
 
+  .site-header__link:hover,
   .site-header__link.is-active {
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    color: var(--color-text);
   }
 
-  /* Mobile details toggle */
-  .site-header__details {
-    display: block;
+  .site-header__link:hover::after,
+  .site-header__link.is-active::after {
+    inset-inline: 0;
   }
 
-  .site-header__toggle {
-    list-style: none;
-    display: inline-flex;
+  .site-header__utilities {
+    display: flex;
     align-items: center;
-    gap: 0.4rem;
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0 0.75rem;
-    border: 1px solid var(--header-border);
-    border-radius: 0.75rem;
-    background: var(--header-bg);
-    color: var(--header-fg);
-    cursor: pointer;
-    font: inherit;
+    gap: var(--space-2);
   }
 
-  .site-header__toggle::-webkit-details-marker {
+  .site-header__github {
     display: none;
+    place-items: center;
+    inline-size: var(--touch-min);
+    block-size: var(--touch-min);
+    color: var(--color-text-muted);
   }
 
-  .site-header__toggle:focus-visible {
-    outline: 2px solid var(--color-accent, #181512);
-    outline-offset: 2px;
+  .site-header__github:hover {
+    color: var(--nest-cyan);
   }
 
-  .site-header__nav {
-    padding: 0.5rem 0;
+  .site-header__github svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
   }
 
-  /* Desktop: hide details nav, show desktop nav */
-  .site-header__nav--desktop {
-    display: none;
+  .site-header__github path {
+    fill: currentColor;
   }
 
-  @media (min-width: 768px) {
-    .site-header__details {
+  @media (width >= 860px) {
+    .site-header__desktop-nav,
+    .site-header__github {
+      display: grid;
+    }
+  }
+
+  @media (width < 430px) {
+    .site-header__identity span {
       display: none;
     }
 
-    .site-header__nav--desktop {
-      display: block;
-      padding: 0;
+    .site-header__mark {
+      inline-size: 2.25rem;
+      block-size: 2.25rem;
     }
-
-    .site-header__inner {
-      height: 4rem;
-      padding: 0 1.5rem;
-    }
-  }
-
-  /* When details open on mobile, show dropdown panel */
-  .site-header__details[open] .site-header__nav {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 3.5rem;
-    background: var(--header-bg);
-    border-bottom: 1px solid var(--header-border);
-    padding: 0.75rem 1rem 1rem;
-    box-shadow: 0 8px 24px rgba(24, 21, 18, 0.08);
-  }
-
-  .site-header__details[open] .site-header__list {
-    flex-direction: column;
-    gap: 0.25rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .site-header,
-    .site-header__toggle,
-    .site-header__link {
-      transition: none;
+    .site-header__skip,
+    .site-header__link,
+    .site-header__link::after {
+      transition-duration: var(--motion-duration-instant);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .site-header__link::after {
+      background: Highlight;
+      box-shadow: none;
     }
   }
 </style>
