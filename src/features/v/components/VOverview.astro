@@ -1,0 +1,283 @@
+---
+import { vSections } from '../data/index.js';
+---
+
+<section class="v-overview" aria-labelledby="v-overview-title">
+  <header class="v-overview__header">
+    <p class="v-overview__eyebrow">Digital Nest · V world</p>
+    <h2 id="v-overview-title" class="v-overview__title">Laboratorio computacional — Core Team, proof over claims</h2>
+    <p class="v-overview__lead">
+      I’m Core Team Member @ V. The site shows contributions with links to repos, commits, and reviewed PRs — not vanity counts. V is the भाषा (language); VSL, VTL, RxV, and setup-v are the tools that make it usable for science, tensors, time, and CI.
+    </p>
+    <blockquote class="v-overview__quote">“Simple enough for a Friday afternoon. Fast enough for a production pipeline.” — V ecosystem</blockquote>
+  </header>
+
+  <div class="v-overview__facts" role="list" aria-label="Quick facts">
+    <article class="v-overview__fact" role="listitem">
+      <span class="v-overview__fact-k">Core Team @ V</span>
+      <span class="v-overview__fact-v">Verified commits in <code>vlang/v</code>, <code>vsl</code>, <code>vtl</code>, <code>setup-v</code> + author of <code>ulises-jeremias/rxv</code></span>
+    </article>
+    <article class="v-overview__fact" role="listitem">
+      <span class="v-overview__fact-k">Scientific focus</span>
+      <span class="v-overview__fact-v">Pure-V BLAS/LAPACK, autograd, fractals — testable numerics over benchmarks theatre</span>
+    </article>
+    <article class="v-overview__fact" role="listitem">
+      <span class="v-overview__fact-k">Install</span>
+      <span class="v-overview__fact-v"><code>v install vsl</code> · <code>v install vtl</code> · <code>v install ulises-jeremias.rxv</code></span>
+    </article>
+  </div>
+
+  <details class="v-overview__details">
+    <summary class="v-overview__summary">How this page verifies claims (and where Veasel fits)</summary>
+    <div class="v-overview__details-body">
+      <ul class="v-overview__verify">
+        <li>Links point to <code>github.com/vlang/*</code> and <code>ulises-jeremias/rxv</code> — each card links to its repo, not to stars.</li>
+        <li>Diagrams are HTML/CSS/SVG authored here — no embedded screenshots that hide state. Reduced-motion shows static fallbacks.</li>
+        <li><strong>Veasel</strong> (V mascot) is only included if <code>vlang/v-mascot/LICENSE</code> explicitly permits it with attribution. Otherwise this site uses an original V-inspired illustration and states the ambiguity plainly.</li>
+        <li>See <code>src/data/project-worlds.ts</code> for world metadata and <code>src/data/routes.ts</code> for canonical URLs.</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="v-overview__sections" role="list" aria-label="Ecosystem sections">
+    {
+      vSections.map((s) => (
+        <article class="v-overview__section" role="listitem" data-section={s.id}>
+          <p class="v-overview__section-eyebrow">{s.eyebrow}</p>
+          <h3 class="v-overview__section-title">{s.title}</h3>
+          <p class="v-overview__section-desc">{s.description}</p>
+          <ul class="v-overview__bullets">
+            {s.bullets.map((b) => (
+              <li>{b}</li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .v-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .v-overview__header {
+    max-width: 48rem;
+  }
+
+  .v-overview__eyebrow {
+    margin: 0 0 0.3rem 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .v-overview__title {
+    margin: 0 0 0.55rem 0;
+    font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-overview__lead {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .v-overview__quote {
+    margin: 0.9rem 0 0 0;
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid var(--theme-accent, #1e5a8a);
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 6%, #f7f0e6));
+    border-radius: 0 10px 10px 0;
+    font-size: 0.92rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-overview__facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  @media (min-width: 680px) {
+    .v-overview__facts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .v-overview__fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 12px;
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+  }
+
+  .v-overview__fact-k {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .v-overview__fact-v {
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-overview__fact-v code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.05rem 0.28rem;
+  }
+
+  .v-overview__details {
+    border: 1px solid var(--color-sand, #e9d8c3);
+    border-radius: 12px;
+    background: var(--color-warm-white, #fffdf9);
+    padding: 0.1rem 0.85rem;
+  }
+
+  .v-overview__summary {
+    cursor: pointer;
+    padding: 0.75rem 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-deep-ink, #181512);
+    list-style: none;
+  }
+
+  .v-overview__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .v-overview__summary::before {
+    content: '▸';
+    display: inline-block;
+    margin-right: 0.45rem;
+    color: var(--theme-accent, #1e5a8a);
+    transition: transform 160ms ease;
+  }
+
+  .v-overview__details[open] .v-overview__summary::before {
+    transform: rotate(90deg);
+  }
+
+  .v-overview__summary:focus-visible {
+    outline: 2px solid var(--color-focus, #005fcc);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  .v-overview__details-body {
+    padding: 0 0 0.9rem 1.15rem;
+    border-top: 1px dashed var(--color-sand, #e9d8c3);
+    margin-top: 0.1rem;
+  }
+
+  .v-overview__verify {
+    margin: 0.7rem 0 0 0;
+    padding: 0 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .v-overview__verify code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.05rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .v-overview__sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (min-width: 720px) {
+    .v-overview__sections {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .v-overview__sections {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .v-overview__section {
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
+    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+  }
+
+  .v-overview__section-eyebrow {
+    margin: 0 0 0.2rem 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .v-overview__section-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.96rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .v-overview__section-desc {
+    margin: 0 0 0.55rem 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .v-overview__bullets {
+    margin: 0;
+    padding: 0 0 0 1.05rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v-overview__summary::before {
+      transition: none;
+    }
+  }
+</style>

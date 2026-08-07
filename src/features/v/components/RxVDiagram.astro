@@ -1,0 +1,419 @@
+---
+import { rxvOperatorGroups } from '../data/index.js';
+---
+
+<section class="rxv" aria-labelledby="rxv-title">
+  <header class="rxv__header">
+    <p class="rxv__eyebrow">04 · RxV</p>
+    <h2 id="rxv-title" class="rxv__title">Streams as channels, operators as threads</h2>
+    <p class="rxv__desc">
+      Create an <code>Observable[T]</code> and chain: <code>source → filter → map → merge/reduce → subscriber</code>. Each step spawns one thread, communicates via <code>chan Item[T]</code>, and forwards error + completion. Deterministic, generic, zero-deps.
+    </p>
+  </header>
+
+  <div class="rxv__grid">
+    <div class="rxv__diagram">
+      <svg
+        viewBox="0 0 720 320"
+        role="img"
+        aria-labelledby="rxvSvgTitle rxvSvgDesc"
+        xmlns="http://www.w3.org/2000/svg"
+        class="rxv__svg"
+      >
+        <title id="rxvSvgTitle">RxV — source through operators to subscriber</title>
+        <desc id="rxvSvgDesc">
+          Horizontal pipeline: source range emits 1..10, filter even, map double, merge with timer channel, reduce sum, subscriber for_each prints sum. Arrows show item flow; error and completion follow same channel. Bottom row shows thread-per-operator model via chan Item[T].
+        </desc>
+        <rect x="0" y="0" width="720" height="320" rx="14" fill="#0f2a44"></rect>
+        <rect x="0" y="0" width="720" height="18" rx="6" fill="rgba(91,155,213,0.16)" aria-hidden="true"></rect>
+        <text x="16" y="28" font-size="10" font-weight="700" letter-spacing="0.07em" fill="#8bb8e0" style="text-transform: uppercase;">pipeline · chan Item[T]</text>
+
+        <!-- source -->
+        <g tabindex="0" role="listitem" aria-label="Source — range 1 to 10 — emits integers sequentially">
+          <title>Source — rxv.range(1,10)</title>
+          <rect x="16" y="42" width="108" height="78" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.3)"></rect>
+          <rect x="16" y="42" width="108" height="4" rx="2" fill="#5b9bd5"></rect>
+          <text x="30" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">source</text>
+          <text x="30" y="78" font-size="12.5" font-weight="800" fill="#e6f0fb">range</text>
+          <text x="30" y="94" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">1 → 10</text>
+          <text x="30" y="110" font-size="9.5" fill="#8bb8e0">emits 10 items</text>
+        </g>
+
+        <!-- filter -->
+        <g tabindex="0" role="listitem" aria-label="Filter — keep even numbers only — predicate v percent 2 equals 0">
+          <title>filter — v % 2 == 0</title>
+          <rect x="152" y="42" width="108" height="78" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
+          <text x="166" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">filter</text>
+          <text x="166" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">v % 2 == 0</text>
+          <text x="166" y="96" font-size="9.5" fill="#b8d0e6">keeps 5 · drops 5</text>
+          <text x="166" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">.filter(fn)</text>
+        </g>
+
+        <g aria-hidden="true">
+          <line x1="124" y1="81" x2="152" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="155,81 149,77 149,85" fill="#5b9bd5"></polygon>
+          <rect x="130" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
+          <text x="138" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+        </g>
+
+        <!-- map -->
+        <g tabindex="0" role="listitem" aria-label="Map — double each value — free function map_ generic">
+          <title>map_ — v * 2 — free function due to V generics</title>
+          <rect x="288" y="42" width="108" height="78" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
+          <text x="302" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">map</text>
+          <text x="302" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">× 2</text>
+          <text x="302" y="96" font-size="9.5" fill="#b8d0e6">5 items → doubled</text>
+          <text x="302" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">map_[T,T](…)</text>
+        </g>
+
+        <g aria-hidden="true">
+          <line x1="260" y1="81" x2="288" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="291,81 285,77 285,85" fill="#5b9bd5"></polygon>
+          <rect x="266" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
+          <text x="274" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+        </g>
+
+        <!-- merge/reduce -->
+        <g tabindex="0" role="listitem" aria-label="Merge and reduce — sum even doubles — reduce accumulator 0">
+          <title>reduce — sum — acc 0</title>
+          <rect x="424" y="42" width="108" height="78" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.32)"></rect>
+          <rect x="424" y="42" width="108" height="4" rx="2" fill="#7cb7c9"></rect>
+          <text x="438" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">reduce</text>
+          <text x="438" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">sum</text>
+          <text x="438" y="96" font-size="9.5" fill="#b8d0e6">acc 0 → 60</text>
+          <text x="438" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">reduce_[T,U]</text>
+        </g>
+
+        <g aria-hidden="true">
+          <line x1="396" y1="81" x2="424" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="427,81 421,77 421,85" fill="#5b9bd5"></polygon>
+          <rect x="402" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
+          <text x="410" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+        </g>
+
+        <!-- subscriber -->
+        <g tabindex="0" role="listitem" aria-label="Subscriber — for_each prints Sum 60 — receives error and completion callbacks">
+          <title>Subscriber — for_each — done channel</title>
+          <rect x="560" y="42" width="144" height="78" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
+          <rect x="560" y="42" width="144" height="4" rx="2" fill="#5b9bd5"></rect>
+          <text x="574" y="60" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">subscribe</text>
+          <text x="574" y="78" font-size="11.5" font-weight="700" fill="#e6f0fb">for_each</text>
+          <text x="574" y="94" font-size="9.5" fill="#b8d0e6">prints 60 · done</text>
+          <text x="574" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">&lt;- done</text>
+        </g>
+
+        <g aria-hidden="true">
+          <line x1="532" y1="81" x2="560" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
+          <polygon points="563,81 557,77 557,85" fill="#5b9bd5"></polygon>
+          <rect x="538" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
+          <text x="546" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+        </g>
+
+        <!-- bottom thread row -->
+        <rect x="16" y="144" width="688" height="84" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(91,155,213,0.18)"></rect>
+        <text x="30" y="162" font-size="10" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">thread per operator · chan Item[T]</text>
+        <text x="30" y="178" font-size="10" fill="#b8d0e6">Each operator spawns 1 lightweight thread → reads chan[T], writes chan[T] → error/completion are Item tags → for_each blocks on done.</text>
+        <!-- thread dots -->
+        <g aria-hidden="true">
+          <rect x="30" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <circle cx="42" cy="202" r="4" fill="#5b9bd5"></circle>
+          <text x="50" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 1: source</text>
+          <rect x="164" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <circle cx="176" cy="202" r="4" fill="#5b9bd5"></circle>
+          <text x="184" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 2: filter</text>
+          <rect x="298" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <circle cx="310" cy="202" r="4" fill="#5b9bd5"></circle>
+          <text x="318" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 3: map</text>
+          <rect x="432" y="188" width="136" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <circle cx="444" cy="202" r="4" fill="#7cb7c9"></circle>
+          <text x="452" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 4: reduce</text>
+        </g>
+
+        <!-- example code line bottom -->
+        <rect x="16" y="242" width="688" height="62" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.18)"></rect>
+        <text x="30" y="262" font-size="9.5" font-weight="700" letter-spacing="0.06em" fill="#8bb8e0" style="text-transform: uppercase;">example · sum even doubles 1..10</text>
+        <text x="30" y="282" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace">range(1,10) → filter(even) → map(×2) → reduce(0, sum) → for_each(print)</text>
+        <text x="30" y="298" font-size="10" fill="#8bb8e0">Output: </text>
+        <text x="68" y="298" font-size="10" font-weight="700" fill="#5b9bd5" font-family="ui-monospace, monospace">Sum 1..10 even×2 = 60</text>
+        <text x="224" y="298" font-size="10" fill="#8bb8e0">(5 items: 4,8,12,16,20 → sum)</text>
+      </svg>
+
+      <div class="rxv__operators" role="list" aria-label="RxV operator groups">
+        {
+          rxvOperatorGroups.map((g) => (
+            <div class="rxv__group" role="listitem">
+              <span class="rxv__group-cat">{g.category}</span>
+              <span class="rxv__group-ops">{g.operators.join(' · ')}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="rxv__cards">
+      <article class="rxv__card">
+        <h3 class="rxv__card-title">Why channels?</h3>
+        <p class="rxv__card-text">V channels are typed, buffered, and cheap. RxV leans on them — no global scheduler, no hidden queue. If you know <code>go</code> or <code>spawn</code>, you know RxV.</p>
+        <ul class="rxv__list">
+          <li><code>ObservableImpl[T]</code> generic over any T</li>
+          <li>Errors as <code>Item[T]&#123; error: IError &#125;</code></li>
+          <li><code>Item[T]&#123; is_closed: true &#125;</code> for completion</li>
+        </ul>
+      </article>
+      <article class="rxv__card">
+        <h3 class="rxv__card-title">From V generics to free fns</h3>
+        <p class="rxv__card-text">V doesn’t allow generic methods with extra type params, so <code>.map</code> is <code>rxv.map_[T,U](mut obs, fn)</code>. Verbose once, clear forever — types stay explicit.</p>
+        <div class="rxv__code" role="region" aria-label="RxV snippet">
+          <pre><code><span class="rxv__c-kw">mut</span> obs := rxv.<span class="rxv__c-fn">range</span>(<span class="rxv__c-nu">1</span>, <span class="rxv__c-nu">10</span>)
+<span class="rxv__c-kw">mut</span> evens := obs.<span class="rxv__c-fn">filter</span>(fn (v <span class="rxv__c-ty">int</span>) <span class="rxv__c-ty">bool</span> &#123; <span class="rxv__c-kw">return</span> v % <span class="rxv__c-nu">2</span> == <span class="rxv__c-nu">0</span> &#125;)
+<span class="rxv__c-kw">mut</span> doubled := rxv.<span class="rxv__c-fn">map_</span>[<span class="rxv__c-ty">int</span>,<span class="rxv__c-ty">int</span>](<span class="rxv__c-kw">mut</span> evens, fn (v <span class="rxv__c-ty">int</span>) ?<span class="rxv__c-ty">int</span> &#123; <span class="rxv__c-kw">return</span> v*<span class="rxv__c-nu">2</span> &#125;)
+done := doubled.<span class="rxv__c-fn">for_each</span>(…)
+_ = &lt;-done</code></pre>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <p class="rxv__note">
+    Install: <code>v install ulises-jeremias.rxv</code> → <code>import ulises_jeremias.rxv</code>. Docs: <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">ulises-jeremias/rxv ↗</a>. Operators reference: <code>docs/OPERATORS.md</code>.
+  </p>
+</section>
+
+<style>
+  .rxv {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.15rem;
+    border-radius: 16px;
+    background: var(--color-warm-white, #fffdf9);
+    border: 1px solid var(--color-sand, #e9d8c3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .rxv__header {
+    max-width: 48rem;
+  }
+
+  .rxv__eyebrow {
+    margin: 0 0 0.25rem 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .rxv__title {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .rxv__desc {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .rxv__desc code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.82rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.08rem 0.3rem;
+  }
+
+  .rxv__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 920px) {
+    .rxv__grid {
+      grid-template-columns: 1.45fr 0.95fr;
+      align-items: start;
+    }
+  }
+
+  .rxv__diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .rxv__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+    border: 1px solid var(--color-sand, #e9d8c3);
+    overflow: hidden;
+  }
+
+  .rxv__svg g[tabindex="0"]:focus-visible {
+    outline: none;
+  }
+
+  .rxv__svg g[tabindex="0"]:focus-visible rect {
+    stroke: var(--color-focus, #005fcc) !important;
+    stroke-width: 2.2 !important;
+  }
+
+  .rxv__operators {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 560px) {
+    .rxv__operators {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .rxv__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 10px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 6%, #f7f0e6));
+    border: 1px solid var(--theme-border-accent, color-mix(in srgb, #1e5a8a 10%, #e9d8c3));
+  }
+
+  .rxv__group-cat {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--theme-accent-strong, #16446a);
+  }
+
+  .rxv__group-ops {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .rxv__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .rxv__card {
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    background: var(--theme-accent-subtle, color-mix(in srgb, #1e5a8a 4%, #fffdf9));
+    border: 1px solid var(--theme-border-accent);
+  }
+
+  .rxv__card-title {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .rxv__card-text {
+    margin: 0 0 0.6rem 0;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+  }
+
+  .rxv__card-text code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.08rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .rxv__list {
+    margin: 0;
+    padding: 0 0 0 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: var(--color-deep-ink, #181512);
+  }
+
+  .rxv__list code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.8rem;
+    background: rgba(15, 42, 68, 0.06);
+    border-radius: 5px;
+    padding: 0.08rem 0.28rem;
+    border: 1px solid rgba(15, 42, 68, 0.08);
+  }
+
+  .rxv__code {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 42, 68, 0.12);
+    background: #0f2a44;
+  }
+
+  .rxv__code pre {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    overflow-x: auto;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.74rem;
+    line-height: 1.6;
+    color: #cfe1f5;
+  }
+
+  .rxv__c-kw { color: #7cb7c9; font-weight: 600; }
+  .rxv__c-fn { color: #e6f0fb; }
+  .rxv__c-ty { color: #f4c7a5; }
+  .rxv__c-nu { color: #a8d8ea; }
+
+  .rxv__note {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--color-moss-strong, #5a5e4f);
+    border-top: 1px dashed var(--theme-border-accent);
+    padding-top: 0.7rem;
+  }
+
+  .rxv__note a {
+    color: var(--theme-accent-strong, #16446a);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .rxv__note a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .rxv__note code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    background: rgba(15, 42, 68, 0.06);
+    border: 1px solid rgba(15, 42, 68, 0.08);
+    border-radius: 6px;
+    padding: 0.08rem 0.3rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rxv__svg * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
