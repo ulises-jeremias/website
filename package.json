@@ -13,8 +13,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "format": "prettier --ignore-path .gitignore --write .",
-    "format:check": "prettier --ignore-path .gitignore --check .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:a11y": "eslint . --report-unused-disable-directives --max-warnings 0",
@@ -58,7 +58,7 @@
       "eslint --fix"
     ],
     "*": [
-      "prettier --ignore-path .gitignore --write"
+      "prettier --write"
     ]
   }
 }
