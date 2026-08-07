@@ -1,0 +1,205 @@
+---
+/**
+ * SiteFooter — global footer per B-07 (D-05).
+ * - Sitemap links from route config (verified paths only)
+ * - Verified social: GitHub, LinkedIn, Email, Discord (no invented usernames)
+ * - Contact CTA, copyright, colophon / provenance
+ * - Tokens: CSS variables with warm-paper fallbacks
+ * - A11y: <footer> landmark, headings for sections, contrast, focus-visible
+ * - Responsive: grid → stacked, no layout shift
+ */
+
+import { getNavRoutes, getNavLabel } from '@/data/routes.js';
+import Link from './Link.astro';
+
+export interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props as Props;
+
+const navRoutes = getNavRoutes();
+
+// Verified links only — no invented handles. Update when socials are confirmed.
+const socialLinks = [
+  { label: 'GitHub', href: 'https://github.com/ulises-jeremias', external: true },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ulises-jeremias', external: true },
+  { label: 'Email', href: 'mailto:ulises.jeremias@gmail.com', external: false },
+  { label: 'Discord', href: 'https://discord.gg/bR5VyATgka', external: true },
+] as const;
+
+const legalLinks = [
+  { label: 'Source', href: 'https://github.com/ulises-jeremias/website' },
+] as const;
+
+const year = new Date().getFullYear();
+---
+
+<footer id={id} class="site-footer" data-testid="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__grid">
+      <section class="site-footer__section" aria-labelledby="footer-nav-heading">
+        <h2 id="footer-nav-heading" class="site-footer__heading">Explore</h2>
+        <ul class="site-footer__list">
+          {
+            navRoutes.map((route) => (
+              <li>
+                <Link href={route.path} variant="subtle" class="site-footer__link">
+                  {getNavLabel(route)}
+                </Link>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="site-footer__section" aria-labelledby="footer-connect-heading">
+        <h2 id="footer-connect-heading" class="site-footer__heading">Connect</h2>
+        <ul class="site-footer__list">
+          {
+            socialLinks.map((link) => (
+              <li>
+                <Link
+                  href={link.href}
+                  variant="subtle"
+                  external={link.external}
+                  class="site-footer__link"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="site-footer__cta">
+          <Link href="mailto:ulises.jeremias@gmail.com" variant="default">Get in touch →</Link>
+        </p>
+      </section>
+
+      <section class="site-footer__section" aria-labelledby="footer-colophon-heading">
+        <h2 id="footer-colophon-heading" class="site-footer__heading">Colophon</h2>
+        <p class="site-footer__text">
+          Built with Astro 7 · TypeScript · pnpm. Crafted in the Digital Nest.
+        </p>
+        <ul class="site-footer__list site-footer__list--inline">
+          {
+            legalLinks.map((link) => (
+              <li>
+                <Link href={link.href} variant="subtle" external>
+                  {link.label}
+                </Link>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copy">
+        © {year} Ulises Jeremias. Content is curated; generated data shows provenance and last-updated.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    --footer-bg: var(--color-paper, #f7f0e6);
+    --footer-fg: var(--color-ink, #181512);
+    --footer-border: var(--color-border, #e9d8c3);
+    --footer-muted: var(--color-muted, #6b715e);
+    background: var(--footer-bg);
+    color: var(--footer-fg);
+    border-top: 1px solid var(--footer-border);
+    margin-top: 4rem;
+  }
+
+  .site-footer__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 2.5rem 1rem 1.5rem;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__inner {
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr 1.25fr;
+      gap: 2rem 1.5rem;
+    }
+  }
+
+  .site-footer__heading {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--footer-muted);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .site-footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .site-footer__list--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .site-footer__link {
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-footer__link:focus-visible {
+    outline: 2px solid var(--color-accent, #181512);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  .site-footer__text {
+    color: var(--footer-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .site-footer__cta {
+    margin: 1rem 0 0 0;
+  }
+
+  .site-footer__bottom {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--footer-border);
+  }
+
+  .site-footer__copy {
+    color: var(--footer-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer__link {
+      transition: none;
+    }
+  }
+</style>

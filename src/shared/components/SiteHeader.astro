@@ -1,0 +1,279 @@
+---
+/**
+ * SiteHeader — global navigation surface across worlds (D-04).
+ * - API: `currentPath` for active state (`aria-current="page"`), optional `transparent` variant.
+ * - Tokens: uses CSS variables with fallbacks; integrates future C-04/C-08 tokens.
+ * - A11y: <header> landmark, <nav aria-label="Primary">, keyboard focus-visible, skip-link target via main#main-content,
+ *   focus trap not needed (no drawer JS); contrast via ink/paper.
+ * - Responsive: desktop ≥768px shows full nav; mobile stacks and exposes toggle via <details> (no JS required),
+ *   ≥44px touch targets, no layout shift, respects prefers-reduced-motion.
+ * - Minimal JS: none by default; drawer via native <details>. Enhance with JS later for focus trap/ESC if needed.
+ */
+
+import { getNavRoutes, getNavLabel } from '@/data/routes.js';
+import Link from './Link.astro';
+
+export interface Props {
+  currentPath?: string;
+  transparent?: boolean;
+  id?: string;
+}
+
+const { currentPath = '/', transparent = false, id } = Astro.props as Props;
+
+const navRoutes = getNavRoutes();
+
+function isActive(routePath: string, current: string): boolean {
+  if (routePath === '/') return current === '/' || current === '';
+  return current === routePath || current.startsWith(`${routePath}/`);
+}
+---
+
+<header
+  id={id}
+  class:list={['site-header', { 'site-header--transparent': transparent }]}
+  data-testid="site-header"
+>
+  <a href="#main-content" class="site-header__skip">Skip to content</a>
+  <div class="site-header__inner">
+    <a href="/" class="site-header__brand" aria-label="Home — Digital Nest">
+      <span class="site-header__mark" aria-hidden="true">⬢</span>
+      <span class="site-header__wordmark">Digital Nest</span>
+    </a>
+
+    {/* Mobile toggle via details — no JS, keyboard + SR accessible, respects reduced-motion */}
+    <details class="site-header__details">
+      <summary class="site-header__toggle" aria-label="Toggle navigation">
+        <span aria-hidden="true" class="site-header__toggle-icon">☰</span>
+        <span class="site-header__toggle-label">Menu</span>
+      </summary>
+
+      <nav aria-label="Primary" class="site-header__nav">
+        <ul class="site-header__list">
+          {
+            navRoutes.map((route) => {
+              const active = isActive(route.path, currentPath);
+              return (
+                <li class="site-header__item">
+                  <Link
+                    href={route.path}
+                    variant="nav"
+                    ariaCurrent={active ? 'page' : undefined}
+                    class:list={['site-header__link', { 'is-active': active }]}
+                  >
+                    {getNavLabel(route)}
+                  </Link>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </details>
+
+    {/* Desktop nav (always visible ≥768px, hidden on mobile when details closed via CSS) */}
+    <nav aria-label="Primary" class="site-header__nav site-header__nav--desktop">
+      <ul class="site-header__list">
+        {
+          navRoutes.map((route) => {
+            const active = isActive(route.path, currentPath);
+            return (
+              <li class="site-header__item">
+                <Link
+                  href={route.path}
+                  variant="nav"
+                  ariaCurrent={active ? 'page' : undefined}
+                  class:list={['site-header__link', { 'is-active': active }]}
+                >
+                  {getNavLabel(route)}
+                </Link>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    --header-bg: var(--color-paper, #fffdf9);
+    --header-fg: var(--color-ink, #181512);
+    --header-border: var(--color-border, #e9d8c3);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    backdrop-filter: saturate(1.1);
+  }
+
+  .site-header--transparent {
+    background: color-mix(in srgb, var(--header-bg) 85%, transparent);
+  }
+
+  .site-header__skip {
+    position: absolute;
+    left: -9999px;
+    top: 0.5rem;
+    background: var(--header-bg);
+    color: var(--header-fg);
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--header-border);
+    z-index: 50;
+  }
+
+  .site-header__skip:focus {
+    left: 0.75rem;
+  }
+
+  .site-header__skip:focus-visible {
+    outline: 2px solid var(--color-accent, #181512);
+    outline-offset: 2px;
+  }
+
+  .site-header__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--header-fg);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border-radius: 0.5rem;
+  }
+
+  .site-header__brand:focus-visible {
+    outline: 2px solid var(--color-accent, #181512);
+    outline-offset: 2px;
+  }
+
+  .site-header__mark {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .site-header__wordmark {
+    font-size: 1.05rem;
+  }
+
+  .site-header__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .site-header__link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    border-radius: 0.5rem;
+  }
+
+  .site-header__link:focus-visible {
+    outline: 2px solid var(--color-accent, #181512);
+    outline-offset: 2px;
+  }
+
+  .site-header__link.is-active {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* Mobile details toggle */
+  .site-header__details {
+    display: block;
+  }
+
+  .site-header__toggle {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 0.75rem;
+    border: 1px solid var(--header-border);
+    border-radius: 0.75rem;
+    background: var(--header-bg);
+    color: var(--header-fg);
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .site-header__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-header__toggle:focus-visible {
+    outline: 2px solid var(--color-accent, #181512);
+    outline-offset: 2px;
+  }
+
+  .site-header__nav {
+    padding: 0.5rem 0;
+  }
+
+  /* Desktop: hide details nav, show desktop nav */
+  .site-header__nav--desktop {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__details {
+      display: none;
+    }
+
+    .site-header__nav--desktop {
+      display: block;
+      padding: 0;
+    }
+
+    .site-header__inner {
+      height: 4rem;
+      padding: 0 1.5rem;
+    }
+  }
+
+  /* When details open on mobile, show dropdown panel */
+  .site-header__details[open] .site-header__nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 3.5rem;
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    padding: 0.75rem 1rem 1rem;
+    box-shadow: 0 8px 24px rgba(24, 21, 18, 0.08);
+  }
+
+  .site-header__details[open] .site-header__list {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-header__toggle,
+    .site-header__link {
+      transition: none;
+    }
+  }
+</style>

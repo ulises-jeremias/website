@@ -10,6 +10,7 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 - [Project configuration](./PROJECT_CONFIGURATION.md) — Node/pnpm, Astro, TypeScript, ESLint, Prettier, content collections, env
 - [GitHub setup & CI](./GITHUB_SETUP_GUIDE.md) — actions, branch protection, Dependabot, Danger, MegaLinter
 - [Testing guide](./TESTING_GUIDE.md) — Vitest, coverage, Codecov, adding tests
+- [Design tokens](./design/tokens.md) — global palette (C-04), semantic (C-05), themes (C-06), typography (C-07), spacing/grid (C-08), a11y checklist
 
 ## Quick links in the app
 

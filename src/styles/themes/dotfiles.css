@@ -1,0 +1,20 @@
+/**
+ * dotfiles.css — Dotfiles section theme (C-06)
+ */
+
+[data-section='dotfiles'],
+[data-theme='dotfiles'] {
+  --theme-accent: #8a4d6a;
+  --theme-accent-strong: #6f3d55;
+  --theme-accent-light: #c080a0;
+  --theme-accent-subtle: color-mix(in srgb, #8a4d6a 10%, var(--color-warm-paper));
+  --theme-border-accent: color-mix(in srgb, #8a4d6a 22%, var(--color-sand));
+  --theme-surface-tint: color-mix(in srgb, #8a4d6a 5%, var(--color-warm-paper));
+  --theme-accent-secondary: #e8a0bf;
+  --theme-accent-tertiary: #f4c7a5;
+  --theme-peach: #f4c7a5;
+  --theme-pink: #e8a0bf;
+  --theme-illustration: 'dot matrix, terminal glyphs, file-tree diagrams';
+  --theme-shape: 'rounded terminal windows, folder tabs';
+  --theme-texture: 'subtle paper on light, faint grid on dark';
+}

@@ -1,0 +1,212 @@
+---
+/**
+ * SectionLayout — shared section shell (D-03).
+ * Rhythm: header → hero → content → footer.
+ * Props mirror D-03 spec: world, theme, hero, nav, metadata.
+ * - Uses route metadata + canonical helper (D-02) for SEO.
+ * - Composes SiteHeader / SiteFooter (D-04/D-05) and primitives (D-06).
+ * - A11y: landmarks <header> (via SiteHeader), <nav>, <main id="main-content">, <footer>;
+ *   hero has aria-labelledby; headings not skipped; skip-link target present.
+ * - Responsive: container max-width 72rem, fluid padding, hero stacks on mobile.
+ * - Tokens: CSS variables with fallbacks (future C tokens override).
+ */
+
+import BaseLayout from './BaseLayout.astro';
+import SiteHeader from '@/shared/components/SiteHeader.astro';
+import SiteFooter from '@/shared/components/SiteFooter.astro';
+import { getCanonicalUrl } from '@/data/routes.js';
+
+export interface HeroProps {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+  variant?: 'default' | 'compact';
+}
+
+export interface Props {
+  title: string;
+  description?: string;
+  world?: string;
+  theme?: string;
+  hero?: HeroProps;
+  currentPath?: string;
+  canonical?: string;
+  noIndex?: boolean;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  world,
+  theme,
+  hero,
+  currentPath,
+  canonical,
+  noIndex,
+  ogImage,
+} = Astro.props as Props;
+
+const canonicalUrl = canonical ?? getCanonicalUrl(currentPath ?? Astro.url.pathname);
+const themeAttr = theme ?? world ?? 'home';
+const pagePath = currentPath ?? Astro.url.pathname;
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    {world && <meta name="world" content={world} />}
+  </Fragment>
+
+  <div class="section-layout" data-world={world} data-theme={themeAttr} data-path={pagePath}>
+    <SiteHeader currentPath={pagePath} />
+
+    {
+      hero && (
+        <section
+          class:list={['section-hero', `section-hero--${hero.align ?? 'left'}`, `section-hero--${hero.variant ?? 'default'}`]}
+          aria-labelledby="hero-title"
+        >
+          <div class="section-hero__inner">
+            {hero.eyebrow && <p class="section-hero__eyebrow">{hero.eyebrow}</p>}
+            <h1 id="hero-title" class="section-hero__title">
+              {hero.title}
+            </h1>
+            {hero.description && <p class="section-hero__description">{hero.description}</p>}
+            <slot name="hero-actions" />
+          </div>
+        </section>
+      )
+    }
+
+    {/* Named slot for hero-extra (e.g., diagrams, code) without forcing h2 */}
+    <slot name="hero" />
+
+    <main id="main-content" class="section-content" tabindex="-1">
+      <div class="section-content__inner">
+        <slot />
+      </div>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<style>
+  .section-layout {
+    --content-max: 72rem;
+    --content-pad: 1rem;
+    --hero-pad-y: 3rem;
+    --hero-bg: var(--color-paper, #fffdf9);
+    --hero-fg: var(--color-ink, #181512);
+    --hero-muted: var(--color-muted, #6b715e);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg, #fffdf9);
+    color: var(--color-ink, #181512);
+  }
+
+  @media (min-width: 768px) {
+    .section-layout {
+      --content-pad: 1.5rem;
+      --hero-pad-y: 4rem;
+    }
+  }
+
+  /* Hero */
+  .section-hero {
+    background: var(--hero-bg);
+    border-bottom: 1px solid var(--color-border, #e9d8c3);
+  }
+
+  .section-hero__inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: var(--hero-pad-y) var(--content-pad);
+  }
+
+  .section-hero--center .section-hero__inner {
+    text-align: center;
+  }
+
+  .section-hero--compact .section-hero__inner {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .section-hero__eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hero-muted);
+    margin: 0 0 0.75rem 0;
+  }
+
+  .section-hero__title {
+    font-size: clamp(1.875rem, 5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--hero-fg);
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+
+  .section-hero__description {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    line-height: 1.6;
+    color: var(--hero-muted);
+    margin: 0.75rem 0 0 0;
+    max-width: 42rem;
+  }
+
+  .section-hero--center .section-hero__description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Content */
+  .section-content {
+    flex: 1;
+  }
+
+  .section-content__inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 2rem var(--content-pad) 0;
+  }
+
+  .section-content__inner > :first-child {
+    margin-top: 0;
+  }
+
+  /* Ensure main can receive focus from skip-link without outline jank */
+  .section-content:focus {
+    outline: none;
+  }
+
+  .section-content:focus-visible {
+    outline: 2px solid var(--color-accent, #181512);
+    outline-offset: -2px;
+  }
+
+  /* World/theme hooks — no hard-coded colors; override via CSS variables per-world */
+  .section-layout[data-theme='dotfiles'] {
+    --hero-bg: var(--color-paper, #f7f0e6);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-hero,
+    .section-content {
+      transition: none;
+    }
+  }
+</style>
