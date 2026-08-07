@@ -1,0 +1,71 @@
+/**
+ * themes/index.css — Section theme architecture (C-06)
+ */
+
+@import './dotfiles.css';
+@import './workstation.css';
+@import './toolkit.css';
+@import './v.css';
+@import './create-awesome.css';
+
+:root {
+  --theme-accent: var(--color-clay);
+  --theme-accent-strong: var(--color-clay-strong);
+  --theme-accent-light: var(--color-clay-light);
+  --theme-accent-subtle: var(--color-clay-muted);
+  --theme-border-accent: color-mix(in srgb, var(--theme-accent) 35%, transparent);
+  --theme-surface-tint: color-mix(in srgb, var(--theme-accent) 6%, var(--color-bg));
+  --theme-illustration: 'warm / hand-drawn / paper texture';
+  --theme-motion: var(--ease-default);
+}
+
+[data-section='dotfiles'],
+[data-theme='dotfiles'] {
+  --theme-id: 'dotfiles';
+}
+
+[data-section='workstation'],
+[data-theme='workstation'] {
+  --theme-id: 'workstation';
+}
+
+[data-section='toolkit'],
+[data-theme='toolkit'] {
+  --theme-id: 'toolkit';
+}
+
+[data-section='v'],
+[data-theme='v'] {
+  --theme-id: 'v';
+}
+
+[data-section='create-awesome'],
+[data-theme='create-awesome'] {
+  --theme-id: 'create-awesome';
+}
+
+.theme-tint {
+  background: var(--theme-surface-tint);
+  border-block: 1px solid var(--theme-border-accent);
+}
+
+.theme-accent {
+  color: var(--theme-accent-strong);
+}
+
+.theme-accent-bg {
+  background: var(--theme-accent);
+  color: var(--color-warm-white);
+}
+
+a.theme-accent {
+  color: var(--theme-accent-strong);
+}
+
+a.theme-accent:hover {
+  color: color-mix(in srgb, var(--theme-accent-strong) 85%, black);
+}
+
+[data-theme]:focus-within {
+  --color-focus: var(--theme-accent-strong);
+}

@@ -1,0 +1,37 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+const meta = getRouteMeta('/open-source')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="open-source">
+  <h1>Open Source — Evidence-based contributions</h1>
+  <p>
+    Distingue: owned, maintained, org role, external PRs. Solo evidencia: <em>merged authored PRs</em> primaria. No stars/forks/watching.
+  </p>
+  <div style="padding:1rem; border:1px solid var(--color-border); border-radius:8px; background:var(--color-paper);">
+    <p>
+      <strong>Pipeline:</strong> Raw GitHub evidence → Normalized → Editorial overrides → Static data → Rendered views
+    </p>
+    <p style="color:var(--color-muted); font-size:0.9rem;">
+      Build-time generación, token nunca en browser, scheduled refresh, cache last-known-good, deduplicación, filtros
+      bot, exclusión privada, provenance.
+    </p>
+  </div>
+  <section>
+    <h2>Timeline (ejemplo)</h2>
+    <ul>
+      <li>
+        <a href="https://github.com/vlang/v/pulls?q=author:ulises-jeremias" target="_blank" rel="noreferrer"
+          >V — PRs merged</a
+        > — validado
+      </li>
+      <li><a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">rxv — owned</a></li>
+      <li><a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">setup-v — maintained</a></li>
+    </ul>
+    <p style="color:var(--color-muted); font-size:0.9rem;">
+      Última actualización: 2026-08-07. Fuente: GitHub GraphQL + Search, paginado, rate-limit + retry, fixtures
+      determinísticos. Ver pipeline N.
+    </p>
+  </section>
+</SectionLayout>

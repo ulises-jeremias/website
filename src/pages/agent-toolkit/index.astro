@@ -1,0 +1,79 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+const meta = getRouteMeta('/agent-toolkit')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="toolkit">
+  <h1>Agent Toolkit — One source of truth → many assistants</h1>
+  <p>
+    <em>Composable AI agent capabilities for every major coding assistant.</em> 61 skills, 16 agents, 10 loops, 6 profiles.
+    Instalación: <code>uvx --from agent-toolkit-cli agent-toolkit install && agent-toolkit doctor</code>
+  </p>
+
+  <section aria-labelledby="scene1">
+    <h2 id="scene1">Escena 1 — Un catálogo, muchos asistentes</h2>
+    <p>
+      Capacidades se escriben una vez en <code>skills/</code>, <code>agents/</code>, <code>loops/</code> y se compilan al
+      formato nativo de cada herramienta:
+    </p>
+    <ul>
+      <li><strong>Claude Code</strong> — plugin marketplace</li>
+      <li><strong>Muse Code</strong> — skills</li>
+      <li><strong>OpenCode</strong> — agents</li>
+      <li><strong>Cursor</strong> — rules</li>
+      <li><strong>Copilot</strong> — instructions</li>
+      <li><strong>Windsurf</strong> — rules</li>
+      <li><strong>Pi</strong> — skills</li>
+    </ul>
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin:1rem 0;">
+      <span style="padding:0.4rem 0.8rem; background:#7C3AED; color:white; border-radius:999px;">skills 61</span>
+      <span style="padding:0.4rem 0.8rem; background:#0891B2; color:white; border-radius:999px;">agents 16</span>
+      <span style="padding:0.4rem 0.8rem; background:#EA580C; color:white; border-radius:999px;">loops 10</span>
+    </div>
+    <p style="color:var(--color-muted);">
+      No todas las herramientas reciben archivos idénticos — cada una su formato nativo.
+    </p>
+  </section>
+
+  <section aria-labelledby="scene4">
+    <h2 id="scene4">Escena 4 — Swarm orchestration</h2>
+    <pre
+      style="background:var(--color-ink); color:#E2E8F0; padding:1rem; border-radius:8px; overflow:auto;"><code>Task
+ ↓ Recipe: pair | team | full
+ ↓ Role assignments (planner, implementer, reviewer, architect, QA, human)
+ ↓ State machine → Worktrees (separados) → Handoff queue (outbox→queued→active→completed)
+ ↓ Review → Human approval → Final report</code></pre>
+    <p>
+      Herdr y tmux son <em>backends de UI</em>. Toolkit posee la semántica de orquestación. Cambia entre vistas sin
+      cambiar flujo.
+    </p>
+    <div style="display:flex; gap:1rem; margin:1rem 0;">
+      <div style="flex:1; padding:1rem; border:1px solid var(--color-border); border-radius:8px;">
+        <h3>Herdr</h3>
+        <p>Rich workspace, tabs, status, handoff actions. Recomendado local.</p>
+      </div>
+      <div style="flex:1; padding:1rem; border:1px solid var(--color-border); border-radius:8px;">
+        <h3>tmux</h3>
+        <p>Socket aislado, sesión por run, ventanas por rol. SSH/headless.</p>
+      </div>
+    </div>
+    <p>
+      <a href="https://github.com/ulises-jeremias/agent-toolkit" target="_blank" rel="noreferrer"
+        >Repositorio Toolkit →</a
+      > · <a
+        href="https://github.com/ulises-jeremias/agent-toolkit/blob/main/docs/ARCHITECTURE.md"
+        target="_blank"
+        rel="noreferrer">Arquitectura</a
+      >
+    </p>
+  </section>
+
+  <section>
+    <h2>Seguridad y presupuestos</h2>
+    <p>
+      Budgets: tokens, costo, wall-clock, concurrencia, restarts, handoffs, artifact size. Secret redaction, path
+      containment, aprobaciones humanas, push/release denegados.
+    </p>
+  </section>
+</SectionLayout>

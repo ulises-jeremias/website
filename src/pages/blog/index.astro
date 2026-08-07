@@ -1,46 +1,34 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getCollection } from 'astro:content';
-import '../../styles/blog.css';
-
+import { getRouteMeta } from '@/data/routes';
+const meta = getRouteMeta('/blog')!;
 const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
+  .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const hasPosts = posts.length > 0;
 ---
 
-<BaseLayout title="Blog — my-project" description="Sample blog powered by Astro content collections.">
-  <div class="blog-page">
-    <div class="blog-page__inner">
-      <nav class="blog-page__nav" aria-label="Site">
-        <a href="/">← Home</a>
-      </nav>
-
-      <h1 class="blog-page__title">Blog</h1>
-      <p class="blog-page__lead">
-        One sample post ships with this starter. Add Markdown files under <code>src/content/blog/</code>.
-      </p>
-
-      <ul class="blog-list">
-        {
-          posts.map((post) => (
-            <li class="blog-list__item">
-              <a href={'/blog/' + post.id} class="blog-list__link">
-                <h2 class="blog-list__post-title">{post.data.title}</h2>
-                <p class="blog-list__meta">
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {post.data.pubDate.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </time>
-                </p>
-                <p class="blog-list__description">{post.data.description}</p>
-              </a>
-            </li>
-          ))
-        }
+<SectionLayout title={meta.title} description={meta.description} theme="blog">
+  <h1>Blog — Field notes</h1>
+  {
+    hasPosts ? (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.slug}/`}>{post.data.title}</a> — {post.data.description}
+          </li>
+        ))}
       </ul>
-    </div>
-  </div>
-</BaseLayout>
+    ) : (
+      <div style="text-align:center; padding:3rem; border:1px dashed var(--color-border); border-radius:10px; background:var(--color-paper);">
+        <h2>📝 The writing desk is ready.</h2>
+        <p>The first field notes are still being prepared.</p>
+        <p style="color:var(--color-muted);">
+          No se fabrican posts de thought-leadership. El blog está listo antes de que existan posts.
+        </p>
+      </div>
+    )
+  }
+  <p style="margin-top:2rem;"><a href="/">← Volver</a></p>
+</SectionLayout>

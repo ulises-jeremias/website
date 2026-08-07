@@ -1,0 +1,805 @@
+---
+import { smartColorSteps } from '../data/index.js';
+---
+
+<section class="smart-colors" aria-labelledby="smart-colors-title">
+  <header class="smart-colors__header">
+    <p class="smart-colors__eyebrow">Smart Colors</p>
+    <h2 id="smart-colors-title" class="smart-colors__title">Del wallpaper a tus apps en un flujo continuo</h2>
+    <p class="smart-colors__desc">
+      Cuatro etapas animadas: wallpaper → extraccion → palette → apps. Pausa, repite o ve el fallback estatico. Respeta
+      <code>prefers-reduced-motion</code>.
+    </p>
+  </header>
+
+  <!-- Fallback estatico: visible por defecto, oculto cuando animacion esta activa y motion ok -->
+  <div class="smart-colors__static" role="list" aria-label="Smart Colors — vista estatica (fallback)">
+    {
+      smartColorSteps.map((step) => (
+        <article class="smart-colors__static-card" role="listitem">
+          <div class="smart-colors__static-icon" aria-hidden="true">
+            {step.icon}
+          </div>
+          <h3 class="smart-colors__static-title">{step.title}</h3>
+          <p class="smart-colors__static-desc">{step.description}</p>
+          <p class="smart-colors__static-detail">{step.detail}</p>
+        </article>
+      ))
+    }
+    <p class="smart-colors__static-note">
+      ↳ Flujo completo visible sin animacion. Activa la version animada con “Ver animacion” si tu sistema lo permite.
+    </p>
+  </div>
+
+  <!-- Animacion -->
+  <div
+    class="smart-colors__animated"
+    data-smart-colors
+    role="region"
+    aria-label="Smart Colors — animacion interactiva"
+    aria-live="polite"
+    aria-atomic="true"
+  >
+    <div class="smart-colors__stage" aria-hidden="false">
+      <ol class="smart-colors__track" role="list">
+        {
+          smartColorSteps.map((step, idx) => (
+            <li
+              class="smart-colors__step"
+              data-step={step.id}
+              data-index={String(idx)}
+              role="listitem"
+              aria-label={`${step.title}: ${step.description}`}
+            >
+              <div class="smart-colors__step-visual" aria-hidden="true">
+                {step.id === 'wallpaper' && (
+                  <div class="sc-visual sc-visual--wallpaper">
+                    <div class="sc-visual__wallpaper-grid">
+                      <span style="background: #ffb0ca" />
+                      <span style="background: #e2bdc7" />
+                      <span style="background: #7a4a5f" />
+                      <span style="background: #191114" />
+                      <span style="background: #d5c2c6" />
+                      <span style="background: #fbe7ec" />
+                    </div>
+                    <div class="sc-visual__wallpaper-label">rice: flowers · wpgtk</div>
+                  </div>
+                )}
+                {step.id === 'extraction' && (
+                  <div class="sc-visual sc-visual--extraction">
+                    <div class="sc-extract__dots">
+                      <span class="sc-extract__dot" style="background:#FFB0CA" />
+                      <span class="sc-extract__dot" style="background:#7a4a5f" />
+                      <span class="sc-extract__dot" style="background:#e2bdc7" />
+                      <span class="sc-extract__dot" style="background:#4a2d3a" />
+                      <span class="sc-extract__dot" style="background:#fbe7ec" />
+                    </div>
+                    <div class="sc-extract__scan" />
+                  </div>
+                )}
+                {step.id === 'palette' && (
+                  <div class="sc-visual sc-visual--palette">
+                    <div class="sc-palette__swatches">
+                      <span style="background:#FFB0CA" title="primary" />
+                      <span style="background:#e2bdc7" title="secondary" />
+                      <span style="background:#7a4a5f" title="tertiary" />
+                      <span style="background:#d53a3a" title="error" />
+                      <span style="background:#2d2027" title="neutral" />
+                    </div>
+                    <code class="sc-palette__label">scheme.json · M3</code>
+                  </div>
+                )}
+                {step.id === 'apps' && (
+                  <div class="sc-visual sc-visual--apps">
+                    <div class="sc-apps__mock">
+                      <div class="sc-apps__bar">Quickshell bar</div>
+                      <div class="sc-apps__row">
+                        <span class="sc-apps__win" style="border-color:#FFB0CA">
+                          Hyprland
+                        </span>
+                        <span class="sc-apps__win" style="border-color:#e2bdc7">
+                          Kitty
+                        </span>
+                        <span class="sc-apps__win" style="border-color:#7a4a5f">
+                          GTK
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div class="smart-colors__step-body">
+                <span class="smart-colors__step-index" aria-hidden="true">
+                  0{idx + 1}
+                </span>
+                <h3 class="smart-colors__step-title">
+                  <span aria-hidden="true">{step.icon} </span>
+                  {step.title}
+                </h3>
+                <p class="smart-colors__step-desc">{step.description}</p>
+                <p class="smart-colors__step-detail">{step.detail}</p>
+              </div>
+
+              {idx < smartColorSteps.length - 1 && (
+                <div class="smart-colors__connector" aria-hidden="true">
+                  <span class="smart-colors__arrow">→</span>
+                </div>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="smart-colors__progress" aria-hidden="true">
+        <div class="smart-colors__progress-bar" data-progress-bar style="width: 25%"></div>
+      </div>
+
+      <p class="smart-colors__live" data-live-region aria-live="polite">
+        Paso 1 de 4: Wallpaper — Imagen curada por rice en backgrounds/
+      </p>
+    </div>
+
+    <div class="smart-colors__controls" role="group" aria-label="Controles de animacion">
+      <button
+        type="button"
+        class="smart-colors__btn smart-colors__btn--primary"
+        data-action="toggle"
+        aria-controls="smart-colors-track"
+        aria-pressed="false"
+      >
+        <span data-toggle-label>Pausar</span>
+      </button>
+      <button
+        type="button"
+        class="smart-colors__btn"
+        data-action="replay"
+        aria-label="Reiniciar animacion desde el inicio">↻ Repetir</button
+      >
+      <button
+        type="button"
+        class="smart-colors__btn smart-colors__btn--ghost"
+        data-action="toggle-static"
+        aria-pressed="false">Ver estatico</button
+      >
+      <span class="smart-colors__hint" aria-hidden="true">Teclado: Espacio pausar · R repetir</span>
+    </div>
+
+    <noscript>
+      <p class="smart-colors__noscript">
+        Animacion requiere JavaScript. Se muestra el fallback estatico arriba. Activa JS para ver la secuencia wallpaper
+        → extraccion → palette → apps.
+      </p>
+    </noscript>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.querySelector('[data-smart-colors]') as HTMLElement | null;
+    if (!root) return;
+
+    const steps = Array.from(root.querySelectorAll('[data-step]')) as HTMLElement[];
+    const progressBar = root.querySelector('[data-progress-bar]') as HTMLElement | null;
+    const live = root.querySelector('[data-live-region]') as HTMLElement | null;
+    const toggleBtn = root.querySelector('[data-action="toggle"]') as HTMLButtonElement | null;
+    const replayBtn = root.querySelector('[data-action="replay"]') as HTMLButtonElement | null;
+    const staticBtn = root.querySelector('[data-action="toggle-static"]') as HTMLButtonElement | null;
+    const toggleLabel = root.querySelector('[data-toggle-label]') as HTMLElement | null;
+    const rootEl = root as HTMLElement;
+
+    const labels = [
+      'Paso 1 de 4: Wallpaper — Imagen curada por rice en backgrounds/',
+      'Paso 2 de 4: Extraccion — Cuantizacion y luminancia',
+      'Paso 3 de 4: Palette — Material Design 3 scheme.json',
+      'Paso 4 de 4: Apps — Aplicacion atomica a Hyprland, Quickshell, Kitty',
+    ];
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let playing = !prefersReduced;
+    let timer: number | null = null;
+    let showStaticAlt = false;
+
+    function render() {
+      steps.forEach((el, i) => {
+        const isActive = i === index;
+        el.classList.toggle('is-active', isActive);
+        el.setAttribute('aria-current', isActive ? 'step' : 'false');
+        el.style.opacity = isActive ? '1' : '0.52';
+        el.style.transform = isActive ? 'scale(1)' : 'scale(0.98)';
+      });
+      if (progressBar) {
+        progressBar.style.width = `${((index + 1) / steps.length) * 100}%`;
+      }
+      if (live) live.textContent = labels[index] || labels[0];
+      if (toggleBtn) {
+        toggleBtn.setAttribute('aria-pressed', String(!playing));
+        if (toggleLabel) toggleLabel.textContent = playing ? 'Pausar' : 'Reanudar';
+      }
+      rootEl.classList.toggle('is-paused', !playing);
+      rootEl.classList.toggle('is-static-alt', showStaticAlt);
+    }
+
+    function next() {
+      index = (index + 1) % steps.length;
+      render();
+    }
+
+    function play() {
+      if (timer) window.clearInterval(timer);
+      if (!playing) return;
+      timer = window.setInterval(next, 2200);
+    }
+
+    function pause() {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function toggle() {
+      playing = !playing;
+      if (playing) play();
+      else pause();
+      render();
+    }
+
+    function replay() {
+      index = 0;
+      playing = true;
+      showStaticAlt = false;
+      if (staticBtn) staticBtn.setAttribute('aria-pressed', 'false');
+      render();
+      pause();
+      play();
+      // focus management for a11y
+      const first = steps[0];
+      if (first) first.focus?.();
+    }
+
+    function toggleStatic() {
+      showStaticAlt = !showStaticAlt;
+      if (showStaticAlt) {
+        pause();
+        playing = false;
+        // show all steps as grid
+        steps.forEach((el) => {
+          el.classList.add('is-static-visible');
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        if (progressBar) progressBar.style.width = '100%';
+        if (live) live.textContent = 'Vista estatica: las 4 etapas visibles sin animacion.';
+      } else {
+        steps.forEach((el) => el.classList.remove('is-static-visible'));
+        playing = !prefersReduced;
+        render();
+        if (playing) play();
+      }
+      if (staticBtn) staticBtn.setAttribute('aria-pressed', String(showStaticAlt));
+    }
+
+    // Respect reduced motion: do not autoplay, show hint
+    if (prefersReduced) {
+      playing = false;
+      if (live)
+        live.textContent = 'Movimiento reducido detectado: animacion pausada. Usa Reanudar si deseas reproducir.';
+    }
+
+    // Init
+    render();
+    if (playing) play();
+
+    toggleBtn?.addEventListener('click', toggle);
+    replayBtn?.addEventListener('click', replay);
+    staticBtn?.addEventListener('click', toggleStatic);
+
+    // Keyboard shortcuts when region focused
+    rootEl.addEventListener('keydown', (e) => {
+      const ev = e;
+      if (ev.key === ' ' || ev.code === 'Space') {
+        ev.preventDefault();
+        toggle();
+      } else if (ev.key.toLowerCase() === 'r') {
+        ev.preventDefault();
+        replay();
+      }
+    });
+
+    // Make root focusable for keyboard
+    rootEl.setAttribute('tabindex', '0');
+
+    // Pause when tab hidden to save resources
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pause();
+      else if (playing) play();
+    });
+  })();
+</script>
+
+<style>
+  .smart-colors {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .smart-colors__eyebrow {
+    display: inline-flex;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 176, 202, 0.12);
+    border: 1px solid rgba(255, 176, 202, 0.26);
+    color: #ffb0ca;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.7rem;
+  }
+
+  .smart-colors__title {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.35rem, 2.8vw, 1.95rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fbe7ec;
+    line-height: 1.2;
+  }
+
+  .smart-colors__desc {
+    margin: 0 0 1rem;
+    color: #d5c2c6;
+    line-height: 1.65;
+    font-size: 0.95rem;
+    max-width: 70ch;
+  }
+
+  .smart-colors__desc code {
+    padding: 0.15rem 0.35rem;
+    border-radius: 0.35rem;
+    background: rgba(255, 176, 202, 0.14);
+    color: #ffb0ca;
+    font-size: 0.85em;
+  }
+
+  /* Static fallback */
+  .smart-colors__static {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, rgba(45, 32, 39, 0.55), rgba(25, 17, 20, 0.85));
+    border: 1px solid rgba(255, 176, 202, 0.14);
+  }
+
+  @media (min-width: 720px) {
+    .smart-colors__static {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .smart-colors__static-card {
+    padding: 0.9rem;
+    border-radius: 0.9rem;
+    background: rgba(25, 17, 20, 0.92);
+    border: 1px solid rgba(255, 176, 202, 0.16);
+    text-align: center;
+  }
+
+  .smart-colors__static-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    margin-bottom: 0.45rem;
+  }
+
+  .smart-colors__static-title {
+    margin: 0 0 0.2rem;
+    font-size: 0.98rem;
+    font-weight: 750;
+    color: #ffb0ca;
+  }
+
+  .smart-colors__static-desc {
+    margin: 0 0 0.35rem;
+    font-size: 0.84rem;
+    color: #fbe7ec;
+    font-weight: 600;
+  }
+
+  .smart-colors__static-detail {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #c9a8b2;
+    line-height: 1.5;
+  }
+
+  .smart-colors__static-note {
+    grid-column: 1 / -1;
+    margin: 0.2rem 0 0;
+    font-size: 0.78rem;
+    color: #c9a8b2;
+    text-align: center;
+  }
+
+  /* Animated container */
+  .smart-colors__animated {
+    border-radius: 1.15rem;
+    background: linear-gradient(180deg, rgba(45, 32, 39, 0.85), rgba(25, 17, 20, 0.96));
+    border: 1px solid rgba(255, 176, 202, 0.18);
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.34);
+    outline: none;
+  }
+
+  .smart-colors__animated:focus-visible {
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.34),
+      0 0 0 3px rgba(255, 176, 202, 0.45);
+  }
+
+  .smart-colors__track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 860px) {
+    .smart-colors__track {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .smart-colors__step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0.9rem;
+    border-radius: 0.95rem;
+    background: rgba(25, 17, 20, 0.9);
+    border: 1px solid rgba(255, 176, 202, 0.14);
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s ease,
+      border-color 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+
+  .smart-colors__step.is-active {
+    border-color: rgba(255, 176, 202, 0.55);
+    box-shadow: 0 6px 22px rgba(255, 176, 202, 0.18);
+    background: linear-gradient(180deg, rgba(255, 176, 202, 0.08), rgba(25, 17, 20, 0.96));
+  }
+
+  .smart-colors__step-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 999px;
+    background: #ffb0ca;
+    color: #191114;
+    font-weight: 800;
+    font-size: 0.78rem;
+  }
+
+  .smart-colors__step-title {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: #fbe7ec;
+    letter-spacing: -0.02em;
+  }
+
+  .smart-colors__step-desc {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #ffb0ca;
+    font-weight: 600;
+  }
+
+  .smart-colors__step-detail {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #c9a8b2;
+    line-height: 1.55;
+  }
+
+  .smart-colors__step-visual {
+    min-height: 88px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 176, 202, 0.06);
+    border: 1px dashed rgba(255, 176, 202, 0.18);
+    border-radius: 0.7rem;
+    padding: 0.6rem;
+  }
+
+  .sc-visual__wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 28px);
+    gap: 6px;
+  }
+
+  .sc-visual__wallpaper-grid span {
+    width: 28px;
+    height: 18px;
+    border-radius: 4px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .sc-visual__wallpaper-label,
+  .sc-palette__label {
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    color: #c9a8b2;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .sc-extract__dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sc-extract__dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: block;
+    border: 2px solid rgba(25, 17, 20, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    animation: sc-bob 1.6s ease-in-out infinite;
+  }
+
+  .sc-extract__dot:nth-child(2) {
+    animation-delay: 0.12s;
+  }
+  .sc-extract__dot:nth-child(3) {
+    animation-delay: 0.24s;
+  }
+  .sc-extract__dot:nth-child(4) {
+    animation-delay: 0.36s;
+  }
+  .sc-extract__dot:nth-child(5) {
+    animation-delay: 0.48s;
+  }
+
+  .sc-extract__scan {
+    margin-top: 0.6rem;
+    width: 100%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, #ffb0ca, transparent);
+    opacity: 0.9;
+    animation: sc-scan 1.2s linear infinite;
+  }
+
+  .sc-palette__swatches {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sc-palette__swatches span {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    display: block;
+    border: 2px solid rgba(25, 17, 20, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.26);
+  }
+
+  .sc-apps__mock {
+    width: 100%;
+  }
+
+  .sc-apps__bar {
+    height: 22px;
+    border-radius: 6px;
+    background: #ffb0ca;
+    color: #191114;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+    margin-bottom: 8px;
+  }
+
+  .sc-apps__row {
+    display: flex;
+    gap: 6px;
+  }
+
+  .sc-apps__win {
+    flex: 1;
+    height: 36px;
+    border-radius: 6px;
+    background: rgba(25, 17, 20, 0.9);
+    border: 2px solid;
+    display: grid;
+    place-items: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fbe7ec;
+  }
+
+  .smart-colors__connector {
+    display: none;
+  }
+
+  @media (min-width: 860px) {
+    .smart-colors__connector {
+      display: block;
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #ffb0ca;
+      color: #191114;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.78rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
+      z-index: 2;
+    }
+  }
+
+  .smart-colors__progress {
+    margin-top: 0.9rem;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 176, 202, 0.14);
+    overflow: hidden;
+  }
+
+  .smart-colors__progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ffb0ca, #e2bdc7);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+
+  .smart-colors__live {
+    margin: 0.6rem 0 0;
+    font-size: 0.82rem;
+    color: #c9a8b2;
+    min-height: 1.2em;
+  }
+
+  .smart-colors__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 176, 202, 0.14);
+  }
+
+  .smart-colors__btn {
+    appearance: none;
+    border: 1px solid rgba(255, 176, 202, 0.24);
+    background: rgba(25, 17, 20, 0.92);
+    color: #fbe7ec;
+    padding: 0.55rem 0.9rem;
+    border-radius: 0.7rem;
+    font-weight: 700;
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .smart-colors__btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 176, 202, 0.45);
+  }
+
+  .smart-colors__btn:focus-visible {
+    outline: 2px solid #ffb0ca;
+    outline-offset: 2px;
+  }
+
+  .smart-colors__btn--primary {
+    background: #ffb0ca;
+    color: #191114;
+    border-color: #ffb0ca;
+  }
+
+  .smart-colors__btn--primary:hover {
+    background: #ffc6d8;
+  }
+
+  .smart-colors__btn--ghost {
+    background: transparent;
+    color: #d5c2c6;
+  }
+
+  .smart-colors__hint {
+    font-size: 0.76rem;
+    color: #c9a8b2;
+    margin-left: auto;
+  }
+
+  .smart-colors__noscript {
+    margin: 0.7rem 0 0;
+    font-size: 0.84rem;
+    color: #d5c2c6;
+    background: rgba(213, 194, 198, 0.08);
+    padding: 0.6rem 0.8rem;
+    border-radius: 0.6rem;
+  }
+
+  /* prefers-reduced-motion: disable animations */
+  @media (prefers-reduced-motion: reduce) {
+    .smart-colors__animated {
+      display: none;
+    }
+    .smart-colors__static {
+      outline: 2px dashed rgba(255, 176, 202, 0.35);
+      outline-offset: 3px;
+    }
+    .sc-extract__dot,
+    .sc-extract__scan {
+      animation: none !important;
+    }
+  }
+
+  /* When motion is ok, hide static by default, show animated */
+  @media (prefers-reduced-motion: no-preference) {
+    .smart-colors__static {
+      display: none;
+    }
+    .smart-colors__animated.is-static-alt .smart-colors__track {
+      /* static alt via button: show grid all visible */
+    }
+    .smart-colors__animated.is-static-alt .smart-colors__progress,
+    .smart-colors__animated.is-static-alt .smart-colors__live {
+      display: none;
+    }
+    .smart-colors__animated.is-paused .sc-extract__dot,
+    .smart-colors__animated.is-paused .sc-extract__scan,
+    .smart-colors__animated.is-paused .smart-colors__progress-bar {
+      animation-play-state: paused !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes sc-bob {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+    @keyframes sc-scan {
+      0% {
+        transform: translateX(-30%);
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(30%);
+        opacity: 0.2;
+      }
+    }
+  }
+</style>

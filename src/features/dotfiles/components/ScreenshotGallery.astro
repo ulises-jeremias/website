@@ -1,0 +1,460 @@
+---
+import { screenshotItems } from '../data/index.js';
+---
+
+<section class="screenshot-gallery" aria-labelledby="gallery-title">
+  <header class="screenshot-gallery__header">
+    <p class="screenshot-gallery__eyebrow">Galeria</p>
+    <h2 id="gallery-title" class="screenshot-gallery__title">Del collage al detalle — capturas reales</h2>
+    <p class="screenshot-gallery__desc">
+      Seis vistas que recorren el sistema. Cada imagen es placeholder accesible que referencia el asset original en
+      <code>dotfiles/static</code> (MIT). Reemplaza <code>src</code> por la imagen optimizada cuando publiques — el componente
+      ya es lazy, con <code>alt</code> descriptivo y caption.
+    </p>
+  </header>
+
+  <div class="screenshot-gallery__grid" role="list">
+    {
+      screenshotItems.map((shot) => (
+        <figure class="screenshot-gallery__card" role="listitem">
+          <div class="screenshot-gallery__frame" aria-hidden="true">
+            {shot.placeholder === 'collage' && (
+              <div class="shot shot--collage">
+                <span class="shot__bar">Quickshell · bar rail + dashboard</span>
+                <div class="shot__grid">
+                  <span class="shot__tile shot__tile--plum" />
+                  <span class="shot__tile shot__tile--pink" />
+                  <span class="shot__tile shot__tile--soft" />
+                  <span class="shot__tile shot__tile--dark" />
+                </div>
+                <span class="shot__label">collage.png · 1914×1075</span>
+              </div>
+            )}
+            {shot.placeholder === 'dark' && (
+              <div class="shot shot--dark">
+                <div class="shot__window">
+                  <span class="shot__win-bar">kitty — fastfetch</span>
+                  <span class="shot__win-body">▓▓▓ Hornero dark · Hyprland smooth</span>
+                </div>
+                <span class="shot__label">screen.png · 1914×1075</span>
+              </div>
+            )}
+            {shot.placeholder === 'light' && (
+              <div class="shot shot--light">
+                <div class="shot__window shot__window--light">
+                  <span class="shot__win-bar">yazi — ~/ · light</span>
+                  <span class="shot__win-body">░░ Pastel · WCAG contrast OK</span>
+                </div>
+                <span class="shot__label">screen-2.jpg · 1914×1075</span>
+              </div>
+            )}
+            {shot.placeholder === 'launchpad' && (
+              <div class="shot shot--launchpad">
+                <div class="shot__search">⌕ Buscar app, rice, wallpaper…</div>
+                <div class="shot__apps">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span class="shot__label">screenshot-launchpad.png · 800×600</span>
+              </div>
+            )}
+            {shot.placeholder === 'spotlight' && (
+              <div class="shot shot--spotlight">
+                <div class="shot__spotlight">⌕ dots appearance apply neon-city</div>
+                <div class="shot__spot-list">
+                  <span>› neon-city — Cyberpunk</span>
+                  <span>› flowers — Cozy</span>
+                  <span>› vapor — Vaporwave</span>
+                </div>
+                <span class="shot__label">screenshot-spotlight-dark.png</span>
+              </div>
+            )}
+            {shot.placeholder === 'dashboard' && (
+              <div class="shot shot--dashboard">
+                <div class="shot__tabs">
+                  <span class="is-active">Media</span>
+                  <span>Performance</span>
+                  <span>Weather</span>
+                </div>
+                <div class="shot__dash-body">♫ MPRIS · CPU 12% · 24°C — Open-Meteo</div>
+                <span class="shot__label">Quickshell dashboard — GPL-3.0*</span>
+              </div>
+            )}
+          </div>
+
+          {/* Real img: lazy, optional — keep placeholder src as data URI to avoid 404, swap to real path when assets are published */}
+          <img
+            class="screenshot-gallery__img"
+            src={`data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${shot.width} ${shot.height}'><rect width='100%' height='100%' fill='#191114'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#FFB0CA' font-family='monospace' font-size='14'>${shot.id} — placeholder accesible</text></svg>`)}`}
+            data-src={`https://raw.githubusercontent.com/ulises-jeremias/dotfiles/main/static/${shot.id === 'dark' ? 'screen.png' : shot.id === 'light' ? 'screen-2.jpg' : shot.id === 'collage' ? 'collage.png' : shot.id === 'launchpad' ? 'screenshot-launchpad.png' : shot.id === 'spotlight' ? 'screenshot-spotlight-dark.png' : 'screen.png'}`}
+            alt={shot.alt}
+            width={String(shot.width)}
+            height={String(shot.height)}
+            loading="lazy"
+            decoding="async"
+          />
+
+          <figcaption class="screenshot-gallery__caption">
+            <span class="screenshot-gallery__caption-title">{shot.caption}</span>
+            <span class="screenshot-gallery__caption-credit">{shot.credit}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+
+  <div class="screenshot-gallery__dialog" role="note" aria-label="Notas de licencia e integracion">
+    <h3 class="screenshot-gallery__dialog-title">Notas de integracion</h3>
+    <ul class="screenshot-gallery__dialog-list">
+      <li>
+        <strong>Assets MIT:</strong>
+        <code>collage.png, screen.png, screen-2.jpg, screenshot-*.png</code> provienen de
+        <code>dotfiles/static</code> bajo MIT (2019-2025). Copialos a <code>public/dotfiles/</code> y actualiza <code
+          >src</code
+        > antes de publicar en prod, o manten el placeholder si prefieres no servir binarios pesados.
+      </li>
+      <li>
+        <strong>Optimiza:</strong> usa <code>astro:assets</code> o <code>&lt;Image&gt;</code> con formatos AVIF/WebP y <code
+          >sizes="(min-width: 960px) 440px, 90vw"</code
+        >.
+      </li>
+      <li>
+        <strong>Quickshell GPL-3.0:</strong> dashboard y shell adaptados de <code>caelestia-dots/shell</code> — respeta GPL-3.0
+        si distribuyes binarios derivados.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .screenshot-gallery {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .screenshot-gallery__eyebrow {
+    display: inline-flex;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 176, 202, 0.12);
+    border: 1px solid rgba(255, 176, 202, 0.26);
+    color: #ffb0ca;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.7rem;
+  }
+
+  .screenshot-gallery__title {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.35rem, 2.8vw, 1.95rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fbe7ec;
+    line-height: 1.2;
+  }
+
+  .screenshot-gallery__desc {
+    margin: 0;
+    color: #d5c2c6;
+    line-height: 1.65;
+    font-size: 0.92rem;
+    max-width: 72ch;
+  }
+
+  .screenshot-gallery__desc code {
+    padding: 0.14rem 0.32rem;
+    border-radius: 0.32rem;
+    background: rgba(255, 176, 202, 0.13);
+    color: #ffb0ca;
+    font-size: 0.86em;
+  }
+
+  .screenshot-gallery__grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .screenshot-gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 980px) {
+    .screenshot-gallery__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .screenshot-gallery__card {
+    margin: 0;
+    background: linear-gradient(180deg, rgba(45, 32, 39, 0.9), rgba(25, 17, 20, 0.98));
+    border: 1px solid rgba(255, 176, 202, 0.16);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .screenshot-gallery__frame {
+    aspect-ratio: 16 / 10;
+    background: #191114;
+    border-bottom: 1px solid rgba(255, 176, 202, 0.14);
+    display: grid;
+    place-items: center;
+    padding: 0.85rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Placeholder shots */
+  .shot {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    justify-content: center;
+  }
+
+  .shot__bar {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #191114;
+    background: #ffb0ca;
+    padding: 0.28rem 0.5rem;
+    border-radius: 999px;
+    align-self: flex-start;
+  }
+
+  .shot__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    flex: 1;
+  }
+
+  .shot__tile {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 176, 202, 0.18);
+  }
+  .shot__tile--plum {
+    background: #191114;
+    border-color: rgba(255, 176, 202, 0.28);
+  }
+  .shot__tile--pink {
+    background: #ffb0ca;
+  }
+  .shot__tile--soft {
+    background: #e2bdc7;
+  }
+  .shot__tile--dark {
+    background: #2d2027;
+  }
+
+  .shot__label {
+    font-size: 0.68rem;
+    color: #c9a8b2;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-align: center;
+  }
+
+  .shot__window {
+    background: #2d2027;
+    border: 1px solid rgba(255, 176, 202, 0.22);
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .shot__window--light {
+    background: #fff5f8;
+    border-color: rgba(25, 17, 20, 0.12);
+  }
+
+  .shot__win-bar {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.35rem 0.55rem;
+    background: rgba(255, 176, 202, 0.18);
+    color: #fbe7ec;
+    border-bottom: 1px solid rgba(255, 176, 202, 0.14);
+  }
+
+  .shot__window--light .shot__win-bar {
+    color: #191114;
+    background: #ffe4ec;
+  }
+
+  .shot__win-body {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    font-size: 0.78rem;
+    color: #d5c2c6;
+    font-family: ui-monospace, monospace;
+    padding: 0.6rem;
+    text-align: center;
+  }
+
+  .shot__window--light .shot__win-body {
+    color: #4a2d3a;
+  }
+
+  .shot__search {
+    background: #2d2027;
+    border: 1px solid rgba(255, 176, 202, 0.22);
+    border-radius: 999px;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.78rem;
+    color: #fbe7ec;
+    text-align: center;
+  }
+
+  .shot__apps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    flex: 1;
+    align-content: center;
+  }
+
+  .shot__apps span {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ffb0ca, #e2bdc7);
+    border: 1px solid rgba(25, 17, 20, 0.12);
+  }
+
+  .shot__spotlight {
+    background: #2d2027;
+    border: 1px solid rgba(255, 176, 202, 0.24);
+    border-radius: 10px;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.76rem;
+    color: #fbe7ec;
+    font-family: ui-monospace, monospace;
+  }
+
+  .shot__spot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.74rem;
+    color: #d5c2c6;
+    font-family: ui-monospace, monospace;
+  }
+
+  .shot__tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .shot__tabs span {
+    padding: 0.22rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: rgba(255, 176, 202, 0.14);
+    color: #d5c2c6;
+    border: 1px solid rgba(255, 176, 202, 0.16);
+  }
+
+  .shot__tabs span.is-active {
+    background: #ffb0ca;
+    color: #191114;
+    border-color: #ffb0ca;
+  }
+
+  .shot__dash-body {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    font-size: 0.74rem;
+    color: #d5c2c6;
+    text-align: center;
+    padding: 0.5rem;
+    background: rgba(255, 176, 202, 0.06);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 176, 202, 0.13);
+  }
+
+  .screenshot-gallery__img {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    /* keep accessible but visually use placeholder frame */
+  }
+
+  .screenshot-gallery__caption {
+    padding: 0.75rem 0.85rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+    flex: 1;
+  }
+
+  .screenshot-gallery__caption-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #fbe7ec;
+    line-height: 1.35;
+  }
+
+  .screenshot-gallery__caption-credit {
+    font-size: 0.72rem;
+    color: #c9a8b2;
+    font-family: ui-monospace, monospace;
+  }
+
+  .screenshot-gallery__dialog {
+    margin-top: 1.1rem;
+    padding: 0.95rem 1rem;
+    border-radius: 0.95rem;
+    background: rgba(255, 176, 202, 0.07);
+    border: 1px solid rgba(255, 176, 202, 0.14);
+  }
+
+  .screenshot-gallery__dialog-title {
+    margin: 0 0 0.45rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #ffb0ca;
+  }
+
+  .screenshot-gallery__dialog-list {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: #c9a8b2;
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .screenshot-gallery__dialog-list code {
+    padding: 0.12rem 0.3rem;
+    border-radius: 0.3rem;
+    background: rgba(25, 17, 20, 0.9);
+    color: #e2bdc7;
+    font-size: 0.84em;
+  }
+
+  .screenshot-gallery__dialog-list strong {
+    color: #fbe7ec;
+  }
+</style>

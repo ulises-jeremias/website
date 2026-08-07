@@ -1,0 +1,45 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+const meta = getRouteMeta('/v')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="v">
+  <h1>V Ecosystem — Fast, clear, scientific</h1>
+  <p>Laboratorio computacional — Core Team Member @ V, contribuciones verificadas (no vanity counts).</p>
+  <section>
+    <h2>VSL — Scientific Library</h2>
+    <p>
+      Álgebra lineal, métodos numéricos, estadística, visualización, backends CPU y aceleración opcional. Fractal
+      determinístico (ver repo <a href="https://github.com/vlang/vsl" target="_blank" rel="noreferrer">vsl</a>).
+    </p>
+    <div style="padding:1rem; border:1px solid var(--color-border); border-radius:8px; background:var(--color-paper);">
+      <p>
+        <em>Visualización fractal placeholder — backend selector (CPU/GPU) con fallback estático y reduced-motion.</em>
+      </p>
+    </div>
+  </section>
+  <section>
+    <h2>VTL — Tensor Library</h2>
+    <p>Tensores, autograd, grafos computacionales, capas, optimizadores. Interacción: grafo forward/backward.</p>
+  </section>
+  <section>
+    <h2>RxV — Reactive</h2>
+    <p>Observables, canales, operadores. Flujo: <code>source → filter → map → merge/reduce → subscriber</code></p>
+  </section>
+  <section>
+    <h2>setup-v</h2>
+    <p>GitHub Action para V — pipeline: versión, arquitectura, caché, build, outputs.</p>
+  </section>
+  <p>
+    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">RxV →</a> · <a
+      href="https://github.com/vlang/setup-v"
+      target="_blank"
+      rel="noreferrer">setup-v →</a
+    >
+  </p>
+  <p style="color:var(--color-muted); font-size:0.9rem;">
+    <strong>Nota licencia:</strong> Veasel solo si <code>vlang/v-mascot/LICENSE</code> lo permite con atribución; caso ambiguo
+    usa ilustración original V-inspirada (no derivada).
+  </p>
+</SectionLayout>

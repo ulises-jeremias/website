@@ -1,0 +1,49 @@
+/* HorneroConfig — identity plum #191114 / pink #FFB0CA */
+:root {
+  --dotfiles-plum: #191114;
+  --dotfiles-plum-soft: #241a1f;
+  --dotfiles-plum-elevated: #2d2027;
+  --dotfiles-pink: #ffb0ca;
+  --dotfiles-pink-soft: #e2bdc7;
+  --dotfiles-pink-muted: #d5c2c6;
+  --dotfiles-text: #fbe7ec;
+  --dotfiles-text-muted: #c9a8b2;
+  --dotfiles-border: rgba(255, 176, 202, 0.18);
+  --dotfiles-shadow: 0 10px 30px rgba(0, 0, 0, 0.36);
+}
+
+.dotfiles-page {
+  background:
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(255, 176, 202, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 30% at 85% 100%, rgba(226, 189, 199, 0.12), transparent 60%), var(--dotfiles-plum);
+  color: var(--dotfiles-text);
+  min-height: 100vh;
+}
+
+.dotfiles-page a:focus-visible,
+.dotfiles-page button:focus-visible {
+  outline: 2px solid #ffb0ca;
+  outline-offset: 3px;
+}
+
+.dotfiles-skip {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.dotfiles-skip:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.6rem 0.9rem;
+  background: #ffb0ca;
+  color: #191114;
+  border-radius: 0.6rem;
+  font-weight: 800;
+  z-index: 50;
+}

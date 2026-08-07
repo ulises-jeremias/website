@@ -1,0 +1,52 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+const meta = getRouteMeta('/create-awesome')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="create-awesome">
+  <h1>Create Awesome — Choose template + addons → production-ready</h1>
+  <p>
+    <strong>Un comando. Cualquier stack.</strong> Familia de CLIs para Node, Python y V — no reemplaza los catálogos externos,
+    los compone.
+  </p>
+  <section>
+    <h2>Familia</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;">
+      <div style="padding:1rem; border:1px solid #F59E0B; border-radius:10px; background:#FFFBEB;">
+        <h3 style="color:#F59E0B;">Node</h3>
+        <p>Amber #F59E0B + Teal #0D9488 — cozy command center — frontend, backend, full-stack, monorepo, AI-ready</p>
+        <code>npx create-awesome-node-app my-app --template react-vite --addons tailwind</code>
+      </div>
+      <div style="padding:1rem; border:1px solid #3B82F6; border-radius:10px; background:#EFF6FF;">
+        <h3 style="color:#3B82F6;">Python</h3>
+        <p>Blue #3B82F6 + Green #16A34A — FastAPI, Django, CLI, Celery, uv</p>
+        <code>pipx run create-awesome-python-app my-app --template fastapi</code>
+      </div>
+      <div style="padding:1rem; border:1px solid #8B5CF6; border-radius:10px; background:#F5F3FF;">
+        <h3 style="color:#8B5CF6;">V</h3>
+        <p>Violet #8B5CF6 + Cyan #06B6D4 — fast, native, experimental</p>
+        <code>v run create-awesome-vlang-app my-app --template vweb</code>
+      </div>
+    </div>
+    <p style="margin-top:1rem;">
+      <strong>Composición:</strong> template + addons. No es no-code — compone archivos reales. <a
+        href="https://create-awesome-node-app.vercel.app"
+        target="_blank"
+        rel="noreferrer">Catálogo Node</a
+      > · <a href="https://create-awesome-python-app.vercel.app" target="_blank" rel="noreferrer">Python</a> · <a
+        href="https://create-awesome-vlang-app.vercel.app"
+        target="_blank"
+        rel="noreferrer">V</a
+      >
+    </p>
+  </section>
+  <section>
+    <h2>Distribución y contribución</h2>
+    <p>
+      npm, AUR, Homebrew, Docker. Contribuir templates/addons vía repos <code>cna-templates</code>, <code
+        >cpa-templates</code
+      >, <code>cva-templates</code>. Sync build-time evaluado para no duplicar catálogos.
+    </p>
+  </section>
+</SectionLayout>

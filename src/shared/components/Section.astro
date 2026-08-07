@@ -1,0 +1,35 @@
+---
+/**
+ * Section — D-03 shared section layout API.
+ */
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  lead?: string;
+  tinted?: boolean;
+  narrowHeader?: boolean;
+}
+
+const { id, eyebrow, title, lead, tinted = false, narrowHeader = true } = Astro.props as Props;
+const sectionClass = ['home-section', tinted ? 'home-section--tinted' : ''].filter(Boolean).join(' ');
+---
+
+<section id={id} class={sectionClass} aria-labelledby={title ? `${id}-title` : undefined}>
+  <div class="home-section__inner">
+    {
+      (eyebrow || title || lead) && (
+        <header class:list={['home-section__header', narrowHeader ? '' : 'home-section__header--wide']}>
+          {eyebrow && <span class="home-section__eyebrow">{eyebrow}</span>}
+          {title && (
+            <h2 id={id ? `${id}-title` : undefined} class="home-section__title">
+              {title}
+            </h2>
+          )}
+          {lead && <p class="home-section__lead">{lead}</p>}
+        </header>
+      )
+    }
+    <slot />
+  </div>
+</section>

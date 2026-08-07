@@ -1,0 +1,18 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta } from '@/data/routes';
+import StackDiagram from '@/features/workstation/components/StackDiagram.astro';
+const meta = getRouteMeta('/agentic-workstation')!;
+---
+
+<SectionLayout title={meta.title} description={meta.description} theme="workstation">
+  <h1>Agentic Workstation</h1>
+  <p>Una orden para convertir tu máquina en estación AI-native.</p>
+  <StackDiagram />
+  <section>
+    <h2>Instalación verificada</h2>
+    <pre><code>uv tool install --force agent-toolkit-cli && agent-toolkit install
+agent-toolkit doctor</code></pre>
+    <p><a href="https://github.com/ulises-jeremias/agentic-workstation" target="_blank" rel="noreferrer">Repo →</a></p>
+  </section>
+</SectionLayout>
