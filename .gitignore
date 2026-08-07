@@ -15,3 +15,10 @@ storybook-static/
 .mega-linter.log
 megalinter-reports/
 .parcel-cache/
+
+# UI/UX recovery — bulky raw baseline PNGs (keep contact-sheets/)
+docs/design/baselines/*/desktop-*/
+docs/design/baselines/*/laptop-*/
+docs/design/baselines/*/tablet-*/
+docs/design/baselines/*/mobile-*/
+!docs/design/baselines/*/contact-sheets/

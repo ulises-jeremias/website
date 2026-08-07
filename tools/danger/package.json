@@ -1,5 +1,6 @@
 {
   "name": "danger-runtime",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "danger": "^12.3.4"

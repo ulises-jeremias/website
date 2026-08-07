@@ -18,7 +18,9 @@
     "dist/**",
     "build/**",
     "coverage/**",
-    ".git/**"
+    ".git/**",
+    "docs/design/art-directions/**/*.html",
+    "docs/design/baselines/**"
   ],
   "words": [
     "Astro",

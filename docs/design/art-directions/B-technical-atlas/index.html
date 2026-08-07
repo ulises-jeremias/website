@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PROTOTYPE — Direction B · Technical Atlas — Digital Nest</title>
+    <style>
+      :root {
+        --bg: #e8eef0;
+        --panel: #f4f7f8;
+        --ink: #1a1f22;
+        --ink-soft: #3d474c;
+        --rail: #9aa8ae;
+        --grid: #c5d0d4;
+        --accent: #a14e2f;
+        --warm: #9c5f2e;
+        --cool: #3e6572;
+        --line: #7a8b93;
+        --margin: clamp(1rem, 3.5vw, 2.5rem);
+        --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        --sans: system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 1rem;
+        line-height: 1.55;
+        background-image:
+          linear-gradient(to right, color-mix(in srgb, var(--rail) 28%, transparent) 1px, transparent 1px),
+          linear-gradient(to bottom, color-mix(in srgb, var(--rail) 22%, transparent) 1px, transparent 1px);
+        background-size: 48px 48px;
+      }
+      a {
+        color: var(--accent);
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .proto-banner {
+        background: var(--ink);
+        color: #f4f7f8;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        padding: 0.55rem var(--margin);
+        text-align: center;
+      }
+      .screen-nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem 1rem;
+        padding: 0.6rem var(--margin);
+        background: color-mix(in srgb, var(--panel) 94%, transparent);
+        border-bottom: 1px solid var(--rail);
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .screen-nav a {
+        color: var(--cool);
+        text-decoration: none;
+      }
+      .screen-nav a:hover {
+        color: var(--accent);
+      }
+      .screen {
+        padding: 2rem var(--margin) 3rem;
+        border-bottom: 1px solid var(--rail);
+      }
+      .coord {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--cool);
+        letter-spacing: 0.06em;
+        margin: 0 0 1rem;
+      }
+      .module {
+        background: var(--panel);
+        border: 1px solid var(--rail);
+        position: relative;
+      }
+      .module::before {
+        content: attr(data-id);
+        position: absolute;
+        top: -0.55rem;
+        left: 0.75rem;
+        background: var(--panel);
+        padding: 0 0.35rem;
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--warm);
+        letter-spacing: 0.05em;
+      }
+
+      /* Home */
+      .home-grid {
+        display: grid;
+        grid-template-columns: 1.35fr 1fr;
+        gap: 1.25rem;
+        min-height: calc(100vh - 7rem);
+      }
+      @media (max-width: 900px) {
+        .home-grid {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+      }
+      .identity {
+        padding: 1.75rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .identity h1 {
+        font-size: clamp(1.85rem, 4vw, 2.75rem);
+        font-weight: 650;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin: 0.35rem 0 0.75rem;
+      }
+      .title-line {
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+        margin: 0 0 0.5rem;
+        max-width: 28rem;
+      }
+      .bio {
+        font-size: 0.92rem;
+        color: var(--ink-soft);
+        margin: 0 0 1.25rem;
+        max-width: 32rem;
+      }
+      .cta-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--rail);
+      }
+      .btn {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        padding: 0.55rem 0.9rem;
+        border: 1px solid var(--ink);
+        background: var(--ink);
+        color: var(--panel);
+        text-decoration: none;
+      }
+      .btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn-outline:hover {
+        background: var(--ink);
+        color: var(--panel);
+      }
+      .discover {
+        padding: 1.25rem 1.25rem 1.5rem;
+      }
+      .discover h2 {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--cool);
+        margin: 0 0 1rem;
+      }
+      .topo-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .topo-list li {
+        display: grid;
+        grid-template-columns: 3.2rem 1fr auto;
+        gap: 0.5rem;
+        align-items: baseline;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--rail) 70%, transparent);
+        font-size: 0.9rem;
+      }
+      .topo-list .c {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--warm);
+      }
+      .topo-list a {
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .topo-list a:hover {
+        color: var(--accent);
+      }
+      .topo-list .w {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--cool);
+      }
+
+      /* Atlas regions */
+      .atlas-map {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 0.75rem;
+        position: relative;
+      }
+      @media (max-width: 900px) {
+        .atlas-map {
+          grid-template-columns: 1fr;
+        }
+      }
+      .region {
+        padding: 1.1rem 1rem 1.2rem;
+        border: 1px solid var(--rail);
+        background: var(--panel);
+        position: relative;
+      }
+      .region.r-toolkit {
+        grid-row: span 2;
+        border-color: var(--ink);
+      }
+      .region h3 {
+        margin: 0 0 0.4rem;
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+      }
+      .region.r-toolkit h3 {
+        font-size: 1.55rem;
+      }
+      .region p {
+        margin: 0;
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+      }
+      .region .tag {
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--warm);
+        letter-spacing: 0.06em;
+        margin-bottom: 0.35rem;
+      }
+      .conn-svg {
+        display: block;
+        width: 100%;
+        height: 48px;
+        margin: 0.75rem 0 0;
+      }
+
+      /* Toolkit anatomy */
+      .anatomy {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 1.25rem;
+      }
+      @media (max-width: 900px) {
+        .anatomy {
+          grid-template-columns: 1fr;
+        }
+      }
+      .anatomy-panel {
+        padding: 1.25rem 1.25rem 1.5rem;
+      }
+      .anatomy-panel h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.45rem;
+        letter-spacing: -0.02em;
+      }
+      .cap-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+      .cap {
+        border: 1px dashed var(--line);
+        padding: 0.65rem 0.7rem;
+        font-size: 0.82rem;
+      }
+      .cap b {
+        display: block;
+        font-family: var(--mono);
+        font-size: 1.1rem;
+        color: var(--accent);
+        margin-bottom: 0.15rem;
+      }
+      .cap span {
+        color: var(--ink-soft);
+        font-size: 0.78rem;
+      }
+      .dist-svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: var(--bg);
+        border: 1px solid var(--rail);
+      }
+
+      /* Workstation stack */
+      .stack {
+        display: grid;
+        grid-template-columns: 8rem 1fr;
+        gap: 0;
+        border: 1px solid var(--ink);
+        background: var(--panel);
+      }
+      @media (max-width: 700px) {
+        .stack {
+          grid-template-columns: 1fr;
+        }
+      }
+      .stack-side {
+        background: var(--ink);
+        color: var(--panel);
+        padding: 1.25rem 1rem;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+      }
+      .stack-side h2 {
+        font-family: var(--sans);
+        font-size: 1.1rem;
+        margin: 0.5rem 0 0;
+        letter-spacing: -0.02em;
+        color: #fff;
+      }
+      .layers {
+        display: flex;
+        flex-direction: column;
+      }
+      .layer {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--rail);
+        display: grid;
+        grid-template-columns: 3.5rem 1fr;
+        gap: 0.75rem;
+        align-items: start;
+      }
+      .layer:last-child {
+        border-bottom: 0;
+      }
+      .layer .ly {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--warm);
+        padding-top: 0.15rem;
+      }
+      .layer h3 {
+        margin: 0 0 0.25rem;
+        font-size: 0.98rem;
+      }
+      .layer p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+      }
+      .layer.l3 {
+        background: color-mix(in srgb, var(--accent) 8%, var(--panel));
+      }
+
+      /* Mobile */
+      .mobile-wrap {
+        display: flex;
+        justify-content: center;
+        padding: 0.5rem 0 1.5rem;
+      }
+      .mobile-frame {
+        width: 100%;
+        max-width: 390px;
+        border: 2px solid var(--ink);
+        background: var(--panel);
+        padding: 1rem;
+      }
+      .mobile-frame h2 {
+        font-size: 1.45rem;
+        margin: 0.25rem 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      .m-list {
+        list-style: none;
+        margin: 1rem 0 0;
+        padding: 0;
+      }
+      .m-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.55rem 0;
+        border-top: 1px solid var(--rail);
+        font-size: 0.88rem;
+      }
+      .m-list a {
+        color: var(--ink);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .m-list .c {
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--cool);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="proto-banner" role="status">PROTOTYPE — Direction B — not production. For C-02 review.</div>
+    <nav class="screen-nav" aria-label="Prototype screens">
+      <a href="#home-desktop">01 Home</a>
+      <a href="#home-worlds">02 Atlas</a>
+      <a href="#toolkit">03 Toolkit</a>
+      <a href="#extra">04 Workstation</a>
+      <a href="#home-mobile">05 Mobile</a>
+    </nav>
+
+    <section class="screen" id="home-desktop" aria-labelledby="home-title">
+      <p class="coord">SCREEN · #home-desktop · GRID 48 · ORIGIN N0</p>
+      <div class="home-grid">
+        <div class="module identity" data-id="MOD · IDENTITY">
+          <div>
+            <p class="coord" style="margin: 0">N0.1 · LA PLATA · BA · AR</p>
+            <h1 id="home-title">Ulises Jeremias</h1>
+            <p class="title-line">Solutions Architect @ NaNLABS · Core Team @ V · AUR Maintainer</p>
+            <p class="bio">
+              Builds developer tooling, AI-powered workflows, CLI apps, and infrastructure automation — TypeScript, Go,
+              Shell, Python, V. The Digital Nest is construction: reusable systems, not a bird product.
+            </p>
+          </div>
+          <div class="cta-bar">
+            <a class="btn" href="mailto:ulisescf.24@gmail.com">Collaborate</a>
+            <a class="btn btn-outline" href="https://discord.gg/bR5VyATgka">Discord</a>
+            <a class="btn btn-outline" href="https://github.com/ulises-jeremias">GitHub ↗</a>
+          </div>
+        </div>
+        <div class="module discover" data-id="MOD · WORLD INDEX">
+          <h2>Navigable regions</h2>
+          <ul class="topo-list">
+            <li><span class="c">R-30</span><a href="#toolkit">Agent Toolkit</a><span class="w">flagship</span></li>
+            <li><span class="c">R-20</span><a href="#extra">Agentic Workstation</a><span class="w">L1</span></li>
+            <li><span class="c">R-10</span><a href="#home-worlds">HorneroConfig</a><span class="w">/dotfiles</span></li>
+            <li><span class="c">R-40</span><a href="#home-worlds">V ecosystem</a><span class="w">lang</span></li>
+            <li><span class="c">R-50</span><a href="#home-worlds">Create Awesome</a><span class="w">scaffold</span></li>
+            <li>
+              <span class="c">R-60+</span><a href="#home-worlds">Community · Blog · Projects · OSS</a
+              ><span class="w">more</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="home-worlds" aria-labelledby="worlds-title">
+      <p class="coord">SCREEN · #home-worlds · ATLAS REGIONS · TOPOLOGY</p>
+      <h2 id="worlds-title" style="font-size: 1.35rem; letter-spacing: -0.02em; margin: 0 0 1rem">
+        Project worlds as atlas regions
+      </h2>
+      <div class="atlas-map" aria-label="World atlas with unequal regions">
+        <div class="region r-toolkit">
+          <div class="tag">R-30 · PRIMARY MASS</div>
+          <h3><a href="#toolkit" style="color: inherit; text-decoration: none">Agent Toolkit</a></h3>
+          <p>
+            One reusable source of agent capabilities → many coding assistants. 61 skills, 16 agents, 10 loops, 6
+            profiles.
+          </p>
+          <svg class="conn-svg" viewBox="0 0 280 48" aria-hidden="true">
+            <line x1="8" y1="24" x2="272" y2="24" stroke="#7A8B93" stroke-width="1" />
+            <circle cx="8" cy="24" r="3" fill="#A14E2F" />
+            <circle cx="90" cy="24" r="2.5" fill="#1A1F22" />
+            <circle cx="170" cy="24" r="2.5" fill="#1A1F22" />
+            <circle cx="272" cy="24" r="3" fill="#3E6572" />
+            <text x="20" y="16" font-family="ui-monospace,monospace" font-size="8" fill="#3E6572">source</text>
+            <text x="220" y="16" font-family="ui-monospace,monospace" font-size="8" fill="#3E6572">targets</text>
+          </svg>
+        </div>
+        <div class="region">
+          <div class="tag">R-20</div>
+          <h3><a href="#extra" style="color: inherit; text-decoration: none">Workstation</a></h3>
+          <p>L1 machine stack: chezmoi, packages, LLM policy rails.</p>
+        </div>
+        <div class="region">
+          <div class="tag">R-10</div>
+          <h3>HorneroConfig</h3>
+          <p>Portable nest wiring under /dotfiles.</p>
+        </div>
+        <div class="region">
+          <div class="tag">R-40 · R-50</div>
+          <h3>V · Create Awesome</h3>
+          <p>Language core team work + multi-runtime project scaffolds.</p>
+        </div>
+        <div class="region">
+          <div class="tag">R-60 → R-90</div>
+          <h3>Community · Blog · Projects · OSS</h3>
+          <p>Writing, selected builds, and open contribution surfaces.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="toolkit" aria-labelledby="toolkit-title">
+      <p class="coord">SCREEN · #toolkit · EXPLODED CAPABILITY ANATOMY</p>
+      <div class="anatomy">
+        <div class="module anatomy-panel" data-id="MOD · ANATOMY">
+          <h2 id="toolkit-title">Agent Toolkit — exploded view</h2>
+          <p style="margin: 0; color: var(--ink-soft); font-size: 0.92rem">
+            Capabilities are modules on a shared rail. Distribution is structural: one source fan-out to assistant
+            targets.
+          </p>
+          <div class="cap-grid">
+            <div class="cap"><b>61</b><span>skills · reusable procedures</span></div>
+            <div class="cap"><b>16</b><span>agents · role bindings</span></div>
+            <div class="cap"><b>10</b><span>loops · scheduled runs</span></div>
+            <div class="cap"><b>6</b><span>profiles · install shapes</span></div>
+          </div>
+          <p style="margin: 0; font-family: var(--mono); font-size: 0.72rem; color: var(--cool)">
+            uvx agent-toolkit-cli · uv tool install agent-toolkit-cli
+          </p>
+        </div>
+        <div class="module anatomy-panel" data-id="MOD · DISTRIBUTION" style="padding: 0; overflow: hidden">
+          <svg class="dist-svg" viewBox="0 0 420 280" role="img" aria-labelledby="dist-title">
+            <title id="dist-title">One source Agent Toolkit distributing to multiple coding assistants</title>
+            <rect x="150" y="20" width="120" height="52" fill="#F4F7F8" stroke="#1A1F22" stroke-width="1.5" />
+            <text
+              x="210"
+              y="42"
+              text-anchor="middle"
+              font-family="system-ui,sans-serif"
+              font-size="11"
+              font-weight="600"
+              fill="#1A1F22"
+            >
+              Agent Toolkit
+            </text>
+            <text x="210" y="58" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#3E6572">
+              skills · agents · loops
+            </text>
+            <line x1="210" y1="72" x2="210" y2="110" stroke="#7A8B93" stroke-width="1.5" />
+            <circle cx="210" cy="110" r="4" fill="#A14E2F" />
+            <line x1="60" y1="110" x2="360" y2="110" stroke="#7A8B93" stroke-width="1" />
+            <line x1="60" y1="110" x2="60" y2="150" stroke="#7A8B93" />
+            <line x1="140" y1="110" x2="140" y2="150" stroke="#7A8B93" />
+            <line x1="210" y1="110" x2="210" y2="150" stroke="#7A8B93" />
+            <line x1="280" y1="110" x2="280" y2="150" stroke="#7A8B93" />
+            <line x1="360" y1="110" x2="360" y2="150" stroke="#7A8B93" />
+            <rect x="20" y="150" width="80" height="36" fill="#E8EEF0" stroke="#9AA8AE" />
+            <text x="60" y="172" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#1A1F22">
+              Cursor
+            </text>
+            <rect x="100" y="150" width="80" height="36" fill="#E8EEF0" stroke="#9AA8AE" />
+            <text
+              x="140"
+              y="172"
+              text-anchor="middle"
+              font-family="ui-monospace,monospace"
+              font-size="9"
+              fill="#1A1F22"
+            >
+              Claude
+            </text>
+            <rect x="180" y="150" width="80" height="36" fill="#E8EEF0" stroke="#9AA8AE" />
+            <text
+              x="220"
+              y="172"
+              text-anchor="middle"
+              font-family="ui-monospace,monospace"
+              font-size="9"
+              fill="#1A1F22"
+            >
+              OpenCode
+            </text>
+            <rect x="260" y="150" width="80" height="36" fill="#E8EEF0" stroke="#9AA8AE" />
+            <text
+              x="300"
+              y="172"
+              text-anchor="middle"
+              font-family="ui-monospace,monospace"
+              font-size="9"
+              fill="#1A1F22"
+            >
+              Gemini
+            </text>
+            <rect x="320" y="150" width="80" height="36" fill="#E8EEF0" stroke="#9AA8AE" />
+            <text
+              x="360"
+              y="172"
+              text-anchor="middle"
+              font-family="ui-monospace,monospace"
+              font-size="9"
+              fill="#1A1F22"
+            >
+              Copilot
+            </text>
+            <text
+              x="210"
+              y="220"
+              text-anchor="middle"
+              font-family="ui-monospace,monospace"
+              font-size="9"
+              fill="#9C5F2E"
+            >
+              write once · mount many
+            </text>
+            <text x="210" y="248" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3D474C">
+              Pitch: one reusable source of agent capabilities → many coding assistants
+            </text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="extra" aria-labelledby="extra-title">
+      <p class="coord">SCREEN · #extra · AGENTIC WORKSTATION · 4-LAYER STACK</p>
+      <div class="stack">
+        <div class="stack-side">
+          <span>R-20</span>
+          <h2 id="extra-title">Agentic Workstation</h2>
+          <p style="margin: 1rem 0 0; line-height: 1.5; opacity: 0.85">
+            L1 machine provisioning. Layers nest; policy rides the rail.
+          </p>
+        </div>
+        <div class="layers">
+          <div class="layer">
+            <span class="ly">L0</span>
+            <div>
+              <h3>Host OS</h3>
+              <p>Arch Linux baseline, packages, hardware-facing constraints.</p>
+            </div>
+          </div>
+          <div class="layer">
+            <span class="ly">L1</span>
+            <div>
+              <h3>Workstation core</h3>
+              <p>chezmoi-managed dotfiles, shell, fonts, LLM allowlist / strict policy.</p>
+            </div>
+          </div>
+          <div class="layer">
+            <span class="ly">L1.5</span>
+            <div>
+              <h3>Agent Toolkit mount</h3>
+              <p>Skills, agents, loops, profiles installed into coding assistants.</p>
+            </div>
+          </div>
+          <div class="layer l3">
+            <span class="ly">L3</span>
+            <div>
+              <h3>Project overlay</h3>
+              <p>Personal AI workspace — multi-repo orchestration, packs, personas, knowledge.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="home-mobile" aria-labelledby="mobile-title">
+      <p class="coord">SCREEN · #home-mobile · MAX-WIDTH 390</p>
+      <div class="mobile-wrap">
+        <div class="mobile-frame">
+          <p class="coord" style="margin: 0">N0 · DIGITAL NEST</p>
+          <h2 id="mobile-title">Ulises Jeremias</h2>
+          <p style="margin: 0 0 0.75rem; font-size: 0.85rem; color: var(--ink-soft)">
+            Solutions Architect @ NaNLABS · Core Team @ V
+          </p>
+          <a class="btn" href="mailto:ulisescf.24@gmail.com" style="font-size: 0.7rem">Collaborate</a>
+          <ul class="m-list">
+            <li><a href="#toolkit">Agent Toolkit</a><span class="c">R-30</span></li>
+            <li><a href="#extra">Workstation</a><span class="c">R-20</span></li>
+            <li><a href="#home-worlds">HorneroConfig</a><span class="c">R-10</span></li>
+            <li><a href="#home-worlds">V · Create Awesome</a><span class="c">R-40+</span></li>
+            <li><a href="#home-worlds">Blog · Community · OSS</a><span class="c">R-60+</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
