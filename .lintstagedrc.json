@@ -1,4 +1,4 @@
 {
   "*.{js,jsx,ts,tsx,astro}": ["eslint --fix"],
-  "*": ["prettier --ignore-path .gitignore --write"]
+  "*": ["prettier --write"]
 }
