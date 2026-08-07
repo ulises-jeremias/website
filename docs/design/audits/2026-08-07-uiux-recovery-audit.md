@@ -105,14 +105,12 @@ Captured production preview (`pnpm build` + `pnpm preview`) at 1440 / 1024 / 768
 
 ## GitHub reconciliation (summary)
 
-| Classification              | Issues (representative)                                                                                                                    |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| DONE — VERIFIED             | #31 A-01, #40 B-01, #41 B-02, #68 D-02 (metadata helpers exist) — with caveats                                                             |
-| IMPLEMENTED — UX FAILED     | #86 E-03 (closed without human design review), #69 D-03 (layout exists, over-constrains), F-03..F-07 closed design tasks with card/pill UX |
-| PARTIALLY IMPLEMENTED       | Epics #20–#28 content/routes exist; design AC mostly unmet                                                                                 |
-| NOT STARTED                 | Most H-* design issues (#131–#167); N-* pipeline; much of O-* QA                                                                           |
-| NEEDS HUMAN DESIGN APPROVAL | #51 C-02 (prototypes), #52 C-03 (selection gate)                                                                                           |
-| Leave closed + follow-up    | #53 C-04, #54 C-05 token files exist — re-validate after art-direction selection                                                           |
+- **DONE — VERIFIED:** #31 A-01, #40 B-01, #41 B-02, #68 D-02 (metadata helpers exist) — with caveats
+- **IMPLEMENTED — UX FAILED:** #86 E-03 (closed without human design review), #69 D-03 (layout exists, over-constrains), F-03..F-07 closed design tasks with card/pill UX
+- **PARTIALLY IMPLEMENTED:** Epics #20–#28 content/routes exist; design AC mostly unmet
+- **NOT STARTED:** Most H-* design issues (#131–#167); N-* pipeline; much of O-* QA
+- **NEEDS HUMAN DESIGN APPROVAL:** #51 C-02 (prototypes), #52 C-03 (selection gate)
+- **Leave closed + follow-up:** #53 C-04, #54 C-05 token files exist — re-validate after art-direction selection
 
 Full matrix maintained in issue comments / recovery epic — avoid committing a giant generated bookkeeping file.
 

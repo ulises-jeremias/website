@@ -7,7 +7,7 @@ High-fidelity, self-contained HTML prototypes for GitHub issue **C-02** (#51).
 
 Each direction is a single static file (inline CSS, system fonts only — no build step).
 
-**Option A — file URL**
+### Option A — file URL
 
 ```bash
 # from repo root
@@ -16,14 +16,16 @@ xdg-open docs/design/art-directions/A-editorial-workshop/index.html
 # file:///…/docs/design/art-directions/A-editorial-workshop/index.html
 ```
 
-**Option B — local static server** (if you prefer `http://`)
+### Option B — local static server
 
 ```bash
 pnpm dlx serve docs/design/art-directions
 # then visit /A-editorial-workshop/ etc.
 ```
 
-**Option C — later site preview** — if these paths are ever wired into Astro/`pnpm preview`, use that host; until then, Prefer A or B.
+### Option C — later site preview
+
+If these paths are ever wired into Astro/`pnpm preview`, use that host; until then, prefer A or B.
 
 ### Prototypes
 

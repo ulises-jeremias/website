@@ -2,7 +2,10 @@
 # https://megalinter.io/latest/config-file/
 
 FILTER_REGEX_EXCLUDE: >-
-  (\.git/|node_modules/|\.astro/|dist/|build/|coverage/|pnpm-lock\.yaml)
+  (\.git/|node_modules/|\.astro/|dist/|build/|coverage/|pnpm-lock\.yaml|docs/design/art-directions/.+\.html|docs/design/baselines/.+\.(png|jpg|jpeg|webp))
+
+# Self-contained art-direction prototypes intentionally use inline CSS (<style>).
+HTML_DJLINT_FILTER_REGEX_EXCLUDE: (docs/design/art-directions/)
 
 COPYPASTE_JSCPD_ARGUMENTS: '--min-lines 20 --min-tokens 150 --threshold 5'
 
