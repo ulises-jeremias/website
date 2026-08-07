@@ -30,7 +30,7 @@ If these paths are ever wired into Astro/`pnpm preview`, use that host; until th
 ### Prototypes
 
 | Direction                                   | Path                                                                   | Extra world         |
-| ------------------------------------------- | ---------------------------------------------------------------------- | ------------------- |
+|---------------------------------------------|------------------------------------------------------------------------|---------------------|
 | **A** Editorial Workshop / Field Guide      | [`A-editorial-workshop/index.html`](./A-editorial-workshop/index.html) | HorneroConfig       |
 | **B** Technical Atlas / Constructed Systems | [`B-technical-atlas/index.html`](./B-technical-atlas/index.html)       | Agentic Workstation |
 | **C** Living Workbench                      | [`C-living-workbench/index.html`](./C-living-workbench/index.html)     | Create Awesome      |
@@ -40,7 +40,7 @@ Each file includes anchor screens: `#home-desktop` · `#home-worlds` · `#toolki
 ## Comparison matrix
 
 | Criterion                     | Direction A · Editorial Workshop                                      | Direction B · Technical Atlas                                                       | Direction C · Living Workbench                                                 |
-| ----------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+|-------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 | **Personal identity**         | **High** — serif masthead, marginal metaphor, human field-guide voice | **Med** — clear name/role in modules; colder, more system than person               | **High** — warm paper persona + instrument panel; status as craft, not chrome  |
 | **Technical depth**           | **Med** — annotated plate + install notes; depth is literary          | **High** — coordinates, topology, exploded anatomy, SVG distribution, 4-layer stack | **High** — causal toolkit pipeline + realistic CLI; denser instrument language |
 | **Distinctiveness**           | **High** — notebook/editorial grammar vs. current card SaaS           | **High** — atlas/grid language; least like a portfolio template                     | **High** — dual surface (paper + dark panels); sticky stage narrative          |

@@ -7,7 +7,7 @@
 ## Repository snapshot
 
 | Item            | Value                                        |
-| --------------- | -------------------------------------------- |
+|-----------------|----------------------------------------------|
 | HEAD            | `1c47467` (i18n English sweep after PR #318) |
 | Branch          | `design/uiux-audit-and-foundation`           |
 | Framework       | Astro 7 static, pnpm                         |
@@ -23,7 +23,7 @@
 Actual CSS loading:
 
 | Surface              | Imports                                                                             |
-| -------------------- | ----------------------------------------------------------------------------------- |
+|----------------------|-------------------------------------------------------------------------------------|
 | `/`                  | `tokens.css` + `home.css` only                                                      |
 | SectionLayout worlds | **none** of the design-system entry (rely on hard-coded fallbacks in component CSS) |
 | `/dotfiles`          | `dotfiles.css` only                                                                 |
@@ -38,7 +38,7 @@ Actual CSS loading:
 ### P0.3 — Competing global shells
 
 | Shell              | Used on              | Brand                  | Nav                                       |
-| ------------------ | -------------------- | ---------------------- | ----------------------------------------- |
+|--------------------|----------------------|------------------------|-------------------------------------------|
 | `Header.astro`     | `/`                  | `UJ` + Ulises Jeremias | Home, Blog, GitHub, Contact               |
 | `SiteHeader.astro` | SectionLayout worlds | `⬢ Digital Nest`       | All worlds (desktop + mobile details)     |
 | Dotfiles bespoke   | `/dotfiles`          | `◉ ulises-jeremias`    | Inicio / Blog / dotfiles (mixed language) |
@@ -73,7 +73,7 @@ Still visible after “English sweep” commits:
 ### P0.8 — Duplicated facts drift
 
 | Fact                 | Locations                                                                          | Conflict |
-| -------------------- | ---------------------------------------------------------------------------------- | -------- |
+|----------------------|------------------------------------------------------------------------------------|----------|
 | Agent Toolkit skills | home hero SVG / home data / workstation pages → **52**; toolkit page/data → **61** | Drift    |
 
 ## What to preserve
@@ -90,7 +90,7 @@ Captured production preview (`pnpm build` + `pnpm preview`) at 1440 / 1024 / 768
 ## Route UX audit (severity)
 
 | Route                  | Purpose in 5s?                      | Severity     | Primary problems                                                              |
-| ---------------------- | ----------------------------------- | ------------ | ----------------------------------------------------------------------------- |
+|------------------------|-------------------------------------|--------------|-------------------------------------------------------------------------------|
 | `/`                    | Partial (bio yes, worlds buried)    | **Critical** | SaaS grammar; card grids; nest diagram = rounded modules; header lacks worlds |
 | `/dotfiles`            | Weak (identity strong, story mixed) | **High**     | Separate shell; ES/EN mix; Epic F; placeholder gallery SVGs; pill overload    |
 | `/agentic-workstation` | Medium                              | **High**     | Epic G eyebrow; radial glow cyber look; LayerCard grid; 52-skill drift        |
@@ -108,7 +108,7 @@ Captured production preview (`pnpm build` + `pnpm preview`) at 1440 / 1024 / 768
 - **DONE — VERIFIED:** #31 A-01, #40 B-01, #41 B-02, #68 D-02 (metadata helpers exist) — with caveats
 - **IMPLEMENTED — UX FAILED:** #86 E-03 (closed without human design review), #69 D-03 (layout exists, over-constrains), F-03..F-07 closed design tasks with card/pill UX
 - **PARTIALLY IMPLEMENTED:** Epics #20–#28 content/routes exist; design AC mostly unmet
-- **NOT STARTED:** Most H-* design issues (#131–#167); N-* pipeline; much of O-* QA
+- **NOT STARTED:** Most H-*design issues (#131–#167); N-* pipeline; much of O-* QA
 - **NEEDS HUMAN DESIGN APPROVAL:** #51 C-02 (prototypes), #52 C-03 (selection gate)
 - **Leave closed + follow-up:** #53 C-04, #54 C-05 token files exist — re-validate after art-direction selection
 
