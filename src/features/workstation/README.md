@@ -6,7 +6,7 @@ Domain: **Agentic Workstation — Personal DX graph** (`HorneroConfig` optional 
 
 ## Structure
 
-```
+```text
 workstation/
 ├── components/
 │   ├── EcosystemDiagram.astro   # Personal DX graph SVG

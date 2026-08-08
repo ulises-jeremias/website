@@ -1,7 +1,7 @@
 # Homepage visual gate — SHIP AUTHORIZED / FORMAL REVIEW OPEN
 
-**Branch:** `feat/final-digital-nest-production`  
-**Base:** `f05db66` (`main` / #322 ZIP fidelity)  
+**Branch:** `feat/final-digital-nest-production`
+**Base:** `f05db66` (`main` / #322 ZIP fidelity)
 **Status:** Product owner authorized merge to `main` without blocking on this gate. Golden Playwright snapshots intentionally **not** updated for this ship. Formal APPROVED / REJECTED reply still welcome for golden refresh and #319 acceptance.
 
 ## Comparison package

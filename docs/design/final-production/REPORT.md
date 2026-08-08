@@ -1,10 +1,10 @@
 # Digital Nest — Final Production Report
 
-**Branch:** `feat/final-digital-nest-production`  
-**Base:** `main` @ `f05db66` (#322 ZIP synthwave fidelity)  
-**Epic:** [#319](https://github.com/ulises-jeremias/website/issues/319) — stays OPEN until human homepage/product sign-off  
-**Art direction:** Synthwave Systems Atlas (#52 CLOSED — do not reopen)  
-**Canonical host:** `https://www.ulises-jeremias.dev/`  
+**Branch:** `feat/final-digital-nest-production`
+**Base:** `main` @ `f05db66` (#322 ZIP synthwave fidelity)
+**Epic:** [#319](https://github.com/ulises-jeremias/website/issues/319) — stays OPEN until human homepage/product sign-off
+**Art direction:** Synthwave Systems Atlas (#52 CLOSED — do not reopen)
+**Canonical host:** `https://www.ulises-jeremias.dev/`
 **Report date:** 2026-08-07
 
 ## Verification

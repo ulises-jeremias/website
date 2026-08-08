@@ -4,7 +4,7 @@
 
 ## Structure
 
-```
+```text
 dotfiles/
 ├── components/
 │   ├── DotfilesNarrative.astro       # Narrative + verified fact strip
