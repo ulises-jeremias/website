@@ -15,7 +15,7 @@ Reference: `docs/design/final-production/reference-comparison/reference.png`
 ## Cross-cutting findings
 
 | Gap                                                               | Evidence                                                                                                                               |
-|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Project worlds are ZIP neon **cards**, not reference **dioramas** | `ProjectWorld.astro` uses `sizes="88px"`; `home.css` sets `.atlas-world { block-size: 6.75rem }` and `.atlas-world__visual { 5.5rem }` |
 | Magic inventory counts live in copy                               | `project-worlds.ts` toolkit description hardcodes `61 skills · 16 agents…`; same string in NestStatus                                  |
 | Create Awesome install URL 404s                                   | `create-vlang-app.vercel.app` → 404; canonical is `create-awesome-vlang-app.vercel.app`                                                |
@@ -139,7 +139,7 @@ Reference: `docs/design/final-production/reference-comparison/reference.png`
 ## Provenance policy (adopted)
 
 | Kind                       | Use                                             |
-|----------------------------|-------------------------------------------------|
+| -------------------------- | ----------------------------------------------- |
 | `CANONICAL_PROJECT_SOURCE` | Current repo HEAD / catalogs                    |
 | `PUBLIC_PROFILE_SOURCE`    | Approved profile + public professional presence |
 | `GENERATED_GITHUB_SOURCE`  | Build-time GitHub sync                          |
@@ -153,7 +153,7 @@ Volatile counts must not be hand-maintained in multiple files.
 ## Backlog stance
 
 | Issue                  | Stance                                 |
-|------------------------|----------------------------------------|
+| ---------------------- | -------------------------------------- |
 | #52                    | CLOSED — art direction locked          |
 | #319                   | OPEN — parent for final production     |
 | #86                    | OPEN until homepage visual sign-off    |

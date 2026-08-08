@@ -7,7 +7,7 @@
 ## Comparison package
 
 | Artifact                  | Path                                                                         |
-|---------------------------|------------------------------------------------------------------------------|
+| ------------------------- | ---------------------------------------------------------------------------- |
 | Reference                 | `docs/design/final-production/reference-comparison/reference.png`            |
 | Production before (crawl) | `docs/design/final-production/audit/home/1440.png` · `390.png`               |
 | Candidate 1440            | `docs/design/final-production/reference-comparison/home-desktop.png`         |
