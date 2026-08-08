@@ -1,7 +1,16 @@
 ---
-import { capabilityNodes, inventoryCommit, inventoryVerifiedAt, skillDomains, toolkitStats } from '../data/index.js';
+import {
+  capabilityNodes,
+  inventoryCommit,
+  inventoryProvenance,
+  inventoryVerifiedAt,
+  inventoryVersionLabel,
+  skillDomains,
+  toolkitStats,
+} from '../data/index.js';
 
 const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
+const coreCount = skillDomains.find((d) => d.id === 'core')?.count ?? 0;
 ---
 
 <section class="cap-anatomy" aria-labelledby="cap-anatomy-title">
@@ -9,8 +18,11 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
     <p class="cap-anatomy__eyebrow">Capability anatomy</p>
     <h2 id="cap-anatomy-title">Skills · agents · loops · packs · plugins · MCP</h2>
     <p class="cap-anatomy__lede">
-      One catalog, six capability families. Counts verified against agent-toolkit
-      <code>{inventoryCommit}</code> ({inventoryVerifiedAt}) — inventory facts, not telemetry.
+      One catalog, six capability families. Select a family for real examples from the generated catalogs —
+      <code>{inventoryVersionLabel}</code>
+      ·
+      <code>{inventoryCommit}</code>
+      ({inventoryVerifiedAt}). Static HTML stays useful without script.
     </p>
   </header>
 
@@ -25,6 +37,63 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
       ))
     }
   </ul>
+
+  <form class="cap-anatomy__explorer" aria-labelledby="cap-explorer-title">
+    <div class="cap-anatomy__explorer-head">
+      <h3 id="cap-explorer-title">Family explorer</h3>
+      <p class="cap-anatomy__provenance">{inventoryProvenance}</p>
+    </div>
+
+    <div class="cap-anatomy__tabs" role="radiogroup" aria-label="Capability family">
+      {
+        capabilityNodes.map((node, index) => (
+          <>
+            <input
+              class="cap-anatomy__radio"
+              type="radio"
+              name="cap-family"
+              id={`cap-${node.id}`}
+              value={node.id}
+              checked={index === 0}
+            />
+            <label class="cap-anatomy__tab" for={`cap-${node.id}`} style={`--node-color: ${node.color}`}>
+              <span class="cap-anatomy__tab-count">{node.count}</span>
+              <span class="cap-anatomy__tab-name">{node.title}</span>
+            </label>
+          </>
+        ))
+      }
+    </div>
+
+    {
+      capabilityNodes.map((node) => (
+        <div class={`cap-anatomy__panel cap-anatomy__panel--${node.id}`} data-family={node.id}>
+          <div class="cap-anatomy__panel-intro" style={`--node-color: ${node.color}`}>
+            <p class="cap-anatomy__summary">{node.summary}</p>
+            <p class="cap-anatomy__detail">{node.detail}</p>
+            <a class="cap-anatomy__source" href={node.href} target="_blank" rel="noreferrer">
+              Browse {node.title.toLowerCase()} on GitHub
+            </a>
+          </div>
+          <ul class="cap-anatomy__examples" aria-label={`${node.title} examples`}>
+            {node.examples.map((example) => (
+              <li>
+                <span class="cap-anatomy__ex-id">{example.id}</span>
+                <span class="cap-anatomy__ex-name">{example.name}</span>
+                <span class="cap-anatomy__ex-desc">{example.description}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+
+    <noscript>
+      <p class="cap-anatomy__noscript">
+        Without progressive enhancement, every family panel below remains visible with its catalog examples.
+      </p>
+    </noscript>
+  </form>
 
   <div class="cap-anatomy__stage" role="img" aria-label="Capability anatomy diagram linking six catalog families">
     <svg class="cap-anatomy__svg" viewBox="0 0 960 320" role="presentation" aria-hidden="true">
@@ -53,28 +122,13 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
         catalog
       </text>
       <text x="480" y="174" text-anchor="middle" fill="#1cefff" font-size="11" font-family="ui-monospace, monospace">
-        {totalSkills} · 9 domains
+        {totalSkills} · {skillDomains.length} domains
       </text>
     </svg>
-
-    <ol class="cap-anatomy__nodes">
-      {
-        capabilityNodes.map((node) => (
-          <li style={`--node-color: ${node.color}`}>
-            <a href={node.href} target="_blank" rel="noreferrer">
-              <span class="cap-anatomy__count">{node.count}</span>
-              <span class="cap-anatomy__name">{node.title}</span>
-              <span class="cap-anatomy__summary">{node.summary}</span>
-              <span class="cap-anatomy__detail">{node.detail}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ol>
   </div>
 
   <div class="cap-anatomy__domains" aria-labelledby="skill-domains-title">
-    <h3 id="skill-domains-title">Skill domains — core is 8, not 6</h3>
+    <h3 id="skill-domains-title">Skill domains — core is {coreCount}, not 6</h3>
     <ul role="list">
       {
         skillDomains.map((domain) => (
@@ -157,6 +211,178 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
     font-size: 0.72rem;
   }
 
+  .cap-anatomy__explorer {
+    margin-block-end: 1.25rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 35%, transparent);
+    background:
+      radial-gradient(ellipse at 12% 0%, color-mix(in srgb, var(--nest-magenta) 14%, transparent), transparent 45%),
+      color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .cap-anatomy__explorer-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-block-end: 0.85rem;
+  }
+
+  .cap-anatomy__explorer-head h3 {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 1rem;
+  }
+
+  .cap-anatomy__provenance {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--nest-cyan);
+  }
+
+  .cap-anatomy__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+  }
+
+  .cap-anatomy__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .cap-anatomy__tab {
+    --node-color: var(--nest-violet);
+    display: inline-grid;
+    gap: 0.1rem;
+    min-block-size: 44px;
+    min-inline-size: 5.25rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-950) 80%, transparent);
+    clip-path: var(--clip-corner-sm);
+    cursor: pointer;
+  }
+
+  .cap-anatomy__tab-count {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--node-color);
+  }
+
+  .cap-anatomy__tab-name {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .cap-anatomy__radio:focus-visible + .cap-anatomy__tab {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .cap-anatomy__radio:checked + .cap-anatomy__tab {
+    border-color: var(--node-color);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--node-color) 45%, transparent);
+  }
+
+  .cap-anatomy__panel {
+    display: none;
+    gap: 0.9rem;
+  }
+
+  .cap-anatomy__explorer:has(#cap-skills:checked) .cap-anatomy__panel--skills,
+  .cap-anatomy__explorer:has(#cap-agents:checked) .cap-anatomy__panel--agents,
+  .cap-anatomy__explorer:has(#cap-loops:checked) .cap-anatomy__panel--loops,
+  .cap-anatomy__explorer:has(#cap-packs:checked) .cap-anatomy__panel--packs,
+  .cap-anatomy__explorer:has(#cap-plugins:checked) .cap-anatomy__panel--plugins,
+  .cap-anatomy__explorer:has(#cap-mcp:checked) .cap-anatomy__panel--mcp {
+    display: grid;
+  }
+
+  @supports not selector(:has(*)) {
+    .cap-anatomy__panel {
+      display: grid;
+      margin-block-end: 1rem;
+      padding-block-end: 1rem;
+      border-block-end: 1px solid var(--color-border);
+    }
+  }
+
+  .cap-anatomy__panel-intro {
+    --node-color: var(--nest-violet);
+    display: grid;
+    gap: 0.35rem;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 3px solid var(--node-color);
+  }
+
+  .cap-anatomy__summary {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .cap-anatomy__detail {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: color-mix(in srgb, var(--node-color) 70%, var(--color-text-muted));
+  }
+
+  .cap-anatomy__source {
+    color: var(--nest-cyan);
+    font-size: 0.85rem;
+  }
+
+  .cap-anatomy__examples {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cap-anatomy__examples li {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-950) 72%, transparent);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .cap-anatomy__ex-id {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: var(--nest-magenta);
+  }
+
+  .cap-anatomy__ex-name {
+    font-weight: 650;
+    font-size: 0.9rem;
+  }
+
+  .cap-anatomy__ex-desc {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .cap-anatomy__noscript {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+  }
+
   .cap-anatomy__stage {
     position: relative;
     padding: 1rem;
@@ -171,71 +397,8 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
   .cap-anatomy__svg {
     display: block;
     width: min(100%, 52rem);
-    margin: 0 auto 1rem;
+    margin: 0 auto;
     max-block-size: 14rem;
-  }
-
-  .cap-anatomy__nodes {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    counter-reset: cap-node;
-  }
-
-  .cap-anatomy__nodes li {
-    --node-color: var(--nest-violet);
-  }
-
-  .cap-anatomy__nodes a {
-    display: grid;
-    gap: 0.35rem;
-    min-block-size: 100%;
-    padding: 0.9rem;
-    border: 1px solid color-mix(in srgb, var(--node-color) 38%, transparent);
-    border-inline-start: 3px solid var(--node-color);
-    background: color-mix(in srgb, var(--nest-midnight-950) 70%, transparent);
-    clip-path: var(--clip-corner-md);
-    color: inherit;
-    text-decoration: none;
-    transition:
-      border-color var(--motion-duration-feedback, 160ms) ease,
-      transform var(--motion-duration-feedback, 160ms) ease;
-  }
-
-  .cap-anatomy__nodes a:hover,
-  .cap-anatomy__nodes a:focus-visible {
-    border-color: var(--node-color);
-    transform: translateY(-2px);
-    outline: 2px solid var(--node-color);
-    outline-offset: 2px;
-  }
-
-  .cap-anatomy__count {
-    font-family: var(--font-mono);
-    font-size: 1.2rem;
-    color: var(--node-color);
-  }
-
-  .cap-anatomy__name {
-    font-weight: 650;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-size: 0.92rem;
-  }
-
-  .cap-anatomy__summary,
-  .cap-anatomy__detail {
-    color: var(--color-text-muted);
-    font-size: 0.86rem;
-  }
-
-  .cap-anatomy__detail {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: color-mix(in srgb, var(--node-color) 70%, var(--color-text-muted));
   }
 
   .cap-anatomy__domains {
@@ -287,7 +450,7 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .cap-anatomy__nodes,
+    .cap-anatomy__examples,
     .cap-anatomy__domains ul {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -299,20 +462,9 @@ const totalSkills = skillDomains.reduce((sum, domain) => sum + domain.count, 0);
 
   @media (width < 560px) {
     .cap-anatomy__stats,
-    .cap-anatomy__nodes,
+    .cap-anatomy__examples,
     .cap-anatomy__domains ul {
       grid-template-columns: 1fr;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cap-anatomy__nodes a {
-      transition: none;
-    }
-
-    .cap-anatomy__nodes a:hover,
-    .cap-anatomy__nodes a:focus-visible {
-      transform: none;
     }
   }
 </style>

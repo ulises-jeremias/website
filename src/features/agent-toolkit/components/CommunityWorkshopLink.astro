@@ -1,0 +1,78 @@
+---
+import { communityCrossLink } from '../data/index.js';
+---
+
+<section class="toolkit-community" aria-labelledby="toolkit-community-title">
+  <div class="toolkit-community__inner">
+    <p class="toolkit-community__eyebrow">Digital Nest</p>
+    <h2 id="toolkit-community-title">{communityCrossLink.title}</h2>
+    <p>{communityCrossLink.summary}</p>
+    <a class="toolkit-community__cta" href={communityCrossLink.href}>{communityCrossLink.cta}</a>
+  </div>
+</section>
+
+<style>
+  .toolkit-community {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .toolkit-community__inner {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 40%, transparent);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--nest-magenta) 10%, transparent), transparent 55%),
+      color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .toolkit-community__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .toolkit-community h2 {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .toolkit-community p {
+    margin: 0;
+    max-inline-size: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .toolkit-community__cta {
+    justify-self: start;
+    margin-block-start: 0.35rem;
+    min-block-size: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 50%, transparent);
+    color: var(--nest-cyan);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .toolkit-community__cta:hover,
+  .toolkit-community__cta:focus-visible {
+    border-color: var(--nest-magenta);
+    color: var(--nest-magenta);
+    outline: 2px solid var(--nest-magenta);
+    outline-offset: 2px;
+  }
+</style>

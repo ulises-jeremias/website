@@ -84,7 +84,8 @@ export const routes: RouteMeta[] = [
     id: 'dotfiles',
     path: '/dotfiles',
     title: 'HorneroConfig — Dotfiles & Workstation OS',
-    description: 'HorneroConfig: reproducible operating layer — Hyprland, Quickshell, Smart Colors, chezmoi.',
+    description:
+      'HorneroConfig: Hyprland + Quickshell + Kitty + Zsh, chezmoi, appearance themes, and Smart Colors wallpaper→scheme pipeline.',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'dotfiles',
@@ -97,7 +98,8 @@ export const routes: RouteMeta[] = [
     id: 'workstation',
     path: '/agentic-workstation',
     title: 'Agentic Workstation — Machine Provisioning',
-    description: 'One command to an AI-native workstation: provisioning, direnv, LLM policy.',
+    description:
+      'Thin AI-native workstation: chezmoi provisioning, profile selector, LLM policy — Personal DX graph with Agentic Harness runtime.',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'workstation',
@@ -148,8 +150,9 @@ export const routes: RouteMeta[] = [
   {
     id: 'community',
     path: '/community',
-    title: 'Community — Shared Workshop',
-    description: 'Create-Awesome Discord and contributor pathways — shared workshop.',
+    title: 'Community — Digital Nest Workshop',
+    description:
+      'Shared Discord workshop for HorneroConfig, agentic tooling, Create Awesome, V ecosystem work, and incubating experiments — not a Create Awesome–only community.',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'community',
@@ -226,8 +229,8 @@ for (const route of routes) {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Default site URL when `import.meta.env.SITE` / env is not configured. */
-export const DEFAULT_SITE_URL = 'https://ulises-jeremias.github.io';
+/** Canonical production host — www is preferred; apex should redirect in hosting. */
+export const DEFAULT_SITE_URL = 'https://www.ulises-jeremias.dev';
 
 /** Resolve site base URL. Prefers explicit arg, then Astro SITE, then env, then default. */
 export function getSiteUrl(explicit?: string): string {

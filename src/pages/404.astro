@@ -2,10 +2,143 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 ---
 
-<SectionLayout title="404 — Page not found" description="Page not found — Digital Nest">
-  <div style="text-align:center; padding:4rem 0;">
-    <h1>404 — Nest not found</h1>
-    <p>The page you’re looking for doesn’t exist yet. The hornero hasn’t built this chamber.</p>
-    <p><a href="/">Back to nest →</a> · <a href="/agent-toolkit">Agent Toolkit</a> · <a href="/blog">Blog</a></p>
-  </div>
+<SectionLayout
+  title="404 — Signal lost"
+  description="World not found — return to Digital Nest"
+  theme="home"
+  world="404"
+  currentPath="/404"
+  noIndex={true}
+>
+  <section class="lost-world" aria-labelledby="lost-title">
+    <p class="lost-world__eyebrow">404 · Digital Nest</p>
+    <p class="lost-world__signal" aria-hidden="true">SIGNAL LOST</p>
+    <h1 id="lost-title" class="lost-world__title">WORLD NOT FOUND</h1>
+    <p class="lost-world__lead">
+      This coordinate is outside the Digital Nest network — an isolated platform with no uplink.
+    </p>
+    <div class="lost-world__platform" aria-hidden="true">
+      <span class="lost-world__glow"></span>
+      <span class="lost-world__island"></span>
+    </div>
+    <nav class="lost-world__actions" aria-label="Recovery">
+      <a class="lost-world__cta lost-world__cta--primary" href="/">Return to Digital Nest</a>
+      <a class="lost-world__cta" href="/#project-atlas">Explore Worlds</a>
+      <a class="lost-world__cta" href="/blog">Blog</a>
+      <a class="lost-world__cta" href="/community">Community</a>
+    </nav>
+  </section>
 </SectionLayout>
+
+<style>
+  .lost-world {
+    width: min(100% - 2 * var(--section-padding-x), 42rem);
+    margin: 0 auto;
+    padding-block: clamp(3rem, 12vw, 6rem);
+    text-align: center;
+  }
+  .lost-world__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .lost-world__signal {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: clamp(0.85rem, 2.4vw, 1rem);
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--nest-violet) 85%, white);
+    text-shadow: 0 0 18px color-mix(in srgb, var(--nest-violet) 45%, transparent);
+    animation: lost-world-pulse 2.8s ease-in-out infinite;
+  }
+  .lost-world__title {
+    margin: 0.65rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    letter-spacing: 0.08em;
+    color: var(--nest-magenta);
+    text-shadow: 0 0 28px color-mix(in srgb, var(--nest-magenta) 40%, transparent);
+  }
+  .lost-world__lead {
+    margin: 0.85rem auto 0;
+    max-width: 42ch;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .lost-world__platform {
+    position: relative;
+    width: 8rem;
+    height: 5rem;
+    margin: 2rem auto;
+  }
+  .lost-world__glow {
+    position: absolute;
+    inset: 40% 10% 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--nest-cyan) 45%, transparent), transparent 70%);
+    filter: blur(8px);
+  }
+  .lost-world__island {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 4.5rem;
+    height: 2.2rem;
+    translate: -50% 0;
+    border-radius: 40% 40% 35% 35%;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--nest-violet) 55%, #1a1028), #0b0614);
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 40%, transparent);
+    box-shadow: 0 12px 24px color-mix(in srgb, #000 55%, transparent);
+  }
+  .lost-world__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .lost-world__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    clip-path: var(--clip-corner-sm);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .lost-world__cta--primary {
+    border-color: color-mix(in srgb, var(--nest-magenta) 60%, transparent);
+    color: var(--nest-pink);
+  }
+  .lost-world__cta:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  @keyframes lost-world-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lost-world__signal {
+      animation: none;
+      opacity: 0.9;
+    }
+    .lost-world__glow {
+      filter: none;
+    }
+  }
+</style>

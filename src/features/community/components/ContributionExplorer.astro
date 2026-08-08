@@ -1,0 +1,207 @@
+---
+import { contributionOpportunities, interestFilters, projectsForInterest } from '../data/index.js';
+---
+
+<section id="find-something" class="cm-explore" aria-labelledby="cm-explore-title" data-testid="contribution-explorer">
+  <header class="cm-explore__header">
+    <p class="cm-explore__eyebrow">Find something to build</p>
+    <h2 id="cm-explore-title" class="cm-explore__title">Explore by interest</h2>
+    <p class="cm-explore__lead">
+      Filter by what you enjoy. Searches span HorneroConfig, Workstation, Harness, Agent Toolkit, and the Create Awesome
+      organizations — not only one CLI family, and not the website repo as the default dump.
+    </p>
+  </header>
+
+  <div class="cm-explore__filters" role="list" aria-label="Interest filters">
+    {
+      interestFilters.map((filter) => (
+        <a class="cm-explore__chip" role="listitem" href={`#interest-${filter.id}`} title={filter.hint}>
+          {filter.label}
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="cm-explore__ops">
+    {
+      contributionOpportunities.map((op) => (
+        <article class="cm-explore__op" aria-labelledby={`op-${op.id}`}>
+          <h3 id={`op-${op.id}`} class="cm-explore__op-title">
+            {op.title}
+          </h3>
+          <p class="cm-explore__op-desc">{op.description}</p>
+          {op.labels.length > 0 ? (
+            <p class="cm-explore__op-labels">{op.labels.map((l) => `#${l}`).join(' · ')}</p>
+          ) : null}
+          <a class="cm-explore__op-link" href={op.href} target="_blank" rel="noopener noreferrer">
+            Open on GitHub
+          </a>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="cm-explore__interests">
+    {
+      interestFilters.map((filter) => {
+        const projects = projectsForInterest(filter.id);
+        return (
+          <section
+            id={`interest-${filter.id}`}
+            class="cm-explore__interest"
+            aria-labelledby={`interest-title-${filter.id}`}
+          >
+            <h3 id={`interest-title-${filter.id}`} class="cm-explore__interest-title">
+              {filter.label}
+            </h3>
+            <p class="cm-explore__interest-hint">{filter.hint}</p>
+            {projects.length === 0 ? (
+              <p class="cm-explore__empty">No active workshop projects tagged yet — try Discord or nearby interests.</p>
+            ) : (
+              <ul class="cm-explore__interest-list">
+                {projects.map((p) => (
+                  <li>
+                    {p.repo ? (
+                      <a href={`https://github.com/${p.repo}`} target="_blank" rel="noopener noreferrer">
+                        {p.name}
+                      </a>
+                    ) : (
+                      <span>{p.name}</span>
+                    )}
+                    {p.worldPath ? (
+                      <>
+                        {' '}
+                        · <a href={p.worldPath}>world</a>
+                      </>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        );
+      })
+    }
+  </div>
+</section>
+
+<style>
+  .cm-explore {
+    padding: 1.75rem 0;
+    scroll-margin-top: 5rem;
+  }
+  .cm-explore__eyebrow {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .cm-explore__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 800;
+    color: var(--color-text);
+  }
+  .cm-explore__lead {
+    margin: 0.55rem 0 0;
+    max-width: 70ch;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .cm-explore__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .cm-explore__chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 0.75rem;
+    clip-path: var(--clip-corner-sm);
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 40%, transparent);
+    color: var(--nest-cyan);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 650;
+  }
+  .cm-explore__chip:hover,
+  .cm-explore__chip:focus-visible {
+    border-color: var(--nest-magenta);
+    color: var(--nest-pink);
+  }
+  .cm-explore__chip:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .cm-explore__ops {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (width >= 800px) {
+    .cm-explore__ops {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .cm-explore__op {
+    padding: 1rem;
+    clip-path: var(--clip-corner-sm);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+  }
+  .cm-explore__op-title {
+    margin: 0;
+    font-size: 1.02rem;
+    color: var(--color-text);
+  }
+  .cm-explore__op-desc,
+  .cm-explore__op-labels {
+    margin: 0.4rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .cm-explore__op-link {
+    display: inline-flex;
+    margin-top: 0.7rem;
+    color: var(--nest-cyan);
+    font-weight: 700;
+    font-size: 0.88rem;
+  }
+  .cm-explore__interests {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+  .cm-explore__interest {
+    scroll-margin-top: 5rem;
+    padding: 0.85rem 1rem;
+    border-left: 2px solid color-mix(in srgb, var(--nest-magenta) 55%, transparent);
+  }
+  .cm-explore__interest-title {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+  .cm-explore__interest-hint,
+  .cm-explore__empty {
+    margin: 0.3rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.88rem;
+  }
+  .cm-explore__interest-list {
+    margin: 0.45rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+  .cm-explore__interest-list a {
+    color: var(--nest-cyan);
+  }
+</style>

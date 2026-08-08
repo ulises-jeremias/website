@@ -8,8 +8,11 @@ import ProvisioningSection from '@/features/workstation/components/ProvisioningS
 import DoctorChecks from '@/features/workstation/components/DoctorChecks.astro';
 import ToolkitRationale from '@/features/workstation/components/ToolkitRationale.astro';
 import ThinWorkstationBadge from '@/features/workstation/components/ThinWorkstationBadge.astro';
+import WorkstationAtlas from '@/features/workstation/components/WorkstationAtlas.astro';
+import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 
 const meta = getRouteMeta('/agentic-workstation')!;
+const toolkitInventory = inventoryStrip();
 ---
 
 <SectionLayout
@@ -19,40 +22,42 @@ const meta = getRouteMeta('/agentic-workstation')!;
   description={meta.description}
   theme="workstation"
   hero={{
-    eyebrow: 'Epic G · Agentic Workstation · Personal DX graph',
+    eyebrow: 'Agentic Workstation · Personal DX graph',
     title: 'Agentic Workstation — thin machine, fat capabilities',
     description:
-      'Graph-like Personal DX: optional HorneroConfig desktop, Workstation machine (L1), Toolkit capabilities (L1.5), Harness runtime (L2), and project overlay (L3). Provisioning via chezmoi; capabilities live in agent-toolkit.',
+      'Graph-like Personal DX: optional HorneroConfig desktop, Workstation machine (L1), Toolkit capabilities (L1.5), Agentic Harness runtime (L2). Provisioning via chezmoi; capabilities live in agent-toolkit; harness is the persistent workspace — not the Toolkit.',
   }}
 >
   <Fragment slot="hero-actions">
     <div class="ws-hero-actions">
       <ThinWorkstationBadge />
       <div class="ws-hero-cta">
-        <a href="#stack" class="ws-btn ws-btn--primary">Explore layers ↓</a>
+        <a href="#atlas" class="ws-btn ws-btn--primary">Explore stations ↓</a>
         <a href="#provisioning" class="ws-btn ws-btn--ghost">Provisioning &amp; doctor</a>
         <code class="ws-hero-code">chezmoi init --apply ulises-jeremias/agentic-workstation</code>
       </div>
       <nav class="ws-toc" aria-label="On this page">
         <span class="ws-toc__label">On this page</span>
-        <a href="#stack">Stack · layers</a>
+        <a href="#atlas">Atlas · stations</a>
+        <a href="#stack">DX graph</a>
         <a href="#ecosystem">Ecosystem SVG</a>
+        <a href="#layers">Nodes</a>
         <a href="#provisioning">Provisioning</a>
         <a href="#doctor">Health checks</a>
-        <a href="#toolkit">Why toolkit owns capabilities</a>
+        <a href="#toolkit">Why toolkit</a>
+        <a href="/community">Community</a>
       </nav>
     </div>
   </Fragment>
 
   <div class="ws-page">
-    <!-- Narrative -->
     <section class="ws-narrative" aria-labelledby="ws-narrative-title">
       <h2 id="ws-narrative-title" class="ws-narrative__title">A graph, not a forced ladder</h2>
       <p class="ws-narrative__lead">
         The <strong>Digital Nest</strong> Personal DX stack is graph-like. <em>HorneroConfig</em> is an optional desktop surface
         (L0), not a required predecessor. <em>Workstation</em> provisions the machine (L1),
-        <em>agent-toolkit</em> distributes capabilities (L1.5), and the <em>harness/overlay</em> holds memory and run state
-        (L2/L3). The workstation stays <strong>thin</strong>: it ships no embedded
+        <em>agent-toolkit</em> distributes capabilities (L1.5), and <em>Agentic Harness</em> holds persistent memory and run
+        state (L2). The workstation stays <strong>thin</strong>: it ships no embedded
         <code>skills/*</code>, <code>loops/*</code>, or <code>mcp/*</code> — only
         <code>dev-companion/runner</code>. Everything else is delegated to <code>agent-toolkit</code> via
         <code>uv tool install --force agent-toolkit-cli &amp;&amp; agent-toolkit install</code>.
@@ -60,7 +65,7 @@ const meta = getRouteMeta('/agentic-workstation')!;
       <div class="ws-narrative__facts" role="list">
         <div class="ws-fact" role="listitem">
           <span class="ws-fact__k">Dotfiles</span><span class="ws-fact__v"
-            >HorneroConfig · Hyprland + Quickshell · 22 rices · smart-colors</span
+            >HorneroConfig · Hyprland + Quickshell · 12 themes · smart-colors</span
           >
         </div>
         <div class="ws-fact" role="listitem">
@@ -75,24 +80,30 @@ const meta = getRouteMeta('/agentic-workstation')!;
         </div>
         <div class="ws-fact" role="listitem">
           <span class="ws-fact__k">Tooling</span><span class="ws-fact__v"
-            >agent-toolkit · 61 skills · 16 agents · 10 loops · MCP · SKILL.md catalog</span
+            >agent-toolkit · {toolkitInventory} · SKILL.md catalog</span
+          >
+        </div>
+        <div class="ws-fact" role="listitem">
+          <span class="ws-fact__k">Harness</span><span class="ws-fact__v"
+            >agentic-harness · persistent memory · personas · packs · loops</span
           >
         </div>
       </div>
     </section>
 
+    <WorkstationAtlas />
+
     <div id="stack">
       <StackDiagram />
     </div>
 
-    <section class="ws-diagram-wrap" aria-label="Ecosystem diagram — 4 layers inline SVG">
+    <section class="ws-diagram-wrap" aria-label="Ecosystem diagram — Personal DX graph inline SVG">
       <div class="ws-diagram-head">
-        <h2 class="ws-diagram-title">Ecosystem — 4 capas · SVG · midnight identity</h2>
+        <h2 class="ws-diagram-title">Ecosystem — Personal DX graph · midnight identity</h2>
         <p class="ws-diagram-desc">
-          The diagram is the map; the layers below are the territory. HorneroConfig paints the desktop, Workstation
-          provisions the machine (thin), Toolkit distributes every capability, Harness keeps runtime memory. <code
-            >midnight #020617</code
-          > · <code>cyan #22D3EE</code> ·
+          The diagram is the map; the stations below are the territory. HorneroConfig paints the desktop when you want
+          it, Workstation provisions the machine (thin), Toolkit distributes every capability, Agentic Harness keeps
+          runtime memory. <code>midnight #020617</code> · <code>cyan #22D3EE</code> ·
           <code>violet #A78BFA</code> · <code>lime #84CC16</code>.
         </p>
       </div>
@@ -100,9 +111,7 @@ const meta = getRouteMeta('/agentic-workstation')!;
         <EcosystemDiagram />
       </div>
       <p class="ws-diagram-meta">
-        Thin boundary marked after L1 — no embedded capabilities. Accessible inline SVG with <code>role="img"</code>, <code
-          >&lt;title&gt;</code
-        > and <code>&lt;desc&gt;</code>.
+        Thin boundary marked after L1 — no embedded capabilities. Accessible inline SVG with <code>role="img"</code>.
       </p>
     </section>
 
@@ -114,7 +123,6 @@ const meta = getRouteMeta('/agentic-workstation')!;
 
     <ToolkitRationale />
 
-    <!-- CTAs -->
     <section class="ws-ctas" aria-labelledby="ws-ctas-title">
       <h2 id="ws-ctas-title" class="ws-ctas__title">Verified thin workstation — start here</h2>
       <p class="ws-ctas__lead">
@@ -124,7 +132,10 @@ const meta = getRouteMeta('/agentic-workstation')!;
         <div class="ws-cta-card">
           <h3 class="ws-cta-card__title">1 · Provision the machine</h3>
           <pre class="ws-cta-card__code"><code>chezmoi init --apply ulises-jeremias/agentic-workstation</code></pre>
-          <p class="ws-cta-card__desc">Idempotent chezmoi apply · profile-driven (technical / data / ai / minimal).</p>
+          <p class="ws-cta-card__desc">
+            Idempotent chezmoi apply · profiles: technical · non-technical · ai · node · python · data · infra · minimal
+            · custom.
+          </p>
           <a
             href="https://github.com/ulises-jeremias/agentic-workstation"
             target="_blank"
@@ -137,13 +148,13 @@ const meta = getRouteMeta('/agentic-workstation')!;
           <pre
             class="ws-cta-card__code ws-cta-card__code--highlight"><code>uv tool install --force agent-toolkit-cli &amp;&amp; agent-toolkit install</code></pre>
           <p class="ws-cta-card__desc">
-            61 skills · 16 agents · 10 loops · MCP · plugins. Delegated via toolkit — no AUR/pipx fallback.
+            {toolkitInventory}. Delegated via toolkit — no AUR/pipx fallback.
           </p>
           <a
             href="https://github.com/ulises-jeremias/agent-toolkit"
             target="_blank"
             rel="noreferrer"
-            class="ws-cta-card__link">agent-toolkit → 61 skills ↗</a
+            class="ws-cta-card__link">agent-toolkit → capabilities ↗</a
           >
         </div>
         <div class="ws-cta-card">
@@ -160,23 +171,24 @@ agent-toolkit swarm doctor</code></pre>
           >
         </div>
         <div class="ws-cta-card">
-          <h3 class="ws-cta-card__title">4 · Gate LLM policy (before queue)</h3>
+          <h3 class="ws-cta-card__title">4 · Gate LLM policy · open harness</h3>
           <pre class="ws-cta-card__code"><code>dots-devcompanion llm-status</code></pre>
           <p class="ws-cta-card__desc">
-            Machine-level provider allowlist · <code>DOTS_AI_DEVCOMPANION_LLM_ALLOWLIST</code> + <code>STRICT=1</code>.
-            Never invokes model.
+            Machine-level provider allowlist · then run sessions in
+            <strong>Agentic Harness</strong> (persistent workspace / L2 runtime).
           </p>
           <a
-            href="https://github.com/ulises-jeremias/ai-workspace"
+            href="https://github.com/ulises-jeremias/agentic-harness"
             target="_blank"
             rel="noreferrer"
-            class="ws-cta-card__link">ai-workspace → harness runtime ↗</a
+            class="ws-cta-card__link">agentic-harness → runtime workspace ↗</a
           >
         </div>
       </div>
       <p class="ws-ctas__foot">
-        Full docs: <code>docs/ARCHITECTURE.md</code> + <code>docs/AGENT_TOOLKIT.md</code> in agentic-workstation. Tokens from
-        <code>src/styles/tokens.css</code> · layout via <code>SectionLayout</code>.
+        Full docs: <code>docs/ARCHITECTURE.md</code> + <code>docs/AGENT_TOOLKIT.md</code> in agentic-workstation. Workshop
+        &amp; contribution paths:
+        <a href="/community">Community — Digital Nest umbrella</a>.
       </p>
     </section>
   </div>
@@ -287,11 +299,6 @@ agent-toolkit swarm doctor</code></pre>
     border-radius: 0.35rem;
     border: 1px solid var(--color-border);
   }
-  .ws-facts {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
   .ws-fact {
     display: grid;
     grid-template-columns: 160px 1fr;
@@ -346,10 +353,6 @@ agent-toolkit swarm doctor</code></pre>
   .ws-diagram-meta {
     color: var(--color-text-muted);
     font-size: 0.78rem;
-  }
-  .ws-diagram-meta code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    color: var(--color-text-faint);
   }
   .ws-ctas {
     display: flex;
@@ -448,5 +451,13 @@ agent-toolkit swarm doctor</code></pre>
   .ws-ctas__foot code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     color: var(--color-text-faint);
+  }
+  .ws-ctas__foot a {
+    color: var(--world-accent);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ws-ctas__foot a:hover {
+    text-decoration: underline;
   }
 </style>

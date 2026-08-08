@@ -1,14 +1,70 @@
 ---
 /**
+ * BaseHead — charset, viewport, icons, and core SEO/social tags.
+ * Prefer absolute canonical + OG image URLs from the caller (SectionLayout / buildPageSeo).
+ */
+import {
+  DEFAULT_OG_IMAGE,
+  PRODUCTION_SITE_URL,
+  SITE_AUTHOR,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_THEME_COLOR,
+  TWITTER_HANDLE,
+} from '@/data/site.js';
+
+/**
  * @typedef {Object} Props
  * @property {string} title
  * @property {string} [description]
+ * @property {string} [canonical]
+ * @property {string} [ogImage]
+ * @property {boolean} [noIndex]
+ * @property {string} [ogType]
+ * @property {string} [themeColor]
+ * @property {string} [robots]
  */
-const { title, description } = /** @type {Props} */ (Astro.props);
+const {
+  title,
+  description,
+  canonical,
+  ogImage = DEFAULT_OG_IMAGE,
+  noIndex = false,
+  ogType = 'website',
+  themeColor = SITE_THEME_COLOR,
+  robots,
+} = /** @type {Props} */ (Astro.props);
+
+const siteBase = Astro.site?.toString() ?? PRODUCTION_SITE_URL;
+const absoluteOg = ogImage.startsWith('http')
+  ? ogImage
+  : new URL(ogImage.startsWith('/') ? ogImage : `/${ogImage}`, siteBase).toString();
+const robotsContent = robots ?? (noIndex ? 'noindex, nofollow' : 'index, follow');
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content={themeColor} />
+<meta name="author" content={SITE_AUTHOR} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/assets/logo-nest.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="alternate" type="application/rss+xml" title="Ulises Jeremias — Blog" href="/rss.xml" />
 <title>{title}</title>
 {description && <meta name="description" content={description} />}
+{canonical && <link rel="canonical" href={canonical} />}
+<meta name="robots" content={robotsContent} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content={SITE_LOCALE} />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+{description && <meta property="og:description" content={description} />}
+{canonical && <meta property="og:url" content={canonical} />}
+<meta property="og:image" content={absoluteOg} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={TWITTER_HANDLE} />
+<meta name="twitter:creator" content={TWITTER_HANDLE} />
+<meta name="twitter:title" content={title} />
+{description && <meta name="twitter:description" content={description} />}
+<meta name="twitter:image" content={absoluteOg} />

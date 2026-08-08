@@ -1,14 +1,18 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import {
-  ContributionPathways,
+  ActiveWorkshop,
+  ContributionExplorer,
   DiscordCTA,
+  Hero,
   ModerationPrivacy,
-  ProjectFamilies,
   SupportChannels,
+  WorkshopGraph,
   WorkshopNarrative,
+  communityMeta,
 } from '@/features/community';
 import { getRouteMeta } from '@/data/routes';
+
 const meta = getRouteMeta('/community')!;
 ---
 
@@ -18,65 +22,65 @@ const meta = getRouteMeta('/community')!;
   title={meta.title}
   description={meta.description}
   theme="community"
-  hero={{
-    eyebrow: 'Community · shared workshop',
-    title: 'Community — shared workshop that connects every world',
-    description:
-      'The shared workshop connected to every project world. The bench where drafts, reviews, and small PRs become documentation — with Discord for live help and GitHub for the trail.',
-    align: 'left',
-  }}
 >
   <div class="community-page">
+    <Hero />
     <WorkshopNarrative />
     <DiscordCTA />
-    <ProjectFamilies />
-    <ContributionPathways />
+    <WorkshopGraph />
+    <ActiveWorkshop />
+    <ContributionExplorer />
     <SupportChannels />
     <ModerationPrivacy />
+
     <section class="community-closing" aria-labelledby="closing-title">
-      <h2 id="closing-title" class="community-closing__title">Bring a question, leave a link</h2><p
-        class="community-closing__lead"
-      >
-        Whether you fix a typo, add an addon, or review a VSL method — the workshop is open. Start with a labeled issue
-        or ask in <code>#help</code>.
-      </p><div class="community-closing__actions">
+      <h2 id="closing-title" class="community-closing__title">Pick a world. Or just hang out.</h2>
+      <p class="community-closing__lead">
+        Whether you care about Linux rices, agent skills, scaffolding CLIs, V numerics, or something still incubating —
+        the workshop is open. Start in Discord or jump straight to a repository that matches your interests.
+      </p>
+      <div class="community-closing__actions">
         <a
-          href="https://discord.gg/bR5VyATgka"
+          href={communityMeta.discordInviteUrl}
           class="community-closing__cta community-closing__cta--discord"
           target="_blank"
-          rel="noreferrer noopener"
-          aria-label="Join Discord — Create-Awesome workshop (opens in new tab)"
-          >Join Discord →<span class="sr-only"> (opens in new tab)</span></a
-        ><a href="https://github.com/ulises-jeremias/website/issues" class="community-closing__cta">Open an issue →</a
-        ><a href="/blog" class="community-closing__cta community-closing__cta--ghost">Read field notes →</a>
-      </div><p class="community-closing__note">
-        All links verified 2026-08-07 · Invite <code>discord.gg/bR5VyATgka</code> · Code of Conduct <a
-          href="https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md"
-          target="_blank"
-          rel="noreferrer noopener">→</a
+          rel="noopener noreferrer"
+          aria-label="Join the Digital Nest Discord (opens in a new tab)"
         >
+          Join the Discord
+        </a>
+        <a href="#find-something" class="community-closing__cta">Find something to contribute</a>
+        <a href="/projects" class="community-closing__cta community-closing__cta--ghost">Browse projects</a>
+        <a href="/open-source" class="community-closing__cta community-closing__cta--ghost">Open Source evidence</a>
+      </div>
+      <p class="community-closing__note">
+        Invite verified · <code>discord.gg/bR5VyATgka</code> · {communityMeta.communityDistinctNote}
       </p>
     </section>
   </div>
 </SectionLayout>
+
 <style>
   .community-page {
     display: grid;
-    gap: 0.5rem;
-    padding-bottom: 2rem;
-  }
-  .community-closing {
+    gap: 0.25rem;
     max-width: 72rem;
     margin: 0 auto;
-    padding: 1.5rem 0;
+    padding: 0 1rem 2.5rem;
     width: 100%;
+  }
+  @media (width >= 860px) {
+    .community-page {
+      padding-inline: 1.5rem;
+    }
+  }
+  .community-closing {
+    padding: 1.75rem 0 0.5rem;
   }
   .community-closing__title {
     margin: 0;
     font-size: clamp(1.4rem, 3vw, 1.75rem);
     font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
     color: var(--color-text);
   }
   .community-closing__lead {
@@ -84,7 +88,6 @@ const meta = getRouteMeta('/community')!;
     max-width: 62ch;
     color: var(--color-text-muted);
     line-height: 1.6;
-    font-size: 1rem;
   }
   .community-closing__actions {
     display: flex;
@@ -127,7 +130,7 @@ const meta = getRouteMeta('/community')!;
     background: transparent;
   }
   .community-closing__note {
-    margin: 0.75rem 0 0;
+    margin: 0.85rem 0 0;
     color: var(--color-text-faint);
     font-size: 0.85rem;
     line-height: 1.5;
@@ -138,20 +141,5 @@ const meta = getRouteMeta('/community')!;
     background: color-mix(in srgb, var(--nest-violet) 12%, transparent);
     border: 1px solid var(--color-border);
     font-size: 0.85rem;
-  }
-  .community-closing__note a {
-    color: var(--nest-cyan);
-    font-weight: 600;
-  }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>

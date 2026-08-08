@@ -1,10 +1,71 @@
+import { inventoryCounts, inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 import type {
   DoctorCheck,
   LayerMeta,
   ProvisioningStep,
   ToolkitRationalePoint,
   WorkstationIdentity,
+  WorkstationProfile,
 } from '../types/index.js';
+
+/** Canonical chezmoi profiles from agentic-workstation `home/.chezmoidata/profiles.yaml` (HEAD). */
+export const workstationProfiles: WorkstationProfile[] = [
+  {
+    id: 'technical',
+    description: 'Full developer stack (node, python, docker, AI, productivity skills).',
+    groups: [
+      'core',
+      'node',
+      'python',
+      'docker',
+      'ai',
+      'skills_jira',
+      'skills_confluence',
+      'skills_productivity',
+      'swarm',
+    ],
+  },
+  {
+    id: 'non-technical',
+    description: 'Productivity + AI only, no language runtimes.',
+    groups: ['core', 'ai', 'skills_productivity', 'swarm'],
+  },
+  {
+    id: 'ai',
+    description: 'AI agents and productivity tooling, no language runtimes.',
+    groups: ['core', 'ai', 'skills_productivity', 'swarm'],
+  },
+  {
+    id: 'node',
+    description: 'Node.js developer stack.',
+    groups: ['core', 'node', 'skills_productivity'],
+  },
+  {
+    id: 'python',
+    description: 'Python / data developer stack.',
+    groups: ['core', 'python', 'skills_productivity'],
+  },
+  {
+    id: 'data',
+    description: 'Data engineering stack (python + AI + JIRA/Confluence skills).',
+    groups: ['core', 'python', 'ai', 'skills_jira', 'skills_confluence', 'skills_productivity', 'swarm'],
+  },
+  {
+    id: 'infra',
+    description: 'Infrastructure stack (docker + node + python).',
+    groups: ['core', 'docker', 'node', 'python', 'skills_productivity'],
+  },
+  {
+    id: 'minimal',
+    description: 'Core CLI baseline only. Nothing else.',
+    groups: ['core'],
+  },
+  {
+    id: 'custom',
+    description: 'Answer every group question yourself.',
+    groups: [],
+  },
+];
 
 export const workstationIdentity: WorkstationIdentity = {
   midnight: '#020617',
@@ -23,10 +84,10 @@ export const workstationLayers: LayerMeta[] = [
     mapping: 'HorneroConfig / desktop (optional Personal DX surface)',
     accent: '#22D3EE',
     description:
-      'Optional desktop surface in the Personal DX graph — not a required linear predecessor of the workstation. Transforms Linux desktop into a functional workspace via Hyprland + Quickshell + smart-colors when you want the physical nest.',
+      'Optional desktop surface in the Personal DX graph — not a required predecessor of the workstation. Transforms a Linux desktop into a functional workspace via Hyprland + Quickshell + smart-colors when you want the physical nest.',
     responsibilities: [
       'Hyprland / Wayland compositor + Quickshell shell',
-      '22 rices, smart-colors (python-materialyoucolor → dots/smart-colors)',
+      '12 themes, smart-colors (python-materialyoucolor → dots/smart-colors)',
       'chezmoi home/ source state (dotfiles)',
       'Theme-intelligence: light/dark, semantic mapping',
     ],
@@ -45,7 +106,7 @@ export const workstationLayers: LayerMeta[] = [
       'Thin agentic-workstation. Provisions the machine via chezmoi: packages, shell, secrets, LLM policy, and thin dots-* helpers. Delegates all capabilities to agent-toolkit — ships no embedded skills.',
     responsibilities: [
       'chezmoi apply: packages, shell, LLM policy (env.d)',
-      'Profile-driven install (technical / data / ai / minimal)',
+      'Profile-driven install (technical, non-technical, ai, node, python, data, infra, minimal, custom)',
       'dots-* thin helpers (doctor, skills, loop, devcompanion)',
       'dev-companion/runner — workstation-only runtime (kept)',
     ],
@@ -64,11 +125,10 @@ export const workstationLayers: LayerMeta[] = [
     subtitle: 'capabilities · distribution',
     mapping: 'Toolkit / capabilities',
     accent: '#84CC16',
-    description:
-      'Sole capability distribution. agent-toolkit provides 61 skills, 16 agents, 10 loops, MCP templates and 7 profiles via uv. Single source of truth — versioned independently from the workstation.',
+    description: `Sole capability distribution. agent-toolkit provides ${inventoryStrip()}, MCP templates and tool profiles via uv. Single source of truth — versioned independently from the workstation.`,
     responsibilities: [
-      '61 skills (9 domains) + 16 agent personas',
-      '10 loop templates + 7 tool profiles (Claude/Cursor/OpenCode…)',
+      `${inventoryCounts.skills} skills (${inventoryCounts.skillDomains} domains) + ${inventoryCounts.agents} agent personas`,
+      `${inventoryCounts.loops} loop templates + tool profiles (Claude/Cursor/OpenCode…)`,
       'MCP templates + packs/prompts/schemas',
       'Symlink sync via dots-skills (delegated)',
     ],
@@ -83,20 +143,20 @@ export const workstationLayers: LayerMeta[] = [
     id: 'harness',
     index: 3,
     label: 'L2 · RUNTIME',
-    title: 'Harness',
-    subtitle: 'runtime · memory',
-    mapping: 'Harness / runtime',
+    title: 'Agentic Harness',
+    subtitle: 'runtime · persistent workspace',
+    mapping: 'Harness / runtime (L2)',
     accent: '#22D3EE',
     description:
-      'Running instance — the harness that makes AI sessions stateful. Persistent knowledge, personas, packs, and loop execution. Consumes toolkit CLIs; agentic-harness / ai-workspace is the generic baseline.',
+      'Persistent AI workspace and runtime layer — memory, personas, packs, indexed repos, and autonomous loops. Consumes toolkit CLIs; it is not the Toolkit. Canonical repo: ulises-jeremias/agentic-harness.',
     responsibilities: [
       'knowledge/ — persistent memory across sessions',
       'personas/ + packs/ — scope + client context bundles',
       'Loop runs: trace.jsonl, state, isolation worktrees',
       'workspace-context: persona constraints + pack loading',
     ],
-    delivers: ['ai-workspace/knowledge/', 'ai-workspace/personas/ & packs/', 'runs/<id>/trace.jsonl worktrees'],
-    repo: 'ulises-jeremias/ai-workspace → agentic-harness',
+    delivers: ['knowledge/ · personas/ · packs/', 'loops/<name>/runs/*/report.md', 'devcompanion queue artifacts'],
+    repo: 'ulises-jeremias/agentic-harness',
   },
 ];
 
@@ -105,7 +165,7 @@ export const provisioningSteps: ProvisioningStep[] = [
     step: 'Chezmoi apply',
     command: 'chezmoi init --apply ulises-jeremias/agentic-workstation',
     description: 'Bootstraps machine provisioning. Applies home/ source state (shell, packages, configs) idempotently.',
-    note: 'Profile: technical / non-technical / ai / data / infra / minimal / custom (see home/.chezmoidata/profiles.yaml)',
+    note: 'Profiles: technical · non-technical · ai · node · python · data · infra · minimal · custom (home/.chezmoidata/profiles.yaml)',
   },
   {
     step: 'Toolchain',
@@ -135,7 +195,7 @@ export const doctorChecks: DoctorCheck[] = [
     name: 'OS & chezmoi snapshot',
     command: 'dots-doctor',
     description:
-      'Pretty OS, df, chezmoi version/source-path, ai-workspace hint, env.d summary, gh auth state, skill bundle count.',
+      'Pretty OS, df, chezmoi version/source-path, harness workspace path hint, env.d summary, gh auth state, skill bundle count.',
     when: 'Always — human-readable snapshot (default mode)',
   },
   {
@@ -195,7 +255,7 @@ export const toolkitRationale: ToolkitRationalePoint[] = [
 
 export const thinWorkstationVerification = {
   statement:
-    'Thin workstation delegates all capabilities to agent-toolkit via uv tool install --force agent-toolkit-cli && agent-toolkit install. The SKILL.md catalog is provided by the toolkit at runtime. Workstation-only runner logic (dev-companion/runner) is retained.',
+    'Thin workstation delegates all capabilities to agent-toolkit via uv tool install --force agent-toolkit-cli && agent-toolkit install. The SKILL.md catalog is provided by the toolkit at runtime. Workstation-only runner logic (dev-companion/runner) is retained. Agentic Harness (ulises-jeremias/agentic-harness) is the L2 persistent runtime workspace — not Toolkit.',
   references: [
     'docs/ARCHITECTURE.md',
     'docs/AGENT_TOOLKIT.md',

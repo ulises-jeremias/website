@@ -5,6 +5,7 @@ import {
   getWorldById,
   getWorldByPath,
   getWorldBySlug,
+  type ProjectWorld,
   projectWorlds,
   projectWorldSchema,
   validateTaxonomy,
@@ -46,7 +47,7 @@ describe('project-world taxonomy', () => {
   it('featuredWorlds contains exactly the 5 hero worlds', () => {
     expect(featuredWorlds).toHaveLength(5);
     const ids = featuredWorlds.map((w) => w.id);
-    expect(ids).toEqual(['dotfiles', 'workstation', 'toolkit', 'v', 'create-awesome']);
+    expect(ids).toEqual(['dotfiles', 'toolkit', 'workstation', 'v', 'create-awesome']);
   });
 
   it('all featured worlds have subdomain candidates', () => {
@@ -97,7 +98,7 @@ describe('project-world taxonomy', () => {
 
   it('validateTaxonomy detects duplicate path', () => {
     const dup = [...projectWorlds, { ...projectWorlds[0]!, id: 'dup-test' }];
-    const errors = validateTaxonomy(dup as any);
+    const errors = validateTaxonomy(dup as ProjectWorld[]);
     expect(errors.some((e) => e.includes('Duplicate path'))).toBe(true);
   });
 
@@ -125,6 +126,6 @@ describe('project-world taxonomy', () => {
   it('homepage can render worlds in defined priority order', () => {
     // Simulate homepage hero rendering: featuredWorlds in priority order
     const rendered = featuredWorlds.map((w) => w.title);
-    expect(rendered).toEqual(['Dotfiles', 'Agentic Workstation', 'Agent Toolkit', 'V Ecosystem', 'Create Awesome']);
+    expect(rendered).toEqual(['Dotfiles', 'Agent Toolkit', 'Agentic Workstation', 'V Ecosystem', 'Create Awesome']);
   });
 });

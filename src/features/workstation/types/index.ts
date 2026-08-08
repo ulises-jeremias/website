@@ -40,3 +40,13 @@ export interface WorkstationIdentity {
   violet: string;
   lime: string;
 }
+
+/** Canonical profile id from agentic-workstation chezmoi profiles.yaml */
+export type WorkstationProfileId =
+  'technical' | 'non-technical' | 'ai' | 'node' | 'python' | 'data' | 'infra' | 'minimal' | 'custom';
+
+export interface WorkstationProfile {
+  id: WorkstationProfileId;
+  description: string;
+  groups: string[];
+}

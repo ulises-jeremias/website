@@ -1,50 +1,69 @@
 ---
-import { variants } from '../data/index.js';
+import { catalogTotals, variants } from '../data/index.js';
+
+const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
+  templates.filter((t) => t.featured).concat(templates.filter((t) => !t.featured).slice(0, 4));
 ---
 
 <section aria-labelledby="ca-variants-title" class="ca-variants" data-testid="ca-variants">
   <h2 id="ca-variants-title">Family — three runtimes, one composition model</h2>
   <p class="ca-variants__intro">
     Same mental model across Node, Python, and V: pick a <code>template</code>, add <code>addons</code>. Real files, no
-    hidden runtime. Catalog counts verified: CNA 10+53, CPA 6+18, CVA 7+11.
+    hidden runtime. Totals from sourced catalogs (not sample arrays): CNA {catalogTotals.node.templates}+{
+      catalogTotals.node.addons
+    }, CPA {catalogTotals.python.templates}+{catalogTotals.python.addons}, CVA {catalogTotals.v.templates}+{
+      catalogTotals.v.addons
+    }. Cards below highlight featured + a few starters; the composer exposes the full catalogs.
   </p>
   <div class="ca-variants__grid">
     {
-      variants.map((v) => (
-        <article class="ca-variant" style={`--v-accent:${v.accent}; --v-bg:${v.bg}`}>
-          <header class="ca-variant__head">
-            <h3 class="ca-variant__name">{v.title}</h3>
-            <span class={`ca-variant__status ca-variant__status--${v.status}`}>{v.status}</span>
-          </header>
-          <p class="ca-variant__desc">{v.description}</p>
-          <div class="ca-variant__templates">
-            <strong>Templates</strong>
-            <ul>
-              {v.templates.map((t) => (
-                <li>
-                  <code>{t.id}</code> — {t.description} {t.featured ? <span class="ca-badge">featured</span> : null}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div class="ca-variant__addons">
-            <strong>Addons</strong>
-            <ul>
-              {v.addons.map((a) => (
-                <li>
-                  <code>{a.id}</code> — {a.description} <span class="ca-muted">({a.category})</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <pre class="ca-variant__install">
-            <code>{v.install}</code>
-          </pre>
-          <a href={v.href} target="_blank" rel="noreferrer" class="ca-variant__link">
-            Catalog →
-          </a>
-        </article>
-      ))
+      variants.map((v) => {
+        const totals = catalogTotals[v.id];
+        const shown = featuredOnly(v.templates);
+        const featuredAddons = v.addons.slice(0, 6);
+        return (
+          <article class="ca-variant" id={v.id} style={`--v-accent:${v.accent}; --v-bg:${v.bg}`}>
+            <header class="ca-variant__head">
+              <h3 class="ca-variant__name">{v.title}</h3>
+              <span class={`ca-variant__status ca-variant__status--${v.status}`}>{v.status}</span>
+            </header>
+            <p class="ca-variant__desc">{v.description}</p>
+            <p class="ca-variant__count">
+              <strong>
+                {totals.templates} templates · {totals.addons} addons
+              </strong>{' '}
+              <span class="ca-muted">from {v.id === 'node' ? 'cna' : v.id === 'python' ? 'cpa' : 'cva'}-templates</span>
+            </p>
+            <div class="ca-variant__templates">
+              <strong>Featured / starters</strong>
+              <ul>
+                {shown.map((t) => (
+                  <li>
+                    <code>{t.id}</code> — {t.description} {t.featured ? <span class="ca-badge">featured</span> : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="ca-variant__addons">
+              <strong>Addon sample</strong>
+              <ul>
+                {featuredAddons.map((a) => (
+                  <li>
+                    <code>{a.id}</code> — {a.description} <span class="ca-muted">({a.category})</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="ca-muted">Full {totals.addons} available in the composer above.</p>
+            </div>
+            <pre class="ca-variant__install">
+              <code>{v.install}</code>
+            </pre>
+            <a href={v.href} target="_blank" rel="noreferrer" class="ca-variant__link">
+              Live catalog →
+            </a>
+          </article>
+        );
+      })
     }
   </div>
 </section>
@@ -78,6 +97,7 @@ import { variants } from '../data/index.js';
     background: color-mix(in srgb, var(--nest-midnight-900) 92%, var(--v-accent));
     border-top: 3px solid var(--v-accent);
     color: var(--color-text);
+    scroll-margin-top: 1.5rem;
   }
   .ca-variant__head {
     display: flex;
@@ -113,6 +133,10 @@ import { variants } from '../data/index.js';
     color: var(--color-text-muted);
     font-size: 0.95rem;
     min-height: 3rem;
+  }
+  .ca-variant__count {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
   }
   .ca-variant ul {
     margin: 0.5rem 0;

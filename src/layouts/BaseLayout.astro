@@ -1,19 +1,67 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
+import JsonLd from '@/shared/components/JsonLd.astro';
+import { buildPageSeo } from '@/data/seo.js';
 import '../styles/index.css';
 
 /**
  * @typedef {Object} Props
  * @property {string} title
  * @property {string} [description]
+ * @property {string} [path]
+ * @property {string} [canonical]
+ * @property {string} [ogImage]
+ * @property {boolean} [noIndex]
+ * @property {string} [world]
+ * @property {'website' | 'article' | 'profile'} [type]
+ * @property {string} [ogType]
+ * @property {string} [themeColor]
+ * @property {string} [robots]
+ * @property {Record<string, unknown> | Record<string, unknown>[]} [jsonLd]
  */
-const { title, description } = /** @type {Props} */ (Astro.props);
+const {
+  title,
+  description,
+  path = '/',
+  canonical,
+  ogImage,
+  noIndex,
+  world,
+  type,
+  ogType,
+  themeColor,
+  robots,
+  jsonLd,
+} = /** @type {Props} */ (Astro.props);
+
+const seo = buildPageSeo({
+  path,
+  title,
+  description,
+  canonical,
+  ogImage,
+  noIndex,
+  world,
+  type: type ?? (ogType === 'article' || ogType === 'profile' ? ogType : 'website'),
+});
+
+const mergedJsonLd = [...seo.jsonLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead
+      title={seo.title}
+      description={seo.description}
+      canonical={seo.canonical}
+      ogImage={seo.ogImage}
+      noIndex={noIndex}
+      ogType={seo.ogType}
+      themeColor={themeColor ?? seo.themeColor}
+      robots={robots ?? seo.robots}
+    />
+    {mergedJsonLd.length > 0 && <JsonLd data={mergedJsonLd} />}
     <slot name="head" />
   </head>
   <body>

@@ -2,6 +2,8 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { getCanonicalUrl, getCanonicalUrlForSlug } from '@/data/routes';
+import { profile } from '@/data/profile';
 import '@/styles/blog.css';
 
 export async function getStaticPaths() {
@@ -24,28 +26,75 @@ const hasPost = Boolean(post);
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let pageTitle = 'Note not found — Blog';
 let pageDescription = 'This note has not been published yet. The writing desk is ready for future field notes.';
+let articleJsonLd: Record<string, unknown> | undefined;
+let ogType = 'website';
+const canonical = hasPost ? getCanonicalUrlForSlug(post.id) : getCanonicalUrl('/blog');
 
 if (hasPost) {
   const rendered = await render(post);
   Content = rendered.Content;
   pageTitle = post.data.title + ' — Blog';
   pageDescription = post.data.description;
+  ogType = 'article';
+  articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    ...(post.data.updatedDate
+      ? { dateModified: post.data.updatedDate.toISOString() }
+      : { dateModified: post.data.pubDate.toISOString() }),
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonical,
+    },
+    author: {
+      '@type': 'Person',
+      name: profile.displayName,
+      url: getCanonicalUrl('/'),
+    },
+    publisher: {
+      '@type': 'Person',
+      name: profile.displayName,
+      url: getCanonicalUrl('/'),
+    },
+    url: canonical,
+    isPartOf: {
+      '@type': 'Blog',
+      name: 'Ulises Jeremias — Blog',
+      url: getCanonicalUrl('/blog'),
+    },
+  };
 }
 ---
 
-<SectionLayout title={pageTitle} description={pageDescription} currentPath="/blog" theme="blog" world="Blog">
+<SectionLayout
+  title={pageTitle}
+  description={pageDescription}
+  currentPath="/blog"
+  theme="blog"
+  world="Blog"
+  canonical={canonical}
+  ogType={ogType}
+  jsonLd={articleJsonLd}
+>
   <div class="blog-page">
     <div class="blog-page__inner">
       <nav class="blog-page__nav" aria-label="Blog">
         <a href="/blog">← Blog</a>
+        <span class="blog-page__nav-sep" aria-hidden="true">·</span>
+        <a href="/rss.xml">RSS</a>
       </nav>
 
       {
         hasPost && Content ? (
-          <article>
-            <h1 class="blog-page__title">{post.data.title}</h1>
+          <article itemscope itemtype="https://schema.org/BlogPosting">
+            <h1 class="blog-page__title" itemprop="headline">
+              {post.data.title}
+            </h1>
             <p class="blog-post__meta">
-              <time datetime={post.data.pubDate.toISOString()}>
+              <time datetime={post.data.pubDate.toISOString()} itemprop="datePublished">
                 {post.data.pubDate.toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -53,7 +102,8 @@ if (hasPost) {
                 })}
               </time>
             </p>
-            <div class="blog-post__content">
+            <meta itemprop="description" content={post.data.description} />
+            <div class="blog-post__content blog-prose" itemprop="articleBody">
               <Content />
             </div>
           </article>
@@ -62,7 +112,9 @@ if (hasPost) {
             <h1 class="blog-page__title">Note not found</h1>
             <p>This note has not been published yet. The writing desk is ready for future field notes.</p>
             <p>
-              <a href="/blog">Back to the blog index</a>
+              <a class="blog-page__recovery" href="/blog">
+                Back to the blog index
+              </a>
             </p>
           </article>
         )

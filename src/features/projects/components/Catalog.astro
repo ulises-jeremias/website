@@ -1,117 +1,205 @@
 ---
-import { activeProjects, archivedProjects } from '../data/index.js';
-import { statusLabels } from '../types/index.js';
+import Archipelago from './Archipelago.astro';
+import { getGroupedLedger, ledgerProjects } from '../data/index.js';
+import { roleLabels, statusLabels, type Project } from '../types/index.js';
+
+const groups = getGroupedLedger(ledgerProjects);
+const groupOptions = groups.map((g) => ({ id: g.id, label: g.label, count: g.projects.length }));
+
+function primaryHref(project: Project): string {
+  return project.links[0]?.href ?? '#';
+}
 ---
 
-<section class="projects-hero" aria-labelledby="projects-hero-title" data-testid="projects-hero">
-  <p class="projects-hero__eyebrow">Projects · curated ledger</p>
-  <h1 id="projects-hero-title" class="projects-hero__title">Projects — dense ledger, not giant cards</h1>
-  <p class="projects-hero__lead">
-    Manual curation with source links and verification dates. Status uses text labels, not color alone. Stars appear
-    only when verified against GitHub (recoil-devtools: 49, 2026-08-07).
-  </p>
-</section>
+<Archipelago />
 
-<section class="projects-ledger" aria-labelledby="projects-active-title">
-  <h2 id="projects-active-title">Active &amp; maintained</h2>
-  <div class="projects-ledger__table" role="table" aria-label="Active projects">
-    <div class="projects-ledger__row projects-ledger__row--head" role="row">
-      <span role="columnheader">Project</span>
-      <span role="columnheader">Kind</span>
-      <span role="columnheader">Status</span>
-      <span role="columnheader">Verified</span>
-      <span role="columnheader">Links</span>
+<section class="projects-ledger" aria-labelledby="projects-ledger-title" data-testid="projects-ledger">
+  <div class="projects-ledger__head">
+    <div>
+      <p class="projects-ledger__eyebrow">Projects · searchable ledger</p>
+      <h2 id="projects-ledger-title">Grouped by system</h2>
+      <p class="projects-ledger__lede">
+        Personal DX, Agentic, V, Create Awesome, Dev tools, and Experiments/legacy. Status uses text labels. Stars and
+        downloads appear only when build-time metrics include <code>verifiedAt</code>.
+      </p>
     </div>
-    {
-      activeProjects.map((p) => (
-        <article class="projects-ledger__row" role="row" data-status={p.status} data-testid="project-row">
-          <div role="cell">
-            <h3>{p.title}</h3>
-            <p>{p.summary}</p>
-            <p class="projects-ledger__tags">
-              {p.tags.map((t) => (
-                <span>#{t}</span>
-              ))}
-              {p.stars ? <span class="projects-ledger__stars">{p.stars} stars · verified</span> : null}
-            </p>
-          </div>
-          <div role="cell">
-            <span class="projects-ledger__kind">
-              {p.kind} · {p.role}
-            </span>
-          </div>
-          <div role="cell">
-            <span
-              class={`projects-ledger__badge projects-ledger__badge--${p.status}`}
-              aria-label={`Status ${statusLabels[p.status]}`}
-            >
-              {statusLabels[p.status]}
-            </span>
-          </div>
-          <div role="cell">
-            <time datetime={p.lastVerified}>{p.lastVerified}</time>
-          </div>
-          <div role="cell" class="projects-ledger__links">
-            {p.links.map((l) => (
-              <a
-                href={l.href}
-                target={l.href.startsWith('http') ? '_blank' : undefined}
-                rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </article>
-      ))
-    }
+
+    <form class="projects-ledger__controls" role="search" data-projects-search>
+      <label class="projects-ledger__search">
+        <span class="visually-hidden">Filter projects</span>
+        <input type="search" name="q" placeholder="Filter by name, tag, role…" autocomplete="off" data-projects-query />
+      </label>
+      <label class="projects-ledger__group-filter">
+        <span class="visually-hidden">Group</span>
+        <select name="group" data-projects-group>
+          <option value="">All groups</option>
+          {
+            groupOptions.map((g) => (
+              <option value={g.id}>
+                {g.label} ({g.count})
+              </option>
+            ))
+          }
+        </select>
+      </label>
+      <noscript>
+        <p class="projects-ledger__noscript">
+          Filtering enhances this page; group headings remain available without JS.
+        </p>
+      </noscript>
+    </form>
   </div>
-</section>
 
-{
-  archivedProjects.length > 0 && (
-    <section class="projects-ledger projects-ledger--archived" aria-labelledby="projects-archived-title">
-      <h2 id="projects-archived-title">Archived — preserved</h2>
-      <p class="projects-ledger__note">Not hidden — distinguished with lower emphasis. No invented claims.</p>
-      <div class="projects-ledger__table" role="table" aria-label="Archived projects">
-        {archivedProjects.map((p) => (
-          <article class="projects-ledger__row" role="row" data-status={p.status}>
-            <div role="cell">
-              <h3>{p.title}</h3>
-              <p>{p.summary}</p>
-              {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
-            </div>
-            <div role="cell">
-              <span class="projects-ledger__kind">
-                {p.kind} · {p.role}
-              </span>
-            </div>
-            <div role="cell">
-              <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>{statusLabels[p.status]}</span>
-            </div>
-            <div role="cell">
-              <time datetime={p.lastVerified}>{p.lastVerified}</time>
-            </div>
-            <div role="cell" class="projects-ledger__links">
-              {p.links.map((l) => (
-                <a href={l.href}>{l.label}</a>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-<style>
-  .projects-hero {
-    width: min(100% - 2 * var(--section-padding-x), 74rem);
-    margin: 0 auto;
-    padding-block: clamp(1.5rem, 4vw, 2.5rem);
+  {
+    groups.map((bucket) => (
+      <section
+        class="projects-ledger__group"
+        aria-labelledby={`group-${bucket.id}`}
+        data-group={bucket.id}
+        data-projects-group-section
+      >
+        <h3 id={`group-${bucket.id}`}>{bucket.label}</h3>
+        <div class="projects-ledger__table" role="table" aria-label={`${bucket.label} projects`}>
+          <div class="projects-ledger__row projects-ledger__row--head" role="row">
+            <span role="columnheader">Project</span>
+            <span role="columnheader">Kind / role</span>
+            <span role="columnheader">Status</span>
+            <span role="columnheader">Verified</span>
+            <span role="columnheader">Links</span>
+          </div>
+          {bucket.projects.map((p) => (
+            <article
+              class="projects-ledger__row"
+              role="row"
+              data-status={p.status}
+              data-visibility={p.visibility}
+              data-testid="project-row"
+              data-projects-row
+              data-search={`${p.title} ${p.summary} ${p.tags.join(' ')} ${p.role} ${p.kind} ${p.slug}`}
+            >
+              <div role="cell">
+                <h4>
+                  <a href={primaryHref(p)}>{p.title}</a>
+                  {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
+                </h4>
+                <p>{p.summary}</p>
+                {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
+                {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
+                <p class="projects-ledger__tags">
+                  {p.tags.map((t) => (
+                    <span>#{t}</span>
+                  ))}
+                  {p.metrics?.stars != null && p.metrics.verifiedAt ? (
+                    <span class="projects-ledger__metrics">
+                      {p.metrics.stars} stars · verified {p.metrics.verifiedAt}
+                    </span>
+                  ) : null}
+                  {p.metrics?.downloads != null && p.metrics.verifiedAt ? (
+                    <span class="projects-ledger__metrics">
+                      {p.metrics.downloads} downloads · verified {p.metrics.verifiedAt}
+                    </span>
+                  ) : null}
+                </p>
+              </div>
+              <div role="cell">
+                <span class="projects-ledger__kind">
+                  {p.kind} · {roleLabels[p.role]}
+                </span>
+              </div>
+              <div role="cell">
+                <span
+                  class={`projects-ledger__badge projects-ledger__badge--${p.status}`}
+                  aria-label={`Status ${statusLabels[p.status]}`}
+                >
+                  {statusLabels[p.status]}
+                </span>
+              </div>
+              <div role="cell">
+                <time datetime={p.lastVerified}>{p.lastVerified}</time>
+              </div>
+              <div role="cell" class="projects-ledger__links">
+                {p.links.map((l) => (
+                  <a
+                    href={l.href}
+                    target={l.href.startsWith('http') ? '_blank' : undefined}
+                    rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))
   }
 
-  .projects-hero__eyebrow {
+  <p class="projects-ledger__empty" data-projects-empty hidden>No projects match this filter.</p>
+</section>
+
+<script>
+  const root = document.querySelector('[data-projects-search]');
+  const ledger = document.querySelector('[data-testid="projects-ledger"]');
+  if (root && ledger) {
+    const query = root.querySelector('[data-projects-query]');
+    const group = root.querySelector('[data-projects-group]');
+    const rows = [...ledger.querySelectorAll('[data-projects-row]')];
+    const sections = [...ledger.querySelectorAll('[data-projects-group-section]')];
+    const empty = ledger.querySelector('[data-projects-empty]');
+
+    const apply = () => {
+      const q = (query instanceof HTMLInputElement ? query.value : '').trim().toLowerCase();
+      const g = group instanceof HTMLSelectElement ? group.value : '';
+      let visible = 0;
+
+      for (const row of rows) {
+        const hay = (row.getAttribute('data-search') ?? '').toLowerCase();
+        const section = row.closest('[data-projects-group-section]');
+        const groupId = section?.getAttribute('data-group') ?? '';
+        const matchQ = !q || hay.includes(q);
+        const matchG = !g || groupId === g;
+        const show = matchQ && matchG;
+        row.toggleAttribute('hidden', !show);
+        if (show) visible += 1;
+      }
+
+      for (const section of sections) {
+        const any = [...section.querySelectorAll('[data-projects-row]')].some((row) => !row.hasAttribute('hidden'));
+        const groupId = section.getAttribute('data-group') ?? '';
+        const groupOk = !g || groupId === g;
+        section.toggleAttribute('hidden', !(any && groupOk));
+      }
+
+      empty?.toggleAttribute('hidden', visible > 0);
+    };
+
+    root.addEventListener('input', apply);
+    root.addEventListener('change', apply);
+  }
+</script>
+
+<style>
+  .projects-ledger {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: 1.5rem 2.75rem;
+  }
+
+  .projects-ledger__head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (width >= 900px) {
+    .projects-ledger__head {
+      grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.9fr);
+      align-items: end;
+    }
+  }
+
+  .projects-ledger__eyebrow {
     margin: 0 0 var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--text-xs);
@@ -120,42 +208,61 @@ import { statusLabels } from '../types/index.js';
     color: var(--nest-sunset-orange);
   }
 
-  .projects-hero__title {
+  .projects-ledger__head h2 {
     margin: 0 0 var(--space-3);
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-    letter-spacing: 0.02em;
+    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
-  .projects-hero__lead {
+  .projects-ledger__lede {
     margin: 0;
     max-inline-size: 68ch;
     color: var(--color-text-muted);
   }
 
-  .projects-ledger {
-    width: min(100% - 2 * var(--section-padding-x), 74rem);
-    margin: 0 auto;
-    padding-block: 1.5rem 2.5rem;
+  .projects-ledger__controls {
+    display: grid;
+    gap: 0.65rem;
   }
 
-  .projects-ledger h2 {
-    margin: 0 0 0.85rem;
-    font-size: 1.05rem;
-    letter-spacing: 0.06em;
+  .projects-ledger__search input,
+  .projects-ledger__group-filter select {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    color: var(--color-text);
+    font: inherit;
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .projects-ledger__search input:focus-visible,
+  .projects-ledger__group-filter select:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .projects-ledger__noscript {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--color-text-faint);
+  }
+
+  .projects-ledger__group {
+    margin-bottom: 1.75rem;
+  }
+
+  .projects-ledger__group h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.02rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--nest-cyan);
   }
 
-  .projects-ledger__note {
-    margin: 0 0 0.85rem;
-    color: var(--color-text-faint);
-    font-size: 0.88rem;
-  }
-
   .projects-ledger__table {
     display: grid;
-    gap: 0;
     border: 1px solid var(--color-border);
     background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
     clip-path: var(--clip-corner-md);
@@ -182,15 +289,52 @@ import { statusLabels } from '../types/index.js';
     background: color-mix(in srgb, var(--nest-violet) 8%, transparent);
   }
 
-  .projects-ledger__row h3 {
+  .projects-ledger__row h4 {
     margin: 0 0 0.25rem;
     font-size: 0.98rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .projects-ledger__row h4 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .projects-ledger__row h4 a:hover,
+  .projects-ledger__row h4 a:focus-visible {
+    color: var(--nest-cyan);
+    outline: none;
+  }
+
+  .projects-ledger__world-tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nest-pink);
+    border: 1px solid color-mix(in srgb, var(--nest-pink) 40%, transparent);
+    padding: 0.1rem 0.35rem;
   }
 
   .projects-ledger__row p {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.86rem;
+  }
+
+  .projects-ledger__caution {
+    margin-block-start: 0.35rem !important;
+    color: var(--nest-sunset-orange) !important;
+    font-size: 0.8rem !important;
+  }
+
+  .projects-ledger__archived-note {
+    margin-block-start: 0.35rem !important;
+    font-style: italic;
+    color: var(--color-text-faint) !important;
   }
 
   .projects-ledger__tags {
@@ -203,7 +347,7 @@ import { statusLabels } from '../types/index.js';
     color: var(--color-text-faint);
   }
 
-  .projects-ledger__stars {
+  .projects-ledger__metrics {
     color: var(--nest-cyan);
   }
 
@@ -261,14 +405,21 @@ import { statusLabels } from '../types/index.js';
     outline-offset: 2px;
   }
 
-  .projects-ledger--archived {
-    opacity: 0.82;
+  .projects-ledger__empty {
+    margin: 1rem 0 0;
+    color: var(--color-text-faint);
   }
 
-  .projects-ledger__archived-note {
-    margin-block-start: 0.35rem !important;
-    font-style: italic;
-    color: var(--color-text-faint) !important;
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   @media (width < 900px) {

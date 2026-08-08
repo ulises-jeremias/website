@@ -18,6 +18,7 @@ export function isThinWorkstationCompliant(layer: LayerMeta): boolean {
   return layer.description.toLowerCase().includes('thin');
 }
 
+/** Graph-style Personal DX summary — not a forced install ladder. */
 export function getEcosystemFlow(): string {
-  return workstationLayers.map((l) => l.mapping).join(' → ');
+  return 'HorneroConfig (optional) · Workstation (L1) ↔ Toolkit (L1.5) ↔ Harness (L2)';
 }

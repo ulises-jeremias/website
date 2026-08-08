@@ -29,10 +29,19 @@
 }
 
 .blog-page__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
   margin-bottom: 2rem;
 }
 
-.blog-page__nav a {
+.blog-page__nav a,
+.blog-page__recovery {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.35rem 0.15rem;
   color: var(--blog-accent);
   text-decoration: none;
   font-family: var(--font-mono);
@@ -41,7 +50,20 @@
   text-transform: uppercase;
 }
 
-.blog-page__nav a:focus-visible {
+.blog-page__nav-sep {
+  color: var(--blog-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.blog-page__nav a:hover,
+.blog-page__recovery:hover {
+  color: var(--blog-text);
+}
+
+.blog-page__nav a:focus-visible,
+.blog-page__recovery:focus-visible,
+.blog-list__link:focus-visible {
   outline: 2px solid var(--blog-accent);
   outline-offset: 3px;
 }
@@ -69,7 +91,7 @@
 }
 
 .blog-list__item {
-  padding: 1.15rem 0;
+  padding: 0;
   border-block-end: 1px solid var(--blog-border);
   background: transparent;
   border-radius: 0;
@@ -80,8 +102,11 @@
 }
 
 .blog-list__link {
+  display: block;
+  padding: 1.15rem 0.15rem;
   color: inherit;
   text-decoration: none;
+  min-height: 2.75rem;
 }
 
 .blog-list__link:hover .blog-list__title,
@@ -125,6 +150,29 @@
   max-inline-size: 52ch;
 }
 
+.blog-empty__elsewhere {
+  margin-top: 1rem !important;
+}
+
+.blog-empty__elsewhere a {
+  color: var(--blog-accent, var(--nest-cyan));
+  text-underline-offset: 0.15em;
+}
+
+.blog-empty__elsewhere a:hover,
+.blog-empty__elsewhere a:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+.blog-post__meta {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blog-muted);
+}
+
 .blog-prose {
   max-inline-size: 65ch;
 }
@@ -152,8 +200,19 @@
   color: var(--blog-accent);
 }
 
+.blog-prose a:focus-visible {
+  outline: 2px solid var(--blog-accent);
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blog-page {
     background: var(--blog-bg);
+  }
+
+  .blog-list__link,
+  .blog-page__nav a,
+  .blog-page__recovery {
+    transition: none;
   }
 }

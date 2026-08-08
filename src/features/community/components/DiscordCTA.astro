@@ -1,202 +1,105 @@
 ---
 import { communityMeta } from '../data/index.js';
+
 interface Props {
   inviteUrl?: string;
-  compact?: boolean;
 }
-const { inviteUrl = communityMeta.discordInviteUrl, compact = false } = Astro.props as Props;
-const blurple = communityMeta.discordBlurple;
-const blurpleHover = communityMeta.discordBlurpleHover;
+
+const { inviteUrl = communityMeta.discordInviteUrl } = Astro.props as Props;
 ---
 
-<section
-  class:list={['community-discord', compact ? 'community-discord--compact' : '']}
-  aria-labelledby="discord-title"
-  data-testid="discord-cta"
->
-  <div class="community-discord__header">
-    <span class="community-discord__eyebrow">Discord · workshop live</span><h2
-      id="discord-title"
-      class="community-discord__title"
-    >
-      Join the shared workshop
-    </h2><p class="community-discord__lead">
-      The Create-Awesome Discord is where templates, rices, and V libraries get discussed before they ship. One invite,
-      all families — Node, Python, and V.
+<section class="cm-discord" aria-labelledby="cm-discord-title" data-testid="discord-cta">
+  <div class="cm-discord__copy">
+    <p class="cm-discord__eyebrow">Discord · verified invite</p>
+    <h2 id="cm-discord-title" class="cm-discord__title">Join the Digital Nest Discord</h2>
+    <p class="cm-discord__lead">
+      The umbrella room for HorneroConfig, Workstation, Harness, Agent Toolkit, Create Awesome, V work, and incubating
+      experiments. Ask questions, share drafts, or just follow along — contribution is optional.
+    </p>
+    <p class="cm-discord__note">
+      Invite <code>discord.gg/bR5VyATgka</code> · {communityMeta.communityDistinctNote}
     </p>
   </div>
-  <div class="community-discord__card" role="region" aria-label="Discord invitation">
-    <div class="community-discord__card-main">
-      <p class="community-discord__card-title"><span aria-hidden="true">💬</span> Create-Awesome Discord</p><p
-        class="community-discord__card-text"
-      >
-        Verified invite · ask in <code>#help</code> · share a draft · pick a labeled issue together. Blurple is used only
-        for this call-to-action — no vanity member counts without an authoritative source.
-      </p><p class="community-discord__card-note">
-        Invite: <code class="community-discord__code">discord.gg/bR5VyATgka</code> · community distinct from employer
-      </p>
-    </div><div class="community-discord__action">
-      <a
-        href={inviteUrl}
-        class="community-discord__cta"
-        target="_blank"
-        rel="noreferrer noopener"
-        aria-label="Join Discord — Create-Awesome workshop (opens in new tab)"
-        data-testid="discord-invite"
-        ><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"
-          ><path
-            fill="currentColor"
-            d="M20.5 4.5a18 18 0 0 0-4.5-1.4 15.5 15.5 0 0 0-.8 1.6 16.5 16.5 0 0 0-4.4 0 15.5 15.5 0 0 0-.8-1.6A18 18 0 0 0 5 4.5 18 18 0 0 0 3 18.5a18 18 0 0 0 5.5 2.8 13 13 0 0 0 1.1-1.8 13 13 0 0 1-1.7-.8l.4-.3c3.2 1.5 6.7 1.5 9.9 0l.4.3c-.5.3-1.1.6-1.7.8a13 13 0 0 0 1.1 1.8A18 18 0 0 0 21 18.5 18 18 0 0 0 20.5 4.5ZM9.7 15.8c-.9 0-1.6-.8-1.6-1.9s.7-1.9 1.6-1.9c.9 0 1.7.8 1.6 1.9 0 1.1-.7 1.9-1.6 1.9Zm4.6 0c-.9 0-1.6-.8-1.6-1.9s.7-1.9 1.6-1.9c.9 0 1.7.8 1.6 1.9 0 1.1-.7 1.9-1.6 1.9Z"
-          ></path></svg
-        >Join Discord<span aria-hidden="true">→</span></a
-      ><p class="community-discord__action-hint">Opens in a new tab · free, no account required to preview</p>
-    </div>
-  </div>
-  <p class="community-discord__policy">
-    Blurple <code>#5865F2</code> is used only as an accent for this Discord CTA. No member counts or activity metrics are
-    shown without a refreshable authoritative source.
-  </p>
+  <a
+    class="cm-discord__cta"
+    href={inviteUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Join the Digital Nest Discord (opens in a new tab)"
+    data-testid="discord-invite"
+  >
+    Join the Discord
+  </a>
+  <p class="cm-discord__policy">{communityMeta.metricsPolicy}</p>
 </section>
-<style define:vars={{ blurple, blurpleHover }}>
-  .community-discord {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 1.5rem 0;
-  }
-  .community-discord__eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    background: var(--world-accent-subtle);
-    border: 1px solid var(--color-border);
-    color: var(--world-accent);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .community-discord__title {
-    margin: 0.75rem 0 0.5rem;
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    color: var(--color-text);
-  }
-  .community-discord__lead {
-    margin: 0;
-    max-width: 62ch;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-    font-size: 1rem;
-  }
-  .community-discord__card {
-    margin-top: 1.25rem;
+
+<style>
+  .cm-discord {
     display: grid;
     gap: 1rem;
     padding: 1.25rem;
-    border-radius: 1rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-sm);
+    margin: 0.5rem 0;
+    clip-path: var(--clip-corner-md);
+    border: 1px solid color-mix(in srgb, #5865f2 45%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 90%, #5865f2 6%);
   }
-  @media (min-width: 860px) {
-    .community-discord__card {
-      grid-template-columns: 1.6fr 0.9fr;
+  @media (width >= 860px) {
+    .cm-discord {
+      grid-template-columns: 1.5fr auto;
       align-items: center;
-      padding: 1.5rem;
     }
   }
-  .community-discord__card-title {
-    margin: 0 0 0.5rem;
-    font-weight: 750;
-    font-size: 1.05rem;
+  .cm-discord__eyebrow {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #9aa4ff;
+  }
+  .cm-discord__title {
+    margin: 0.45rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 1.7rem);
+    font-weight: 800;
     color: var(--color-text);
   }
-  .community-discord__card-text {
-    margin: 0;
+  .cm-discord__lead,
+  .cm-discord__note,
+  .cm-discord__policy {
+    margin: 0.5rem 0 0;
     color: var(--color-text-muted);
-    line-height: 1.6;
+    line-height: 1.55;
     font-size: 0.95rem;
   }
-  .community-discord__card-note {
-    margin: 0.75rem 0 0;
+  .cm-discord__note code,
+  .cm-discord__policy {
+    font-size: 0.85rem;
     color: var(--color-text-faint);
-    font-size: 0.85rem;
   }
-  .community-discord__code {
-    padding: 0.1rem 0.35rem;
-    border-radius: 0.35rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    font-size: 0.85rem;
-  }
-  .community-discord__action {
-    display: grid;
-    gap: 0.5rem;
-    justify-items: start;
-  }
-  @media (min-width: 860px) {
-    .community-discord__action {
-      justify-items: end;
-    }
-  }
-  .community-discord__cta {
+  .cm-discord__cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    justify-content: center;
     min-height: 44px;
-    padding: 0 1.1rem;
-    border-radius: 999px;
-    background: var(--blurple);
+    padding: 0 1.2rem;
+    clip-path: var(--clip-corner-sm);
+    background: #5865f2;
+    border: 1px solid #5865f2;
     color: #fff;
-    font-weight: 700;
-    font-size: 0.95rem;
+    font-weight: 750;
     text-decoration: none;
-    border: 1px solid var(--blurple);
-    box-shadow: var(--shadow-sm);
-    transition:
-      background 140ms ease,
-      transform 140ms ease,
-      box-shadow 140ms ease;
+    white-space: nowrap;
   }
-  .community-discord__cta:hover {
-    background: var(--blurpleHover);
-    border-color: var(--blurpleHover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
+  .cm-discord__cta:hover {
+    background: #4752c4;
+    border-color: #4752c4;
   }
-  .community-discord__cta:focus-visible {
-    outline: 3px solid var(--color-focus-ring, rgba(88, 101, 242, 0.35));
+  .cm-discord__cta:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
-  .community-discord__action-hint {
-    margin: 0;
-    color: var(--color-text-faint);
-    font-size: 0.82rem;
-    line-height: 1.4;
-  }
-  .community-discord__policy {
-    margin: 0.75rem 0 0;
-    color: var(--color-text-faint);
-    font-size: 0.85rem;
-    line-height: 1.5;
-  }
-  .community-discord__policy code {
-    padding: 0.1rem 0.3rem;
-    border-radius: 0.3rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    font-size: 0.85rem;
-  }
-  .community-discord--compact .community-discord__lead {
-    font-size: 0.95rem;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .community-discord__cta {
-      transition: none;
-    }
+  .cm-discord__policy {
+    grid-column: 1 / -1;
   }
 </style>

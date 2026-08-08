@@ -9,8 +9,17 @@ export {
   narrativeSections,
   smartColorSteps,
   screenshotItems,
+  attributionEntries,
   licenseEntries,
+  verifiedFacts,
   dotfilesMeta,
 } from './data/index.js';
 
-export type { DotfilesLayer, NarrativeSection, SmartColorStep, ScreenshotItem, LicenseEntry } from './types/index.js';
+export type {
+  DotfilesLayer,
+  NarrativeSection,
+  SmartColorStep,
+  ScreenshotItem,
+  AttributionEntry,
+  LicenseEntry,
+} from './types/index.js';

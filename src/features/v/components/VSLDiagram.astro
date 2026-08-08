@@ -7,9 +7,10 @@ import { vslBackends } from '../data/index.js';
     <p class="vsl__eyebrow">02 · VSL</p>
     <h2 id="vsl-title" class="vsl__title">Pure-V by default, C when you ask</h2>
     <p class="vsl__desc">
-      VSL ships pure-V BLAS/LAPACK with no system deps. Flip a compile flag and it delegates to OpenBLAS / LAPACKE.
-      Deterministic fractals (Sierpinski, Mandelbrot, Julia) prove both paths pixel-identical — with graceful CPU
-      fallback and <code>prefers-reduced-motion</code> support.
+      VSL ships pure-V BLAS/LAPACK with no system deps. Opt into C BLAS/LAPACK for throughput, or experimental GPU
+      backends (OpenCL/VCL, CUDA, Vulkan). Deterministic fractals (Sierpinski, Mandelbrot, Julia) prove CPU paths — with <code
+        >prefers-reduced-motion</code
+      > support.
     </p>
   </header>
 
@@ -194,11 +195,11 @@ import { vslBackends } from '../data/index.js';
         <text x="520" y="322" font-size="9.5" fill="#8bb8e0" aria-hidden="true">→</text>
       </svg>
 
-      <div class="vsl__fallback" role="list" aria-label="VSL backends fallback">
+      <div class="vsl__fallback" role="list" aria-label="VSL backends">
         {
-          vslBackends.slice(0, 3).map((b) => (
+          vslBackends.map((b) => (
             <span class="vsl__chip" role="listitem">
-              <strong>{b.label}</strong> <code>{b.flag}</code> · {b.bestFor}
+              <strong>{b.label}</strong> <code>{b.flag}</code> · <em>{b.maturity}</em> — {b.bestFor}
             </span>
           ))
         }
@@ -214,8 +215,8 @@ import { vslBackends } from '../data/index.js';
         </p>
         <ul class="vsl__list">
           <li>Level 1-3 BLAS, LAPACK solvers, eig, SVD</li>
-          <li>MPI + optional OpenCL (roadmap) — same Tensor data</li>
-          <li><code>v run benchmarks/blas_bench.v</code> to compare backends</li>
+          <li>C BLAS/LAPACK opt-in; OpenCL/CUDA/Vulkan experimental; MPI optional</li>
+          <li><code>v run benchmarks/compare_backends.v</code> for pure-V vs C</li>
         </ul>
       </article>
       <article class="vsl__card">

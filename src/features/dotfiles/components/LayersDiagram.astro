@@ -182,12 +182,12 @@ import { dotfilesLayers } from '../data/index.js';
           fill="#FFB0CA"
           style="text-transform: uppercase;"
         >
-          .chezmoiroot → home/ · gestion atomica
+          .chezmoiroot → home/ · atomic apply
         </text>
       </g>
     </svg>
 
-    <div class="layers-diagram__sr" role="list" aria-label="Capas HorneroConfig (alternativa textual)">
+    <div class="layers-diagram__sr" role="list" aria-label="HorneroConfig layers (text alternative)">
       {
         dotfilesLayers.map((layer) => (
           <div class="layers-diagram__sr-item" role="listitem">
@@ -204,16 +204,18 @@ import { dotfilesLayers } from '../data/index.js';
     </div>
   </div>
 
-  <figure class="layers-diagram__legend" aria-label="Leyenda del diagrama">
-    <figcaption class="layers-diagram__legend-title">Como leer el diagrama</figcaption>
+  <figure class="layers-diagram__legend" aria-label="Diagram legend">
+    <figcaption class="layers-diagram__legend-title">How to read the diagram</figcaption>
     <ul class="layers-diagram__legend-list">
       <li>
         <strong>Vertical flow:</strong> from foundation (chezmoi) to surface (shell). Each layer delegates downward.
       </li>
-      <li><strong>Chezmoi:</strong> plantillas, run_onchange y external.toml — source of truth declarativo.</li>
-      <li><strong>Scripts:</strong> dots-* idempotentes con set -euo pipefail y EasyOptions.</li>
-      <li><strong>Terminal + Compositor:</strong> Kitty/Quickshell/Hyprland consumen la misma M3 palette.</li>
-      <li><strong>Shell:</strong> Zsh/P10k es la interfaz humana sobre toda la pila.</li>
+      <li>
+        <strong>Chezmoi:</strong> templates, run_onchange hooks, and externals — declarative source of truth.
+      </li>
+      <li><strong>Scripts:</strong> idempotent dots-* CLIs with set -euo pipefail and EasyOptions.</li>
+      <li><strong>Terminal + compositor:</strong> Kitty / Quickshell / Hyprland consume the same M3 palette.</li>
+      <li><strong>Shell:</strong> Zsh / Powerlevel10k is the human interface over the whole stack.</li>
     </ul>
   </figure>
 </section>

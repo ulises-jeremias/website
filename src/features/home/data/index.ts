@@ -1,5 +1,7 @@
 import { profile } from '@/data/profile.js';
 import { featuredWorlds as canonicalFeaturedWorlds, worldsByPriority } from '@/data/project-worlds.js';
+import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
+import { verifiedFacts as dotfilesFacts } from '@/features/dotfiles/data/index.js';
 import type { AtlasWorld, ContactLink, FeaturedProjectRow, NestStatusItem } from '../types/index.js';
 
 /** ZIP island art filenames (under /assets/nest/), mapped from project-world ids. */
@@ -53,12 +55,12 @@ export const nestStatus: NestStatusItem[] = [
   },
   {
     label: 'toolkit_inventory',
-    value: '61 skills · 16 agents · 10 loops · 7 profiles',
+    value: inventoryStrip(),
     tone: 'violet',
   },
   {
-    label: 'dotfiles_rices',
-    value: '22 HorneroConfig rices',
+    label: 'dotfiles_themes',
+    value: `${dotfilesFacts.themeCount} HorneroConfig themes`,
     tone: 'magenta',
   },
   {

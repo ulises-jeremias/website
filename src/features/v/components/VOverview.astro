@@ -8,13 +8,19 @@ import { vSections } from '../data/index.js';
     <h2 id="v-overview-title" class="v-overview__title">Computational lab — Core Team, proof over claims</h2>
     <p class="v-overview__lead">
       I’m Core Team Member @ V. The site shows contributions with links to repos, commits, and reviewed PRs — not vanity
-      counts. V is the language; VSL, VTL (V Tensor Library), RxV, and setup-v are the tools that make it usable for
-      science, tensors, streams, and CI.
+      counts. V is the language; VSL and VTL cover scientific compute and tensors; RxV covers reactive streams; setup-v
+      covers CI; Awesome V is the community catalog.
     </p>
-    <blockquote class="v-overview__quote">
-      “Simple enough for a Friday afternoon. Fast enough for a production pipeline.” — V ecosystem
-    </blockquote>
   </header>
+
+  <div class="v-overview__lab" aria-hidden="true">
+    <span class="v-overview__lab-mod">LANG</span>
+    <span class="v-overview__lab-mod">VSL</span>
+    <span class="v-overview__lab-mod">VTL</span>
+    <span class="v-overview__lab-mod">RxV</span>
+    <span class="v-overview__lab-mod">CI</span>
+    <span class="v-overview__lab-mod">LIST</span>
+  </div>
 
   <div class="v-overview__facts" role="list" aria-label="Quick facts">
     <article class="v-overview__fact" role="listitem">
@@ -22,7 +28,7 @@ import { vSections } from '../data/index.js';
       <span class="v-overview__fact-v"
         >Verified commits in <code>vlang/v</code>, <code>vsl</code>, <code>vtl</code>, <code>setup-v</code> + author of <code
           >ulises-jeremias/rxv</code
-        ></span
+        >; contributor on <code>awesome-v</code></span
       >
     </article>
     <article class="v-overview__fact" role="listitem">
@@ -117,16 +123,36 @@ import { vSections } from '../data/index.js';
     color: var(--color-text-muted);
   }
 
-  .v-overview__quote {
-    margin: 0.9rem 0 0 0;
-    padding: 0.7rem 0.9rem;
-    border-left: 3px solid var(--world-accent);
-    background: var(--world-accent-subtle);
-    border-radius: 0 10px 10px 0;
-    font-size: 0.92rem;
-    font-style: italic;
-    line-height: 1.55;
-    color: var(--color-text);
+  .v-overview__lab {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.4rem;
+    padding: 0.65rem;
+    border: 1px solid var(--world-border-accent);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--world-accent) 12%, transparent), transparent 55%),
+      var(--world-accent-subtle);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .v-overview__lab-mod {
+    display: grid;
+    place-items: center;
+    min-block-size: 2.4rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--world-accent-strong);
+    border: 1px solid var(--world-border-accent);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  @media (max-width: 640px) {
+    .v-overview__lab {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .v-overview__facts {

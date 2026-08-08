@@ -1,4 +1,26 @@
-import type { VBackend, VDiagramStep, VLicenseEntry, VOperatorGroup, VProject, VSection } from '../types/index.js';
+import type {
+  VBackend,
+  VDiagramStep,
+  VLicenseEntry,
+  VOperatorGroup,
+  VProject,
+  VSection,
+  VtlMaturity,
+} from '../types/index.js';
+
+/**
+ * Ownership / roles (verified GitHub contribution signal, 2026-08-07):
+ * - vlang/v — Core Team contributor (compiler/tooling ecosystem)
+ * - vlang/vsl — primary maintainer (dominant contributions)
+ * - vlang/vtl — primary maintainer
+ * - ulises-jeremias/rxv — author
+ * - vlang/setup-v — maintainer
+ * - vlang/awesome-v — contributor (scientific / template listings); community-curated list
+ *
+ * setup-v pin: upstream README documents `uses: vlang/setup-v@v1.7` (latest release tag).
+ */
+
+export const SETUP_V_PIN = 'vlang/setup-v@v1.7';
 
 export const vProjects: VProject[] = [
   {
@@ -10,7 +32,11 @@ export const vProjects: VProject[] = [
     repo: 'vlang/v',
     icon: 'v',
     role: 'Core Team — compiler, tooling, docs, ecosystem',
-    highlights: ['Single-file bootstrap via C + tcc', 'Immutable by default, fast compile', '4M+ LoC compiled <1 s'],
+    highlights: [
+      'Single-file bootstrap via C + tcc',
+      'Immutable by default, fast compile',
+      'Self-host compile <1 s (upstream README)',
+    ],
     license: 'MIT',
   },
   {
@@ -21,8 +47,8 @@ export const vProjects: VProject[] = [
     href: 'https://github.com/vlang/vsl',
     repo: 'vlang/vsl',
     icon: 'vsl',
-    role: 'Maintainer — pure-V backends, fractals, benchmarks',
-    highlights: ['Pure-V default, zero deps', 'Optional CBLAS/LAPACKe', 'Sierpinski + Mandelbrot + Julia'],
+    role: 'Maintainer — pure-V backends, compute dispatch, scientific modules',
+    highlights: ['Pure-V default, zero deps', 'Optional CBLAS/LAPACKe', 'Experimental GPU: OpenCL / CUDA / Vulkan'],
     license: 'MIT',
   },
   {
@@ -34,7 +60,7 @@ export const vProjects: VProject[] = [
     repo: 'vlang/vtl',
     icon: 'vtl',
     role: 'Maintainer — Tensor core, autograd graph, Sequential API',
-    highlights: ['Reverse-mode autograd', 'Layers, losses, optimizers', 'Broadcast + map/reduce'],
+    highlights: ['CPU training default', 'Reverse-mode autograd', 'CUDA / Vulkan experimental'],
     license: 'MIT',
   },
   {
@@ -58,18 +84,18 @@ export const vProjects: VProject[] = [
     repo: 'vlang/setup-v',
     icon: 'ci',
     role: 'Maintainer — install flow, caching, arch detection',
-    highlights: ['vlang/setup-v@v1.7', 'Version file + cache', 'Linux / macOS / Windows'],
+    highlights: [SETUP_V_PIN, 'Version file + cache', 'Linux / macOS / Windows'],
     license: 'MIT',
   },
   {
     id: 'awesome-v',
     title: 'Awesome V',
     shortLabel: 'awesome',
-    description: 'Curated catalog — libraries, tools, and community picks for the V ecosystem.',
+    description: 'Community-curated catalog — libraries, tools, and resources for the V ecosystem (CC0).',
     href: 'https://github.com/vlang/awesome-v',
     repo: 'vlang/awesome-v',
     icon: 'list',
-    role: 'Curator — scientific + template picks',
+    role: 'Contributor — scientific + template listings (community-curated list)',
     highlights: ['Community curated', 'Scientific + templates', 'CC0 1.0 list license'],
     license: 'CC0 1.0',
   },
@@ -93,11 +119,11 @@ export const vSections: VSection[] = [
     title: 'VSL — pure-V scientific stack',
     eyebrow: '02 · scientific',
     description:
-      'High-performance numerics without system deps. Pure-V BLAS/LAPACK ships by default; drop in OpenBLAS/LAPACKe with a flag when you need peak throughput.',
+      'High-performance numerics without system deps. Pure-V BLAS/LAPACK ships by default; opt into C or experimental GPU backends when you need them.',
     bullets: [
       'BLAS Level 1-3 + LAPACK (pure-V, 0 deps)',
       'Flags: -d vsl_blas_cblas / -d vsl_lapack_lapacke',
-      'Stats, FFT, optimization, visualization (Plotly style)',
+      'GPU paths (OpenCL/VCL, CUDA, Vulkan) are experimental',
     ],
   },
   {
@@ -105,7 +131,7 @@ export const vSections: VSection[] = [
     title: 'VTL — tensors & autograd',
     eyebrow: '03 · tensors',
     description:
-      'Tensor[T] with slicing, broadcasting, and reverse-mode autograd. Build arbitrary graphs — then let nn layers compose them for you.',
+      'Tensor[T] with slicing, broadcasting, and reverse-mode autograd. CPU training is the default path; CUDA and Vulkan remain experimental opt-in.',
     bullets: [
       'Context + Variable + gates → backprop()',
       'Sequential API: Linear/Conv2D/LSTM/Attention',
@@ -131,24 +157,78 @@ export const vSections: VSection[] = [
     description:
       'The Action resolves version (tag, branch, commit, or .v-version), detects arch, restores cache, installs the binary, and verifies v version.',
     bullets: [
-      'Uses PAT-less binary fetch for tags (no rate-limit pain)',
+      `Pin: ${SETUP_V_PIN} (upstream README / latest release)`,
       'Arch-aware (x64, arm64) with warning fallback',
       'Cache key: version + os + arch → ~seconds restores',
     ],
   },
 ];
 
+/** VSL backends from vlang/vsl README backend status table. */
 export const vslBackends: VBackend[] = [
-  { id: 'pure-v', label: 'Pure V', flag: 'default', bestFor: 'Zero-dep deploy, cross-platform' },
+  {
+    id: 'pure-v',
+    label: 'Pure V',
+    flag: 'default',
+    maturity: 'default',
+    bestFor: 'Zero-dep deploy, portable BLAS/LAPACK-style routines',
+  },
   {
     id: 'cblas',
-    label: 'OpenBLAS (CBLAS)',
-    flag: '-d vsl_blas_cblas',
-    bestFor: 'Max throughput when C libs available',
+    label: 'C BLAS / LAPACK',
+    flag: '-d vsl_blas_cblas · -d vsl_lapack_lapacke',
+    maturity: 'stable-opt-in',
+    bestFor: 'Optimized CPU kernels when C libs are available',
   },
-  { id: 'lapacke', label: 'LAPACKE', flag: '-d vsl_lapack_lapacke', bestFor: 'LAPACK at C speed' },
-  { id: 'opencl', label: 'OpenCL', flag: 'experimental', bestFor: 'GPU kernels (VSL roadmap)' },
-  { id: 'mpi', label: 'MPI', flag: 'optional', bestFor: 'Cluster linear algebra' },
+  {
+    id: 'opencl',
+    label: 'OpenCL / VCL',
+    flag: 'module-specific',
+    maturity: 'experimental',
+    bestFor: 'Cross-vendor GPU kernels (not a beta gate)',
+  },
+  {
+    id: 'cuda',
+    label: 'CUDA',
+    flag: '-d cuda',
+    maturity: 'experimental',
+    bestFor: 'cuBLAS/cuDNN GEMM, activations, Conv2D (VTL training)',
+  },
+  {
+    id: 'vulkan',
+    label: 'Vulkan',
+    flag: '-d vulkan',
+    maturity: 'experimental',
+    bestFor: 'GEMM / Conv2D / fused Adam (VTL f32 path)',
+  },
+  {
+    id: 'mpi',
+    label: 'MPI',
+    flag: 'optional',
+    maturity: 'optional',
+    bestFor: 'Cluster linear algebra (OpenMPI)',
+  },
+];
+
+export const vtlMaturity: VtlMaturity[] = [
+  {
+    id: 'cpu',
+    label: 'CPU',
+    maturity: 'default',
+    note: 'Default training path — tensors, autograd, layers, optimizers, datasets',
+  },
+  {
+    id: 'cuda',
+    label: 'CUDA',
+    maturity: 'experimental',
+    note: 'Opt-in Linear/Conv2D forward + backward, activations, Adam slots',
+  },
+  {
+    id: 'vulkan',
+    label: 'Vulkan',
+    maturity: 'experimental',
+    note: 'Opt-in f32 Linear, Conv2D same-padding, ReLU/Sigmoid, fused Adam',
+  },
 ];
 
 export const vtlModules: Array<{ id: string; title: string; desc: string }> = [
@@ -185,7 +265,7 @@ export const vEcosystemSteps: VDiagramStep[] = [
   { id: 'vsl', label: 'VSL', description: 'scientific · BLAS', detail: 'vlang/vsl' },
   { id: 'vtl', label: 'VTL', description: 'tensors · autograd', detail: 'vlang/vtl' },
   { id: 'rxv', label: 'RxV', description: 'reactive · channels', detail: 'ulises-jeremias/rxv' },
-  { id: 'setup', label: 'setup-v', description: 'CI · action', detail: 'vlang/setup-v' },
+  { id: 'setup', label: 'setup-v', description: 'CI · action', detail: SETUP_V_PIN },
 ];
 
 export const licenseEntries: VLicenseEntry[] = [
@@ -224,5 +304,4 @@ export const vMeta = {
   accentStrong: '#16446a',
   accentLight: '#5b9bd5',
   accentSubtle: 'var(--world-accent-subtle)',
-  quote: 'Simple enough for a Friday afternoon. Fast enough for a production pipeline.',
 };

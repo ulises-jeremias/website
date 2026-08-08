@@ -1,120 +1,79 @@
 ---
-import { moderationItems, communityMeta } from '../data/index.js';
+import { moderationItems } from '../data/index.js';
 ---
 
-<section class="community-moderation" aria-labelledby="moderation-title" data-testid="moderation-privacy">
-  <header class="community-moderation__header">
-    <p class="community-moderation__eyebrow">Moderation & privacy</p><h2
-      id="moderation-title"
-      class="community-moderation__title"
-    >
-      Guardrails for a calm workshop
-    </h2><p class="community-moderation__lead">
-      Moderation is documented, privacy is minimal, and metrics are honest — or they are not shown at all.
+<section class="cm-moderation" aria-labelledby="cm-moderation-title" data-testid="moderation-privacy">
+  <header class="cm-moderation__header">
+    <p class="cm-moderation__eyebrow">Boundaries</p>
+    <h2 id="cm-moderation-title" class="cm-moderation__title">Moderation & privacy — only what is real</h2>
+    <p class="cm-moderation__lead">
+      No invented escalation ladders, appeals processes, or universal policies. When a Digital Nest–wide Code of Conduct
+      exists, it will be linked explicitly.
     </p>
   </header>
-  <div class="community-moderation__grid">
+  <ul class="cm-moderation__list">
     {
       moderationItems.map((item) => (
-        <article class="community-moderation__card" aria-label={item.title}>
-          <>
-            <h3 class="community-moderation__card-title">{item.title}</h3>
-            <p class="community-moderation__card-text">{item.description}</p>
-          </>
-        </article>
+        <li class="cm-moderation__item">
+          <h3 class="cm-moderation__item-title">{item.title}</h3>
+          <p class="cm-moderation__item-text">{item.description}</p>
+        </li>
       ))
     }
-  </div>
-  <div class="community-moderation__metrics" role="note" aria-label="Community metrics policy">
-    <h3 class="community-moderation__metrics-title">Metrics policy</h3><p class="community-moderation__metrics-text">
-      {communityMeta.metricsPolicy}
-    </p><p class="community-moderation__metrics-text">
-      If a count appears in the future, it will state its source, timestamp, and refresh cadence — and link to the query
-      that produces it. Until then, the workshop is measured by merged PRs and closed issues, not by headcounts.
-    </p>
-  </div>
+  </ul>
 </section>
+
 <style>
-  .community-moderation {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 1.5rem 0;
+  .cm-moderation {
+    padding: 1.75rem 0;
   }
-  .community-moderation__eyebrow {
-    display: inline-flex;
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    background: var(--world-accent-subtle);
-    border: 1px solid var(--color-border);
-    color: var(--world-accent);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 0.75rem;
-  }
-  .community-moderation__title {
+  .cm-moderation__eyebrow {
     margin: 0;
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .cm-moderation__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
     font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
     color: var(--color-text);
   }
-  .community-moderation__lead {
-    margin: 0.5rem 0 0;
-    max-width: 62ch;
+  .cm-moderation__lead {
+    margin: 0.55rem 0 0;
+    max-width: 70ch;
     color: var(--color-text-muted);
     line-height: 1.6;
-    font-size: 1rem;
   }
-  .community-moderation__grid {
+  .cm-moderation__list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
     display: grid;
-    gap: 0.85rem;
-    margin-top: 1.25rem;
-    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
-  @media (min-width: 820px) {
-    .community-moderation__grid {
-      grid-template-columns: 1fr 1fr;
+  @media (width >= 800px) {
+    .cm-moderation__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  .community-moderation__card {
-    padding: 1rem 1.15rem;
-    border-radius: 0.9rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-sm);
-  }
-  .community-moderation__card-title {
-    margin: 0 0 0.35rem;
-    font-size: 0.95rem;
-    font-weight: 750;
-    color: var(--color-text);
-  }
-  .community-moderation__card-text {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-  .community-moderation__metrics {
-    margin-top: 1rem;
-    padding: 1rem 1.15rem;
-    border-radius: 0.9rem;
-    background: var(--color-surface);
+  .cm-moderation__item {
+    padding: 0.9rem 1rem;
+    clip-path: var(--clip-corner-sm);
     border: 1px solid var(--color-border);
   }
-  .community-moderation__metrics-title {
+  .cm-moderation__item-title {
     margin: 0;
-    font-size: 0.95rem;
-    font-weight: 750;
+    font-size: 0.98rem;
     color: var(--color-text);
   }
-  .community-moderation__metrics-text {
-    margin: 0.35rem 0 0;
+  .cm-moderation__item-text {
+    margin: 0.4rem 0 0;
     color: var(--color-text-muted);
     font-size: 0.9rem;
-    line-height: 1.6;
+    line-height: 1.55;
   }
 </style>

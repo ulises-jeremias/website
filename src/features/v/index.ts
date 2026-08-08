@@ -9,9 +9,11 @@ export { default as RxVDiagram } from './components/RxVDiagram.astro';
 export { default as SetupVDiagram } from './components/SetupVDiagram.astro';
 
 export {
+  SETUP_V_PIN,
   vProjects,
   vSections,
   vslBackends,
+  vtlMaturity,
   vtlModules,
   rxvOperatorGroups,
   setupVPipeline,
@@ -20,4 +22,12 @@ export {
   vMeta,
 } from './data/index.js';
 
-export type { VProject, VSection, VDiagramStep, VLicenseEntry, VBackend, VOperatorGroup } from './types/index.js';
+export type {
+  VProject,
+  VSection,
+  VDiagramStep,
+  VLicenseEntry,
+  VBackend,
+  VtlMaturity,
+  VOperatorGroup,
+} from './types/index.js';

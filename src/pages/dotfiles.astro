@@ -6,13 +6,47 @@ import {
   LayersDiagram,
   ScreenshotGallery,
   SmartColorsAnimation,
-  licenseEntries,
+  attributionEntries,
+  verifiedFacts,
 } from '@/features/dotfiles';
 import '@/styles/dotfiles.css';
 
 const meta = getRouteMeta('/dotfiles')!;
 const pageTitle = meta.title;
 const pageDescription = meta.description;
+
+const heroScene = {
+  primary: {
+    src: '/media/dotfiles/screen.png',
+    alt: 'HorneroConfig dark desktop with Quickshell bars, btop, and cava',
+    width: 1914,
+    height: 1075,
+    label: 'screen.png · dark desktop',
+  },
+  thumbs: [
+    {
+      src: '/media/dotfiles/screenshot-launchpad.png',
+      alt: 'Application launchpad grid',
+      width: 1440,
+      height: 900,
+      label: 'Launchpad',
+    },
+    {
+      src: '/media/dotfiles/screenshot-spotlight-dark.png',
+      alt: 'Dark spotlight launcher',
+      width: 1440,
+      height: 868,
+      label: 'Spotlight',
+    },
+    {
+      src: '/media/dotfiles/screen-2.jpg',
+      alt: 'Landscape appearance with telemetry bar',
+      width: 1916,
+      height: 1080,
+      label: 'Landscape theme',
+    },
+  ],
+};
 ---
 
 <SectionLayout
@@ -32,24 +66,24 @@ const pageDescription = meta.description;
           </h1>
           <p class="dotfiles-hero__subtitle">
             The framework that builds your digital nest. <strong>Hyprland + Quickshell + Kitty + Zsh</strong> orchestrated
-            by <strong>chezmoi</strong> and <strong>~46 dots-*</strong> scripts. Smart Colors maps wallpaper → palette → scheme
-            → apps with <strong>python-materialyoucolor</strong>.
+            by <strong>chezmoi</strong> and <strong>{verifiedFacts.dotsScriptCount} dots-*</strong> scripts. Smart Colors
+            maps wallpaper → Material extraction → <code>scheme.json</code> → Quickshell, Hyprland, Kitty, and GTK.
           </p>
 
           <div class="dotfiles-hero__badges" role="list" aria-label="Project facts">
             <span class="dotfiles-hero__badge" role="listitem">MIT · 2019-2025</span>
-            <span class="dotfiles-hero__badge" role="listitem">22 rices</span>
-            <span class="dotfiles-hero__badge" role="listitem">config.json · no apply.sh</span>
+            <span class="dotfiles-hero__badge" role="listitem">{verifiedFacts.themeCount} themes</span>
+            <span class="dotfiles-hero__badge" role="listitem">theme.json · no apply.sh</span>
             <span class="dotfiles-hero__badge dotfiles-hero__badge--plum" role="listitem"
               >plum #191114 · pink #FFB0CA</span
             >
           </div>
 
           <div class="dotfiles-hero__actions">
-            <a href="#galeria" class="dotfiles-hero__cta dotfiles-hero__cta--primary">View gallery</a>
+            <a href="#gallery" class="dotfiles-hero__cta dotfiles-hero__cta--primary">View gallery</a>
             <a href="#smart-colors" class="dotfiles-hero__cta dotfiles-hero__cta--secondary">Smart Colors →</a>
             <a
-              href="https://github.com/ulises-jeremias/dotfiles/wiki"
+              href={verifiedFacts.wikiUrl}
               class="dotfiles-hero__cta dotfiles-hero__cta--ghost"
               target="_blank"
               rel="noreferrer">Docs wiki</a
@@ -58,8 +92,7 @@ const pageDescription = meta.description;
 
           <div class="dotfiles-hero__install" role="region" aria-label="Quick install">
             <p class="dotfiles-hero__install-label">One-command install</p>
-            <pre
-              class="dotfiles-hero__install-code"><code>sh -c "$(curl -fsSL https://github.com/ulises-jeremias/dotfiles/blob/main/scripts/install_dotfiles.sh?raw=true)"</code></pre>
+            <pre class="dotfiles-hero__install-code"><code>{verifiedFacts.installCurl}</code></pre>
             <div class="dotfiles-hero__install-alts">
               <code>yay -S dots-stable</code>
               <code>chezmoi init --apply ulises-jeremias</code>
@@ -68,27 +101,36 @@ const pageDescription = meta.description;
           </div>
         </div>
 
-        <div class="dotfiles-hero__visual" aria-hidden="true">
-          <div class="dotfiles-hero__card">
-            <div class="dotfiles-hero__card-bar">
-              <span></span><span></span><span></span>
-              <span class="dotfiles-hero__card-title">dots appearance · flowers</span>
-            </div>
-            <div class="dotfiles-hero__card-body">
-              <div class="dotfiles-hero__mini-grid">
-                <span style="background:#FFB0CA"></span>
-                <span style="background:#e2bdc7"></span>
-                <span style="background:#7a4a5f"></span>
-                <span style="background:#191114; border:1px solid rgba(255,176,202,0.3)"></span>
-              </div>
-              <p class="dotfiles-hero__card-text">
-                Rice via config.json · scheme.json regenerated · Hyprland borders + Kitty + Quickshell synced.
-              </p>
-            </div>
+        <div class="dotfiles-hero__visual">
+          <figure class="dotfiles-hero__scene">
+            <img
+              class="dotfiles-hero__scene-img"
+              src={heroScene.primary.src}
+              alt={heroScene.primary.alt}
+              width={String(heroScene.primary.width)}
+              height={String(heroScene.primary.height)}
+              decoding="async"
+              fetchpriority="high"
+            />
+            <figcaption class="dotfiles-hero__scene-caption">{heroScene.primary.label}</figcaption>
+          </figure>
+          <div class="dotfiles-hero__thumbs" role="list" aria-label="More desktop captures">
+            {
+              heroScene.thumbs.map((thumb) => (
+                <figure class="dotfiles-hero__thumb" role="listitem">
+                  <img
+                    src={thumb.src}
+                    alt={thumb.alt}
+                    width={String(thumb.width)}
+                    height={String(thumb.height)}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>{thumb.label}</figcaption>
+                </figure>
+              ))
+            }
           </div>
-          <p class="dotfiles-hero__visual-caption">
-            Brand plum #191114 / pink #FFB0CA — badges, bar, and Material scheme.
-          </p>
         </div>
       </div>
     </header>
@@ -98,7 +140,7 @@ const pageDescription = meta.description;
         <DotfilesNarrative />
       </section>
 
-      <section id="stack" class="dotfiles-section dotfiles-section--alt" aria-label="Diagrama de capas">
+      <section id="stack" class="dotfiles-section dotfiles-section--alt" aria-label="Layers diagram">
         <LayersDiagram />
       </section>
 
@@ -110,80 +152,52 @@ const pageDescription = meta.description;
         <ScreenshotGallery />
       </section>
 
-      <section id="licenses" class="dotfiles-section" aria-labelledby="licenses-title">
-        <div class="dotfiles-licenses">
-          <header class="dotfiles-licenses__header">
-            <p class="dotfiles-licenses__eyebrow">License verification</p>
-            <h2 id="licenses-title" class="dotfiles-licenses__title">
-              Verified licenses — MIT + GPL-3.0 with attribution
-            </h2>
-            <p class="dotfiles-licenses__desc">
-              This site and HorneroConfig share author and base MIT license, with an attributed exception for Quickshell
-              adapted from <code>caelestia-dots/shell</code> (GPL-3.0). Verify before redistributing binaries or wallpapers.
+      <section id="attribution" class="dotfiles-section" aria-labelledby="attribution-title">
+        <details class="dotfiles-attribution">
+          <summary class="dotfiles-attribution__summary">
+            <p class="dotfiles-attribution__eyebrow">Attribution</p>
+            <h2 id="attribution-title" class="dotfiles-attribution__title">Credits that keep the nest honest</h2>
+            <p class="dotfiles-attribution__desc">
+              HorneroConfig is MIT. Quickshell UI is adapted from caelestia-dots/shell (GPL-3.0) with upstream credit —
+              expand for component notes.
             </p>
-          </header>
+          </summary>
 
-          <div class="dotfiles-licenses__grid" role="list">
+          <ul class="dotfiles-attribution__list">
             {
-              licenseEntries.map((entry) => (
-                <article class="dotfiles-licenses__card" role="listitem">
-                  <h3 class="dotfiles-licenses__card-title">{entry.component}</h3>
-                  <p class="dotfiles-licenses__card-license">
-                    <span class="dotfiles-licenses__badge">{entry.license}</span>
-                    <span class="dotfiles-licenses__source">{entry.source}</span>
-                  </p>
-                  <p class="dotfiles-licenses__card-notes">{entry.notes}</p>
-                </article>
+              attributionEntries.map((entry) => (
+                <li class="dotfiles-attribution__item">
+                  <span class="dotfiles-attribution__badge">{entry.license}</span>
+                  <div>
+                    <strong>{entry.component}</strong>
+                    <span class="dotfiles-attribution__source">{entry.source}</span>
+                    <p>{entry.notes}</p>
+                  </div>
+                </li>
               ))
             }
-          </div>
-
-          <div class="dotfiles-licenses__verify" role="note" aria-label="Verification result">
-            <h3 class="dotfiles-licenses__verify-title">Local verification 2026-08-07</h3>
-            <ul class="dotfiles-licenses__verify-list">
-              <li>
-                <code>website/LICENSE</code> exists — MIT Copyright (c) 2025-2026 Ulises Jeremias Cornejo Fandos — valid.
-              </li>
-              <li><code>dotfiles/LICENSE</code> (sibling repo) — MIT 2019-2025 — same author — compatible.</li>
-              <li>
-                <code>caelestia-dots/shell</code> referenced in dotfiles README with attribution and GPL-3.0 — respected in
-                /dotfiles.
-              </li>
-              <li>
-                Screenshots <code>dotfiles/static/*</code> — MIT — safe for placeholders; per-rice wallpapers — verify individually.
-              </li>
-              <li>
-                No GPL binary is redistributed on this site (docs/placeholder only) — source clause not triggered; if
-                you embed the Hornero C++ plugin, publish source.
-              </li>
-            </ul>
-            <p class="dotfiles-licenses__verify-foot">
-              Tools: <code>cat LICENSE</code> + manual README review + <code>pnpm knip</code> with no extra conflicting licenses.
-              This page is not legal advice.
-            </p>
-          </div>
-        </div>
+          </ul>
+        </details>
       </section>
 
       <section class="dotfiles-cta" aria-label="Call to action">
         <div class="dotfiles-cta__inner">
           <h2 class="dotfiles-cta__title">Ready to nest?</h2>
           <p class="dotfiles-cta__text">
-            Clone, apply a rice and let Smart Colors handle the rest. Your nest, your rules.
+            Clone, apply a theme, and let Smart Colors handle the rest. Meet builders across the Digital Nest community
+            — HorneroConfig is one station in the workshop, not a solo silo.
           </p>
           <div class="dotfiles-cta__actions">
             <a
-              href="https://github.com/ulises-jeremias/dotfiles"
+              href={verifiedFacts.repoUrl}
               target="_blank"
               rel="noreferrer"
-              class="dotfiles-cta__btn dotfiles-cta__btn--primary">Open dotfiles on GitHub</a
+              class="dotfiles-cta__btn dotfiles-cta__btn--primary">Open on GitHub</a
             >
-            <a
-              href="https://github.com/ulises-jeremias/dotfiles/wiki/Smart-Colors-System"
-              target="_blank"
-              rel="noreferrer"
-              class="dotfiles-cta__btn">Explore Smart Colors</a
+            <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noreferrer" class="dotfiles-cta__btn"
+              >Explore Smart Colors</a
             >
+            <a href="/community" class="dotfiles-cta__btn">Digital Nest community</a>
             <a href="/" class="dotfiles-cta__btn dotfiles-cta__btn--ghost">← Back to home</a>
           </div>
         </div>
@@ -198,71 +212,16 @@ const pageDescription = meta.description;
       padding: 1.1rem 1.2rem 2rem;
     }
 
-    .dotfiles-hero__nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.85rem 1rem;
-      border-radius: 999px;
-      background: rgba(25, 17, 20, 0.82);
-      border: 1px solid rgba(255, 176, 202, 0.16);
-      backdrop-filter: blur(10px);
-    }
-
-    .dotfiles-hero__brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      color: #fbe7ec;
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .dotfiles-hero__brand-mark {
-      width: 1.7rem;
-      height: 1.7rem;
-      display: grid;
-      place-items: center;
-      border-radius: 999px;
-      background: #ffb0ca;
-      color: #191114;
-      font-size: 0.9rem;
-    }
-
-    .dotfiles-hero__nav-links {
-      display: flex;
-      gap: 0.6rem;
-      align-items: center;
-    }
-
-    .dotfiles-hero__nav-link {
-      color: #d5c2c6;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.88rem;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-
-    .dotfiles-hero__nav-link:hover {
-      color: #fbe7ec;
-      border-color: rgba(255, 176, 202, 0.28);
-      background: rgba(255, 176, 202, 0.08);
-    }
-
     .dotfiles-hero__main {
       display: grid;
       gap: 1.6rem;
-      margin-top: 1.8rem;
+      margin-top: 0.4rem;
       align-items: start;
     }
 
     @media (min-width: 920px) {
       .dotfiles-hero__main {
-        grid-template-columns: 1.15fr 0.85fr;
+        grid-template-columns: 1.05fr 0.95fr;
       }
     }
 
@@ -301,9 +260,20 @@ const pageDescription = meta.description;
       max-width: 62ch;
     }
 
-    .dotfiles-hero__subtitle strong {
+    .dotfiles-hero__subtitle strong,
+    .dotfiles-hero__subtitle code {
       color: #fbe7ec;
       font-weight: 750;
+    }
+
+    .dotfiles-hero__subtitle code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.92em;
+      font-weight: 650;
+      padding: 0.08rem 0.28rem;
+      border-radius: 0.3rem;
+      background: rgba(255, 176, 202, 0.12);
+      color: #ffb0ca;
     }
 
     .dotfiles-hero__badges {
@@ -432,81 +402,66 @@ const pageDescription = meta.description;
     .dotfiles-hero__visual {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.75rem;
     }
 
-    .dotfiles-hero__card {
-      background: linear-gradient(180deg, #2d2027, #241a1f);
-      border: 1px solid rgba(255, 176, 202, 0.18);
+    .dotfiles-hero__scene {
+      margin: 0;
       border-radius: 1.1rem;
       overflow: hidden;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+      border: 1px solid rgba(255, 176, 202, 0.22);
+      background: #191114;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
     }
 
-    .dotfiles-hero__card-bar {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.65rem 0.75rem;
-      background: rgba(255, 176, 202, 0.12);
-      border-bottom: 1px solid rgba(255, 176, 202, 0.14);
-    }
-
-    .dotfiles-hero__card-bar span:not(.dotfiles-hero__card-title) {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: #ffb0ca;
+    .dotfiles-hero__scene-img {
       display: block;
-      opacity: 0.9;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
     }
 
-    .dotfiles-hero__card-bar span:nth-child(2) {
-      background: #e2bdc7;
-    }
-    .dotfiles-hero__card-bar span:nth-child(3) {
-      background: #7a4a5f;
-    }
-
-    .dotfiles-hero__card-title {
-      margin-left: 0.5rem;
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: #fbe7ec;
+    .dotfiles-hero__scene-caption {
+      margin: 0;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.72rem;
       font-family: ui-monospace, monospace;
+      color: #c9a8b2;
+      background: rgba(25, 17, 20, 0.96);
+      border-top: 1px solid rgba(255, 176, 202, 0.12);
     }
 
-    .dotfiles-hero__card-body {
-      padding: 1rem;
-    }
-
-    .dotfiles-hero__mini-grid {
+    .dotfiles-hero__thumbs {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 0.8rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
-    .dotfiles-hero__mini-grid span {
-      height: 44px;
-      border-radius: 10px;
+    .dotfiles-hero__thumb {
+      margin: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 176, 202, 0.16);
+      background: #191114;
+    }
+
+    .dotfiles-hero__thumb img {
       display: block;
-      border: 1px solid rgba(255, 176, 202, 0.14);
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
     }
 
-    .dotfiles-hero__card-text {
-      margin: 0;
-      font-size: 0.84rem;
+    .dotfiles-hero__thumb figcaption {
+      padding: 0.35rem 0.45rem;
+      font-size: 0.68rem;
       color: #c9a8b2;
-      line-height: 1.55;
-    }
-
-    .dotfiles-hero__visual-caption {
-      margin: 0;
-      font-size: 0.74rem;
-      color: #c9a8b2;
-      text-align: center;
-      font-style: italic;
+      font-family: ui-monospace, monospace;
     }
 
     .dotfiles-main {
@@ -530,12 +485,25 @@ const pageDescription = meta.description;
       border-color: rgba(255, 176, 202, 0.1);
     }
 
-    .dotfiles-licenses {
+    .dotfiles-attribution {
       max-width: 960px;
       margin: 0 auto;
     }
 
-    .dotfiles-licenses__eyebrow {
+    .dotfiles-attribution__summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .dotfiles-attribution__summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .dotfiles-attribution[open] .dotfiles-attribution__summary {
+      margin-bottom: 1rem;
+    }
+
+    .dotfiles-attribution__eyebrow {
       display: inline-flex;
       padding: 0.28rem 0.7rem;
       border-radius: 999px;
@@ -549,7 +517,7 @@ const pageDescription = meta.description;
       margin: 0 0 0.7rem;
     }
 
-    .dotfiles-licenses__title {
+    .dotfiles-attribution__title {
       margin: 0 0 0.45rem;
       font-size: clamp(1.35rem, 2.8vw, 1.95rem);
       font-weight: 800;
@@ -558,7 +526,7 @@ const pageDescription = meta.description;
       line-height: 1.2;
     }
 
-    .dotfiles-licenses__desc {
+    .dotfiles-attribution__desc {
       margin: 0;
       color: #d5c2c6;
       line-height: 1.65;
@@ -566,107 +534,59 @@ const pageDescription = meta.description;
       max-width: 72ch;
     }
 
-    .dotfiles-licenses__desc code {
-      padding: 0.12rem 0.32rem;
-      border-radius: 0.3rem;
-      background: rgba(255, 176, 202, 0.13);
-      color: #ffb0ca;
-      font-size: 0.88em;
-    }
-
-    .dotfiles-licenses__grid {
+    .dotfiles-attribution__list {
+      list-style: none;
+      margin: 1.1rem 0 0;
+      padding: 0;
       display: grid;
-      gap: 0.9rem;
-      margin-top: 1.1rem;
-      grid-template-columns: 1fr;
+      gap: 0.85rem;
     }
 
-    @media (min-width: 820px) {
-      .dotfiles-licenses__grid {
-        grid-template-columns: repeat(2, 1fr);
+    @media (min-width: 720px) {
+      .dotfiles-attribution__list {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
-    .dotfiles-licenses__card {
+    .dotfiles-attribution__item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.95rem;
+      border-radius: 1rem;
       background: linear-gradient(180deg, rgba(45, 32, 39, 0.92), rgba(25, 17, 20, 0.98));
       border: 1px solid rgba(255, 176, 202, 0.16);
-      border-radius: 1rem;
-      padding: 1rem;
     }
 
-    .dotfiles-licenses__card-title {
-      margin: 0 0 0.4rem;
-      font-size: 0.98rem;
-      font-weight: 800;
+    .dotfiles-attribution__item strong {
+      display: block;
       color: #ffb0ca;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
     }
 
-    .dotfiles-licenses__card-license {
-      margin: 0 0 0.45rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      align-items: center;
+    .dotfiles-attribution__item p {
+      margin: 0.35rem 0 0;
+      font-size: 0.84rem;
+      color: #c9a8b2;
+      line-height: 1.55;
     }
 
-    .dotfiles-licenses__badge {
+    .dotfiles-attribution__badge {
+      flex-shrink: 0;
       padding: 0.2rem 0.5rem;
       border-radius: 999px;
       background: #ffb0ca;
       color: #191114;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 800;
     }
 
-    .dotfiles-licenses__source {
-      font-size: 0.78rem;
+    .dotfiles-attribution__source {
+      display: block;
+      font-size: 0.76rem;
       color: #e2bdc7;
       font-family: ui-monospace, monospace;
-    }
-
-    .dotfiles-licenses__card-notes {
-      margin: 0;
-      font-size: 0.84rem;
-      color: #c9a8b2;
-      line-height: 1.6;
-    }
-
-    .dotfiles-licenses__verify {
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 1rem;
-      background: rgba(255, 176, 202, 0.08);
-      border: 1px solid rgba(255, 176, 202, 0.18);
-    }
-
-    .dotfiles-licenses__verify-title {
-      margin: 0 0 0.5rem;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #ffb0ca;
-    }
-
-    .dotfiles-licenses__verify-list {
-      margin: 0 0 0.6rem;
-      padding-left: 1.15rem;
-      color: #d5c2c6;
-      font-size: 0.84rem;
-      line-height: 1.65;
-    }
-
-    .dotfiles-licenses__verify-list code {
-      padding: 0.12rem 0.3rem;
-      border-radius: 0.3rem;
-      background: rgba(25, 17, 20, 0.9);
-      color: #e2bdc7;
-      font-size: 0.86em;
-    }
-
-    .dotfiles-licenses__verify-foot {
-      margin: 0;
-      font-size: 0.76rem;
-      color: #c9a8b2;
-      font-style: italic;
     }
 
     .dotfiles-cta {
@@ -738,35 +658,6 @@ const pageDescription = meta.description;
       background: transparent;
       color: #d5c2c6;
       border-color: rgba(255, 176, 202, 0.16);
-    }
-
-    .dotfiles-footer {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 1.2rem 1.2rem 2rem;
-      border-top: 1px solid rgba(255, 176, 202, 0.14);
-      color: #c9a8b2;
-      font-size: 0.82rem;
-      line-height: 1.6;
-      text-align: center;
-    }
-
-    .dotfiles-footer a {
-      color: #ffb0ca;
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    .dotfiles-footer a:hover {
-      text-decoration: underline;
-    }
-
-    .dotfiles-footer code {
-      padding: 0.12rem 0.28rem;
-      border-radius: 0.3rem;
-      background: rgba(255, 176, 202, 0.12);
-      color: #ffb0ca;
-      font-size: 0.86em;
     }
 
     @media (prefers-reduced-motion: reduce) {

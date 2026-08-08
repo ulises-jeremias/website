@@ -7,8 +7,8 @@ import { smartColorSteps } from '../data/index.js';
     <p class="smart-colors__eyebrow">Smart Colors</p>
     <h2 id="smart-colors-title" class="smart-colors__title">From wallpaper to apps in one continuous pipeline</h2>
     <p class="smart-colors__desc">
-      Four stages: wallpaper → extraction → palette → apps. Pause, replay, or use the static fallback. Honors
-      <code>prefers-reduced-motion</code>.
+      Real maintained path: wallpaper → Material extraction → <code>scheme.json</code> → Quickshell / Hyprland / Kitty / GTK.
+      Pause, replay, or use the static fallback. Honors <code>prefers-reduced-motion</code>.
     </p>
   </header>
 
@@ -63,7 +63,7 @@ import { smartColorSteps } from '../data/index.js';
                       <span style="background: #d5c2c6" />
                       <span style="background: #fbe7ec" />
                     </div>
-                    <div class="sc-visual__wallpaper-label">rice: flowers · wpgtk</div>
+                    <div class="sc-visual__wallpaper-label">dots-wallpaper-set · state path</div>
                   </div>
                 )}
                 {step.id === 'extraction' && (
@@ -76,6 +76,7 @@ import { smartColorSteps } from '../data/index.js';
                       <span class="sc-extract__dot" style="background:#fbe7ec" />
                     </div>
                     <div class="sc-extract__scan" />
+                    <div class="sc-visual__wallpaper-label">pywal + materialyoucolor</div>
                   </div>
                 )}
                 {step.id === 'palette' && (
@@ -87,13 +88,13 @@ import { smartColorSteps } from '../data/index.js';
                       <span style="background:#d53a3a" title="error" />
                       <span style="background:#2d2027" title="neutral" />
                     </div>
-                    <code class="sc-palette__label">scheme.json · M3</code>
+                    <code class="sc-palette__label">~/.cache/dots/smart-colors/</code>
                   </div>
                 )}
                 {step.id === 'apps' && (
                   <div class="sc-visual sc-visual--apps">
                     <div class="sc-apps__mock">
-                      <div class="sc-apps__bar">Quickshell bar</div>
+                      <div class="sc-apps__bar">Quickshell Colours</div>
                       <div class="sc-apps__row">
                         <span class="sc-apps__win" style="border-color:#FFB0CA">
                           Hyprland
@@ -137,7 +138,7 @@ import { smartColorSteps } from '../data/index.js';
       </div>
 
       <p class="smart-colors__live" data-live-region aria-live="polite">
-        Step 1 of 4: Wallpaper — Image curated per rice in backgrounds/
+        Step 1 of 4: Wallpaper — dots-wallpaper-set records the path and starts the pipeline
       </p>
     </div>
 
@@ -163,13 +164,12 @@ import { smartColorSteps } from '../data/index.js';
         data-action="toggle-static"
         aria-pressed="false">Show static</button
       >
-      <span class="smart-colors__hint" aria-hidden="true">Teclado: Espacio pausar · R repetir</span>
+      <span class="smart-colors__hint" aria-hidden="true">Keyboard: Space pause · R replay</span>
     </div>
 
     <noscript>
       <p class="smart-colors__noscript">
-        Animation requires JavaScript. The static fallback is shown above. Enable JS to see the wallpaper sequence →
-        extraccion → palette → apps.
+        Animation requires JavaScript. The static fallback above shows wallpaper → Material extraction → scheme → apps.
       </p>
     </noscript>
   </div>
@@ -190,10 +190,10 @@ import { smartColorSteps } from '../data/index.js';
     const rootEl = root as HTMLElement;
 
     const labels = [
-      'Step 1 of 4: Wallpaper — Image curated per rice in backgrounds/',
-      'Step 2 of 4: Extraction — Quantization and luminance',
-      'Step 3 of 4: Palette — Material Design 3 scheme.json',
-      'Step 4 of 4: Apps — Atomic apply to Hyprland, Quickshell, Kitty',
+      'Step 1 of 4: Wallpaper — dots-wallpaper-set records the path and starts the pipeline',
+      'Step 2 of 4: Material extraction — pywal + generate-m3-colors.py (materialyoucolor)',
+      'Step 3 of 4: Scheme cache — scheme.json and consumer exports under ~/.cache/dots/smart-colors/',
+      'Step 4 of 4: Consumers — Quickshell Colours, Hyprland, Kitty, GTK',
     ];
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
