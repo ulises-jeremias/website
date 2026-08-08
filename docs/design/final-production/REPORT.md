@@ -10,7 +10,7 @@
 ## Verification
 
 | Check                       | Result                                                                                                                                        |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | `pnpm test`                 | **108/108 passed**                                                                                                                            |
 | `pnpm type-check`           | **0 errors** (hints only)                                                                                                                     |
 | `pnpm build`                | **11 pages** static build OK                                                                                                                  |
@@ -26,7 +26,7 @@
 ## Gate status
 
 | Gate             | Status                                                                                           |
-| ---------------- | ------------------------------------------------------------------------------------------------ |
+|------------------|--------------------------------------------------------------------------------------------------|
 | Homepage visual  | **SHIP AUTHORIZED by product owner** — merge may proceed; formal golden acceptance still pending |
 | Golden snapshots | Not updated for this ship unless CI fails on intentional UI changes                              |
 | Epic #319 close  | Remains OPEN after merge — awaiting visual acceptance note                                       |
@@ -107,7 +107,7 @@ Formal gate replies still useful: **APPROVED** · **APPROVED WITH NOTES** · **R
 ## Issue reconciliation posture
 
 | Issue family                    | Posture                                        |
-| ------------------------------- | ---------------------------------------------- |
+|---------------------------------|------------------------------------------------|
 | #319 epic                       | OPEN — evidence accumulating; await acceptance |
 | #52 art direction               | CLOSED — do not reopen                         |
 | #86 / visual goldens            | Wait for homepage APPROVED                     |
