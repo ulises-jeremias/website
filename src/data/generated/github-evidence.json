@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "generator": "seed",
+  "mode": "seed",
+  "evidence": [
+    {
+      "id": "rxv-owned",
+      "kind": "owned",
+      "subject": "ulises-jeremias/rxv",
+      "evidence": "Repository ownership",
+      "href": "https://github.com/ulises-jeremias/rxv",
+      "role": "owner",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "agent-toolkit-owned",
+      "kind": "owned",
+      "subject": "ulises-jeremias/agent-toolkit",
+      "evidence": "Capability distribution catalog",
+      "href": "https://github.com/ulises-jeremias/agent-toolkit",
+      "role": "owner",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "agentic-workstation-owned",
+      "kind": "owned",
+      "subject": "ulises-jeremias/agentic-workstation",
+      "evidence": "Machine provisioning (L1)",
+      "href": "https://github.com/ulises-jeremias/agentic-workstation",
+      "role": "owner",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "agentic-harness-owned",
+      "kind": "owned",
+      "subject": "ulises-jeremias/agentic-harness",
+      "evidence": "Persistent AI workspace runtime (L2)",
+      "href": "https://github.com/ulises-jeremias/agentic-harness",
+      "role": "owner",
+      "featured": false,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "setup-v-maintained",
+      "kind": "maintained",
+      "subject": "vlang/setup-v",
+      "evidence": "Maintainer role · Action @v1.7",
+      "href": "https://github.com/vlang/setup-v",
+      "role": "maintainer",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "vtl-maintained",
+      "kind": "maintained",
+      "subject": "vlang/vtl",
+      "evidence": "V Tensor Library maintainer",
+      "href": "https://github.com/vlang/vtl",
+      "role": "maintainer",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "vsl-maintained",
+      "kind": "maintained",
+      "subject": "vlang/vsl",
+      "evidence": "V Scientific Library maintainer",
+      "href": "https://github.com/vlang/vsl",
+      "role": "maintainer",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "v-external-prs",
+      "kind": "external",
+      "subject": "vlang/v",
+      "evidence": "Merged authored PRs (search link — no invented count)",
+      "href": "https://github.com/vlang/v/pulls?q=author:ulises-jeremias+is:merged",
+      "role": "merged-author",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "create-awesome-orgs",
+      "kind": "org",
+      "subject": "Create-Node-App / Create-Python-App / Create-Vlang-App",
+      "evidence": "Organization maintainer",
+      "href": "https://github.com/Create-Node-App",
+      "role": "org-maintainer",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-08-07",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    }
+  ],
+  "volatile": {},
+  "notes": [
+    "Committed cache from verified editorial evidence. Run `pnpm data:refresh` with GITHUB_TOKEN (optional) to re-verify public repo existence. Volatile counts omitted until refresh succeeds."
+  ]
+}

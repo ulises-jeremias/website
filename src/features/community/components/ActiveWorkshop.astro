@@ -1,0 +1,242 @@
+---
+import { activeWorkshopProjects, ecosystemLabels, incubatingProjects } from '../data/index.js';
+import type { CommunityProject } from '../types/index.js';
+
+const byEcosystem = (ecosystem: CommunityProject['ecosystem']) =>
+  activeWorkshopProjects.filter((p) => p.ecosystem === ecosystem || p.alsoIn.includes(ecosystem));
+
+const sections: { id: CommunityProject['ecosystem']; note?: string }[] = [
+  { id: 'personal-dx', note: 'Linux desktop + thin machine provisioning' },
+  { id: 'agentic', note: 'Capability distribution and persistent workspaces' },
+  { id: 'create-awesome', note: 'One family of scaffold CLIs — not the whole community' },
+  { id: 'v-ecosystem', note: 'Roles are project-specific; Ulises does not own all of V' },
+];
+
+const stateLabel: Record<CommunityProject['state'], string> = {
+  active: 'Active',
+  maintained: 'Maintained',
+  experimental: 'Experimental',
+};
+---
+
+<section class="cm-active" aria-labelledby="cm-active-title" data-testid="active-workshop">
+  <header class="cm-active__header">
+    <p class="cm-active__eyebrow">Active workshop</p>
+    <h2 id="cm-active-title" class="cm-active__title">Projects you can touch today</h2>
+    <p class="cm-active__lead">
+      Participation is controlled per project with communityEnabled in the community registry. Adding a future public
+      repo should mean one registry entry — not rewriting this page by hand five times.
+    </p>
+  </header>
+
+  {
+    sections.map((section) => {
+      const projects = byEcosystem(section.id);
+      // Avoid double-listing create-awesome orgs under v when alsoIn includes v
+      const unique =
+        section.id === 'v-ecosystem'
+          ? projects.filter((p) => p.ecosystem === 'v-ecosystem')
+          : projects.filter((p) => p.ecosystem === section.id);
+      if (unique.length === 0) return null;
+      return (
+        <div class="cm-active__family" data-ecosystem={section.id}>
+          <h3 class="cm-active__family-title">{ecosystemLabels[section.id]}</h3>
+          {section.note ? <p class="cm-active__family-note">{section.note}</p> : null}
+          <ul class="cm-active__grid">
+            {unique.map((project) => (
+              <li class="cm-active__card">
+                <div class="cm-active__card-top">
+                  <h4 class="cm-active__name">{project.name}</h4>
+                  <span class="cm-active__state">{stateLabel[project.state]}</span>
+                </div>
+                <p class="cm-active__summary">{project.summary}</p>
+                <p class="cm-active__role">
+                  Role: <strong>{project.role}</strong>
+                </p>
+                <p class="cm-active__areas">Contribute: {project.contributionAreas.join(' · ')}</p>
+                <div class="cm-active__links">
+                  {project.repo ? (
+                    <a href={`https://github.com/${project.repo}`} target="_blank" rel="noopener noreferrer">
+                      Repository
+                    </a>
+                  ) : null}
+                  {project.worldPath ? <a href={project.worldPath}>World</a> : null}
+                  {project.website && project.website !== `https://github.com/${project.repo}` ? (
+                    <a href={project.website} target="_blank" rel="noopener noreferrer">
+                      Site
+                    </a>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    })
+  }
+</section>
+
+<section class="cm-incubating" aria-labelledby="cm-incubating-title" data-testid="incubating-workshop">
+  <header class="cm-incubating__header">
+    <p class="cm-incubating__eyebrow">Incubating</p>
+    <h2 id="cm-incubating-title" class="cm-incubating__title">Blueprints on the horizon</h2>
+    <p class="cm-incubating__lead">
+      These directions are editorial and public by choice. No repositories, release dates, or contributor lists until
+      canonical sources exist. More experiments may appear later without a product name yet.
+    </p>
+  </header>
+  <ul class="cm-incubating__grid">
+    {
+      incubatingProjects.map((item) => (
+        <li class="cm-incubating__card">
+          <h3 class="cm-incubating__name">{item.workingTitle}</h3>
+          <p class="cm-incubating__badge">Incubating · coming later</p>
+          <p class="cm-incubating__summary">{item.summary}</p>
+          <p class="cm-incubating__themes">{item.themes.join(' · ')}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .cm-active,
+  .cm-incubating {
+    padding: 1.75rem 0;
+  }
+  .cm-active__eyebrow,
+  .cm-incubating__eyebrow {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .cm-incubating__eyebrow {
+    color: color-mix(in srgb, var(--nest-violet) 80%, white);
+  }
+  .cm-active__title,
+  .cm-incubating__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 800;
+    color: var(--color-text);
+  }
+  .cm-active__lead,
+  .cm-incubating__lead {
+    margin: 0.55rem 0 0;
+    max-width: 70ch;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .cm-active__family {
+    margin-top: 1.5rem;
+  }
+  .cm-active__family-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nest-magenta);
+  }
+  .cm-active__family-note {
+    margin: 0.35rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.88rem;
+  }
+  .cm-active__grid,
+  .cm-incubating__grid {
+    list-style: none;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
+  }
+  @media (width >= 720px) {
+    .cm-active__grid,
+    .cm-incubating__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (width >= 1100px) {
+    .cm-active__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .cm-active__card {
+    padding: 1rem;
+    clip-path: var(--clip-corner-sm);
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 35%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 86%, transparent);
+  }
+  .cm-active__card-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .cm-active__name {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: var(--color-text);
+  }
+  .cm-active__state {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .cm-active__summary,
+  .cm-active__role,
+  .cm-active__areas {
+    margin: 0.45rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .cm-active__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.75rem;
+  }
+  .cm-active__links a {
+    color: var(--nest-cyan);
+    font-weight: 650;
+    font-size: 0.88rem;
+  }
+  .cm-incubating__card {
+    padding: 1rem;
+    clip-path: var(--clip-corner-sm);
+    border: 1px dashed color-mix(in srgb, var(--nest-violet) 55%, transparent);
+    background: color-mix(in srgb, var(--nest-void, #0b0614) 55%, transparent);
+    opacity: 0.92;
+  }
+  .cm-incubating__name {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--color-text);
+  }
+  .cm-incubating__badge {
+    margin: 0.35rem 0 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--nest-violet) 85%, white);
+  }
+  .cm-incubating__summary,
+  .cm-incubating__themes {
+    margin: 0.45rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+</style>

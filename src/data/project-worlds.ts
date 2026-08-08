@@ -1,9 +1,8 @@
 import { z } from 'astro/zod';
+import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 
 // ---------------------------------------------------------------------------
-// Theme tokens (preliminary) — reference for world theming
-// Final palette lands in src/styles/tokens.css (Epic C). These identifiers
-// are shared with navigation (Header/MobileNav) for world-aware styling.
+// Theme tokens — shared with navigation for world-aware styling.
 // ---------------------------------------------------------------------------
 
 export const themeIdSchema = z.enum([
@@ -95,32 +94,32 @@ export const projectWorlds: ProjectWorld[] = [
     relatedWorlds: ['workstation', 'open-source'],
   },
   {
-    id: 'workstation',
-    slug: 'agentic-workstation',
-    title: 'Agentic Workstation',
-    description: 'Provisioning, policy, and tooling for an AI-native developer workstation',
-    path: '/agentic-workstation',
-    theme: 'workstation',
-    accent: 'cyan',
-    illustration: 'workstation',
-    priority: 20,
-    featured: true,
-    subdomain: 'workstation',
-    relatedWorlds: ['toolkit', 'dotfiles'],
-  },
-  {
     id: 'toolkit',
     slug: 'agent-toolkit',
     title: 'Agent Toolkit',
-    description: '61 skills · 16 agents · 10 loops · 7 profiles · 6 MCP — swarm recipes included',
+    description: `${inventoryStrip()} — swarm recipes included`,
     path: '/agent-toolkit',
     theme: 'toolkit',
     accent: 'violet',
     illustration: 'capability-core',
-    priority: 30,
+    priority: 20,
     featured: true,
     subdomain: 'agents',
     relatedWorlds: ['workstation', 'community'],
+  },
+  {
+    id: 'workstation',
+    slug: 'agentic-workstation',
+    title: 'Agentic Workstation',
+    description: 'Thin machine provisioning for the Personal DX graph — chezmoi, profiles, LLM policy.',
+    path: '/agentic-workstation',
+    theme: 'workstation',
+    accent: 'cyan',
+    illustration: 'workstation',
+    priority: 30,
+    featured: true,
+    subdomain: 'workstation',
+    relatedWorlds: ['toolkit', 'dotfiles', 'community'],
   },
   {
     id: 'v',
@@ -170,7 +169,7 @@ export const projectWorlds: ProjectWorld[] = [
     id: 'community',
     slug: 'community',
     title: 'Community',
-    description: 'Community — Discord, contributions, shared workshop',
+    description: 'Shared workshop across Digital Nest projects',
     path: '/community',
     theme: 'community',
     accent: 'pink',
@@ -267,8 +266,11 @@ export const crossLinks: CrossLink[] = [
   { from: 'dotfiles', to: 'workstation', label: 'Provisions workstation' },
   { from: 'workstation', to: 'dotfiles', label: 'Uses dotfiles layer' },
   { from: 'v', to: 'open-source', label: 'V core contributions' },
-  { from: 'create-awesome', to: 'community', label: 'Discuss templates' },
+  { from: 'create-awesome', to: 'community', label: 'Join the shared community' },
   { from: 'blog', to: 'community', label: 'Continue in Discord' },
+  { from: 'toolkit', to: 'community', label: 'Discuss or contribute' },
+  { from: 'dotfiles', to: 'community', label: 'Contribute through the Digital Nest community' },
+  { from: 'workstation', to: 'community', label: 'Discuss Personal DX' },
   { from: 'projects', to: 'open-source', label: 'See contributions' },
 ];
 

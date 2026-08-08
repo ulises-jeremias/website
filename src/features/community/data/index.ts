@@ -1,215 +1,442 @@
 import type {
-  ContributionPathway,
+  CommunityMeta,
+  CommunityProject,
+  ContributionOpportunity,
+  IncubatingProject,
+  InterestFilter,
   ModerationItem,
-  ProjectFamily,
   SupportChannel,
-  WeeklyOpportunity,
   WorkshopSection,
 } from '../types/index.js';
-export const communityMeta = {
+import {
+  communityProjectSchema,
+  contributionOpportunitySchema,
+  incubatingProjectSchema,
+  interestFilterSchema,
+} from '../types/index.js';
+
+export const communityMeta: CommunityMeta = {
   discordInviteUrl: 'https://discord.gg/bR5VyATgka',
   discordBlurple: '#5865F2',
   discordBlurpleHover: '#4752C4',
-  codeOfConductUrl: 'https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md',
-  supportUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki',
+  exampleCodeOfConductUrl: 'https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md',
   communityDistinctNote:
-    'Community is distinct from employer (NaNLABS) — participation is voluntary and moderated independently.',
+    'This Discord is a personal open-source workshop — not a NaNLABS or employer channel. Participation is voluntary.',
   metricsPolicy:
-    'No member counts or vanity metrics are shown without an authoritative, refreshable source. Counts are omitted by design.',
-} as const;
+    'No member counts or vanity metrics without an authoritative, refreshable source. Counts are omitted by design.',
+};
+
+/**
+ * Verified GitHub search spanning community-enabled repos + Create Awesome orgs.
+ * EDITORIAL: keep in sync with communityProjects[].repo / org fields.
+ */
+export const COMMUNITY_ISSUE_SEARCH_BASE =
+  'repo:ulises-jeremias/dotfiles OR repo:ulises-jeremias/agentic-workstation OR repo:ulises-jeremias/agentic-harness OR repo:ulises-jeremias/agent-toolkit OR org:Create-Node-App OR org:Create-Python-App OR org:Create-Vlang-App';
+
+export function communityIssueSearch(extraQuery: string): string {
+  const q = `${COMMUNITY_ISSUE_SEARCH_BASE} ${extraQuery} is:open type:issue`;
+  return `https://github.com/search?q=${encodeURIComponent(q)}&type=issues`;
+}
+
 export const workshopSections: WorkshopSection[] = [
   {
-    id: 'shared-workshop',
-    title: 'The shared workshop — connected to every world',
+    id: 'one-discord-many-projects',
+    title: 'One Discord. Many projects.',
     paragraphs: [
-      'Community is the shared workshop that connects every world in the Digital Nest — dotfiles, workstation, toolkit, V, and Create Awesome. It is not a broadcast channel: it is a bench where questions, drafts, and fixes circulate before they become documentation.',
-      'The principle is simple: work in the open, link the evidence, and leave a path for the next person. Every pattern in this site has a provenance — a PR, a discussion, or a commit you can open. If you cannot verify it, it is not on the page.',
+      "Digital Nest Community is the shared workshop behind Ulises' open-source work — Personal DX, agentic tooling, Create Awesome, V ecosystem contributions, and whatever ships next. Join for a rice, a skill, a template, a tensor bug, or just to follow experiments.",
+      'Create Awesome is one family inside the workshop. It does not define the community.',
     ],
   },
   {
-    id: 'purpose-audience',
-    title: 'Who this is for — and who it is not',
+    id: 'cross-pollination',
+    title: 'Cross-pollination is the point',
     paragraphs: [
-      'For builders who keep their system reproducible, their CLIs composable, and their AI assistance auditable. You may be tuning a Hyprland rice, adding an addon to cna-templates, or reviewing a VSL numerical method — the workshop welcomes the same rigor at any scale.',
-      'It is not a support desk for proprietary tooling or employer-sponsored work. NaNLABS and other work contexts are mentioned for transparency only; the community has its own Code of Conduct, moderation, and privacy expectations (see below).',
+      'Someone can arrive for Create Awesome Python and later ship a docs fix in Agent Toolkit, or help with HorneroConfig Smart Colors. Ecosystems overlap on purpose — Linux, CLIs, agents, and scientific tooling share the same bench.',
+      'You do not need a contribution plan to join. Ask questions, review drafts, learn, or pick an issue when something clicks.',
     ],
   },
   {
     id: 'how-we-work',
-    title: 'How we work — small boards, clear edges',
+    title: 'Discord for talk. GitHub for the trail.',
     paragraphs: [
-      'We favor small, reversible contributions with typed boundaries: a docs fix with a Zod-validated frontmatter, a template addon with a test, a shell script with set -euo pipefail. Weekly triage surfaces labeled issues — good first issue, documentation, templates — so you can pick a board that matches your time and depth.',
-      'Design and content decisions are recorded near the code (ADRs, PR descriptions, route tables). If a choice matters for more than one world, it is written down before it ships.',
+      'Use Discord for quick questions and coordination. Prefer GitHub issues, PRs, and docs for durable decisions so the next person can follow the evidence.',
+      'Opportunities range from documentation and tests to CLI work, templates, architecture, and research spikes. Some are excellent first PRs; others are deep. New contribution opportunities are shared regularly across the ecosystem — no invented weekly schedule.',
+      'Contribute with AI, without AI, or with a deliberate mix. The workshop is also a place to keep practicing real engineering judgment.',
     ],
   },
 ];
-export const projectFamilies: ProjectFamily[] = [
+
+const _projects: CommunityProject[] = [
   {
-    id: 'node',
-    label: 'Node',
-    title: 'Create Awesome — Node',
-    description: 'Templates + addons for frontend, backend, and full-stack. Compose files, not black boxes.',
-    href: 'https://github.com/Create-Node-App/cna-templates',
-    icon: 'node',
-    languages: ['TypeScript', 'Node'],
-    installHint: 'npm create awesome-node-app@latest my-app -- --template react-vite-starter',
+    id: 'horneroconfig',
+    name: 'HorneroConfig',
+    summary: 'Reproducible Linux desktop — Hyprland, Quickshell, Smart Colors, rices.',
+    ecosystem: 'personal-dx',
+    alsoIn: [],
+    repo: 'ulises-jeremias/dotfiles',
+    website: 'https://github.com/ulises-jeremias/dotfiles',
+    worldPath: '/dotfiles',
+    state: 'active',
+    communityEnabled: true,
+    contributionAreas: ['rices/themes', 'Smart Colors', 'shell tooling', 'docs'],
+    interests: ['linux-desktop', 'documentation', 'beginner'],
+    beginnerFriendly: true,
+    role: 'Creator',
+    source: 'github',
   },
   {
-    id: 'python',
-    label: 'Python',
-    title: 'Create Awesome — Python',
-    description: 'FastAPI, Django, CLI, Celery with uv. Same composition model, Python idioms.',
-    href: 'https://github.com/Create-Python-App/cpa-templates',
-    icon: 'python',
-    languages: ['Python', 'uv'],
-    installHint: 'uvx create-awesome-python-app@latest my-app --template fastapi-starter',
+    id: 'agentic-workstation',
+    name: 'Agentic Workstation',
+    summary: 'Thin machine provisioning — chezmoi, profiles, LLM policy, Toolkit uplink.',
+    ecosystem: 'personal-dx',
+    alsoIn: [],
+    repo: 'ulises-jeremias/agentic-workstation',
+    worldPath: '/agentic-workstation',
+    state: 'active',
+    communityEnabled: true,
+    contributionAreas: ['provisioning', 'profiles', 'docs', 'doctor checks'],
+    interests: ['linux-desktop', 'ai-agents', 'devops-infra', 'documentation'],
+    beginnerFriendly: true,
+    role: 'Creator',
+    source: 'github',
   },
   {
-    id: 'v',
-    label: 'V',
-    title: 'Create Awesome — V',
-    description: 'Native, fast scaffolding for the V ecosystem — experimental, typed, and reviewable.',
-    href: 'https://github.com/Create-Vlang-App/cva-templates',
-    icon: 'v',
-    languages: ['V'],
-    installHint: 'create-vlang-app my-app --template web-server',
+    id: 'agentic-harness',
+    name: 'Agentic Harness',
+    summary: 'Persistent AI workspace — memory, personas, packs, and autonomous loops.',
+    ecosystem: 'agentic',
+    alsoIn: ['personal-dx'],
+    repo: 'ulises-jeremias/agentic-harness',
+    state: 'active',
+    communityEnabled: true,
+    contributionAreas: ['workspace runtime', 'memory/personas', 'docs', 'loops'],
+    interests: ['ai-agents', 'documentation', 'testing'],
+    beginnerFriendly: false,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'agent-toolkit',
+    name: 'Agent Toolkit',
+    summary: 'Composable capabilities — skills, agents, loops, MCP, swarm recipes, Herdr/tmux surfaces.',
+    ecosystem: 'agentic',
+    alsoIn: [],
+    repo: 'ulises-jeremias/agent-toolkit',
+    worldPath: '/agent-toolkit',
+    state: 'active',
+    communityEnabled: true,
+    contributionAreas: ['skills', 'agents', 'loops', 'MCP', 'docs', 'plugins'],
+    interests: ['ai-agents', 'documentation', 'testing', 'beginner'],
+    beginnerFriendly: true,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'create-awesome-node',
+    name: 'Create Awesome — Node',
+    summary: 'Composable Node scaffolds — templates + extensions you own.',
+    ecosystem: 'create-awesome',
+    alsoIn: [],
+    org: 'Create-Node-App',
+    repo: 'Create-Node-App/create-node-app',
+    website: 'https://create-awesome-node-app.vercel.app',
+    worldPath: '/create-awesome#node',
+    state: 'active',
+    communityEnabled: true,
+    contributionAreas: ['CLI', 'templates', 'extensions', 'docs', 'CI'],
+    interests: ['node', 'documentation', 'testing', 'beginner'],
+    beginnerFriendly: true,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'create-awesome-python',
+    name: 'Create Awesome — Python',
+    summary: 'Composable Python scaffolds with uv — FastAPI, Django, CLI, workers.',
+    ecosystem: 'create-awesome',
+    alsoIn: [],
+    org: 'Create-Python-App',
+    repo: 'Create-Python-App/create-python-app',
+    website: 'https://create-awesome-python-app.vercel.app',
+    worldPath: '/create-awesome#python',
+    state: 'active',
+    communityEnabled: true,
+    contributionAreas: ['CLI', 'templates', 'addons', 'docs', 'CI'],
+    interests: ['python', 'documentation', 'testing', 'beginner'],
+    beginnerFriendly: true,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'create-awesome-v',
+    name: 'Create Awesome — V',
+    summary: 'Native V scaffolds — web, CLI, systems, plus VSL/VTL/RxV starters.',
+    ecosystem: 'create-awesome',
+    alsoIn: ['v-ecosystem'],
+    org: 'Create-Vlang-App',
+    repo: 'Create-Vlang-App/create-vlang-app',
+    website: 'https://create-awesome-vlang-app.vercel.app',
+    worldPath: '/create-awesome#v',
+    state: 'experimental',
+    communityEnabled: true,
+    contributionAreas: ['CLI', 'templates', 'addons', 'docs'],
+    interests: ['v', 'documentation', 'testing'],
+    beginnerFriendly: false,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'vsl',
+    name: 'VSL',
+    summary: 'V Scientific Library — numerics and scientific tooling in V.',
+    ecosystem: 'v-ecosystem',
+    alsoIn: [],
+    repo: 'vlang/vsl',
+    worldPath: '/v#vsl',
+    state: 'maintained',
+    communityEnabled: true,
+    contributionAreas: ['numerics', 'docs', 'tests', 'backends'],
+    interests: ['v', 'testing', 'documentation'],
+    beginnerFriendly: false,
+    role: 'Maintainer',
+    source: 'github',
+  },
+  {
+    id: 'vtl',
+    name: 'VTL',
+    summary: 'V Tensor Library — tensors, autograd, experimental GPU paths.',
+    ecosystem: 'v-ecosystem',
+    alsoIn: [],
+    repo: 'vlang/vtl',
+    worldPath: '/v#vtl',
+    state: 'experimental',
+    communityEnabled: true,
+    contributionAreas: ['tensors', 'autograd', 'docs', 'tests'],
+    interests: ['v', 'testing', 'documentation'],
+    beginnerFriendly: false,
+    role: 'Maintainer',
+    source: 'github',
+  },
+  {
+    id: 'rxv',
+    name: 'RxV',
+    summary: 'ReactiveX for V — observables and channel pipelines.',
+    ecosystem: 'v-ecosystem',
+    alsoIn: [],
+    repo: 'ulises-jeremias/rxv',
+    worldPath: '/v#rxv',
+    state: 'experimental',
+    communityEnabled: true,
+    contributionAreas: ['operators', 'docs', 'tests'],
+    interests: ['v', 'testing', 'documentation'],
+    beginnerFriendly: false,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'setup-v',
+    name: 'setup-v',
+    summary: 'GitHub Action to install and cache V across OSes.',
+    ecosystem: 'v-ecosystem',
+    alsoIn: [],
+    repo: 'vlang/setup-v',
+    worldPath: '/v#setup-v',
+    state: 'maintained',
+    communityEnabled: true,
+    contributionAreas: ['CI action', 'docs', 'caching'],
+    interests: ['v', 'devops-infra', 'documentation'],
+    beginnerFriendly: true,
+    role: 'Maintainer',
+    source: 'github',
   },
 ];
-export const weeklyOpportunities: WeeklyOpportunity[] = [
-  {
+
+export const communityProjects: CommunityProject[] = _projects.map((p) => communityProjectSchema.parse(p));
+
+export const incubatingProjects: IncubatingProject[] = [
+  incubatingProjectSchema.parse({
+    id: 'skypiea-home',
+    workingTitle: 'Skypiea-Home',
+    summary: 'HomeLab tooling and automation — incubating with a partner. Public details stay high-level on purpose.',
+    themes: ['HomeLab', 'Proxmox', 'Home Assistant', 'infrastructure automation'],
+    public: true,
+    ecosystem: 'lab',
+  }),
+  incubatingProjectSchema.parse({
+    id: 'horneroos',
+    workingTitle: 'HorneroOS',
+    summary: 'Arch-based distribution concept — incubating. No public repository yet.',
+    themes: ['Arch Linux', 'distribution', 'installer'],
+    public: true,
+    ecosystem: 'lab',
+  }),
+  incubatingProjectSchema.parse({
+    id: 'agent-workspace-experiment',
+    workingTitle: 'New agent workspace',
+    summary: 'Unnamed experiment exploring desktop / AI-agent tooling. No public name or repo yet.',
+    themes: ['agent interfaces', 'developer tooling', 'desktop'],
+    public: true,
+    ecosystem: 'agentic',
+  }),
+];
+
+export const interestFilters: InterestFilter[] = [
+  interestFilterSchema.parse({ id: 'beginner', label: 'Easy first PR', hint: 'Docs, labels, small fixes' }),
+  interestFilterSchema.parse({ id: 'linux-desktop', label: 'Linux / DevEx', hint: 'HorneroConfig & workstation' }),
+  interestFilterSchema.parse({ id: 'ai-agents', label: 'AI / agents', hint: 'Toolkit, harness, workflows' }),
+  interestFilterSchema.parse({ id: 'node', label: 'Node', hint: 'Create Awesome Node' }),
+  interestFilterSchema.parse({ id: 'python', label: 'Python', hint: 'Create Awesome Python' }),
+  interestFilterSchema.parse({ id: 'v', label: 'V / scientific', hint: 'VSL, VTL, RxV, CVA' }),
+  interestFilterSchema.parse({
+    id: 'devops-infra',
+    label: 'DevOps / infra',
+    hint: 'CI, provisioning, HomeLab themes',
+  }),
+  interestFilterSchema.parse({ id: 'documentation', label: 'Docs', hint: 'Guides, ADRs, clarity' }),
+  interestFilterSchema.parse({ id: 'design', label: 'Design', hint: 'Visual & UX contributions' }),
+  interestFilterSchema.parse({ id: 'testing', label: 'Testing', hint: 'Coverage, CI, repros' }),
+];
+
+export const contributionOpportunities: ContributionOpportunity[] = [
+  contributionOpportunitySchema.parse({
     id: 'good-first-issue',
     title: 'Good first issues',
-    description: 'Docs, copy, and small template addons with tests — ideal for a first PR.',
-    labels: ['good first issue', 'documentation'],
-    href: 'https://github.com/search?q=org%3ACreate-Node-App+org%3ACreate-Python-App+org%3ACreate-Vlang-App+label%3A%22good+first+issue%22+is%3Aopen+type%3Aissue',
-  },
-  {
-    id: 'templates',
-    title: 'Templates & addons',
-    description: 'New templates or addons that compose cleanly with existing stacks.',
-    labels: ['templates', 'addons'],
-    href: 'https://github.com/Create-Node-App/cna-templates/issues',
-  },
-  {
-    id: 'docs',
+    description: 'Labeled starter work across Personal DX, agentic tooling, and Create Awesome.',
+    interests: ['beginner', 'documentation'],
+    labels: ['good first issue'],
+    href: communityIssueSearch('label:"good first issue"'),
+  }),
+  contributionOpportunitySchema.parse({
+    id: 'documentation',
     title: 'Documentation',
-    description: 'Clarify an ADR, fix a workflow, or expand a guide — verified docs matter as much as code.',
-    labels: ['documentation', 'enhancement'],
-    href: 'https://github.com/ulises-jeremias/website/issues',
-  },
+    description: 'Clarify guides, READMEs, and contribution docs across the ecosystem.',
+    interests: ['documentation', 'beginner'],
+    labels: ['documentation'],
+    href: communityIssueSearch('label:documentation'),
+  }),
+  contributionOpportunitySchema.parse({
+    id: 'agent-toolkit',
+    title: 'Agent Toolkit',
+    description: 'Skills, agents, loops, MCP templates, and swarm docs.',
+    interests: ['ai-agents', 'testing'],
+    labels: [],
+    href: 'https://github.com/ulises-jeremias/agent-toolkit/issues',
+  }),
+  contributionOpportunitySchema.parse({
+    id: 'personal-dx',
+    title: 'Personal DX',
+    description: 'HorneroConfig, workstation provisioning, and harness workspace issues.',
+    interests: ['linux-desktop', 'devops-infra'],
+    labels: [],
+    href: communityIssueSearch(
+      '(repo:ulises-jeremias/dotfiles OR repo:ulises-jeremias/agentic-workstation OR repo:ulises-jeremias/agentic-harness)',
+    ),
+  }),
+  contributionOpportunitySchema.parse({
+    id: 'create-awesome',
+    title: 'Create Awesome family',
+    description: 'CLIs, templates, addons/extensions across Node, Python, and V.',
+    interests: ['node', 'python', 'v'],
+    labels: ['templates', 'addons'],
+    href: communityIssueSearch('(org:Create-Node-App OR org:Create-Python-App OR org:Create-Vlang-App)'),
+  }),
+  contributionOpportunitySchema.parse({
+    id: 'v-ecosystem',
+    title: 'V ecosystem',
+    description: 'Scientific, tensor, reactive, and CI work where Ulises maintains or creates.',
+    interests: ['v', 'testing'],
+    labels: [],
+    href: communityIssueSearch('(repo:vlang/vsl OR repo:vlang/vtl OR repo:ulises-jeremias/rxv OR repo:vlang/setup-v)'),
+  }),
 ];
-export const beginnerPathway: ContributionPathway = {
-  id: 'beginner',
-  title: 'Beginner — first contribution in an afternoon',
-  description: 'Start small, ship with tests, and learn the review rhythm. No setup magic required.',
-  audience: 'New to the workshop or short on time',
-  steps: [
-    {
-      title: 'Read the Code of Conduct',
-      description: 'Seven lines that set the tone: be kind, be precise, stay on topic.',
-      href: 'https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md',
-      label: 'Code of Conduct',
-    },
-    {
-      title: 'Pick a labeled issue',
-      description: 'Filter by good first issue or documentation. Each has scope, expected file, and review checklist.',
-      href: 'https://github.com/search?q=org%3ACreate-Node-App+label%3A%22good+first+issue%22+is%3Aopen+type%3Aissue',
-      label: 'Browse issues',
-    },
-    {
-      title: 'Scaffold locally',
-      description: 'Use the matching CLI (Node / Python / V) to generate a test app and reproduce the change.',
-      label: 'Template + addon',
-    },
-    {
-      title: 'Submit a focused PR',
-      description: 'One concern per PR, typed at the edge (Zod), with a clear title following Conventional Commits.',
-      label: 'feat(docs): clarify ...',
-    },
-  ],
-  ctaLabel: 'Find a good first issue',
-  ctaHref:
-    'https://github.com/search?q=org%3ACreate-Node-App+org%3ACreate-Python-App+org%3ACreate-Vlang-App+label%3A%22good+first+issue%22+is%3Aopen+type%3Aissue',
-};
-export const experiencedPathway: ContributionPathway = {
-  id: 'experienced',
-  title: 'Experienced — shape the scaffolding',
-  description: 'Design templates, CLI composition, and pipelines that survive a major version.',
-  audience: 'Comfortable with Astro, CLIs, or scientific libraries',
-  steps: [
-    {
-      title: 'Review architecture',
-      description:
-        'Read docs/PROJECT_STRUCTURE.md and docs/STATE_MANAGEMENT.md — feature-based, thin pages, content-first.',
-      href: 'https://github.com/ulises-jeremias/website/blob/main/docs/PROJECT_STRUCTURE.md',
-      label: 'Project structure',
-    },
-    {
-      title: 'Design a template or addon',
-      description:
-        'Propose the file map, config surface, and test plan. Templates are static HTML until an island is justified.',
-      label: 'Template + addon ADR',
-    },
-    {
-      title: 'Wire CI and type safety',
-      description: 'Astro check, ESLint, Vitest, and build must pass. Zod at the boundary, no hidden client state.',
-      label: 'pnpm type-check && build',
-    },
-    {
-      title: 'Mentor a first PR',
-      description:
-        'Review a beginner pathway PR with actionable, kind comments. The workshop scales when reviews teach.',
-      label: 'Review & merge',
-    },
-  ],
-  ctaLabel: 'Open a template proposal',
-  ctaHref: 'https://github.com/Create-Node-App/cna-templates/issues/new',
-};
+
 export const supportChannels: SupportChannel[] = [
   {
-    label: 'Code of Conduct',
-    href: 'https://github.com/Create-Node-App/.github/blob/main/CODE_OF_CONDUCT.md',
-    description: 'Community standards and enforcement — our shared agreement.',
+    label: 'Join Discord',
+    href: communityMeta.discordInviteUrl,
+    description: 'Live questions and coordination across Digital Nest projects.',
     external: true,
   },
   {
-    label: 'Discord — #help',
-    href: 'https://discord.gg/bR5VyATgka',
-    description: 'Ask in the workshop — questions, drafts, and office hours.',
+    label: 'Browse ecosystem issues',
+    href: communityIssueSearch(''),
+    description: 'GitHub remains the durable trail for issues, PRs, and decisions.',
     external: true,
   },
   {
-    label: 'GitHub Discussions — website',
-    href: 'https://github.com/ulises-jeremias/website/discussions',
-    description: 'Async design and docs conversations, linked from pages.',
-    external: true,
+    label: 'Open Source evidence',
+    href: '/open-source',
+    description: 'Contribution evidence and project surface on this site.',
+    external: false,
   },
   {
-    label: 'Wiki — dotfiles support',
-    href: 'https://github.com/ulises-jeremias/dotfiles/wiki',
-    description: 'HorneroConfig setup and troubleshooting guides.',
+    label: 'Projects ledger',
+    href: '/projects',
+    description: 'Curated project catalog — distinct from this workshop page.',
+    external: false,
+  },
+  {
+    label: 'Create Node App Code of Conduct',
+    href: communityMeta.exampleCodeOfConductUrl,
+    description: 'Example project-org CoC — not automatically universal for every Digital Nest space.',
     external: true,
   },
 ];
+
 export const moderationItems: ModerationItem[] = [
   {
-    title: 'Scope and independence',
+    title: 'Scope',
     description:
-      'Community spaces are not employer channels. Moderation decisions are made by community moderators, documented in PRs and issues, and appealable via the Code of Conduct process.',
+      'This is a personal open-source workshop, not an employer community. Be respectful; follow GitHub and Discord platform rules plus any Code of Conduct published by the specific project you contribute to.',
   },
   {
-    title: 'Privacy — minimize retention',
+    title: 'Privacy',
     description:
-      'Discord handles and GitHub profiles are public by participation. No private analytics, no member counts without an authoritative refreshable source, and no tracking beyond what GitHub and Discord provide by default.',
+      'Discord handles and GitHub profiles are public by participation. This site does not add private analytics or fabricated member counts. Discord and GitHub retain data under their own policies.',
   },
   {
-    title: 'Enforcement — graduated, documented',
+    title: 'Codes of Conduct',
     description:
-      'Warnings are private and specific. Repeat or severe violations lead to temporary or permanent restrictions, always with a written rationale referencing the Code of Conduct.',
+      'There is not yet a single Digital Nest–wide Code of Conduct. Create Node App publishes one for that organization; other projects may differ. A shared community CoC is a recommended future improvement — not something we invent here.',
   },
   {
-    title: 'Accessibility — participate without Discord',
+    title: 'Discord is optional',
     description:
-      'Every onboarding path, template decision, and weekly opportunity is also reachable via GitHub issues and docs. Discord is a convenience, not a gate.',
+      'You can follow and contribute entirely through GitHub. Discord is for conversation; it is not a gate.',
   },
 ];
+
+export const ecosystemLabels: Record<CommunityProject['ecosystem'], string> = {
+  'personal-dx': 'Personal DX',
+  agentic: 'Agentic tooling',
+  'create-awesome': 'Create Awesome',
+  'v-ecosystem': 'V ecosystem',
+  lab: 'Lab / experiments',
+};
+
+export const activeWorkshopProjects = communityProjects.filter((p) => p.communityEnabled);
+
+export function projectsForInterest(interest: CommunityProject['interests'][number]): CommunityProject[] {
+  return activeWorkshopProjects.filter((p) => p.interests.includes(interest));
+}
+
+export function validateCommunityRegistry(
+  projects: CommunityProject[] = communityProjects,
+  incubating: IncubatingProject[] = incubatingProjects,
+): string[] {
+  const errors: string[] = [];
+  const ids = new Set<string>();
+  for (const p of projects) {
+    const parsed = communityProjectSchema.safeParse(p);
+    if (!parsed.success) errors.push(`[${p.id}] ${parsed.error.message}`);
+    if (ids.has(p.id)) errors.push(`Duplicate project id: ${p.id}`);
+    ids.add(p.id);
+    if (!p.communityEnabled) errors.push(`[${p.id}] communityEnabled must be true in registry export`);
+  }
+  for (const i of incubating) {
+    const parsed = incubatingProjectSchema.safeParse(i);
+    if (!parsed.success) errors.push(`[incubating:${i.id}] ${parsed.error.message}`);
+    if (ids.has(i.id)) errors.push(`Incubating id collides with project: ${i.id}`);
+  }
+  return errors;
+}

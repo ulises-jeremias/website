@@ -1,6 +1,5 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
-import { getRouteMeta } from '@/data/routes';
 import {
   Hero,
   Overview,
@@ -8,22 +7,27 @@ import {
   DistributionMap,
   QueueSeparation,
   SwarmStory,
+  CommunityWorkshopLink,
 } from '@/features/agent-toolkit';
-import { budgetItems, installSnippets } from '@/features/agent-toolkit/data/index.js';
-const meta = getRouteMeta('/agent-toolkit')!;
+import {
+  budgetItems,
+  installSnippets,
+  inventoryStrip,
+  inventoryVersionLabel,
+  toolkitMeta,
+} from '@/features/agent-toolkit/data/index.js';
 ---
 
 <SectionLayout
-  title={meta.title}
-  description={meta.description}
+  title={toolkitMeta.title}
+  description={toolkitMeta.description}
   currentPath="/agent-toolkit"
   world="Agent Toolkit"
   theme="toolkit"
   hero={{
-    eyebrow: 'Agent Toolkit',
+    eyebrow: `Agent Toolkit · ${inventoryVersionLabel}`,
     title: 'One source → many assistants',
-    description:
-      '61 skills · 16 agents · 10 loops · 7 profiles · 6 MCP — capability distribution for the Personal DX graph.',
+    description: `${inventoryStrip()} — capability distribution for the Personal DX graph.`,
   }}
 >
   <Fragment slot="hero"><Hero /></Fragment>
@@ -73,6 +77,8 @@ const meta = getRouteMeta('/agent-toolkit')!;
       </div>
     </div>
   </section>
+
+  <CommunityWorkshopLink />
 </SectionLayout>
 
 <style>

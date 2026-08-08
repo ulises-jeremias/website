@@ -301,7 +301,7 @@
 }
 
 /* -------------------------------------------------------------------------- */
-/* Project atlas — ZIP 3-column staggered constellation                       */
+/* Project atlas — floating diorama platforms (reference composition)         */
 /* -------------------------------------------------------------------------- */
 
 .project-atlas {
@@ -317,13 +317,13 @@
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
-  margin-block-end: var(--space-4);
+  margin-block-end: var(--space-3);
 }
 
 @media (width >= 1024px) {
   .project-atlas__header {
-    padding-inline-end: 15rem;
-    margin-block-end: var(--space-6);
+    padding-inline-end: 4rem;
+    margin-block-end: var(--space-4);
   }
 }
 
@@ -367,7 +367,7 @@
 .project-atlas__stage {
   position: relative;
   flex: 1;
-  min-block-size: 28rem;
+  min-block-size: 36rem;
   overflow: visible;
 }
 
@@ -414,54 +414,103 @@
   z-index: 3;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.75rem 1.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  justify-items: center;
 }
 
 @media (width >= 640px) {
   .project-atlas__worlds {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
   }
 }
 
 @media (width >= 1024px) {
   .project-atlas__worlds {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding-block-end: 5.5rem;
+    gap: 1.25rem 1rem;
+    padding-block-end: 2rem;
+    align-items: start;
   }
 
   .atlas-world--rise {
-    transform: translateY(-0.75rem);
+    transform: translateY(-0.5rem);
   }
 
   .atlas-world--mid {
-    transform: translateY(2.5rem);
+    transform: translateY(2.25rem);
   }
 
   .atlas-world--drop {
-    transform: translateY(5rem);
+    transform: translateY(4.5rem);
   }
 }
 
+/* Diorama link: illustration-first platform, label plate attached above */
 .atlas-world {
   --world-color: var(--nest-magenta);
+  --world-art-size: 10rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  block-size: 6.75rem;
+  align-items: center;
+  gap: 0.55rem;
+  inline-size: 100%;
+  max-inline-size: 15rem;
   min-block-size: var(--touch-min);
-  padding: 0.625rem 4.75rem 0.625rem 0.75rem;
+  padding: 0.25rem;
   color: inherit;
   text-decoration: none;
   isolation: isolate;
-  clip-path: var(--clip-corner-md);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   transition:
     transform var(--motion-duration-fast) var(--motion-ease-out),
-    filter var(--motion-duration-fast) var(--motion-ease-out),
-    box-shadow var(--motion-duration-fast) var(--motion-ease-out);
+    filter var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.atlas-world--lg {
+  --world-art-size: 12.5rem;
+}
+
+.atlas-world--md {
+  --world-art-size: 10.75rem;
+}
+
+.atlas-world--sm {
+  --world-art-size: 9rem;
+}
+
+@media (width >= 1280px) {
+  .atlas-world--lg {
+    --world-art-size: 13.5rem;
+  }
+
+  .atlas-world--md {
+    --world-art-size: 11.5rem;
+  }
+
+  .atlas-world--sm {
+    --world-art-size: 9.5rem;
+  }
+}
+
+.atlas-world__plate {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  inline-size: 100%;
+  max-inline-size: 13.5rem;
+  padding: 0.45rem 0.65rem 0.5rem;
+  background: color-mix(in srgb, var(--nest-void) 78%, transparent);
+  backdrop-filter: blur(6px);
 }
 
 .atlas-world__number {
@@ -472,9 +521,8 @@
 }
 
 .atlas-world__title {
-  margin-block-start: 0.15rem;
   font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 1.2;
@@ -487,20 +535,43 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  margin-block-start: 0.25rem;
   overflow: hidden;
-  font-size: 0.65625rem;
+  font-size: 0.625rem;
   line-height: 1.35;
   color: var(--color-text-muted);
 }
 
-.atlas-world__visual {
+.atlas-world__platform {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  inline-size: var(--world-art-size);
+  block-size: var(--world-art-size);
+}
+
+.atlas-world__glow {
   position: absolute;
-  inset-block-end: 0;
-  inset-inline-end: 0;
+  inset-inline: 12%;
+  inset-block-end: 4%;
+  block-size: 28%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--world-color) 55%, transparent) 0%,
+    transparent 72%
+  );
+  filter: blur(10px);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.atlas-world__visual {
+  position: relative;
+  z-index: 1;
   display: block;
-  inline-size: 5.5rem;
-  block-size: 5.5rem;
+  inline-size: 100%;
+  block-size: 100%;
   pointer-events: none;
 }
 
@@ -509,12 +580,13 @@
   inline-size: 100%;
   block-size: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 12px 18px color-mix(in srgb, var(--nest-void) 55%, transparent));
   transition: transform 0.5s var(--motion-ease-out);
 }
 
 .atlas-world:hover,
 .atlas-world:focus-visible {
-  transform: translateY(-0.25rem);
+  transform: translateY(-0.35rem);
   z-index: 4;
   outline: none;
 }
@@ -522,23 +594,23 @@
 @media (width >= 1024px) {
   .atlas-world--rise:hover,
   .atlas-world--rise:focus-visible {
-    transform: translateY(calc(-0.75rem - 0.25rem));
+    transform: translateY(calc(-0.5rem - 0.35rem));
   }
 
   .atlas-world--mid:hover,
   .atlas-world--mid:focus-visible {
-    transform: translateY(calc(2.5rem - 0.25rem));
+    transform: translateY(calc(2.25rem - 0.35rem));
   }
 
   .atlas-world--drop:hover,
   .atlas-world--drop:focus-visible {
-    transform: translateY(calc(5rem - 0.25rem));
+    transform: translateY(calc(4.5rem - 0.35rem));
   }
 }
 
 .atlas-world:hover .atlas-world__island,
 .atlas-world:focus-visible .atlas-world__island {
-  transform: scale(1.1);
+  transform: translateY(-0.2rem) scale(1.04);
 }
 
 .atlas-world:hover .atlas-world__title,
@@ -546,8 +618,12 @@
   color: var(--nest-paper);
 }
 
-.atlas-world:focus-visible {
+.atlas-world:focus-visible .atlas-world__plate {
   box-shadow: var(--focus-glow);
+}
+
+.atlas-world:focus-visible {
+  box-shadow: none;
 }
 
 .project-atlas:has(.atlas-world:is(:hover, :focus-visible)) .atlas-connection {
@@ -945,6 +1021,27 @@
 
   .project-atlas__stage {
     min-block-size: 0;
+  }
+
+  .project-atlas__worlds {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+    padding-inline: 0.5rem;
+  }
+
+  .atlas-world {
+    max-inline-size: 18rem;
+    --world-art-size: 11.5rem;
+  }
+
+  .atlas-world:nth-child(even) {
+    margin-inline-start: auto;
+    margin-inline-end: 0.25rem;
+  }
+
+  .atlas-world:nth-child(odd) {
+    margin-inline-end: auto;
+    margin-inline-start: 0.25rem;
   }
 
   .atlas-world--rise,

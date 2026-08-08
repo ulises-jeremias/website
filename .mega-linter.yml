@@ -2,7 +2,7 @@
 # https://megalinter.io/latest/config-file/
 
 FILTER_REGEX_EXCLUDE: >-
-  (\.git/|node_modules/|\.astro/|dist/|build/|coverage/|pnpm-lock\.yaml|docs/design/art-directions/.+\.html|docs/design/baselines/.+\.(png|jpg|jpeg|webp))
+  (\.git/|node_modules/|\.astro/|dist/|build/|coverage/|pnpm-lock\.yaml|docs/design/art-directions/.+\.html|docs/design/baselines/.+\.(png|jpg|jpeg|webp)|docs/design/final-production/.+\.(png|jpg|jpeg|webp))
 
 # Self-contained art-direction prototypes intentionally use inline CSS (<style>).
 HTML_DJLINT_FILTER_REGEX_EXCLUDE: (docs/design/art-directions/)
@@ -19,3 +19,8 @@ DISABLE_LINTERS:
   - TYPESCRIPT_ES
   - JAVASCRIPT_ES
   - TYPESCRIPT_STANDARD
+  # Table formatter fights Prettier markdown spacing and thrash-commits on APPLY_FIXES
+  - MARKDOWN_MARKDOWN_TABLE_FORMATTER
+  # MegaLinter container lacks prettier-plugin-astro from this repo
+  - JSON_PRETTIER
+  - YAML_PRETTIER

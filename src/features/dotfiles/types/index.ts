@@ -26,14 +26,17 @@ export interface ScreenshotItem {
   alt: string;
   caption: string;
   credit: string;
+  src: string;
   width: number;
   height: number;
-  placeholder: string;
 }
 
-export interface LicenseEntry {
+export interface AttributionEntry {
   component: string;
   license: string;
   source: string;
   notes: string;
 }
+
+/** @deprecated Prefer AttributionEntry */
+export type LicenseEntry = AttributionEntry;

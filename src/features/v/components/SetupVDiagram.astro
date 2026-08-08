@@ -7,7 +7,7 @@ import { setupVPipeline } from '../data/index.js';
     <p class="setup__eyebrow">05 · setup-v</p>
     <h2 id="setup-title" class="setup__title">From workflow line to verified binary</h2>
     <p class="setup__desc">
-      <code>uses: vlang/setup-v@v1</code> resolves version, detects arch, restores cache, fetches the prebuilt binary, writes
+      <code>uses: vlang/setup-v@v1.7</code> resolves version, detects arch, restores cache, fetches the prebuilt binary, writes
       it to PATH, and exposes outputs. On exotic arches it warns and falls back gracefully — no sudo, no build unless you
       ask.
     </p>
@@ -51,7 +51,7 @@ import { setupVPipeline } from '../data/index.js';
           style="text-transform: uppercase;">workflow.yml</text
         >
         <text x="132" y="58" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace"
-          >- uses: vlang/setup-v@v1</text
+          >- uses: vlang/setup-v@v1.7</text
         >
         <text x="340" y="58" font-size="10" fill="#8bb8e0">with: version / arch / cache</text>
         <text x="580" y="58" font-size="10" fill="#5b9bd5" font-weight="700">runs: 5 stages →</text>
@@ -272,7 +272,7 @@ import { setupVPipeline } from '../data/index.js';
           Team keeps prebuilts for x64 + arm64 on every tag.
         </p>
         <div class="setup__code" role="region" aria-label="setup-v usage yaml">
-          <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">vlang/setup-v@v1</span>
+          <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">vlang/setup-v@v1.7</span>
   <span class="setup__c-kw">with</span>:
     <span class="setup__c-kw">version</span>: <span class="setup__c-str">'0.4.9'</span>  <span class="setup__c-cmt"># or .v-version</span>
     <span class="setup__c-kw">cache</span>: <span class="setup__c-kw">true</span></code></pre>
@@ -296,7 +296,7 @@ import { setupVPipeline } from '../data/index.js';
 
   <p class="setup__note">
     Action: <a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">vlang/setup-v ↗</a> · Marketplace:
-    <code>vlang/setup-v@v1</code> · Cache docs via <code>README.md</code> inputs table.
+    <code>vlang/setup-v@v1.7</code> · Cache docs via <code>README.md</code> inputs table.
   </p>
 </section>
 

@@ -3,8 +3,20 @@ import { atlasWorlds } from '../data/index.js';
 import AtlasConnections from './AtlasConnections.astro';
 import ProjectWorld from './ProjectWorld.astro';
 
-/** ZIP staggered Y offsets cycling across the 3-column grid. */
+/**
+ * Reference homepage order (also encoded in project-worlds priorities):
+ * Dotfiles → Toolkit → Workstation → V → Create Awesome → Community → Blog → Projects → OSS
+ *
+ * Offset classes create depth on desktop; they are neutralized on mobile
+ * in favor of a vertical journey composition.
+ */
 const offsetClasses = ['atlas-world--rise', 'atlas-world--mid', 'atlas-world--drop'] as const;
+
+const scaleFor = (id: string): 'lg' | 'md' | 'sm' => {
+  if (id === 'toolkit' || id === 'workstation' || id === 'dotfiles') return 'lg';
+  if (id === 'blog' || id === 'open-source') return 'sm';
+  return 'md';
+};
 ---
 
 <section id="project-atlas" class="project-atlas" aria-labelledby="project-atlas-title">
@@ -22,7 +34,11 @@ const offsetClasses = ['atlas-world--rise', 'atlas-world--mid', 'atlas-world--dr
     <div class="project-atlas__worlds">
       {
         atlasWorlds.map((world, index) => (
-          <ProjectWorld world={world} offsetClass={offsetClasses[index % offsetClasses.length]} />
+          <ProjectWorld
+            world={world}
+            offsetClass={offsetClasses[index % offsetClasses.length]}
+            scale={scaleFor(world.id)}
+          />
         ))
       }
     </div>

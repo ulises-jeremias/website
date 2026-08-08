@@ -1,3 +1,7 @@
+import type { CapabilityFamilyId, InventoryExample } from '../data/inventory.js';
+
+export type { CapabilityFamilyId, InventoryExample };
+
 export interface ToolkitStat {
   label: string;
   value: string;
@@ -16,13 +20,14 @@ export interface SkillDomain {
 }
 
 export interface CapabilityNode {
-  id: 'skills' | 'agents' | 'loops' | 'packs' | 'plugins' | 'mcp';
+  id: CapabilityFamilyId;
   title: string;
   count: string;
   summary: string;
   detail: string;
   href: string;
   color: string;
+  examples: InventoryExample[];
 }
 
 export interface DistributionTarget {
@@ -43,7 +48,7 @@ export interface SwarmRecipe {
   id: 'pair' | 'team' | 'full';
   label: string;
   useWhen: string;
-  roles: Array<{ id: string; policy: string }>;
+  roles: Array<{ id: string; policy: string; persona?: string }>;
 }
 
 export interface QueueVsSwarmItem {
@@ -58,6 +63,7 @@ export interface UiBackend {
   id: 'herdr' | 'tmux';
   title: string;
   summary: string;
+  commands: string[];
 }
 
 export interface InstallSnippet {
@@ -70,6 +76,13 @@ export interface BudgetItem {
   label: string;
   value: string;
   description: string;
+}
+
+export interface CommunityCrossLink {
+  href: string;
+  title: string;
+  summary: string;
+  cta: string;
 }
 
 /** @deprecated Prefer CapabilityNode — kept for transitional imports */

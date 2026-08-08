@@ -9,6 +9,7 @@ const approvedPrimitives = {
   '--nest-midnight-950': '#040212',
   '--nest-midnight-900': '#050317',
   '--nest-midnight-850': '#090428',
+  '--nest-void': '#0b0614',
   '--nest-paper': '#f7f5ff',
   '--nest-text-muted': '#b9b2d8',
   '--nest-text-faint': '#8f88b4',

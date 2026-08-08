@@ -34,6 +34,10 @@ export interface Props {
   canonical?: string;
   noIndex?: boolean;
   ogImage?: string;
+  /** Open Graph type — e.g. "website" (default) or "article" for blog posts. */
+  ogType?: string;
+  /** Optional JSON-LD graph(s) for SEO (BlogPosting, CollectionPage, etc.). */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   immersive?: boolean;
 }
 
@@ -47,25 +51,28 @@ const {
   canonical,
   noIndex,
   ogImage,
+  ogType = 'website',
+  jsonLd,
   immersive = false,
 } = Astro.props as Props;
 
-const canonicalUrl = canonical ?? getCanonicalUrl(currentPath ?? Astro.url.pathname);
-const themeAttr = theme ?? world ?? 'home';
 const pagePath = currentPath ?? Astro.url.pathname;
+const canonicalUrl = canonical ?? getCanonicalUrl(pagePath);
+const themeAttr = theme ?? world ?? 'home';
+const seoType = ogType === 'article' || ogType === 'profile' ? ogType : 'website';
 ---
 
-<BaseLayout title={title} description={description}>
-  <Fragment slot="head">
-    <link rel="canonical" href={canonicalUrl} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={title} />
-    {description && <meta property="og:description" content={description} />}
-    {noIndex && <meta name="robots" content="noindex, nofollow" />}
-    {world && <meta name="world" content={world} />}
-  </Fragment>
-
+<BaseLayout
+  title={title}
+  description={description}
+  path={pagePath}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  noIndex={noIndex}
+  world={world}
+  type={seoType}
+  jsonLd={jsonLd}
+>
   <div
     class:list={['section-layout', { 'section-layout--immersive': immersive }]}
     data-world={world}

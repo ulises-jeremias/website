@@ -1,7 +1,28 @@
 ---
-import { variants } from '../data/index.js';
+import { catalogTotals, variants } from '../data/index.js';
+import { buildCreateAwesomeCommand, DEFAULT_PROJECT_NAME } from '../lib/buildCommand.js';
 
 const defaultVariant = variants[0]!;
+const defaultTemplate = defaultVariant.templates.find((t) => t.featured)?.id ?? defaultVariant.templates[0]?.id ?? '';
+const initialCommand = buildCreateAwesomeCommand({
+  family: defaultVariant.id,
+  projectName: DEFAULT_PROJECT_NAME,
+  template: defaultTemplate,
+  addons: [],
+});
+
+const composerBootstrap = {
+  defaultProjectName: DEFAULT_PROJECT_NAME,
+  families: Object.fromEntries(
+    variants.map((variant) => [
+      variant.id,
+      {
+        id: variant.id,
+        featuredTemplate: variant.templates.find((t) => t.featured)?.id ?? variant.templates[0]?.id ?? '',
+      },
+    ]),
+  ),
+};
 ---
 
 <section class="ca-composer" aria-labelledby="ca-composer-title">
@@ -9,12 +30,15 @@ const defaultVariant = variants[0]!;
     <p class="ca-composer__eyebrow">Composer</p>
     <h2 id="ca-composer-title">Runtime + template + addons → command</h2>
     <p>
-      Native controls only. Selecting a family updates templates and addons from verified catalogs (CNA 10+53, CPA 6+18,
-      CVA 7+11). No invented IDs.
+      Native controls. Selecting a family updates templates and addons from sourced catalogs (CNA{' '}
+      {catalogTotals.node.templates}+{catalogTotals.node.addons}, CPA {catalogTotals.python.templates}+{
+        catalogTotals.python.addons
+      }, CVA {catalogTotals.v.templates}+{catalogTotals.v.addons}). Commands follow each family’s CLI shape — Node ≠
+      Python ≠ V.
     </p>
   </header>
 
-  <form class="ca-composer__form" data-ca-composer>
+  <form class="ca-composer__form" data-ca-composer data-ca-bootstrap={JSON.stringify(composerBootstrap)}>
     <fieldset>
       <legend>Runtime</legend>
       {
@@ -25,7 +49,7 @@ const defaultVariant = variants[0]!;
               name="ca-runtime"
               id={`ca-runtime-${variant.id}`}
               value={variant.id}
-              data-install={variant.install}
+              data-family={variant.id}
               checked={index === 0}
             />
             <label for={`ca-runtime-${variant.id}`}>{variant.label}</label>
@@ -34,12 +58,29 @@ const defaultVariant = variants[0]!;
       }
     </fieldset>
 
+    <label class="ca-composer__project">
+      Project name
+      <input
+        type="text"
+        name="ca-project"
+        value={DEFAULT_PROJECT_NAME}
+        autocomplete="off"
+        spellcheck="false"
+        data-ca-project
+        aria-label="Project directory name"
+      />
+    </label>
+
     {
       variants.map((variant) => (
-        <div class={`ca-composer__panel ca-composer__panel--${variant.id}`} data-runtime={variant.id}>
+        <div
+          class={`ca-composer__panel ca-composer__panel--${variant.id}`}
+          data-runtime={variant.id}
+          data-ca-panel={variant.id}
+        >
           <label>
             Template
-            <select name={`template-${variant.id}`} aria-label={`${variant.label} template`}>
+            <select name={`template-${variant.id}`} data-ca-template aria-label={`${variant.label} template`}>
               {variant.templates.map((template) => (
                 <option value={template.id} selected={template.featured}>
                   {template.name} ({template.id})
@@ -48,28 +89,112 @@ const defaultVariant = variants[0]!;
             </select>
           </label>
           <fieldset class="ca-composer__addons">
-            <legend>Addons</legend>
+            <legend>Addons ({variant.addons.length})</legend>
             {variant.addons.map((addon) => (
               <label>
-                <input type="checkbox" name={`addon-${variant.id}`} value={addon.id} />
+                <input type="checkbox" name={`addon-${variant.id}`} value={addon.id} data-ca-addon />
                 <code>{addon.id}</code> — {addon.description}
               </label>
             ))}
           </fieldset>
-          <p class="ca-composer__preview">
-            <span>Install baseline</span>
-            <code>{variant.install}</code>
-          </p>
         </div>
       ))
     }
 
+    <p class="ca-composer__preview">
+      <span>Composable command</span>
+      <code data-ca-command>{initialCommand}</code>
+    </p>
+
     <p class="ca-composer__note">
       Default family: {defaultVariant.title}. Without CSS <code>:has()</code>, all panels remain visible as static
-      documentation.
+      documentation; the command preview still updates when JavaScript is available.
     </p>
   </form>
 </section>
+
+<script is:inline>
+  (function () {
+    const form = document.querySelector('[data-ca-composer]');
+    if (!form) return;
+
+    let composerBootstrap = {};
+    try {
+      composerBootstrap = JSON.parse(form.getAttribute('data-ca-bootstrap') || '{}');
+    } catch (_err) {
+      composerBootstrap = { defaultProjectName: 'my-app', families: {} };
+    }
+
+    const families = composerBootstrap.families || {};
+
+    function activeFamily() {
+      const checked = form.querySelector('input[name="ca-runtime"]:checked');
+      return checked ? checked.value : 'node';
+    }
+
+    function selectedTemplate(family) {
+      const panel = form.querySelector('[data-ca-panel="' + family + '"]');
+      if (!panel) return '';
+      const select = panel.querySelector('[data-ca-template]');
+      return select && select.value ? select.value : (families[family] && families[family].featuredTemplate) || '';
+    }
+
+    function selectedAddons(family) {
+      const panel = form.querySelector('[data-ca-panel="' + family + '"]');
+      if (!panel) return [];
+      return Array.prototype.map
+        .call(panel.querySelectorAll('[data-ca-addon]:checked'), function (el) {
+          return el.value;
+        })
+        .filter(Boolean);
+    }
+
+    function buildCommand(family, projectName, template, addons) {
+      const name =
+        (projectName || composerBootstrap.defaultProjectName || 'my-app').trim().replace(/\s+/g, '-') || 'my-app';
+      const cleaned = (addons || []).filter(Boolean);
+
+      if (family === 'node') {
+        const node = ['npm', 'create', 'awesome-node-app@latest', name, '--'];
+        if (template) {
+          node.push('--template', template);
+        }
+        if (cleaned.length) {
+          node.push('--addons');
+          for (let i = 0; i < cleaned.length; i++) node.push(cleaned[i]);
+        }
+        return node.join(' ');
+      }
+
+      if (family === 'python') {
+        const py = ['uvx', 'create-awesome-python-app@latest', name];
+        if (template) py.push('--template', template);
+        for (let j = 0; j < cleaned.length; j++) {
+          py.push('--addons', cleaned[j]);
+        }
+        return py.join(' ');
+      }
+
+      const vcmd = ['create-vlang-app', name];
+      if (template) vcmd.push('--template', template);
+      if (cleaned.length) vcmd.push('--addons', cleaned.join(','));
+      return vcmd.join(' ');
+    }
+
+    function refresh() {
+      const family = activeFamily();
+      const projectInput = form.querySelector('[data-ca-project]');
+      const projectName = projectInput ? projectInput.value : composerBootstrap.defaultProjectName;
+      const command = buildCommand(family, projectName, selectedTemplate(family), selectedAddons(family));
+      const out = form.querySelector('[data-ca-command]');
+      if (out) out.textContent = command;
+    }
+
+    form.addEventListener('change', refresh);
+    form.addEventListener('input', refresh);
+    refresh();
+  })();
+</script>
 
 <style>
   .ca-composer {
@@ -152,6 +277,22 @@ const defaultVariant = variants[0]!;
     outline-offset: 2px;
   }
 
+  .ca-composer__project {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+  }
+
+  .ca-composer__project input,
+  .ca-composer select {
+    min-block-size: 44px;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid var(--color-border);
+    background: var(--nest-midnight-950);
+    color: var(--color-text);
+  }
+
   .ca-composer__panel {
     display: none;
     gap: 0.85rem;
@@ -178,17 +319,12 @@ const defaultVariant = variants[0]!;
     font-size: 0.9rem;
   }
 
-  .ca-composer select {
-    min-block-size: 44px;
-    padding: 0.45rem 0.6rem;
-    border: 1px solid var(--color-border);
-    background: var(--nest-midnight-950);
-    color: var(--color-text);
-  }
-
   .ca-composer__addons {
     display: grid;
     gap: 0.35rem;
+    max-block-size: 18rem;
+    overflow: auto;
+    padding-right: 0.25rem;
   }
 
   .ca-composer__addons label {
@@ -204,7 +340,7 @@ const defaultVariant = variants[0]!;
   .ca-composer__preview {
     display: grid;
     gap: 0.35rem;
-    margin: 0;
+    margin: 0.85rem 0 0;
   }
 
   .ca-composer__preview span {
@@ -223,6 +359,8 @@ const defaultVariant = variants[0]!;
     background: var(--color-code-bg, color-mix(in srgb, var(--nest-midnight-950) 88%, transparent));
     clip-path: var(--clip-corner-sm);
     font-size: 0.78rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 
   .ca-composer__note {

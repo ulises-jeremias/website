@@ -1,185 +1,91 @@
 ---
-import { supportChannels, communityMeta } from '../data/index.js';
+import { supportChannels } from '../data/index.js';
 ---
 
-<section class="community-support" aria-labelledby="support-title" data-testid="support-channels">
-  <header class="community-support__header">
-    <p class="community-support__eyebrow">Support & agreement</p><h2
-      id="support-title"
-      class="community-support__title"
-    >
-      Where to ask, what to expect
-    </h2><p class="community-support__lead">
-      The workshop is async by default. Prefer the surface that leaves a linkable trail — GitHub first, Discord for live
-      drafts.
+<section class="cm-support" aria-labelledby="cm-support-title" data-testid="support-channels">
+  <header class="cm-support__header">
+    <p class="cm-support__eyebrow">Channels</p>
+    <h2 id="cm-support-title" class="cm-support__title">Where to talk and where to leave a trail</h2>
+    <p class="cm-support__lead">
+      Channel names inside Discord are not listed here unless they are intentionally published. Prefer durable GitHub
+      issues for work that should outlive a chat thread.
     </p>
   </header>
-  <div class="community-support__grid">
+  <ul class="cm-support__list">
     {
       supportChannels.map((channel) => (
-        <a
-          href={channel.href}
-          class="community-support__card"
-          target={channel.external ? '_blank' : undefined}
-          rel={channel.external ? 'noreferrer noopener' : undefined}
-          aria-label={`${channel.label} (opens in new tab)`}
-        >
-          <span class="community-support__card-href" aria-hidden="true">
-            {channel.href.replace(/^https:\/\//, '')} {channel.external ? '↗' : ''}
-          </span>
-          {channel.external && <span class="sr-only"> (opens in new tab)</span>}
-        </a>
+        <li class="cm-support__item">
+          <a
+            href={channel.href}
+            class="cm-support__link"
+            target={channel.external ? '_blank' : undefined}
+            rel={channel.external ? 'noopener noreferrer' : undefined}
+          >
+            {channel.label}
+          </a>
+          <p class="cm-support__desc">{channel.description}</p>
+        </li>
       ))
     }
-  </div>
-  <div class="community-support__agreement" role="region" aria-label="Code of Conduct and support agreement">
-    <h3 class="community-support__agreement-title">Code of Conduct & support</h3><p
-      class="community-support__agreement-text"
-    >
-      By participating you agree to the <a
-        href={communityMeta.codeOfConductUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        class="community-support__agreement-link">Code of Conduct<span class="sr-only"> (opens in new tab)</span></a
-      > — our seven-line agreement on kindness, precision, and staying on topic. For broader guidance, see the <a
-        href={communityMeta.supportUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        class="community-support__agreement-link">support wiki<span class="sr-only"> (opens in new tab)</span></a
-      >.
-    </p><p class="community-support__agreement-note">
-      Enforcement is documented and proportionate, with a private first warning. See moderation below.
-    </p>
-  </div>
+  </ul>
 </section>
+
 <style>
-  .community-support {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 1.5rem 0;
+  .cm-support {
+    padding: 1.75rem 0;
   }
-  .community-support__eyebrow {
-    display: inline-flex;
-    padding: 0.25rem 0.65rem;
-    border-radius: 999px;
-    background: var(--world-accent-subtle);
-    border: 1px solid var(--color-border);
-    color: var(--world-accent);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 0.75rem;
-  }
-  .community-support__title {
+  .cm-support__eyebrow {
     margin: 0;
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .cm-support__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
     font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
     color: var(--color-text);
   }
-  .community-support__lead {
-    margin: 0.5rem 0 0;
-    max-width: 62ch;
+  .cm-support__lead {
+    margin: 0.55rem 0 0;
+    max-width: 70ch;
     color: var(--color-text-muted);
     line-height: 1.6;
-    font-size: 1rem;
   }
-  .community-support__grid {
+  .cm-support__list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
     display: grid;
-    gap: 0.85rem;
-    margin-top: 1.25rem;
-    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
-  @media (min-width: 760px) {
-    .community-support__grid {
-      grid-template-columns: 1fr 1fr;
+  @media (width >= 800px) {
+    .cm-support__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-  .community-support__card {
-    display: grid;
-    gap: 0.35rem;
-    padding: 1rem;
-    border-radius: 0.9rem;
-    background: var(--color-surface);
+  .cm-support__item {
+    padding: 0.9rem 1rem;
+    clip-path: var(--clip-corner-sm);
     border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+  }
+  .cm-support__link {
+    color: var(--nest-cyan);
+    font-weight: 750;
     text-decoration: none;
-    color: inherit;
-    transition:
-      border-color 140ms ease,
-      box-shadow 140ms ease;
   }
-  .community-support__card:hover {
-    border-color: var(--color-border-strong, #d4c4b2);
-    box-shadow: var(--shadow-sm);
-  }
-  .community-support__card:focus-visible {
-    outline: 2px solid var(--color-focus);
+  .cm-support__link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
   }
-  .community-support__card-title {
-    font-weight: 750;
-    font-size: 0.95rem;
-    color: var(--color-text);
-  }
-  .community-support__card-text {
-    color: var(--color-text-muted);
-    font-size: 0.88rem;
-    line-height: 1.5;
-  }
-  .community-support__card-href {
-    color: var(--color-text-faint);
-    font-size: 0.82rem;
-    word-break: break-all;
-  }
-  .community-support__agreement {
-    margin-top: 1rem;
-    padding: 1rem 1.15rem;
-    border-radius: 0.9rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-  }
-  .community-support__agreement-title {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 750;
-    color: var(--color-text);
-  }
-  .community-support__agreement-text {
+  .cm-support__desc {
     margin: 0.35rem 0 0;
     color: var(--color-text-muted);
     font-size: 0.9rem;
-    line-height: 1.6;
-  }
-  .community-support__agreement-link {
-    color: var(--color-link);
-    font-weight: 600;
-    text-underline-offset: 3px;
-  }
-  .community-support__agreement-link:hover {
-    text-decoration: underline;
-  }
-  .community-support__agreement-link:focus-visible {
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
-    border-radius: 0.25rem;
-  }
-  .community-support__agreement-note {
-    margin: 0.5rem 0 0;
-    color: var(--color-text-faint);
-    font-size: 0.85rem;
     line-height: 1.5;
-  }
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>

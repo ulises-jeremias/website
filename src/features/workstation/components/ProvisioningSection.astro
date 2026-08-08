@@ -38,13 +38,12 @@ import { provisioningSteps } from '../data/index.js';
   <div class="ws-provisioning__callout" role="note">
     <h3 class="ws-provisioning__callout-title">Profile-driven — no host snowflakes</h3>
     <p class="ws-provisioning__callout-text">
-      <code>home/.chezmoidata/profiles.yaml</code> encodes feature groups. <code>technical</code>, <code>data</code>, <code
-        >ai</code
-      > enable
-      <code>swarm</code> by default (<code>install_group_swarm</code>). <code>custom</code> answers every flag. Questionnaire
-      lives in
-      <code>home/.chezmoi.toml.tmpl</code>; install scripts translate canonical <code>package_groups</code> names per platform
-      (apt / brew / pacman / dnf).
+      Canonical profiles from <code>home/.chezmoidata/profiles.yaml</code>: <code>technical</code>,
+      <code>non-technical</code>, <code>ai</code>, <code>node</code>, <code>python</code>, <code>data</code>,
+      <code>infra</code>, <code>minimal</code>, <code>custom</code>. Swarm defaults on for
+      <code>technical</code> / <code>non-technical</code> / <code>ai</code> / <code>data</code>
+      (<code>install_group_swarm</code>). <code>custom</code> answers every flag. Questionnaire lives in
+      <code>home/.chezmoi.toml.tmpl</code>.
     </p>
     <p class="ws-provisioning__callout-text">
       Secrets & LLM policy stay in <code>~/.config/agentic-workstation/env.d/*.env</code> and are never committed. Runner

@@ -1,27 +1,39 @@
 export { default as Hero } from './components/Hero.astro';
 export { default as DiscordCTA } from './components/DiscordCTA.astro';
 export { default as WorkshopNarrative } from './components/WorkshopNarrative.astro';
-export { default as ProjectFamilies } from './components/ProjectFamilies.astro';
-export { default as ContributionPathways } from './components/ContributionPathways.astro';
+export { default as WorkshopGraph } from './components/WorkshopGraph.astro';
+export { default as ActiveWorkshop } from './components/ActiveWorkshop.astro';
+export { default as ContributionExplorer } from './components/ContributionExplorer.astro';
 export { default as SupportChannels } from './components/SupportChannels.astro';
 export { default as ModerationPrivacy } from './components/ModerationPrivacy.astro';
+
 export {
   communityMeta,
   workshopSections,
-  projectFamilies,
-  weeklyOpportunities,
-  beginnerPathway,
-  experiencedPathway,
+  communityProjects,
+  incubatingProjects,
+  interestFilters,
+  contributionOpportunities,
   supportChannels,
   moderationItems,
+  ecosystemLabels,
+  activeWorkshopProjects,
+  communityIssueSearch,
+  validateCommunityRegistry,
+  COMMUNITY_ISSUE_SEARCH_BASE,
 } from './data/index.js';
+
 export type {
+  CommunityMeta,
+  CommunityProject,
+  CommunityProjectState,
+  CommunityEcosystem,
+  CommunityInterest,
+  CommunityRole,
+  IncubatingProject,
+  ContributionOpportunity,
+  InterestFilter,
   WorkshopSection,
-  ProjectFamily,
-  PathwayStep,
-  ContributionPathway,
-  WeeklyOpportunity,
   SupportChannel,
   ModerationItem,
-  CommunityMeta,
 } from './types/index.js';

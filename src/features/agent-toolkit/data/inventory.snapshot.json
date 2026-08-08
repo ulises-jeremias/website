@@ -1,0 +1,254 @@
+{
+  "source": "ulises-jeremias/agent-toolkit",
+  "sourceKind": "CANONICAL_PROJECT_SOURCE",
+  "catalogs": [
+    "catalogs/skill-catalog.yaml",
+    "catalogs/agent-catalog.yaml",
+    "catalogs/loop-catalog.yaml",
+    "profiles/",
+    "packs/",
+    "plugins/",
+    "mcp/registry/"
+  ],
+  "commit": "b6700ca",
+  "commitFull": "b6700cad300a7d4527da5f0eb02ad7a1f8cfd3ad",
+  "verifiedAt": "2026-08-07",
+  "version": "1.8.4",
+  "counts": {
+    "skills": 61,
+    "agents": 16,
+    "loops": 10,
+    "profiles": 7,
+    "packs": 3,
+    "plugins": 4,
+    "mcp": 6,
+    "skillDomains": 9
+  },
+  "skillDomains": [
+    {
+      "id": "core",
+      "count": 8
+    },
+    {
+      "id": "data",
+      "count": 2
+    },
+    {
+      "id": "delivery",
+      "count": 21
+    },
+    {
+      "id": "design",
+      "count": 6
+    },
+    {
+      "id": "forge",
+      "count": 8
+    },
+    {
+      "id": "integrations",
+      "count": 5
+    },
+    {
+      "id": "loops",
+      "count": 1
+    },
+    {
+      "id": "ops",
+      "count": 6
+    },
+    {
+      "id": "tooling",
+      "count": 4
+    }
+  ],
+  "profiles": ["claude-code", "copilot", "cursor", "muse-code", "opencode", "pi", "windsurf"],
+  "packs": ["delivery-discipline", "engineering-workflow", "oss-maintenance"],
+  "plugins": ["agent-toolkit-agents", "agent-toolkit-complete", "agent-toolkit-core", "agent-toolkit-forge"],
+  "mcp": ["clickup", "figma", "github", "linear", "notion", "slack"],
+  "agentIds": [
+    "architect",
+    "assistant",
+    "build-error-resolver",
+    "client-workflow-bootstrap",
+    "code-reviewer",
+    "database-reviewer",
+    "docs-lookup",
+    "e2e-runner",
+    "performance-optimizer",
+    "planner",
+    "refactor-cleaner",
+    "reference-lookup",
+    "security-reviewer",
+    "tdd-guide",
+    "tech-assistant",
+    "typescript-reviewer"
+  ],
+  "loopIds": [
+    "changelog-drafter",
+    "ci-sweeper",
+    "daily-triage",
+    "dep-sweeper",
+    "issue-triage",
+    "oss-daily-briefing",
+    "oss-pr-monitor",
+    "oss-triage",
+    "post-merge-cleanup",
+    "pr-babysitter"
+  ],
+  "examples": {
+    "skills": [
+      {
+        "id": "core/assistant",
+        "name": "assistant",
+        "domain": "core",
+        "description": "Assistant \u2014 on any repo, scan README\u2192docs\u2192AGENTS\u2192CONTRIBUTING\u2192PR templates\u2192task runners\u2192devcontainer\u2192CI\u2192configs before code; cite sources; prefer AGENTS.md for agent behavior; port",
+        "stability": "stable"
+      },
+      {
+        "id": "delivery/development-workflow",
+        "name": "development-workflow",
+        "domain": "delivery",
+        "description": "Default development workflow, task lifecycle, DoR, DoD, validation, and evidence model when a project has no explicit override. Repository instructions still take precedence.",
+        "stability": "stable"
+      },
+      {
+        "id": "ops/swarm",
+        "name": "swarm",
+        "domain": "ops",
+        "description": "Launch an Agent Toolkit swarm from a natural language request using agent-toolkit swarm CLI with Herdr/tmux eager windows and file handoffs.",
+        "stability": "stable"
+      },
+      {
+        "id": "forge/github-cli-workflow",
+        "name": "github-cli-workflow",
+        "domain": "forge",
+        "description": "HOW \u2014 GitHub CLI (gh): push branch, create draft PR with title/body from template or file; fallback untracked PR_DESCRIPTION_*.md. Use when origin is GitHub.",
+        "stability": "stable"
+      }
+    ],
+    "agents": [
+      {
+        "id": "architect",
+        "name": "architect",
+        "description": "Software architecture and system design specialist. Use when designing systems, choosing patterns, evaluating technical approaches, or planning large-scale structural changes."
+      },
+      {
+        "id": "code-reviewer",
+        "name": "code-reviewer",
+        "description": "Expert code review specialist. Proactively reviews code for quality, security, and maintainability. Use immediately after writing or modifying any significant code."
+      },
+      {
+        "id": "tdd-guide",
+        "name": "tdd-guide",
+        "description": "Test-Driven Development specialist. Enforces write-tests-first methodology. Use when implementing new features to ensure proper test coverage from the start."
+      },
+      {
+        "id": "security-reviewer",
+        "name": "security-reviewer",
+        "description": "Security vulnerability detection specialist. Use proactively after implementing authentication, data handling, API endpoints, or any user-facing functionality."
+      }
+    ],
+    "loops": [
+      {
+        "id": "daily-triage",
+        "name": "daily-triage",
+        "description": "Triage new issues and propose labels (report-only)",
+        "tier": "L1",
+        "cadence": "1d"
+      },
+      {
+        "id": "ci-sweeper",
+        "name": "ci-sweeper",
+        "description": "Detect CI failures and propose fixes via draft PRs (L2, cautious)",
+        "tier": "L2",
+        "cadence": "15m"
+      },
+      {
+        "id": "pr-babysitter",
+        "name": "pr-babysitter",
+        "description": "Monitor open PRs and post review comments (L2, PR-gated)",
+        "tier": "L2",
+        "cadence": "15m"
+      },
+      {
+        "id": "oss-daily-briefing",
+        "name": "oss-daily-briefing",
+        "description": "Daily read-only briefing across OSS ecosystem repos (L1)",
+        "tier": "L1",
+        "cadence": "1d"
+      }
+    ],
+    "packs": [
+      {
+        "id": "delivery-discipline",
+        "name": "Delivery Discipline Pack",
+        "description": "Ticket hygiene, traceability, and process compliance for engineering teams."
+      },
+      {
+        "id": "engineering-workflow",
+        "name": "Engineering Workflow Pack",
+        "description": "End-to-end engineering delivery workflow covering planning, implementation, review, and deployment."
+      },
+      {
+        "id": "oss-maintenance",
+        "name": "OSS Maintenance Pack",
+        "description": "Automate PR review, issue triage, and daily briefings across a multi-repo OSS ecosystem. This pack combines three loops that work together to reduce the manual overhead of maintain"
+      }
+    ],
+    "plugins": [
+      {
+        "id": "agent-toolkit-agents",
+        "name": "agent-toolkit-agents",
+        "description": "Full set of 16 AI agent personas: architect, code-reviewer, security-reviewer, planner, database-reviewer, TypeScript-reviewer, and more."
+      },
+      {
+        "id": "agent-toolkit-complete",
+        "name": "agent-toolkit-complete",
+        "description": "Full stable skill catalog coverage for consumers who want everything (#50)"
+      },
+      {
+        "id": "agent-toolkit-core",
+        "name": "agent-toolkit-core",
+        "description": "Core orchestration skills, dev companion, output handshake, PR fallback, and code-reviewer agent. The baseline install for any project."
+      },
+      {
+        "id": "agent-toolkit-forge",
+        "name": "agent-toolkit-forge",
+        "description": "GitHub and GitLab automation skills: PR workflows, CI fixes, comment resolution, and contribution planning."
+      }
+    ],
+    "mcp": [
+      {
+        "id": "clickup",
+        "name": "ClickUp",
+        "description": "View and create tasks, manage lists and spaces, add comments, read and write Docs"
+      },
+      {
+        "id": "figma",
+        "name": "Figma",
+        "description": "Fetch design context, file structure, component metadata, and screenshots for design-to-code"
+      },
+      {
+        "id": "github",
+        "name": "GitHub",
+        "description": "Access GitHub repositories, issues, PRs, code, and CI via the official GitHub MCP server"
+      },
+      {
+        "id": "linear",
+        "name": "Linear",
+        "description": "Create and update issues, manage projects and cycles, add comments, query sprints"
+      },
+      {
+        "id": "notion",
+        "name": "Notion",
+        "description": "Read and write Notion pages and databases, query blocks, and create content"
+      },
+      {
+        "id": "slack",
+        "name": "Slack",
+        "description": "Read channel history, post messages, add reactions, and browse Slack canvases"
+      }
+    ]
+  }
+}

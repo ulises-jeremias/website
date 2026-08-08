@@ -24,6 +24,7 @@
     "test:coverage": "vitest run --coverage --passWithNoTests",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
+    "data:refresh": "node scripts/refresh-github-data.mjs",
     "cspell": "cspell lint --no-progress .",
     "knip": "knip",
     "prepare": "husky"

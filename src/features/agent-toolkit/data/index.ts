@@ -1,6 +1,16 @@
+import {
+  countString,
+  inventory,
+  inventoryCounts,
+  inventoryProvenance,
+  inventoryStrip,
+  inventoryVersionLabel,
+  skillDomainDetail,
+} from './inventory.js';
 import type {
   BudgetItem,
   CapabilityNode,
+  CommunityCrossLink,
   DistributionTarget,
   InstallSnippet,
   QueueVsSwarmItem,
@@ -12,100 +22,126 @@ import type {
   UiBackend,
 } from '../types/index.js';
 
-/**
- * Inventory verified against agent-toolkit HEAD (b6700ca, 2026-08-07):
- * skills 61 across 9 domains (core 8), agents 16, loops 10,
- * profiles/targets 7, MCP templates 6, packs 3, plugins 4.
- */
-export const inventoryVerifiedAt = '2026-08-07';
-export const inventoryCommit = 'b6700ca';
+export {
+  inventory,
+  inventoryCounts,
+  inventoryProvenance,
+  inventoryStrip,
+  inventoryVersionLabel,
+  countString,
+  skillDomainDetail,
+} from './inventory.js';
+
+/** Provenance — do not duplicate these literals elsewhere */
+export const inventoryVerifiedAt = inventory.verifiedAt;
+export const inventoryCommit = inventory.commit;
+export const inventoryCommitFull = inventory.commitFull;
+export const inventoryVersion = inventory.version;
+
+const GH = 'https://github.com/ulises-jeremias/agent-toolkit';
 
 export const toolkitStats: ToolkitStat[] = [
-  { label: 'skills', value: '61', hint: '9 domains · core 8' },
-  { label: 'agents', value: '16', hint: 'persona constraints' },
-  { label: 'loops', value: '10', hint: 'L1 / L2 / L3' },
-  { label: 'profiles', value: '7', hint: 'native tool targets' },
-  { label: 'MCP', value: '6', hint: 'registry templates' },
+  {
+    label: 'skills',
+    value: countString('skills'),
+    hint: `${inventoryCounts.skillDomains} domains · core ${inventory.skillDomains.find((d) => d.id === 'core')?.count ?? 0}`,
+  },
+  { label: 'agents', value: countString('agents'), hint: 'persona constraints' },
+  { label: 'loops', value: countString('loops'), hint: 'L1 / L2 / L3' },
+  { label: 'profiles', value: countString('profiles'), hint: 'native tool targets' },
+  { label: 'MCP', value: countString('mcp'), hint: 'registry templates' },
 ];
 
-export const skillDomains: SkillDomain[] = [
-  { id: 'core', count: 8 },
-  { id: 'delivery', count: 21 },
-  { id: 'forge', count: 8 },
-  { id: 'design', count: 6 },
-  { id: 'ops', count: 6 },
-  { id: 'integrations', count: 5 },
-  { id: 'tooling', count: 4 },
-  { id: 'data', count: 2 },
-  { id: 'loops', count: 1 },
-];
+export const skillDomains: SkillDomain[] = inventory.skillDomains;
 
 export const capabilityNodes: CapabilityNode[] = [
   {
     id: 'skills',
     title: 'Skills',
-    count: '61',
+    count: countString('skills'),
     summary: 'Reusable capability units — one SKILL.md directory each.',
-    detail: 'core 8 · delivery 21 · forge 8 · design 6 · ops 6 · integrations 5 · tooling 4 · data 2 · loops 1',
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/skills',
+    detail: skillDomainDetail(),
+    href: `${GH}/tree/main/skills`,
     color: '#a05cff',
+    examples: inventory.examples.skills,
   },
   {
     id: 'agents',
     title: 'Agents',
-    count: '16',
+    count: countString('agents'),
     summary: 'Persona constraints that scope allow/deny actions and handoffs.',
-    detail: 'architect · planner · code-reviewer · security-reviewer · tdd-guide · …',
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/agents',
+    detail: inventory.agentIds.slice(0, 6).join(' · ') + ' · …',
+    href: `${GH}/tree/main/agents`,
     color: '#ff84f1',
+    examples: inventory.examples.agents,
   },
   {
     id: 'loops',
     title: 'Loops',
-    count: '10',
+    count: countString('loops'),
     summary: 'Recurring workflows declared as loops/<name>/loop.yaml.',
     detail: 'L1 report-only · L2 controlled · L3 high-autonomy · resumable budgets',
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/blob/main/docs/LOOPS.md',
+    href: `${GH}/blob/main/docs/LOOPS.md`,
     color: '#ff9a4d',
+    examples: inventory.examples.loops,
   },
   {
     id: 'packs',
     title: 'Packs',
-    count: '3',
+    count: countString('packs'),
     summary: 'Client/project context bundles loaded into the harness overlay.',
-    detail: 'delivery-discipline · engineering-workflow · oss-maintenance',
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/packs',
+    detail: inventory.packs.join(' · '),
+    href: `${GH}/tree/main/packs`,
     color: '#1cefff',
+    examples: inventory.examples.packs,
   },
   {
     id: 'plugins',
     title: 'Plugins',
-    count: '4',
+    count: countString('plugins'),
     summary: 'Native marketplace products compiled from the same catalog.',
-    detail: 'agent-toolkit-core · agents · forge · complete',
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/plugins',
+    detail: inventory.plugins.map((p) => p.replace(/^agent-toolkit-/, '')).join(' · '),
+    href: `${GH}/tree/main/plugins`,
     color: '#55b9ff',
+    examples: inventory.examples.plugins,
   },
   {
     id: 'mcp',
     title: 'MCP',
-    count: '6',
+    count: countString('mcp'),
     summary: 'Registry + installable templates for external tool servers.',
-    detail: 'github · slack · clickup · linear · notion · figma',
-    href: 'https://github.com/ulises-jeremias/agent-toolkit/tree/main/mcp',
+    detail: inventory.mcp.join(' · '),
+    href: `${GH}/tree/main/mcp`,
     color: '#7358ff',
+    examples: inventory.examples.mcp,
   },
 ];
 
-export const distributionTargets: DistributionTarget[] = [
-  { id: 'claude-code', label: 'Claude Code', path: '~/.claude/skills + marketplace plugins' },
-  { id: 'cursor', label: 'Cursor', path: 'profiles/cursor/rules/*.mdc' },
-  { id: 'opencode', label: 'OpenCode', path: 'profiles/opencode/agents + opencode.json' },
-  { id: 'copilot', label: 'Copilot', path: 'profiles/copilot' },
-  { id: 'windsurf', label: 'Windsurf', path: 'profiles/windsurf/memories' },
-  { id: 'pi', label: 'Pi', path: 'profiles/pi/skills' },
-  { id: 'muse-code', label: 'Muse Code', path: 'profiles/muse-code' },
-];
+const PROFILE_LABELS: Record<string, { label: string; path: string }> = {
+  'claude-code': { label: 'Claude Code', path: '~/.claude/skills + marketplace plugins' },
+  cursor: { label: 'Cursor', path: 'profiles/cursor/rules/*.mdc' },
+  opencode: { label: 'OpenCode', path: 'profiles/opencode/agents + opencode.json' },
+  copilot: { label: 'Copilot', path: 'profiles/copilot' },
+  windsurf: { label: 'Windsurf', path: 'profiles/windsurf/memories' },
+  pi: { label: 'Pi', path: 'profiles/pi/skills' },
+  'muse-code': { label: 'Muse Code', path: 'profiles/muse-code' },
+};
+
+export const distributionTargets: DistributionTarget[] = inventory.profiles.map((id) => ({
+  id,
+  label: PROFILE_LABELS[id]?.label ?? id,
+  path: PROFILE_LABELS[id]?.path ?? `profiles/${id}`,
+}));
+
+/** Catalog family counts for distribution map — derived, not retyped */
+export const sourceCatalogLines = [
+  { label: 'skills/', count: inventoryCounts.skills },
+  { label: 'agents/', count: inventoryCounts.agents },
+  { label: 'loops/', count: inventoryCounts.loops },
+  { label: 'packs/', count: inventoryCounts.packs },
+  { label: 'plugins/', count: inventoryCounts.plugins },
+  { label: 'mcp/', count: inventoryCounts.mcp },
+] as const;
 
 export const toolkitOverview: ToolkitOverviewSection[] = [
   {
@@ -137,7 +173,7 @@ export const toolkitOverview: ToolkitOverviewSection[] = [
 export const queueVsSwarm: QueueVsSwarmItem[] = [
   {
     id: 'devcompanion',
-    title: 'DevCompanion — durable queue',
+    title: 'DevCompanion — durable KEEP queue',
     summary:
       'Background job queue for heavy work: review, PR, CI fix, investigate, refactor. Not a multi-agent runtime.',
     bullets: [
@@ -157,7 +193,7 @@ export const queueVsSwarm: QueueVsSwarmItem[] = [
       'pair / team / full recipes with promote without losing run ID',
       'Herdr and tmux are UI backends over the same run state',
     ],
-    command: 'agent-toolkit swarm plan --recipe pair --ui tmux "…" --json',
+    command: 'agent-toolkit swarm plan --recipe pair --ui tmux --runner skeleton "…" --json',
   },
 ];
 
@@ -201,7 +237,7 @@ export const swarmStages: SwarmStage[] = [
     id: 'state',
     index: 6,
     title: 'State',
-    summary: 'run.yaml, trace.jsonl, budget.json, ownership, and approvals.',
+    summary: 'run.yaml, state.json, trace.jsonl, budget.json, ownership, approvals.',
     detail: 'atomic writes · fail closed on unclear ownership',
   },
   {
@@ -220,15 +256,19 @@ export const swarmStages: SwarmStage[] = [
   },
 ];
 
+/**
+ * Built-in recipes from agent-toolkit swarm/recipes.py at inventory commit.
+ * pair = implementer → reviewer → integrator (verified).
+ */
 export const swarmRecipes: SwarmRecipe[] = [
   {
     id: 'pair',
     label: 'pair',
     useWhen: 'Bugs, features, refactors — default risk.',
     roles: [
-      { id: 'implementer', policy: 'writer' },
-      { id: 'reviewer', policy: 'reviewer-writer' },
-      { id: 'integrator', policy: 'integrator' },
+      { id: 'implementer', policy: 'writer', persona: 'tdd-guide' },
+      { id: 'reviewer', policy: 'reviewer-writer', persona: 'code-reviewer' },
+      { id: 'integrator', policy: 'integrator', persona: 'architect' },
     ],
   },
   {
@@ -236,10 +276,10 @@ export const swarmRecipes: SwarmRecipe[] = [
     label: 'team',
     useWhen: 'Medium features, schema or API changes — plan approval required.',
     roles: [
-      { id: 'planner', policy: 'read-only' },
-      { id: 'implementer', policy: 'writer' },
-      { id: 'reviewer', policy: 'reviewer-writer' },
-      { id: 'architect', policy: 'integrator' },
+      { id: 'planner', policy: 'read-only', persona: 'planner' },
+      { id: 'implementer', policy: 'writer', persona: 'tdd-guide' },
+      { id: 'reviewer', policy: 'reviewer-writer', persona: 'code-reviewer' },
+      { id: 'architect', policy: 'integrator', persona: 'architect' },
     ],
   },
   {
@@ -247,26 +287,47 @@ export const swarmRecipes: SwarmRecipe[] = [
     label: 'full',
     useWhen: 'Security-sensitive work, releases, migrations.',
     roles: [
-      { id: 'planner', policy: 'read-only' },
-      { id: 'implementer', policy: 'writer' },
-      { id: 'refactorer', policy: 'writer' },
-      { id: 'architect', policy: 'integrator' },
-      { id: 'hardener', policy: 'specialist' },
-      { id: 'qa', policy: 'reviewer-writer' },
+      { id: 'planner', policy: 'read-only', persona: 'planner' },
+      { id: 'implementer', policy: 'writer', persona: 'tdd-guide' },
+      { id: 'refactorer', policy: 'writer', persona: 'refactor-cleaner' },
+      { id: 'architect', policy: 'integrator', persona: 'architect' },
+      { id: 'hardener', policy: 'reviewer-writer', persona: 'security-reviewer' },
+      { id: 'qa', policy: 'reviewer-writer', persona: 'e2e-runner' },
     ],
   },
 ];
+
+export const sharedRunStateFiles = [
+  'run.yaml',
+  'state.json',
+  'trace.jsonl',
+  'budget.json',
+  'ownership.json',
+  'approvals.json',
+  'artifacts/',
+  'handoffs/',
+] as const;
 
 export const uiBackends: UiBackend[] = [
   {
     id: 'herdr',
     title: 'Herdr',
     summary: 'Preferred workspace GUI over the same run state, approvals, and artifacts.',
+    commands: [
+      'agent-toolkit swarm start --recipe pair --ui herdr --runner opencode "…"',
+      'agent-toolkit swarm attach RUN_ID',
+      'herdr workspace open swarm-RUN_ID',
+    ],
   },
   {
     id: 'tmux',
     title: 'tmux',
     summary: 'Terminal panes on an isolated socket — parity view, not a fork of the product.',
+    commands: [
+      'agent-toolkit swarm start --recipe pair --ui tmux --runner opencode "Fix bug"',
+      'tmux -L agent-toolkit-swarm-RUN_ID attach -t swarm-RUN_ID',
+      'agent-toolkit swarm plan --recipe pair --ui tmux --runner skeleton "Demo" --json',
+    ],
   },
 ];
 
@@ -297,16 +358,25 @@ export const budgetItems: BudgetItem[] = [
   { label: 'artifacts', value: 'artifact_size + handoffs', description: 'size gates' },
 ];
 
+export const communityCrossLink: CommunityCrossLink = {
+  href: '/community',
+  title: 'Community — Digital Nest workshop',
+  summary:
+    'Agent Toolkit is one station in the umbrella Digital Nest workshop. Join Discord and contribute across HorneroConfig, Workstation, Harness, Create Awesome, and V ecosystem work.',
+  cta: 'Open the workshop',
+};
+
 export const toolkitMeta = {
   title: 'Agent Toolkit — Skills, Agents, Loops, Swarms',
-  description:
-    'One source catalog: 61 skills, 16 agents, 10 loops, 7 profiles, 6 MCP templates — compiled into every assistant target.',
+  description: `One source catalog: ${inventoryStrip()} — compiled into every assistant target.`,
   accent: '#a05cff',
   accentStrong: '#7358ff',
   violet: '#a05cff',
   cyan: '#1cefff',
   orange: '#ff9a4d',
   slate: '#8f88b4',
+  version: inventoryVersionLabel,
+  provenance: inventoryProvenance,
 };
 
 /** Transitional aliases for older imports */

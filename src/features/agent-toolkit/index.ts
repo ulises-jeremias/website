@@ -4,6 +4,7 @@ export { default as CapabilityAnatomy } from './components/CapabilityAnatomy.ast
 export { default as DistributionMap } from './components/DistributionMap.astro';
 export { default as QueueSeparation } from './components/QueueSeparation.astro';
 export { default as SwarmStory } from './components/SwarmStory.astro';
+export { default as CommunityWorkshopLink } from './components/CommunityWorkshopLink.astro';
 export {
   toolkitOverview,
   toolkitStats,
@@ -11,22 +12,34 @@ export {
   capabilities,
   skillDomains,
   distributionTargets,
+  sourceCatalogLines,
   queueVsSwarm,
   swarmStages,
   swarmScenes,
   swarmRecipes,
+  sharedRunStateFiles,
   uiBackends,
   installSnippets,
   budgetItems,
+  communityCrossLink,
   toolkitMeta,
+  inventory,
+  inventoryCounts,
   inventoryVerifiedAt,
   inventoryCommit,
+  inventoryCommitFull,
+  inventoryVersion,
+  inventoryVersionLabel,
+  inventoryProvenance,
+  inventoryStrip,
 } from './data/index.js';
 export type {
   ToolkitStat,
   ToolkitOverviewSection,
   CapabilityNode,
   CapabilityItem,
+  CapabilityFamilyId,
+  InventoryExample,
   SkillDomain,
   DistributionTarget,
   QueueVsSwarmItem,
@@ -36,4 +49,5 @@ export type {
   UiBackend,
   InstallSnippet,
   BudgetItem,
+  CommunityCrossLink,
 } from './types/index.js';

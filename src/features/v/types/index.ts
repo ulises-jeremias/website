@@ -34,10 +34,18 @@ export interface VLicenseEntry {
 }
 
 export interface VBackend {
-  id: 'pure-v' | 'cblas' | 'lapacke' | 'opencl' | 'mpi';
+  id: 'pure-v' | 'cblas' | 'opencl' | 'cuda' | 'vulkan' | 'mpi';
   label: string;
   flag: string;
+  maturity: 'default' | 'stable-opt-in' | 'experimental' | 'optional';
   bestFor: string;
+}
+
+export interface VtlMaturity {
+  id: 'cpu' | 'cuda' | 'vulkan';
+  label: string;
+  maturity: 'default' | 'experimental';
+  note: string;
 }
 
 export interface VOperatorGroup {

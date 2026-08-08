@@ -1,0 +1,360 @@
+---
+/**
+ * WorkstationAtlas — synthwave station board: terminals, profiles, toolkit uplink, harness.
+ * Static SVG/CSS only (no Three.js). Uses midnight/cyan/violet/lime identity.
+ */
+import { workstationProfiles } from '../data/index.js';
+---
+
+<section id="atlas" class="ws-atlas" aria-labelledby="ws-atlas-title">
+  <div class="ws-atlas__head">
+    <span class="ws-atlas__kicker">Workstation world · synthwave systems atlas</span>
+    <h2 id="ws-atlas-title" class="ws-atlas__title">Provision · select · uplink · run</h2>
+    <p class="ws-atlas__lead">
+      A Personal DX graph, not a forced ladder. HorneroConfig is an optional desktop edge. The thin workstation
+      provisions the machine; toolkit uplinks capabilities; Agentic Harness holds runtime memory.
+    </p>
+  </div>
+
+  <div class="ws-atlas__stage" aria-hidden="true">
+    <img
+      class="ws-atlas__island"
+      src="/assets/island-workstation.png"
+      alt=""
+      width="640"
+      height="360"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+
+  <div class="ws-atlas__board" role="group" aria-label="Workstation stations">
+    <!-- Terminal: provisioning -->
+    <article class="ws-station ws-station--terminal" aria-labelledby="ws-st-term">
+      <header class="ws-station__chrome">
+        <span class="ws-station__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h3 id="ws-st-term" class="ws-station__title">Terminal · provisioning</h3>
+      </header>
+      <pre
+        class="ws-station__term"
+        tabindex="0"><code><span class="ws-term-prompt">$</span> chezmoi init --apply ulises-jeremias/agentic-workstation
+<span class="ws-term-ok">✓</span> packages · shell · env.d · dots-* helpers
+<span class="ws-term-prompt">$</span> dots-doctor
+<span class="ws-term-muted">snapshot · swarm gate · harness path hint</span></code></pre>
+    </article>
+
+    <!-- Profile selector -->
+    <article class="ws-station ws-station--profiles" aria-labelledby="ws-st-prof">
+      <h3 id="ws-st-prof" class="ws-station__title">Profile selector</h3>
+      <p class="ws-station__hint">
+        Canonical chezmoi profiles from <code>home/.chezmoidata/profiles.yaml</code>
+      </p>
+      <ul class="ws-profiles" role="list">
+        {
+          workstationProfiles.map((p) => (
+            <li class="ws-profiles__item">
+              <span class="ws-profiles__id">{p.id}</span>
+              <span class="ws-profiles__desc">{p.description}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </article>
+
+    <!-- Toolkit uplink -->
+    <article class="ws-station ws-station--uplink" aria-labelledby="ws-st-up">
+      <h3 id="ws-st-up" class="ws-station__title">Toolkit uplink</h3>
+      <p class="ws-station__hint">L1.5 · sole capability path after the thin boundary</p>
+      <pre
+        class="ws-station__term ws-station__term--lime"
+        tabindex="0"><code>uv tool install --force agent-toolkit-cli
+&amp;&amp; agent-toolkit install</code></pre>
+      <p class="ws-station__foot">
+        Skills, agents, loops, MCP — owned by
+        <a href="/agent-toolkit">Agent Toolkit</a>, not the workstation.
+      </p>
+    </article>
+
+    <!-- Harness station -->
+    <article class="ws-station ws-station--harness" aria-labelledby="ws-st-harness">
+      <h3 id="ws-st-harness" class="ws-station__title">Harness station</h3>
+      <p class="ws-station__hint">L2 · persistent AI workspace / runtime — not Toolkit</p>
+      <div class="ws-harness-card">
+        <p class="ws-harness-card__name">agentic-harness</p>
+        <p class="ws-harness-card__desc">
+          Memory · personas · packs · loops · queues. Consumes toolkit CLIs as the running instance.
+        </p>
+        <a
+          class="ws-harness-card__link"
+          href="https://github.com/ulises-jeremias/agentic-harness"
+          target="_blank"
+          rel="noreferrer">ulises-jeremias/agentic-harness ↗</a
+        >
+      </div>
+    </article>
+  </div>
+
+  <p class="ws-atlas__community">
+    Discuss the whole nest in
+    <a href="/community">Community — Digital Nest workshop</a>
+    · optional desktop:
+    <a href="/dotfiles">HorneroConfig</a>
+    · capabilities:
+    <a href="/agent-toolkit">Agent Toolkit</a>.
+  </p>
+</section>
+
+<style>
+  .ws-atlas {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .ws-atlas__head {
+    max-width: 72ch;
+  }
+  .ws-atlas__kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #22d3ee;
+    margin-bottom: 0.45rem;
+  }
+  .ws-atlas__title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #f8fafc;
+  }
+  .ws-atlas__lead {
+    margin: 0;
+    color: #94a3b8;
+    line-height: 1.65;
+    font-size: 0.96rem;
+  }
+  .ws-atlas__stage {
+    position: relative;
+    border-radius: 1.15rem;
+    overflow: hidden;
+    border: 1px solid rgba(51, 65, 85, 0.65);
+    background: #020617;
+    max-height: 220px;
+  }
+  .ws-atlas__island {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center 40%;
+    opacity: 0.92;
+    mask-image: linear-gradient(180deg, black 55%, transparent 100%);
+  }
+  .ws-atlas__board {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) {
+    .ws-atlas__board {
+      grid-template-columns: 1.15fr 1fr;
+    }
+  }
+  .ws-station {
+    padding: 1.05rem 1.1rem 1rem;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(51, 65, 85, 0.65);
+    clip-path: var(--clip-corner-sm, none);
+    border-radius: 1rem;
+  }
+  .ws-station--terminal {
+    border-color: rgba(34, 211, 238, 0.28);
+    background: linear-gradient(180deg, rgba(34, 211, 238, 0.06), transparent 40%), rgba(2, 6, 23, 0.92);
+  }
+  .ws-station--profiles {
+    border-color: rgba(167, 139, 250, 0.28);
+  }
+  .ws-station--uplink {
+    border-color: rgba(132, 204, 22, 0.3);
+  }
+  .ws-station--harness {
+    border-color: rgba(34, 211, 238, 0.35);
+    border-style: dashed;
+  }
+  .ws-station__chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.65rem;
+  }
+  .ws-station__dots {
+    display: inline-flex;
+    gap: 0.28rem;
+  }
+  .ws-station__dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #334155;
+    display: block;
+  }
+  .ws-station__dots i:nth-child(1) {
+    background: #f87171;
+  }
+  .ws-station__dots i:nth-child(2) {
+    background: #facc15;
+  }
+  .ws-station__dots i:nth-child(3) {
+    background: #4ade80;
+  }
+  .ws-station__title {
+    margin: 0 0 0.45rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+  .ws-station__chrome .ws-station__title {
+    margin: 0;
+  }
+  .ws-station__hint {
+    margin: 0 0 0.65rem;
+    color: #64748b;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .ws-station__hint code {
+    color: #94a3b8;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.76rem;
+  }
+  .ws-station__term {
+    margin: 0;
+    padding: 0.75rem 0.85rem;
+    border-radius: 0.7rem;
+    background: #020617;
+    border: 1px solid #1e293b;
+    overflow-x: auto;
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+  .ws-station__term code {
+    color: #a5f3fc;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    white-space: pre;
+  }
+  .ws-station__term--lime code {
+    color: #bef264;
+  }
+  .ws-term-prompt {
+    color: #22d3ee;
+    font-weight: 700;
+  }
+  .ws-term-ok {
+    color: #84cc16;
+  }
+  .ws-term-muted {
+    color: #64748b;
+  }
+  .ws-profiles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  .ws-profiles__item {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 0.5rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.5rem;
+    background: rgba(2, 6, 23, 0.55);
+    border: 1px solid rgba(51, 65, 85, 0.45);
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  @media (max-width: 560px) {
+    .ws-profiles__item {
+      grid-template-columns: 1fr;
+    }
+  }
+  .ws-profiles__id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 700;
+    color: #c4b5fd;
+    font-size: 0.76rem;
+  }
+  .ws-profiles__desc {
+    color: #94a3b8;
+  }
+  .ws-station__foot {
+    margin: 0.65rem 0 0;
+    color: #94a3b8;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .ws-station__foot a {
+    color: #84cc16;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ws-station__foot a:hover {
+    text-decoration: underline;
+  }
+  .ws-harness-card {
+    padding: 0.85rem 0.9rem;
+    border-radius: 0.75rem;
+    background: rgba(2, 6, 23, 0.7);
+    border: 1px solid rgba(34, 211, 238, 0.22);
+  }
+  .ws-harness-card__name {
+    margin: 0 0 0.35rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-weight: 800;
+    color: #a5f3fc;
+    font-size: 0.92rem;
+  }
+  .ws-harness-card__desc {
+    margin: 0 0 0.55rem;
+    color: #94a3b8;
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+  .ws-harness-card__link {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #22d3ee;
+    text-decoration: none;
+  }
+  .ws-harness-card__link:hover {
+    text-decoration: underline;
+  }
+  .ws-atlas__community {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-radius: 0.85rem;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px dashed rgba(167, 139, 250, 0.28);
+    color: #94a3b8;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .ws-atlas__community a {
+    color: #c4b5fd;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ws-atlas__community a:hover {
+    text-decoration: underline;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ws-station {
+      transition: none;
+    }
+  }
+</style>

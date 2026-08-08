@@ -1,0 +1,24 @@
+{
+  "name": "Digital Nest — Ulises Jeremias",
+  "short_name": "Digital Nest",
+  "description": "Personal workshop, documentation atlas, and open-source portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#040212",
+  "theme_color": "#050317",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/logo-nest.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

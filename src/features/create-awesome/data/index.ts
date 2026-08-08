@@ -1,3 +1,5 @@
+import { familyCatalogs } from './catalogs.js';
+import { buildCreateAwesomeCommand } from '../lib/buildCommand.js';
 import type {
   ComparisonRow,
   CompositionExample,
@@ -7,11 +9,25 @@ import type {
   FamilyIntro,
 } from '../types/index.js';
 
+export { familyCatalogs } from './catalogs.js';
+export { buildCreateAwesomeCommand } from '../lib/buildCommand.js';
+
 export const familyIntro: FamilyIntro = {
   title: 'One command. Any stack.',
   lead: 'Family of CLIs that compose templates + addons into production-ready apps — not generators that hide files, but composers that ship real code you own.',
   principle: 'Template + addons = real files. No lock-in, no hidden runtime.',
 };
+
+export const catalogTotals = {
+  node: { templates: familyCatalogs.node.templateCount, addons: familyCatalogs.node.addonCount },
+  python: { templates: familyCatalogs.python.templateCount, addons: familyCatalogs.python.addonCount },
+  v: { templates: familyCatalogs.v.templateCount, addons: familyCatalogs.v.addonCount },
+  sources: {
+    node: familyCatalogs.node.source,
+    python: familyCatalogs.python.source,
+    v: familyCatalogs.v.source,
+  },
+} as const;
 
 export const distributionChannels: DistributionChannel[] = [
   {
@@ -35,7 +51,7 @@ export const distributionChannels: DistributionChannel[] = [
   {
     id: 'cva-release',
     label: 'create-vlang-app',
-    command: 'curl -fsSL https://create-vlang-app.vercel.app/install.sh | sh',
+    command: 'curl -fsSL https://create-awesome-vlang-app.vercel.app/install.sh | sh',
     note: 'V — release binary (primary today)',
   },
   {
@@ -47,8 +63,8 @@ export const distributionChannels: DistributionChannel[] = [
   {
     id: 'brew',
     label: 'Homebrew',
-    command: 'brew install create-vlang-app',
-    note: 'V — macOS/Linux',
+    command: 'brew tap Create-Vlang-App/tap && brew install create-vlang-app',
+    note: 'V — macOS/Linux tap',
   },
 ];
 
@@ -65,38 +81,8 @@ export const variants: CreateAwesomeVariant[] = [
     install: 'npm create awesome-node-app@latest my-app',
     href: 'https://create-awesome-node-app.vercel.app',
     repo: 'Create-Node-App/create-node-app',
-    templates: [
-      {
-        id: 'react-vite-boilerplate',
-        name: 'React + Vite',
-        description: 'SPA with Vite + React',
-        stack: ['React', 'Vite'],
-        featured: true,
-      },
-      { id: 'nextjs-starter', name: 'Next.js', description: 'SSR/SSG starter', stack: ['Next.js'] },
-      { id: 'nestjs-boilerplate', name: 'NestJS', description: 'API boilerplate', stack: ['NestJS'] },
-      {
-        id: 'turborepo-boilerplate',
-        name: 'Turborepo',
-        description: 'Monorepo boilerplate',
-        stack: ['Turborepo', 'pnpm'],
-      },
-      {
-        id: 'nextjs-saas-ai-starter',
-        name: 'SaaS AI',
-        description: 'Next.js SaaS + AI starter',
-        stack: ['Next.js', 'AI'],
-      },
-      { id: 'astro-starter', name: 'Astro', description: 'Content-first sites', stack: ['Astro'] },
-      { id: 'hono-starter', name: 'Hono', description: 'Edge-ready API', stack: ['Hono'] },
-      { id: 'remix-starter', name: 'Remix', description: 'Full-stack Remix', stack: ['Remix'] },
-    ],
-    addons: [
-      { id: 'tailwind', name: 'Tailwind', description: 'Utility CSS', category: 'styling' },
-      { id: 'drizzle', name: 'Drizzle ORM', description: 'Type-safe ORM', category: 'data' },
-      { id: 'trpc', name: 'tRPC', description: 'End-to-end typesafe API', category: 'tooling' },
-      { id: 'docker', name: 'Docker', description: 'Container deploy', category: 'deploy' },
-    ],
+    templates: familyCatalogs.node.templates,
+    addons: familyCatalogs.node.addons,
   },
   {
     id: 'python',
@@ -110,36 +96,8 @@ export const variants: CreateAwesomeVariant[] = [
     install: 'uvx create-awesome-python-app@latest my-app',
     href: 'https://create-awesome-python-app.vercel.app',
     repo: 'Create-Python-App/create-python-app',
-    templates: [
-      {
-        id: 'fastapi-starter',
-        name: 'FastAPI',
-        description: 'Async API with Pydantic',
-        stack: ['FastAPI', 'Pydantic'],
-        featured: true,
-      },
-      { id: 'django-api', name: 'Django API', description: 'Django API starter', stack: ['Django'] },
-      { id: 'cli-starter', name: 'CLI', description: 'Typer-style CLI', stack: ['CLI'] },
-      { id: 'celery-worker', name: 'Celery Worker', description: 'Task queue worker', stack: ['Celery'] },
-      {
-        id: 'uv-workspace-starter',
-        name: 'uv workspace',
-        description: 'uv monorepo workspace',
-        stack: ['uv'],
-      },
-      {
-        id: 'mlops-sklearn-starter',
-        name: 'MLOps sklearn',
-        description: 'sklearn MLOps starter',
-        stack: ['sklearn'],
-      },
-    ],
-    addons: [
-      { id: 'sqlalchemy', name: 'SQLAlchemy', description: 'ORM', category: 'data' },
-      { id: 'alembic', name: 'Alembic', description: 'Migrations', category: 'data' },
-      { id: 'ruff', name: 'Ruff', description: 'Linter/formatter', category: 'tooling' },
-      { id: 'docker', name: 'Docker', description: 'Container deploy', category: 'deploy' },
-    ],
+    templates: familyCatalogs.python.templates,
+    addons: familyCatalogs.python.addons,
   },
   {
     id: 'v',
@@ -150,31 +108,11 @@ export const variants: CreateAwesomeVariant[] = [
     accent: '#6b4a9c',
     accentLight: '#a78bfa',
     bg: '#F5F3FF',
-    install: 'curl -fsSL https://create-vlang-app.vercel.app/install.sh | sh',
-    href: 'https://create-vlang-app.vercel.app',
+    install: 'curl -fsSL https://create-awesome-vlang-app.vercel.app/install.sh | sh',
+    href: 'https://create-awesome-vlang-app.vercel.app',
     repo: 'Create-Vlang-App/create-vlang-app',
-    templates: [
-      { id: 'web-server', name: 'Web server', description: 'HTTP server starter', stack: ['V'], featured: true },
-      { id: 'cli-app', name: 'CLI app', description: 'Command-line app', stack: ['flag'] },
-      { id: 'library-starter', name: 'Library', description: 'Reusable module', stack: ['v.mod'] },
-      { id: 'systems-app', name: 'Systems', description: 'Systems-oriented app', stack: ['V'] },
-      { id: 'vsl-starter', name: 'VSL starter', description: 'V Scientific Library', stack: ['VSL'] },
-      { id: 'vtl-starter', name: 'VTL starter', description: 'V Tensor Library', stack: ['VTL'] },
-      { id: 'rxv-starter', name: 'RxV starter', description: 'ReactiveX for V', stack: ['RxV'] },
-    ],
-    addons: [
-      { id: 'github-setup', name: 'GitHub setup', description: 'CI + repo bootstrap', category: 'tooling' },
-      { id: 'development-container', name: 'Dev container', description: 'Devcontainer profile', category: 'tooling' },
-      { id: 'v-docker', name: 'Docker', description: 'Container image', category: 'deploy' },
-      { id: 'v-fmt-vet', name: 'fmt + vet', description: 'v fmt / v vet hooks', category: 'tooling' },
-      { id: 'v-sqlite', name: 'SQLite', description: 'SQLite persistence', category: 'data' },
-      { id: 'v-postgres', name: 'Postgres', description: 'Postgres persistence', category: 'data' },
-      { id: 'vtl-nn-cpu', name: 'VTL NN CPU', description: 'Tensor NN on CPU', category: 'tooling' },
-      { id: 'vtl-vsl-bridge', name: 'VTL↔VSL bridge', description: 'Compose tensors with VSL LA', category: 'tooling' },
-      { id: 'vsl-classical-ml', name: 'VSL classical ML', description: 'Classical ML helpers', category: 'tooling' },
-      { id: 'vsl-plotting', name: 'VSL plotting', description: 'Plotting helpers', category: 'tooling' },
-      { id: 'rxv-operators', name: 'RxV operators', description: 'Extra operators', category: 'tooling' },
-    ],
+    templates: familyCatalogs.v.templates,
+    addons: familyCatalogs.v.addons,
   },
 ];
 
@@ -184,16 +122,26 @@ export const compositionExamples: CompositionExample[] = [
     title: 'Node SaaS AI',
     variant: 'node',
     template: 'nextjs-saas-ai-starter',
-    addons: ['tailwind', 'drizzle'],
-    command: 'npm create awesome-node-app@latest my-app -- --template nextjs-saas-ai-starter',
+    addons: ['nextjs-tailwindcss', 'nextjs-drizzle-postgres'],
+    command: buildCreateAwesomeCommand({
+      family: 'node',
+      projectName: 'my-app',
+      template: 'nextjs-saas-ai-starter',
+      addons: ['nextjs-tailwindcss', 'nextjs-drizzle-postgres'],
+    }),
   },
   {
     id: 'python-api',
     title: 'Python API',
     variant: 'python',
     template: 'fastapi-starter',
-    addons: ['sqlalchemy', 'alembic', 'ruff'],
-    command: 'uvx create-awesome-python-app@latest my-api --template fastapi-starter',
+    addons: ['github-setup', 'fastapi-sqlalchemy', 'pre-commit'],
+    command: buildCreateAwesomeCommand({
+      family: 'python',
+      projectName: 'my-api',
+      template: 'fastapi-starter',
+      addons: ['github-setup', 'fastapi-sqlalchemy', 'pre-commit'],
+    }),
   },
   {
     id: 'v-web',
@@ -201,7 +149,12 @@ export const compositionExamples: CompositionExample[] = [
     variant: 'v',
     template: 'web-server',
     addons: ['v-sqlite', 'v-docker'],
-    command: 'create-vlang-app my-vapp --template web-server --addons v-sqlite,v-docker',
+    command: buildCreateAwesomeCommand({
+      family: 'v',
+      projectName: 'my-vapp',
+      template: 'web-server',
+      addons: ['v-sqlite', 'v-docker'],
+    }),
   },
 ];
 
@@ -227,8 +180,24 @@ export const contributionSteps: ContributionStep[] = [
 ];
 
 export const comparisonRows: ComparisonRow[] = [
-  { feature: 'Install', node: 'npm create', python: 'uvx / pipx', v: 'release binary / AUR' },
-  { feature: 'Templates', node: '10', python: '6', v: '7 (beta)' },
-  { feature: 'Addons', node: '53 extensions', python: '18', v: '11' },
+  { feature: 'Install', node: 'npm create', python: 'uvx / pipx', v: 'release binary / AUR / brew' },
+  {
+    feature: 'Templates',
+    node: String(catalogTotals.node.templates),
+    python: String(catalogTotals.python.templates),
+    v: `${catalogTotals.v.templates} (beta)`,
+  },
+  {
+    feature: 'Addons',
+    node: `${catalogTotals.node.addons} extensions`,
+    python: String(catalogTotals.python.addons),
+    v: String(catalogTotals.v.addons),
+  },
   { feature: 'Status', node: 'stable', python: 'stable', v: 'beta' },
+  {
+    feature: 'Catalog source',
+    node: 'cna-templates',
+    python: 'cpa-templates',
+    v: 'cva-templates',
+  },
 ];

@@ -1,24 +1,37 @@
 ---
 /**
- * Hero — Create Awesome family
+ * Hero — Create Awesome family (project factory)
  */
-import { familyIntro } from '../data/index.js';
+import { catalogTotals, familyIntro } from '../data/index.js';
 ---
 
 <section class="ca-hero" aria-labelledby="ca-hero-title" data-testid="ca-hero">
   <div class="ca-hero__copy">
-    <p class="ca-hero__eyebrow">Epic J · Create Awesome · family hub</p>
+    <p class="ca-hero__eyebrow">Create Awesome · project factory</p>
     <h1 id="ca-hero-title" class="ca-hero__title">{familyIntro.title}</h1>
     <p class="ca-hero__lead">{familyIntro.lead}</p>
     <p class="ca-hero__principle"><em>{familyIntro.principle}</em></p>
+    <p class="ca-hero__totals">
+      Sourced catalogs: Node {catalogTotals.node.templates}+{catalogTotals.node.addons} · Python{' '}
+      {catalogTotals.python.templates}+{catalogTotals.python.addons} · V {catalogTotals.v.templates}+{
+        catalogTotals.v.addons
+      }
+    </p>
   </div>
   <div class="ca-hero__visual" aria-hidden="true">
-    <div class="ca-hero__stack">
-      <span class="ca-hero__chip ca-hero__chip--amber">template</span>
-      <span class="ca-hero__plus">+</span>
-      <span class="ca-hero__chip ca-hero__chip--teal">addons</span>
-      <span class="ca-hero__arrow">→</span>
-      <span class="ca-hero__chip ca-hero__chip--ink">app</span>
+    <div class="ca-factory">
+      <div class="ca-factory__rail">
+        <span class="ca-factory__module ca-factory__module--node">NODE</span>
+        <span class="ca-factory__module ca-factory__module--python">PYTHON</span>
+        <span class="ca-factory__module ca-factory__module--v">V</span>
+      </div>
+      <div class="ca-factory__flow">
+        <span class="ca-factory__chip">template</span>
+        <span class="ca-factory__op">+</span>
+        <span class="ca-factory__chip ca-factory__chip--cyan">addons</span>
+        <span class="ca-factory__op">→</span>
+        <span class="ca-factory__chip ca-factory__chip--out">app</span>
+      </div>
     </div>
   </div>
 </section>
@@ -29,10 +42,21 @@ import { familyIntro } from '../data/index.js';
     gap: var(--space-6);
     padding: var(--space-8) 0;
     border-bottom: 1px solid var(--color-border);
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 90% 10%,
+        color-mix(in srgb, var(--nest-sunset-orange) 14%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 10% 80%,
+        color-mix(in srgb, var(--nest-cyan) 10%, transparent),
+        transparent 50%
+      );
   }
   @media (min-width: 900px) {
     .ca-hero {
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
     }
   }
@@ -57,48 +81,124 @@ import { familyIntro } from '../data/index.js';
   .ca-hero__principle {
     font-size: 0.95rem;
     color: var(--color-text-muted);
+    margin: 0 0 var(--space-3);
+  }
+  .ca-hero__totals {
     margin: 0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--nest-cyan);
   }
   .ca-hero__visual {
     display: grid;
     place-items: center;
   }
-  .ca-hero__stack {
+  .ca-factory {
+    width: min(100%, 22rem);
+    display: grid;
+    gap: 0.85rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+  .ca-factory__rail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.45rem;
+  }
+  .ca-factory__module {
+    display: grid;
+    place-items: center;
+    min-block-size: 2.6rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    border: 1px solid var(--color-border);
+    clip-path: var(--clip-corner-sm);
+  }
+  .ca-factory__module--node {
+    color: var(--nest-sunset-orange);
+    border-color: color-mix(in srgb, var(--nest-sunset-orange) 45%, transparent);
+    background: color-mix(in srgb, var(--nest-sunset-orange) 12%, transparent);
+  }
+  .ca-factory__module--python {
+    color: var(--nest-cyan);
+    border-color: color-mix(in srgb, var(--nest-cyan) 45%, transparent);
+    background: color-mix(in srgb, var(--nest-cyan) 12%, transparent);
+  }
+  .ca-factory__module--v {
+    color: var(--nest-violet);
+    border-color: color-mix(in srgb, var(--nest-violet) 45%, transparent);
+    background: color-mix(in srgb, var(--nest-violet) 12%, transparent);
+  }
+  .ca-factory__flow {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    flex-wrap: wrap;
     justify-content: center;
-    padding: var(--space-4);
-    border: 1px dashed var(--color-border);
-    border-radius: 12px;
-    background: var(--color-surface);
+    gap: 0.4rem;
+    flex-wrap: wrap;
   }
-  .ca-hero__chip {
-    padding: 0.35rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
+  .ca-factory__chip {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
     font-weight: 600;
     border: 1px solid var(--color-border);
-  }
-  .ca-hero__chip--amber {
-    background: color-mix(in srgb, var(--nest-sunset-orange) 16%, var(--nest-midnight-900));
-    border-color: color-mix(in srgb, var(--nest-sunset-orange) 45%, transparent);
+    clip-path: var(--clip-corner-sm);
+    background: color-mix(in srgb, var(--nest-sunset-orange) 14%, var(--nest-midnight-900));
     color: var(--nest-sunset-orange);
   }
-  .ca-hero__chip--teal {
+  .ca-factory__chip--cyan {
     background: color-mix(in srgb, var(--nest-cyan) 14%, var(--nest-midnight-900));
     border-color: color-mix(in srgb, var(--nest-cyan) 45%, transparent);
     color: var(--nest-cyan);
   }
-  .ca-hero__chip--ink {
+  .ca-factory__chip--out {
     background: var(--world-accent);
     color: var(--color-text-on-accent);
     border-color: var(--world-accent-strong);
   }
-  .ca-hero__plus,
-  .ca-hero__arrow {
+  .ca-factory__op {
     font-weight: 700;
     color: var(--color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ca-factory__module--node {
+      animation: ca-module-pulse 4.8s ease-in-out infinite;
+    }
+    .ca-factory__module--python {
+      animation: ca-module-pulse 4.8s ease-in-out 0.4s infinite;
+    }
+    .ca-factory__module--v {
+      animation: ca-module-pulse 4.8s ease-in-out 0.8s infinite;
+    }
+    .ca-factory__chip--out {
+      animation: ca-out-glow 3.6s ease-in-out infinite;
+    }
+  }
+
+  @keyframes ca-module-pulse {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.88;
+    }
+    50% {
+      transform: translateY(-2px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes ca-out-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 transparent;
+    }
+    50% {
+      box-shadow: 0 0 18px color-mix(in srgb, var(--nest-sunset-orange) 35%, transparent);
+    }
   }
 </style>

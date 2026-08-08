@@ -1,7 +1,7 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getCollection } from 'astro:content';
-import { getRouteMeta } from '@/data/routes';
+import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
 import '@/styles/blog.css';
 
 const meta = getRouteMeta('/blog')!;
@@ -9,15 +9,52 @@ const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const hasPosts = posts.length > 0;
+
+const collectionJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: meta.title,
+  description: meta.description,
+  url: getCanonicalUrl('/blog'),
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Digital Nest',
+    url: getCanonicalUrl('/'),
+  },
+  ...(hasPosts
+    ? {
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: posts.map((post, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: getCanonicalUrl(`/blog/${post.id}/`),
+            name: post.data.title,
+          })),
+        },
+      }
+    : {}),
+};
 ---
 
-<SectionLayout currentPath="/blog" world="Blog" title={meta.title} description={meta.description} theme="blog">
+<SectionLayout
+  currentPath="/blog"
+  world="Blog"
+  title={meta.title}
+  description={meta.description}
+  theme="blog"
+  jsonLd={collectionJsonLd}
+>
   <div class="blog-page">
     <div class="blog-page__inner">
-      <p class="blog-page__nav"><a href="/">← Digital Nest</a></p>
+      <p class="blog-page__nav">
+        <a href="/">← Digital Nest</a>
+        <span class="blog-page__nav-sep" aria-hidden="true">·</span>
+        <a href="/rss.xml">RSS</a>
+      </p>
       <h1 class="blog-page__title">Blog — field notes</h1>
       <p class="blog-page__lead">
-        Calm editorial journal. Readable body copy, subdued neon, no looping environment behind the writing desk.
+        Notes on developer tooling, systems, and open source — written for reading, not spectacle.
       </p>
 
       {
@@ -25,7 +62,7 @@ const hasPosts = posts.length > 0;
           <ul class="blog-list">
             {posts.map((post) => (
               <li class="blog-list__item">
-                <a class="blog-list__link" href={`/blog/${post.slug}/`}>
+                <a class="blog-list__link" href={`/blog/${post.id}/`}>
                   <h2 class="blog-list__title">{post.data.title}</h2>
                   <p class="blog-list__meta">
                     <time datetime={post.data.pubDate.toISOString()}>
@@ -42,10 +79,15 @@ const hasPosts = posts.length > 0;
             ))}
           </ul>
         ) : (
-          <div class="blog-empty">
+          <div class="blog-empty" role="status">
             <h2>The writing desk is ready.</h2>
             <p>The first field notes are still being prepared.</p>
             <p>No fabricated thought-leadership posts. Empty state is intentional.</p>
+            <p class="blog-empty__elsewhere">
+              Meanwhile: explore the
+              <a href="/projects">projects ledger</a>,<a href="/open-source">open-source evidence</a>, or the
+              <a href="/community">community workshop</a>.
+            </p>
           </div>
         )
       }

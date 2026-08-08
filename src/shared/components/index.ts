@@ -1,6 +1,7 @@
 export { default as Button } from './Button.astro';
 export { default as Link } from './Link.astro';
 export { default as DigitalNestMark } from './DigitalNestMark.astro';
+export { default as JsonLd } from './JsonLd.astro';
 export { default as MobileNav } from './MobileNav.astro';
 export { default as SiteHeader } from './SiteHeader.astro';
 export { default as SiteFooter } from './SiteFooter.astro';

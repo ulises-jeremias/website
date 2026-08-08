@@ -11,16 +11,20 @@
     }
   ],
   "ignorePaths": [
-    "node_modules/**",
-    ".astro/**",
-    "pnpm-lock.yaml",
     "*.lock",
-    "dist/**",
+    ".astro/**",
+    ".git/**",
     "build/**",
     "coverage/**",
-    ".git/**",
+    "dist/**",
     "docs/design/art-directions/**/*.html",
-    "docs/design/baselines/**"
+    "docs/design/baselines/**",
+    "docs/design/final-production/audit/**",
+    "docs/design/final-production/reference-comparison/**",
+    "node_modules/**",
+    "pnpm-lock.yaml",
+    "src/data/generated/**",
+    "src/features/agent-toolkit/data/inventory.snapshot.json"
   ],
   "words": [
     "Astro",

@@ -1,0 +1,146 @@
+---
+import { evidenceItems, getEvidenceNotes } from '@/data/open-source/index.js';
+
+const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
+---
+
+<section class="oss-ledger" aria-labelledby="oss-ledger-title" data-testid="oss-ledger">
+  <h2 id="oss-ledger-title">Evidence ledger</h2>
+  <p class="oss-ledger__lede">
+    Primary evidence is repository roles and merged authored work. Pipeline: committed Zod cache (`pnpm data:refresh`) →
+    editorial overrides → static render. Volatile metrics stay empty unless a refresh stamps them.
+  </p>
+
+  <div class="oss-ledger__table" role="table" aria-label="Contribution evidence">
+    <div class="oss-ledger__row oss-ledger__row--head" role="row">
+      <span role="columnheader">Kind</span>
+      <span role="columnheader">Subject</span>
+      <span role="columnheader">Evidence</span>
+      <span role="columnheader">Provenance</span>
+    </div>
+    {
+      evidenceItems.map((row) => (
+        <a class="oss-ledger__row" role="row" href={row.href} target="_blank" rel="noreferrer" data-testid="oss-row">
+          <span role="cell" class="oss-ledger__kind">
+            {row.kind}
+          </span>
+          <span role="cell">{row.subject}</span>
+          <span role="cell">{row.summary ?? row.evidence}</span>
+          <span role="cell" class="oss-ledger__prov">
+            {row.provenance}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    notes.length > 0 && (
+      <ul class="oss-ledger__notes">
+        {notes.map((note) => (
+          <li>{note}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  <p class="oss-ledger__foot">
+    No vanity metrics. Counts omitted unless refreshable and sourced with <code>verifiedAt</code>.
+  </p>
+</section>
+
+<style>
+  .oss-ledger {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: 1rem 2.75rem;
+  }
+
+  .oss-ledger h2 {
+    margin: 0 0 0.65rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .oss-ledger__lede {
+    margin: 0 0 1rem;
+    max-inline-size: 70ch;
+    color: var(--color-text-muted);
+  }
+
+  .oss-ledger__table {
+    display: grid;
+    border: 1px solid var(--color-border);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .oss-ledger__row {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1.3fr) minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    border-block-end: 1px solid var(--color-border);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .oss-ledger__row:last-child {
+    border-block-end: 0;
+  }
+
+  .oss-ledger__row--head {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    background: color-mix(in srgb, var(--nest-violet) 8%, transparent);
+  }
+
+  .oss-ledger__row:not(.oss-ledger__row--head):hover,
+  .oss-ledger__row:not(.oss-ledger__row--head):focus-visible {
+    background: color-mix(in srgb, var(--nest-cyan) 8%, transparent);
+    outline: none;
+  }
+
+  .oss-ledger__kind {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .oss-ledger__prov {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    color: var(--color-text-faint);
+    word-break: break-word;
+  }
+
+  .oss-ledger__notes {
+    margin: 1rem 0 0;
+    padding-inline-start: 1.1rem;
+    color: var(--color-text-faint);
+    font-size: 0.82rem;
+  }
+
+  .oss-ledger__foot {
+    margin: 1rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.82rem;
+  }
+
+  @media (width < 820px) {
+    .oss-ledger__row--head {
+      display: none;
+    }
+
+    .oss-ledger__row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

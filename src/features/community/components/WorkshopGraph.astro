@@ -1,0 +1,136 @@
+---
+/**
+ * Ecosystem graph — workshop connecting Digital Nest worlds.
+ * Decorative SVG; relationships are explained in adjacent text.
+ */
+---
+
+<section class="cm-graph" aria-labelledby="cm-graph-title" data-testid="workshop-graph">
+  <header class="cm-graph__header">
+    <p class="cm-graph__eyebrow">Ecosystem map</p>
+    <h2 id="cm-graph-title" class="cm-graph__title">Stations around one bench</h2>
+    <p class="cm-graph__lead">
+      Projects overlap on purpose. HorneroConfig is optional desktop. Workstation provisions the machine. Toolkit
+      distributes capabilities. Harness is the persistent runtime/workspace layer. Create Awesome and V sit nearby —
+      incubating work stays on the horizon as blueprints.
+    </p>
+  </header>
+
+  <figure class="cm-graph__figure">
+    <svg class="cm-graph__svg" viewBox="0 0 720 360" role="img" aria-labelledby="cm-graph-svg-title cm-graph-svg-desc">
+      <title id="cm-graph-svg-title">Digital Nest community ecosystem graph</title>
+      <desc id="cm-graph-svg-desc">
+        Central workshop connected to HorneroConfig, Agentic Workstation, Agent Toolkit, Agentic Harness, Create
+        Awesome, V ecosystem, and dim incubating stations.
+      </desc>
+      <defs>
+        <linearGradient id="cm-line" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="var(--nest-cyan, #22d3ee)" stop-opacity="0.85"></stop>
+          <stop offset="100%" stop-color="var(--nest-magenta, #ff2d95)" stop-opacity="0.7"></stop>
+        </linearGradient>
+      </defs>
+      <g class="cm-graph__routes" fill="none" stroke="url(#cm-line)" stroke-width="1.25" stroke-dasharray="5 7">
+        <path d="M360 175 L180 90"></path>
+        <path d="M360 175 L280 70"></path>
+        <path d="M360 175 L440 70"></path>
+        <path d="M360 175 L540 95"></path>
+        <path d="M360 175 L150 230"></path>
+        <path d="M360 175 L250 290"></path>
+        <path d="M360 175 L470 290"></path>
+        <path d="M360 175 L580 240"></path>
+        <path d="M440 70 L540 95" opacity="0.45"></path>
+        <path d="M280 70 L180 90" opacity="0.45"></path>
+        <path class="cm-graph__route--dim" d="M360 175 L640 160" stroke-dasharray="2 6" opacity="0.35"></path>
+        <path class="cm-graph__route--dim" d="M360 175 L620 300" stroke-dasharray="2 6" opacity="0.35"></path>
+      </g>
+      <g class="cm-graph__stations" font-family="var(--font-display), sans-serif" text-anchor="middle">
+        <g transform="translate(360 175)">
+          <rect x="-58" y="-22" width="116" height="44" rx="2" class="cm-graph__hub"></rect>
+          <text y="5" class="cm-graph__hub-label">WORKSHOP</text>
+        </g>
+        <g transform="translate(180 90)"><text class="cm-graph__label">HorneroConfig</text></g>
+        <g transform="translate(280 70)"><text class="cm-graph__label">Workstation</text></g>
+        <g transform="translate(440 70)"><text class="cm-graph__label">Agent Toolkit</text></g>
+        <g transform="translate(540 95)"><text class="cm-graph__label">Harness</text></g>
+        <g transform="translate(150 230)"><text class="cm-graph__label">Create Awesome</text></g>
+        <g transform="translate(250 290)"><text class="cm-graph__label">Node · Python · V</text></g>
+        <g transform="translate(470 290)"><text class="cm-graph__label">V ecosystem</text></g>
+        <g transform="translate(580 240)"><text class="cm-graph__label">Open Source</text></g>
+        <g transform="translate(640 160)"><text class="cm-graph__label cm-graph__label--dim">Skypiea-Home</text></g>
+        <g transform="translate(620 300)"><text class="cm-graph__label cm-graph__label--dim">HorneroOS · …</text></g>
+      </g>
+    </svg>
+    <figcaption class="cm-graph__caption">
+      Illuminated stations are public today. Dashed distant labels are incubating — no fabricated repos.
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  .cm-graph {
+    padding: 1.75rem 0;
+  }
+  .cm-graph__eyebrow {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+  .cm-graph__title {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 800;
+    color: var(--color-text);
+  }
+  .cm-graph__lead {
+    margin: 0.55rem 0 0;
+    max-width: 70ch;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .cm-graph__figure {
+    margin: 1.25rem 0 0;
+  }
+  .cm-graph__svg {
+    display: block;
+    width: 100%;
+    max-width: 46rem;
+    height: auto;
+    margin-inline: auto;
+  }
+  .cm-graph__hub {
+    fill: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    stroke: color-mix(in srgb, var(--nest-cyan) 70%, transparent);
+    stroke-width: 1.5;
+  }
+  .cm-graph__hub-label {
+    fill: var(--nest-cyan);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+  .cm-graph__label {
+    fill: var(--nest-pink, #ff6bb5);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .cm-graph__label--dim {
+    fill: color-mix(in srgb, var(--color-text-faint) 90%, transparent);
+    font-weight: 600;
+  }
+  .cm-graph__caption {
+    margin: 0.65rem 0 0;
+    text-align: center;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cm-graph__routes path {
+      animation: none;
+    }
+  }
+</style>

@@ -2,89 +2,66 @@
 
 ---
 
-<section class="smart-colors" aria-labelledby="smart-colors-title">
-  <h2 id="smart-colors-title">Smart Colors — wallpaper → palette → apps</h2>
-  <div class="flow" role="img" aria-label="Smart Colors flow: wallpaper to apps">
-    <div class="flow-step">
-      <div class="flow-box">Wallpaper</div>
-      <span class="flow-arrow" aria-hidden="true">↓</span>
-      <div class="flow-box">Color extraction</div>
-      <span class="flow-arrow" aria-hidden="true">↓</span>
-      <div class="flow-box">Semantic palette</div>
-      <span class="flow-arrow" aria-hidden="true">↓</span>
-      <div class="flow-box">Quickshell / Hyprland / terminal / apps</div>
+<section class="smart-colors-stub" aria-labelledby="smart-colors-stub-title">
+  <h2 id="smart-colors-stub-title">Smart Colors — wallpaper → palette → apps</h2>
+  <div class="smart-colors-stub__flow" role="img" aria-label="Smart Colors flow: wallpaper to apps">
+    <div class="smart-colors-stub__step">
+      <div class="smart-colors-stub__box">Wallpaper</div>
+      <span class="smart-colors-stub__arrow" aria-hidden="true">↓</span>
+      <div class="smart-colors-stub__box">Material extraction</div>
+      <span class="smart-colors-stub__arrow" aria-hidden="true">↓</span>
+      <div class="smart-colors-stub__box">scheme.json cache</div>
+      <span class="smart-colors-stub__arrow" aria-hidden="true">↓</span>
+      <div class="smart-colors-stub__box">Quickshell / Hyprland / Kitty / GTK</div>
     </div>
-    <p class="flow-caption">
-      Colors are extracted from the wallpaper and automatically applied to Quickshell, Hyprland, terminal and apps via
-      Material Design 3. Respects <code>prefers-reduced-motion</code> and has a static fallback.
+    <p class="smart-colors-stub__caption">
+      Maintained path: dots-wallpaper-set → pywal + generate-m3-colors.py → scheme.json → Colours service and desktop
+      consumers. Prefer <code>SmartColorsAnimation</code> on <code>/dotfiles</code>.
     </p>
-    <div class="flow-controls">
-      <button type="button" class="flow-btn" aria-label="Pause animation">⏸ Pause</button>
-      <button type="button" class="flow-btn" aria-label="Play animation">▶ Play</button>
-    </div>
   </div>
-  <details>
-    <summary>Text description of the flow</summary>
-    <ol>
-      <li><strong>Wallpaper:</strong> image selected by the user</li>
-      <li><strong>Extraction:</strong> intelligent palette analysis</li>
-      <li><strong>Semantic palette:</strong> error, success, warning, info with AA contrast</li>
-      <li><strong>Application:</strong> Quickshell, Hyprland, terminal, apps</li>
-    </ol>
-  </details>
 </section>
 <style>
-  .smart-colors {
-    margin: var(--space-8) 0;
+  .smart-colors-stub {
+    margin: 2rem 0;
   }
-  .flow {
+  .smart-colors-stub__flow {
     display: grid;
     place-items: center;
-    gap: var(--space-4);
-    padding: var(--space-6);
-    border: 1px solid var(--world-border-accent);
-    background: var(--world-surface-tint);
-    clip-path: var(--clip-corner-md);
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(255, 176, 202, 0.18);
+    background: rgba(45, 32, 39, 0.55);
+    border-radius: 1rem;
   }
-  .flow-step {
+  .smart-colors-stub__step {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
   }
-  .flow-box {
-    background: var(--color-surface-elevated);
-    border: 1px solid var(--world-border-accent);
-    color: var(--color-text);
-    padding: 0.6rem 1rem;
-    clip-path: var(--clip-corner-sm);
-    font-weight: 600;
-    min-width: 200px;
+  .smart-colors-stub__box {
+    padding: 0.6rem 0.9rem;
+    border: 1px solid rgba(255, 176, 202, 0.22);
+    background: #191114;
+    color: #fbe7ec;
+    border-radius: 0.55rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+  .smart-colors-stub__arrow {
+    color: #ffb0ca;
+    font-weight: 800;
+  }
+  .smart-colors-stub__caption {
+    max-width: 60ch;
     text-align: center;
-  }
-  .flow-arrow {
-    font-size: 1.2rem;
-    color: var(--world-accent);
-  }
-  .flow-caption {
+    color: #d5c2c6;
+    margin: 0;
     font-size: 0.9rem;
-    color: var(--color-text-muted);
-    max-width: 50ch;
-    text-align: center;
+    line-height: 1.55;
   }
-  .flow-controls {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .flow-btn {
-    padding: 0.4rem 0.8rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    background: var(--color-surface-elevated);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .flow-arrow {
-      animation: none;
-    }
+  .smart-colors-stub__caption code {
+    color: #ffb0ca;
   }
 </style>

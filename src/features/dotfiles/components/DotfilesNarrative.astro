@@ -1,5 +1,5 @@
 ---
-import { narrativeSections, dotfilesMeta } from '../data/index.js';
+import { narrativeSections, dotfilesMeta, verifiedFacts } from '../data/index.js';
 ---
 
 <section class="dotfiles-narrative" aria-labelledby="narrative-title">
@@ -26,13 +26,13 @@ import { narrativeSections, dotfilesMeta } from '../data/index.js';
     }
   </div>
 
-  <div class="dotfiles-narrative__facts" role="list" aria-label="Key facts">
+  <div class="dotfiles-narrative__facts" role="list" aria-label="Key facts verified against upstream HEAD">
     <div class="dotfiles-narrative__fact" role="listitem">
-      <span class="dotfiles-narrative__fact-number">22</span>
-      <span class="dotfiles-narrative__fact-label">themed rices</span>
+      <span class="dotfiles-narrative__fact-number">{verifiedFacts.themeCount}</span>
+      <span class="dotfiles-narrative__fact-label">appearance themes</span>
     </div>
     <div class="dotfiles-narrative__fact" role="listitem">
-      <span class="dotfiles-narrative__fact-number">~46</span>
+      <span class="dotfiles-narrative__fact-number">{verifiedFacts.dotsScriptCount}</span>
       <span class="dotfiles-narrative__fact-label">dots-* scripts</span>
     </div>
     <div class="dotfiles-narrative__fact" role="listitem">

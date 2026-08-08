@@ -1,5 +1,5 @@
 ---
-import { vtlModules } from '../data/index.js';
+import { vtlMaturity, vtlModules } from '../data/index.js';
 ---
 
 <section class="vtl" aria-labelledby="vtl-title">
@@ -8,8 +8,8 @@ import { vtlModules } from '../data/index.js';
     <h2 id="vtl-title" class="vtl__title">Tensors that remember their graph</h2>
     <p class="vtl__desc">
       Every <code>Tensor[T]</code> is a view. Wrap it in a <code>Variable</code> via <code>Context</code> and each op records
-      a gate. Call <code>backprop()</code> and gradients flow backward — scalars first, then generalized. Hover or focus the
-      graph to see forward (solid) vs backward (dashed) edges.
+      a gate. Call <code>backprop()</code> and gradients flow backward — scalars first, then generalized. CPU training is
+      the default path; CUDA and Vulkan remain experimental opt-in.
     </p>
   </header>
 
@@ -311,6 +311,15 @@ import { vtlModules } from '../data/index.js';
           vtlModules.map((m) => (
             <span class="vtl__chip" role="listitem">
               <strong>{m.title}</strong> {m.desc}
+            </span>
+          ))
+        }
+      </div>
+      <div class="vtl__legend" role="list" aria-label="VTL compute maturity">
+        {
+          vtlMaturity.map((m) => (
+            <span class="vtl__chip" role="listitem">
+              <strong>{m.label}</strong> <em>{m.maturity}</em> — {m.note}
             </span>
           ))
         }

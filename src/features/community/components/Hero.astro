@@ -1,186 +1,194 @@
 ---
 /**
- * Community Hero — workshop identity (K-02)
+ * Community hero — umbrella Digital Nest workshop (not Create Awesome–centric).
  */
+import { communityMeta } from '../data/index.js';
 ---
 
-<section class="community-hero" aria-labelledby="community-hero-title" data-testid="community-hero">
-  <div class="community-hero__inner">
-    <div class="community-hero__copy">
-      <p class="community-hero__eyebrow">Epic K · Community · shared workshop</p>
-      <h1 id="community-hero-title" class="community-hero__title">
-        Community — <span class="community-hero__accent">shared workshop</span>
-      </h1>
-      <p class="community-hero__lead">
-        The shared workshop connected to every project world. A bench for drafts, reviews, and small PRs that become
-        documentation — not a broadcast feed.
-      </p>
-      <div class="community-hero__meta" role="list" aria-label="Community facts">
-        <span class="community-hero__meta-item" role="listitem"
-          ><span aria-hidden="true">🛠️</span> Workshop tone — evidence over claims</span
-        ><span class="community-hero__meta-item" role="listitem"
-          ><span aria-hidden="true">📋</span> Typed at the edge — Zod, Astro check, tests</span
-        ><span class="community-hero__meta-item" role="listitem"
-          ><span aria-hidden="true">🔗</span> Linked provenance — every pattern has a PR</span
-        >
-      </div>
+<section class="cm-hero" aria-labelledby="community-hero-title" data-testid="community-hero">
+  <div class="cm-hero__copy">
+    <p class="cm-hero__eyebrow">Digital Nest · Community</p>
+    <h1 id="community-hero-title" class="cm-hero__title">
+      The shared workshop behind the <span class="cm-hero__accent">Digital Nest</span>
+    </h1>
+    <p class="cm-hero__lead">
+      One Discord for contributors across Personal DX, agentic tooling, Create Awesome, V, and experiments still taking
+      shape. Pick a project, an issue, or a technical area you enjoy — Create Awesome is one family inside the workshop,
+      not the whole workshop.
+    </p>
+    <div class="cm-hero__actions">
+      <a
+        class="cm-hero__cta cm-hero__cta--primary"
+        href={communityMeta.discordInviteUrl}
+        target="_blank"
+        rel="noopener noreferrer">Join the Discord</a
+      >
+      <a class="cm-hero__cta cm-hero__cta--secondary" href="#find-something">Find something to contribute</a>
     </div>
-    <div class="community-hero__visual" aria-hidden="true">
-      <div class="community-hero__card">
-        <div class="community-hero__card-bar">
-          <span class="community-hero__dot"></span><span class="community-hero__dot"></span><span
-            class="community-hero__dot"></span><span class="community-hero__card-title"
-            >workshop board · weekly triage</span
-          >
-        </div>
-        <div class="community-hero__card-body">
-          <div class="community-hero__board">
-            <span class="community-hero__board-chip">good first issue</span><span class="community-hero__board-chip"
-              >documentation</span
-            ><span class="community-hero__board-chip">templates</span><span class="community-hero__board-chip"
-              >V · VSL</span
-            >
-          </div><p class="community-hero__card-text">
-            Pick a labeled issue · reproduce · PR with tests · review → merge.
-          </p>
-        </div>
-      </div>
+    <ul class="cm-hero__signals" aria-label="Workshop signals">
+      <li>One community · many open-source projects</li>
+      <li>Discord for talk · GitHub for the trail</li>
+      <li>Join to learn, discuss, or ship — contribution optional</li>
+    </ul>
+  </div>
+
+  <div class="cm-hero__visual" aria-hidden="true">
+    <div class="cm-hero__plaza">
+      <span class="cm-hero__node cm-hero__node--center">Workshop</span>
+      <span class="cm-hero__node" style="--n:0">DX</span>
+      <span class="cm-hero__node" style="--n:1">Agents</span>
+      <span class="cm-hero__node" style="--n:2">Create</span>
+      <span class="cm-hero__node" style="--n:3">V</span>
+      <span class="cm-hero__node cm-hero__node--dim" style="--n:4">Soon</span>
+      <span class="cm-hero__ring"></span>
     </div>
   </div>
 </section>
+
 <style>
-  .community-hero {
-    padding: clamp(2rem, 5vw, 3rem) 0;
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg);
-  }
-  .community-hero__inner {
-    max-width: 72rem;
-    margin: 0 auto;
-    padding: 0 1rem;
+  .cm-hero {
     display: grid;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
-    grid-template-columns: 1fr;
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--nest-magenta) 28%, transparent);
   }
-  @media (min-width: 860px) {
-    .community-hero__inner {
-      grid-template-columns: 1.15fr 0.85fr;
-      padding: 0 1.5rem;
-      gap: 2rem;
+  @media (width >= 900px) {
+    .cm-hero {
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 2.5rem;
     }
   }
-  .community-hero__eyebrow {
-    display: inline-flex;
-    padding: 0.28rem 0.7rem;
-    border-radius: 999px;
-    background: var(--world-accent-subtle);
-    border: 1px solid var(--color-border);
-    color: var(--world-accent);
-    font-size: 0.78rem;
+  .cm-hero__eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    margin: 0 0 0.85rem;
+    color: var(--nest-pink, var(--world-accent));
   }
-  .community-hero__title {
+  .cm-hero__title {
     margin: 0;
-    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 4.5vw, 2.6rem);
     font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
     color: var(--color-text);
     text-wrap: balance;
   }
-  .community-hero__accent {
-    color: var(--world-accent);
+  .cm-hero__accent {
+    color: var(--nest-magenta, var(--world-accent));
+    text-shadow: 0 0 24px color-mix(in srgb, var(--nest-magenta) 35%, transparent);
   }
-  .community-hero__lead {
-    margin: 0.75rem 0 0;
-    max-width: 60ch;
+  .cm-hero__lead {
+    margin: 0.85rem 0 0;
+    max-width: 62ch;
     color: var(--color-text-muted);
-    font-size: clamp(1rem, 2vw, 1.1rem);
+    font-size: clamp(1rem, 2vw, 1.08rem);
     line-height: 1.6;
   }
-  .community-hero__meta {
+  .cm-hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 0.75rem;
-    margin-top: 1rem;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
   }
-  .community-hero__meta-item {
+  .cm-hero__cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.35rem 0.6rem;
-    border-radius: 999px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    font-size: 0.82rem;
-    font-weight: 600;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 1.1rem;
+    clip-path: var(--clip-corner-sm);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
   }
-  .community-hero__visual {
+  .cm-hero__cta--primary {
+    background: #5865f2;
+    border: 1px solid #5865f2;
+    color: #fff;
+  }
+  .cm-hero__cta--primary:hover {
+    background: #4752c4;
+    border-color: #4752c4;
+  }
+  .cm-hero__cta--secondary {
+    background: color-mix(in srgb, var(--nest-midnight-900) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    color: var(--nest-cyan);
+  }
+  .cm-hero__cta:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .cm-hero__signals {
+    margin: 1.1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.35rem;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+  }
+  .cm-hero__signals li::before {
+    content: '> ';
+    color: var(--nest-cyan);
+  }
+  .cm-hero__visual {
     display: grid;
     place-items: center;
   }
-  .community-hero__card {
-    width: min(100%, 22rem);
-    border-radius: 1rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
+  .cm-hero__plaza {
+    position: relative;
+    inline-size: min(100%, 18rem);
+    aspect-ratio: 1;
   }
-  .community-hero__card-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.65rem 0.85rem;
-    background: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
+  .cm-hero__ring {
+    position: absolute;
+    inset: 18%;
+    border: 1px dashed color-mix(in srgb, var(--nest-cyan) 45%, transparent);
+    border-radius: 50%;
+    opacity: 0.7;
   }
-  .community-hero__dot {
-    width: 0.55rem;
-    height: 0.55rem;
-    border-radius: 999px;
-    background: var(--world-border-accent);
-    display: inline-block;
+  .cm-hero__node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    min-inline-size: 3.4rem;
+    padding: 0.35rem 0.55rem;
+    clip-path: var(--clip-corner-sm);
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 50%, transparent);
+    background: color-mix(in srgb, var(--nest-void, #0b0614) 78%, transparent);
+    color: var(--nest-pink);
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    transform: rotate(calc(var(--n, 0) * 72deg)) translateY(-6.2rem) rotate(calc(var(--n, 0) * -72deg));
   }
-  .community-hero__card-title {
-    margin-left: 0.35rem;
-    font-size: 0.78rem;
-    color: var(--color-text-muted);
+  .cm-hero__node--center {
+    z-index: 2;
+    transform: none;
+    border-color: color-mix(in srgb, var(--nest-cyan) 60%, transparent);
+    color: var(--nest-cyan);
+    box-shadow: 0 0 28px color-mix(in srgb, var(--nest-cyan) 25%, transparent);
   }
-  .community-hero__card-body {
-    padding: 1rem;
-  }
-  .community-hero__board {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  .community-hero__board-chip {
-    padding: 0.25rem 0.55rem;
-    border-radius: 999px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+  .cm-hero__node--dim {
+    opacity: 0.45;
+    border-style: dashed;
     color: var(--color-text-faint);
-    font-size: 0.78rem;
-    font-weight: 600;
-  }
-  .community-hero__card-text {
-    margin: 0.85rem 0 0;
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-    line-height: 1.5;
   }
   @media (prefers-reduced-motion: reduce) {
-    .community-hero {
-      transition: none;
+    .cm-hero__ring {
+      animation: none;
     }
   }
 </style>

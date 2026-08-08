@@ -16,7 +16,7 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 ---
 
 <article class="blog-card">
-  <a href={`/blog/${slug}`} class="blog-card__link">
+  <a href={`/blog/${slug}/`} class="blog-card__link">
     <h2 class="blog-card__title">{title}</h2>
     <p class="blog-card__description">{description}</p>
     <time class="blog-card__date" datetime={pubDate.toISOString()}>
@@ -27,40 +27,53 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 <style>
   .blog-card {
-    border: 1px solid #e5e7eb;
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    transition:
-      border-color 0.2s,
-      box-shadow 0.2s;
-  }
-
-  .blog-card:hover {
-    border-color: #4f46e5;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+    border-block: 1px solid color-mix(in srgb, var(--nest-violet, #a05cff) 28%, transparent);
+    padding: 0;
+    background: transparent;
   }
 
   .blog-card__link {
+    display: block;
     text-decoration: none;
     color: inherit;
-    display: block;
+    min-height: 2.75rem;
+    padding: 1.15rem 0.15rem;
+  }
+
+  .blog-card__link:focus-visible {
+    outline: 2px solid var(--nest-cyan, #1cefff);
+    outline-offset: 3px;
   }
 
   .blog-card__title {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin: 0 0 0.5rem 0;
-    color: #111827;
+    margin: 0 0 0.35rem;
+    color: var(--nest-paper, #f7f5ff);
+  }
+
+  .blog-card__link:hover .blog-card__title,
+  .blog-card__link:focus-visible .blog-card__title {
+    color: var(--nest-cyan, #1cefff);
   }
 
   .blog-card__description {
-    color: #6b7280;
-    margin: 0 0 0.75rem 0;
+    color: var(--nest-text-muted, #b9b2d8);
+    margin: 0 0 0.55rem;
     line-height: 1.6;
   }
 
   .blog-card__date {
-    font-size: 0.875rem;
-    color: #9ca3af;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--nest-text-muted, #b9b2d8);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blog-card__link {
+      transition: none;
+    }
   }
 </style>

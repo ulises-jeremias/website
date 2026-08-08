@@ -6,8 +6,8 @@ interface Props {
   description?: string;
 }
 const {
-  title = 'Agentic Workstation — four-layer DX',
-  description = 'From desktop pixels to runtime memory: a thin, composable ecosystem.',
+  title = 'Agentic Workstation — Personal DX graph',
+  description = 'Optional desktop, thin machine, toolkit uplink, harness runtime — a graph, not a forced ladder.',
 } = Astro.props as Props;
 ---
 
@@ -27,22 +27,22 @@ const {
 
     <p class="ws-hero__lead">{description}</p>
 
-    <p class="ws-hero__flow" aria-label="Ecosystem flow">
+    <p class="ws-hero__flow" aria-label="Ecosystem graph nodes">
       {
         workstationLayers.map((l, i) => (
           <>
             <span class="ws-hero__flow-item" style={`--accent:${l.accent}`}>
               <span class="ws-hero__flow-dot" />
-              {l.mapping}
+              {l.title}
             </span>
-            {i < workstationLayers.length - 1 && <span class="ws-hero__flow-arrow">→</span>}
+            {i < workstationLayers.length - 1 && <span class="ws-hero__flow-arrow">·</span>}
           </>
         ))
       }
     </p>
 
     <div class="ws-hero__actions">
-      <a href="#ecosystem" class="ws-hero__btn ws-hero__btn--primary">Explore 4 layers ↓</a>
+      <a href="#atlas" class="ws-hero__btn ws-hero__btn--primary">Explore stations ↓</a>
       <a href="#provisioning" class="ws-hero__btn ws-hero__btn--ghost">Provisioning &amp; doctor</a>
       <code class="ws-hero__code">chezmoi init --apply ulises-jeremias/agentic-workstation</code>
     </div>

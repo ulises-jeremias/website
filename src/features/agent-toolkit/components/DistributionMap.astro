@@ -1,28 +1,33 @@
 ---
-import { distributionTargets, inventoryCommit } from '../data/index.js';
+import { distributionTargets, inventoryCommit, sourceCatalogLines } from '../data/index.js';
 ---
 
 <section class="dist-map" aria-labelledby="dist-map-title">
   <header class="dist-map__header">
     <p class="dist-map__eyebrow">Source → targets</p>
-    <h2 id="dist-map-title">Compile once. Land in seven native profiles.</h2>
+    <h2 id="dist-map-title">Compile once. Land in {distributionTargets.length} native profiles.</h2>
     <p class="dist-map__lede">
       <code>skills/</code>, <code>agents/</code>, and <code>loops/</code> are the source of truth. Profiles under
       <code>profiles/</code> are compiled views for each assistant — verified at {inventoryCommit}.
     </p>
   </header>
 
-  <div class="dist-map__diagram" role="img" aria-label="Source catalog distributing into seven tool targets">
+  <div
+    class="dist-map__diagram"
+    role="img"
+    aria-label={`Source catalog distributing into ${distributionTargets.length} tool targets`}
+  >
     <div class="dist-map__source">
       <p class="dist-map__label">Source</p>
       <p class="dist-map__source-title">agent-toolkit catalog</p>
       <ul>
-        <li>skills/ · 61</li>
-        <li>agents/ · 16</li>
-        <li>loops/ · 10</li>
-        <li>packs/ · 3</li>
-        <li>plugins/ · 4</li>
-        <li>mcp/ · 6</li>
+        {
+          sourceCatalogLines.map((line) => (
+            <li>
+              {line.label} · {line.count}
+            </li>
+          ))
+        }
       </ul>
     </div>
 

@@ -1,5 +1,5 @@
 ---
-import { swarmRecipes, swarmStages, uiBackends } from '../data/index.js';
+import { sharedRunStateFiles, swarmRecipes, swarmStages, uiBackends } from '../data/index.js';
 
 const defaultRecipe = swarmRecipes[0]!;
 ---
@@ -9,10 +9,27 @@ const defaultRecipe = swarmRecipes[0]!;
     <p class="swarm-story__eyebrow">Swarm story</p>
     <h2 id="swarm-story-title">Request → recipe → roles → worktrees → handoffs → state → governance → artifact</h2>
     <p class="swarm-story__lede">
-      Multi-role orchestration is separate from DevCompanion’s queue. Pick a recipe — the same stage pipeline stays;
-      only the role topology changes. Herdr and tmux are two views of one run state.
+      Multi-role orchestration is separate from DevCompanion’s KEEP queue. Pick a recipe — the same stage pipeline
+      stays; only the role topology changes. Herdr and tmux are two views of one run state.
     </p>
   </header>
+
+  <div class="swarm-story__visual" role="img" aria-label="Eight-stage swarm pipeline from request through artifact">
+    <ol class="swarm-story__rail">
+      {
+        swarmStages.map((stage) => (
+          <li style={`--stage-i: ${stage.index}`}>
+            <span class="swarm-story__rail-index">{String(stage.index).padStart(2, '0')}</span>
+            <span class="swarm-story__rail-title">{stage.title}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="swarm-story__pulse" aria-hidden="true"></div>
+    <p class="swarm-story__visual-note">
+      Motion highlights stage flow; with reduced motion the full pipeline stays visible and complete.
+    </p>
+  </div>
 
   <ol class="swarm-story__pipeline">
     {
@@ -66,6 +83,7 @@ const defaultRecipe = swarmRecipes[0]!;
                 <span class="swarm-story__role">
                   <span class="swarm-story__role-id">{role.id}</span>
                   <span class="swarm-story__role-policy">{role.policy}</span>
+                  {role.persona ? <span class="swarm-story__role-persona">{role.persona}</span> : null}
                 </span>
               </li>
             ))}
@@ -124,14 +142,9 @@ const defaultRecipe = swarmRecipes[0]!;
   <div class="swarm-story__backends" aria-labelledby="backends-title">
     <h3 id="backends-title">Herdr · tmux — same state, two views</h3>
     <div class="swarm-story__state">
-      <p class="swarm-story__state-label">Shared run state</p>
+      <p class="swarm-story__state-label">Shared run state · .agent-toolkit/swarm/runs/&lt;run-id&gt;/</p>
       <ul>
-        <li>run.yaml</li>
-        <li>trace.jsonl</li>
-        <li>budget.json</li>
-        <li>ownership.json</li>
-        <li>approvals.json</li>
-        <li>artifacts/</li>
+        {sharedRunStateFiles.map((file) => <li>{file}</li>)}
       </ul>
     </div>
     <div class="swarm-story__views">
@@ -140,6 +153,13 @@ const defaultRecipe = swarmRecipes[0]!;
           <article>
             <h4>{backend.title}</h4>
             <p>{backend.summary}</p>
+            <ul class="swarm-story__cmds">
+              {backend.commands.map((command) => (
+                <li>
+                  <code>{command}</code>
+                </li>
+              ))}
+            </ul>
           </article>
         ))
       }
@@ -174,6 +194,91 @@ const defaultRecipe = swarmRecipes[0]!;
     margin: 0;
     max-inline-size: 72ch;
     color: var(--color-text-muted);
+  }
+
+  .swarm-story__visual {
+    position: relative;
+    margin: 1.35rem 0 1rem;
+    padding: 1rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 32%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-magenta) 10%, transparent), transparent 40%),
+      linear-gradient(270deg, color-mix(in srgb, var(--nest-cyan) 10%, transparent), transparent 40%),
+      color-mix(in srgb, var(--nest-midnight-900) 94%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .swarm-story__rail {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .swarm-story__rail li {
+    display: grid;
+    gap: 0.2rem;
+    min-block-size: 4.25rem;
+    padding: 0.55rem 0.4rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 35%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 70%, transparent);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .swarm-story__rail-index {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--nest-magenta);
+  }
+
+  .swarm-story__rail-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 650;
+  }
+
+  .swarm-story__pulse {
+    position: absolute;
+    inset-block: 1rem;
+    inset-inline-start: 1rem;
+    width: 12%;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--nest-cyan) 35%, transparent),
+      color-mix(in srgb, var(--nest-magenta) 40%, transparent),
+      transparent
+    );
+    pointer-events: none;
+    animation: swarm-pulse 7.2s linear infinite;
+  }
+
+  @keyframes swarm-pulse {
+    0% {
+      transform: translateX(0);
+      opacity: 0.35;
+    }
+    10% {
+      opacity: 0.85;
+    }
+    100% {
+      transform: translateX(720%);
+      opacity: 0.2;
+    }
+  }
+
+  .swarm-story__visual-note {
+    margin: 0.65rem 0 0;
+    font-size: 0.78rem;
+    color: var(--color-text-faint);
   }
 
   .swarm-story__pipeline {
@@ -343,11 +448,16 @@ const defaultRecipe = swarmRecipes[0]!;
     font-size: 0.88rem;
   }
 
-  .swarm-story__role-policy {
+  .swarm-story__role-policy,
+  .swarm-story__role-persona {
     font-family: var(--font-mono);
     font-size: 0.68rem;
     color: var(--color-text-faint);
     letter-spacing: 0.06em;
+  }
+
+  .swarm-story__role-persona {
+    color: var(--nest-cyan);
   }
 
   .swarm-story__role-svg {
@@ -386,7 +496,7 @@ const defaultRecipe = swarmRecipes[0]!;
     margin: 0 0 0.45rem;
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--nest-cyan);
   }
@@ -415,6 +525,8 @@ const defaultRecipe = swarmRecipes[0]!;
   }
 
   .swarm-story__views article {
+    display: grid;
+    gap: 0.55rem;
     padding: 1rem;
     border: 1px solid var(--color-border);
     background: color-mix(in srgb, var(--nest-violet) 8%, var(--nest-midnight-900));
@@ -422,7 +534,7 @@ const defaultRecipe = swarmRecipes[0]!;
   }
 
   .swarm-story__views h4 {
-    margin: 0 0 0.35rem;
+    margin: 0;
     color: var(--nest-pink);
   }
 
@@ -432,20 +544,58 @@ const defaultRecipe = swarmRecipes[0]!;
     font-size: 0.9rem;
   }
 
+  .swarm-story__cmds {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .swarm-story__cmds code {
+    display: block;
+    padding: 0.45rem 0.55rem;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    background: var(--color-code-bg, color-mix(in srgb, var(--nest-midnight-950) 88%, transparent));
+    clip-path: var(--clip-corner-sm);
+    font-size: 0.72rem;
+    white-space: pre;
+  }
+
   @media (width < 900px) {
     .swarm-story__pipeline {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .swarm-story__rail {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
   @media (width < 640px) {
     .swarm-story__pipeline,
-    .swarm-story__views {
+    .swarm-story__views,
+    .swarm-story__rail {
       grid-template-columns: 1fr;
     }
 
     .swarm-story__role-svg {
       display: none;
+    }
+
+    .swarm-story__pulse {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .swarm-story__pulse {
+      display: none;
+    }
+
+    .swarm-story__rail li {
+      border-color: color-mix(in srgb, var(--nest-cyan) 40%, transparent);
     }
   }
 </style>

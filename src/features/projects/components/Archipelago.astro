@@ -1,0 +1,202 @@
+---
+import { worldPointerProjects } from '../data/index.js';
+import { groupLabels } from '../types/index.js';
+
+const islandByWorld: Record<string, string> = {
+  dotfiles: 'island-dotfiles',
+  workstation: 'island-workstation',
+  toolkit: 'island-agent',
+  v: 'island-v',
+  'create-awesome': 'island-scaffold',
+};
+
+const islands = worldPointerProjects.map((project, index) => ({
+  ...project,
+  island: islandByWorld[project.worldId ?? ''] ?? 'island-projects',
+  number: String(index + 1).padStart(2, '0'),
+  href: project.links.find((l) => l.kind === 'world')?.href ?? project.links[0]?.href ?? '/projects',
+}));
+---
+
+<section class="archipelago" aria-labelledby="archipelago-title" data-testid="projects-archipelago">
+  <div class="archipelago__intro">
+    <p class="archipelago__eyebrow">Projects · archipelago</p>
+    <h2 id="archipelago-title">World islands, then the ledger</h2>
+    <p class="archipelago__lede">
+      Featured Digital Nest worlds surface as islands. Additional repos live in the grouped ledger below — not as a
+      second card dashboard.
+    </p>
+  </div>
+
+  <ul class="archipelago__map" role="list">
+    {
+      islands.map((island) => (
+        <li class="archipelago__island" data-group={island.group}>
+          <a class="archipelago__link" href={island.href} data-testid="archipelago-island">
+            <span class="archipelago__num" aria-hidden="true">
+              {island.number}
+            </span>
+            <img
+              class="archipelago__art"
+              src={`/assets/nest/${island.island}-sm.webp`}
+              alt=""
+              width="160"
+              height="120"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="archipelago__label">
+              <span class="archipelago__title">{island.title}</span>
+              <span class="archipelago__group">{groupLabels[island.group]}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <svg class="archipelago__constellation" viewBox="0 0 100 20" aria-hidden="true" focusable="false">
+    <path
+      d="M8 12 C 20 4, 30 16, 42 10 S 70 4, 92 12"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="0.35"
+      stroke-dasharray="1.2 1.4"></path>
+    {[8, 28, 48, 68, 88].map((x, i) => <circle cx={x} cy={i % 2 === 0 ? 11 : 9} r="0.7" fill="currentColor" />)}
+  </svg>
+</section>
+
+<style>
+  .archipelago {
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem) 0.5rem;
+  }
+
+  .archipelago__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nest-sunset-orange);
+  }
+
+  .archipelago__intro h2 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.55rem, 3.4vw, 2.15rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .archipelago__lede {
+    margin: 0;
+    max-inline-size: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .archipelago__map {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .archipelago__island:nth-child(even) {
+    margin-block-start: 1.25rem;
+  }
+
+  .archipelago__link {
+    display: grid;
+    gap: 0.45rem;
+    color: inherit;
+    text-decoration: none;
+    padding: 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    clip-path: var(--clip-corner-md);
+    position: relative;
+    transition:
+      border-color 160ms ease,
+      transform 160ms ease,
+      background 160ms ease;
+  }
+
+  .archipelago__link:hover,
+  .archipelago__link:focus-visible {
+    border-color: color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    background: color-mix(in srgb, var(--nest-cyan) 8%, var(--nest-midnight-900));
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .archipelago__num {
+    position: absolute;
+    inset: 0.45rem auto auto 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--color-text-faint);
+  }
+
+  .archipelago__art {
+    width: min(100%, 9rem);
+    height: auto;
+    margin-inline: auto;
+    pointer-events: none;
+  }
+
+  .archipelago__label {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .archipelago__title {
+    font-size: 0.92rem;
+    letter-spacing: 0.03em;
+  }
+
+  .archipelago__group {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .archipelago__constellation {
+    display: block;
+    width: min(100%, 42rem);
+    margin: 1.25rem auto 0;
+    color: color-mix(in srgb, var(--nest-violet) 55%, transparent);
+  }
+
+  @media (width < 960px) {
+    .archipelago__map {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (width < 640px) {
+    .archipelago__map {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .archipelago__island:nth-child(even) {
+      margin-block-start: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .archipelago__link {
+      transition: none;
+    }
+
+    .archipelago__link:hover,
+    .archipelago__link:focus-visible {
+      transform: none;
+    }
+  }
+</style>

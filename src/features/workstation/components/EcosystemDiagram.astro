@@ -1,3 +1,10 @@
+---
+import { inventoryCounts } from '@/features/agent-toolkit/data/inventory.js';
+
+const toolkitLine = `${inventoryCounts.skills} skills · ${inventoryCounts.agents} agents · ${inventoryCounts.loops} loops`;
+const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schemas`;
+---
+
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 1200 560"
@@ -5,10 +12,10 @@
   aria-labelledby="ws-diag-title ws-diag-desc"
   class="ws-ecosystem-diagram"
 >
-  <title id="ws-diag-title">Agentic Workstation — 4-layer ecosystem</title>
+  <title id="ws-diag-title">Agentic Workstation — Personal DX graph</title>
   <desc id="ws-diag-desc"
     >Personal DX graph: HorneroConfig is an optional desktop sibling. Workstation provisions the machine, delegates
-    capabilities to agent-toolkit, and the harness consumes them as runtime memory.</desc
+    capabilities to agent-toolkit, and Agentic Harness consumes them as the L2 runtime workspace.</desc
   >
   <defs>
     <linearGradient id="ws-bg" x1="0" y1="0" x2="1" y2="1">
@@ -62,7 +69,7 @@
     letter-spacing="2.4">PERSONAL DX GRAPH · OPTIONAL DESKTOP SIBLING</text
   >
   <text x="40" y="76" fill="#F8FAFC" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="750"
-    >Workstation ↔ Toolkit ↔ Harness · HorneroConfig optional</text
+    >Workstation ↔ Toolkit ↔ Agentic Harness · HorneroConfig optional</text
   >
   <text x="40" y="102" fill="#94A3B8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13.5"
     >machine provisioning · capability distribution · runtime memory — desktop is a sibling edge, not a hard dependency</text
@@ -120,7 +127,7 @@
         >Hyprland + Quickshell</text
       >
       <text x="20" y="127" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="11"
-        >smart-colors · 22 rices</text
+        >smart-colors · 12 themes</text
       >
       <text x="20" y="146" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="11"
         >chezmoi home/ · yazi · themes</text
@@ -287,10 +294,10 @@
         >capabilities · distribution</text
       >
       <text x="20" y="108" fill="#CBD5E1" font-family="Inter, ui-sans-serif, sans-serif" font-size="11.5"
-        >61 skills · 16 agents · 10 loops</text
+        >{toolkitLine}</text
       >
       <text x="20" y="127" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="11"
-        >MCP · 7 profiles · packs/schemas</text
+        >{profilesLine}</text
       >
       <text x="20" y="146" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="11"
         >dots-skills sync (delegated)</text
@@ -366,7 +373,7 @@
         fill="#F8FAFC"
         font-family="Inter, ui-sans-serif, sans-serif"
         font-size="16.5"
-        font-weight="850">Harness</text
+        font-weight="850">Agentic Harness</text
       >
       <text x="20" y="84" fill="#22D3EE" font-family="Inter, ui-sans-serif, sans-serif" font-size="12" font-weight="700"
         >runtime · memory</text
@@ -420,7 +427,7 @@
         text-anchor="middle"
         fill="#94A3B8"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
-        font-size="10">ai-workspace · per run</text
+        font-size="10">persistent workspace · L2</text
       >
     </g>
   </g>
@@ -471,8 +478,8 @@
   <!-- Footer identity bar -->
   <rect x="40" y="514" width="1120" height="1" fill="#334155" opacity="0.6"></rect>
   <text x="40" y="536" fill="#475569" font-family="Inter, ui-sans-serif, sans-serif" font-size="10.5"
-    >Identity · midnight #020617 · cyan #22D3EE · violet #A78BFA · lime #84CC16 · thin after L1 — toolkit owns runtime
-    catalog</text
+    >Identity · midnight #020617 · cyan #22D3EE · violet #A78BFA · lime #84CC16 · thin after L1 — toolkit owns catalog ·
+    harness owns runtime</text
   >
   <text x="1046" y="536" fill="#334155" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10"
     >1200×560</text

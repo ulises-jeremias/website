@@ -1,4 +1,35 @@
-import type { DotfilesLayer, LicenseEntry, NarrativeSection, ScreenshotItem, SmartColorStep } from '../types/index.js';
+import type {
+  AttributionEntry,
+  DotfilesLayer,
+  NarrativeSection,
+  ScreenshotItem,
+  SmartColorStep,
+} from '../types/index.js';
+
+/** Verified against github.com/ulises-jeremias/dotfiles HEAD (main) on 2026-08-07. */
+export const verifiedFacts = {
+  themeCount: 12,
+  dotsScriptCount: 47,
+  themes: [
+    'catppuccin-latte',
+    'catppuccin-mocha',
+    'everforest',
+    'gruvbox',
+    'landscape',
+    'monochrome',
+    'neon-city',
+    'nord-dreams',
+    'rose-pine',
+    'soft-morning',
+    'vapor-dreams',
+    'warm-sunset',
+  ] as const,
+  repoUrl: 'https://github.com/ulises-jeremias/dotfiles',
+  wikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki',
+  smartColorsWikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki/Smart-Colors-System',
+  installCurl:
+    'sh -c "$(curl -fsSL https://github.com/ulises-jeremias/dotfiles/blob/main/scripts/install_dotfiles.sh?raw=true)"',
+} as const;
 
 export const dotfilesLayers: DotfilesLayer[] = [
   {
@@ -9,7 +40,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
     details: [
       '.chezmoiroot → home/',
       '.chezmoi.toml.tmpl + run_onchange_* hooks',
-      'State in ~/.config/.current_rice and ~/.cache/dots/',
+      'State in ~/.local/state/dots/ and ~/.cache/dots/',
     ],
     color: '#3a232e',
   },
@@ -17,11 +48,11 @@ export const dotfilesLayers: DotfilesLayer[] = [
     id: 'scripts',
     label: 'scripts',
     shortLabel: 'dots',
-    description: 'Orchestration of ~46 dots-* utilities',
+    description: `Orchestration of ${verifiedFacts.dotsScriptCount} dots-* utilities`,
     details: [
-      'dots-* with EasyOptions and set -euo pipefail',
-      'dots appearance, dots-wallpaper-set, dots-rice',
-      'dots-smart-colors, config.json, python-materialyoucolor',
+      'dots-* CLIs with EasyOptions and set -euo pipefail',
+      'dots appearance, dots-wallpaper-set, dots-smart-colors',
+      'theme.json appearances + python-materialyoucolor M3 path',
     ],
     color: '#4a2d3a',
   },
@@ -33,7 +64,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
     details: [
       'Kitty + fontconfig + ligatures',
       'btop, cava, fastfetch, yazi, tmux',
-      'M3 palette via ~/.cache/dots/smart-colors/',
+      'M3 palette via ~/.cache/dots/smart-colors/colors-kitty.conf',
     ],
     color: '#5e384a',
   },
@@ -43,9 +74,9 @@ export const dotfilesLayers: DotfilesLayer[] = [
     shortLabel: 'hyprland',
     description: 'Modern animated Wayland desktop',
     details: [
-      'Hyprland + per-rice animation profiles',
+      'Hyprland + per-theme animation profiles',
       'Quickshell: bar, launcher, dashboard, notifications, OSD',
-      'Hyprlock + wallpaper flow',
+      'Hyprlock + dots-wallpaper-set flow',
     ],
     color: '#7a4a5f',
   },
@@ -69,14 +100,14 @@ export const narrativeSections: NarrativeSection[] = [
     title: 'The hornero nest',
     paragraphs: [
       'HorneroConfig is named after the hornero, the bird that builds robust nests adapted to its environment. Each layer — from chezmoi to shell — plays a structural role: isolated in development, integrated in use.',
-      'The philosophy is modular and resilient: graceful degradation without optional dependencies, a single source of truth in ~/.cache/dots/ and ~/.config/, and automation that turns an empty system into a productive desktop.',
+      'The philosophy is modular and resilient: graceful degradation without optional dependencies, a single source of truth in ~/.cache/dots/ and ~/.local/state/dots/, and automation that turns an empty system into a productive desktop.',
     ],
   },
   {
     id: 'stack',
     title: 'Live stack, not a config collection',
     paragraphs: [
-      'The stack unites Hyprland/Wayland with Quickshell (QML + Hornero C++ plugin), GPU-accelerated Kitty, Zsh/Powerlevel10k, and ~46 dots-* scripts. Each of the 22 rices is a self-contained directory with config.json, backgrounds/, and preview.png — no apply.sh.',
+      `The stack unites Hyprland/Wayland with Quickshell (QML + Hornero C++ plugin), GPU-accelerated Kitty, Zsh/Powerlevel10k, and ${verifiedFacts.dotsScriptCount} dots-* scripts. Each of the ${verifiedFacts.themeCount} appearance themes ships as a self-contained directory with theme.json, preview, and wallpaper directory — no apply.sh.`,
       'Chezmoi orchestrates templates and idempotent hooks. Install with chezmoi init --apply ulises-jeremias, then manage appearance with dots appearance and Smart Colors.',
     ],
   },
@@ -84,8 +115,8 @@ export const narrativeSections: NarrativeSection[] = [
     id: 'smart-colors',
     title: 'Color with purpose',
     paragraphs: [
-      'Smart Colors analyzes the wallpaper with python-materialyoucolor, detects luminance for light/dark mode, maps semantics (red→error, green→success), and optimizes WCAG contrast. It generates once and caches scheme.json (Material Design 3) plus variants for Hyprland, shell, and GTK.',
-      'When you change wallpaper, the Quickshell Colours service regenerates the palette and applies it atomically to bar, borders, kitty, and lock — no hardcoded theme values.',
+      'Smart Colors follows the maintained Hyprland + Quickshell path: dots-wallpaper-set (or Control Center) triggers pywal and generate-m3-colors.py via dots-m3-colors (python-materialyoucolor), writing scheme.json plus Kitty/GTK/Hyprlock exports under ~/.cache/dots/smart-colors/.',
+      'Quickshell’s Colours service reloads from scheme.json (file watch or dots-quickshell ipc colours reload). dots-gtk-theme keeps GTK/libadwaita in lockstep — one wallpaper change, one atomic palette.',
     ],
   },
 ];
@@ -94,117 +125,122 @@ export const smartColorSteps: SmartColorStep[] = [
   {
     id: 'wallpaper',
     title: 'Wallpaper',
-    description: 'Image curated per rice in backgrounds/',
-    icon: 'wp',
-    detail: 'dots appearance / dots-wallpaper-set records the change and triggers the pipeline.',
+    description: 'dots-wallpaper-set or Control Center Apply',
+    icon: '01',
+    detail:
+      'Records the path under ~/.local/state/dots/wallpaper/ and starts the appearance pipeline (IPC when Quickshell is running).',
   },
   {
     id: 'extraction',
-    title: 'Extraction',
-    description: 'Quantization and luminance analysis',
-    icon: 'ex',
-    detail: 'python-materialyoucolor extracts dominants, computes luminance, and decides light/dark.',
+    title: 'Material extraction',
+    description: 'pywal + generate-m3-colors.py',
+    icon: '02',
+    detail:
+      'dots-m3-colors prefers system python3 with materialyoucolor; luminance decides light/dark; semantics map error/success/warning.',
   },
   {
     id: 'palette',
-    title: 'Palette',
-    description: 'Material Design 3 scheme.json',
-    icon: 'pl',
-    detail: 'Generates primary/secondary/tertiary/error/neutral in ~/.cache/dots/smart-colors/.',
+    title: 'Scheme cache',
+    description: 'scheme.json + consumer exports',
+    icon: '03',
+    detail:
+      'Writes ~/.cache/dots/smart-colors/scheme.json, colors-kitty.conf, colors-hyprlock.env, colors.css, and shell/env helpers.',
   },
   {
     id: 'apps',
-    title: 'Apps',
-    description: 'Atomic application across the desktop',
-    icon: 'ap',
-    detail: 'Quickshell Colours, Hyprland, Kitty, GTK, and Hyprlock consume the same source.',
+    title: 'Desktop consumers',
+    description: 'Quickshell · Hyprland · Kitty · GTK',
+    icon: '04',
+    detail:
+      'Colours.qml reloads the M3 scheme; borders, terminal, lock, and GTK sync from the same cache — no hardcoded theme values.',
   },
 ];
 
+/**
+ * First-party captures from ulises-jeremias/dotfiles/static (MIT).
+ * Excludes anime.jpeg / anime-girl-screen.png and collage.png (embeds anime wallpaper).
+ */
 export const screenshotItems: ScreenshotItem[] = [
   {
-    id: 'collage',
-    alt: 'HorneroConfig collage showing sidebar bar, dashboard, and desktop wallpapers',
-    caption: 'Collage — Quickshell + Hyprland desktop overview',
-    credit: 'public/media/dotfiles/collage.png — MIT (dotfiles)',
-    width: 1914,
-    height: 1075,
-    placeholder: 'collage',
-  },
-  {
     id: 'dark',
-    alt: 'Dark theme with left bar rail, artistic wallpaper, and Kitty terminal',
-    caption: 'Dark theme — default rice with soft motion',
-    credit: 'public/media/dotfiles/screen.png — MIT (dotfiles)',
+    alt: 'HorneroConfig dark desktop with Quickshell bars, btop, and cava over a bridge wallpaper',
+    caption: 'Dark desktop — Quickshell bars + observability',
+    credit: 'dotfiles/static/screen.png · MIT',
+    src: '/media/dotfiles/screen.png',
     width: 1914,
     height: 1075,
-    placeholder: 'dark',
   },
   {
     id: 'light',
-    alt: 'Light theme with pastel palette, minimal top bar, and yazi file manager',
-    caption: 'Light theme — Smart Colors light/dark adaptation',
-    credit: 'public/media/dotfiles/screen-2.jpg — MIT (dotfiles)',
-    width: 1914,
-    height: 1075,
-    placeholder: 'light',
+    alt: 'HorneroConfig desktop with landscape wallpaper and telemetry-rich Quickshell top bar',
+    caption: 'Appearance theme — landscape telemetry bar',
+    credit: 'dotfiles/static/screen-2.jpg · MIT',
+    src: '/media/dotfiles/screen-2.jpg',
+    width: 1916,
+    height: 1080,
   },
   {
     id: 'launchpad',
-    alt: 'Application launchpad with fuzzy search and wallpaper previews',
-    caption: 'Launchpad — QML launcher with search and rice selector',
-    credit: 'public/media/dotfiles/screenshot-launchpad.png — MIT (dotfiles)',
-    width: 800,
-    height: 600,
-    placeholder: 'launchpad',
+    alt: 'Full-screen application launchpad with search and icon grid',
+    caption: 'Launchpad — searchable app grid',
+    credit: 'dotfiles/static/screenshot-launchpad.png · MIT',
+    src: '/media/dotfiles/screenshot-launchpad.png',
+    width: 1440,
+    height: 900,
   },
   {
-    id: 'spotlight',
-    alt: 'Dark spotlight palette with filtered apps and keyboard shortcuts',
-    caption: 'Spotlight — command palette within reach',
-    credit: 'public/media/dotfiles/screenshot-spotlight-dark.png — MIT (dotfiles)',
-    width: 800,
-    height: 600,
-    placeholder: 'spotlight',
+    id: 'spotlight-dark',
+    alt: 'Dark spotlight launcher with fuzzy app list over abstract wallpaper',
+    caption: 'Spotlight — dark command palette',
+    credit: 'dotfiles/static/screenshot-spotlight-dark.png · MIT',
+    src: '/media/dotfiles/screenshot-spotlight-dark.png',
+    width: 1440,
+    height: 868,
+  },
+  {
+    id: 'spotlight-light',
+    alt: 'Light spotlight launcher with frosted glass panel over colorful abstract wallpaper',
+    caption: 'Spotlight — light command palette',
+    credit: 'dotfiles/static/screenshot-spotlight-light.png · MIT',
+    src: '/media/dotfiles/screenshot-spotlight-light.png',
+    width: 1440,
+    height: 872,
+  },
+  {
+    id: 'nord-bar',
+    alt: 'Nord-style top bar listing open apps over an urban dusk wallpaper',
+    caption: 'Bar — nord one-line window list',
+    credit: 'dotfiles/static/screenshot-nord-oneline.png · MIT',
+    src: '/media/dotfiles/screenshot-nord-oneline.png',
+    width: 1440,
+    height: 900,
   },
 ];
 
-export const licenseEntries: LicenseEntry[] = [
+export const attributionEntries: AttributionEntry[] = [
   {
-    component: 'website (this site)',
+    component: 'HorneroConfig',
     license: 'MIT',
-    source: 'LICENSE — Copyright (c) 2025-2026 Ulises Jeremias Cornejo Fandos',
-    notes: 'Dotfiles feature content and /dotfiles page under the site MIT license.',
-  },
-  {
-    component: 'HorneroConfig dotfiles',
-    license: 'MIT',
-    source: 'github.com/ulises-jeremias/dotfiles/LICENSE (2019-2025)',
-    notes: 'dots-* scripts, hypr/kitty/zsh/tmux configs, rices, and docs. MIT-compatible reuse.',
+    source: 'ulises-jeremias/dotfiles',
+    notes: 'Framework sources, dots-* scripts, themes, and first-party static captures.',
   },
   {
     component: 'Quickshell shell (adapted)',
     license: 'GPL-3.0',
-    source: 'caelestia-dots/shell by soramanew — GPL-3.0',
-    notes:
-      'Quickshell implementation adapted from caelestia-dots/shell. Redistributing derived binaries requires GPL-3.0 compliance and source.',
-  },
-  {
-    component: 'Screenshots and assets',
-    license: 'MIT (dotfiles) — wallpapers vary',
-    source: 'public/media/dotfiles/* from dotfiles/static',
-    notes:
-      'First-party captures are MIT. Individual rice wallpapers may carry their own licenses — verify before redistribution.',
+    source: 'caelestia-dots/shell by soramanew',
+    notes: 'Desktop shell adapted with attribution; original LICENSE kept in-tree.',
   },
 ];
+
+/** @deprecated Use attributionEntries — kept for any residual imports during Wave 3. */
+export const licenseEntries = attributionEntries;
 
 export const dotfilesMeta = {
   plum: '#191114',
   pink: '#FFB0CA',
   pinkSoft: '#e2bdc7',
   pinkMuted: '#d5c2c6',
-  title: 'HorneroConfig — dotfiles framework',
-  description:
-    'Dotfiles framework by Ulises Jeremias: Hyprland + Quickshell + Kitty + Zsh + chezmoi + ~46 dots-*. Smart Colors (python-materialyoucolor), 22 rices, one-command install.',
+  title: 'HorneroConfig — personal DX desktop',
+  description: `HorneroConfig: Hyprland + Quickshell + Kitty + Zsh, chezmoi, ${verifiedFacts.dotsScriptCount} dots-* scripts, ${verifiedFacts.themeCount} appearance themes, and Smart Colors (python-materialyoucolor).`,
   quote: 'Like the hornero, build your digital nest: robust, beautiful, and tailored to you.',
 };

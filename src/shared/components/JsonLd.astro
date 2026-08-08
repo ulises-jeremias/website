@@ -1,0 +1,14 @@
+---
+/**
+ * JsonLd — emit one or more JSON-LD graphs into <head>.
+ * Used by blog posts (BlogPosting) and collection pages when content exists.
+ */
+export interface Props {
+  data: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { data } = Astro.props as Props;
+const payload = Array.isArray(data) ? data : [data];
+---
+
+{payload.map((item) => <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />)}
