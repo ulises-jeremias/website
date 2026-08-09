@@ -1,0 +1,11 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = 'Get started' } = Astro.props;
+---
+
+<nav class="vf-dock" aria-label={label}>
+  <slot />
+</nav>

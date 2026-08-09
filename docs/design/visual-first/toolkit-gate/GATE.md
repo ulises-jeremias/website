@@ -1,25 +1,28 @@
-# READY FOR HUMAN REVIEW — Agent Toolkit Visual-First Gate
+# APPROVED — Agent Toolkit Visual-First Gate
 
+**Status:** APPROVED  
+**Date:** 2026-08-09  
+**Decision:** User approved in chat (product owner).  
 **Branch:** `feat/visual-first-agent-toolkit`  
 **Parent epic:** #319  
 **Art direction:** Synthwave Systems Atlas (#52 closed — not reopened)  
-**Scope:** `/agent-toolkit` only (P0). Other worlds audited but not reworked.
+**Scope reviewed:** `/agent-toolkit` only (P0).
 
 ---
 
-## Decision requested
+## Decision recorded
 
-Reply with one of:
+| Option              | Result                                                                  |
+| ------------------- | ----------------------------------------------------------------------- |
+| **APPROVED**        | ✅ Selected — proceed to extract primitives and rework remaining worlds |
+| APPROVED WITH NOTES | —                                                                       |
+| REJECTED            | —                                                                       |
 
-1. **APPROVED** — proceed to extract primitives and rework Workstation next
-2. **APPROVED WITH NOTES** — list required changes before propagation
-3. **REJECTED** — list blockers; do not propagate the pattern
-
-Do **not** update Playwright goldens or merge until this gate passes.
+Playwright goldens remain **not** updated until the full visual-first pass is approved.
 
 ---
 
-## Comparison package
+## Comparison package (as reviewed)
 
 | Asset           | Path                            |
 | --------------- | ------------------------------- |
@@ -76,7 +79,9 @@ Playwright goldens **not** updated (intentional).
 
 ---
 
-## Explicit STOP
+## Next (post-approval)
 
-**STOP for human product review.**  
-No Workstation / Dotfiles / V / Create Awesome / Community / Projects / OSS / Blog rework until decision above.
+1. Extract reusable visual primitives from the Toolkit Operations Room
+2. Rework Workstation → Dotfiles → V → Create Awesome → Community → Projects / Open Source / Blog / Home polish
+3. Produce `REPORT.md` + `final-gate/` package
+4. **STOP for final human product approval** before golden updates or #319 close

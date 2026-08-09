@@ -1,0 +1,13 @@
+---
+interface Props {
+  d: string;
+  active?: boolean;
+  accent?: string;
+  class?: string;
+}
+
+const { d, active = false, accent, class: className } = Astro.props;
+const style = accent ? `--vf-flow-accent: ${accent}` : undefined;
+---
+
+<path class:list={['vf-flow', className, { 'is-active': active }]} d={d} style={style} aria-hidden="true"></path>

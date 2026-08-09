@@ -1,0 +1,23 @@
+---
+interface Props {
+  value: number;
+  label: string;
+  caption?: string;
+  accent?: string;
+}
+
+const { value, label, caption, accent } = Astro.props;
+const clamped = Math.max(0, Math.min(100, value));
+const style = [`--vf-meter-value: ${clamped}`, accent ? `--vf-meter-accent: ${accent}` : ''].filter(Boolean).join('; ');
+---
+
+<div class="vf-meter" style={style} aria-label={`${label}: ${clamped}%`}>
+  <svg viewBox="0 0 72 72" aria-hidden="true">
+    <circle cx="36" cy="36" r="28" class="vf-meter__track" pathLength="100"></circle>
+    <circle cx="36" cy="36" r="28" class="vf-meter__fill" pathLength="100"></circle>
+  </svg>
+  <div class="vf-meter__label">
+    <strong>{clamped}%</strong>
+    <span>{caption ?? label}</span>
+  </div>
+</div>

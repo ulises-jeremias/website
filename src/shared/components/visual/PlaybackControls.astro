@@ -1,0 +1,15 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = 'Playback controls' } = Astro.props;
+---
+
+<div class="vf-playback" role="group" aria-label={label}>
+  <button type="button" data-play>Play</button>
+  <button type="button" data-pause>Pause</button>
+  <button type="button" data-prev>Prev</button>
+  <button type="button" data-next>Next</button>
+  <button type="button" data-replay>Replay</button>
+</div>

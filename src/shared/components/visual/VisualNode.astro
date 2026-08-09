@@ -1,0 +1,36 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  pressed?: boolean;
+  accent?: string;
+  name?: string;
+  as?: 'button' | 'label';
+  for?: string;
+}
+
+const { id, label, pressed = false, accent, name, as = 'button', for: htmlFor } = Astro.props;
+const style = accent ? `--vf-node-accent: ${accent}` : undefined;
+---
+
+{
+  as === 'label' ? (
+    <label class="vf-node" for={htmlFor ?? id} style={style} data-visual-node={id}>
+      <slot name="glyph" />
+      <span>{label}</span>
+    </label>
+  ) : (
+    <button
+      type="button"
+      class="vf-node"
+      id={id}
+      name={name}
+      style={style}
+      aria-pressed={pressed ? 'true' : 'false'}
+      data-visual-node={id}
+    >
+      <slot name="glyph" />
+      <span>{label}</span>
+    </button>
+  )
+}

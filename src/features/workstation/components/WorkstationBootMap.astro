@@ -1,0 +1,559 @@
+---
+import { PlaybackControls, SceneInspector, StageScrubber, StatusMeter, WorldDock } from '@/shared/components/visual';
+import '@/shared/components/visual/visual.css';
+import { doctorChecks, thinWorkstationVerification, workstationLayers, workstationProfiles } from '../data/index.js';
+
+const stages = [
+  { id: 'fresh', index: 1, title: 'Fresh', summary: 'Sparse machine — terminal only, no capability lights.' },
+  { id: 'profile', index: 2, title: 'Profile', summary: 'Pick a chezmoi profile; module groups light up.' },
+  { id: 'provision', index: 3, title: 'Provision', summary: 'chezmoi applies packages, shell, env, thin helpers.' },
+  {
+    id: 'doctor',
+    index: 4,
+    title: 'Doctor',
+    summary: 'Health console verifies shell, profile, toolkit, swarm, harness.',
+  },
+  { id: 'uplink', index: 5, title: 'Uplink', summary: 'Workstation stays thin; Toolkit owns capabilities.' },
+  { id: 'harness', index: 6, title: 'Harness', summary: 'Persistent runtime station — memory, sessions, workspace.' },
+];
+
+const dockActions = [
+  {
+    id: 'provision',
+    label: 'Provision',
+    command: 'chezmoi init --apply ulises-jeremias/agentic-workstation',
+  },
+  {
+    id: 'toolkit',
+    label: 'Install Toolkit',
+    command: 'uv tool install --force agent-toolkit-cli && agent-toolkit install',
+  },
+  {
+    id: 'health',
+    label: 'Check health',
+    command: 'dots-doctor && agent-toolkit swarm doctor',
+  },
+  {
+    id: 'harness',
+    label: 'Open Harness',
+    command: 'dots-devcompanion llm-status',
+  },
+];
+
+const profilePayload = workstationProfiles.map((p) => ({
+  id: p.id,
+  groups: p.groups,
+  description: p.description,
+}));
+
+const layerPayload = workstationLayers.map((l) => ({
+  id: l.id,
+  title: l.title,
+  label: l.label,
+  subtitle: l.subtitle,
+  accent: l.accent,
+  repo: l.repo,
+}));
+
+const healthItems = [
+  { id: 'shell', label: 'shell' },
+  { id: 'profile', label: 'profile' },
+  { id: 'toolkit', label: 'toolkit' },
+  { id: 'swarm', label: 'swarm UI' },
+  { id: 'harness', label: 'harness' },
+];
+
+const stagesJson = JSON.stringify(stages);
+const profilesJson = JSON.stringify(profilePayload);
+const layersJson = JSON.stringify(layerPayload);
+---
+
+<section
+  class="vf-scene ws-boot"
+  aria-labelledby="ws-boot-title"
+  data-ws-boot
+  data-stages={stagesJson}
+  data-profiles={profilesJson}
+  data-layers={layersJson}
+>
+  <header>
+    <p class="vf-scene__eyebrow">Boot the Workstation</p>
+    <h1 id="ws-boot-title" class="vf-scene__title">Agentic Workstation</h1>
+    <p class="vf-scene__lede">Thin machine · fat capabilities · one interactive system map.</p>
+  </header>
+
+  <div class="ws-boot__transport">
+    <StageScrubber stages={stages} label="Boot sequence" />
+    <p class="ws-boot__stage-copy" data-ws-stage-copy>{stages[0]!.summary}</p>
+    <PlaybackControls label="Boot sequence playback" />
+  </div>
+
+  <div class="vf-stage vf-stage--split">
+    <div class="vf-canvas ws-boot__canvas" data-ws-canvas data-stage="fresh">
+      <svg class="ws-boot__graph" viewBox="0 0 640 420" role="img" aria-label="Personal DX system map">
+        <title>Personal DX graph — HorneroConfig optional, Workstation, Toolkit, Harness</title>
+        <rect x="24" y="24" width="592" height="372" rx="4" class="ws-boot__frame"></rect>
+        <text x="40" y="52" class="ws-boot__caption" data-ws-caption>Fresh environment</text>
+
+        <g class="ws-boot__edges" aria-hidden="true">
+          <path class="vf-flow__edge" data-edge="hornero-ws" d="M320 88 L320 140"></path>
+          <path class="vf-flow__edge" data-edge="ws-toolkit" d="M260 230 L180 300"></path>
+          <path class="vf-flow__edge" data-edge="ws-harness" d="M380 230 L460 300"></path>
+          <path class="vf-flow__edge" data-edge="toolkit-harness" d="M220 330 L420 330"></path>
+        </g>
+
+        <g class="ws-boot__node" data-graph-node="hornero" transform="translate(250,48)">
+          <rect width="140" height="44" class="ws-boot__node-disk"></rect>
+          <text x="70" y="20" text-anchor="middle" class="ws-boot__node-k">L0 optional</text>
+          <text x="70" y="36" text-anchor="middle" class="ws-boot__node-t">HorneroConfig</text>
+        </g>
+
+        <g class="ws-boot__node ws-boot__node--machine" data-graph-node="workstation" transform="translate(220,150)">
+          <rect width="200" height="90" class="ws-boot__machine"></rect>
+          <text x="100" y="28" text-anchor="middle" class="ws-boot__node-t">WORKSTATION</text>
+          <text x="100" y="48" text-anchor="middle" class="ws-boot__node-k">L1 · machine</text>
+          <text x="100" y="72" text-anchor="middle" class="ws-boot__term" data-ws-term>$ _</text>
+        </g>
+
+        <g class="ws-boot__modules" data-ws-modules aria-hidden="true">
+          {
+            ['chezmoi', 'packages', 'shell', 'env', 'helpers'].map((mod, i) => (
+              <g class="ws-boot__mod" data-mod={mod} transform={`translate(${80 + i * 100}, 255)`}>
+                <rect width="84" height="28" />
+                <text x="42" y="18" text-anchor="middle">
+                  {mod}
+                </text>
+              </g>
+            ))
+          }
+        </g>
+
+        <g class="ws-boot__node" data-graph-node="toolkit" transform="translate(100,300)">
+          <rect width="150" height="56" class="ws-boot__node-disk"></rect>
+          <text x="75" y="24" text-anchor="middle" class="ws-boot__node-t">Toolkit</text>
+          <text x="75" y="42" text-anchor="middle" class="ws-boot__node-k">L1.5 uplink</text>
+        </g>
+
+        <g class="ws-boot__node" data-graph-node="harness" transform="translate(390,300)">
+          <rect width="150" height="56" class="ws-boot__node-disk"></rect>
+          <text x="75" y="24" text-anchor="middle" class="ws-boot__node-t">Harness</text>
+          <text x="75" y="42" text-anchor="middle" class="ws-boot__node-k">L2 runtime</text>
+        </g>
+
+        <circle class="ws-boot__packet" data-ws-packet r="4" cx="320" cy="200"></circle>
+      </svg>
+
+      <div class="ws-boot__profiles" role="radiogroup" aria-label="Workstation profile">
+        {
+          workstationProfiles.map((profile, index) => (
+            <>
+              <input
+                class="ws-boot__profile-radio"
+                type="radio"
+                name="ws-profile"
+                id={`ws-profile-${profile.id}`}
+                value={profile.id}
+                checked={index === 0}
+              />
+              <label class="ws-boot__profile" for={`ws-profile-${profile.id}`}>
+                {profile.id}
+              </label>
+            </>
+          ))
+        }
+      </div>
+
+      <div class="ws-boot__health" data-ws-health aria-label="System health">
+        <p class="ws-boot__health-title">System health</p>
+        <ul>
+          {
+            healthItems.map((item) => (
+              <li data-health={item.id}>
+                <span data-health-mark>○</span> {item.label}
+              </li>
+            ))
+          }
+        </ul>
+        <StatusMeter value={0} label="checks ready" />
+      </div>
+    </div>
+
+    <SceneInspector
+      kicker="Station"
+      title="Fresh machine"
+      body="Sparse environment — provision next."
+      chips={['L1 thin', 'no embedded skills']}
+    />
+  </div>
+
+  <WorldDock title="Get started" actions={dockActions} />
+
+  <details class="ws-boot__docs">
+    <summary>Docs &amp; verification</summary>
+    <p>{thinWorkstationVerification.statement}</p>
+    <ul>
+      {
+        thinWorkstationVerification.references.map((ref) => (
+          <li>
+            <code>{ref}</code>
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      Doctor modes:
+      {doctorChecks.map((c) => c.command).join(' · ')}
+    </p>
+    <p>
+      Repos:
+      <a href="https://github.com/ulises-jeremias/agentic-workstation" target="_blank" rel="noreferrer"
+        >agentic-workstation ↗</a
+      >
+      ·
+      <a href="https://github.com/ulises-jeremias/agent-toolkit" target="_blank" rel="noreferrer">agent-toolkit ↗</a>
+      ·
+      <a href="https://github.com/ulises-jeremias/agentic-harness" target="_blank" rel="noreferrer">agentic-harness ↗</a
+      >
+      ·
+      <a href="/agent-toolkit">Toolkit Operations Room</a>
+      ·
+      <a href="/community">Community</a>
+    </p>
+  </details>
+
+  <noscript>
+    <div class="ws-boot__fallback">
+      <p>Boot path: Fresh → Profile → Provision → Doctor → Toolkit uplink → Harness.</p>
+      <p>Profiles: {workstationProfiles.map((p) => p.id).join(' · ')}</p>
+      <p>
+        Install: <code>chezmoi init --apply ulises-jeremias/agentic-workstation</code> then
+        <code>uv tool install --force agent-toolkit-cli && agent-toolkit install</code>
+      </p>
+    </div>
+  </noscript>
+</section>
+
+<style>
+  .ws-boot__transport {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .ws-boot__stage-copy {
+    margin: 0;
+    color: var(--vf-muted, var(--color-text-muted));
+    font-size: 0.9rem;
+    max-inline-size: 60ch;
+  }
+
+  .ws-boot__canvas {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .ws-boot__graph {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ws-boot__frame {
+    fill: color-mix(in srgb, #020617 88%, transparent);
+    stroke: color-mix(in srgb, #22d3ee 35%, transparent);
+  }
+
+  .ws-boot__caption {
+    fill: #94a3b8;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ws-boot__node-disk,
+  .ws-boot__machine {
+    fill: color-mix(in srgb, #0f172a 90%, #22d3ee);
+    stroke: color-mix(in srgb, #22d3ee 45%, transparent);
+  }
+
+  .ws-boot__node-t {
+    fill: #e2e8f0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .ws-boot__node-k {
+    fill: #94a3b8;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ws-boot__term {
+    fill: #67e8f9;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .ws-boot__mod rect {
+    fill: color-mix(in srgb, #020617 70%, #84cc16);
+    stroke: color-mix(in srgb, #84cc16 50%, transparent);
+    opacity: 0.15;
+  }
+
+  .ws-boot__mod text {
+    fill: #d9f99d;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.2;
+  }
+
+  .ws-boot__packet {
+    fill: #f0abfc;
+    opacity: 0;
+  }
+
+  .ws-boot__canvas[data-stage='fresh'] [data-graph-node='hornero'],
+  .ws-boot__canvas[data-stage='fresh'] [data-graph-node='toolkit'],
+  .ws-boot__canvas[data-stage='fresh'] [data-graph-node='harness'] {
+    opacity: 0.28;
+  }
+
+  .ws-boot__canvas[data-stage='provision'] .ws-boot__mod rect,
+  .ws-boot__canvas[data-stage='provision'] .ws-boot__mod text {
+    opacity: 1;
+  }
+
+  .ws-boot__canvas[data-stage='uplink'] [data-edge='ws-toolkit'],
+  .ws-boot__canvas[data-stage='harness'] [data-edge='ws-harness'],
+  .ws-boot__canvas[data-stage='harness'] [data-edge='toolkit-harness'] {
+    stroke: #f0abfc;
+    stroke-dasharray: none;
+  }
+
+  .ws-boot__canvas[data-stage='uplink'] .ws-boot__packet,
+  .ws-boot__canvas[data-stage='harness'] .ws-boot__packet {
+    opacity: 1;
+  }
+
+  .ws-boot__profiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .ws-boot__profile-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ws-boot__profile {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    cursor: pointer;
+  }
+
+  .ws-boot__profile-radio:checked + .ws-boot__profile,
+  .ws-boot__profile-radio:focus-visible + .ws-boot__profile {
+    border-color: #22d3ee;
+    color: #e2e8f0;
+    box-shadow: 0 0 0 2px color-mix(in srgb, #22d3ee 35%, transparent);
+  }
+
+  .ws-boot__health {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, #020617 70%, transparent);
+  }
+
+  .ws-boot__health-title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #84cc16;
+  }
+
+  .ws-boot__health ul {
+    margin: 0 0 0.65rem;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  .ws-boot__health li[data-ok='true'] {
+    color: #bef264;
+  }
+
+  .ws-boot__docs {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.86rem;
+  }
+
+  .ws-boot__docs summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+  }
+
+  .ws-boot__fallback {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ws-boot__packet {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { createStagePlayback } from '@/shared/components/visual/playback.js';
+
+  type Stage = { id: string; index: number; title: string; summary: string };
+  type Profile = { id: string; groups: string[]; description: string };
+  type Layer = { id: string; title: string; label: string; subtitle: string; accent: string; repo: string };
+
+  function setChips(list: HTMLElement, chips: string[]) {
+    while (list.firstChild) list.removeChild(list.firstChild);
+    list.hidden = chips.length === 0;
+    for (const chip of chips) {
+      const li = document.createElement('li');
+      li.className = 'vf-inspector__chip';
+      li.textContent = chip;
+      list.appendChild(li);
+    }
+  }
+
+  function bindBoot(root: HTMLElement) {
+    const stages = JSON.parse(root.dataset.stages || '[]') as Stage[];
+    const profiles = JSON.parse(root.dataset.profiles || '[]') as Profile[];
+    const layers = JSON.parse(root.dataset.layers || '[]') as Layer[];
+    const canvas = root.querySelector<HTMLElement>('[data-ws-canvas]');
+    const copyEl = root.querySelector<HTMLElement>('[data-ws-stage-copy]');
+    const caption = root.querySelector<SVGTextElement>('[data-ws-caption]');
+    const term = root.querySelector<SVGTextElement>('[data-ws-term]');
+    const inspectorTitle = root.querySelector<HTMLElement>('[data-vf-inspector-title]');
+    const inspectorBody = root.querySelector<HTMLElement>('[data-vf-inspector-body]');
+    const inspectorChips = root.querySelector<HTMLElement>('[data-vf-inspector-chips]');
+    const meterFill = root.querySelector<SVGCircleElement>('[data-vf-meter-fill]');
+    const meterValue = root.querySelector<HTMLElement>('[data-vf-meter-value]');
+    const healthItems = root.querySelectorAll<HTMLElement>('[data-health]');
+
+    const captions: Record<string, string> = {
+      fresh: 'Fresh environment',
+      profile: 'Choose profile',
+      provision: 'Provisioning modules',
+      doctor: 'Health console',
+      uplink: 'Toolkit uplink',
+      harness: 'Harness ready',
+    };
+
+    const applyStage = (index: number) => {
+      const stage = stages[index];
+      if (!stage || !canvas) return;
+      canvas.dataset.stage = stage.id;
+      if (copyEl) copyEl.textContent = stage.summary;
+      if (caption) caption.textContent = captions[stage.id] ?? stage.title;
+      root.querySelectorAll<HTMLButtonElement>('[data-vf-stage]').forEach((btn) => {
+        btn.setAttribute('aria-pressed', btn.dataset.vfStage === stage.id ? 'true' : 'false');
+      });
+
+      const profileId = root.querySelector<HTMLInputElement>('input[name="ws-profile"]:checked')?.value ?? 'technical';
+      const profile = profiles.find((p) => p.id === profileId) ?? profiles[0];
+      const layer =
+        stage.id === 'uplink'
+          ? layers.find((l) => l.id === 'toolkit')
+          : stage.id === 'harness'
+            ? layers.find((l) => l.id === 'harness')
+            : layers.find((l) => l.id === 'workstation');
+
+      if (inspectorTitle) {
+        inspectorTitle.textContent = stage.title + (layer ? ` · ${layer.title}` : '');
+      }
+      if (inspectorBody) {
+        inspectorBody.hidden = false;
+        inspectorBody.textContent = stage.id === 'profile' && profile ? profile.description : stage.summary;
+      }
+      if (inspectorChips) {
+        const chips =
+          stage.id === 'profile' && profile
+            ? profile.groups.length
+              ? profile.groups
+              : ['custom prompts']
+            : layer
+              ? [layer.label, layer.subtitle]
+              : [];
+        setChips(inspectorChips, chips);
+      }
+
+      if (term) {
+        term.textContent =
+          stage.id === 'provision'
+            ? '$ chezmoi apply'
+            : stage.id === 'doctor'
+              ? '$ dots-doctor'
+              : stage.id === 'uplink'
+                ? '$ agent-toolkit install'
+                : stage.id === 'harness'
+                  ? '$ llm-status · ready'
+                  : '$ _';
+      }
+
+      const healthReady = stage.id === 'doctor' || stage.id === 'uplink' || stage.id === 'harness';
+      healthItems.forEach((item) => {
+        item.dataset.ok = healthReady ? 'true' : 'false';
+        const mark = item.querySelector('[data-health-mark]');
+        if (mark) mark.textContent = healthReady ? '✓' : '○';
+      });
+      const pct = healthReady ? 100 : stage.id === 'provision' ? 40 : stage.id === 'profile' ? 15 : 0;
+      if (meterFill) meterFill.setAttribute('stroke-dashoffset', String(100 - pct));
+      if (meterValue) meterValue.textContent = `${pct}%`;
+    };
+
+    const playback = createStagePlayback({
+      root,
+      stageCount: stages.length,
+      intervalMs: 2000,
+      autoplayOnce: true,
+      onChange: applyStage,
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('[data-vf-stage]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = Number(btn.dataset.vfStageIndex || '1') - 1;
+        playback.pause();
+        playback.setIndex(idx);
+      });
+    });
+
+    root.querySelectorAll<HTMLInputElement>('input[name="ws-profile"]').forEach((input) => {
+      input.addEventListener('change', () => applyStage(playback.getIndex()));
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ws-boot]').forEach(bindBoot);
+</script>

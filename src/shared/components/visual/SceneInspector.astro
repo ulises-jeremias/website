@@ -1,0 +1,21 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  id?: string;
+  live?: boolean;
+}
+
+const { eyebrow = 'Inspector', title, id, live = true } = Astro.props;
+---
+
+<aside class="vf-inspector" id={id} aria-live={live ? 'polite' : undefined}>
+  {eyebrow ? <p class="vf-inspector__eyebrow">{eyebrow}</p> : null}
+  <h3 class="vf-inspector__title">{title}</h3>
+  <div class="vf-inspector__body">
+    <slot />
+  </div>
+  <div class="vf-inspector__meta">
+    <slot name="meta" />
+  </div>
+</aside>
