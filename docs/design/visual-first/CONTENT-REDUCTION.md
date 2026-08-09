@@ -9,7 +9,7 @@ Measurement method: approximate visible words excluding site header/footer, `ari
 | `/`                    |          381 |         TBD |        TBD | Not in P0 prototype                              |
 | `/dotfiles`            |         1093 |         TBD |        TBD | Not in P0 prototype                              |
 | `/agentic-workstation` |         2274 |         TBD |        TBD | Not in P0 prototype                              |
-| `/agent-toolkit`       |     **1662** |     **355** | **−78.6%** | P0 Operations Room — exceeds −60% to −75% target |
+| `/agent-toolkit`       |     **1662** |     **338** | **−79.7%** | P0 Operations Room — exceeds −60% to −75% target |
 | `/v`                   |         2207 |         TBD |        TBD | Not in P0 prototype                              |
 | `/create-awesome`      |         2169 |         TBD |        TBD | Not in P0 prototype                              |
 | `/community`           |         1515 |         TBD |        TBD | Not in P0 prototype                              |
@@ -23,9 +23,9 @@ Measurement method: approximate visible words excluding site header/footer, `ari
 | Metric      | Value                        |
 | ----------- | ---------------------------- |
 | Before      | **1662**                     |
-| After       | **355**                      |
-| Absolute Δ  | −1307                        |
-| Relative Δ  | **−78.6%**                   |
+| After       | **338**                      |
+| Absolute Δ  | −1324                        |
+| Relative Δ  | **−79.7%**                   |
 | Target band | 415–665 words (−60% to −75%) |
 | Result      | **Exceeds target**           |
 

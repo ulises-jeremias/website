@@ -44,7 +44,7 @@ Do **not** update Playwright goldens or merge until this gate passes.
 
 | Before |   After |      Delta |
 | -----: | ------: | ---------: |
-|   1662 | **355** | **−78.6%** |
+|   1662 | **338** | **−79.7%** |
 
 Target was −60% to −75%. **Exceeds target** while adding nexus / personas / control-room teaching surface.
 

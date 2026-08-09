@@ -4,7 +4,7 @@
 **Production:** https://www.ulises-jeremias.dev  
 **Branch capture context:** `feat/visual-first-agent-toolkit` (audit of live production, pre-prototype)  
 **Viewports:** 1440×1000 and 390×844 (viewport screenshots under `docs/design/visual-first/audit/{route}/`)  
-**Word metric:** approximate **visible** words in `<main>` after removing header/footer/`aria-hidden` (see `audit/metrics.json`).
+**Word metric (canonical):** approximate **visible** words excluding header/footer, `aria-hidden`, and closed `<details>` (see `audit/_metrics.json`). Alternate main-only scrape also stored in `audit/metrics.json`.
 
 ## Principle under test
 
@@ -18,17 +18,17 @@ One concept = one primary teaching device. Layers 0–2 emphasized.
 
 | Route                  | Visible words | Prose paras | Lists / items | Diagrams | Cards | Density verdict                                      |
 | ---------------------- | ------------: | ----------: | ------------: | -------: | ----: | ---------------------------------------------------- |
-| `/`                    |           281 |           4 |        3 / 15 |       0* |     0 | Acceptable for atlas; keep diorama priority          |
-| `/dotfiles`            |           749 |          22 |        8 / 26 |        1 |    22 | High prose + card tiles; Smart Colors already visual |
-| `/agentic-workstation` |          2003 |          53 |       14 / 59 |        2 |   102 | Worst duplication; graph + cards + lists             |
-| `/agent-toolkit`       |          1092 |          29 |      21 / 105 |        3 |     0 | Repeated stats/panels; P0 prototype target           |
-| `/v`                   |          1738 |          38 |       17 / 52 |        5 |    94 | Lab diagrams exist but buried in prose/cards         |
-| `/create-awesome`      |          2020 |          18 |        8 / 43 |        0 |     0 | Composer + repeated family essays                    |
-| `/community`           |          1178 |          59 |       17 / 63 |        1 |    31 | Umbrella correct; too many paragraphs                |
-| `/blog`                |            44 |           4 |         0 / 0 |        0 |     0 | Fine empty journal                                   |
-| `/projects`            |           234 |          14 |         1 / 5 |        0 |     0 | Compact ledger — mostly OK                           |
-| `/open-source`         |           135 |           4 |        2 / 10 |        1 |     0 | Compact evidence — mostly OK                         |
-| `/404.html`            |            24 |           1 |         0 / 0 |        0 |     0 | Fine                                                 |
+| `/`                    |           381 |           4 |        3 / 15 |       0* |     0 | Acceptable for atlas; keep diorama priority          |
+| `/dotfiles`            |          1093 |          22 |        8 / 26 |        1 |    22 | High prose + card tiles; Smart Colors already visual |
+| `/agentic-workstation` |          2274 |          53 |       14 / 59 |        2 |   102 | Worst duplication; graph + cards + lists             |
+| `/agent-toolkit`       |          1662 |          34 |      21 / 105 |        3 |     7 | Repeated stats/panels; P0 prototype target           |
+| `/v`                   |          2207 |          38 |       17 / 52 |        5 |    94 | Lab diagrams exist but buried in prose/cards         |
+| `/create-awesome`      |          2169 |          18 |        8 / 43 |        0 |     0 | Composer + repeated family essays                    |
+| `/community`           |          1515 |          59 |       17 / 63 |        1 |    31 | Umbrella correct; too many paragraphs                |
+| `/blog`                |            51 |           4 |         0 / 0 |        0 |     0 | Fine empty journal                                   |
+| `/projects`            |           366 |          14 |         1 / 5 |        0 |     0 | Compact ledger — mostly OK                           |
+| `/open-source`         |           226 |           4 |        2 / 10 |        1 |     0 | Compact evidence — mostly OK                         |
+| `/404.html`            |            28 |           1 |         0 / 0 |        0 |     0 | Fine                                                 |
 
 \*Home diorama uses CSS/image composition; SVG count may under-report.
 
@@ -93,9 +93,9 @@ One concept = one primary teaching device. Layers 0–2 emphasized.
 
 ## `/agent-toolkit` (P0)
 
-- **Approx visible words:** 1092
-- **Prose paragraphs:** 29
-- **Cards / lists:** 0 cards · 21 lists / 105 items
+- **Approx visible words:** 1662 (canonical `_metrics.json`)
+- **Prose paragraphs:** 34
+- **Cards / lists:** 7 cards · 21 lists / 105 items
 - **Diagrams / visual interactions:** anatomy SVG, distribution map, swarm rail (underpowered vs prose)
 - **Primary concept:** One source catalog → many assistants; Swarm ≠ Queue
 - **Primary CTA:** install / explore GitHub / community
@@ -108,7 +108,8 @@ One concept = one primary teaching device. Layers 0–2 emphasized.
 | TEXT REMOVE            | Overview triad (“principle / layers / delivery”), duplicate swarm stage cards under the rail                  |
 | TEXT MUST REMAIN       | Short title + one sentence, live counts from inventory, docs/GitHub deep links, provenance                    |
 
-**Target after P0:** −60% to −75% visible prose (≈273–437 words) while teaching more via Operations Room interactions.
+**Target after P0:** −60% to −75% visible prose (≈415–665 words) while teaching more via Operations Room interactions.  
+**Measured after (prototype):** **338** words (−79.7%) — see `toolkit-gate/WORD-COUNT.md`.
 
 Screenshots: `audit/agent-toolkit/{1440,390}.png`
 
