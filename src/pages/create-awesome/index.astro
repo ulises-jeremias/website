@@ -1,7 +1,8 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
-import { Details, Hero, Variants, Composer } from '@/features/create-awesome';
+import CreateAwesomeWorld from '@/features/create-awesome/components/CreateAwesomeWorld.astro';
 import { getRouteMeta } from '@/data/routes';
+
 const meta = getRouteMeta('/create-awesome')!;
 ---
 
@@ -11,9 +12,7 @@ const meta = getRouteMeta('/create-awesome')!;
   title={meta.title}
   description={meta.description}
   theme="create-awesome"
+  immersive
 >
-  <Hero />
-  <Composer />
-  <Variants />
-  <Details />
+  <CreateAwesomeWorld />
 </SectionLayout>

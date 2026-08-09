@@ -3,6 +3,8 @@ astro
 authkit
 Autodetecta
 autograd
+autoplay
+autoplayed
 backprop
 blas
 Blurple
@@ -19,6 +21,8 @@ colours
 computacional
 Consolas
 contenido
+contenteditable
+contentinfo
 Conv
 Cornejo
 cuda
@@ -42,6 +46,7 @@ frontmatter
 Fuente
 galeria
 goldens
+GSAP
 gunicorn
 handlr
 Herdr
@@ -75,6 +80,7 @@ mypy
 networkidle
 nombre
 nord
+noscript
 oneline
 opencode
 orbitron
@@ -106,7 +112,10 @@ sklearn
 skypiea
 slowapi
 soramanew
+spinbutton
 sqlalchemy
+stdlib
+Stdlib
 subpaths
 sutil
 synthwave
@@ -131,6 +140,7 @@ viewports
 vitest
 vlang
 vvet
+WAAPI
 WCAG
 webp
 wordmark

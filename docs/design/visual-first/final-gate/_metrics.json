@@ -1,0 +1,57 @@
+{
+  "/": {
+    "before": 381,
+    "after": 349,
+    "deltaPct": -8.4
+  },
+  "/dotfiles": {
+    "before": 1093,
+    "after": 283,
+    "deltaPct": -74.1
+  },
+  "/agentic-workstation": {
+    "before": 2274,
+    "after": 182,
+    "deltaPct": -92
+  },
+  "/agent-toolkit": {
+    "before": 1662,
+    "after": 338,
+    "deltaPct": -79.7
+  },
+  "/v": {
+    "before": 2207,
+    "after": 290,
+    "deltaPct": -86.9
+  },
+  "/create-awesome": {
+    "before": 2169,
+    "after": 198,
+    "deltaPct": -90.9
+  },
+  "/community": {
+    "before": 1515,
+    "after": 233,
+    "deltaPct": -84.6
+  },
+  "/blog": {
+    "before": 51,
+    "after": 19,
+    "deltaPct": -62.7
+  },
+  "/projects": {
+    "before": 366,
+    "after": 207,
+    "deltaPct": -43.4
+  },
+  "/open-source": {
+    "before": 226,
+    "after": 70,
+    "deltaPct": -69
+  },
+  "/404.html": {
+    "before": 28,
+    "after": 28,
+    "deltaPct": 0
+  }
+}

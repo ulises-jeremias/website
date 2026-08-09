@@ -1,0 +1,77 @@
+---
+interface Props {
+  chips: string[];
+}
+
+const { chips } = Astro.props;
+---
+
+<div class="v-scene" data-v-scene="awesome-v">
+  <h2 class="v-scene__title" id="v-scene-awesome-title">Awesome V</h2>
+  <p class="v-scene__note">Curated catalog highlights — select a chip to inspect.</p>
+  <ul class="v-scene__chips" aria-label="Catalog highlights">
+    {
+      chips.map((chip, i) => (
+        <li>
+          <button type="button" data-awesome-chip aria-pressed={i === 0 ? 'true' : 'false'}>
+            <code>{chip}</code>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">{chips[0] ?? 'Catalog'}</p>
+</div>
+
+<script>
+  function init(root: HTMLElement) {
+    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-awesome-chip]'));
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+        if (live) live.textContent = btn.textContent?.trim() || '';
+      });
+    });
+  }
+  document.querySelectorAll<HTMLElement>('[data-v-scene="awesome-v"]').forEach(init);
+</script>
+
+<style>
+  .v-scene {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .v-scene__title {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--world-accent, #5b9bd5);
+  }
+  .v-scene__note,
+  .v-scene__live {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .v-scene__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .v-scene__chips button {
+    min-height: 40px;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .v-scene__chips button[aria-pressed='true'] {
+    border-color: var(--world-accent, #5b9bd5);
+  }
+</style>

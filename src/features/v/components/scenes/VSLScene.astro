@@ -1,0 +1,104 @@
+---
+/** VSL station — matrix → plot teaching beat (no invented benchmarks). */
+---
+
+<div class="v-scene" data-v-scene="vsl">
+  <h2 class="v-scene__title" id="v-scene-vsl-title">VSL</h2>
+  <p class="v-scene__note">Pure-V numerics by default. Advance the matrix → plot conveyor.</p>
+  <div class="v-scene__controls" role="group" aria-label="VSL demo steps">
+    <button type="button" data-vsl-step="matrix" aria-pressed="true">Matrix</button>
+    <button type="button" data-vsl-step="plot" aria-pressed="false">Plot</button>
+  </div>
+  <svg class="v-scene__svg" viewBox="0 0 560 240" role="img" aria-labelledby="v-scene-vsl-title">
+    <rect width="560" height="240" fill="#0f2a44" rx="8"></rect>
+    <g data-vsl-panel="matrix" class="is-active">
+      {
+        Array.from({ length: 4 }, (_, row) =>
+          Array.from({ length: 4 }, (_, col) => (
+            <rect x={80 + col * 36} y={60 + row * 36} width="28" height="28" rx="2" fill="#1e4d6b" stroke="#5b9bd5" />
+          )),
+        )
+      }
+      <text x="140" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">matrix</text>
+    </g>
+    <g data-vsl-panel="plot">
+      <polyline points="320,180 360,120 400,140 440,80 480,100" fill="none" stroke="#38bdf8" stroke-width="2"
+      ></polyline>
+      <text x="400" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">plot</text>
+    </g>
+  </svg>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">Matrix stage — values ready for a plot.</p>
+</div>
+
+<script>
+  function init(root: HTMLElement) {
+    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
+    const setStep = (step: string) => {
+      root.querySelectorAll<HTMLButtonElement>('[data-vsl-step]').forEach((b) => {
+        b.setAttribute('aria-pressed', b.dataset.vslStep === step ? 'true' : 'false');
+      });
+      root.querySelectorAll<SVGGElement>('[data-vsl-panel]').forEach((p) => {
+        p.classList.toggle('is-active', p.dataset.vslPanel === step);
+      });
+      if (live) {
+        live.textContent =
+          step === 'plot' ? 'Plot stage — same data, visualized.' : 'Matrix stage — values ready for a plot.';
+      }
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-vsl-step]').forEach((b) => {
+      b.addEventListener('click', () => setStep(b.dataset.vslStep || 'matrix'));
+    });
+  }
+  document.querySelectorAll<HTMLElement>('[data-v-scene="vsl"]').forEach(init);
+</script>
+
+<style>
+  .v-scene {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .v-scene__title {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--world-accent, #5b9bd5);
+  }
+  .v-scene__note,
+  .v-scene__live {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .v-scene__controls {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .v-scene__controls button {
+    min-height: 40px;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .v-scene__controls button[aria-pressed='true'] {
+    border-color: var(--world-accent, #5b9bd5);
+    color: var(--nest-paper, #f8fafc);
+  }
+  .v-scene__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .v-scene__svg [data-vsl-panel] {
+    opacity: 0.25;
+  }
+  .v-scene__svg [data-vsl-panel].is-active {
+    opacity: 1;
+  }
+</style>

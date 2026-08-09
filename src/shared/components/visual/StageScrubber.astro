@@ -1,0 +1,27 @@
+---
+export interface Props {
+  stages: Array<{ id: string; title: string; index?: number }>;
+  label?: string;
+  initialIndex?: number;
+}
+
+const { stages, label = 'Pipeline stage', initialIndex = 0 } = Astro.props;
+---
+
+<ol class="vf-scrubber" aria-label={label} data-scrubber>
+  {
+    stages.map((stage, i) => (
+      <li>
+        <button
+          type="button"
+          aria-pressed={i === initialIndex ? 'true' : 'false'}
+          data-stage={stage.id}
+          data-stage-index={String(stage.index ?? i)}
+        >
+          <span>{String(stage.index ?? i).padStart(2, '0')}</span>
+          {stage.title}
+        </button>
+      </li>
+    ))
+  }
+</ol>

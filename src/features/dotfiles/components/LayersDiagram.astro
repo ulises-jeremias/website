@@ -1,295 +1,169 @@
 ---
 import { dotfilesLayers } from '../data/index.js';
+
+interface Props {
+  /** When true, omit section chrome — parent supplies title/inspector. */
+  compact?: boolean;
+}
+
+const { compact = true } = Astro.props;
+
+const ordered = [...dotfilesLayers].reverse();
 ---
 
-<section class="layers-diagram" aria-labelledby="layers-title">
-  <header class="layers-diagram__header">
-    <p class="layers-diagram__eyebrow">Architecture</p>
-    <h2 id="layers-title" class="layers-diagram__title">
-      Layered stack — shell · compositor · terminal · scripts · chezmoi
-    </h2>
-    <p id="layers-desc" class="layers-diagram__desc">
-      Five isolatable layers that chezmoi unites into an atomic system. Bottom-up: declarative foundation (chezmoi) →
-      automation (scripts) → render (terminal + compositor) → interaction (shell). Tab or use screen readers to explore
-      each layer.
-    </p>
-  </header>
-
-  <div class="layers-diagram__wrap">
-    <svg
-      class="layers-diagram__svg"
-      viewBox="0 0 680 560"
-      role="img"
-      aria-labelledby="layersSvgTitle layersSvgDesc"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <title id="layersSvgTitle">HorneroConfig layers diagram</title>
-      <desc id="layersSvgDesc">
-        Vertical diagram of five layers: shell (zsh/p10k) on top, then compositor (Hyprland + Quickshell), terminal
-        (Kitty), scripts (dots-*) and chezmoi as base. Arrows show each upper layer depends on the lower; the entire
-        stack is distributed via chezmoi.
-      </desc>
-
-      <!-- background rail -->
-      <rect x="324" y="24" width="12" height="492" rx="6" fill="rgba(255,176,202,0.12)" aria-hidden="true"></rect>
-
-      <!-- layers: bottom to top is chezmoi -> scripts -> terminal -> compositor -> shell -->
-      <!-- We render top to bottom visually: shell at y=24 -->
-      {
-        dotfilesLayers
-          .slice()
-          .reverse()
-          .map((layer, index) => {
-            const y = 24 + index * 104;
-            const isTop = index === 0;
-            const isBottom = index === dotfilesLayers.length - 1;
-            return (
-              <g
-                class="layers-diagram__layer"
-                tabindex="0"
-                role="listitem"
-                aria-label={`${layer.label}: ${layer.description}. ${layer.details.join('. ')}`}
-              >
-                <title>{`${layer.label} — ${layer.description}`}</title>
-                <desc>{layer.details.join('. ')}</desc>
-                <rect
-                  x="56"
-                  y={String(y)}
-                  width="568"
-                  height="84"
-                  rx="16"
-                  fill={layer.color}
-                  stroke="rgba(255,176,202,0.28)"
-                  stroke-width="1.2"
-                />
-                {/* accent bar */}
-                <rect
-                  x="56"
-                  y={String(y)}
-                  width="568"
-                  height="5"
-                  rx="2.5"
-                  fill={isTop ? '#FFB0CA' : isBottom ? '#e2bdc7' : 'rgba(255,176,202,0.85)'}
-                  opacity="0.95"
-                />
-                {/* left icon box */}
-                <rect
-                  x="70"
-                  y={String(y + 18)}
-                  width="48"
-                  height="48"
-                  rx="12"
-                  fill="rgba(25,17,20,0.72)"
-                  stroke="rgba(255,176,202,0.18)"
-                />
-                <text
-                  x="94"
-                  y={String(y + 48)}
-                  text-anchor="middle"
-                  dominant-baseline="middle"
-                  font-size="22"
-                  aria-hidden="true"
-                >
-                  {layer.id === 'chezmoi'
-                    ? '🏠'
-                    : layer.id === 'scripts'
-                      ? '🛠️'
-                      : layer.id === 'terminal'
-                        ? '💻'
-                        : layer.id === 'compositor'
-                          ? '🌊'
-                          : '🐚'}
-                </text>
-                {/* labels */}
-                <text
-                  x="132"
-                  y={String(y + 28)}
-                  font-size="13"
-                  font-weight="700"
-                  letter-spacing="0.06em"
-                  fill="#FFB0CA"
-                  style="text-transform: uppercase;"
-                >
-                  {layer.shortLabel}
-                </text>
-                <text
-                  x="132"
-                  y={String(y + 46)}
-                  font-size="16.5"
-                  font-weight="800"
-                  letter-spacing="-0.02em"
-                  fill="#fbe7ec"
-                >
-                  {layer.label}
-                </text>
-                <text x="132" y={String(y + 64)} font-size="11.8" fill="#d5c2c6">
-                  {layer.description}
-                </text>
-                {/* connection arrow to next layer */}
-                {index < dotfilesLayers.length - 1 && (
-                  <g aria-hidden="true">
-                    <line
-                      x1="340"
-                      y1={String(y + 84)}
-                      x2="340"
-                      y2={String(y + 104)}
-                      stroke="rgba(255,176,202,0.55)"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-dasharray="6 6"
-                    />
-                    <polygon
-                      points={`${340},${y + 104} ${334},${y + 96} ${346},${y + 96}`}
-                      fill="#FFB0CA"
-                      opacity="0.95"
-                    />
-                  </g>
-                )}
-                {/* focus ring hint */}
-                <rect
-                  x="54"
-                  y={String(y - 2)}
-                  width="572"
-                  height="88"
-                  rx="18"
-                  fill="none"
-                  stroke="transparent"
+<div
+  class:list={['df-layers', { 'df-layers--compact': compact }]}
+  data-df-layers
+  role="img"
+  aria-label="HorneroConfig layers: shell, compositor, terminal, scripts, chezmoi"
+>
+  <svg class="df-layers__svg" viewBox="0 0 680 540" role="presentation" xmlns="http://www.w3.org/2000/svg">
+    <rect x="324" y="20" width="12" height="470" rx="6" fill="rgba(255,176,202,0.12)" aria-hidden="true"></rect>
+    {
+      ordered.map((layer, index) => {
+        const y = 20 + index * 100;
+        const isTop = index === 0;
+        const isBottom = index === ordered.length - 1;
+        return (
+          <g
+            class="df-layers__layer"
+            tabindex="0"
+            role="button"
+            data-layer={layer.id}
+            aria-pressed={layer.id === 'chezmoi' ? 'true' : 'false'}
+            aria-label={`${layer.label}: ${layer.description}`}
+          >
+            <rect
+              x="56"
+              y={String(y)}
+              width="568"
+              height="80"
+              rx="14"
+              fill={layer.color}
+              stroke="rgba(255,176,202,0.28)"
+              stroke-width="1.2"
+            />
+            <rect
+              x="56"
+              y={String(y)}
+              width="568"
+              height="4"
+              rx="2"
+              fill={isTop ? '#FFB0CA' : isBottom ? '#e2bdc7' : 'rgba(255,176,202,0.85)'}
+            />
+            <rect
+              x="70"
+              y={String(y + 16)}
+              width="48"
+              height="48"
+              rx="10"
+              fill="rgba(25,17,20,0.72)"
+              stroke="rgba(255,176,202,0.18)"
+            />
+            <text
+              x="94"
+              y={String(y + 46)}
+              text-anchor="middle"
+              dominant-baseline="middle"
+              font-size="11"
+              font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+              letter-spacing="0.08em"
+              fill="#FFB0CA"
+              aria-hidden="true"
+            >
+              {layer.shortLabel.slice(0, 4).toUpperCase()}
+            </text>
+            <text x="132" y={String(y + 34)} font-size="15" font-weight="800" letter-spacing="-0.02em" fill="#fbe7ec">
+              {layer.label}
+            </text>
+            <text x="132" y={String(y + 56)} font-size="12" fill="#d5c2c6">
+              {layer.description}
+            </text>
+            {index < ordered.length - 1 && (
+              <g aria-hidden="true">
+                <line
+                  x1="340"
+                  y1={String(y + 80)}
+                  x2="340"
+                  y2={String(y + 100)}
+                  stroke="rgba(255,176,202,0.55)"
                   stroke-width="2"
-                  class="layers-diagram__focus-ring"
+                  stroke-linecap="round"
+                  stroke-dasharray="6 6"
                 />
+                <polygon points={`${340},${y + 100} ${334},${y + 92} ${346},${y + 92}`} fill="#FFB0CA" />
               </g>
-            );
-          })
-      }
+            )}
+            <rect
+              class="df-layers__focus"
+              x="54"
+              y={String(y - 2)}
+              width="572"
+              height="84"
+              rx="16"
+              fill="none"
+              stroke="transparent"
+              stroke-width="2"
+            />
+          </g>
+        );
+      })
+    }
+    <text
+      x="340"
+      y="528"
+      text-anchor="middle"
+      font-size="11"
+      font-weight="600"
+      letter-spacing="0.06em"
+      fill="#FFB0CA"
+      aria-hidden="true"
+    >
+      .chezmoiroot → home/ · atomic apply
+    </text>
+  </svg>
 
-      <!-- chezmoi foundation badge -->
-      <g aria-hidden="true">
-        <rect
-          x="220"
-          y="528"
-          width="240"
-          height="20"
-          rx="10"
-          fill="rgba(255,176,202,0.12)"
-          stroke="rgba(255,176,202,0.22)"></rect>
-        <text
-          x="340"
-          y="541"
-          text-anchor="middle"
-          font-size="11"
-          font-weight="600"
-          letter-spacing="0.05em"
-          fill="#FFB0CA"
-          style="text-transform: uppercase;"
-        >
-          .chezmoiroot → home/ · atomic apply
-        </text>
-      </g>
-    </svg>
-
-    <div class="layers-diagram__sr" role="list" aria-label="HorneroConfig layers (text alternative)">
-      {
-        dotfilesLayers.map((layer) => (
-          <div class="layers-diagram__sr-item" role="listitem">
-            <h3 class="layers-diagram__sr-title">{layer.label}</h3>
-            <p class="layers-diagram__sr-desc">{layer.description}</p>
-            <ul>
-              {layer.details.map((d) => (
-                <li>{d}</li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
-    </div>
+  <div class="df-layers__sr" role="list" aria-label="HorneroConfig layers">
+    {
+      dotfilesLayers.map((layer) => (
+        <div role="listitem">
+          <span>
+            {layer.label} — {layer.description}
+          </span>
+        </div>
+      ))
+    }
   </div>
-
-  <figure class="layers-diagram__legend" aria-label="Diagram legend">
-    <figcaption class="layers-diagram__legend-title">How to read the diagram</figcaption>
-    <ul class="layers-diagram__legend-list">
-      <li>
-        <strong>Vertical flow:</strong> from foundation (chezmoi) to surface (shell). Each layer delegates downward.
-      </li>
-      <li>
-        <strong>Chezmoi:</strong> templates, run_onchange hooks, and externals — declarative source of truth.
-      </li>
-      <li><strong>Scripts:</strong> idempotent dots-* CLIs with set -euo pipefail and EasyOptions.</li>
-      <li><strong>Terminal + compositor:</strong> Kitty / Quickshell / Hyprland consume the same M3 palette.</li>
-      <li><strong>Shell:</strong> Zsh / Powerlevel10k is the human interface over the whole stack.</li>
-    </ul>
-  </figure>
-</section>
+</div>
 
 <style>
-  .layers-diagram {
-    max-width: 960px;
-    margin: 0 auto;
+  .df-layers {
+    width: 100%;
   }
 
-  .layers-diagram__eyebrow {
-    display: inline-flex;
-    padding: 0.28rem 0.7rem;
-    border-radius: 999px;
-    background: rgba(255, 176, 202, 0.12);
-    border: 1px solid rgba(255, 176, 202, 0.26);
-    color: #ffb0ca;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 0.7rem;
-  }
-
-  .layers-diagram__title {
-    margin: 0 0 0.5rem;
-    font-size: clamp(1.35rem, 2.8vw, 1.95rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: #fbe7ec;
-    line-height: 1.2;
-  }
-
-  .layers-diagram__desc {
-    margin: 0;
-    color: #d5c2c6;
-    line-height: 1.65;
-    font-size: 0.95rem;
-    max-width: 70ch;
-  }
-
-  .layers-diagram__wrap {
-    margin-top: 1.2rem;
-    background: linear-gradient(180deg, rgba(45, 32, 39, 0.7), rgba(25, 17, 20, 0.9));
-    border: 1px solid rgba(255, 176, 202, 0.16);
-    border-radius: 1.2rem;
-    padding: 1rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
-  }
-
-  .layers-diagram__svg {
+  .df-layers__svg {
     display: block;
     width: 100%;
     height: auto;
   }
 
-  .layers-diagram__layer {
+  .df-layers__layer {
     cursor: pointer;
     outline: none;
   }
 
-  .layers-diagram__layer:focus-visible .layers-diagram__focus-ring,
-  .layers-diagram__layer:hover .layers-diagram__focus-ring {
+  .df-layers__layer[aria-pressed='true'] .df-layers__focus,
+  .df-layers__layer:focus-visible .df-layers__focus,
+  .df-layers__layer:hover .df-layers__focus {
     stroke: #ffb0ca;
   }
 
-  .layers-diagram__layer:focus-visible rect[rx='16'],
-  .layers-diagram__layer:hover rect[rx='16'] {
+  .df-layers__layer[aria-pressed='true'] rect[rx='14'] {
     stroke: #ffb0ca;
-    stroke-width: 1.6;
+    stroke-width: 1.8;
   }
 
-  /* sr fallback: visually hidden but accessible; also shown as fallback on small screens if SVG fails */
-  .layers-diagram__sr {
+  .df-layers__sr {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -301,56 +175,11 @@ import { dotfilesLayers } from '../data/index.js';
     border: 0;
   }
 
-  .layers-diagram__sr-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #ffb0ca;
-    margin: 0.6rem 0 0.15rem;
-  }
-
-  .layers-diagram__sr-desc {
-    margin: 0 0 0.3rem;
-    color: #d5c2c6;
-    font-size: 0.9rem;
-  }
-
-  .layers-diagram__legend {
-    margin: 1rem 0 0;
-    padding: 0.9rem 1rem;
-    border-radius: 0.9rem;
-    background: rgba(255, 176, 202, 0.06);
-    border: 1px solid rgba(255, 176, 202, 0.14);
-  }
-
-  .layers-diagram__legend-title {
-    font-weight: 700;
-    color: #ffb0ca;
-    font-size: 0.88rem;
-    margin-bottom: 0.45rem;
-  }
-
-  .layers-diagram__legend-list {
-    margin: 0;
-    padding-left: 1.15rem;
-    color: #c9a8b2;
-    font-size: 0.88rem;
-    line-height: 1.6;
-  }
-
-  .layers-diagram__legend-list li {
-    margin-bottom: 0.25rem;
-  }
-
-  .layers-diagram__legend-list strong {
-    color: #fbe7ec;
-    font-weight: 700;
-  }
-
   @media (prefers-reduced-motion: no-preference) {
-    .layers-diagram__layer {
+    .df-layers__layer {
       transition: transform 0.18s ease;
     }
-    .layers-diagram__layer:hover {
+    .df-layers__layer:hover {
       transform: translateX(2px);
     }
   }

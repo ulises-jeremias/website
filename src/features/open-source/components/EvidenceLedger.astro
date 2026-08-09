@@ -6,47 +6,41 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
 <section class="oss-ledger" aria-labelledby="oss-ledger-title" data-testid="oss-ledger">
   <h2 id="oss-ledger-title">Evidence ledger</h2>
-  <p class="oss-ledger__lede">
-    Primary evidence is repository roles and merged authored work. Pipeline: committed Zod cache (`pnpm data:refresh`) →
-    editorial overrides → static render. Volatile metrics stay empty unless a refresh stamps them.
-  </p>
+  <p class="oss-ledger__lede">Roles and merged work from the evidence cache.</p>
 
-  <div class="oss-ledger__table" role="table" aria-label="Contribution evidence">
-    <div class="oss-ledger__row oss-ledger__row--head" role="row">
-      <span role="columnheader">Kind</span>
-      <span role="columnheader">Subject</span>
-      <span role="columnheader">Evidence</span>
-      <span role="columnheader">Provenance</span>
-    </div>
+  <ul class="oss-ledger__table" aria-label="Contribution evidence">
+    <li class="oss-ledger__row oss-ledger__row--head" aria-hidden="true">
+      <span>Kind</span>
+      <span>Subject</span>
+      <span>Evidence</span>
+      <span>Link</span>
+    </li>
     {
       evidenceItems.map((row) => (
-        <a class="oss-ledger__row" role="row" href={row.href} target="_blank" rel="noreferrer" data-testid="oss-row">
-          <span role="cell" class="oss-ledger__kind">
-            {row.kind}
-          </span>
-          <span role="cell">{row.subject}</span>
-          <span role="cell">{row.summary ?? row.evidence}</span>
-          <span role="cell" class="oss-ledger__prov">
-            {row.provenance}
-          </span>
-        </a>
+        <li class="oss-ledger__row">
+          <span class="oss-ledger__kind">{row.kind}</span>
+          <span>{row.subject}</span>
+          <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
+          <a href={row.href} target="_blank" rel="noreferrer" data-testid="oss-row">
+            {row.provenance} ↗
+          </a>
+        </li>
       ))
     }
-  </div>
+  </ul>
 
   {
     notes.length > 0 && (
-      <ul class="oss-ledger__notes">
-        {notes.map((note) => (
-          <li>{note}</li>
-        ))}
-      </ul>
+      <details class="oss-ledger__notes">
+        <summary>Notes</summary>
+        <ul>
+          {notes.map((note) => (
+            <li>{note}</li>
+          ))}
+        </ul>
+      </details>
     )
   }
-
-  <p class="oss-ledger__foot">
-    No vanity metrics. Counts omitted unless refreshable and sourced with <code>verifiedAt</code>.
-  </p>
 </section>
 
 <style>
@@ -72,18 +66,37 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
   .oss-ledger__table {
     display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     border: 1px solid var(--color-border);
     clip-path: var(--clip-corner-md);
   }
 
   .oss-ledger__row {
     display: grid;
-    grid-template-columns: 7rem minmax(0, 1.3fr) minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-columns: 7rem minmax(0, 1.1fr) minmax(0, 1.5fr) minmax(0, 1fr);
     gap: 0.75rem;
     padding: 0.8rem 1rem;
     border-block-end: 1px solid var(--color-border);
     color: inherit;
+  }
+
+  .oss-ledger__row a {
+    color: var(--nest-cyan);
     text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .oss-ledger__row a:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .oss-ledger__evidence {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
   }
 
   .oss-ledger__row:last-child {
@@ -99,10 +112,8 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
     background: color-mix(in srgb, var(--nest-violet) 8%, transparent);
   }
 
-  .oss-ledger__row:not(.oss-ledger__row--head):hover,
-  .oss-ledger__row:not(.oss-ledger__row--head):focus-visible {
+  .oss-ledger__row:not(.oss-ledger__row--head):hover {
     background: color-mix(in srgb, var(--nest-cyan) 8%, transparent);
-    outline: none;
   }
 
   .oss-ledger__kind {

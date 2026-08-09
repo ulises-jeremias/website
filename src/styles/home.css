@@ -913,6 +913,16 @@
   font-size: 0.8125rem;
 }
 
+.featured-ledger__status {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--world-color, var(--nest-cyan));
+}
+
 .featured-ledger__copy span {
   font-size: 0.75rem;
   color: var(--color-text-muted);

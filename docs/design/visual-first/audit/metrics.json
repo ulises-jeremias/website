@@ -1,0 +1,68 @@
+[
+  {
+    "route": "/404.html",
+    "words": 28,
+    "paragraphs": 1,
+    "title": "404 \u2014 Signal lost"
+  },
+  {
+    "route": "/",
+    "words": 381,
+    "paragraphs": 5,
+    "title": "Ulises Jeremias \u2014 Digital Nest"
+  },
+  {
+    "route": "/dotfiles",
+    "words": 1093,
+    "paragraphs": 25,
+    "title": "HorneroConfig \u2014 Dotfiles & Workstation OS"
+  },
+  {
+    "route": "/agentic-workstation",
+    "words": 2274,
+    "paragraphs": 53,
+    "title": "Agentic Workstation \u2014 Machine Provisioning"
+  },
+  {
+    "route": "/agent-toolkit",
+    "words": 1662,
+    "paragraphs": 34,
+    "title": "Agent Toolkit \u2014 Skills, Agents, Loops, Swarms"
+  },
+  {
+    "route": "/v",
+    "words": 2207,
+    "paragraphs": 37,
+    "title": "V Ecosystem \u2014 Systems & Scientific"
+  },
+  {
+    "route": "/create-awesome",
+    "words": 2169,
+    "paragraphs": 19,
+    "title": "Create Awesome \u2014 App Scaffolding Family"
+  },
+  {
+    "route": "/community",
+    "words": 1515,
+    "paragraphs": 65,
+    "title": "Community \u2014 Digital Nest Workshop"
+  },
+  {
+    "route": "/blog",
+    "words": 51,
+    "paragraphs": 4,
+    "title": "Blog \u2014 Field Notes"
+  },
+  {
+    "route": "/projects",
+    "words": 366,
+    "paragraphs": 14,
+    "title": "Projects \u2014 Curated Catalog"
+  },
+  {
+    "route": "/open-source",
+    "words": 226,
+    "paragraphs": 4,
+    "title": "Open Source \u2014 Evidence-Based Contributions"
+  }
+]

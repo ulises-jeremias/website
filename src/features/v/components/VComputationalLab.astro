@@ -1,0 +1,392 @@
+---
+import { SceneInspector, WorldDock } from '@/shared/components/visual';
+import '@/shared/components/visual/visual.css';
+import VLanguageScene from './scenes/VLanguageScene.astro';
+import VSLScene from './scenes/VSLScene.astro';
+import VTLAutoGradScene from './scenes/VTLAutoGradScene.astro';
+import RxVStreamScene from './scenes/RxVStreamScene.astro';
+import SetupVScene from './scenes/SetupVScene.astro';
+import AwesomeVScene from './scenes/AwesomeVScene.astro';
+import { licenseEntries, SETUP_V_PIN, vProjects } from '../data/index.js';
+
+const stations = vProjects.map((project) => ({
+  id: project.id,
+  label: project.shortLabel,
+  title: project.title,
+  body: project.description,
+  role: project.role,
+  repo: project.repo,
+  href: project.href,
+  license: project.license,
+  chips: project.highlights.slice(0, 3),
+}));
+
+const defaultStation = stations[0]!;
+const stationsJson = JSON.stringify(stations);
+---
+
+<section class="v-lab" aria-labelledby="v-lab-title" data-v-lab data-stations={stationsJson}>
+  <header class="v-lab__header">
+    <p class="v-lab__eyebrow">V Ecosystem · computational lab</p>
+    <h1 id="v-lab-title">V Lab</h1>
+    <p class="v-lab__lede">Select a station. Diagrams teach — essays stay in the repos.</p>
+  </header>
+
+  <div class="v-lab__stations" role="tablist" aria-label="Lab stations">
+    {
+      stations.map((station, index) => (
+        <button
+          type="button"
+          class="vf-node"
+          role="tab"
+          id={`v-station-${station.id}`}
+          aria-selected={index === 0 ? 'true' : 'false'}
+          aria-controls={`v-panel-${station.id}`}
+          tabindex={index === 0 ? 0 : -1}
+          data-v-station={station.id}
+        >
+          {station.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="vf-scene">
+    <div class="vf-stage v-lab__stage">
+      {
+        stations.map((station, index) => (
+          <div
+            class="v-lab__panel"
+            id={`v-panel-${station.id}`}
+            role="tabpanel"
+            aria-labelledby={`v-station-${station.id}`}
+            data-v-panel={station.id}
+            hidden={index !== 0}
+          >
+            {station.id === 'v' ? <VLanguageScene /> : null}
+            {station.id === 'vsl' ? <VSLScene /> : null}
+            {station.id === 'vtl' ? <VTLAutoGradScene /> : null}
+            {station.id === 'rxv' ? <RxVStreamScene /> : null}
+            {station.id === 'setup-v' ? <SetupVScene /> : null}
+            {station.id === 'awesome-v' ? <AwesomeVScene chips={station.chips} /> : null}
+          </div>
+        ))
+      }
+    </div>
+
+    <SceneInspector eyebrow="Station" title={defaultStation.title} id="v-lab-inspector">
+      <p data-v-inspector-body>{defaultStation.body}</p>
+      <Fragment slot="meta">
+        <div data-v-inspector-meta>
+          <span data-v-inspector-role>{defaultStation.role}</span>
+          <span>
+            <code data-v-inspector-repo>{defaultStation.repo}</code>
+            · <span data-v-inspector-license>{defaultStation.license}</span>
+          </span>
+          <ul class="v-lab__chips" data-v-inspector-chips aria-label="Highlights">
+            {
+              defaultStation.chips.map((chip) => (
+                <li>
+                  <code>{chip}</code>
+                </li>
+              ))
+            }
+          </ul>
+          <a data-v-inspector-link href={defaultStation.href} target="_blank" rel="noreferrer"> Open repo ↗ </a>
+        </div>
+      </Fragment>
+    </SceneInspector>
+  </div>
+
+  <WorldDock label="Install & explore">
+    <a class="vf-dock__primary" href="https://github.com/vlang/v" target="_blank" rel="noreferrer"> vlang/v </a>
+    <a href="https://github.com/vlang/vsl" target="_blank" rel="noreferrer">VSL</a>
+    <a href="https://github.com/vlang/vtl" target="_blank" rel="noreferrer">VTL</a>
+    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">RxV</a>
+    <a href="/community">Community</a>
+    <code class="vf-dock__code">v install vsl · v install vtl · uses: {SETUP_V_PIN}</code>
+  </WorldDock>
+
+  <details class="v-lab__licenses">
+    <summary>Licenses</summary>
+    <ul>
+      {
+        licenseEntries.map((entry) => (
+          <li>
+            <strong>{entry.component}</strong> · {entry.license}
+            {entry.notes ? ` — ${entry.notes}` : ''}
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</section>
+
+<style>
+  .v-lab {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .v-lab__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .v-lab__header h1 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3.5vw, 2.35rem);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .v-lab__lede {
+    margin: 0.45rem 0 0;
+    color: var(--color-text-muted);
+    max-inline-size: 48ch;
+  }
+
+  .v-lab__stations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0 0.85rem;
+  }
+
+  .v-lab__stations .vf-node[aria-selected='true'] {
+    border-color: var(--world-accent, #5b9bd5);
+    color: var(--nest-paper, #f8fafc);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--world-accent, #5b9bd5) 35%, transparent);
+  }
+
+  .v-lab__stage {
+    padding: 0.65rem;
+    min-height: 22rem;
+  }
+
+  .v-lab__panel {
+    min-height: 20rem;
+  }
+
+  .v-lab__panel :global(.eco__wrap),
+  .v-lab__panel :global(.vsl__diagram),
+  .v-lab__panel :global(.vtl__diagram),
+  .v-lab__panel :global(.rxv__diagram),
+  .v-lab__panel :global(.setup__diagram) {
+    margin: 0;
+  }
+
+  .v-lab__panel :global(.eco__grid),
+  .v-lab__panel :global(.vsl__grid),
+  .v-lab__panel :global(.vtl__grid),
+  .v-lab__panel :global(.rxv__grid),
+  .v-lab__panel :global(.setup__grid) {
+    display: block;
+  }
+
+  .v-lab__panel :global(svg) {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  .v-lab__catalog {
+    display: grid;
+    gap: 0.75rem;
+    min-height: 16rem;
+    padding: 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 35%, transparent);
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 40% 20%,
+        color-mix(in srgb, var(--world-accent, #5b9bd5) 22%, transparent),
+        transparent 65%
+      ),
+      #0f2a44;
+    clip-path: var(--clip-corner-md);
+  }
+
+  .v-lab__catalog-k {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8bb8e0;
+  }
+
+  .v-lab__catalog ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .v-lab__catalog li code {
+    display: inline-block;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgba(91, 155, 213, 0.35);
+    color: #e6f0fb;
+    font-size: 0.78rem;
+  }
+
+  .v-lab__chips {
+    list-style: none;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .v-lab__chips code {
+    padding: 0.12rem 0.35rem;
+    border: 1px solid var(--color-border);
+  }
+
+  #v-lab-inspector [data-v-inspector-meta] {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  #v-lab-inspector [data-v-inspector-role] {
+    color: var(--color-text-muted);
+  }
+
+  #v-lab-inspector [data-v-inspector-link] {
+    color: var(--world-accent, #5b9bd5);
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 0.2rem;
+  }
+
+  #v-lab-inspector [data-v-inspector-link]:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .v-lab__licenses {
+    margin-top: 0.5rem;
+    font-size: 0.86rem;
+    color: var(--color-text-muted);
+  }
+
+  .v-lab :global(.vf-dock__primary) {
+    background: var(--world-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  .v-lab__canvas {
+    background: var(--world-surface-tint);
+  }
+
+  .v-lab__licenses summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .v-lab__licenses ul {
+    margin: 0.65rem 0 0;
+    padding: 0 0 0 1.1rem;
+    display: grid;
+    gap: 0.35rem;
+  }
+</style>
+
+<script>
+  type Station = {
+    id: string;
+    label: string;
+    title: string;
+    body: string;
+    role: string;
+    repo: string;
+    href: string;
+    license: string;
+    chips: string[];
+  };
+
+  function clearChildren(el: HTMLElement) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function setChips(list: HTMLElement, chips: string[]) {
+    clearChildren(list);
+    for (const chip of chips) {
+      const li = document.createElement('li');
+      const code = document.createElement('code');
+      code.textContent = chip;
+      li.appendChild(code);
+      list.appendChild(li);
+    }
+  }
+
+  function bindLab(root: HTMLElement) {
+    const stations = JSON.parse(root.dataset.stations || '[]') as Station[];
+    const titleEl = root.querySelector('#v-lab-inspector .vf-inspector__title');
+    const bodyEl = root.querySelector<HTMLElement>('[data-v-inspector-body]');
+    const roleEl = root.querySelector<HTMLElement>('[data-v-inspector-role]');
+    const repoEl = root.querySelector<HTMLElement>('[data-v-inspector-repo]');
+    const licenseEl = root.querySelector<HTMLElement>('[data-v-inspector-license]');
+    const chipsEl = root.querySelector<HTMLElement>('[data-v-inspector-chips]');
+    const linkEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-link]');
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-v-station]')];
+
+    const select = (id: string, focusTab = false) => {
+      const station = stations.find((s) => s.id === id);
+      if (!station) return;
+
+      tabs.forEach((btn) => {
+        const on = btn.dataset.vStation === id;
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+        btn.tabIndex = on ? 0 : -1;
+        if (on && focusTab) btn.focus();
+      });
+
+      root.querySelectorAll<HTMLElement>('[data-v-panel]').forEach((panel) => {
+        panel.hidden = panel.dataset.vPanel !== id;
+      });
+
+      if (titleEl) titleEl.textContent = station.title;
+      if (bodyEl) bodyEl.textContent = station.body;
+      if (roleEl) roleEl.textContent = station.role;
+      if (repoEl) repoEl.textContent = station.repo;
+      if (licenseEl) licenseEl.textContent = station.license;
+      if (chipsEl) setChips(chipsEl, station.chips);
+      if (linkEl) {
+        linkEl.href = station.href;
+        linkEl.textContent = `Open ${station.repo} ↗`;
+      }
+    };
+
+    tabs.forEach((btn, index) => {
+      btn.addEventListener('click', () => select(btn.dataset.vStation || ''));
+      btn.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') {
+          return;
+        }
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        const target = tabs[next];
+        if (target) select(target.dataset.vStation || '', true);
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-v-lab]').forEach(bindLab);
+</script>

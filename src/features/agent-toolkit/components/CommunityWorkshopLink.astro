@@ -2,77 +2,46 @@
 import { communityCrossLink } from '../data/index.js';
 ---
 
-<section class="toolkit-community" aria-labelledby="toolkit-community-title">
-  <div class="toolkit-community__inner">
-    <p class="toolkit-community__eyebrow">Digital Nest</p>
-    <h2 id="toolkit-community-title">{communityCrossLink.title}</h2>
-    <p>{communityCrossLink.summary}</p>
-    <a class="toolkit-community__cta" href={communityCrossLink.href}>{communityCrossLink.cta}</a>
-  </div>
+<section class="atk-community" aria-labelledby="atk-community-title">
+  <p class="atk-community__eyebrow">Digital Nest</p>
+  <h2 id="atk-community-title">{communityCrossLink.title}</h2>
+  <p>{communityCrossLink.summary.split('.')[0]}.</p>
+  <a href={communityCrossLink.href}>{communityCrossLink.cta} →</a>
 </section>
 
 <style>
-  .toolkit-community {
-    width: min(100% - 2 * var(--section-padding-x), 74rem);
+  .atk-community {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
     margin: 0 auto;
-    padding-block: clamp(1.75rem, 4vw, 3rem);
+    padding-block: 1.5rem 2.5rem;
   }
 
-  .toolkit-community__inner {
-    display: grid;
-    gap: 0.65rem;
-    padding: 1.25rem 1.35rem;
-    border: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 40%, transparent);
-    background:
-      linear-gradient(135deg, color-mix(in srgb, var(--nest-magenta) 10%, transparent), transparent 55%),
-      color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
-    clip-path: var(--clip-corner-md);
-  }
-
-  .toolkit-community__eyebrow {
-    margin: 0;
+  .atk-community__eyebrow {
+    margin: 0 0 0.35rem;
     font-family: var(--font-mono);
-    font-size: var(--text-xs);
+    font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--world-accent-tertiary, var(--nest-sunset-orange));
   }
 
-  .toolkit-community h2 {
-    margin: 0;
-    font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  .atk-community h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.15rem;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
   }
 
-  .toolkit-community p {
-    margin: 0;
-    max-inline-size: 68ch;
+  .atk-community p {
+    margin: 0 0 0.65rem;
     color: var(--color-text-muted);
+    max-inline-size: 60ch;
   }
 
-  .toolkit-community__cta {
-    justify-self: start;
-    margin-block-start: 0.35rem;
-    min-block-size: 44px;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.55rem 1rem;
-    border: 1px solid color-mix(in srgb, var(--nest-cyan) 50%, transparent);
-    color: var(--nest-cyan);
-    text-decoration: none;
+  .atk-community a {
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    clip-path: var(--clip-corner-sm);
-  }
-
-  .toolkit-community__cta:hover,
-  .toolkit-community__cta:focus-visible {
-    border-color: var(--nest-magenta);
-    color: var(--nest-magenta);
-    outline: 2px solid var(--nest-magenta);
-    outline-offset: 2px;
+    color: var(--nest-cyan);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--nest-cyan) 40%, transparent);
   }
 </style>

@@ -8,6 +8,7 @@ export { default as ProvisioningSection } from './components/ProvisioningSection
 export { default as DoctorChecks } from './components/DoctorChecks.astro';
 export { default as ToolkitRationale } from './components/ToolkitRationale.astro';
 export { default as ThinWorkstationBadge } from './components/ThinWorkstationBadge.astro';
+export { default as WorkstationSystemMap } from './components/WorkstationSystemMap.astro';
 
 export {
   workstationLayers,

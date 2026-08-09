@@ -1,0 +1,27 @@
+---
+export interface Props {
+  /** Numeric progress 0–100 for the ring fill (optional when using displayValue only). */
+  value?: number;
+  label: string;
+  caption?: string;
+  accent?: string;
+  /** Visible primary readout — use for non-% labels like "Step 2/6" or "ENFORCED". */
+  displayValue?: string;
+}
+
+const { value = 0, label, caption, accent, displayValue } = Astro.props;
+const clamped = Math.max(0, Math.min(100, value));
+const readout = displayValue ?? `${clamped}%`;
+const style = [`--vf-meter-value: ${clamped}`, accent ? `--vf-meter-accent: ${accent}` : ''].filter(Boolean).join('; ');
+---
+
+<div class="vf-meter" style={style} aria-label={`${label}: ${readout}`} data-vf-meter>
+  <svg viewBox="0 0 72 72" aria-hidden="true">
+    <circle cx="36" cy="36" r="28" class="vf-meter__track" pathLength="100"></circle>
+    <circle cx="36" cy="36" r="28" class="vf-meter__fill" pathLength="100"></circle>
+  </svg>
+  <div class="vf-meter__label">
+    <strong data-vf-meter-value>{readout}</strong>
+    <span>{caption ?? label}</span>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+---
+/** VTL station — reverse-mode autograd teaching beat. */
+---
+
+<div class="v-scene" data-v-scene="vtl">
+  <h2 class="v-scene__title" id="v-scene-vtl-title">VTL</h2>
+  <p class="v-scene__note">Forward compute, then reverse gradients. Scrub the tape.</p>
+  <div class="v-scene__controls" role="group" aria-label="Autograd direction">
+    <button type="button" data-vtl-dir="forward" aria-pressed="true">Forward</button>
+    <button type="button" data-vtl-dir="reverse" aria-pressed="false">Reverse</button>
+  </div>
+  <svg class="v-scene__svg" viewBox="0 0 560 200" role="img" aria-labelledby="v-scene-vtl-title">
+    <rect width="560" height="200" fill="#111827" rx="8"></rect>
+    <g data-vtl-nodes>
+      <circle cx="100" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="x"></circle>
+      <circle cx="240" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="w"></circle>
+      <circle cx="380" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="y"></circle>
+      <text x="100" y="104" text-anchor="middle" fill="#e9d5ff" font-size="12" font-family="monospace">x</text>
+      <text x="240" y="104" text-anchor="middle" fill="#e9d5ff" font-size="12" font-family="monospace">w</text>
+      <text x="380" y="104" text-anchor="middle" fill="#e9d5ff" font-size="12" font-family="monospace">y</text>
+    </g>
+    <path data-vtl-flow d="M122 100 H218" stroke="#38bdf8" stroke-width="2" fill="none" marker-end="url(#vtl-arrow)"
+    ></path>
+    <path data-vtl-flow d="M262 100 H358" stroke="#38bdf8" stroke-width="2" fill="none"></path>
+    <defs>
+      <marker id="vtl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"></path>
+      </marker>
+    </defs>
+  </svg>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">Forward pass · values flow left → right.</p>
+</div>
+
+<script>
+  function init(root: HTMLElement) {
+    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
+    const flows = root.querySelectorAll<SVGPathElement>('[data-vtl-flow]');
+    const setDir = (dir: string) => {
+      root.querySelectorAll<HTMLButtonElement>('[data-vtl-dir]').forEach((b) => {
+        b.setAttribute('aria-pressed', b.dataset.vtlDir === dir ? 'true' : 'false');
+      });
+      flows.forEach((f) => {
+        f.style.transform = dir === 'reverse' ? 'scaleX(-1)' : 'none';
+        f.style.transformOrigin = 'center';
+      });
+      if (live) {
+        live.textContent =
+          dir === 'reverse'
+            ? 'Reverse mode · gradients flow right → left.'
+            : 'Forward pass · values flow left → right.';
+      }
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-vtl-dir]').forEach((b) => {
+      b.addEventListener('click', () => setDir(b.dataset.vtlDir || 'forward'));
+    });
+  }
+  document.querySelectorAll<HTMLElement>('[data-v-scene="vtl"]').forEach(init);
+</script>
+
+<style>
+  .v-scene {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .v-scene__title {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--world-accent, #a78bfa);
+  }
+  .v-scene__note,
+  .v-scene__live {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .v-scene__controls {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .v-scene__controls button {
+    min-height: 40px;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .v-scene__controls button[aria-pressed='true'] {
+    border-color: #a78bfa;
+    color: var(--nest-paper, #f8fafc);
+  }
+  .v-scene__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>
