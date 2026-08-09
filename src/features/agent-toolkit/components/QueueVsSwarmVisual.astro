@@ -1,0 +1,199 @@
+---
+import { toolkitDocs } from '../data/index.js';
+---
+
+<section class="atk-qvs" aria-labelledby="atk-qvs-title">
+  <header class="atk-qvs__header">
+    <p class="atk-qvs__eyebrow">Queue ≠ Swarm</p>
+    <h2 id="atk-qvs-title">Two runtimes. Different jobs.</h2>
+  </header>
+
+  <div class="atk-qvs__split">
+    <article class="atk-qvs__pane atk-qvs__pane--queue" aria-label="DevCompanion queue">
+      <h3>DevCompanion</h3>
+      <svg class="atk-qvs__svg" viewBox="0 0 320 160" role="img" aria-label="Single job moving through a durable queue">
+        <title>Queue conveyor</title>
+        <rect x="16" y="60" width="288" height="18" rx="2" class="atk-qvs__belt"></rect>
+        <g class="atk-qvs__stations">
+          <text x="40" y="40">JOB</text>
+          <text x="110" y="40">QUEUE</text>
+          <text x="190" y="40">RUN</text>
+          <text x="260" y="40">DONE</text>
+        </g>
+        <rect class="atk-qvs__job" x="28" y="54" width="36" height="30" rx="2"></rect>
+      </svg>
+      <p>One durable background job at a time.</p>
+    </article>
+
+    <article class="atk-qvs__pane atk-qvs__pane--swarm" aria-label="Swarm orchestration">
+      <h3>Swarm</h3>
+      <svg class="atk-qvs__svg" viewBox="0 0 320 160" role="img" aria-label="Multiple roles around shared run state">
+        <title>Swarm topology</title>
+        <circle cx="160" cy="84" r="28" class="atk-qvs__state"></circle>
+        <text x="160" y="88" text-anchor="middle" class="atk-qvs__state-label">STATE</text>
+        <g class="atk-qvs__roles">
+          <rect x="118" y="12" width="84" height="28" rx="2"></rect>
+          <text x="160" y="30" text-anchor="middle">Reviewer</text>
+          <rect x="18" y="70" width="90" height="28" rx="2"></rect>
+          <text x="63" y="88" text-anchor="middle">Implementer</text>
+          <rect x="212" y="70" width="90" height="28" rx="2"></rect>
+          <text x="257" y="88" text-anchor="middle">Integrator</text>
+          <rect x="105" y="122" width="110" height="24" rx="2"></rect>
+          <text x="160" y="138" text-anchor="middle">worktrees</text>
+        </g>
+        <path d="M160 40 V56 M108 84 H132 M188 84 H212 M160 112 V122" class="atk-qvs__links"></path>
+      </svg>
+      <p>Coordinated multi-role execution.</p>
+    </article>
+  </div>
+
+  <p class="atk-qvs__copy">
+    Queue = durable background jobs. Swarm = coordinated multi-role execution.
+    <a href={toolkitDocs.swarm} target="_blank" rel="noreferrer">Learn more ↗</a>
+  </p>
+</section>
+
+<style>
+  .atk-qvs {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .atk-qvs__header {
+    margin-bottom: 1rem;
+  }
+
+  .atk-qvs__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .atk-qvs h2 {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  }
+
+  .atk-qvs__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+
+  .atk-qvs__pane {
+    padding: 0.9rem 1rem 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .atk-qvs__pane--queue {
+    border-color: color-mix(in srgb, var(--nest-cyan) 40%, transparent);
+  }
+
+  .atk-qvs__pane--swarm {
+    border-color: color-mix(in srgb, var(--nest-magenta) 45%, transparent);
+  }
+
+  .atk-qvs h3 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .atk-qvs__pane--swarm h3 {
+    color: var(--nest-magenta);
+  }
+
+  .atk-qvs__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .atk-qvs__belt {
+    fill: color-mix(in srgb, var(--nest-cyan) 18%, transparent);
+    stroke: var(--nest-cyan);
+  }
+
+  .atk-qvs__stations text,
+  .atk-qvs__roles text,
+  .atk-qvs__state-label {
+    fill: var(--color-text-muted);
+    font-size: 11px;
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+
+  .atk-qvs__job {
+    fill: var(--nest-cyan);
+    animation: atk-job 3.6s ease-in-out infinite;
+  }
+
+  .atk-qvs__state {
+    fill: color-mix(in srgb, var(--nest-magenta) 25%, transparent);
+    stroke: var(--nest-magenta);
+  }
+
+  .atk-qvs__roles rect {
+    fill: color-mix(in srgb, var(--nest-midnight-950) 70%, transparent);
+    stroke: var(--nest-magenta);
+  }
+
+  .atk-qvs__links {
+    fill: none;
+    stroke: color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    stroke-width: 1.5;
+  }
+
+  .atk-qvs__pane p {
+    margin: 0.55rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .atk-qvs__copy {
+    margin: 0.9rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .atk-qvs__copy a {
+    color: var(--nest-cyan);
+    margin-inline-start: 0.35rem;
+  }
+
+  @keyframes atk-job {
+    0% {
+      transform: translateX(0);
+    }
+    70% {
+      transform: translateX(230px);
+    }
+    100% {
+      transform: translateX(230px);
+      opacity: 0.4;
+    }
+  }
+
+  @media (width < 800px) {
+    .atk-qvs__split {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atk-qvs__job {
+      animation: none;
+      transform: translateX(120px);
+    }
+  }
+</style>

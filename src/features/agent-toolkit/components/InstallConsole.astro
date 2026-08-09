@@ -1,0 +1,188 @@
+---
+import { installSnippets, toolkitDocs } from '../data/index.js';
+
+const tabs = installSnippets.map((s, i) => ({
+  id: ['uvx', 'persistent', 'marketplace'][i] ?? `tab-${i}`,
+  label: ['uvx', 'persistent', 'Claude marketplace'][i] ?? s.label,
+  command: s.command,
+  note: s.note,
+}));
+const tabsJson = JSON.stringify(tabs);
+---
+
+<section class="atk-install" aria-labelledby="atk-install-title" data-atk-install data-tabs={tabsJson}>
+  <header>
+    <p class="atk-install__eyebrow">Install</p>
+    <h2 id="atk-install-title">One console</h2>
+  </header>
+  <div class="atk-install__tabs" role="tablist" aria-label="Install method">
+    {
+      tabs.map((tab, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`install-tab-${tab.id}`}
+          aria-selected={index === 0 ? 'true' : 'false'}
+          aria-controls="install-panel"
+          data-install-tab={tab.id}
+          tabindex={index === 0 ? 0 : -1}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="atk-install__panel" role="tabpanel" id="install-panel" aria-labelledby={`install-tab-${tabs[0]!.id}`}>
+    <pre><code data-install-cmd>{tabs[0]!.command}</code></pre>
+    <button type="button" class="atk-install__copy" data-install-copy>Copy</button>
+  </div>
+  <p class="atk-install__note" data-install-note>{tabs[0]!.note}</p>
+  <p class="atk-install__docs">
+    <a href={toolkitDocs.install} target="_blank" rel="noreferrer">Installation docs ↗</a>
+  </p>
+</section>
+
+<script>
+  function initInstall(root: HTMLElement) {
+    const tabs = JSON.parse(root.dataset.tabs || '[]') as Array<{
+      id: string;
+      label: string;
+      command: string;
+      note: string;
+    }>;
+    const cmd = root.querySelector<HTMLElement>('[data-install-cmd]');
+    const note = root.querySelector<HTMLElement>('[data-install-note]');
+    const panel = root.querySelector<HTMLElement>('#install-panel');
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-install-tab]'));
+
+    const select = (id: string | null) => {
+      const tab = tabs.find((t) => t.id === id) || tabs[0];
+      if (!tab) return;
+      buttons.forEach((b) => {
+        const on = b.dataset.installTab === id;
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+      });
+      if (cmd) cmd.textContent = tab.command;
+      if (note) note.textContent = tab.note;
+      if (panel) panel.setAttribute('aria-labelledby', `install-tab-${tab.id}`);
+    };
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => select(b.dataset.installTab || null));
+      b.addEventListener('keydown', (e) => {
+        const idx = buttons.indexOf(b);
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = buttons[(idx + 1) % buttons.length]!;
+          next.focus();
+          select(next.dataset.installTab || null);
+        }
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = buttons[(idx - 1 + buttons.length) % buttons.length]!;
+          prev.focus();
+          select(prev.dataset.installTab || null);
+        }
+      });
+    });
+
+    root.querySelector<HTMLButtonElement>('[data-install-copy]')?.addEventListener('click', async () => {
+      const text = cmd?.textContent || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        /* ignore */
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-atk-install]').forEach(initInstall);
+</script>
+
+<style>
+  .atk-install {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .atk-install__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .atk-install h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+  }
+
+  .atk-install__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .atk-install__tabs button {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+  }
+
+  .atk-install__tabs button[aria-selected='true'] {
+    color: #fff;
+    border-color: var(--nest-cyan);
+    background: color-mix(in srgb, var(--nest-cyan) 16%, transparent);
+  }
+
+  .atk-install__panel {
+    position: relative;
+  }
+
+  .atk-install__panel pre {
+    margin: 0;
+    padding: 0.75rem 3.5rem 0.75rem 0.75rem;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    background: var(--color-code-bg, #0b0714);
+    font-size: 0.78rem;
+  }
+
+  .atk-install__copy {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--nest-magenta);
+    background: color-mix(in srgb, var(--nest-magenta) 25%, transparent);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .atk-install__note,
+  .atk-install__docs {
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-faint);
+  }
+
+  .atk-install__docs a {
+    color: var(--nest-cyan);
+  }
+</style>

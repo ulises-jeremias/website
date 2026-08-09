@@ -1,0 +1,596 @@
+---
+import {
+  capabilityNodes,
+  distributionTargets,
+  inventory,
+  personaVisuals,
+  skillDomains,
+  toolkitDocs,
+} from '../data/index.js';
+
+const maxDomain = Math.max(...skillDomains.map((d) => d.count), 1);
+const familyAngles = capabilityNodes.map((_, i) => -90 + (i * 360) / capabilityNodes.length);
+const targetAngles = distributionTargets.map((_, i) => -90 + (i * 360) / distributionTargets.length);
+
+const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).slice(0, 8);
+---
+
+<section class="atk-nexus" aria-labelledby="atk-nexus-title" data-atk-nexus>
+  <header class="atk-nexus__hero">
+    <p class="atk-nexus__eyebrow">Agent Operations Room</p>
+    <h1 id="atk-nexus-title">Agent Toolkit</h1>
+    <p class="atk-nexus__lede">One source → many assistants.</p>
+  </header>
+
+  <div class="atk-nexus__stage">
+    <div class="atk-nexus__visual" role="group" aria-label="Capability Nexus">
+      <svg class="atk-nexus__svg" viewBox="0 0 640 640" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="atk-core-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff84f1" stop-opacity="0.55"></stop>
+            <stop offset="55%" stop-color="#7358ff" stop-opacity="0.22"></stop>
+            <stop offset="100%" stop-color="#0b0618" stop-opacity="0"></stop>
+          </radialGradient>
+          <filter id="atk-soft">
+            <feGaussianBlur stdDeviation="2.2" result="b"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="b"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <circle class="atk-nexus__orbit atk-nexus__orbit--outer" cx="320" cy="320" r="268"></circle>
+        <circle class="atk-nexus__orbit atk-nexus__orbit--mid" cx="320" cy="320" r="188"></circle>
+        <circle cx="320" cy="320" r="96" fill="url(#atk-core-glow)"></circle>
+
+        {
+          distributionTargets.map((target, index) => {
+            const angle = (targetAngles[index]! * Math.PI) / 180;
+            const x = 320 + Math.cos(angle) * 268;
+            const y = 320 + Math.sin(angle) * 268;
+            return (
+              <g class="atk-nexus__target" data-target={target.id}>
+                <line class="atk-nexus__beam" x1="320" y1="320" x2={x} y2={y} style={`--beam-i: ${index}`} />
+                <circle cx={x} cy={y} r="18" class="atk-nexus__target-node" />
+                <text x={x} y={y + 34} text-anchor="middle" class="atk-nexus__target-label">
+                  {target.label}
+                </text>
+              </g>
+            );
+          })
+        }
+
+        {
+          capabilityNodes.map((node, index) => {
+            const angle = (familyAngles[index]! * Math.PI) / 180;
+            const x = 320 + Math.cos(angle) * 188;
+            const y = 320 + Math.sin(angle) * 188;
+            return (
+              <g class="atk-nexus__family-mark" data-family-mark={node.id} style={`--node-color: ${node.color}`}>
+                <circle cx={x} cy={y} r="28" class="atk-nexus__family-ring" />
+                <text x={x} y={y + 4} text-anchor="middle" class="atk-nexus__family-count">
+                  {node.count}
+                </text>
+              </g>
+            );
+          })
+        }
+
+        <g class="atk-nexus__core" filter="url(#atk-soft)">
+          <circle cx="320" cy="320" r="54" class="atk-nexus__core-disk"></circle>
+          <text x="320" y="312" text-anchor="middle" class="atk-nexus__core-title">AGENT</text>
+          <text x="320" y="334" text-anchor="middle" class="atk-nexus__core-title">TOOLKIT</text>
+        </g>
+
+        <g class="atk-nexus__packets" data-packets>
+          <circle class="atk-nexus__packet" r="4" cx="320" cy="320"></circle>
+          <circle class="atk-nexus__packet" r="4" cx="320" cy="320"></circle>
+          <circle class="atk-nexus__packet" r="4" cx="320" cy="320"></circle>
+        </g>
+      </svg>
+
+      <div class="atk-nexus__family-controls" role="radiogroup" aria-label="Capability family">
+        {
+          capabilityNodes.map((node, index) => (
+            <>
+              <input
+                class="atk-nexus__radio"
+                type="radio"
+                name="atk-family"
+                id={`atk-family-${node.id}`}
+                value={node.id}
+                checked={index === 0}
+                data-family={node.id}
+              />
+              <label class="atk-nexus__chip" for={`atk-family-${node.id}`} style={`--node-color: ${node.color}`}>
+                <span class="atk-nexus__chip-count">{node.count}</span>
+                <span>{node.title}</span>
+              </label>
+            </>
+          ))
+        }
+      </div>
+    </div>
+
+    <aside class="atk-nexus__inspector" aria-live="polite">
+      {
+        capabilityNodes.map((node, index) => (
+          <div
+            class:list={['atk-nexus__panel', { 'is-active': index === 0 }]}
+            data-family-panel={node.id}
+            hidden={index !== 0}
+          >
+            <p class="atk-nexus__panel-kicker">{node.title}</p>
+            <p class="atk-nexus__panel-count">{node.count}</p>
+            <p class="atk-nexus__panel-summary">{node.summary}</p>
+            <ul class="atk-nexus__examples" aria-label={`${node.title} examples`}>
+              {node.examples.slice(0, 3).map((example) => (
+                <li>
+                  <code>{example.name}</code>
+                </li>
+              ))}
+            </ul>
+            {node.id === 'skills' ? (
+              <div class="atk-nexus__domains" aria-label="Skill domains">
+                {skillDomains.map((domain) => (
+                  <div class="atk-nexus__domain" style={`--fill: ${(domain.count / maxDomain) * 100}%`}>
+                    <span>{domain.id}</span>
+                    <span class="atk-nexus__domain-bar" title={`${domain.id}: ${domain.count}`}>
+                      <span />
+                    </span>
+                    <span class="atk-nexus__domain-n">{domain.count}</span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+            {node.id === 'agents' ? (
+              <ul class="atk-nexus__personas" aria-label="Agent personas">
+                {agentVisualIds.map((id) => {
+                  const visual = personaVisuals[id]!;
+                  return (
+                    <li data-glyph={visual.glyph}>
+                      <span class="atk-nexus__persona-glyph" aria-hidden="true" />
+                      <span>
+                        <strong>{visual.label}</strong>
+                        <small>{visual.prop}</small>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+            <a class="atk-nexus__browse" href={node.href} target="_blank" rel="noreferrer">
+              Browse {node.title.toLowerCase()} ↗
+            </a>
+          </div>
+        ))
+      }
+      <p class="atk-nexus__dist-note">
+        Compile once → land in {distributionTargets.length} native profiles.
+        <a href={toolkitDocs.repo} target="_blank" rel="noreferrer">Docs ↗</a>
+      </p>
+    </aside>
+  </div>
+
+  <noscript>
+    <p class="atk-nexus__noscript">
+      Without script, all capability families and assistant targets remain listed above with catalog counts from the
+      inventory snapshot.
+    </p>
+  </noscript>
+</section>
+
+<style>
+  .atk-nexus {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.25rem, 3vw, 2rem) clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .atk-nexus__hero {
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .atk-nexus__eyebrow {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .atk-nexus h1 {
+    margin: 0;
+    font-family: var(--font-display, Orbitron, ui-sans-serif);
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--nest-paper);
+  }
+
+  .atk-nexus__lede {
+    margin: 0.55rem 0 0;
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    color: var(--nest-magenta);
+  }
+
+  .atk-nexus__stage {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.9fr);
+    align-items: start;
+  }
+
+  .atk-nexus__visual {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 40%, transparent);
+    background:
+      radial-gradient(
+        ellipse 60% 50% at 50% 45%,
+        color-mix(in srgb, var(--nest-violet) 22%, transparent),
+        transparent 70%
+      ),
+      color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+    padding: 0.75rem;
+  }
+
+  .atk-nexus__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(68vh, 34rem);
+  }
+
+  .atk-nexus__orbit {
+    fill: none;
+    stroke: color-mix(in srgb, var(--nest-cyan) 28%, transparent);
+    stroke-dasharray: 3 7;
+  }
+
+  .atk-nexus__orbit--mid {
+    stroke: color-mix(in srgb, var(--nest-magenta) 35%, transparent);
+  }
+
+  .atk-nexus__beam {
+    stroke: color-mix(in srgb, var(--nest-cyan) 35%, transparent);
+    stroke-width: 1.2;
+    stroke-dasharray: 4 8;
+    animation: atk-beam 4.8s linear infinite;
+    animation-delay: calc(var(--beam-i) * 0.35s);
+  }
+
+  .atk-nexus__target-node {
+    fill: color-mix(in srgb, var(--nest-midnight-900) 70%, #1cefff);
+    stroke: var(--nest-cyan);
+    stroke-width: 1.5;
+  }
+
+  .atk-nexus__target-label {
+    fill: var(--color-text-muted);
+    font-size: 11px;
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+
+  .atk-nexus__family-ring {
+    fill: color-mix(in srgb, var(--nest-midnight-950) 70%, transparent);
+    stroke: var(--node-color, var(--nest-violet));
+    stroke-width: 2;
+  }
+
+  .atk-nexus__family-count {
+    fill: var(--nest-paper);
+    font-size: 13px;
+    font-family: var(--font-mono), ui-monospace, monospace;
+  }
+
+  .atk-nexus__core-disk {
+    fill: color-mix(in srgb, var(--nest-midnight-950) 80%, #7358ff);
+    stroke: var(--nest-magenta);
+    stroke-width: 2;
+  }
+
+  .atk-nexus__core-title {
+    fill: var(--nest-paper);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    font-family: var(--font-display, Orbitron, ui-sans-serif);
+  }
+
+  .atk-nexus__packet {
+    fill: var(--nest-cyan);
+    opacity: 0.85;
+  }
+
+  .atk-nexus__family-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+
+  .atk-nexus__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .atk-nexus__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 44px;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--node-color, var(--nest-violet)) 55%, transparent);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .atk-nexus__chip-count {
+    color: var(--node-color, var(--nest-magenta));
+    font-weight: 700;
+  }
+
+  .atk-nexus__radio:checked + .atk-nexus__chip,
+  .atk-nexus__radio:focus-visible + .atk-nexus__chip {
+    color: var(--nest-paper);
+    border-color: var(--node-color, var(--nest-magenta));
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--node-color, var(--nest-magenta)) 45%, transparent);
+    outline: none;
+  }
+
+  .atk-nexus__inspector {
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 35%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 94%, transparent);
+    clip-path: var(--clip-corner-md);
+    padding: 1rem 1.1rem;
+    min-height: 18rem;
+  }
+
+  .atk-nexus__panel-kicker {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .atk-nexus__panel-count {
+    margin: 0.2rem 0 0;
+    font-family: var(--font-display, Orbitron, ui-sans-serif);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    color: var(--nest-magenta);
+    line-height: 1;
+  }
+
+  .atk-nexus__panel-summary {
+    margin: 0.55rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .atk-nexus__examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .atk-nexus__examples code {
+    display: inline-block;
+    padding: 0.25rem 0.45rem;
+    border: 1px solid var(--color-border);
+    font-size: 0.75rem;
+    color: var(--nest-cyan);
+  }
+
+  .atk-nexus__domains {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.9rem;
+  }
+
+  .atk-nexus__domain {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr 1.5rem;
+    gap: 0.4rem;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: var(--color-text-faint);
+  }
+
+  .atk-nexus__domain-bar {
+    display: block;
+    height: 0.45rem;
+    background: color-mix(in srgb, var(--nest-violet) 18%, transparent);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .atk-nexus__domain-bar > span {
+    display: block;
+    height: 100%;
+    width: var(--fill);
+    background: linear-gradient(90deg, var(--nest-violet), var(--nest-cyan));
+  }
+
+  .atk-nexus__domain-n {
+    text-align: right;
+    color: var(--nest-paper);
+  }
+
+  .atk-nexus__personas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .atk-nexus__personas li {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+    min-height: 2.6rem;
+    padding: 0.35rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+  }
+
+  .atk-nexus__personas strong {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+
+  .atk-nexus__personas small {
+    color: var(--color-text-faint);
+    font-size: 0.65rem;
+  }
+
+  .atk-nexus__persona-glyph {
+    width: 1.6rem;
+    height: 1.6rem;
+    flex: none;
+    border: 1px solid var(--nest-magenta);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--nest-magenta) 40%, transparent), transparent),
+      color-mix(in srgb, var(--nest-midnight-950) 80%, transparent);
+    clip-path: polygon(20% 0, 80% 0, 100% 35%, 70% 100%, 30% 100%, 0 35%);
+  }
+
+  .atk-nexus__browse,
+  .atk-nexus__dist-note a {
+    color: var(--nest-cyan);
+  }
+
+  .atk-nexus__browse {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .atk-nexus__dist-note {
+    margin: 1rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .atk-nexus__noscript {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+  }
+
+  @keyframes atk-beam {
+    to {
+      stroke-dashoffset: -48;
+    }
+  }
+
+  @media (width < 900px) {
+    .atk-nexus__stage {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .atk-nexus__beam,
+    .atk-nexus__packet {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initNexus(root: HTMLElement) {
+    const radios = Array.from(root.querySelectorAll<HTMLInputElement>('input[name="atk-family"]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-family-panel]'));
+    const marks = Array.from(root.querySelectorAll<SVGElement>('[data-family-mark]'));
+    const packets = Array.from(root.querySelectorAll<SVGCircleElement>('.atk-nexus__packet'));
+    const targets = Array.from(root.querySelectorAll<SVGGElement>('.atk-nexus__target'));
+
+    const setFamily = (id: string) => {
+      panels.forEach((panel) => {
+        const active = panel.dataset.familyPanel === id;
+        panel.hidden = !active;
+        panel.classList.toggle('is-active', active);
+      });
+      marks.forEach((mark) => {
+        mark.classList.toggle('is-active', mark.dataset.familyMark === id);
+        const ring = mark.querySelector('.atk-nexus__family-ring');
+        if (ring instanceof SVGElement) {
+          ring.setAttribute('stroke-width', mark.dataset.familyMark === id ? '3.5' : '2');
+        }
+      });
+    };
+
+    radios.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        if (radio.checked) setFamily(radio.value);
+      });
+    });
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && packets.length && targets.length && 'animate' in packets[0]!) {
+      const run = () => {
+        packets.forEach((packet, index) => {
+          const target = targets[index % targets.length]!;
+          const node = target.querySelector('circle');
+          if (!(node instanceof SVGCircleElement)) return;
+          const x = Number(node.getAttribute('cx'));
+          const y = Number(node.getAttribute('cy'));
+          packet.animate(
+            [
+              { cx: 320, cy: 320, opacity: 0.1 },
+              { cx: (320 + x) / 2, cy: (320 + y) / 2, opacity: 1 },
+              { cx: x, cy: y, opacity: 0.15 },
+            ],
+            {
+              duration: 2400,
+              delay: index * 400,
+              iterations: 1,
+              easing: 'ease-in-out',
+              fill: 'forwards',
+            },
+          );
+        });
+      };
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            run();
+            io.disconnect();
+          }
+        },
+        { threshold: 0.35 },
+      );
+      io.observe(root);
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-atk-nexus]').forEach(initNexus);
+</script>

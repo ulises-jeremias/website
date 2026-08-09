@@ -361,9 +361,47 @@ export const budgetItems: BudgetItem[] = [
 export const communityCrossLink: CommunityCrossLink = {
   href: '/community',
   title: 'Community — Digital Nest workshop',
-  summary:
-    'Agent Toolkit is one station in the umbrella Digital Nest workshop. Join Discord and contribute across HorneroConfig, Workstation, Harness, Create Awesome, and V ecosystem work.',
+  summary: 'One station in the Digital Nest workshop — Discord + GitHub across DX, harness, Create Awesome, and V.',
   cta: 'Open the workshop',
+};
+
+/** Canonical docs deep-links (manual lives in the repo, not on this page). */
+export const toolkitDocs = {
+  repo: GH,
+  swarm: `${GH}/blob/main/docs/SWARMS.md`,
+  loops: `${GH}/blob/main/docs/LOOPS.md`,
+  install: `${GH}/blob/main/docs/INSTALLATION.md`,
+  skills: `${GH}/tree/main/skills`,
+  agents: `${GH}/tree/main/agents`,
+} as const;
+
+/**
+ * Visual archetypes for swarm role stations and agent explorer.
+ * Maps recipe role ids / persona ids onto original synthwave operator props — not real people.
+ */
+export const personaVisuals: Record<
+  string,
+  {
+    label: string;
+    prop: string;
+    glyph: 'plan' | 'code' | 'review' | 'merge' | 'shield' | 'test' | 'refactor' | 'agent';
+  }
+> = {
+  planner: { label: 'Planner', prop: 'holographic blueprint', glyph: 'plan' },
+  implementer: { label: 'Implementer', prop: 'active terminal', glyph: 'code' },
+  reviewer: { label: 'Reviewer', prop: 'diff magnifier', glyph: 'review' },
+  integrator: { label: 'Integrator', prop: 'merge junction', glyph: 'merge' },
+  architect: { label: 'Architect', prop: 'system topology', glyph: 'merge' },
+  hardener: { label: 'Hardener', prop: 'security shield', glyph: 'shield' },
+  qa: { label: 'QA', prop: 'test console', glyph: 'test' },
+  refactorer: { label: 'Refactorer', prop: 'cleanup tools', glyph: 'refactor' },
+  'tdd-guide': { label: 'TDD Guide', prop: 'active terminal', glyph: 'code' },
+  'code-reviewer': { label: 'Code Reviewer', prop: 'diff magnifier', glyph: 'review' },
+  'security-reviewer': { label: 'Security Reviewer', prop: 'security shield', glyph: 'shield' },
+  'e2e-runner': { label: 'E2E Runner', prop: 'test console', glyph: 'test' },
+  'refactor-cleaner': { label: 'Refactor Cleaner', prop: 'cleanup tools', glyph: 'refactor' },
+  'build-error-resolver': { label: 'Build Resolver', prop: 'error beacon', glyph: 'code' },
+  assistant: { label: 'Assistant', prop: 'ops headset', glyph: 'agent' },
 };
 
 export const toolkitMeta = {
