@@ -54,7 +54,8 @@ const composerBootstrap = {
     data-ca-bootstrap={JSON.stringify(composerBootstrap)}
   >
     {/* Runtime radios stay in the form for command state; embedded worlds expose stations instead. */}
-    <fieldset class:list={[{ 'ca-composer__runtime--proxy': embedded }]} aria-hidden={embedded ? 'true' : undefined}>
+    {/* Proxied radios stay in the form for command state but leave the a11y tree when embedded. */}
+    <fieldset class:list={[{ 'ca-composer__runtime--proxy': embedded }]} inert={embedded || undefined}>
       {embedded ? null : <legend>Runtime</legend>}
       {
         variants.map((variant, index) => (
@@ -66,6 +67,7 @@ const composerBootstrap = {
               value={variant.id}
               data-family={variant.id}
               checked={index === 0}
+              tabindex={embedded ? -1 : undefined}
               aria-label={embedded ? variant.label : undefined}
             />
             {embedded ? null : <label for={`ca-runtime-${variant.id}`}>{variant.label}</label>}
@@ -93,7 +95,7 @@ const composerBootstrap = {
           class={`ca-composer__panel ca-composer__panel--${variant.id}`}
           data-runtime={variant.id}
           data-ca-panel={variant.id}
-          hidden={index !== 0}
+          data-ca-panel-active={index === 0 ? 'true' : 'false'}
         >
           <label>
             Template

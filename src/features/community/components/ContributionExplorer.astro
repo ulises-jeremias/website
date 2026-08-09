@@ -1,5 +1,5 @@
 ---
-import { contributionOpportunities, interestFilters, projectsForInterest } from '../data/index.js';
+import { contributionOpportunities, interestFilters } from '../data/index.js';
 
 const opsJson = JSON.stringify(
   contributionOpportunities.map((op) => ({
@@ -56,57 +56,21 @@ const opsJson = JSON.stringify(
     }
   </ul>
 
-  <details class="cm-explore__by-interest">
-    <summary>Projects by interest</summary>
-    <div class="cm-explore__interests">
-      {
-        interestFilters.map((filter) => {
-          const projects = projectsForInterest(filter.id);
-          return (
-            <section
-              id={`interest-${filter.id}`}
-              class="cm-explore__interest"
-              aria-labelledby={`interest-title-${filter.id}`}
-            >
-              <h3 id={`interest-title-${filter.id}`} class="cm-explore__interest-title">
-                {filter.label}
-              </h3>
-              <p class="cm-explore__interest-hint">{filter.hint}</p>
-              {projects.length === 0 ? (
-                <p class="cm-explore__empty">No tagged projects yet.</p>
-              ) : (
-                <ul class="cm-explore__interest-list">
-                  {projects.map((p) => (
-                    <li>
-                      {p.repo ? (
-                        <a href={`https://github.com/${p.repo}`} target="_blank" rel="noopener noreferrer">
-                          {p.name}
-                        </a>
-                      ) : (
-                        <span>{p.name}</span>
-                      )}
-                      {p.worldPath ? (
-                        <>
-                          {' '}
-                          · <a href={p.worldPath}>world</a>
-                        </>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
-          );
-        })
-      }
-    </div>
-  </details>
+  <p class="cm-explore__hint" data-cm-explore-hint aria-live="polite">
+    Filter illuminates plaza stations above. Pick an interest to focus the workshop.
+  </p>
 </section>
 
 <style>
   .cm-explore {
     padding: 0.5rem 0;
     scroll-margin-top: 5rem;
+  }
+
+  .cm-explore__hint {
+    margin: 0.65rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
   }
 
   .cm-explore__eyebrow {

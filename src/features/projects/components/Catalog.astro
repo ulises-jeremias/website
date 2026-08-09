@@ -59,9 +59,7 @@ function primaryHref(project: Project): string {
         <div class="projects-ledger__table" role="table" aria-label={`${bucket.label} projects`}>
           <div class="projects-ledger__row projects-ledger__row--head" role="row">
             <span role="columnheader">Project</span>
-            <span role="columnheader">Kind / role</span>
             <span role="columnheader">Status</span>
-            <span role="columnheader">Verified</span>
             <span role="columnheader">Links</span>
           </div>
           {bucket.projects.map((p) => (
@@ -80,7 +78,9 @@ function primaryHref(project: Project): string {
                   {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
                 </h4>
                 <details class="projects-ledger__inspect">
-                  <summary>Inspect</summary>
+                  <summary>
+                    Inspect <span class="visually-hidden">{p.title}</span>
+                  </summary>
                   <p>{p.summary}</p>
                   {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
                   {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
@@ -92,20 +92,15 @@ function primaryHref(project: Project): string {
                 </details>
               </div>
               <div role="cell">
-                <span class="projects-ledger__kind">
-                  {p.kind} · {roleLabels[p.role]}
-                </span>
-              </div>
-              <div role="cell">
                 <span
                   class={`projects-ledger__badge projects-ledger__badge--${p.status}`}
                   aria-label={`Status ${statusLabels[p.status]}`}
                 >
                   {statusLabels[p.status]}
                 </span>
-              </div>
-              <div role="cell">
-                <time datetime={p.lastVerified}>{p.lastVerified}</time>
+                <span class="projects-ledger__kind">
+                  {p.kind} · {roleLabels[p.role]} · <time datetime={p.lastVerified}>{p.lastVerified}</time>
+                </span>
               </div>
               <div role="cell" class="projects-ledger__links">
                 {p.links.map((l) => (
@@ -260,7 +255,7 @@ function primaryHref(project: Project): string {
 
   .projects-ledger__row {
     display: grid;
-    grid-template-columns: minmax(14rem, 2.4fr) 0.9fr 0.8fr 0.7fr 0.9fr;
+    grid-template-columns: minmax(14rem, 2.6fr) 1.1fr 0.9fr;
     gap: 0.75rem;
     padding: 0.85rem 1rem;
     border-block-end: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);

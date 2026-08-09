@@ -26,7 +26,13 @@ const first = smartColorSteps[0]!;
       <p class="df-colors__eyebrow">Smart Colors</p>
       <h2 id="df-colors-title">Wallpaper → palette → apps</h2>
     </div>
-    <StatusMeter value={25} label="Pipeline" caption="stage" accent="#FFB0CA" />
+    <StatusMeter
+      value={Math.round((1 / smartColorSteps.length) * 100)}
+      label="Pipeline"
+      caption="stage"
+      displayValue={`Step 1/${smartColorSteps.length}`}
+      accent="#FFB0CA"
+    />
   </header>
 
   <div class="vf-scene df-colors__scene">
@@ -84,31 +90,18 @@ const first = smartColorSteps[0]!;
           <text x="320" y="78" text-anchor="middle" class="df-colors__viz-cap"> ~/.cache/dots/smart-colors/ </text>
         </g>
         <g data-sc-viz="apps" class="df-colors__viz is-hidden">
-          {
-            [
-              { t: 'Quickshell', x: 200 },
-              { t: 'Hyprland', x: 300 },
-              { t: 'Kitty', x: 400 },
-              { t: 'GTK', x: 480 },
-            ].map((app) => (
-              <g>
-                <rect
-                  x={app.x}
-                  y="30"
-                  width="72"
-                  height="32"
-                  rx="6"
-                  fill="#191114"
-                  stroke="#FFB0CA"
-                  stroke-width="1.5"
-                />
-                <text x={app.x + 36} y="50" text-anchor="middle" class="df-colors__viz-app">
-                  {app.t}
-                </text>
-              </g>
-            ))
-          }
-          <text x="320" y="78" text-anchor="middle" class="df-colors__viz-cap">one atomic palette</text>
+          <!-- Mini desktop: wallpaper plane + recolored consumers -->
+          <rect x="190" y="18" width="260" height="88" rx="8" fill="#3a232e" stroke="#FFB0CA" stroke-width="1.25"
+          ></rect>
+          <rect x="200" y="28" width="100" height="56" rx="4" fill="#7a4a5f"></rect>
+          <rect x="310" y="28" width="128" height="18" rx="3" fill="#191114" stroke="#FFB0CA"></rect>
+          <text x="374" y="41" text-anchor="middle" class="df-colors__viz-app">Quickshell</text>
+          <rect x="310" y="52" width="60" height="28" rx="3" fill="#191114" stroke="#e2bdc7"></rect>
+          <text x="340" y="70" text-anchor="middle" class="df-colors__viz-app">Kitty</text>
+          <rect x="378" y="52" width="60" height="28" rx="3" fill="#191114" stroke="#FFB0CA"></rect>
+          <text x="408" y="70" text-anchor="middle" class="df-colors__viz-app">GTK</text>
+          <text x="250" y="98" text-anchor="middle" class="df-colors__viz-cap">Hyprland desktop</text>
+          <text x="420" y="98" text-anchor="middle" class="df-colors__viz-cap">recolored</text>
         </g>
 
         <text x="320" y="200" text-anchor="middle" class="df-colors__foot" aria-hidden="true">
@@ -160,8 +153,8 @@ const first = smartColorSteps[0]!;
       if (detail) detail.textContent = stage.detail;
       if (meter) {
         meter.style.setProperty('--vf-meter-value', String(stage.progress));
-        const strong = meter.querySelector('strong');
-        if (strong) strong.textContent = `${stage.progress}%`;
+        const strong = meter.querySelector('[data-vf-meter-value], strong');
+        if (strong) strong.textContent = `Step ${index + 1}/${stages.length}`;
       }
       root.querySelectorAll<SVGGElement>('[data-sc-node]').forEach((node) => {
         const on = node.dataset.scNode === stage.id;

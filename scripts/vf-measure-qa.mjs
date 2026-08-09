@@ -7,6 +7,7 @@
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
+import { measureVisibleContent } from './lib/vf-visible-content.mjs';
 
 const BASE = process.env.BASE || 'http://127.0.0.1:4321';
 const ROOT = path.resolve('docs/design/visual-first');
@@ -32,36 +33,6 @@ const ROUTES = Object.keys(BEFORE);
 
 fs.mkdirSync(QA, { recursive: true });
 fs.mkdirSync(INTERACTIONS, { recursive: true });
-
-async function measure(page) {
-  return page.evaluate(() => {
-    const nav = document.querySelector('header, [role="banner"]');
-    const footer = document.querySelector('footer, [role="contentinfo"]');
-    const isHidden = (el) => {
-      const s = getComputedStyle(el);
-      if (s.display === 'none' || s.visibility === 'hidden') return true;
-      if (el.closest('[hidden], [aria-hidden="true"]')) return true;
-      const det = el.closest('details');
-      if (det && !det.open) {
-        const summary = det.querySelector('summary');
-        if (!summary || !summary.contains(el)) return true;
-      }
-      return false;
-    };
-    const inChrome = (el) => (nav && nav.contains(el)) || (footer && footer.contains(el));
-    let visibleText = '';
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    let node;
-    while ((node = walker.nextNode())) {
-      const parent = node.parentElement;
-      if (!parent || isHidden(parent) || inChrome(parent)) continue;
-      const t = node.textContent.replace(/\s+/g, ' ').trim();
-      if (t) visibleText += `${t} `;
-    }
-    const words = (visibleText.match(/[A-Za-zÀ-ÿ0-9]+(?:['’-][A-Za-zÀ-ÿ0-9]+)*/g) || []).length;
-    return { words };
-  });
-}
 
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ deviceScaleFactor: 1 });
@@ -92,7 +63,7 @@ for (const route of ROUTES) {
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.waitForTimeout(200);
-  const metrics = await measure(page);
+  const metrics = await measureVisibleContent(page);
   await page.screenshot({ path: path.join(dir, '1440.png'), fullPage: false });
 
   await page.setViewportSize({ width: 390, height: 844 });

@@ -17,44 +17,45 @@ const bootStages = [
     title: 'Fresh',
     summary: 'Empty machine. Thin workstation will provision — no embedded skills.',
     command: thinWorkstationVerification.installPath.split('&&')[0]?.trim() ?? 'chezmoi init',
-    health: 12,
+    illuminate: ['hornero'] as const,
   },
   {
     id: 'profile',
     title: 'Profile',
     summary: 'Pick a chezmoi profile. Groups drive packages and swarm prerequisites.',
     command: 'profile = technical | minimal | …',
-    health: 28,
+    illuminate: ['hornero', 'workstation'] as const,
   },
   {
     id: 'provision',
     title: 'Provision',
     summary: provisioningSteps[0]!.description,
     command: provisioningSteps[0]!.command,
-    health: 52,
+    illuminate: ['hornero', 'workstation'] as const,
   },
   {
     id: 'doctor',
     title: 'Doctor',
     summary: doctorChecks[0]!.description,
     command: doctorChecks[0]!.command,
-    health: 68,
+    illuminate: ['hornero', 'workstation'] as const,
   },
   {
     id: 'toolkit',
     title: 'Toolkit uplink',
     summary: `Capabilities via agent-toolkit · ${inventoryStrip()}.`,
     command: provisioningSteps[1]!.command,
-    health: 86,
+    illuminate: ['hornero', 'workstation', 'toolkit'] as const,
   },
   {
     id: 'harness',
     title: 'Harness',
     summary: workstationLayers.find((l) => l.id === 'harness')!.description,
     command: 'workspace-context · knowledge/ · personas/',
-    health: 100,
+    illuminate: ['hornero', 'workstation', 'toolkit', 'harness'] as const,
   },
 ];
+const bootStageCount = bootStages.length;
 
 const nodes = [
   { id: 'hornero', x: 90, y: 210, layer: workstationLayers[0]! },
@@ -111,34 +112,46 @@ const defaultLayer = workstationLayers[1]!;
     <p class="ws-map__lede">Fresh → Profile → Provision → Doctor → Toolkit uplink → Harness. Thin L1 · fat L1.5.</p>
   </header>
 
-  <div class="ws-map__identity" aria-label="Identity tokens">
-    <span style={`--swatch:${workstationIdentity.midnight}`}>midnight</span>
-    <span style={`--swatch:${workstationIdentity.cyan}`}>cyan</span>
-    <span style={`--swatch:${workstationIdentity.violet}`}>violet</span>
-    <span style={`--swatch:${workstationIdentity.lime}`}>lime</span>
-  </div>
-
-  <div class="vf-scene">
+  <div class="vf-scene" data-ws-machine data-profile={defaultProfile.id}>
     <div class="vf-stage ws-map__stage">
       <svg
         class="ws-map__svg"
         viewBox="0 0 760 340"
         role="img"
-        aria-label="Personal DX graph: Hornero optional, Workstation, Toolkit, Harness"
+        aria-label="Workstation boot machine: fresh host through harness uplink"
       >
         <defs>
           <radialGradient id="ws-core" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.35"></stop>
             <stop offset="100%" stop-color="#020617" stop-opacity="0"></stop>
           </radialGradient>
+          <linearGradient id="ws-chassis" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0b1224"></stop>
+            <stop offset="100%" stop-color="#1a1030"></stop>
+          </linearGradient>
         </defs>
         <rect x="0" y="0" width="760" height="340" fill="url(#ws-core)"></rect>
+        <!-- Machine chassis -->
+        <rect
+          class="ws-map__chassis"
+          x="48"
+          y="36"
+          width="664"
+          height="268"
+          rx="10"
+          fill="url(#ws-chassis)"
+          stroke="color-mix(in srgb, var(--nest-cyan) 35%, transparent)"
+          stroke-width="1.5"></rect>
+        <rect x="64" y="52" width="180" height="14" rx="2" fill="color-mix(in srgb, #22d3ee 25%, transparent)"></rect>
+        <text x="68" y="63" class="ws-map__chassis-label" fill="#67e8f9" font-size="9" font-family="var(--font-mono)"
+          >MACHINE · BOOT</text
+        >
         {paths.map((p) => <path class="vf-flow" data-flow={p.id} data-from={p.from} data-to={p.to} d={p.d} />)}
         {
           nodes.map((n) => (
             <g class="ws-map__node" data-node={n.id} style={`--vf-node-accent:${n.layer.accent}`}>
-              <circle cx={n.x} cy={n.y} r="36" class="ws-map__node-disk" />
-              <text x={n.x} y={n.y - 4} text-anchor="middle" class="ws-map__node-label">
+              <rect x={n.x - 42} y={n.y - 28} width="84" height="56" rx="4" class="ws-map__module" />
+              <text x={n.x} y={n.y - 2} text-anchor="middle" class="ws-map__node-label">
                 {n.layer.title}
               </text>
               <text x={n.x} y={n.y + 14} text-anchor="middle" class="ws-map__node-sub">
@@ -147,7 +160,7 @@ const defaultLayer = workstationLayers[1]!;
             </g>
           ))
         }
-        <text x="380" y="300" text-anchor="middle" class="ws-map__thin"
+        <text x="380" y="318" text-anchor="middle" class="ws-map__thin"
           >thin boundary after L1 — no embedded skills</text
         >
       </svg>
@@ -199,9 +212,10 @@ const defaultLayer = workstationLayers[1]!;
     <div class="ws-map__boot-head">
       <h2>Boot sequence</h2>
       <StatusMeter
-        value={bootStages[0]!.health}
-        label="Boot health"
-        caption="boot progress"
+        value={Math.round((1 / bootStageCount) * 100)}
+        label="Boot stage"
+        caption="boot sequence"
+        displayValue={`Step 1/${bootStageCount}`}
         accent={workstationIdentity.cyan}
       />
     </div>
@@ -291,7 +305,13 @@ const defaultLayer = workstationLayers[1]!;
 <script>
   import { initStagePlayer } from '@/shared/lib/visual-stage-player';
 
-  type Stage = { id: string; title: string; summary: string; command: string; health: number };
+  type Stage = {
+    id: string;
+    title: string;
+    summary: string;
+    command: string;
+    illuminate: string[];
+  };
   type Profile = { id: string; description: string; groups: string[] };
   type Layer = {
     id: string;
@@ -315,33 +335,44 @@ const defaultLayer = workstationLayers[1]!;
 
     const stageCopy = root.querySelector<HTMLElement>('[data-stage-copy]');
     const stageCmd = root.querySelector<HTMLElement>('[data-stage-cmd]');
-    const meter = root.querySelector<HTMLElement>('.vf-meter');
+    const meter = root.querySelector<HTMLElement>('[data-vf-meter]');
+    const meterValue = root.querySelector<HTMLElement>('[data-vf-meter-value]');
     const boot = root.querySelector<HTMLElement>('[data-boot]');
+    const machine = root.querySelector<HTMLElement>('[data-ws-machine]');
+
+    let selectedLayerId = 'workstation';
+    let bootIndex = 0;
+
+    const syncNodeVisuals = () => {
+      const stage = stages[bootIndex];
+      const illuminated = new Set(stage?.illuminate ?? []);
+      root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
+        const id = g.dataset.node || '';
+        g.classList.toggle('is-lit', illuminated.has(id));
+        g.classList.toggle('is-selected', id === selectedLayerId);
+        g.classList.toggle('is-active', id === selectedLayerId || illuminated.has(id));
+      });
+      root.querySelectorAll<SVGPathElement>('[data-flow]').forEach((path, i) => {
+        const from = path.dataset.from || '';
+        const to = path.dataset.to || '';
+        const bootLit = illuminated.has(from) && illuminated.has(to);
+        const layerLit = from === selectedLayerId || to === selectedLayerId;
+        path.classList.toggle('is-active', bootLit || layerLit);
+        path.classList.toggle('is-boot', bootLit && i <= Math.min(bootIndex, 3));
+      });
+    };
 
     const applyStage = (index: number) => {
       const stage = stages[index];
       if (!stage) return;
+      bootIndex = index;
       if (stageCopy) stageCopy.textContent = stage.summary;
       if (stageCmd) stageCmd.textContent = stage.command;
-      if (meter) {
-        meter.style.setProperty('--vf-meter-value', String(stage.health));
-        const strong = meter.querySelector('strong');
-        if (strong) strong.textContent = `${stage.health}%`;
-      }
-      root.querySelectorAll<SVGPathElement>('[data-flow]').forEach((path, i) => {
-        path.classList.toggle('is-active', i <= Math.min(index, 2));
-      });
-      const highlight =
-        stage.id === 'toolkit'
-          ? 'toolkit'
-          : stage.id === 'harness'
-            ? 'harness'
-            : stage.id === 'fresh'
-              ? 'hornero'
-              : 'workstation';
-      root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
-        g.classList.toggle('is-active', g.dataset.node === highlight);
-      });
+      const progress = Math.round(((index + 1) / stages.length) * 100);
+      if (meter) meter.style.setProperty('--vf-meter-value', String(progress));
+      if (meterValue) meterValue.textContent = `Step ${index + 1}/${stages.length}`;
+      root.dataset.bootStage = stage.id;
+      syncNodeVisuals();
     };
 
     if (boot) {
@@ -362,6 +393,7 @@ const defaultLayer = workstationLayers[1]!;
     const selectLayer = (id: string) => {
       const layer = layers.find((l) => l.id === id) || layers[1];
       if (!layer) return;
+      selectedLayerId = layer.id;
       if (layerTitle) layerTitle.textContent = layer.title;
       if (layerCopy) layerCopy.textContent = layer.description;
       if (layerLabel) layerLabel.textContent = layer.label;
@@ -369,13 +401,7 @@ const defaultLayer = workstationLayers[1]!;
         layerRepo.textContent = layer.repo;
         layerRepo.hidden = !layer.repo;
       }
-      root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
-        g.classList.toggle('is-active', g.dataset.node === id);
-      });
-      root.querySelectorAll<SVGPathElement>('[data-flow]').forEach((path) => {
-        const on = path.dataset.from === id || path.dataset.to === id;
-        path.classList.toggle('is-active', on);
-      });
+      syncNodeVisuals();
     };
 
     root.querySelectorAll<HTMLInputElement>('[data-layer]').forEach((input) => {
@@ -412,6 +438,8 @@ const defaultLayer = workstationLayers[1]!;
       if (!profile || !profileGroups) return;
       if (profileTitle) profileTitle.textContent = profile.id;
       if (profileCopy) profileCopy.textContent = profile.description;
+      if (machine) machine.dataset.profile = profile.id;
+      root.dataset.profile = profile.id;
       clearChildren(profileGroups);
       if (profile.groups.length) {
         profile.groups.forEach((g) => {
@@ -495,17 +523,6 @@ const defaultLayer = workstationLayers[1]!;
     color: var(--color-text-faint);
   }
 
-  .ws-map__identity span::before {
-    content: '';
-    display: inline-block;
-    width: 0.65rem;
-    height: 0.65rem;
-    margin-right: 0.35rem;
-    vertical-align: -0.05rem;
-    background: var(--swatch);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--swatch) 40%, transparent);
-  }
-
   .ws-map__stage {
     padding: 0.75rem;
   }
@@ -516,15 +533,35 @@ const defaultLayer = workstationLayers[1]!;
     display: block;
   }
 
-  .ws-map__node-disk {
-    fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 22%, #020617);
-    stroke: var(--vf-node-accent, #22d3ee);
-    stroke-width: 1.5;
+  .ws-map__module {
+    fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 14%, #020617);
+    stroke: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 45%, transparent);
+    stroke-width: 1.25;
+    opacity: 0.45;
   }
 
-  .ws-map__node.is-active .ws-map__node-disk {
-    fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 40%, #020617);
+  .ws-map__node.is-lit .ws-map__module {
+    opacity: 1;
+    fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 28%, #020617);
+    stroke: var(--vf-node-accent, #22d3ee);
+  }
+
+  .ws-map__node.is-selected .ws-map__module {
     stroke-width: 2.5;
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--vf-node-accent, #22d3ee) 55%, transparent));
+  }
+
+  [data-ws-machine][data-profile='minimal'] .ws-map__chassis {
+    stroke: color-mix(in srgb, #94a3b8 45%, transparent);
+  }
+
+  [data-ws-machine][data-profile='technical'] .ws-map__chassis {
+    stroke: color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+  }
+
+  [data-ws-machine][data-profile='swarm'] .ws-map__chassis,
+  [data-ws-machine][data-profile='full'] .ws-map__chassis {
+    stroke: color-mix(in srgb, var(--nest-violet) 55%, transparent);
   }
 
   .ws-map__node-label {

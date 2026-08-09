@@ -1,10 +1,10 @@
-# APPROVED — Full Visual-First Pass
+# PENDING PRODUCT REVIEW — Full Visual-First Pass
 
-**Status:** APPROVED  
+**Status:** PENDING PRODUCT REVIEW  
 **Date:** 2026-08-09  
-**Decision:** User approved in chat (product owner) and authorized merge to `main` with green CI.  
+**Decision:** Not approved for merge. Awaiting product-owner re-review after CHANGES REQUESTED.  
 **Branch:** `feat/visual-first-agent-toolkit`  
-**Parent epic:** #319  
+**Parent epic:** #319 (kept OPEN — use `Refs #319`, not `Fixes #319`)  
 **Prior gate:** Toolkit Operations Room — **APPROVED** 2026-08-09  
 **Art direction:** Synthwave Systems Atlas (#52 stays closed)
 
@@ -12,17 +12,18 @@
 
 ## Decision recorded
 
-| Option              | Result                                                                                 |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| **APPROVED**        | ✅ Selected — ship to `main`; Playwright goldens may be updated as needed for green CI |
-| APPROVED WITH NOTES | —                                                                                      |
-| REJECTED            | —                                                                                      |
+| Option              | Result                                                             |
+| ------------------- | ------------------------------------------------------------------ |
+| APPROVED            | —                                                                  |
+| APPROVED WITH NOTES | —                                                                  |
+| REJECTED            | —                                                                  |
+| **PENDING REVIEW**  | ✅ Selected — do **not** merge; do **not** update accepted goldens |
 
-User authorized finishing the full visual-first pass and merging to `main` with 100% green CI.
+Product owner requested CHANGES REQUESTED on PR #325. This gate stays pending until human re-review returns APPROVED / APPROVED WITH NOTES / REJECTED.
 
 ---
 
-## Review package (as approved)
+## Review package (candidate evidence)
 
 | Asset                                   | Path                                                                                                                |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -31,11 +32,11 @@ User authorized finishing the full visual-first pass and merging to `main` with 
 | Production audit                        | `../AUDIT.md`                                                                                                       |
 | Primitives                              | `../PRIMITIVES.md`                                                                                                  |
 | Toolkit gate (approved)                 | `../toolkit-gate/GATE.md`                                                                                           |
-| After metrics                           | `_metrics.json`                                                                                                     |
+| After metrics                           | `_metrics.json` / `_after-metrics.json`                                                                             |
 | QA screenshots (all routes, 1440 + 390) | `../qa/{home,dotfiles,agentic-workstation,agent-toolkit,v,create-awesome,community,blog,projects,open-source,404}/` |
-| Interaction evidence                    | `interactions/`                                                                                                     |
+| Interaction evidence                    | `interactions/` (candidate only — not accepted goldens)                                                             |
 
-### Interactions captured
+### Interactions captured (candidates)
 
 - `workstation-boot.png`
 - `dotfiles-smart-colors.png`
@@ -49,22 +50,15 @@ User authorized finishing the full visual-first pass and merging to `main` with 
 
 ## Headline word-count deltas
 
-| Route          | Before → After |      Δ |
-| -------------- | -------------: | -----: |
-| Workstation    |     2274 → 182 | −92.0% |
-| Create Awesome |     2169 → 198 | −90.9% |
-| V              |     2207 → 290 | −86.9% |
-| Community      |     1515 → 233 | −84.6% |
-| Toolkit        |     1662 → 338 | −79.7% |
-| Dotfiles       |     1093 → 283 | −74.1% |
-| Open Source    |       226 → 70 | −69.0% |
-| Projects       |      366 → 207 | −43.4% |
-| Home           |      381 → 349 |  −8.4% |
+Word count is a **regression signal**, not an acceptance KPI. Regenerated with the canonical helper in `scripts/lib/vf-visible-content.mjs` (excludes `script` / `style` / `noscript`).
+
+See `../CONTENT-REDUCTION.md` and `../qa/_metrics.json` for the live table after regeneration.
 
 ---
 
-## Post-approval ship
+## Explicit stop
 
-1. Update Playwright goldens if visual CI requires it
-2. Merge `#325` to `main` with green required checks
-3. Confirm main CI / deploy path after merge
+1. **Do not merge** PR #325
+2. **Do not update** accepted Playwright goldens
+3. Keep #319 OPEN
+4. Await product-owner decision: APPROVED / APPROVED WITH NOTES / REJECTED

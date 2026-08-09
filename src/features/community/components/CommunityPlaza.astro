@@ -46,9 +46,7 @@ const nodesJson = JSON.stringify(nodes);
   <header class="cm-plaza__header">
     <p class="cm-plaza__eyebrow">Digital Nest · shared workshop</p>
     <h1 id="cm-plaza-title" class="cm-plaza__title">Community Plaza</h1>
-    <p class="cm-plaza__lede">
-      One Discord for Personal DX, agentic tooling, Create Awesome, V, and incubating work — not a single-CLI club.
-    </p>
+    <p class="cm-plaza__lede">One Discord for Personal DX, agentic tooling, Create Awesome, V, and incubating work.</p>
   </header>
 
   <ul class="cm-plaza__principles" aria-label="Workshop principles">
@@ -59,29 +57,62 @@ const nodesJson = JSON.stringify(nodes);
 
   <div class="vf-scene cm-plaza__scene">
     <div class="vf-stage cm-plaza__stage">
-      <svg class="cm-plaza__svg" viewBox="0 0 720 280" role="img" aria-label="Workshop hub with project routes">
+      <svg class="cm-plaza__svg" viewBox="0 0 720 280" role="img" aria-label="Community plaza with world clusters">
         <defs>
-          <linearGradient id="cm-plaza-line" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="var(--nest-cyan, #22d3ee)" stop-opacity="0.85"></stop>
-            <stop offset="100%" stop-color="var(--nest-magenta, #ff2d95)" stop-opacity="0.7"></stop>
-          </linearGradient>
+          <radialGradient id="cm-plaza-ground" cx="50%" cy="55%" r="55%">
+            <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"></stop>
+            <stop offset="100%" stop-color="#020617" stop-opacity="0"></stop>
+          </radialGradient>
         </defs>
-        <g fill="none" stroke="url(#cm-plaza-line)" stroke-width="1.25" stroke-dasharray="5 7" opacity="0.75">
-          <path class="vf-flow" d="M360 140 L160 70"></path>
-          <path class="vf-flow" d="M360 140 L280 48"></path>
-          <path class="vf-flow" d="M360 140 L440 48"></path>
-          <path class="vf-flow" d="M360 140 L560 70"></path>
-          <path class="vf-flow" d="M360 140 L140 200"></path>
-          <path class="vf-flow" d="M360 140 L260 240"></path>
-          <path class="vf-flow" d="M360 140 L460 240"></path>
-          <path class="vf-flow" d="M360 140 L580 200"></path>
+        <rect width="720" height="280" fill="url(#cm-plaza-ground)"></rect>
+        <!-- Plaza floor / clusters -->
+        <ellipse
+          cx="360"
+          cy="150"
+          rx="210"
+          ry="70"
+          fill="color-mix(in srgb, #0f172a 80%, transparent)"
+          stroke="color-mix(in srgb, var(--nest-cyan) 35%, transparent)"></ellipse>
+        <g data-cm-cluster="dx" opacity="0.9">
+          <rect x="90" y="48" width="150" height="64" rx="8" fill="#111827" stroke="#22d3ee" stroke-width="1.25"></rect>
+          <text x="165" y="85" text-anchor="middle" fill="#67e8f9" font-size="11" font-family="var(--font-mono)"
+            >Personal DX</text
+          >
+        </g>
+        <g data-cm-cluster="agents" opacity="0.9">
+          <rect x="285" y="36" width="150" height="64" rx="8" fill="#111827" stroke="#a78bfa" stroke-width="1.25"
+          ></rect>
+          <text x="360" y="73" text-anchor="middle" fill="#c4b5fd" font-size="11" font-family="var(--font-mono)"
+            >Agentic</text
+          >
+        </g>
+        <g data-cm-cluster="create" opacity="0.9">
+          <rect x="480" y="48" width="150" height="64" rx="8" fill="#111827" stroke="#fb923c" stroke-width="1.25"
+          ></rect>
+          <text x="555" y="85" text-anchor="middle" fill="#fdba74" font-size="11" font-family="var(--font-mono)"
+            >Create Awesome</text
+          >
+        </g>
+        <g data-cm-cluster="v" opacity="0.9">
+          <rect x="180" y="178" width="140" height="56" rx="8" fill="#111827" stroke="#5b9bd5" stroke-width="1.25"
+          ></rect>
+          <text x="250" y="211" text-anchor="middle" fill="#93c5fd" font-size="11" font-family="var(--font-mono)"
+            >V world</text
+          >
+        </g>
+        <g data-cm-cluster="incubating" opacity="0.9">
+          <rect x="400" y="178" width="160" height="56" rx="8" fill="#111827" stroke="#f472b6" stroke-width="1.25"
+          ></rect>
+          <text x="480" y="211" text-anchor="middle" fill="#f9a8d4" font-size="11" font-family="var(--font-mono)"
+            >Incubating</text
+          >
         </g>
         <g transform="translate(360 140)">
           <rect
-            x="-64"
-            y="-26"
-            width="128"
-            height="52"
+            x="-54"
+            y="-18"
+            width="108"
+            height="36"
             rx="2"
             fill="color-mix(in srgb, var(--nest-midnight-900, #0f172a) 88%, transparent)"
             stroke="color-mix(in srgb, var(--nest-cyan, #22d3ee) 70%, transparent)"
@@ -91,9 +122,9 @@ const nodesJson = JSON.stringify(nodes);
             text-anchor="middle"
             fill="var(--nest-cyan, #22d3ee)"
             font-family="var(--font-mono, monospace)"
-            font-size="12"
+            font-size="11"
             font-weight="700"
-            letter-spacing="0.18em">WORKSHOP</text
+            letter-spacing="0.14em">PLAZA</text
           >
         </g>
       </svg>
@@ -162,10 +193,7 @@ const nodesJson = JSON.stringify(nodes);
     <summary>Community basics</summary>
     <p>{communityMeta.metricsPolicy}</p>
     <p>Invite verified · discord.gg/bR5VyATgka · voluntary participation.</p>
-  </details>
-
-  <details class="cm-plaza__details">
-    <summary>Support channels</summary>
+    <h3 class="cm-plaza__basics-h">Support</h3>
     <ul>
       {
         supportChannels.map((channel) => (
@@ -182,10 +210,7 @@ const nodesJson = JSON.stringify(nodes);
         ))
       }
     </ul>
-  </details>
-
-  <details class="cm-plaza__details">
-    <summary>Moderation &amp; privacy</summary>
+    <h3 class="cm-plaza__basics-h">Moderation &amp; privacy</h3>
     <ul>
       {
         moderationItems.map((item) => (
@@ -294,6 +319,23 @@ const nodesJson = JSON.stringify(nodes);
     max-width: 40rem;
     height: auto;
     margin-inline: auto;
+  }
+
+  .cm-plaza__svg [data-cm-cluster] {
+    opacity: 0.45;
+    transition: opacity 160ms ease;
+  }
+
+  .cm-plaza__svg [data-cm-cluster].is-lit {
+    opacity: 1;
+  }
+
+  .cm-plaza__basics-h {
+    margin: 0.75rem 0 0.35rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
   }
 
   .cm-plaza__nodes {
@@ -449,14 +491,48 @@ const nodesJson = JSON.stringify(nodes);
           linkEl.removeAttribute('rel');
         }
       }
-      const idx = Math.max(
-        0,
-        nodes.findIndex((n) => n.id === id),
-      );
-      root.querySelectorAll<SVGPathElement>('.vf-flow').forEach((path, i) => {
-        path.classList.toggle('is-active', i === idx % 8);
+      const eco = (node.ecosystem || '').toLowerCase();
+      const cluster =
+        node.kind === 'discord'
+          ? 'agents'
+          : eco.includes('v')
+            ? 'v'
+            : eco.includes('create')
+              ? 'create'
+              : eco.includes('dx') || eco.includes('dot') || eco.includes('workstation')
+                ? 'dx'
+                : eco.includes('incubat')
+                  ? 'incubating'
+                  : 'agents';
+      root.querySelectorAll<SVGGElement>('[data-cm-cluster]').forEach((g) => {
+        g.classList.toggle('is-lit', g.dataset.cmCluster === cluster);
       });
     };
+
+    root.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      const filter = target.closest<HTMLElement>('[data-cm-filter]');
+      if (!filter) return;
+      const id = filter.dataset.cmFilter || 'all';
+      const map: Record<string, string> = {
+        all: '',
+        beginner: 'dx',
+        'linux-desktop': 'dx',
+        'ai-agents': 'agents',
+        node: 'create',
+        python: 'create',
+        v: 'v',
+        'devops-infra': 'incubating',
+        documentation: 'agents',
+        design: 'dx',
+        testing: 'agents',
+      };
+      const cluster = map[id] ?? '';
+      root.querySelectorAll<SVGGElement>('[data-cm-cluster]').forEach((g) => {
+        g.classList.toggle('is-lit', !cluster || g.dataset.cmCluster === cluster);
+      });
+    });
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => select(btn.dataset.visualNode || ''));

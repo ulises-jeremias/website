@@ -110,23 +110,25 @@ const islands = worldPointerProjects.map((project, index) => ({
     gap: 0.45rem;
     color: inherit;
     text-decoration: none;
-    padding: 0.65rem;
-    border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
-    clip-path: var(--clip-corner-md);
+    padding: 0.35rem 0.15rem 0.55rem;
+    border: 0;
+    background: transparent;
     position: relative;
     transition:
-      border-color 160ms ease,
       transform 160ms ease,
-      background 160ms ease;
+      color 160ms ease;
   }
 
   .archipelago__link:hover,
   .archipelago__link:focus-visible {
-    border-color: color-mix(in srgb, var(--nest-cyan) 55%, transparent);
-    background: color-mix(in srgb, var(--nest-cyan) 8%, var(--nest-midnight-900));
     outline: none;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    color: var(--nest-cyan);
+  }
+
+  .archipelago__link:focus-visible .archipelago__art {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 3px;
   }
 
   .archipelago__num {

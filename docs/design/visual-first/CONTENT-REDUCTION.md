@@ -1,6 +1,8 @@
 # Content reduction tracker — visual-first pass
 
-Measurement method: approximate visible words excluding site header/footer, `aria-hidden`, and closed `<details>` (Playwright evaluate). Canonical before numbers: production audit `audit/_metrics.json` / `AUDIT.md` (2026-08-09). After numbers: local `dist/` preview via `scripts/vf-measure-qa.mjs` → `qa/_metrics.json`.
+**Gate status:** PENDING PRODUCT REVIEW (see `final-gate/GATE.md`). Word count is a **regression signal**, not an acceptance KPI.
+
+Measurement method: canonical helper `scripts/lib/vf-visible-content.mjs` — approximate visible words excluding site header/footer, `script` / `style` / `noscript`, `aria-hidden`, and closed `<details>` bodies. Canonical before numbers: production audit `audit/_metrics.json` / `AUDIT.md` (2026-08-09). After numbers: regenerate via local preview + `scripts/vf-measure-qa.mjs` / `vf-measure-all.mjs` → `qa/_metrics.json`.
 
 ## Site-wide BEFORE → AFTER
 

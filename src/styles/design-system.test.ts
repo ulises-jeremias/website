@@ -509,7 +509,7 @@ describe('global design system architecture', () => {
     const [workstationMap, vLab, vCard] = await Promise.all([
       readSource('../features/workstation/components/WorkstationSystemMap.astro'),
       readSource('../features/v/components/VComputationalLab.astro'),
-      readSource('../features/v/components/VCard.astro'),
+      readSource('../features/v/components/VCards.astro'),
     ]);
     const currentRouteSources = `${workstationMap}\n${vLab}\n${vCard}`;
 

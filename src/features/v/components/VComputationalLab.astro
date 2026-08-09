@@ -1,11 +1,12 @@
 ---
 import { SceneInspector, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
-import EcosystemDiagram from './EcosystemDiagram.astro';
-import VSLDiagram from './VSLDiagram.astro';
-import VTLDiagram from './VTLDiagram.astro';
-import RxVDiagram from './RxVDiagram.astro';
-import SetupVDiagram from './SetupVDiagram.astro';
+import VLanguageScene from './scenes/VLanguageScene.astro';
+import VSLScene from './scenes/VSLScene.astro';
+import VTLAutoGradScene from './scenes/VTLAutoGradScene.astro';
+import RxVStreamScene from './scenes/RxVStreamScene.astro';
+import SetupVScene from './scenes/SetupVScene.astro';
+import AwesomeVScene from './scenes/AwesomeVScene.astro';
 import { licenseEntries, SETUP_V_PIN, vProjects } from '../data/index.js';
 
 const stations = vProjects.map((project) => ({
@@ -62,23 +63,12 @@ const stationsJson = JSON.stringify(stations);
             data-v-panel={station.id}
             hidden={index !== 0}
           >
-            {station.id === 'v' ? <EcosystemDiagram /> : null}
-            {station.id === 'vsl' ? <VSLDiagram /> : null}
-            {station.id === 'vtl' ? <VTLDiagram /> : null}
-            {station.id === 'rxv' ? <RxVDiagram /> : null}
-            {station.id === 'setup-v' ? <SetupVDiagram /> : null}
-            {station.id === 'awesome-v' ? (
-              <div class="v-lab__catalog" aria-label="Awesome V highlights">
-                <p class="v-lab__catalog-k">Catalog</p>
-                <ul>
-                  {station.chips.map((chip) => (
-                    <li>
-                      <code>{chip}</code>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
+            {station.id === 'v' ? <VLanguageScene /> : null}
+            {station.id === 'vsl' ? <VSLScene /> : null}
+            {station.id === 'vtl' ? <VTLAutoGradScene /> : null}
+            {station.id === 'rxv' ? <RxVStreamScene /> : null}
+            {station.id === 'setup-v' ? <SetupVScene /> : null}
+            {station.id === 'awesome-v' ? <AwesomeVScene chips={station.chips} /> : null}
           </div>
         ))
       }
@@ -181,38 +171,6 @@ const stationsJson = JSON.stringify(stations);
 
   .v-lab__panel {
     min-height: 20rem;
-  }
-
-  /* Station visuals only — hide diagram essays / card dumps */
-  .v-lab__panel :global(section > header),
-  .v-lab__panel :global(.eco__header),
-  .v-lab__panel :global(.eco__fallback),
-  .v-lab__panel :global(.eco__note),
-  .v-lab__panel :global(.vsl__header),
-  .v-lab__panel :global(.vsl__fallback),
-  .v-lab__panel :global(.vsl__cards),
-  .v-lab__panel :global(.vsl__note),
-  .v-lab__panel :global(.vtl__header),
-  .v-lab__panel :global(.vtl__legend),
-  .v-lab__panel :global(.vtl__cards),
-  .v-lab__panel :global(.rxv__header),
-  .v-lab__panel :global(.rxv__operators),
-  .v-lab__panel :global(.rxv__cards),
-  .v-lab__panel :global(.rxv__note),
-  .v-lab__panel :global(.setup__header),
-  .v-lab__panel :global(.setup__fallback),
-  .v-lab__panel :global(.setup__cards),
-  .v-lab__panel :global(.setup__note) {
-    display: none !important;
-  }
-
-  .v-lab__panel :global(section) {
-    padding: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-    gap: 0;
   }
 
   .v-lab__panel :global(.eco__wrap),

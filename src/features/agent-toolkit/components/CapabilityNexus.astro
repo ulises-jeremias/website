@@ -259,8 +259,12 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     stroke: color-mix(in srgb, var(--nest-cyan) 35%, transparent);
     stroke-width: 1.2;
     stroke-dasharray: 4 8;
-    animation: atk-beam 4.8s linear infinite;
-    animation-delay: calc(var(--beam-i) * 0.35s);
+    opacity: 0.55;
+  }
+
+  .atk-nexus__visual.is-beaming .atk-nexus__beam {
+    animation: atk-beam 1.6s linear 1;
+    animation-delay: calc(var(--beam-i) * 0.12s);
   }
 
   .atk-nexus__target-node {
@@ -532,6 +536,17 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     const marks = Array.from(root.querySelectorAll<SVGElement>('[data-family-mark]'));
     const packets = Array.from(root.querySelectorAll<SVGCircleElement>('.atk-nexus__packet'));
     const targets = Array.from(root.querySelectorAll<SVGGElement>('.atk-nexus__target'));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const visual = root.querySelector<HTMLElement>('.atk-nexus__visual');
+
+    const pulseBeamsOnce = () => {
+      if (!visual || reduce) return;
+      visual.classList.remove('is-beaming');
+      // reflow so a fresh single-shot animation can restart
+      void visual.offsetWidth;
+      visual.classList.add('is-beaming');
+      window.setTimeout(() => visual.classList.remove('is-beaming'), 2000);
+    };
 
     const setFamily = (id: string) => {
       panels.forEach((panel) => {
@@ -546,17 +561,9 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
           ring.setAttribute('stroke-width', mark.dataset.familyMark === id ? '3.5' : '2');
         }
       });
-    };
-
-    radios.forEach((radio) => {
-      radio.addEventListener('change', () => {
-        if (radio.checked) setFamily(radio.value);
-      });
-    });
-
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce && packets.length && targets.length && 'animate' in packets[0]!) {
-      const run = () => {
+      targets.forEach((t) => t.classList.add('is-verified'));
+      pulseBeamsOnce();
+      if (!reduce && packets.length && targets.length && 'animate' in packets[0]!) {
         packets.forEach((packet, index) => {
           const target = targets[index % targets.length]!;
           const node = target.querySelector('circle');
@@ -569,27 +576,29 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
               { cx: (320 + x) / 2, cy: (320 + y) / 2, opacity: 1 },
               { cx: x, cy: y, opacity: 0.15 },
             ],
-            {
-              duration: 2400,
-              delay: index * 400,
-              iterations: 1,
-              easing: 'ease-in-out',
-              fill: 'forwards',
-            },
+            { duration: 1200, delay: index * 120, iterations: 1, easing: 'ease-in-out', fill: 'forwards' },
           );
         });
-      };
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((e) => e.isIntersecting)) {
-            run();
-            io.disconnect();
-          }
-        },
-        { threshold: 0.35 },
-      );
-      io.observe(root);
-    }
+      }
+    };
+
+    radios.forEach((radio) => {
+      radio.addEventListener('change', () => {
+        if (radio.checked) setFamily(radio.value);
+      });
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          const checked = radios.find((r) => r.checked);
+          if (checked) setFamily(checked.value);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(root);
   }
 
   document.querySelectorAll<HTMLElement>('[data-atk-nexus]').forEach(initNexus);

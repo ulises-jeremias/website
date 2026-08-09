@@ -1,6 +1,9 @@
 /**
  * Shared stage scrubber + playback wiring (Toolkit Control Room / Workstation Boot pattern).
  * Native DOM only. Honors prefers-reduced-motion. Never uses innerHTML.
+ *
+ * ONE controller for the visual-first pass — do not duplicate in feature scripts
+ * or `playback.ts` (removed).
  */
 
 export type StagePlayerOptions = {
@@ -22,6 +25,13 @@ export type StagePlayer = {
   replay: () => void;
   getIndex: () => number;
 };
+
+const INTERACTIVE_SELECTOR =
+  'button, a, input, textarea, select, summary, option, [role="slider"], [role="spinbutton"], [contenteditable="true"]';
+
+function isInteractiveTarget(target: HTMLElement): boolean {
+  return Boolean(target.closest(INTERACTIVE_SELECTOR));
+}
 
 export function initStagePlayer(options: StagePlayerOptions): StagePlayer {
   const { root, stageCount, onStage, autoplayOnce = true, intervalMs = 2000, zeroBased = true } = options;
@@ -104,17 +114,25 @@ export function initStagePlayer(options: StagePlayerOptions): StagePlayer {
     });
   });
 
-  root.querySelectorAll<HTMLElement>('[data-play]').forEach((el) => el.addEventListener('click', play));
-  root.querySelectorAll<HTMLElement>('[data-pause]').forEach((el) => el.addEventListener('click', pause));
-  root.querySelectorAll<HTMLElement>('[data-prev]').forEach((el) => el.addEventListener('click', prev));
-  root.querySelectorAll<HTMLElement>('[data-next]').forEach((el) => el.addEventListener('click', next));
-  root.querySelectorAll<HTMLElement>('[data-replay]').forEach((el) => el.addEventListener('click', replay));
+  root.querySelectorAll<HTMLElement>('[data-play], [data-vf-play]').forEach((el) => el.addEventListener('click', play));
+  root
+    .querySelectorAll<HTMLElement>('[data-pause], [data-vf-pause]')
+    .forEach((el) => el.addEventListener('click', pause));
+  root.querySelectorAll<HTMLElement>('[data-prev], [data-vf-prev]').forEach((el) => el.addEventListener('click', prev));
+  root.querySelectorAll<HTMLElement>('[data-next], [data-vf-next]').forEach((el) => el.addEventListener('click', next));
+  root
+    .querySelectorAll<HTMLElement>('[data-replay], [data-vf-replay]')
+    .forEach((el) => el.addEventListener('click', replay));
 
   root.addEventListener('keydown', (e) => {
     if (!(e.target instanceof HTMLElement)) return;
     if (!root.contains(e.target)) return;
+    if (isInteractiveTarget(e.target) && e.target !== root) {
+      // Space on buttons already activates them; never steal arrows from form controls / links / summary.
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') return;
+      if (e.key === ' ' || e.code === 'Space') return;
+    }
     if (e.key === ' ' || e.code === 'Space') {
-      if (e.target.closest('button, a, input, textarea, summary')) return;
       e.preventDefault();
       if (timer) pause();
       else play();

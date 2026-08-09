@@ -1,0 +1,98 @@
+---
+/** RxV station — Emit event stream (educational, not live telemetry). */
+---
+
+<div class="v-scene" data-v-scene="rxv">
+  <h2 class="v-scene__title" id="v-scene-rxv-title">RxV</h2>
+  <p class="v-scene__note">Reactive streams. Emit once, then stop — replay to see again.</p>
+  <div class="v-scene__controls" role="group" aria-label="Stream playback">
+    <button type="button" data-rxv-emit>Emit</button>
+    <button type="button" data-rxv-replay>Replay</button>
+  </div>
+  <svg class="v-scene__svg" viewBox="0 0 560 160" role="img" aria-labelledby="v-scene-rxv-title">
+    <rect width="560" height="160" fill="#0b1220" rx="8"></rect>
+    <line x1="40" y1="80" x2="520" y2="80" stroke="#334155" stroke-width="2"></line>
+    <g data-rxv-events></g>
+  </svg>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">Stream idle. Press Emit for a demo burst.</p>
+</div>
+
+<script>
+  function init(root: HTMLElement) {
+    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
+    const layer = root.querySelector<SVGGElement>('[data-rxv-events]');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const emit = () => {
+      if (!layer) return;
+      layer.replaceChildren();
+      const times = [80, 180, 280, 400];
+      times.forEach((x, i) => {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', String(x));
+        c.setAttribute('cy', '80');
+        c.setAttribute('r', '0');
+        c.setAttribute('fill', '#22d3ee');
+        layer.append(c);
+        if (reduce) {
+          c.setAttribute('r', '7');
+        } else {
+          c.animate(
+            [
+              { r: 0, opacity: 0 },
+              { r: 8, opacity: 1 },
+              { r: 7, opacity: 0.85 },
+            ],
+            { duration: 500, delay: i * 180, fill: 'forwards', easing: 'ease-out' },
+          );
+        }
+      });
+      if (live) live.textContent = 'Demo burst emitted · stream complete (not live).';
+    };
+
+    root.querySelector('[data-rxv-emit]')?.addEventListener('click', emit);
+    root.querySelector('[data-rxv-replay]')?.addEventListener('click', emit);
+  }
+  document.querySelectorAll<HTMLElement>('[data-v-scene="rxv"]').forEach(init);
+</script>
+
+<style>
+  .v-scene {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .v-scene__title {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--world-accent, #22d3ee);
+  }
+  .v-scene__note,
+  .v-scene__live {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .v-scene__controls {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .v-scene__controls button {
+    min-height: 40px;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .v-scene__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

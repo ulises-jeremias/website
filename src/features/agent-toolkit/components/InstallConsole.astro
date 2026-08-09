@@ -58,14 +58,15 @@ const tabsJson = JSON.stringify(tabs);
     const select = (id: string | null) => {
       const tab = tabs.find((t) => t.id === id) || tabs[0];
       if (!tab) return;
+      const selectedId = tab.id;
       buttons.forEach((b) => {
-        const on = b.dataset.installTab === id;
+        const on = b.dataset.installTab === selectedId;
         b.setAttribute('aria-selected', on ? 'true' : 'false');
         b.tabIndex = on ? 0 : -1;
       });
       if (cmd) cmd.textContent = tab.command;
       if (note) note.textContent = tab.note;
-      if (panel) panel.setAttribute('aria-labelledby', `install-tab-${tab.id}`);
+      if (panel) panel.setAttribute('aria-labelledby', `install-tab-${selectedId}`);
     };
 
     buttons.forEach((b) => {

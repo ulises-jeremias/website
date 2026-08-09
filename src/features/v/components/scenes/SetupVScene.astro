@@ -1,0 +1,92 @@
+---
+import { SETUP_V_PIN } from '../../data/index.js';
+
+/** setup-v station — CI conveyor (pin is real; no invented benchmarks). */
+---
+
+<div class="v-scene" data-v-scene="setup-v">
+  <h2 class="v-scene__title" id="v-scene-setup-title">setup-v</h2>
+  <p class="v-scene__note">CI conveyor for the pinned V toolchain.</p>
+  <ol class="v-scene__conveyor" data-setup-steps>
+    <li class="is-active">checkout</li>
+    <li>install V</li>
+    <li>pin {SETUP_V_PIN}</li>
+    <li>verify</li>
+  </ol>
+  <button type="button" data-setup-advance>Advance conveyor</button>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">Step 1/4 · checkout</p>
+</div>
+
+<script>
+  function init(root: HTMLElement) {
+    const items = Array.from(root.querySelectorAll<HTMLLIElement>('[data-setup-steps] li'));
+    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
+    let index = 0;
+    const sync = () => {
+      items.forEach((li, i) => li.classList.toggle('is-active', i === index));
+      if (live) live.textContent = `Step ${index + 1}/${items.length} · ${items[index]?.textContent ?? ''}`;
+    };
+    root.querySelector('[data-setup-advance]')?.addEventListener('click', () => {
+      index = (index + 1) % items.length;
+      sync();
+    });
+    sync();
+  }
+  document.querySelectorAll<HTMLElement>('[data-v-scene="setup-v"]').forEach(init);
+</script>
+
+<style>
+  .v-scene {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .v-scene__title {
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--world-accent, #5b9bd5);
+  }
+  .v-scene__note,
+  .v-scene__live {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .v-scene__conveyor {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .v-scene__conveyor li {
+    padding: 0.65rem 0.4rem;
+    border: 1px solid var(--color-border);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .v-scene__conveyor li.is-active {
+    border-color: var(--world-accent, #5b9bd5);
+    color: var(--nest-paper, #f8fafc);
+    background: color-mix(in srgb, var(--world-accent, #5b9bd5) 18%, transparent);
+  }
+  .v-scene button {
+    justify-self: start;
+    min-height: 40px;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+</style>

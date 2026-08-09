@@ -36,7 +36,8 @@ const stagesJson = JSON.stringify(
   })),
 );
 
-const demoHandoff = 'a18f3c9e2b71';
+const demoHandoff = 'DEMO SHA a18f3c9e2b71';
+const stageCount = swarmStages.length;
 ---
 
 <section
@@ -45,6 +46,8 @@ const demoHandoff = 'a18f3c9e2b71';
   data-atk-swarm
   data-recipes={recipesJson}
   data-stages={stagesJson}
+  data-demo-handoff={demoHandoff}
+  style={`--atk-swarm-stages: ${stageCount}`}
 >
   <header class="atk-swarm__header">
     <p class="atk-swarm__eyebrow">Swarm Control Room</p>
@@ -121,14 +124,14 @@ const demoHandoff = 'a18f3c9e2b71';
             <dd data-core-handoff>idle</dd>
           </div>
         </dl>
-        <div class="atk-swarm__budget" aria-label="Budget constraint">
+        <div class="atk-swarm__budget" aria-label="Budget constraint (demo)">
           <svg viewBox="0 0 72 72" aria-hidden="true">
             <circle cx="36" cy="36" r="28" class="atk-swarm__budget-track"></circle>
             <circle cx="36" cy="36" r="28" class="atk-swarm__budget-fill" data-budget-ring pathLength="100"></circle>
           </svg>
           <div>
-            <strong data-budget-label>63%</strong>
-            <span>budget remaining</span>
+            <strong data-budget-label>BUDGET ENFORCED</strong>
+            <span>demo constraint · not live telemetry</span>
           </div>
         </div>
         <details class="atk-swarm__state-files">
@@ -397,9 +400,49 @@ const demoHandoff = 'a18f3c9e2b71';
     text-align: center;
   }
 
-  .atk-swarm__room[data-shell='tmux'] .atk-swarm__station {
-    border-color: color-mix(in srgb, #3dffb5 45%, transparent);
+  .atk-swarm__room[data-shell='tmux'] .atk-swarm__topology {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    gap: 0.35rem;
+    background: #04140c;
+    border: 1px solid #1f6b45;
+    padding: 0.45rem;
     font-family: var(--font-mono);
+  }
+
+  .atk-swarm__room[data-shell='tmux'] .atk-swarm__station {
+    border: 1px solid #3dffb5;
+    border-radius: 0;
+    background: #062015;
+    box-shadow: none;
+    clip-path: none;
+  }
+
+  .atk-swarm__room[data-shell='tmux'] .atk-swarm__silhouette {
+    display: none;
+  }
+
+  .atk-swarm__room[data-shell='tmux'] .atk-swarm__platform {
+    border: 1px dashed #2a8f5c;
+    background: #03150c;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .atk-swarm__room[data-shell='herdr'] .atk-swarm__topology {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 14rem;
+    padding: 1rem 0.5rem 1.5rem;
+  }
+
+  .atk-swarm__room[data-shell='herdr'] .atk-swarm__station {
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 45%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, #2a1848);
+    border-radius: 0.75rem 0.75rem 0.35rem 0.35rem;
   }
 
   .atk-swarm__station.is-active {
@@ -444,16 +487,61 @@ const demoHandoff = 'a18f3c9e2b71';
     text-transform: lowercase;
   }
 
+  .atk-swarm__platform {
+    display: grid;
+    gap: 0.2rem;
+    justify-items: center;
+    width: 100%;
+    padding: 0.45rem 0.35rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 30%, transparent);
+    border-radius: 0.85rem 0.85rem 0.4rem 0.4rem;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--nest-violet) 18%, transparent), transparent 70%),
+      color-mix(in srgb, #0a1620 85%, transparent);
+    transform: perspective(240px) rotateX(12deg);
+    box-shadow: 0 10px 18px color-mix(in srgb, #000 45%, transparent);
+  }
+
   .atk-swarm__station[data-glyph='plan'] .atk-swarm__silhouette {
-    clip-path: polygon(10% 15%, 90% 15%, 90% 85%, 10% 85%);
+    clip-path: polygon(12% 18%, 88% 8%, 92% 78%, 18% 92%);
+    background: linear-gradient(180deg, #67e8f9, #7c3aed);
+  }
+
+  .atk-swarm__station[data-glyph='code'] .atk-swarm__silhouette {
+    clip-path: polygon(20% 10%, 80% 10%, 95% 50%, 80% 90%, 20% 90%, 5% 50%);
+    background: linear-gradient(180deg, #fb7185, #a21caf);
+  }
+
+  .atk-swarm__station[data-glyph='review'] .atk-swarm__silhouette {
+    clip-path: circle(46% at 50% 42%);
+    background: linear-gradient(180deg, #fde047, #f97316);
   }
 
   .atk-swarm__station[data-glyph='shield'] .atk-swarm__silhouette {
     clip-path: polygon(50% 0, 90% 18%, 82% 70%, 50% 100%, 18% 70%, 10% 18%);
+    background: linear-gradient(180deg, #86efac, #0f766e);
   }
 
   .atk-swarm__station[data-glyph='merge'] .atk-swarm__silhouette {
     clip-path: polygon(50% 0, 70% 30%, 100% 30%, 70% 55%, 85% 100%, 50% 75%, 15% 100%, 30% 55%, 0 30%, 30% 30%);
+    background: linear-gradient(180deg, #c4b5fd, #4f46e5);
+  }
+
+  .atk-swarm__station[data-glyph='test'] .atk-swarm__silhouette {
+    clip-path: polygon(15% 0, 85% 0, 70% 100%, 30% 100%);
+    background: linear-gradient(180deg, #5eead4, #0369a1);
+  }
+
+  .atk-swarm__station[data-glyph='refactor'] .atk-swarm__silhouette {
+    clip-path: polygon(0 35%, 35% 0, 100% 20%, 80% 100%, 20% 85%);
+    background: linear-gradient(180deg, #fda4af, #be123c);
+  }
+
+  .atk-swarm__packet-label {
+    fill: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
   }
 
   .atk-swarm__role-id {
@@ -547,13 +635,15 @@ const demoHandoff = 'a18f3c9e2b71';
     stroke: var(--nest-magenta);
     stroke-width: 6;
     stroke-linecap: round;
-    stroke-dasharray: 63 100;
+    stroke-dasharray: 100 100;
+    opacity: 0.85;
   }
 
   .atk-swarm__budget strong {
     display: block;
     color: var(--nest-magenta);
-    font-size: 1.1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
   }
 
   .atk-swarm__budget span {
@@ -666,7 +756,7 @@ const demoHandoff = 'a18f3c9e2b71';
 
   .atk-swarm__scrubber {
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--atk-swarm-stages, 8), minmax(0, 1fr));
     gap: 0.3rem;
     margin: 0;
     padding: 0;
@@ -800,6 +890,8 @@ const demoHandoff = 'a18f3c9e2b71';
 </style>
 
 <script>
+  import { initStagePlayer } from '@/shared/lib/visual-stage-player';
+
   type RecipeRole = {
     id: string;
     policy: string;
@@ -823,6 +915,7 @@ const demoHandoff = 'a18f3c9e2b71';
   function initSwarm(root: HTMLElement) {
     const recipes = JSON.parse(root.dataset.recipes || '[]') as Recipe[];
     const stages = JSON.parse(root.dataset.stages || '[]') as Stage[];
+    const demoHandoff = root.dataset.demoHandoff || 'DEMO SHA a18f3c9e2b71';
     const topology = root.querySelector<HTMLElement>('[data-topology]');
     const room = root.querySelector<HTMLElement>('.atk-swarm__room');
     const shellTitle = root.querySelector<HTMLElement>('[data-shell-title]');
@@ -832,17 +925,13 @@ const demoHandoff = 'a18f3c9e2b71';
     const coreStatus = root.querySelector<HTMLElement>('[data-core-status]');
     const coreRole = root.querySelector<HTMLElement>('[data-core-role]');
     const coreHandoff = root.querySelector<HTMLElement>('[data-core-handoff]');
-    const budgetRing = root.querySelector<SVGCircleElement>('[data-budget-ring]');
     const budgetLabel = root.querySelector<HTMLElement>('[data-budget-label]');
-    const scrubberButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-stage]'));
+    const transport = root.querySelector<HTMLElement>('.atk-swarm__transport') ?? root;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let recipeId = recipes[0]?.id ?? 'pair';
-    let stageIndex = 1;
-    let playing = false;
-    let timer: number | null = null;
     let approved = false;
-    let autoplayed = false;
+    let player: ReturnType<typeof initStagePlayer> | null = null;
 
     const currentRecipe = () => recipes.find((r) => r.id === recipeId) ?? recipes[0]!;
 
@@ -856,23 +945,18 @@ const demoHandoff = 'a18f3c9e2b71';
         station.dataset.role = role.id;
         const sil = el('div', 'atk-swarm__silhouette');
         sil.setAttribute('aria-hidden', 'true');
-        const prop = el('span', 'atk-swarm__prop', role.visual.prop);
-        station.append(
-          sil,
+        const platform = el('div', 'atk-swarm__platform');
+        platform.append(
+          el('div', 'atk-swarm__worktree', `worktree ${String.fromCharCode(65 + index)}`),
           el('span', 'atk-swarm__role-id', role.visual.label || role.id),
           el('span', 'atk-swarm__role-policy', role.policy),
-          prop,
-          el('div', 'atk-swarm__worktree', `worktree ${String.fromCharCode(65 + index)}`),
+          el('span', 'atk-swarm__prop', role.visual.prop),
         );
+        station.append(sil, platform);
         topology.append(station);
       });
-      applyStage();
-    };
-
-    const setBudget = (pct: number) => {
-      const value = Math.max(8, Math.min(100, pct));
-      if (budgetRing) budgetRing.style.strokeDasharray = `${value} 100`;
-      if (budgetLabel) budgetLabel.textContent = `${value}%`;
+      if (player) applyStage(player.getIndex());
+      else applyStage(0);
     };
 
     const pulseHandoff = () => {
@@ -884,39 +968,45 @@ const demoHandoff = 'a18f3c9e2b71';
       const layer = root.querySelector<SVGGElement>('[data-packet-layer]');
       if (!layer) return;
       layer.replaceChildren();
-      const packet = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      packet.setAttribute('r', '6');
-      packet.setAttribute('class', 'atk-swarm__packet');
+      const packet = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      packet.setAttribute('class', 'atk-swarm__packet-group');
+      const disc = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      disc.setAttribute('r', '8');
+      disc.setAttribute('class', 'atk-swarm__packet');
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('class', 'atk-swarm__packet-label');
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('dy', '22');
+      label.textContent = demoHandoff;
       const x1 = from.left + from.width / 2 - roomBox.left;
       const y1 = from.top + from.height / 2 - roomBox.top;
       const x2 = to.left + to.width / 2 - roomBox.left;
       const y2 = to.top + to.height / 2 - roomBox.top;
-      packet.setAttribute('cx', String(x1));
-      packet.setAttribute('cy', String(y1));
+      packet.setAttribute('transform', `translate(${x1} ${y1})`);
+      packet.append(disc, label);
       layer.append(packet);
+      if (reduce) return;
       packet.animate(
         [
-          { cx: x1, cy: y1, opacity: 0.2 },
-          { cx: (x1 + x2) / 2, cy: (y1 + y2) / 2 - 20, opacity: 1 },
-          { cx: x2, cy: y2, opacity: 0.2 },
+          { transform: `translate(${x1}px, ${y1}px)`, opacity: 0.35 },
+          { transform: `translate(${(x1 + x2) / 2}px, ${(y1 + y2) / 2 - 24}px)`, opacity: 1 },
+          { transform: `translate(${x2}px, ${y2}px)`, opacity: 0.35 },
         ],
-        { duration: 1200, easing: 'ease-in-out', fill: 'forwards' },
+        { duration: 1400, easing: 'ease-in-out', fill: 'forwards' },
       );
     };
 
-    const applyStage = () => {
-      const stage = stages.find((s) => s.index === stageIndex) ?? stages[0]!;
+    const applyStage = (zeroBasedIndex: number) => {
+      const stage = stages[zeroBasedIndex] ?? stages[0]!;
+      const stageIndex = stage.index;
       const recipe = currentRecipe();
       const stations = Array.from(root.querySelectorAll<HTMLElement>('.atk-swarm__station'));
-      scrubberButtons.forEach((button) => {
-        button.setAttribute('aria-pressed', button.dataset.stage === stage.id ? 'true' : 'false');
-      });
       if (stageCopy) stageCopy.textContent = `${stage.summary} · ${recipe.useWhen}`;
 
-      const activeRoleIndex = Math.min(Math.max(stageIndex - 3, 0), Math.max(recipe.roles.length - 1, 0));
+      const activeRoleIndex = Math.min(Math.max(zeroBasedIndex - 2, 0), Math.max(recipe.roles.length - 1, 0));
       stations.forEach((station, index) => {
-        station.classList.toggle('is-active', stageIndex >= 3 && index === activeRoleIndex);
-        station.classList.toggle('is-dim', stageIndex >= 3 && index > activeRoleIndex + 1);
+        station.classList.toggle('is-active', zeroBasedIndex >= 2 && index === activeRoleIndex);
+        station.classList.toggle('is-dim', zeroBasedIndex >= 2 && index > activeRoleIndex + 1);
       });
 
       if (coreStatus) {
@@ -925,43 +1015,24 @@ const demoHandoff = 'a18f3c9e2b71';
       }
       if (coreRole) coreRole.textContent = recipe.roles[activeRoleIndex]?.id ?? '—';
       if (coreHandoff) {
-        coreHandoff.textContent = stage.id === 'handoffs' ? 'a18f3c9e2b71' : stageIndex > 5 ? 'received' : 'idle';
+        coreHandoff.textContent = stage.id === 'handoffs' ? demoHandoff : stageIndex > 5 ? 'received' : 'idle';
       }
-      setBudget(stage.id === 'artifact' ? 41 : stage.id === 'governance' ? 52 : 63 + (8 - stageIndex));
+      if (budgetLabel) budgetLabel.textContent = 'BUDGET ENFORCED';
 
       if (gate) gate.hidden = !(stage.id === 'governance' && !approved);
       if (artifact) artifact.hidden = stage.id !== 'artifact';
-      if (!reduce && stage.id === 'handoffs') pulseHandoff();
+      if (stage.id === 'handoffs') pulseHandoff();
+      else root.querySelector<SVGGElement>('[data-packet-layer]')?.replaceChildren();
     };
 
-    const stop = () => {
-      playing = false;
-      if (timer !== null) {
-        window.clearInterval(timer);
-        timer = null;
-      }
-    };
-
-    const play = () => {
-      if (playing) return;
-      playing = true;
-      timer = window.setInterval(
-        () => {
-          if (stageIndex >= stages.length) {
-            stop();
-            return;
-          }
-          stageIndex += 1;
-          if (stageIndex > stages.length) {
-            stageIndex = stages.length;
-            stop();
-          }
-          applyStage();
-          if (stageIndex >= stages.length) stop();
-        },
-        reduce ? 10_000 : 1400,
-      );
-    };
+    player = initStagePlayer({
+      root: transport,
+      stageCount: stages.length,
+      onStage: applyStage,
+      autoplayOnce: true,
+      intervalMs: 1400,
+      zeroBased: false,
+    });
 
     root.querySelectorAll<HTMLInputElement>('input[name="atk-recipe"]').forEach((input) => {
       input.addEventListener('change', () => {
@@ -983,55 +1054,21 @@ const demoHandoff = 'a18f3c9e2b71';
       });
     });
 
-    scrubberButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        stop();
-        stageIndex = Number(button.dataset.stageIndex || '1');
-        applyStage();
-      });
-    });
-
-    root.querySelector<HTMLButtonElement>('[data-play]')?.addEventListener('click', play);
-    root.querySelector<HTMLButtonElement>('[data-pause]')?.addEventListener('click', stop);
-    root.querySelector<HTMLButtonElement>('[data-prev]')?.addEventListener('click', () => {
-      stop();
-      stageIndex = Math.max(1, stageIndex - 1);
-      applyStage();
-    });
-    root.querySelector<HTMLButtonElement>('[data-next]')?.addEventListener('click', () => {
-      stop();
-      stageIndex = Math.min(stages.length, stageIndex + 1);
-      applyStage();
-    });
-    root.querySelector<HTMLButtonElement>('[data-replay]')?.addEventListener('click', () => {
-      stop();
-      approved = false;
-      stageIndex = 1;
-      applyStage();
-      play();
-    });
     root.querySelector<HTMLButtonElement>('[data-approve]')?.addEventListener('click', () => {
       approved = true;
       if (gate) gate.hidden = true;
       if (coreStatus) coreStatus.textContent = 'APPROVED';
-      stageIndex = stages.length;
-      applyStage();
+      player?.setStage(stages.length - 1);
     });
 
-    renderTopology();
+    root.querySelectorAll<HTMLButtonElement>('[data-replay]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        approved = false;
+      });
+    });
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (autoplayed) return;
-        if (entries.some((e) => e.isIntersecting)) {
-          autoplayed = true;
-          if (!reduce) play();
-          io.disconnect();
-        }
-      },
-      { threshold: 0.35 },
-    );
-    io.observe(root);
+    if (budgetLabel) budgetLabel.textContent = 'BUDGET ENFORCED';
+    renderTopology();
   }
 
   document.querySelectorAll<HTMLElement>('[data-atk-swarm]').forEach(initSwarm);
