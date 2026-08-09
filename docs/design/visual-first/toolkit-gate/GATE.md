@@ -18,7 +18,7 @@
 | APPROVED WITH NOTES | —                                                                       |
 | REJECTED            | —                                                                       |
 
-Playwright goldens remain **not** updated until the full visual-first pass is approved.
+Playwright goldens hold lifted after full visual-first gate **APPROVED** 2026-08-09 (see `../final-gate/GATE.md`).
 
 ---
 
@@ -75,13 +75,13 @@ Tech: Astro + CSS + SVG + native TS + WAAPI + IntersectionObserver. No Three.js 
 - `pnpm type-check` — 0 errors
 - `pnpm build` — pass
 
-Playwright goldens **not** updated (intentional).
+Playwright goldens were held until full visual-first approval; hold lifted 2026-08-09.
 
 ---
 
-## Next (post-approval)
+## Post-approval (completed)
 
-1. Extract reusable visual primitives from the Toolkit Operations Room
-2. Rework Workstation → Dotfiles → V → Create Awesome → Community → Projects / Open Source / Blog / Home polish
-3. Produce `REPORT.md` + `final-gate/` package
-4. **STOP for final human product approval** before golden updates or #319 close
+1. ✅ Extract reusable visual primitives from the Toolkit Operations Room
+2. ✅ Rework Workstation → Dotfiles → V → Create Awesome → Community → Projects / Open Source / Blog / Home polish
+3. ✅ Produce `REPORT.md` + `final-gate/` package
+4. ✅ Final human product approval recorded — shipping to `main`

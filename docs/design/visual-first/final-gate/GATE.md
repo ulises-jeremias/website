@@ -1,7 +1,8 @@
-# READY FOR HUMAN REVIEW — Full Visual-First Pass
+# APPROVED — Full Visual-First Pass
 
-**Status:** READY FOR HUMAN REVIEW  
+**Status:** APPROVED  
 **Date:** 2026-08-09  
+**Decision:** User approved in chat (product owner) and authorized merge to `main` with green CI.  
 **Branch:** `feat/visual-first-agent-toolkit`  
 **Parent epic:** #319  
 **Prior gate:** Toolkit Operations Room — **APPROVED** 2026-08-09  
@@ -9,19 +10,19 @@
 
 ---
 
-## Decision requested
+## Decision recorded
 
-Reply with one of:
+| Option              | Result                                                                                 |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| **APPROVED**        | ✅ Selected — ship to `main`; Playwright goldens may be updated as needed for green CI |
+| APPROVED WITH NOTES | —                                                                                      |
+| REJECTED            | —                                                                                      |
 
-1. **APPROVED** — visual-first pass accepted; proceed toward merge after any CI follow-ups (goldens still intentional hold unless you say otherwise)
-2. **APPROVED WITH NOTES** — list required changes before merge
-3. **REJECTED** — list blockers
-
-Do **not** update Playwright goldens or close #319 until this gate passes.
+User authorized finishing the full visual-first pass and merging to `main` with 100% green CI.
 
 ---
 
-## Review package
+## Review package (as approved)
 
 | Asset                                   | Path                                                                                                                |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -62,6 +63,8 @@ Do **not** update Playwright goldens or close #319 until this gate passes.
 
 ---
 
-## Explicit STOP
+## Post-approval ship
 
-**STOP for human product review of the full visual-first pass.**
+1. Update Playwright goldens if visual CI requires it
+2. Merge `#325` to `main` with green required checks
+3. Confirm main CI / deploy path after merge
