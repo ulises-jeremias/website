@@ -1,7 +1,7 @@
 # Visual-first production audit
 
 **Date:** 2026-08-09
-**Production:** https://www.ulises-jeremias.dev
+**Production:** <https://www.ulises-jeremias.dev>
 **Branch capture context:** `feat/visual-first-agent-toolkit` (audit of live production, pre-prototype)
 **Viewports:** 1440×1000 and 390×844 (viewport screenshots under `docs/design/visual-first/audit/{route}/`)
 **Word metric (canonical):** approximate **visible** words excluding header/footer, `aria-hidden`, and closed `<details>` (see `audit/_metrics.json`). Alternate main-only scrape also stored in `audit/metrics.json`.
