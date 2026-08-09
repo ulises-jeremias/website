@@ -1,15 +1,15 @@
 # Visual-first production audit
 
-**Date:** 2026-08-09  
-**Production:** https://www.ulises-jeremias.dev  
-**Branch capture context:** `feat/visual-first-agent-toolkit` (audit of live production, pre-prototype)  
-**Viewports:** 1440×1000 and 390×844 (viewport screenshots under `docs/design/visual-first/audit/{route}/`)  
+**Date:** 2026-08-09
+**Production:** https://www.ulises-jeremias.dev
+**Branch capture context:** `feat/visual-first-agent-toolkit` (audit of live production, pre-prototype)
+**Viewports:** 1440×1000 and 390×844 (viewport screenshots under `docs/design/visual-first/audit/{route}/`)
 **Word metric (canonical):** approximate **visible** words excluding header/footer, `aria-hidden`, and closed `<details>` (see `audit/_metrics.json`). Alternate main-only scrape also stored in `audit/metrics.json`.
 
 ## Principle under test
 
-Website = interactive trailer / conceptual map.  
-Repository + Wiki + docs/ = detailed manual.  
+Website = interactive trailer / conceptual map.
+Repository + Wiki + docs/ = detailed manual.
 One concept = one primary teaching device. Layers 0–2 emphasized.
 
 ---
@@ -108,7 +108,7 @@ One concept = one primary teaching device. Layers 0–2 emphasized.
 | TEXT REMOVE            | Overview triad (“principle / layers / delivery”), duplicate swarm stage cards under the rail                  |
 | TEXT MUST REMAIN       | Short title + one sentence, live counts from inventory, docs/GitHub deep links, provenance                    |
 
-**Target after P0:** −60% to −75% visible prose (≈415–665 words) while teaching more via Operations Room interactions.  
+**Target after P0:** −60% to −75% visible prose (≈415–665 words) while teaching more via Operations Room interactions.
 **Measured after (prototype):** **338** words (−79.7%) — see `toolkit-gate/WORD-COUNT.md`.
 
 Screenshots: `audit/agent-toolkit/{1440,390}.png`
