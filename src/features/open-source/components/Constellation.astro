@@ -17,10 +17,7 @@ const positions = nodes.map((node, index) => {
 <section class="constellation" aria-labelledby="constellation-title" data-testid="oss-constellation">
   <p class="constellation__eyebrow">Open Source · contribution constellation</p>
   <h1 id="constellation-title">Evidence first</h1>
-  <p class="constellation__lede">
-    Owned, maintained, organization, and external merged work — drawn from the committed GitHub evidence cache. No
-    star/fork dashboards. Refresh with <code>pnpm data:refresh</code> (token stays on the build machine).
-  </p>
+  <p class="constellation__lede">Owned · maintained · org · external — verified subjects only.</p>
 
   <div class="constellation__stage" role="img" aria-label="Contribution constellation of verified subjects">
     <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
@@ -46,22 +43,25 @@ const positions = nodes.map((node, index) => {
       }
     </svg>
 
-    <ul class="constellation__legend" role="list">
-      {
-        positions.map((node) => (
-          <li>
-            <a href={node.href} target="_blank" rel="noreferrer" data-kind={node.kind}>
-              <span class="constellation__kind">{node.kind}</span>
-              <span class="constellation__label">{node.label}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <details class="constellation__legend-wrap">
+      <summary>Subjects</summary>
+      <ul class="constellation__legend" role="list">
+        {
+          positions.map((node) => (
+            <li>
+              <a href={node.href} target="_blank" rel="noreferrer" data-kind={node.kind}>
+                <span class="constellation__kind">{node.kind}</span>
+                <span class="constellation__label">{node.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
   </div>
 
   <p class="constellation__meta">
-    Cache generated: <time datetime={lastUpdated}>{lastUpdated}</time>
+    verified <time datetime={lastUpdated}>{lastUpdated}</time>
   </p>
 </section>
 

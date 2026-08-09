@@ -1,0 +1,504 @@
+---
+import { SceneInspector, WorldDock } from '@/shared/components/visual';
+import '@/shared/components/visual/visual.css';
+import Composer from './Composer.astro';
+import {
+  catalogTotals,
+  comparisonRows,
+  compositionExamples,
+  contributionSteps,
+  distributionChannels,
+  familyIntro,
+  variants,
+} from '../data/index.js';
+
+const sourceById = {
+  node: 'cna-templates',
+  python: 'cpa-templates',
+  v: 'cva-templates',
+} as const;
+
+const stations = variants.map((v) => ({
+  id: v.id,
+  label: v.label,
+  title: v.title,
+  status: v.status,
+  description: v.description,
+  install: v.install,
+  href: v.href,
+  repo: v.repo,
+  accent: v.accentLight,
+  templates: catalogTotals[v.id].templates,
+  addons: catalogTotals[v.id].addons,
+  source: sourceById[v.id],
+}));
+
+const stationsJson = JSON.stringify(stations);
+const defaultStation = stations[0]!;
+
+const lineModules = [
+  { id: 'runtime', label: 'Runtime', hint: 'Node · Python · V' },
+  { id: 'template', label: 'Template', hint: 'starter shape' },
+  { id: 'addons', label: 'Addons', hint: 'optional slices' },
+  { id: 'app', label: 'App', hint: 'real files you own' },
+];
+---
+
+<section class="ca-world" aria-labelledby="ca-world-title" data-ca-world data-stations={stationsJson}>
+  <header class="ca-world__hero">
+    <p class="ca-world__eyebrow">Create Awesome · assembly line</p>
+    <h1 id="ca-world-title">{familyIntro.title}</h1>
+    <p class="ca-world__lede">
+      {familyIntro.principle} · Node {catalogTotals.node.templates}+{catalogTotals.node.addons} · Python{' '}
+      {catalogTotals.python.templates}+{catalogTotals.python.addons} · V {catalogTotals.v.templates}+{
+        catalogTotals.v.addons
+      }
+    </p>
+  </header>
+
+  <div class="vf-scene ca-world__scene">
+    <div class="vf-stage ca-world__stage">
+      <svg
+        class="ca-world__line"
+        viewBox="0 0 720 220"
+        role="img"
+        aria-label="Assembly line: runtime, template, addons, app"
+      >
+        <defs>
+          <linearGradient id="ca-line-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.35"></stop>
+            <stop offset="50%" stop-color="#22d3ee" stop-opacity="0.28"></stop>
+            <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.35"></stop>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="720" height="220" fill="url(#ca-line-glow)" opacity="0.35"></rect>
+        <path
+          class="vf-flow is-active"
+          data-ca-belt
+          d="M70 110 H650"
+          style="--vf-flow-accent: var(--nest-sunset-orange, #fb923c)"></path>
+        {
+          lineModules.map((mod, index) => {
+            const x = 70 + index * 180;
+            return (
+              <g class="ca-world__module" data-module={mod.id} transform={`translate(${x} 60)`}>
+                <rect class="ca-world__module-disk" x="-48" y="0" width="96" height="100" rx="4" />
+                <text class="ca-world__module-label" x="0" y="42" text-anchor="middle">
+                  {mod.label}
+                </text>
+                <text class="ca-world__module-hint" x="0" y="68" text-anchor="middle">
+                  {mod.hint}
+                </text>
+              </g>
+            );
+          })
+        }
+      </svg>
+
+      <div class="ca-world__stations" role="radiogroup" aria-label="Runtime station">
+        {
+          stations.map((station, index) => (
+            <>
+              <input
+                class="ca-world__radio"
+                type="radio"
+                name="ca-world-runtime"
+                id={`ca-station-${station.id}`}
+                value={station.id}
+                checked={index === 0}
+                data-ca-station={station.id}
+              />
+              <label
+                class="vf-node"
+                for={`ca-station-${station.id}`}
+                style={`--vf-node-accent: ${station.accent}`}
+                data-visual-node={station.id}
+              >
+                <span>
+                  {station.label}
+                  <small>
+                    {station.templates}+{station.addons}
+                  </small>
+                </span>
+              </label>
+            </>
+          ))
+        }
+      </div>
+    </div>
+
+    <SceneInspector eyebrow="Runtime" title={defaultStation.title} id="ca-runtime-inspector">
+      <p data-ca-inspector-body>{defaultStation.description}</p>
+      <Fragment slot="meta">
+        <span data-ca-inspector-status>
+          {defaultStation.status} · {defaultStation.templates} templates · {defaultStation.addons} addons
+        </span>
+        <span>
+          source <code data-ca-inspector-source>{defaultStation.source}</code>
+        </span>
+        <span>
+          <code data-ca-inspector-install>{defaultStation.install}</code>
+        </span>
+        <span>
+          <a data-ca-inspector-link href={defaultStation.href} target="_blank" rel="noreferrer"> Catalog ↗ </a>
+        </span>
+      </Fragment>
+    </SceneInspector>
+  </div>
+
+  <Composer embedded />
+
+  <details class="ca-world__fold">
+    <summary>Compare · distribute · contribute</summary>
+    <div class="ca-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Node</th>
+            <th>Python</th>
+            <th>V</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            comparisonRows.map((row) => (
+              <tr>
+                <td>{row.feature}</td>
+                <td>{row.node}</td>
+                <td>{row.python}</td>
+                <td>{row.v}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <ul class="ca-world__channels">
+      {
+        distributionChannels.map((channel) => (
+          <li>
+            <strong>{channel.label}</strong> <code>{channel.command}</code>
+          </li>
+        ))
+      }
+    </ul>
+    <ol class="ca-world__steps">
+      {
+        contributionSteps.map((step) => (
+          <li>
+            {step.title}
+            {step.href ? (
+              <>
+                {' '}
+                <a href={step.href} target="_blank" rel="noreferrer">
+                  ↗
+                </a>
+              </>
+            ) : null}
+          </li>
+        ))
+      }
+    </ol>
+  </details>
+
+  <details class="ca-world__fold">
+    <summary>Composition examples</summary>
+    <ul class="ca-world__examples">
+      {
+        compositionExamples.map((example) => (
+          <li>
+            <strong>{example.title}</strong>
+            <code>{example.command}</code>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <WorldDock label="Create Awesome links">
+    <a class="vf-dock__primary" href={defaultStation.href} target="_blank" rel="noreferrer" data-ca-dock-catalog>
+      Catalog
+    </a>
+    <a href={`https://github.com/${defaultStation.repo}`} target="_blank" rel="noreferrer" data-ca-dock-repo>
+      GitHub
+    </a>
+    <a href="/community">Community</a>
+    <code class="vf-dock__code" data-ca-dock-install>{defaultStation.install}</code>
+  </WorldDock>
+</section>
+
+<script>
+  type Station = {
+    id: string;
+    label: string;
+    title: string;
+    status: string;
+    description: string;
+    install: string;
+    href: string;
+    repo: string;
+    accent: string;
+    templates: number;
+    addons: number;
+    source: string;
+  };
+
+  function initWorld(root: HTMLElement) {
+    const stations = JSON.parse(root.dataset.stations || '[]') as Station[];
+
+    const title = root.querySelector('#ca-runtime-inspector .vf-inspector__title');
+    const body = root.querySelector<HTMLElement>('[data-ca-inspector-body]');
+    const status = root.querySelector<HTMLElement>('[data-ca-inspector-status]');
+    const source = root.querySelector<HTMLElement>('[data-ca-inspector-source]');
+    const install = root.querySelector<HTMLElement>('[data-ca-inspector-install]');
+    const link = root.querySelector<HTMLAnchorElement>('[data-ca-inspector-link]');
+    const dockCatalog = root.querySelector<HTMLAnchorElement>('[data-ca-dock-catalog]');
+    const dockRepo = root.querySelector<HTMLAnchorElement>('[data-ca-dock-repo]');
+    const dockInstall = root.querySelector<HTMLElement>('[data-ca-dock-install]');
+    const modules = root.querySelectorAll<SVGGElement>('[data-module]');
+
+    const select = (id: string) => {
+      const station = stations.find((s) => s.id === id) || stations[0];
+      if (!station) return;
+
+      if (title) title.textContent = station.title;
+      if (body) body.textContent = station.description;
+      if (status) {
+        status.textContent = `${station.status} · ${station.templates} templates · ${station.addons} addons`;
+      }
+      if (source) source.textContent = station.source;
+      if (install) install.textContent = station.install;
+      if (link) {
+        link.href = station.href;
+      }
+      if (dockCatalog) dockCatalog.href = station.href;
+      if (dockRepo) dockRepo.href = `https://github.com/${station.repo}`;
+      if (dockInstall) dockInstall.textContent = station.install;
+
+      modules.forEach((mod) => {
+        const kind = mod.dataset.module;
+        mod.classList.toggle(
+          'is-active',
+          kind === 'runtime' || kind === 'template' || kind === 'addons' || kind === 'app',
+        );
+        if (kind === 'runtime') {
+          mod.style.setProperty('--ca-module-accent', station.accent);
+        }
+      });
+
+      const composerRadio = document.querySelector<HTMLInputElement>(`#ca-runtime-${station.id}`);
+      if (composerRadio && !composerRadio.checked) {
+        composerRadio.checked = true;
+        composerRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      root.querySelectorAll<HTMLElement>('[data-visual-node]').forEach((node) => {
+        node.classList.toggle('is-active', node.getAttribute('data-visual-node') === station.id);
+      });
+    };
+
+    root.querySelectorAll<HTMLInputElement>('[data-ca-station]').forEach((input) => {
+      input.addEventListener('change', () => {
+        if (input.checked) select(input.value);
+      });
+    });
+
+    const composer = document.querySelector<HTMLElement>('[data-ca-composer]');
+    composer?.addEventListener('change', (event) => {
+      const target = event.target as HTMLInputElement | null;
+      if (!target || target.name !== 'ca-runtime') return;
+      const stationInput = root.querySelector<HTMLInputElement>(`#ca-station-${target.value}`);
+      if (stationInput && !stationInput.checked) {
+        stationInput.checked = true;
+      }
+      select(target.value);
+    });
+
+    select(stations[0]?.id || 'node');
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ca-world]').forEach(initWorld);
+</script>
+
+<style>
+  .ca-world {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding: clamp(1.25rem, 3.5vw, 2.5rem) 0 clamp(2rem, 5vw, 3.25rem);
+  }
+
+  .ca-world__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .ca-world__hero h1 {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: clamp(1.45rem, 3vw, 2.1rem);
+  }
+
+  .ca-world__lede {
+    margin: 0.45rem 0 0;
+    color: var(--color-text-muted);
+    max-inline-size: 62ch;
+    line-height: 1.45;
+    font-size: 0.95rem;
+  }
+
+  .ca-world__scene {
+    margin-top: 1.25rem;
+  }
+
+  .ca-world__stage {
+    display: grid;
+    gap: 0.85rem;
+    padding: 0.85rem;
+    min-height: 0;
+  }
+
+  .ca-world__line {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ca-world__module-disk {
+    fill: color-mix(in srgb, var(--nest-midnight-950, #020617) 70%, transparent);
+    stroke: color-mix(in srgb, var(--ca-module-accent, var(--color-border)) 55%, transparent);
+    stroke-width: 1.5;
+  }
+
+  .ca-world__module.is-active .ca-world__module-disk {
+    stroke: var(--ca-module-accent, var(--nest-cyan, #22d3ee));
+    fill: color-mix(in srgb, var(--ca-module-accent, var(--nest-cyan, #22d3ee)) 14%, #020617);
+  }
+
+  .ca-world__module-label {
+    fill: var(--nest-paper, #f8fafc);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ca-world__module-hint {
+    fill: var(--color-text-muted, #94a3b8);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  .ca-world__stations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .ca-world__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ca-world__radio:checked + .vf-node,
+  .ca-world__radio:focus-visible + .vf-node {
+    border-color: var(--vf-node-accent, var(--nest-cyan));
+    color: var(--nest-paper, #f8fafc);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--vf-node-accent, var(--nest-cyan)) 35%, transparent);
+  }
+
+  .ca-world__stations .vf-node small {
+    display: block;
+    margin-top: 0.15rem;
+    opacity: 0.7;
+    letter-spacing: 0.06em;
+    font-size: 0.62rem;
+  }
+
+  .ca-world__fold {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.86rem;
+  }
+
+  .ca-world__fold summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .ca-table-wrap {
+    overflow-x: auto;
+    margin: 0.75rem 0;
+  }
+
+  .ca-table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+
+  .ca-table-wrap th,
+  .ca-table-wrap td {
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+  }
+
+  .ca-world__channels,
+  .ca-world__steps,
+  .ca-world__examples {
+    margin: 0.75rem 0 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .ca-world__channels code,
+  .ca-world__examples code {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.72rem;
+    overflow-wrap: anywhere;
+    color: var(--nest-cyan);
+  }
+
+  .ca-world :global(.ca-composer) {
+    width: 100%;
+    padding-block: 1.25rem 0.5rem;
+  }
+
+  .ca-world :global(.ca-composer > header p:not(.ca-composer__eyebrow)) {
+    display: none;
+  }
+
+  .ca-world :global(.ca-composer > header h2) {
+    font-size: 1.1rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ca-world__module.is-active .ca-world__module-disk {
+      animation: ca-module-pulse 3.6s ease-in-out infinite;
+    }
+  }
+
+  @keyframes ca-module-pulse {
+    0%,
+    100% {
+      opacity: 0.9;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+</style>

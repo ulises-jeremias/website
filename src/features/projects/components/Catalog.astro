@@ -16,12 +16,9 @@ function primaryHref(project: Project): string {
 <section class="projects-ledger" aria-labelledby="projects-ledger-title" data-testid="projects-ledger">
   <div class="projects-ledger__head">
     <div>
-      <p class="projects-ledger__eyebrow">Projects · searchable ledger</p>
-      <h2 id="projects-ledger-title">Grouped by system</h2>
-      <p class="projects-ledger__lede">
-        Personal DX, Agentic, V, Create Awesome, Dev tools, and Experiments/legacy. Status uses text labels. Stars and
-        downloads appear only when build-time metrics include <code>verifiedAt</code>.
-      </p>
+      <p class="projects-ledger__eyebrow">Projects · ledger</p>
+      <h2 id="projects-ledger-title">Grouped ledger</h2>
+      <p class="projects-ledger__lede">Filter by name or group. Metrics only when verified.</p>
     </div>
 
     <form class="projects-ledger__controls" role="search" data-projects-search>
@@ -82,24 +79,17 @@ function primaryHref(project: Project): string {
                   <a href={primaryHref(p)}>{p.title}</a>
                   {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
                 </h4>
-                <p>{p.summary}</p>
-                {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
-                {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
-                <p class="projects-ledger__tags">
-                  {p.tags.map((t) => (
-                    <span>#{t}</span>
-                  ))}
-                  {p.metrics?.stars != null && p.metrics.verifiedAt ? (
-                    <span class="projects-ledger__metrics">
-                      {p.metrics.stars} stars · verified {p.metrics.verifiedAt}
-                    </span>
-                  ) : null}
-                  {p.metrics?.downloads != null && p.metrics.verifiedAt ? (
-                    <span class="projects-ledger__metrics">
-                      {p.metrics.downloads} downloads · verified {p.metrics.verifiedAt}
-                    </span>
-                  ) : null}
-                </p>
+                <details class="projects-ledger__inspect">
+                  <summary>Inspect</summary>
+                  <p>{p.summary}</p>
+                  {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
+                  {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
+                  <p class="projects-ledger__tags">
+                    {p.tags.slice(0, 2).map((t) => (
+                      <span>#{t}</span>
+                    ))}
+                  </p>
+                </details>
               </div>
               <div role="cell">
                 <span class="projects-ledger__kind">

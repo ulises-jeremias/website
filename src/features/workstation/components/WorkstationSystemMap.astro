@@ -1,0 +1,662 @@
+---
+import { PlaybackControls, SceneInspector, StageScrubber, StatusMeter, WorldDock } from '@/shared/components/visual';
+import '@/shared/components/visual/visual.css';
+import {
+  doctorChecks,
+  provisioningSteps,
+  thinWorkstationVerification,
+  workstationIdentity,
+  workstationLayers,
+  workstationProfiles,
+} from '../data/index.js';
+import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
+
+const bootStages = [
+  {
+    id: 'fresh',
+    title: 'Fresh',
+    summary: 'Empty machine. Thin workstation will provision — no embedded skills.',
+    command: thinWorkstationVerification.installPath.split('&&')[0]?.trim() ?? 'chezmoi init',
+    health: 12,
+  },
+  {
+    id: 'profile',
+    title: 'Profile',
+    summary: 'Pick a chezmoi profile. Groups drive packages and swarm prerequisites.',
+    command: 'profile = technical | minimal | …',
+    health: 28,
+  },
+  {
+    id: 'provision',
+    title: 'Provision',
+    summary: provisioningSteps[0]!.description,
+    command: provisioningSteps[0]!.command,
+    health: 52,
+  },
+  {
+    id: 'doctor',
+    title: 'Doctor',
+    summary: doctorChecks[0]!.description,
+    command: doctorChecks[0]!.command,
+    health: 68,
+  },
+  {
+    id: 'toolkit',
+    title: 'Toolkit uplink',
+    summary: `Capabilities via agent-toolkit · ${inventoryStrip()}.`,
+    command: provisioningSteps[1]!.command,
+    health: 86,
+  },
+  {
+    id: 'harness',
+    title: 'Harness',
+    summary: workstationLayers.find((l) => l.id === 'harness')!.description,
+    command: 'workspace-context · knowledge/ · personas/',
+    health: 100,
+  },
+];
+
+const nodes = [
+  { id: 'hornero', x: 90, y: 210, layer: workstationLayers[0]! },
+  { id: 'workstation', x: 280, y: 120, layer: workstationLayers[1]! },
+  { id: 'toolkit', x: 480, y: 120, layer: workstationLayers[2]! },
+  { id: 'harness', x: 670, y: 210, layer: workstationLayers[3]! },
+];
+
+const paths = [
+  { id: 'p-hw', d: 'M130 200 C190 160 220 140 250 130', from: 'hornero', to: 'workstation' },
+  { id: 'p-wt', d: 'M330 120 L450 120', from: 'workstation', to: 'toolkit' },
+  { id: 'p-th', d: 'M530 140 C590 150 620 180 650 200', from: 'toolkit', to: 'harness' },
+  { id: 'p-wh', d: 'M300 150 C380 260 520 270 640 230', from: 'workstation', to: 'harness' },
+];
+
+const stagesJson = JSON.stringify(bootStages);
+const profilesJson = JSON.stringify(
+  workstationProfiles.map((p) => ({
+    id: p.id,
+    description: p.description,
+    groups: p.groups,
+  })),
+);
+const layersJson = JSON.stringify(
+  workstationLayers.map((l) => ({
+    id: l.id,
+    label: l.label,
+    title: l.title,
+    subtitle: l.subtitle,
+    description: l.description,
+    accent: l.accent,
+    repo: l.repo ?? '',
+    delivers: l.delivers.slice(0, 3),
+  })),
+);
+const doctorJson = JSON.stringify(doctorChecks.map((d) => ({ name: d.name, command: d.command, when: d.when })));
+
+const defaultProfile = workstationProfiles[0]!;
+const defaultLayer = workstationLayers[1]!;
+---
+
+<section
+  class="ws-map"
+  aria-labelledby="ws-map-title"
+  data-ws-map
+  data-stages={stagesJson}
+  data-profiles={profilesJson}
+  data-layers={layersJson}
+  data-doctor={doctorJson}
+>
+  <header class="ws-map__header">
+    <p class="ws-map__eyebrow">Workstation System Map</p>
+    <h1 id="ws-map-title">Boot the Workstation</h1>
+    <p class="ws-map__lede">Fresh → Profile → Provision → Doctor → Toolkit uplink → Harness. Thin L1 · fat L1.5.</p>
+  </header>
+
+  <div class="ws-map__identity" aria-label="Identity tokens">
+    <span style={`--swatch:${workstationIdentity.midnight}`}>midnight</span>
+    <span style={`--swatch:${workstationIdentity.cyan}`}>cyan</span>
+    <span style={`--swatch:${workstationIdentity.violet}`}>violet</span>
+    <span style={`--swatch:${workstationIdentity.lime}`}>lime</span>
+  </div>
+
+  <div class="vf-scene">
+    <div class="vf-stage ws-map__stage">
+      <svg
+        class="ws-map__svg"
+        viewBox="0 0 760 340"
+        role="img"
+        aria-label="Personal DX graph: Hornero optional, Workstation, Toolkit, Harness"
+      >
+        <defs>
+          <radialGradient id="ws-core" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.35"></stop>
+            <stop offset="100%" stop-color="#020617" stop-opacity="0"></stop>
+          </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="760" height="340" fill="url(#ws-core)"></rect>
+        {paths.map((p) => <path class="vf-flow" data-flow={p.id} data-from={p.from} data-to={p.to} d={p.d} />)}
+        {
+          nodes.map((n) => (
+            <g class="ws-map__node" data-node={n.id} style={`--vf-node-accent:${n.layer.accent}`}>
+              <circle cx={n.x} cy={n.y} r="36" class="ws-map__node-disk" />
+              <text x={n.x} y={n.y - 4} text-anchor="middle" class="ws-map__node-label">
+                {n.layer.title}
+              </text>
+              <text x={n.x} y={n.y + 14} text-anchor="middle" class="ws-map__node-sub">
+                {n.layer.label.split('·')[0]?.trim()}
+              </text>
+            </g>
+          ))
+        }
+        <text x="380" y="300" text-anchor="middle" class="ws-map__thin"
+          >thin boundary after L1 — no embedded skills</text
+        >
+      </svg>
+
+      <div class="ws-map__node-controls" role="radiogroup" aria-label="DX layer">
+        {
+          workstationLayers.map((layer, i) => (
+            <>
+              <input
+                class="ws-map__radio"
+                type="radio"
+                name="ws-layer"
+                id={`ws-layer-${layer.id}`}
+                value={layer.id}
+                checked={i === 1}
+                data-layer={layer.id}
+              />
+              <label class="vf-node" for={`ws-layer-${layer.id}`} style={`--vf-node-accent:${layer.accent}`}>
+                {layer.title}
+              </label>
+            </>
+          ))
+        }
+      </div>
+    </div>
+
+    <SceneInspector eyebrow="Layer" title={defaultLayer.title} id="ws-layer-inspector">
+      <p data-layer-copy>{defaultLayer.description}</p>
+      <Fragment slot="meta">
+        <div data-layer-meta>
+          <span data-layer-label>{defaultLayer.label}</span>
+          {
+            defaultLayer.repo ? (
+              <span>
+                <code data-layer-repo>{defaultLayer.repo}</code>
+              </span>
+            ) : (
+              <span>
+                <code data-layer-repo hidden />
+              </span>
+            )
+          }
+        </div>
+      </Fragment>
+    </SceneInspector>
+  </div>
+
+  <div class="ws-map__boot" data-boot>
+    <div class="ws-map__boot-head">
+      <h2>Boot sequence</h2>
+      <StatusMeter
+        value={bootStages[0]!.health}
+        label="Boot health"
+        caption="boot progress"
+        accent={workstationIdentity.cyan}
+      />
+    </div>
+    <StageScrubber stages={bootStages} label="Boot stage" />
+    <p class="ws-map__stage-copy" data-stage-copy>{bootStages[0]!.summary}</p>
+    <pre class="ws-map__stage-cmd"><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
+    <PlaybackControls label="Boot playback" />
+  </div>
+
+  <div class="ws-map__profile">
+    <h2>Profile</h2>
+    <div class="ws-map__profile-grid" role="radiogroup" aria-label="Chezmoi profile">
+      {
+        workstationProfiles.map((profile, i) => (
+          <>
+            <input
+              class="ws-map__radio"
+              type="radio"
+              name="ws-profile"
+              id={`ws-profile-${profile.id}`}
+              value={profile.id}
+              checked={i === 0}
+              data-profile={profile.id}
+            />
+            <label class="vf-node" for={`ws-profile-${profile.id}`}>
+              {profile.id}
+            </label>
+          </>
+        ))
+      }
+    </div>
+    <SceneInspector eyebrow="Profile" title={defaultProfile.id} id="ws-profile-inspector">
+      <p data-profile-copy>{defaultProfile.description}</p>
+      <Fragment slot="meta">
+        <div data-profile-groups>
+          {
+            defaultProfile.groups.length ? (
+              defaultProfile.groups.map((g) => <code data-group={g}>{g}</code>)
+            ) : (
+              <span data-profile-empty>custom — answer every group prompt</span>
+            )
+          }
+        </div>
+      </Fragment>
+    </SceneInspector>
+  </div>
+
+  <div class="ws-map__health">
+    <h2>Health console</h2>
+    <ul class="ws-map__health-list">
+      {
+        doctorChecks.map((check) => (
+          <li>
+            <code>{check.command}</code>
+            <span>{check.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <details>
+      <summary>Thin workstation verification</summary>
+      <p>{thinWorkstationVerification.statement}</p>
+      <p>
+        No embedded: {thinWorkstationVerification.noEmbedded.join(', ')}. Kept: {
+          thinWorkstationVerification.kept.join(', ')
+        }.
+      </p>
+    </details>
+  </div>
+
+  <WorldDock label="Get started">
+    <a
+      class="vf-dock__primary"
+      href="https://github.com/ulises-jeremias/agentic-workstation"
+      target="_blank"
+      rel="noreferrer"
+    >
+      GitHub
+    </a>
+    <a href="/agent-toolkit">Open Toolkit</a>
+    <a href="/dotfiles">HorneroConfig</a>
+    <a href="/community">Community</a>
+    <code class="vf-dock__code">chezmoi init --apply ulises-jeremias/agentic-workstation</code>
+  </WorldDock>
+</section>
+
+<script>
+  import { initStagePlayer } from '@/shared/lib/visual-stage-player';
+
+  type Stage = { id: string; title: string; summary: string; command: string; health: number };
+  type Profile = { id: string; description: string; groups: string[] };
+  type Layer = {
+    id: string;
+    label: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    accent: string;
+    repo: string;
+    delivers: string[];
+  };
+
+  function clearChildren(el: HTMLElement) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function initMap(root: HTMLElement) {
+    const stages = JSON.parse(root.dataset.stages || '[]') as Stage[];
+    const profiles = JSON.parse(root.dataset.profiles || '[]') as Profile[];
+    const layers = JSON.parse(root.dataset.layers || '[]') as Layer[];
+
+    const stageCopy = root.querySelector<HTMLElement>('[data-stage-copy]');
+    const stageCmd = root.querySelector<HTMLElement>('[data-stage-cmd]');
+    const meter = root.querySelector<HTMLElement>('.vf-meter');
+    const boot = root.querySelector<HTMLElement>('[data-boot]');
+
+    const applyStage = (index: number) => {
+      const stage = stages[index];
+      if (!stage) return;
+      if (stageCopy) stageCopy.textContent = stage.summary;
+      if (stageCmd) stageCmd.textContent = stage.command;
+      if (meter) {
+        meter.style.setProperty('--vf-meter-value', String(stage.health));
+        const strong = meter.querySelector('strong');
+        if (strong) strong.textContent = `${stage.health}%`;
+      }
+      root.querySelectorAll<SVGPathElement>('[data-flow]').forEach((path, i) => {
+        path.classList.toggle('is-active', i <= Math.min(index, 2));
+      });
+      const highlight =
+        stage.id === 'toolkit'
+          ? 'toolkit'
+          : stage.id === 'harness'
+            ? 'harness'
+            : stage.id === 'fresh'
+              ? 'hornero'
+              : 'workstation';
+      root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
+        g.classList.toggle('is-active', g.dataset.node === highlight);
+      });
+    };
+
+    if (boot) {
+      initStagePlayer({
+        root: boot,
+        stageCount: stages.length,
+        onStage: applyStage,
+        autoplayOnce: true,
+        intervalMs: 2400,
+      });
+    }
+
+    const layerTitle = root.querySelector('#ws-layer-inspector .vf-inspector__title');
+    const layerCopy = root.querySelector<HTMLElement>('[data-layer-copy]');
+    const layerLabel = root.querySelector<HTMLElement>('[data-layer-label]');
+    const layerRepo = root.querySelector<HTMLElement>('[data-layer-repo]');
+
+    const selectLayer = (id: string) => {
+      const layer = layers.find((l) => l.id === id) || layers[1];
+      if (!layer) return;
+      if (layerTitle) layerTitle.textContent = layer.title;
+      if (layerCopy) layerCopy.textContent = layer.description;
+      if (layerLabel) layerLabel.textContent = layer.label;
+      if (layerRepo) {
+        layerRepo.textContent = layer.repo;
+        layerRepo.hidden = !layer.repo;
+      }
+      root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
+        g.classList.toggle('is-active', g.dataset.node === id);
+      });
+      root.querySelectorAll<SVGPathElement>('[data-flow]').forEach((path) => {
+        const on = path.dataset.from === id || path.dataset.to === id;
+        path.classList.toggle('is-active', on);
+      });
+    };
+
+    root.querySelectorAll<HTMLInputElement>('[data-layer]').forEach((input) => {
+      input.addEventListener('change', () => {
+        if (input.checked) selectLayer(input.value);
+      });
+    });
+    root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
+      g.style.cursor = 'pointer';
+      g.addEventListener('click', () => {
+        const id = g.dataset.node || '';
+        const radio = root.querySelector<HTMLInputElement>(`#ws-layer-${id}`);
+        if (radio) {
+          radio.checked = true;
+          selectLayer(id);
+        }
+      });
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          (g as unknown as HTMLElement).dispatchEvent(new Event('click'));
+        }
+      });
+    });
+
+    const profileTitle = root.querySelector('#ws-profile-inspector .vf-inspector__title');
+    const profileCopy = root.querySelector<HTMLElement>('[data-profile-copy]');
+    const profileGroups = root.querySelector<HTMLElement>('[data-profile-groups]');
+
+    const selectProfile = (id: string) => {
+      const profile = profiles.find((p) => p.id === id) || profiles[0];
+      if (!profile || !profileGroups) return;
+      if (profileTitle) profileTitle.textContent = profile.id;
+      if (profileCopy) profileCopy.textContent = profile.description;
+      clearChildren(profileGroups);
+      if (profile.groups.length) {
+        profile.groups.forEach((g) => {
+          const code = document.createElement('code');
+          code.textContent = g;
+          profileGroups.appendChild(code);
+        });
+      } else {
+        const span = document.createElement('span');
+        span.textContent = 'custom — answer every group prompt';
+        profileGroups.appendChild(span);
+      }
+    };
+
+    root.querySelectorAll<HTMLInputElement>('[data-profile]').forEach((input) => {
+      input.addEventListener('change', () => {
+        if (input.checked) selectProfile(input.value);
+      });
+    });
+
+    selectLayer('workstation');
+    applyStage(0);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ws-map]').forEach(initMap);
+</script>
+
+<style>
+  .ws-map {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .ws-map__canvas,
+  .ws-map__health {
+    background: var(--world-surface-tint);
+  }
+
+  .ws-map :global(.vf-dock__primary) {
+    background: var(--world-accent);
+    color: var(--color-text-on-accent, var(--nest-midnight-900));
+  }
+
+  .ws-map h1,
+  .ws-map h2 {
+    color: var(--color-text);
+  }
+
+  .ws-map__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-tertiary, var(--nest-sunset-orange));
+  }
+
+  .ws-map h1 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3.5vw, 2.35rem);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .ws-map__lede {
+    margin: 0.45rem 0 0;
+    color: var(--color-text-muted);
+    max-inline-size: 54ch;
+  }
+
+  .ws-map__identity {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 0.85rem 0 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .ws-map__identity span::before {
+    content: '';
+    display: inline-block;
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-right: 0.35rem;
+    vertical-align: -0.05rem;
+    background: var(--swatch);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--swatch) 40%, transparent);
+  }
+
+  .ws-map__stage {
+    padding: 0.75rem;
+  }
+
+  .ws-map__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ws-map__node-disk {
+    fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 22%, #020617);
+    stroke: var(--vf-node-accent, #22d3ee);
+    stroke-width: 1.5;
+  }
+
+  .ws-map__node.is-active .ws-map__node-disk {
+    fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 40%, #020617);
+    stroke-width: 2.5;
+  }
+
+  .ws-map__node-label {
+    fill: var(--nest-paper, #f8fafc);
+    font-size: 11px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .ws-map__node-sub,
+  .ws-map__thin {
+    fill: var(--color-text-faint, #64748b);
+    font-size: 9px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ws-map__node-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+
+  .ws-map__radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ws-map__radio:checked + .vf-node,
+  .ws-map__radio:focus-visible + .vf-node {
+    border-color: var(--vf-node-accent, var(--nest-cyan));
+    color: var(--nest-paper);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--vf-node-accent, var(--nest-cyan)) 35%, transparent);
+  }
+
+  .ws-map__boot,
+  .ws-map__profile,
+  .ws-map__health {
+    margin-top: 1.75rem;
+  }
+
+  .ws-map h2 {
+    margin: 0 0 0.65rem;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ws-map__boot-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .ws-map__boot-head h2 {
+    margin: 0;
+  }
+
+  .ws-map__stage-copy {
+    margin: 0.65rem 0 0.35rem;
+    color: var(--color-text-muted);
+    max-inline-size: 62ch;
+    font-size: 0.9rem;
+  }
+
+  .ws-map__stage-cmd {
+    margin: 0 0 0.65rem;
+    padding: 0.55rem 0.75rem;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    background: var(--color-code-bg, #0b0714);
+    font-size: 0.78rem;
+  }
+
+  .ws-map__profile-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ws-map__health-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .ws-map__health-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: baseline;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .ws-map__health-list code {
+    color: var(--nest-cyan);
+    font-size: 0.78rem;
+  }
+
+  .ws-map__health details {
+    margin-top: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .ws-map__health summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  #ws-profile-inspector [data-profile-groups] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  #ws-profile-inspector code {
+    padding: 0.15rem 0.35rem;
+    border: 1px solid var(--color-border);
+  }
+</style>

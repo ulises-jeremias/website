@@ -1,118 +1,212 @@
 ---
 import { screenshotItems } from '../data/index.js';
+
+const hero = screenshotItems[0]!;
+const rest = screenshotItems.slice(1);
 ---
 
-<section class="screenshot-gallery" aria-labelledby="gallery-title">
-  <header class="screenshot-gallery__header">
-    <p class="screenshot-gallery__eyebrow">Gallery</p>
-    <h2 id="gallery-title" class="screenshot-gallery__title">Desktop captures from HorneroConfig</h2>
-    <p class="screenshot-gallery__desc">
-      First-party screenshots from <code>ulises-jeremias/dotfiles/static</code> (MIT). Anime wallpaper stills and collage
-      assets with unclear redistribution rights are omitted on purpose.
-    </p>
+<section class="df-gallery" aria-labelledby="df-gallery-title" data-df-gallery>
+  <header class="df-gallery__header">
+    <p class="df-gallery__eyebrow">Gallery</p>
+    <h2 id="df-gallery-title">Desktop captures</h2>
   </header>
 
-  <div class="screenshot-gallery__grid" role="list">
+  <figure class="df-gallery__hero">
+    <img
+      src={hero.src}
+      alt={hero.alt}
+      width={hero.width}
+      height={hero.height}
+      loading="lazy"
+      decoding="async"
+      data-gallery-main
+    />
+    <figcaption>
+      <span data-gallery-caption>{hero.caption}</span>
+      <span class="df-gallery__credit" data-gallery-credit>{hero.credit}</span>
+    </figcaption>
+  </figure>
+
+  <div class="df-gallery__rail" role="list" aria-label="Select capture">
     {
-      screenshotItems.map((shot) => (
-        <figure class="screenshot-gallery__card" role="listitem">
-          <img
-            class="screenshot-gallery__img"
-            src={shot.src}
-            alt={shot.alt}
-            width={String(shot.width)}
-            height={String(shot.height)}
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption class="screenshot-gallery__caption">
-            <span class="screenshot-gallery__caption-title">{shot.caption}</span>
-            <span class="screenshot-gallery__caption-credit">{shot.credit}</span>
-          </figcaption>
-        </figure>
+      screenshotItems.map((shot, i) => (
+        <button
+          type="button"
+          class="df-gallery__thumb"
+          role="listitem"
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          data-gallery-id={shot.id}
+          data-src={shot.src}
+          data-alt={shot.alt}
+          data-caption={shot.caption}
+          data-credit={shot.credit}
+          data-w={String(shot.width)}
+          data-h={String(shot.height)}
+        >
+          <img src={shot.src} alt="" width="160" height="90" loading="lazy" decoding="async" />
+          <span>{shot.caption}</span>
+        </button>
       ))
     }
   </div>
+
+  <p class="df-gallery__note">
+    First-party MIT captures from <code>dotfiles/static</code>
+    {rest.length ? ` · ${screenshotItems.length} frames` : ''}.
+  </p>
 </section>
 
-<style>
-  .screenshot-gallery {
-    width: min(100% - 2 * var(--section-padding-x, 1.2rem), 72rem);
-    margin: 0 auto;
-    padding-block: clamp(0.5rem, 2vw, 1rem);
+<script>
+  function initGallery(root: HTMLElement) {
+    const main = root.querySelector<HTMLImageElement>('[data-gallery-main]');
+    const caption = root.querySelector<HTMLElement>('[data-gallery-caption]');
+    const credit = root.querySelector<HTMLElement>('[data-gallery-credit]');
+    const thumbs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-gallery-id]'));
+
+    const select = (btn: HTMLButtonElement) => {
+      thumbs.forEach((t) => t.setAttribute('aria-pressed', t === btn ? 'true' : 'false'));
+      if (main) {
+        main.src = btn.dataset.src || main.src;
+        main.alt = btn.dataset.alt || '';
+        if (btn.dataset.w) main.width = Number(btn.dataset.w);
+        if (btn.dataset.h) main.height = Number(btn.dataset.h);
+      }
+      if (caption) caption.textContent = btn.dataset.caption || '';
+      if (credit) credit.textContent = btn.dataset.credit || '';
+    };
+
+    thumbs.forEach((btn, index) => {
+      btn.addEventListener('click', () => select(btn));
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = thumbs[(index + 1) % thumbs.length]!;
+          next.focus();
+          select(next);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = thumbs[(index - 1 + thumbs.length) % thumbs.length]!;
+          prev.focus();
+          select(prev);
+        }
+      });
+    });
   }
 
-  .screenshot-gallery__eyebrow {
-    margin: 0 0 var(--space-2, 0.5rem);
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: var(--text-xs, 0.75rem);
+  document.querySelectorAll<HTMLElement>('[data-df-gallery]').forEach(initGallery);
+</script>
+
+<style>
+  .df-gallery {
+    margin-top: 1.75rem;
+  }
+
+  .df-gallery__eyebrow {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--world-accent-tertiary, #f4c7a5);
+    color: #ffb0ca;
   }
 
-  .screenshot-gallery__title {
-    margin: 0 0 var(--space-3, 0.75rem);
-    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  .df-gallery__header h2 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.2rem, 2.4vw, 1.55rem);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    color: var(--theme-pink, #ffb0ca);
   }
 
-  .screenshot-gallery__desc {
+  .df-gallery__hero {
     margin: 0;
-    max-inline-size: 68ch;
-    color: var(--color-text-muted, #d5c2c6);
-  }
-
-  .screenshot-gallery__desc code {
-    padding: 0.12rem 0.3rem;
-    border-radius: 0.3rem;
-    background: rgba(255, 176, 202, 0.13);
-    color: #ffb0ca;
-    font-size: 0.88em;
-  }
-
-  .screenshot-gallery__grid {
-    display: grid;
-    gap: 1rem;
-    margin-block: 1.35rem 0;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-    padding: 0;
-    list-style: none;
-  }
-
-  .screenshot-gallery__card {
-    margin: 0;
-    border: 1px solid color-mix(in srgb, #ffb0ca 28%, transparent);
-    background: color-mix(in srgb, #191114 92%, transparent);
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+    border: 1px solid color-mix(in srgb, #ffb0ca 35%, transparent);
+    clip-path: var(--clip-corner-md, polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%));
     overflow: hidden;
+    background: #191114;
   }
 
-  .screenshot-gallery__img {
+  .df-gallery__hero img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .df-gallery__hero figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.35rem 1rem;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.88rem;
+    color: #fbe7ec;
+    background: color-mix(in srgb, #191114 92%, transparent);
+  }
+
+  .df-gallery__credit {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: #c9a8b2;
+  }
+
+  .df-gallery__rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(9.5rem, 1fr);
+    gap: 0.55rem;
+    margin-top: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .df-gallery__thumb {
+    appearance: none;
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0.35rem;
+    border: 1px solid rgba(255, 176, 202, 0.2);
+    background: color-mix(in srgb, #191114 90%, transparent);
+    color: #d5c2c6;
+    text-align: left;
+    cursor: pointer;
+    scroll-snap-align: start;
+    min-height: 44px;
+    clip-path: var(--clip-corner-sm, polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%));
+  }
+
+  .df-gallery__thumb img {
+    display: block;
+    width: 100%;
+    height: 4.5rem;
     object-fit: cover;
     background: #191114;
   }
 
-  .screenshot-gallery__caption {
-    display: grid;
-    gap: 0.25rem;
-    padding: 0.75rem 0.85rem;
+  .df-gallery__thumb span {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
   }
 
-  .screenshot-gallery__caption-title {
-    font-size: 0.9rem;
+  .df-gallery__thumb[aria-pressed='true'] {
+    border-color: #ffb0ca;
     color: #fbe7ec;
+    box-shadow: 0 0 0 2px color-mix(in srgb, #ffb0ca 35%, transparent);
   }
 
-  .screenshot-gallery__caption-credit {
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.68rem;
-    color: var(--color-text-faint, #c9a8b2);
+  .df-gallery__note {
+    margin: 0.65rem 0 0;
+    font-size: 0.78rem;
+    color: #c9a8b2;
+  }
+
+  .df-gallery__note code {
+    color: #ffb0ca;
+    font-size: 0.9em;
   }
 </style>

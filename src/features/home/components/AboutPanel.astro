@@ -13,43 +13,30 @@ import { profile } from '@/data/profile.js';
   <div class="about-panel__body">
     <p class="about-panel__bio">{profile.bio}</p>
     <p class="about-panel__summary">{profile.summary}</p>
-
-    <ul class="about-panel__tags">
-      {
-        [
-          'Solutions Architect',
-          'Open Source',
-          'AI Workflows',
-          'Developer Experience',
-          'Linux Enthusiast',
-          'V Core Team',
-        ].map((tag) => <li class="clip-corner-sm">{tag}</li>)
-      }
-    </ul>
-
-    <ul class="about-panel__roles">
-      {
-        profile.roles.map((role) => (
-          <li>
-            <strong>{role.label}</strong>
-            {role.organization && (
-              <>
-                {' '}
-                <span aria-hidden="true">·</span>{' '}
-                {role.href ? (
-                  <a href={role.href} target="_blank" rel="noopener noreferrer">
-                    {role.organization}
-                  </a>
-                ) : (
-                  <span>{role.organization}</span>
-                )}
-              </>
-            )}
-          </li>
-        ))
-      }
-    </ul>
-
-    <p class="about-panel__fun">{profile.funFact}</p>
+    <details class="about-panel__more">
+      <summary>Roles &amp; focus</summary>
+      <ul class="about-panel__roles">
+        {
+          profile.roles.map((role) => (
+            <li>
+              <strong>{role.label}</strong>
+              {role.organization && (
+                <>
+                  {' '}
+                  <span aria-hidden="true">·</span>{' '}
+                  {role.href ? (
+                    <a href={role.href} target="_blank" rel="noopener noreferrer">
+                      {role.organization}
+                    </a>
+                  ) : (
+                    <span>{role.organization}</span>
+                  )}
+                </>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </details>
   </div>
 </section>

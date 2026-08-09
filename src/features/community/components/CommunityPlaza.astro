@@ -1,0 +1,470 @@
+---
+import { SceneInspector, VisualNode, WorldDock } from '@/shared/components/visual';
+import '@/shared/components/visual/visual.css';
+import ContributionExplorer from './ContributionExplorer.astro';
+import {
+  activeWorkshopProjects,
+  communityMeta,
+  ecosystemLabels,
+  incubatingProjects,
+  moderationItems,
+  supportChannels,
+} from '../data/index.js';
+
+const nodes = [
+  {
+    id: 'discord',
+    name: 'Discord',
+    summary: 'Live questions and coordination across Digital Nest projects.',
+    areas: ['talk', 'coordinate', 'optional'],
+    ecosystem: 'workshop',
+    href: communityMeta.discordInviteUrl,
+    kind: 'discord' as const,
+  },
+  ...activeWorkshopProjects.map((p) => ({
+    id: p.id,
+    name: p.name,
+    summary: p.summary,
+    areas: p.contributionAreas.slice(0, 4),
+    ecosystem: ecosystemLabels[p.ecosystem],
+    href: p.worldPath ?? (p.repo ? `https://github.com/${p.repo}` : (p.website ?? '#')),
+    kind: 'project' as const,
+  })),
+];
+
+const defaultNode = nodes.find((n) => n.id === 'agent-toolkit') ?? nodes[1] ?? nodes[0]!;
+const nodesJson = JSON.stringify(nodes);
+---
+
+<section
+  class="cm-plaza"
+  aria-labelledby="cm-plaza-title"
+  data-cm-plaza
+  data-nodes={nodesJson}
+  data-testid="community-plaza"
+>
+  <header class="cm-plaza__header">
+    <p class="cm-plaza__eyebrow">Digital Nest · shared workshop</p>
+    <h1 id="cm-plaza-title" class="cm-plaza__title">Community Plaza</h1>
+    <p class="cm-plaza__lede">
+      One Discord for Personal DX, agentic tooling, Create Awesome, V, and incubating work — not a single-CLI club.
+    </p>
+  </header>
+
+  <ul class="cm-plaza__principles" aria-label="Workshop principles">
+    <li>One Discord · many projects</li>
+    <li>Cross-pollination</li>
+    <li>Talk in Discord · trail on GitHub</li>
+  </ul>
+
+  <div class="vf-scene cm-plaza__scene">
+    <div class="vf-stage cm-plaza__stage">
+      <svg class="cm-plaza__svg" viewBox="0 0 720 280" role="img" aria-label="Workshop hub with project routes">
+        <defs>
+          <linearGradient id="cm-plaza-line" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="var(--nest-cyan, #22d3ee)" stop-opacity="0.85"></stop>
+            <stop offset="100%" stop-color="var(--nest-magenta, #ff2d95)" stop-opacity="0.7"></stop>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#cm-plaza-line)" stroke-width="1.25" stroke-dasharray="5 7" opacity="0.75">
+          <path class="vf-flow" d="M360 140 L160 70"></path>
+          <path class="vf-flow" d="M360 140 L280 48"></path>
+          <path class="vf-flow" d="M360 140 L440 48"></path>
+          <path class="vf-flow" d="M360 140 L560 70"></path>
+          <path class="vf-flow" d="M360 140 L140 200"></path>
+          <path class="vf-flow" d="M360 140 L260 240"></path>
+          <path class="vf-flow" d="M360 140 L460 240"></path>
+          <path class="vf-flow" d="M360 140 L580 200"></path>
+        </g>
+        <g transform="translate(360 140)">
+          <rect
+            x="-64"
+            y="-26"
+            width="128"
+            height="52"
+            rx="2"
+            fill="color-mix(in srgb, var(--nest-midnight-900, #0f172a) 88%, transparent)"
+            stroke="color-mix(in srgb, var(--nest-cyan, #22d3ee) 70%, transparent)"
+            stroke-width="1.5"></rect>
+          <text
+            y="5"
+            text-anchor="middle"
+            fill="var(--nest-cyan, #22d3ee)"
+            font-family="var(--font-mono, monospace)"
+            font-size="12"
+            font-weight="700"
+            letter-spacing="0.18em">WORKSHOP</text
+          >
+        </g>
+      </svg>
+
+      <div class="cm-plaza__nodes" role="list" aria-label="Plaza stations">
+        {
+          nodes.map((node) => (
+            <div role="listitem">
+              <VisualNode
+                id={node.id}
+                label={node.name}
+                pressed={node.id === defaultNode.id}
+                accent={node.kind === 'discord' ? communityMeta.discordBlurple : undefined}
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="cm-plaza__incubating" aria-label="Incubating blueprints">
+        <p class="cm-plaza__kicker">Incubating blueprints</p>
+        <ul>
+          {
+            incubatingProjects.map((p) => (
+              <li>
+                <strong>{p.workingTitle}</strong>
+                <span> · {p.themes.slice(0, 2).join(' · ')}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <SceneInspector eyebrow="Station" title={defaultNode.name} id="cm-plaza-inspector">
+      <p data-cm-copy>{defaultNode.summary}</p>
+      <Fragment slot="meta">
+        <div data-cm-meta>
+          <span data-cm-ecosystem>{defaultNode.ecosystem}</span>
+          <span data-cm-areas>{defaultNode.areas.join(' · ')}</span>
+          <a data-cm-link href={defaultNode.href} target="_blank" rel="noopener noreferrer">
+            {defaultNode.kind === 'discord' ? 'Join the Discord' : 'Open'}
+          </a>
+        </div>
+      </Fragment>
+    </SceneInspector>
+  </div>
+
+  <div class="cm-plaza__discord" data-cm-discord>
+    <p class="cm-plaza__kicker">Plaza station · Discord</p>
+    <a
+      class="cm-plaza__discord-cta"
+      href={communityMeta.discordInviteUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Join the Digital Nest Discord (opens in a new tab)"
+    >
+      Join the Discord
+    </a>
+    <span>{communityMeta.communityDistinctNote}</span>
+  </div>
+
+  <ContributionExplorer />
+
+  <details class="cm-plaza__details">
+    <summary>Community basics</summary>
+    <p>{communityMeta.metricsPolicy}</p>
+    <p>Invite verified · discord.gg/bR5VyATgka · voluntary participation.</p>
+  </details>
+
+  <details class="cm-plaza__details">
+    <summary>Support channels</summary>
+    <ul>
+      {
+        supportChannels.map((channel) => (
+          <li>
+            <a
+              href={channel.href}
+              target={channel.external ? '_blank' : undefined}
+              rel={channel.external ? 'noopener noreferrer' : undefined}
+            >
+              {channel.label}
+            </a>
+            — {channel.description}
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <details class="cm-plaza__details">
+    <summary>Moderation &amp; privacy</summary>
+    <ul>
+      {
+        moderationItems.map((item) => (
+          <li>
+            <strong>{item.title}</strong> — {item.description}
+          </li>
+        ))
+      }
+    </ul>
+    <p>
+      CoC example:
+      <a href={communityMeta.exampleCodeOfConductUrl} target="_blank" rel="noopener noreferrer"> CODE_OF_CONDUCT ↗ </a>
+    </p>
+  </details>
+
+  <WorldDock label="Dock">
+    <a href="#find-something">Find issues</a>
+    <a href="/projects">Projects</a>
+    <a href="/open-source">Open Source</a>
+  </WorldDock>
+</section>
+
+<style>
+  .cm-plaza {
+    display: grid;
+    gap: 1rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+    width: 100%;
+  }
+
+  @media (width >= 860px) {
+    .cm-plaza {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  .cm-plaza__header {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .cm-plaza__eyebrow,
+  .cm-plaza__kicker {
+    margin: 0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent, var(--nest-cyan, #22d3ee));
+  }
+
+  .cm-plaza__title {
+    margin: 0;
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .cm-plaza__lede {
+    margin: 0;
+    max-width: 56ch;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .cm-plaza__principles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .cm-plaza__principles li {
+    padding: 0.35rem 0.55rem;
+    border: 1px solid var(--color-border);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .cm-plaza__scene {
+    margin-top: 0.25rem;
+  }
+
+  .cm-plaza__stage {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    min-height: 18rem;
+  }
+
+  .cm-plaza__svg {
+    display: block;
+    width: 100%;
+    max-width: 40rem;
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .cm-plaza__nodes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .cm-plaza__incubating {
+    padding-top: 0.65rem;
+    border-top: 1px dashed var(--color-border);
+  }
+
+  .cm-plaza__incubating ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .cm-plaza__incubating strong {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .cm-plaza__discord {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, #5865f2 45%, var(--color-border));
+    background: color-mix(in srgb, #5865f2 12%, transparent);
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .cm-plaza__discord-cta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    background: #5865f2;
+    border: 1px solid #5865f2;
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-decoration: none;
+    clip-path: var(--clip-corner-sm);
+  }
+
+  .cm-plaza__discord-cta:hover {
+    background: #4752c4;
+    border-color: #4752c4;
+  }
+
+  .cm-plaza__discord-cta:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .cm-plaza__discord span {
+    flex: 1 1 16rem;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .cm-plaza__details {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--color-text-muted);
+  }
+
+  .cm-plaza__details summary {
+    cursor: pointer;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .cm-plaza__details ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .cm-plaza__details a {
+    color: var(--nest-cyan, #22d3ee);
+    font-weight: 700;
+  }
+
+  #cm-plaza-inspector :global([data-cm-meta]) {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  #cm-plaza-inspector :global([data-cm-link]) {
+    color: var(--nest-cyan, #22d3ee);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  #cm-plaza-inspector :global([data-cm-link][data-kind='discord']) {
+    color: #c7d2fe;
+  }
+</style>
+
+<script>
+  type PlazaNode = {
+    id: string;
+    name: string;
+    summary: string;
+    areas: string[];
+    ecosystem: string;
+    href: string;
+    kind: 'discord' | 'project';
+  };
+
+  function bindPlaza(root: HTMLElement) {
+    const nodes = JSON.parse(root.dataset.nodes || '[]') as PlazaNode[];
+    const titleEl = root.querySelector('#cm-plaza-inspector .vf-inspector__title');
+    const copyEl = root.querySelector<HTMLElement>('[data-cm-copy]');
+    const ecoEl = root.querySelector<HTMLElement>('[data-cm-ecosystem]');
+    const areasEl = root.querySelector<HTMLElement>('[data-cm-areas]');
+    const linkEl = root.querySelector<HTMLAnchorElement>('[data-cm-link]');
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-visual-node]');
+
+    const select = (id: string) => {
+      const node = nodes.find((n) => n.id === id);
+      if (!node) return;
+      buttons.forEach((btn) => {
+        btn.setAttribute('aria-pressed', btn.dataset.visualNode === id ? 'true' : 'false');
+      });
+      if (titleEl) titleEl.textContent = node.name;
+      if (copyEl) copyEl.textContent = node.summary;
+      if (ecoEl) ecoEl.textContent = node.ecosystem;
+      if (areasEl) areasEl.textContent = node.areas.join(' · ');
+      if (linkEl) {
+        linkEl.href = node.href;
+        linkEl.textContent = node.kind === 'discord' ? 'Join the Discord' : 'Open';
+        linkEl.dataset.kind = node.kind;
+        if (node.kind === 'discord' || node.href.startsWith('http')) {
+          linkEl.target = '_blank';
+          linkEl.rel = 'noopener noreferrer';
+        } else {
+          linkEl.removeAttribute('target');
+          linkEl.removeAttribute('rel');
+        }
+      }
+      const idx = Math.max(
+        0,
+        nodes.findIndex((n) => n.id === id),
+      );
+      root.querySelectorAll<SVGPathElement>('.vf-flow').forEach((path, i) => {
+        path.classList.toggle('is-active', i === idx % 8);
+      });
+    };
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => select(btn.dataset.visualNode || ''));
+    });
+
+    const initial = Array.from(buttons).find((b) => b.getAttribute('aria-pressed') === 'true');
+    if (initial?.dataset.visualNode) select(initial.dataset.visualNode);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-cm-plaza]').forEach(bindPlaza);
+</script>

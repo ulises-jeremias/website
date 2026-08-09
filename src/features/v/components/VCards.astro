@@ -1,81 +1,91 @@
 ---
+/**
+ * Compact repo strip — does not duplicate the lab teaching surface.
+ * Prefer VComputationalLab inspector for project detail.
+ */
 import { vProjects } from '../data/index.js';
-import VCard from './VCard.astro';
 ---
 
 <section class="v-cards" aria-labelledby="v-cards-title">
   <header class="v-cards__header">
-    <p class="v-cards__eyebrow">Ecosystem</p>
-    <h2 id="v-cards-title" class="v-cards__title">Six surfaces — one language</h2>
-    <p class="v-cards__lead">
-      V is the root. VSL and VTL handle numbers and learning. RxV handles time. setup-v and Awesome V handle
-      distribution and discovery. Each ships MIT, each stands alone.
-    </p>
+    <p class="v-cards__eyebrow">Repos</p>
+    <h2 id="v-cards-title" class="v-cards__title">Repos</h2>
   </header>
 
-  <div class="v-cards__grid" role="list">
+  <ul class="v-cards__strip" role="list">
     {
       vProjects.map((p) => (
-        <div role="listitem">
-          <VCard {...p} />
-        </div>
+        <li role="listitem">
+          <a href={p.href} target="_blank" rel="noreferrer">
+            <span>{p.title}</span>
+            <code>{p.repo}</code>
+          </a>
+        </li>
       ))
     }
-  </div>
+  </ul>
 </section>
 
 <style>
-  .v-cards {
-    padding: 0;
-  }
-
   .v-cards__header {
-    max-width: 46rem;
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 0.65rem;
   }
 
   .v-cards__eyebrow {
-    margin: 0 0 0.35rem 0;
-    font-size: 0.78rem;
+    margin: 0 0 0.25rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--world-accent-strong);
   }
 
   .v-cards__title {
-    margin: 0 0 0.5rem 0;
-    font-size: clamp(1.35rem, 3vw, 1.7rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    color: var(--color-text);
-  }
-
-  .v-cards__lead {
     margin: 0;
-    font-size: 0.98rem;
-    line-height: 1.65;
-    color: var(--color-text-muted);
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
-  .v-cards__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
+  .v-cards__strip {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
   }
 
-  @media (min-width: 680px) {
-    .v-cards__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.1rem;
-    }
+  .v-cards__strip a {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-height: 44px;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: var(--color-text);
+    clip-path: var(--clip-corner-sm);
   }
 
-  @media (min-width: 1060px) {
-    .v-cards__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+  .v-cards__strip span {
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .v-cards__strip code {
+    font-size: 0.7rem;
+    color: var(--world-accent-strong);
+  }
+
+  .v-cards__strip a:hover {
+    border-color: var(--world-accent);
+    background: var(--world-accent-subtle);
+  }
+
+  .v-cards__strip a:focus-visible {
+    outline: 2px solid var(--color-focus, #005fcc);
+    outline-offset: 2px;
   }
 </style>

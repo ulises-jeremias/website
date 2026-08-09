@@ -6,28 +6,31 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
 <section class="oss-ledger" aria-labelledby="oss-ledger-title" data-testid="oss-ledger">
   <h2 id="oss-ledger-title">Evidence ledger</h2>
-  <p class="oss-ledger__lede">
-    Primary evidence is repository roles and merged authored work. Pipeline: committed Zod cache (`pnpm data:refresh`) →
-    editorial overrides → static render. Volatile metrics stay empty unless a refresh stamps them.
-  </p>
+  <p class="oss-ledger__lede">Roles and merged work from the evidence cache.</p>
 
   <div class="oss-ledger__table" role="table" aria-label="Contribution evidence">
     <div class="oss-ledger__row oss-ledger__row--head" role="row">
       <span role="columnheader">Kind</span>
       <span role="columnheader">Subject</span>
-      <span role="columnheader">Evidence</span>
-      <span role="columnheader">Provenance</span>
+      <span role="columnheader">Link</span>
     </div>
     {
       evidenceItems.map((row) => (
-        <a class="oss-ledger__row" role="row" href={row.href} target="_blank" rel="noreferrer" data-testid="oss-row">
+        <a
+          class="oss-ledger__row"
+          role="row"
+          href={row.href}
+          target="_blank"
+          rel="noreferrer"
+          data-testid="oss-row"
+          title={`${row.summary ?? row.evidence} · ${row.provenance}`}
+        >
           <span role="cell" class="oss-ledger__kind">
             {row.kind}
           </span>
           <span role="cell">{row.subject}</span>
-          <span role="cell">{row.summary ?? row.evidence}</span>
           <span role="cell" class="oss-ledger__prov">
-            {row.provenance}
+            open ↗
           </span>
         </a>
       ))
@@ -36,17 +39,16 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
   {
     notes.length > 0 && (
-      <ul class="oss-ledger__notes">
-        {notes.map((note) => (
-          <li>{note}</li>
-        ))}
-      </ul>
+      <details class="oss-ledger__notes">
+        <summary>Notes</summary>
+        <ul>
+          {notes.map((note) => (
+            <li>{note}</li>
+          ))}
+        </ul>
+      </details>
     )
   }
-
-  <p class="oss-ledger__foot">
-    No vanity metrics. Counts omitted unless refreshable and sourced with <code>verifiedAt</code>.
-  </p>
 </section>
 
 <style>

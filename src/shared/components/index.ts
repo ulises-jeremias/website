@@ -5,6 +5,7 @@ export { default as JsonLd } from './JsonLd.astro';
 export { default as MobileNav } from './MobileNav.astro';
 export { default as SiteHeader } from './SiteHeader.astro';
 export { default as SiteFooter } from './SiteFooter.astro';
+export * from './visual/index.js';
 export type { Props as ButtonProps } from './Button.astro';
 export type { Props as LinkProps } from './Link.astro';
 export type { Props as SiteHeaderProps } from './SiteHeader.astro';

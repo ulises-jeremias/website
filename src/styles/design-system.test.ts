@@ -506,18 +506,18 @@ describe('global design system architecture', () => {
   });
 
   it('classifies current route theme consumers as dark world-surface usages', async () => {
-    const [workstationRoute, vRoute, vCard] = await Promise.all([
-      readSource('../pages/agentic-workstation/index.astro'),
-      readSource('../pages/v/index.astro'),
+    const [workstationMap, vLab, vCard] = await Promise.all([
+      readSource('../features/workstation/components/WorkstationSystemMap.astro'),
+      readSource('../features/v/components/VComputationalLab.astro'),
       readSource('../features/v/components/VCard.astro'),
     ]);
-    const currentRouteSources = `${workstationRoute}\n${vRoute}\n${vCard}`;
+    const currentRouteSources = `${workstationMap}\n${vLab}\n${vCard}`;
 
     expect(currentRouteSources).toMatch(/background:\s*var\(--(?:color-surface|nest-midnight-900|world-surface-tint)/);
     expect(currentRouteSources).not.toMatch(/background:\s*var\(--color-(?:paper|warm-white)/);
     expect(currentRouteSources).toMatch(/color:\s*var\(--(?:color-text|world-accent)/);
-    expect(vRoute).toMatch(/background:\s*var\(--world-accent/);
-    expect(vRoute).toMatch(/color:\s*var\(--color-text-on-accent/);
+    expect(vLab).toMatch(/background:\s*var\(--world-accent/);
+    expect(vLab).toMatch(/color:\s*var\(--color-text-on-accent/);
   });
 
   it('uses the legacy theme contract for current global theme utilities', async () => {

@@ -1,0 +1,425 @@
+---
+import { SceneInspector, WorldDock } from '@/shared/components/visual';
+import '@/shared/components/visual/visual.css';
+import LayersDiagram from './LayersDiagram.astro';
+import SmartColorsAnimation from './SmartColorsAnimation.astro';
+import ScreenshotGallery from './ScreenshotGallery.astro';
+import { attributionEntries, dotfilesLayers, screenshotItems, verifiedFacts } from '../data/index.js';
+
+const principles = [
+  {
+    id: 'nest',
+    label: 'Nest',
+    title: 'Modular nest',
+    body: 'Layers isolatable in development, atomic when applied.',
+  },
+  {
+    id: 'colors',
+    label: 'Colors',
+    title: 'One palette path',
+    body: 'Wallpaper → Material → scheme.json → consumers.',
+  },
+  {
+    id: 'themes',
+    label: 'Themes',
+    title: `${verifiedFacts.themeCount} appearances`,
+    body: 'theme.json + wallpaper — no apply.sh.',
+  },
+];
+
+const layersJson = JSON.stringify(
+  dotfilesLayers.map((l) => ({
+    id: l.id,
+    label: l.label,
+    description: l.description,
+    details: l.details,
+  })),
+);
+
+const defaultLayer = dotfilesLayers[0]!;
+const heroShot = screenshotItems[0]!;
+---
+
+<section class="df-world" aria-labelledby="df-world-title" data-df-world data-layers={layersJson}>
+  <header class="df-world__hero">
+    <div class="df-world__hero-copy">
+      <p class="df-world__eyebrow">HorneroConfig · desktop</p>
+      <h1 id="df-world-title">HorneroConfig</h1>
+      <p class="df-world__lede">Hyprland + Quickshell — Smart Colors turns wallpaper into a live system palette.</p>
+      <p class="df-world__fact-line" aria-label="Verified facts">
+        <span>{verifiedFacts.themeCount} themes</span>
+        <span aria-hidden="true">·</span>
+        <span>{verifiedFacts.dotsScriptCount} dots-*</span>
+        <span aria-hidden="true">·</span>
+        <span>chezmoi</span>
+      </p>
+    </div>
+    <figure class="df-world__hero-scene">
+      <img
+        src={heroShot.src}
+        alt={heroShot.alt}
+        width={heroShot.width}
+        height={heroShot.height}
+        decoding="async"
+        fetchpriority="high"
+      />
+      <figcaption class="df-world__hero-cap">{heroShot.caption}</figcaption>
+    </figure>
+  </header>
+
+  <WorldDock label="Install">
+    <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noreferrer"> GitHub </a>
+    <a href={verifiedFacts.wikiUrl} target="_blank" rel="noreferrer">Wiki ↗</a>
+    <button type="button" data-df-copy aria-label="Copy install command">Copy install</button>
+    <code class="vf-dock__code" data-df-install>{verifiedFacts.installCurl}</code>
+  </WorldDock>
+
+  <details class="df-world__methods">
+    <summary>Other methods &amp; docs</summary>
+    <ul>
+      <li><code>yay -S dots-stable</code></li>
+      <li><code>chezmoi init --apply ulises-jeremias</code></li>
+      <li><code>dots appearance</code></li>
+      <li>
+        Smart Colors:
+        <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noreferrer">wiki ↗</a>
+      </li>
+    </ul>
+  </details>
+
+  <div class="df-world__principles" role="list" aria-label="Visual principles">
+    {
+      principles.map((p) => (
+        <div class="df-world__principle" role="listitem">
+          <p class="df-world__principle-k">{p.label}</p>
+          <h2>{p.title}</h2>
+          <p>{p.body}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="df-world__layers-block">
+    <header class="df-world__layers-head">
+      <p class="df-world__eyebrow">Architecture</p>
+      <h2>Layer stack</h2>
+    </header>
+    <div class="vf-scene">
+      <div class="vf-stage df-world__layers-stage">
+        <LayersDiagram compact />
+      </div>
+      <SceneInspector eyebrow="Layer" title={defaultLayer.label} id="df-layer-inspector">
+        <p data-layer-copy>{defaultLayer.description}</p>
+        <Fragment slot="meta">
+          <div data-layer-meta>
+            {defaultLayer.details.map((d) => <code data-layer-detail>{d}</code>)}
+          </div>
+        </Fragment>
+      </SceneInspector>
+    </div>
+  </div>
+
+  <SmartColorsAnimation />
+  <ScreenshotGallery />
+
+  <aside class="df-world__prov" aria-label="Provenance">
+    <p>
+      <span>{verifiedFacts.themeCount} themes</span>
+      <span aria-hidden="true">·</span>
+      <span>{verifiedFacts.dotsScriptCount} dots-*</span>
+      <span aria-hidden="true">·</span>
+      <span>verified upstream 2026-08-07</span>
+    </p>
+  </aside>
+
+  <details class="df-world__attribution">
+    <summary>Attribution &amp; licenses</summary>
+    <ul>
+      {
+        attributionEntries.map((entry) => (
+          <li>
+            <strong>{entry.component}</strong> · {entry.license} · {entry.source}
+            <span> — {entry.notes}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <nav class="df-world__links" aria-label="Related worlds">
+    <a href="/community">Community</a>
+    <a href="/agentic-workstation">Workstation</a>
+    <a href="/agent-toolkit">Toolkit</a>
+    <a href={verifiedFacts.repoUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+  </nav>
+</section>
+
+<script>
+  function clearChildren(el: HTMLElement) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function initWorld(root: HTMLElement) {
+    type Layer = { id: string; label: string; description: string; details: string[] };
+    const layers = JSON.parse(root.dataset.layers || '[]') as Layer[];
+
+    const title = root.querySelector('#df-layer-inspector .vf-inspector__title');
+    const copy = root.querySelector<HTMLElement>('[data-layer-copy]');
+    const meta = root.querySelector<HTMLElement>('[data-layer-meta]');
+
+    const selectLayer = (id: string) => {
+      const layer = layers.find((l) => l.id === id) || layers[0];
+      if (!layer) return;
+      if (title) title.textContent = layer.label;
+      if (copy) copy.textContent = layer.description;
+      if (meta) {
+        clearChildren(meta);
+        layer.details.forEach((d) => {
+          const code = document.createElement('code');
+          code.textContent = d;
+          meta.appendChild(code);
+        });
+      }
+      root.querySelectorAll<SVGGElement>('[data-layer]').forEach((g) => {
+        g.setAttribute('aria-pressed', g.dataset.layer === id ? 'true' : 'false');
+      });
+    };
+
+    root.querySelectorAll<SVGGElement>('[data-layer]').forEach((g) => {
+      const activate = () => selectLayer(g.dataset.layer || '');
+      g.addEventListener('click', activate);
+      g.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate();
+        }
+      });
+    });
+
+    const install = root.querySelector<HTMLElement>('[data-df-install]');
+    root.querySelector<HTMLButtonElement>('[data-df-copy]')?.addEventListener('click', async () => {
+      const text = install?.textContent || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        /* ignore */
+      }
+    });
+
+    selectLayer('chezmoi');
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-df-world]').forEach(initWorld);
+</script>
+
+<style>
+  .df-world {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
+    --vf-node-accent: #ffb0ca;
+  }
+
+  .df-world__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ffb0ca;
+  }
+
+  .df-world__hero {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 960px) {
+    .df-world__hero {
+      grid-template-columns: 0.85fr 1.25fr;
+      align-items: end;
+    }
+  }
+
+  .df-world h1 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+  }
+
+  .df-world__lede {
+    margin: 0.55rem 0 0;
+    color: var(--color-text-muted, #d5c2c6);
+    max-inline-size: 36ch;
+    font-size: 1.02rem;
+    line-height: 1.45;
+  }
+
+  .df-world__fact-line {
+    margin: 1rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #c9a8b2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .df-world__hero-scene {
+    margin: 0;
+    border: 1px solid color-mix(in srgb, #ffb0ca 35%, transparent);
+    clip-path: var(--clip-corner-md, polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%));
+    overflow: hidden;
+    background: #191114;
+  }
+
+  .df-world__hero-scene img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .df-world__hero-cap {
+    padding: 0.45rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: #c9a8b2;
+  }
+
+  .df-world__methods,
+  .df-world__attribution {
+    margin-top: 0.5rem;
+    color: var(--color-text-muted, #d5c2c6);
+    font-size: 0.86rem;
+  }
+
+  .df-world__methods summary,
+  .df-world__attribution summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .df-world__methods ul,
+  .df-world__attribution ul {
+    margin: 0.55rem 0 0;
+    padding-left: 1.1rem;
+    line-height: 1.55;
+  }
+
+  .df-world__methods code {
+    color: #ffb0ca;
+    font-size: 0.82rem;
+  }
+
+  .df-world__principles {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.35rem 0 1.5rem;
+  }
+
+  @media (min-width: 760px) {
+    .df-world__principles {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .df-world__principle-k {
+    margin: 0;
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid color-mix(in srgb, #ffb0ca 45%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffb0ca;
+  }
+
+  .df-world__principle h2 {
+    margin: 0.55rem 0 0;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .df-world__principle p {
+    margin: 0.35rem 0 0;
+    color: var(--color-text-muted, #d5c2c6);
+    font-size: 0.86rem;
+    line-height: 1.4;
+    max-inline-size: 28ch;
+  }
+
+  .df-world__layers-head {
+    margin-bottom: 0.65rem;
+  }
+
+  .df-world__layers-head h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .df-world__layers-stage {
+    min-height: 18rem;
+    padding: 0.65rem;
+    border-color: color-mix(in srgb, #ffb0ca 40%, transparent);
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 0%, color-mix(in srgb, #ffb0ca 14%, transparent), transparent 65%),
+      color-mix(in srgb, #191114 96%, #3a232e);
+  }
+
+  #df-layer-inspector [data-layer-meta] {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  #df-layer-inspector code {
+    display: block;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .df-world__prov {
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: #c9a8b2;
+  }
+
+  .df-world__prov p {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .df-world__links {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.1rem;
+    font-size: 0.86rem;
+  }
+
+  .df-world__links a {
+    color: #ffb0ca;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

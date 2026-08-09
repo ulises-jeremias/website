@@ -1,805 +1,314 @@
 ---
-import { smartColorSteps } from '../data/index.js';
+import { PlaybackControls, SceneInspector, StageScrubber, StatusMeter } from '@/shared/components/visual';
+import { smartColorSteps, verifiedFacts } from '../data/index.js';
+
+const stages = smartColorSteps.map((step, i) => ({
+  id: step.id,
+  title: step.title,
+  index: i,
+}));
+
+const stagesPayload = smartColorSteps.map((step, i) => ({
+  id: step.id,
+  title: step.title,
+  description: step.description,
+  detail: step.detail,
+  progress: Math.round(((i + 1) / smartColorSteps.length) * 100),
+}));
+
+const stagesJson = JSON.stringify(stagesPayload);
+const first = smartColorSteps[0]!;
 ---
 
-<section class="smart-colors" aria-labelledby="smart-colors-title">
-  <header class="smart-colors__header">
-    <p class="smart-colors__eyebrow">Smart Colors</p>
-    <h2 id="smart-colors-title" class="smart-colors__title">From wallpaper to apps in one continuous pipeline</h2>
-    <p class="smart-colors__desc">
-      Real maintained path: wallpaper → Material extraction → <code>scheme.json</code> → Quickshell / Hyprland / Kitty / GTK.
-      Pause, replay, or use the static fallback. Honors <code>prefers-reduced-motion</code>.
-    </p>
+<section class="df-colors" aria-labelledby="df-colors-title" data-df-colors data-stages={stagesJson}>
+  <header class="df-colors__head">
+    <div>
+      <p class="df-colors__eyebrow">Smart Colors</p>
+      <h2 id="df-colors-title">Wallpaper → palette → apps</h2>
+    </div>
+    <StatusMeter value={25} label="Pipeline" caption="stage" accent="#FFB0CA" />
   </header>
 
-  <!-- Static fallback: visible by default; hidden when animation is active and motion is allowed -->
-  <div class="smart-colors__static" role="list" aria-label="Smart Colors — static view (fallback)">
-    {
-      smartColorSteps.map((step) => (
-        <article class="smart-colors__static-card" role="listitem">
-          <div class="smart-colors__static-icon" aria-hidden="true">
-            {step.icon}
-          </div>
-          <h3 class="smart-colors__static-title">{step.title}</h3>
-          <p class="smart-colors__static-desc">{step.description}</p>
-          <p class="smart-colors__static-detail">{step.detail}</p>
-        </article>
-      ))
-    }
-    <p class="smart-colors__static-note">
-      ↳ Full pipeline visible without animation. Enable the animated view with “Show animation” if your system allows
-      it.
-    </p>
-  </div>
+  <div class="vf-scene df-colors__scene">
+    <div class="vf-stage df-colors__stage" data-pipeline>
+      <svg
+        class="df-colors__svg"
+        viewBox="0 0 640 220"
+        role="img"
+        aria-label="Smart Colors pipeline: wallpaper, extraction, scheme cache, desktop consumers"
+      >
+        <defs>
+          <linearGradient id="df-sc-rail" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FFB0CA" stop-opacity="0.15"></stop>
+            <stop offset="100%" stop-color="#e2bdc7" stop-opacity="0.35"></stop>
+          </linearGradient>
+        </defs>
+        <rect x="24" y="96" width="592" height="10" rx="5" fill="url(#df-sc-rail)"></rect>
+        <path class="vf-flow is-active" data-sc-flow d="M88 101 H552" style="--vf-flow-accent:#FFB0CA"></path>
 
-  <!-- Motion-enhanced pipeline -->
-  <div
-    class="smart-colors__animated"
-    data-smart-colors
-    role="region"
-    aria-label="Smart Colors — interactive animation"
-    aria-live="polite"
-    aria-atomic="true"
-  >
-    <div class="smart-colors__stage" aria-hidden="false">
-      <ol class="smart-colors__track" role="list">
         {
-          smartColorSteps.map((step, idx) => (
-            <li
-              class="smart-colors__step"
-              data-step={step.id}
-              data-index={String(idx)}
-              role="listitem"
-              aria-label={`${step.title}: ${step.description}`}
-            >
-              <div class="smart-colors__step-visual" aria-hidden="true">
-                {step.id === 'wallpaper' && (
-                  <div class="sc-visual sc-visual--wallpaper">
-                    <div class="sc-visual__wallpaper-grid">
-                      <span style="background: #ffb0ca" />
-                      <span style="background: #e2bdc7" />
-                      <span style="background: #7a4a5f" />
-                      <span style="background: #191114" />
-                      <span style="background: #d5c2c6" />
-                      <span style="background: #fbe7ec" />
-                    </div>
-                    <div class="sc-visual__wallpaper-label">dots-wallpaper-set · state path</div>
-                  </div>
-                )}
-                {step.id === 'extraction' && (
-                  <div class="sc-visual sc-visual--extraction">
-                    <div class="sc-extract__dots">
-                      <span class="sc-extract__dot" style="background:#FFB0CA" />
-                      <span class="sc-extract__dot" style="background:#7a4a5f" />
-                      <span class="sc-extract__dot" style="background:#e2bdc7" />
-                      <span class="sc-extract__dot" style="background:#4a2d3a" />
-                      <span class="sc-extract__dot" style="background:#fbe7ec" />
-                    </div>
-                    <div class="sc-extract__scan" />
-                    <div class="sc-visual__wallpaper-label">pywal + materialyoucolor</div>
-                  </div>
-                )}
-                {step.id === 'palette' && (
-                  <div class="sc-visual sc-visual--palette">
-                    <div class="sc-palette__swatches">
-                      <span style="background:#FFB0CA" title="primary" />
-                      <span style="background:#e2bdc7" title="secondary" />
-                      <span style="background:#7a4a5f" title="tertiary" />
-                      <span style="background:#d53a3a" title="error" />
-                      <span style="background:#2d2027" title="neutral" />
-                    </div>
-                    <code class="sc-palette__label">~/.cache/dots/smart-colors/</code>
-                  </div>
-                )}
-                {step.id === 'apps' && (
-                  <div class="sc-visual sc-visual--apps">
-                    <div class="sc-apps__mock">
-                      <div class="sc-apps__bar">Quickshell Colours</div>
-                      <div class="sc-apps__row">
-                        <span class="sc-apps__win" style="border-color:#FFB0CA">
-                          Hyprland
-                        </span>
-                        <span class="sc-apps__win" style="border-color:#e2bdc7">
-                          Kitty
-                        </span>
-                        <span class="sc-apps__win" style="border-color:#7a4a5f">
-                          GTK
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div class="smart-colors__step-body">
-                <span class="smart-colors__step-index" aria-hidden="true">
-                  0{idx + 1}
-                </span>
-                <h3 class="smart-colors__step-title">
-                  <span aria-hidden="true">{step.icon} </span>
-                  {step.title}
-                </h3>
-                <p class="smart-colors__step-desc">{step.description}</p>
-                <p class="smart-colors__step-detail">{step.detail}</p>
-              </div>
-
-              {idx < smartColorSteps.length - 1 && (
-                <div class="smart-colors__connector" aria-hidden="true">
-                  <span class="smart-colors__arrow">→</span>
-                </div>
-              )}
-            </li>
-          ))
+          smartColorSteps.map((step, i) => {
+            const x = 88 + i * 155;
+            return (
+              <g class="df-colors__node" data-sc-node={step.id} data-sc-index={String(i)}>
+                <circle cx={x} cy="101" r="28" class="df-colors__disk" />
+                <text x={x} y="97" text-anchor="middle" class="df-colors__idx">
+                  {String(i + 1).padStart(2, '0')}
+                </text>
+                <text x={x} y="112" text-anchor="middle" class="df-colors__node-label">
+                  {step.title.split(' ')[0]}
+                </text>
+              </g>
+            );
+          })
         }
-      </ol>
 
-      <div class="smart-colors__progress" aria-hidden="true">
-        <div class="smart-colors__progress-bar" data-progress-bar style="width: 25%"></div>
-      </div>
+        <!-- Stage vignettes -->
+        <g data-sc-viz="wallpaper" class="df-colors__viz is-active">
+          <rect x="200" y="24" width="72" height="40" rx="6" fill="#7a4a5f"></rect>
+          <rect x="280" y="24" width="40" height="40" rx="6" fill="#FFB0CA"></rect>
+          <rect x="328" y="24" width="56" height="40" rx="6" fill="#191114" stroke="#FFB0CA"></rect>
+          <text x="320" y="78" text-anchor="middle" class="df-colors__viz-cap">dots-wallpaper-set</text>
+        </g>
+        <g data-sc-viz="extraction" class="df-colors__viz is-hidden">
+          {
+            ['#FFB0CA', '#e2bdc7', '#7a4a5f', '#4a2d3a', '#fbe7ec'].map((c, i) => (
+              <circle cx={260 + i * 28} cy="44" r="10" fill={c} stroke="#191114" stroke-width="2" />
+            ))
+          }
+          <text x="320" y="78" text-anchor="middle" class="df-colors__viz-cap"> pywal + materialyoucolor </text>
+        </g>
+        <g data-sc-viz="palette" class="df-colors__viz is-hidden">
+          <rect x="220" y="28" width="200" height="36" rx="8" fill="#241a1f" stroke="rgba(255,176,202,0.35)"></rect>
+          <text x="320" y="51" text-anchor="middle" class="df-colors__viz-code">scheme.json</text>
+          <text x="320" y="78" text-anchor="middle" class="df-colors__viz-cap"> ~/.cache/dots/smart-colors/ </text>
+        </g>
+        <g data-sc-viz="apps" class="df-colors__viz is-hidden">
+          {
+            [
+              { t: 'Quickshell', x: 200 },
+              { t: 'Hyprland', x: 300 },
+              { t: 'Kitty', x: 400 },
+              { t: 'GTK', x: 480 },
+            ].map((app) => (
+              <g>
+                <rect
+                  x={app.x}
+                  y="30"
+                  width="72"
+                  height="32"
+                  rx="6"
+                  fill="#191114"
+                  stroke="#FFB0CA"
+                  stroke-width="1.5"
+                />
+                <text x={app.x + 36} y="50" text-anchor="middle" class="df-colors__viz-app">
+                  {app.t}
+                </text>
+              </g>
+            ))
+          }
+          <text x="320" y="78" text-anchor="middle" class="df-colors__viz-cap">one atomic palette</text>
+        </g>
 
-      <p class="smart-colors__live" data-live-region aria-live="polite">
-        Step 1 of 4: Wallpaper — dots-wallpaper-set records the path and starts the pipeline
-      </p>
+        <text x="320" y="200" text-anchor="middle" class="df-colors__foot" aria-hidden="true">
+          Maintained Hyprland + Quickshell path
+        </text>
+      </svg>
     </div>
 
-    <div class="smart-colors__controls" role="group" aria-label="Animation controls">
-      <button
-        type="button"
-        class="smart-colors__btn smart-colors__btn--primary"
-        data-action="toggle"
-        aria-controls="smart-colors-track"
-        aria-pressed="false"
-      >
-        <span data-toggle-label>Pause</span>
-      </button>
-      <button
-        type="button"
-        class="smart-colors__btn"
-        data-action="replay"
-        aria-label="Restart animation from the beginning">↻ Replay</button
-      >
-      <button
-        type="button"
-        class="smart-colors__btn smart-colors__btn--ghost"
-        data-action="toggle-static"
-        aria-pressed="false">Show static</button
-      >
-      <span class="smart-colors__hint" aria-hidden="true">Keyboard: Space pause · R replay</span>
-    </div>
-
-    <noscript>
-      <p class="smart-colors__noscript">
-        Animation requires JavaScript. The static fallback above shows wallpaper → Material extraction → scheme → apps.
-      </p>
-    </noscript>
+    <SceneInspector eyebrow="Stage" title={first.title} id="df-colors-inspector">
+      <p data-sc-copy>{first.description}</p>
+      <Fragment slot="meta">
+        <code data-sc-detail>{first.detail}</code>
+      </Fragment>
+    </SceneInspector>
   </div>
+
+  <StageScrubber stages={stages} label="Smart Colors stage" />
+  <PlaybackControls label="Smart Colors playback" />
+
+  <p class="df-colors__docs">
+    <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noreferrer">Smart Colors wiki ↗</a>
+  </p>
 </section>
 
 <script>
-  (() => {
-    const root = document.querySelector('[data-smart-colors]') as HTMLElement | null;
-    if (!root) return;
+  import { initStagePlayer } from '@/shared/lib/visual-stage-player';
 
-    const steps = Array.from(root.querySelectorAll('[data-step]')) as HTMLElement[];
-    const progressBar = root.querySelector('[data-progress-bar]') as HTMLElement | null;
-    const live = root.querySelector('[data-live-region]') as HTMLElement | null;
-    const toggleBtn = root.querySelector('[data-action="toggle"]') as HTMLButtonElement | null;
-    const replayBtn = root.querySelector('[data-action="replay"]') as HTMLButtonElement | null;
-    const staticBtn = root.querySelector('[data-action="toggle-static"]') as HTMLButtonElement | null;
-    const toggleLabel = root.querySelector('[data-toggle-label]') as HTMLElement | null;
-    const rootEl = root as HTMLElement;
+  type Stage = {
+    id: string;
+    title: string;
+    description: string;
+    detail: string;
+    progress: number;
+  };
 
-    const labels = [
-      'Step 1 of 4: Wallpaper — dots-wallpaper-set records the path and starts the pipeline',
-      'Step 2 of 4: Material extraction — pywal + generate-m3-colors.py (materialyoucolor)',
-      'Step 3 of 4: Scheme cache — scheme.json and consumer exports under ~/.cache/dots/smart-colors/',
-      'Step 4 of 4: Consumers — Quickshell Colours, Hyprland, Kitty, GTK',
-    ];
+  function initColors(root: HTMLElement) {
+    const stages = JSON.parse(root.dataset.stages || '[]') as Stage[];
+    const title = root.querySelector('#df-colors-inspector .vf-inspector__title');
+    const copy = root.querySelector<HTMLElement>('[data-sc-copy]');
+    const detail = root.querySelector<HTMLElement>('[data-sc-detail]');
+    const meter = root.querySelector<HTMLElement>('.vf-meter');
+    const flow = root.querySelector<SVGPathElement>('[data-sc-flow]');
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let index = 0;
-    let playing = !prefersReduced;
-    let timer: number | null = null;
-    let showStaticAlt = false;
-
-    function render() {
-      steps.forEach((el, i) => {
-        const isActive = i === index;
-        el.classList.toggle('is-active', isActive);
-        el.setAttribute('aria-current', isActive ? 'step' : 'false');
-        el.style.opacity = isActive ? '1' : '0.52';
-        el.style.transform = isActive ? 'scale(1)' : 'scale(0.98)';
+    const apply = (index: number) => {
+      const stage = stages[index];
+      if (!stage) return;
+      if (title) title.textContent = stage.title;
+      if (copy) copy.textContent = stage.description;
+      if (detail) detail.textContent = stage.detail;
+      if (meter) {
+        meter.style.setProperty('--vf-meter-value', String(stage.progress));
+        const strong = meter.querySelector('strong');
+        if (strong) strong.textContent = `${stage.progress}%`;
+      }
+      root.querySelectorAll<SVGGElement>('[data-sc-node]').forEach((node) => {
+        const on = node.dataset.scNode === stage.id;
+        node.classList.toggle('is-active', on);
       });
-      if (progressBar) {
-        progressBar.style.width = `${((index + 1) / steps.length) * 100}%`;
+      root.querySelectorAll<SVGGElement>('[data-sc-viz]').forEach((viz) => {
+        const on = viz.dataset.scViz === stage.id;
+        viz.classList.toggle('is-active', on);
+        viz.classList.toggle('is-hidden', !on);
+      });
+      if (flow) {
+        const length = 464;
+        flow.style.strokeDasharray = `${(length * stage.progress) / 100} ${length}`;
       }
-      if (live) live.textContent = labels[index] || labels[0];
-      if (toggleBtn) {
-        toggleBtn.setAttribute('aria-pressed', String(!playing));
-        if (toggleLabel) toggleLabel.textContent = playing ? 'Pause' : 'Resume';
-      }
-      rootEl.classList.toggle('is-paused', !playing);
-      rootEl.classList.toggle('is-static-alt', showStaticAlt);
-    }
+    };
 
-    function next() {
-      index = (index + 1) % steps.length;
-      render();
-    }
-
-    function play() {
-      if (timer) window.clearInterval(timer);
-      if (!playing) return;
-      timer = window.setInterval(next, 2200);
-    }
-
-    function pause() {
-      if (timer) {
-        window.clearInterval(timer);
-        timer = null;
-      }
-    }
-
-    function toggle() {
-      playing = !playing;
-      if (playing) play();
-      else pause();
-      render();
-    }
-
-    function replay() {
-      index = 0;
-      playing = true;
-      showStaticAlt = false;
-      if (staticBtn) staticBtn.setAttribute('aria-pressed', 'false');
-      render();
-      pause();
-      play();
-      // focus management for a11y
-      const first = steps[0];
-      if (first) first.focus?.();
-    }
-
-    function toggleStatic() {
-      showStaticAlt = !showStaticAlt;
-      if (showStaticAlt) {
-        pause();
-        playing = false;
-        // show all steps as grid
-        steps.forEach((el) => {
-          el.classList.add('is-static-visible');
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
-        if (progressBar) progressBar.style.width = '100%';
-        if (live) live.textContent = 'Static view: all 4 stages visible without animation.';
-      } else {
-        steps.forEach((el) => el.classList.remove('is-static-visible'));
-        playing = !prefersReduced;
-        render();
-        if (playing) play();
-      }
-      if (staticBtn) staticBtn.setAttribute('aria-pressed', String(showStaticAlt));
-    }
-
-    // Respect reduced motion: do not autoplay, show hint
-    if (prefersReduced) {
-      playing = false;
-      if (live) live.textContent = 'Reduced motion detected: animation paused. Use Resume if you want playback.';
-    }
-
-    // Init
-    render();
-    if (playing) play();
-
-    toggleBtn?.addEventListener('click', toggle);
-    replayBtn?.addEventListener('click', replay);
-    staticBtn?.addEventListener('click', toggleStatic);
-
-    // Keyboard shortcuts when region focused
-    rootEl.addEventListener('keydown', (e) => {
-      const ev = e;
-      if (ev.key === ' ' || ev.code === 'Space') {
-        ev.preventDefault();
-        toggle();
-      } else if (ev.key.toLowerCase() === 'r') {
-        ev.preventDefault();
-        replay();
-      }
+    initStagePlayer({
+      root,
+      stageCount: stages.length,
+      onStage: apply,
+      autoplayOnce: true,
+      intervalMs: 2200,
     });
+  }
 
-    // Make root focusable for keyboard
-    rootEl.setAttribute('tabindex', '0');
-
-    // Pause when tab hidden to save resources
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) pause();
-      else if (playing) play();
-    });
-  })();
+  document.querySelectorAll<HTMLElement>('[data-df-colors]').forEach(initColors);
 </script>
 
 <style>
-  .smart-colors {
-    max-width: 960px;
-    margin: 0 auto;
+  .df-colors {
+    margin-top: 1.75rem;
   }
 
-  .smart-colors__eyebrow {
-    display: inline-flex;
-    padding: 0.28rem 0.7rem;
-    border-radius: 999px;
-    background: rgba(255, 176, 202, 0.12);
-    border: 1px solid rgba(255, 176, 202, 0.26);
-    color: #ffb0ca;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin: 0 0 0.7rem;
-  }
-
-  .smart-colors__title {
-    margin: 0 0 0.45rem;
-    font-size: clamp(1.35rem, 2.8vw, 1.95rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: #fbe7ec;
-    line-height: 1.2;
-  }
-
-  .smart-colors__desc {
-    margin: 0 0 1rem;
-    color: #d5c2c6;
-    line-height: 1.65;
-    font-size: 0.95rem;
-    max-width: 70ch;
-  }
-
-  .smart-colors__desc code {
-    padding: 0.15rem 0.35rem;
-    border-radius: 0.35rem;
-    background: rgba(255, 176, 202, 0.14);
-    color: #ffb0ca;
-    font-size: 0.85em;
-  }
-
-  /* Static fallback */
-  .smart-colors__static {
-    display: grid;
-    gap: 0.9rem;
-    grid-template-columns: 1fr;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    background: linear-gradient(180deg, rgba(45, 32, 39, 0.55), rgba(25, 17, 20, 0.85));
-    border: 1px solid rgba(255, 176, 202, 0.14);
-  }
-
-  @media (min-width: 720px) {
-    .smart-colors__static {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .smart-colors__static-card {
-    padding: 0.9rem;
-    border-radius: 0.9rem;
-    background: rgba(25, 17, 20, 0.92);
-    border: 1px solid rgba(255, 176, 202, 0.16);
-    text-align: center;
-  }
-
-  .smart-colors__static-icon {
-    font-size: 1.6rem;
-    line-height: 1;
-    margin-bottom: 0.45rem;
-  }
-
-  .smart-colors__static-title {
-    margin: 0 0 0.2rem;
-    font-size: 0.98rem;
-    font-weight: 750;
-    color: #ffb0ca;
-  }
-
-  .smart-colors__static-desc {
-    margin: 0 0 0.35rem;
-    font-size: 0.84rem;
-    color: #fbe7ec;
-    font-weight: 600;
-  }
-
-  .smart-colors__static-detail {
-    margin: 0;
-    font-size: 0.8rem;
-    color: #c9a8b2;
-    line-height: 1.5;
-  }
-
-  .smart-colors__static-note {
-    grid-column: 1 / -1;
-    margin: 0.2rem 0 0;
-    font-size: 0.78rem;
-    color: #c9a8b2;
-    text-align: center;
-  }
-
-  /* Animated container */
-  .smart-colors__animated {
-    border-radius: 1.15rem;
-    background: linear-gradient(180deg, rgba(45, 32, 39, 0.85), rgba(25, 17, 20, 0.96));
-    border: 1px solid rgba(255, 176, 202, 0.18);
-    padding: 1rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.34);
-    outline: none;
-  }
-
-  .smart-colors__animated:focus-visible {
-    box-shadow:
-      0 10px 30px rgba(0, 0, 0, 0.34),
-      0 0 0 3px rgba(255, 176, 202, 0.45);
-  }
-
-  .smart-colors__track {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.9rem;
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 860px) {
-    .smart-colors__track {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .smart-colors__step {
-    position: relative;
+  .df-colors__head {
     display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    padding: 0.9rem;
-    border-radius: 0.95rem;
-    background: rgba(25, 17, 20, 0.9);
-    border: 1px solid rgba(255, 176, 202, 0.14);
-    transition:
-      opacity 0.45s ease,
-      transform 0.45s ease,
-      border-color 0.35s ease,
-      box-shadow 0.35s ease;
-  }
-
-  .smart-colors__step.is-active {
-    border-color: rgba(255, 176, 202, 0.55);
-    box-shadow: 0 6px 22px rgba(255, 176, 202, 0.18);
-    background: linear-gradient(180deg, rgba(255, 176, 202, 0.08), rgba(25, 17, 20, 0.96));
-  }
-
-  .smart-colors__step-index {
-    display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    width: 1.7rem;
-    height: 1.7rem;
-    border-radius: 999px;
-    background: #ffb0ca;
-    color: #191114;
-    font-weight: 800;
-    font-size: 0.78rem;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
-  .smart-colors__step-title {
-    margin: 0;
-    font-size: 1.02rem;
-    font-weight: 800;
-    color: #fbe7ec;
-    letter-spacing: -0.02em;
-  }
-
-  .smart-colors__step-desc {
-    margin: 0;
-    font-size: 0.88rem;
+  .df-colors__eyebrow {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: #ffb0ca;
-    font-weight: 600;
   }
 
-  .smart-colors__step-detail {
+  .df-colors__head h2 {
     margin: 0;
-    font-size: 0.82rem;
-    color: #c9a8b2;
-    line-height: 1.55;
+    font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
-  .smart-colors__step-visual {
-    min-height: 88px;
-    display: grid;
-    place-items: center;
-    background: rgba(255, 176, 202, 0.06);
-    border: 1px dashed rgba(255, 176, 202, 0.18);
-    border-radius: 0.7rem;
-    padding: 0.6rem;
+  .df-colors__scene {
+    margin-bottom: 0.75rem;
   }
 
-  .sc-visual__wallpaper-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 28px);
-    gap: 6px;
+  .df-colors__stage {
+    min-height: 14rem;
+    padding: 0.5rem;
+    border-color: color-mix(in srgb, #ffb0ca 40%, transparent);
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 0%, color-mix(in srgb, #ffb0ca 16%, transparent), transparent 65%),
+      color-mix(in srgb, #191114 96%, #3a232e);
   }
 
-  .sc-visual__wallpaper-grid span {
-    width: 28px;
-    height: 18px;
-    border-radius: 4px;
+  .df-colors__svg {
     display: block;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .sc-visual__wallpaper-label,
-  .sc-palette__label {
-    margin-top: 0.5rem;
-    font-size: 0.72rem;
-    color: #c9a8b2;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  }
-
-  .sc-extract__dots {
-    display: flex;
-    gap: 8px;
-  }
-
-  .sc-extract__dot {
-    width: 18px;
-    height: 18px;
-    border-radius: 999px;
-    display: block;
-    border: 2px solid rgba(25, 17, 20, 0.9);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    animation: sc-bob 1.6s ease-in-out infinite;
-  }
-
-  .sc-extract__dot:nth-child(2) {
-    animation-delay: 0.12s;
-  }
-  .sc-extract__dot:nth-child(3) {
-    animation-delay: 0.24s;
-  }
-  .sc-extract__dot:nth-child(4) {
-    animation-delay: 0.36s;
-  }
-  .sc-extract__dot:nth-child(5) {
-    animation-delay: 0.48s;
-  }
-
-  .sc-extract__scan {
-    margin-top: 0.6rem;
     width: 100%;
-    height: 3px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, transparent, #ffb0ca, transparent);
-    opacity: 0.9;
-    animation: sc-scan 1.2s linear infinite;
+    height: auto;
   }
 
-  .sc-palette__swatches {
-    display: flex;
-    gap: 8px;
+  .df-colors__disk {
+    fill: color-mix(in srgb, #ffb0ca 18%, #191114);
+    stroke: rgba(255, 176, 202, 0.35);
+    stroke-width: 1.5;
   }
 
-  .sc-palette__swatches span {
-    width: 26px;
-    height: 26px;
-    border-radius: 999px;
-    display: block;
-    border: 2px solid rgba(25, 17, 20, 0.9);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.26);
+  .df-colors__node.is-active .df-colors__disk {
+    fill: color-mix(in srgb, #ffb0ca 42%, #191114);
+    stroke: #ffb0ca;
+    stroke-width: 2.4;
   }
 
-  .sc-apps__mock {
-    width: 100%;
+  .df-colors__idx,
+  .df-colors__node-label {
+    fill: #fbe7ec;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  .sc-apps__bar {
-    height: 22px;
-    border-radius: 6px;
-    background: #ffb0ca;
-    color: #191114;
-    font-size: 0.72rem;
-    font-weight: 800;
-    display: grid;
-    place-items: center;
-    margin-bottom: 8px;
+  .df-colors__node-label {
+    fill: #d5c2c6;
+    font-size: 8px;
   }
 
-  .sc-apps__row {
-    display: flex;
-    gap: 6px;
+  .df-colors__viz-cap,
+  .df-colors__foot {
+    fill: #c9a8b2;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10px;
+    letter-spacing: 0.06em;
   }
 
-  .sc-apps__win {
-    flex: 1;
-    height: 36px;
-    border-radius: 6px;
-    background: rgba(25, 17, 20, 0.9);
-    border: 2px solid;
-    display: grid;
-    place-items: center;
-    font-size: 0.7rem;
+  .df-colors__viz-code,
+  .df-colors__viz-app {
+    fill: #ffb0ca;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 11px;
     font-weight: 700;
-    color: #fbe7ec;
   }
 
-  .smart-colors__connector {
+  .df-colors__viz-app {
+    fill: #fbe7ec;
+    font-size: 9px;
+  }
+
+  .df-colors__viz.is-hidden {
     display: none;
   }
 
-  @media (min-width: 860px) {
-    .smart-colors__connector {
-      display: block;
-      position: absolute;
-      right: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: #ffb0ca;
-      color: #191114;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 0.78rem;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.24);
-      z-index: 2;
-    }
+  .df-colors :global(.vf-scrubber) {
+    margin: 0.65rem 0 0.45rem;
   }
 
-  .smart-colors__progress {
-    margin-top: 0.9rem;
-    height: 6px;
-    border-radius: 999px;
-    background: rgba(255, 176, 202, 0.14);
-    overflow: hidden;
-  }
-
-  .smart-colors__progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #ffb0ca, #e2bdc7);
-    border-radius: 999px;
-    transition: width 0.5s ease;
-  }
-
-  .smart-colors__live {
-    margin: 0.6rem 0 0;
+  .df-colors__docs {
+    margin: 0.65rem 0 0;
     font-size: 0.82rem;
-    color: #c9a8b2;
-    min-height: 1.2em;
   }
 
-  .smart-colors__controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    align-items: center;
-    margin-top: 0.9rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid rgba(255, 176, 202, 0.14);
-  }
-
-  .smart-colors__btn {
-    appearance: none;
-    border: 1px solid rgba(255, 176, 202, 0.24);
-    background: rgba(25, 17, 20, 0.92);
-    color: #fbe7ec;
-    padding: 0.55rem 0.9rem;
-    border-radius: 0.7rem;
+  .df-colors__docs a {
+    color: #ffb0ca;
     font-weight: 700;
-    font-size: 0.86rem;
-    cursor: pointer;
-    transition:
-      transform 0.15s ease,
-      background 0.15s ease,
-      border-color 0.15s ease;
+    text-decoration: none;
   }
 
-  .smart-colors__btn:hover {
-    transform: translateY(-1px);
-    border-color: rgba(255, 176, 202, 0.45);
-  }
-
-  .smart-colors__btn:focus-visible {
-    outline: 2px solid #ffb0ca;
-    outline-offset: 2px;
-  }
-
-  .smart-colors__btn--primary {
-    background: #ffb0ca;
-    color: #191114;
-    border-color: #ffb0ca;
-  }
-
-  .smart-colors__btn--primary:hover {
-    background: #ffc6d8;
-  }
-
-  .smart-colors__btn--ghost {
-    background: transparent;
+  #df-colors-inspector code {
+    display: block;
+    white-space: normal;
+    line-height: 1.45;
     color: #d5c2c6;
-  }
-
-  .smart-colors__hint {
-    font-size: 0.76rem;
-    color: #c9a8b2;
-    margin-left: auto;
-  }
-
-  .smart-colors__noscript {
-    margin: 0.7rem 0 0;
-    font-size: 0.84rem;
-    color: #d5c2c6;
-    background: rgba(213, 194, 198, 0.08);
-    padding: 0.6rem 0.8rem;
-    border-radius: 0.6rem;
-  }
-
-  /* prefers-reduced-motion: disable animations */
-  @media (prefers-reduced-motion: reduce) {
-    .smart-colors__animated {
-      display: none;
-    }
-    .smart-colors__static {
-      outline: 2px dashed rgba(255, 176, 202, 0.35);
-      outline-offset: 3px;
-    }
-    .sc-extract__dot,
-    .sc-extract__scan {
-      animation: none !important;
-    }
-  }
-
-  /* When motion is ok, hide static by default, show animated */
-  @media (prefers-reduced-motion: no-preference) {
-    .smart-colors__static {
-      display: none;
-    }
-    .smart-colors__animated.is-static-alt .smart-colors__track {
-      /* static alt via button: show grid all visible */
-    }
-    .smart-colors__animated.is-static-alt .smart-colors__progress,
-    .smart-colors__animated.is-static-alt .smart-colors__live {
-      display: none;
-    }
-    .smart-colors__animated.is-paused .sc-extract__dot,
-    .smart-colors__animated.is-paused .sc-extract__scan,
-    .smart-colors__animated.is-paused .smart-colors__progress-bar {
-      animation-play-state: paused !important;
-    }
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    @keyframes sc-bob {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-4px);
-      }
-    }
-    @keyframes sc-scan {
-      0% {
-        transform: translateX(-30%);
-        opacity: 0.2;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateX(30%);
-        opacity: 0.2;
-      }
-    }
   }
 </style>

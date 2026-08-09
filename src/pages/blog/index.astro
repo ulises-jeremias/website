@@ -52,10 +52,8 @@ const collectionJsonLd = {
         <span class="blog-page__nav-sep" aria-hidden="true">·</span>
         <a href="/rss.xml">RSS</a>
       </p>
-      <h1 class="blog-page__title">Blog — field notes</h1>
-      <p class="blog-page__lead">
-        Notes on developer tooling, systems, and open source — written for reading, not spectacle.
-      </p>
+      <h1 class="blog-page__title">Blog</h1>
+      <p class="blog-page__lead">Field notes on tooling and open source.</p>
 
       {
         hasPosts ? (
@@ -80,13 +78,13 @@ const collectionJsonLd = {
           </ul>
         ) : (
           <div class="blog-empty" role="status">
-            <h2>The writing desk is ready.</h2>
-            <p>The first field notes are still being prepared.</p>
-            <p>No fabricated thought-leadership posts. Empty state is intentional.</p>
-            <p class="blog-empty__elsewhere">
-              Meanwhile: explore the
-              <a href="/projects">projects ledger</a>,<a href="/open-source">open-source evidence</a>, or the
-              <a href="/community">community workshop</a>.
+            <div class="blog-empty__desk" aria-hidden="true">
+              <span class="blog-empty__lamp" />
+              <span class="blog-empty__pad" />
+            </div>
+            <h2>Desk clear.</h2>
+            <p>
+              Notes soon. Browse <a href="/projects">projects</a> or <a href="/community">community</a>.
             </p>
           </div>
         )
