@@ -501,7 +501,7 @@ const nodesJson = JSON.stringify(nodes);
               ? 'create'
               : eco.includes('dx') || eco.includes('dot') || eco.includes('workstation')
                 ? 'dx'
-                : eco.includes('incubat')
+                : eco.includes('incubating')
                   ? 'incubating'
                   : 'agents';
       root.querySelectorAll<SVGGElement>('[data-cm-cluster]').forEach((g) => {

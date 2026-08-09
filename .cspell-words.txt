@@ -21,6 +21,7 @@ colours
 computacional
 Consolas
 contenido
+contenteditable
 contentinfo
 Conv
 Cornejo
@@ -111,7 +112,10 @@ sklearn
 skypiea
 slowapi
 soramanew
+spinbutton
 sqlalchemy
+stdlib
+Stdlib
 subpaths
 sutil
 synthwave
