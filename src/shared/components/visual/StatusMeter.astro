@@ -15,7 +15,17 @@ const readout = displayValue ?? `${clamped}%`;
 const style = [`--vf-meter-value: ${clamped}`, accent ? `--vf-meter-accent: ${accent}` : ''].filter(Boolean).join('; ');
 ---
 
-<div class="vf-meter" style={style} aria-label={`${label}: ${readout}`} data-vf-meter>
+<div
+  class="vf-meter"
+  style={style}
+  role="progressbar"
+  aria-label={label}
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow={clamped}
+  aria-valuetext={readout}
+  data-vf-meter
+>
   <svg viewBox="0 0 72 72" aria-hidden="true">
     <circle cx="36" cy="36" r="28" class="vf-meter__track" pathLength="100"></circle>
     <circle cx="36" cy="36" r="28" class="vf-meter__fill" pathLength="100"></circle>

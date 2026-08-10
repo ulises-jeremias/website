@@ -153,6 +153,8 @@ const first = smartColorSteps[0]!;
       if (detail) detail.textContent = stage.detail;
       if (meter) {
         meter.style.setProperty('--vf-meter-value', String(stage.progress));
+        meter.setAttribute('aria-valuenow', String(stage.progress));
+        meter.setAttribute('aria-valuetext', `Step ${index + 1}/${stages.length}`);
         const strong = meter.querySelector('[data-vf-meter-value], strong');
         if (strong) strong.textContent = `Step ${index + 1}/${stages.length}`;
       }

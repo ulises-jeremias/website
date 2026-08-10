@@ -92,10 +92,7 @@ function primaryHref(project: Project): string {
                 </details>
               </div>
               <div role="cell">
-                <span
-                  class={`projects-ledger__badge projects-ledger__badge--${p.status}`}
-                  aria-label={`Status ${statusLabels[p.status]}`}
-                >
+                <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>
                   {statusLabels[p.status]}
                 </span>
                 <span class="projects-ledger__kind">

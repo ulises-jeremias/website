@@ -132,7 +132,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
               ))}
             </ul>
             {node.id === 'skills' ? (
-              <div class="atk-nexus__domains" aria-label="Skill domains">
+              <div class="atk-nexus__domains">
                 {skillDomains.map((domain) => (
                   <div class="atk-nexus__domain" style={`--fill: ${(domain.count / maxDomain) * 100}%`}>
                     <span>{domain.id}</span>
