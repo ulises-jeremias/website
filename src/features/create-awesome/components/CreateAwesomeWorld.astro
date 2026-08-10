@@ -44,7 +44,13 @@ const lineModules = [
 ];
 ---
 
-<section class="ca-world" aria-labelledby="ca-world-title" data-ca-world data-stations={stationsJson}>
+<section
+  class="ca-world"
+  aria-labelledby="ca-world-title"
+  data-ca-world
+  data-ca-enhanced="false"
+  data-stations={stationsJson}
+>
   <header class="ca-world__hero">
     <p class="ca-world__eyebrow">Create Awesome · assembly line</p>
     <h1 id="ca-world-title">{familyIntro.title}</h1>
@@ -95,7 +101,7 @@ const lineModules = [
         }
       </svg>
 
-      <div class="ca-world__stations" role="radiogroup" aria-label="Runtime station">
+      <div class="ca-world__stations" role="radiogroup" aria-label="Runtime station" hidden>
         {
           stations.map((station, index) => (
             <>
@@ -150,7 +156,7 @@ const lineModules = [
 
   <details class="ca-world__fold">
     <summary>Compare · distribute · contribute · examples</summary>
-    <div class="ca-table-wrap">
+    <div class="ca-table-wrap" role="region" aria-label="Create Awesome family comparison" tabindex="0">
       <table>
         <thead>
           <tr>
@@ -253,6 +259,17 @@ const lineModules = [
     const dockRepo = root.querySelector<HTMLAnchorElement>('[data-ca-dock-repo]');
     const dockInstall = root.querySelector<HTMLElement>('[data-ca-dock-install]');
     const modules = root.querySelectorAll<SVGGElement>('[data-module]');
+    const composer = root.querySelector<HTMLElement>('[data-ca-composer]');
+    const fallback = root.querySelector<HTMLElement>('[data-ca-static-fallback]');
+    const stationControls = root.querySelector<HTMLElement>('.ca-world__stations');
+
+    const activateEnhancedWorld = () => {
+      if (composer?.dataset.caReady !== 'true') return;
+      composer.hidden = false;
+      if (fallback) fallback.hidden = true;
+      if (stationControls) stationControls.hidden = false;
+      root.dataset.caEnhanced = 'true';
+    };
 
     const select = (id: string) => {
       const station = stations.find((s) => s.id === id) || stations[0];
@@ -283,7 +300,7 @@ const lineModules = [
         }
       });
 
-      const composerRadio = document.querySelector<HTMLInputElement>(`#ca-runtime-${station.id}`);
+      const composerRadio = root.querySelector<HTMLInputElement>(`#ca-runtime-${station.id}`);
       if (composerRadio && !composerRadio.checked) {
         composerRadio.checked = true;
         composerRadio.dispatchEvent(new Event('change', { bubbles: true }));
@@ -300,7 +317,6 @@ const lineModules = [
       });
     });
 
-    const composer = document.querySelector<HTMLElement>('[data-ca-composer]');
     composer?.addEventListener('change', (event) => {
       const target = event.target as HTMLInputElement | null;
       if (!target || target.name !== 'ca-runtime') return;
@@ -312,6 +328,11 @@ const lineModules = [
     });
 
     select(stations[0]?.id || 'node');
+    if (composer?.dataset.caReady === 'true') {
+      activateEnhancedWorld();
+    } else {
+      composer?.addEventListener('ca:composer-ready', activateEnhancedWorld, { once: true });
+    }
   }
 
   document.querySelectorAll<HTMLElement>('[data-ca-world]').forEach(initWorld);
@@ -397,6 +418,10 @@ const lineModules = [
     gap: 0.45rem;
   }
 
+  .ca-world__stations[hidden] {
+    display: none;
+  }
+
   .ca-world__radio {
     position: absolute;
     opacity: 0;
@@ -436,6 +461,11 @@ const lineModules = [
   .ca-table-wrap {
     overflow-x: auto;
     margin: 0.75rem 0;
+  }
+
+  .ca-table-wrap:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
   }
 
   .ca-table-wrap table {
