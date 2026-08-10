@@ -18,6 +18,17 @@ const initialCommand = buildCreateAwesomeCommand({
   addons: [],
 });
 
+const staticFamilies = variants.map((variant) => ({
+  id: variant.id,
+  label: variant.label,
+  title: variant.title,
+  description: variant.description,
+  catalog: variant.href,
+  repository: `https://github.com/${variant.repo}`,
+  baseExample: variant.id === 'v' ? 'create-vlang-app my-app' : variant.install,
+  exampleNote: variant.id === 'v' ? 'after installing the CLI' : 'no template or addons selected',
+}));
+
 const composerBootstrap = {
   defaultProjectName: DEFAULT_PROJECT_NAME,
   families: Object.fromEntries(
@@ -32,7 +43,12 @@ const composerBootstrap = {
 };
 ---
 
-<section class:list={['ca-composer', { 'ca-composer--embedded': embedded }]} aria-labelledby="ca-composer-title">
+<section
+  class:list={['ca-composer', { 'ca-composer--embedded': embedded }]}
+  aria-labelledby="ca-composer-title"
+  data-ca-composer-root
+  data-ca-embedded={embedded ? 'true' : 'false'}
+>
   <header>
     <p class="ca-composer__eyebrow">Composer</p>
     <h2 id="ca-composer-title">Runtime + template + addons → command</h2>
@@ -47,11 +63,42 @@ const composerBootstrap = {
     }
   </header>
 
+  <div class="ca-composer__fallback" data-ca-static-fallback>
+    <p>
+      Choose a family from these canonical sources. Each command is a base example only; template and addon composition
+      becomes available after the interactive composer initializes successfully.
+    </p>
+    <div class="ca-composer__fallback-grid">
+      {
+        staticFamilies.map((family) => (
+          <article data-ca-static-family={family.id}>
+            <p class="ca-composer__fallback-family">{family.label}</p>
+            <h3>{family.title}</h3>
+            <p>{family.description}</p>
+            <p class="ca-composer__fallback-command">
+              <span>Base example · {family.exampleNote}</span>
+              <code>{family.baseExample}</code>
+            </p>
+            <p class="ca-composer__fallback-links">
+              <a href={family.catalog} target="_blank" rel="noreferrer">
+                {family.label} catalog ↗
+              </a>
+              <a href={family.repository} target="_blank" rel="noreferrer">
+                {family.label} repository ↗
+              </a>
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
   <form
     class="ca-composer__form"
     id="ca-composer-form"
     data-ca-composer
     data-ca-bootstrap={JSON.stringify(composerBootstrap)}
+    hidden
   >
     {/* Runtime radios stay in the form for command state; embedded worlds expose stations instead. */}
     {/* Proxied radios stay in the form for command state but leave the a11y tree when embedded. */}
@@ -132,11 +179,34 @@ const composerBootstrap = {
     const form = document.querySelector('[data-ca-composer]');
     if (!form) return;
 
-    let composerBootstrap = {};
+    const root = form.closest('[data-ca-composer-root]');
+    const fallback = root && root.querySelector('[data-ca-static-fallback]');
+    const embedded = root && root.getAttribute('data-ca-embedded') === 'true';
+
+    let composerBootstrap;
     try {
       composerBootstrap = JSON.parse(form.getAttribute('data-ca-bootstrap') || '{}');
+      const requiredFamilies = ['node', 'python', 'v'];
+      const validBootstrap =
+        composerBootstrap &&
+        typeof composerBootstrap === 'object' &&
+        !Array.isArray(composerBootstrap) &&
+        composerBootstrap.families &&
+        typeof composerBootstrap.families === 'object' &&
+        !Array.isArray(composerBootstrap.families) &&
+        requiredFamilies.every(function (familyId) {
+          const family = composerBootstrap.families[familyId];
+          return (
+            family &&
+            typeof family === 'object' &&
+            !Array.isArray(family) &&
+            family.id === familyId &&
+            typeof family.featuredTemplate === 'string'
+          );
+        });
+      if (!validBootstrap) return;
     } catch (_err) {
-      composerBootstrap = { defaultProjectName: 'my-app', families: {} };
+      return;
     }
 
     const families = composerBootstrap.families || {};
@@ -212,12 +282,25 @@ const composerBootstrap = {
       const projectName = projectInput ? projectInput.value : composerBootstrap.defaultProjectName;
       const command = buildCommand(family, projectName, selectedTemplate(family), selectedAddons(family));
       const out = form.querySelector('[data-ca-command]');
-      if (out) out.textContent = command;
+      if (!out) return false;
+      out.textContent = command;
+      return true;
     }
 
-    form.addEventListener('change', refresh);
-    form.addEventListener('input', refresh);
-    refresh();
+    try {
+      form.addEventListener('change', refresh);
+      form.addEventListener('input', refresh);
+      if (!refresh()) return;
+      form.setAttribute('data-ca-ready', 'true');
+      if (!embedded) {
+        form.removeAttribute('hidden');
+        if (fallback) fallback.setAttribute('hidden', '');
+        if (root) root.setAttribute('data-ca-enhanced', 'true');
+      }
+      form.dispatchEvent(new CustomEvent('ca:composer-ready', { bubbles: true }));
+    } catch (_err) {
+      return;
+    }
   })();
 </script>
 
@@ -230,6 +313,19 @@ const composerBootstrap = {
 
   .ca-composer--embedded {
     width: 100%;
+  }
+
+  .ca-composer,
+  .ca-composer__form,
+  .ca-composer__panel,
+  .ca-composer__panel > label,
+  .ca-composer fieldset,
+  .ca-composer__preview,
+  .ca-composer__fallback,
+  .ca-composer__fallback-grid,
+  .ca-composer__fallback article {
+    min-inline-size: 0;
+    max-inline-size: 100%;
   }
 
   .ca-composer__eyebrow {
@@ -254,10 +350,80 @@ const composerBootstrap = {
   }
 
   .ca-composer__form {
+    inline-size: 100%;
+    box-sizing: border-box;
     padding: 1rem;
     border: 1px solid var(--color-border);
     background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
     clip-path: var(--clip-corner-md);
+  }
+
+  .ca-composer__form[hidden],
+  .ca-composer__fallback[hidden] {
+    display: none;
+  }
+
+  .ca-composer__fallback {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    clip-path: var(--clip-corner-md);
+  }
+
+  .ca-composer__fallback > p {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .ca-composer__fallback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0.75rem;
+  }
+
+  .ca-composer__fallback article {
+    padding: 0.8rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-950) 84%, transparent);
+  }
+
+  .ca-composer__fallback article > p {
+    margin: 0.45rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .ca-composer__fallback h3 {
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .ca-composer__fallback .ca-composer__fallback-family,
+  .ca-composer__fallback-command span {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nest-cyan);
+  }
+
+  .ca-composer__fallback-command code {
+    display: block;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    margin-top: 0.35rem;
+    padding: 0.55rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-code-bg, var(--nest-midnight-950));
+    color: var(--color-text);
+    overflow-wrap: anywhere;
+  }
+
+  .ca-composer__fallback-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
   }
 
   .ca-composer fieldset {
@@ -315,6 +481,10 @@ const composerBootstrap = {
 
   .ca-composer__project input,
   .ca-composer select {
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    box-sizing: border-box;
     min-block-size: 44px;
     padding: 0.45rem 0.6rem;
     border: 1px solid var(--color-border);
@@ -347,12 +517,20 @@ const composerBootstrap = {
 
   .ca-composer__addons label {
     display: flex;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     gap: 0.55rem;
     align-items: center;
     min-block-size: 40px;
     padding: 0.2rem 0;
     font-size: 0.82rem;
     color: var(--color-text-muted);
+  }
+
+  .ca-composer__addons code {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
   }
 
   .ca-composer__preview {
