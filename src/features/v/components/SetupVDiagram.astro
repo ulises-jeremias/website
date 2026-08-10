@@ -1,5 +1,5 @@
 ---
-import { setupVPipeline } from '../data/index.js';
+import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
 ---
 
 <section class="setup" aria-labelledby="setup-title">
@@ -7,9 +7,9 @@ import { setupVPipeline } from '../data/index.js';
     <p class="setup__eyebrow">05 · setup-v</p>
     <h2 id="setup-title" class="setup__title">From workflow line to verified binary</h2>
     <p class="setup__desc">
-      <code>uses: vlang/setup-v@v1.7</code> resolves a ref or version-file value, detects the architecture, conditionally
-      restores an explicit-version cache, and installs a prebuilt release asset or builds V from source. It then adds V to
-      PATH and exposes the documented outputs.
+      <code>uses: {SETUP_V_PIN}</code> resolves a ref or version-file value, detects the architecture, conditionally restores
+      an explicit-version cache, and installs a prebuilt release asset or builds V from source. It then adds V to PATH and
+      exposes the documented outputs.
     </p>
   </header>
 
@@ -52,7 +52,7 @@ import { setupVPipeline } from '../data/index.js';
           style="text-transform: uppercase;">workflow.yml</text
         >
         <text x="132" y="58" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace"
-          >- uses: vlang/setup-v@v1.7</text
+          >{`- uses: ${SETUP_V_PIN}`}</text
         >
         <text x="340" y="58" font-size="10" fill="#8bb8e0">with: version / arch / cache</text>
         <text x="580" y="58" font-size="10" fill="#5b9bd5" font-weight="700">runs: 5 stages →</text>
@@ -185,7 +185,7 @@ import { setupVPipeline } from '../data/index.js';
         <g
           tabindex="0"
           role="listitem"
-          aria-label="5 Verify — run v version and expose binary path, version, and architecture outputs"
+          aria-label="5 Verify — run v version and expose bin-path, v-bin-path, version, and architecture outputs"
         >
           <title>Verify — v version + outputs</title>
           <rect x="628" y="88" width="76" height="96" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
@@ -225,22 +225,14 @@ import { setupVPipeline } from '../data/index.js';
         >
         <g aria-hidden="true">
           <rect x="30" y="230" width="140" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="44" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >version: resolved</text
-          >
-          <rect x="180" y="230" width="136" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">bin-path: /…/v</text
-          >
-          <rect x="326" y="230" width="160" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="340" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >architecture: x64</text
-          >
+          <text x="44" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">version</text>
+          <rect x="180" y="230" width="140" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">bin-path</text>
+          <rect x="330" y="230" width="160" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="344" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">v-bin-path</text>
+          <rect x="500" y="230" width="174" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
+          <text x="514" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">architecture</text>
         </g>
-        <text x="508" y="247" font-size="10" fill="#8bb8e0"
-          >→ <tspan font-family="ui-monospace, monospace">v install</tspan> or <tspan
-            font-family="ui-monospace, monospace">v test</tspan
-          ></text
-        >
 
         <!-- bottom platforms -->
         <rect x="16" y="278" width="688" height="46" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.22)"></rect>
@@ -285,7 +277,7 @@ import { setupVPipeline } from '../data/index.js';
           architecture. Otherwise it resolves and installs without claiming a reusable version-keyed cache.
         </p>
         <div class="setup__code" role="region" aria-label="setup-v usage yaml">
-          <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">vlang/setup-v@v1.7</span>
+          <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">{SETUP_V_PIN}</span>
   <span class="setup__c-kw">with</span>:
     <span class="setup__c-kw">version</span>: <span class="setup__c-str">{'${{ vars.V_VERSION }}'}</span>  <span class="setup__c-cmt"># explicit ref enables cache</span>
     <span class="setup__c-kw">cache</span>: <span class="setup__c-kw">true</span></code></pre>
@@ -308,7 +300,7 @@ import { setupVPipeline } from '../data/index.js';
 
   <p class="setup__note">
     Action: <a href="https://github.com/vlang/setup-v" target="_blank" rel="noreferrer">vlang/setup-v ↗</a> · Marketplace:
-    <code>vlang/setup-v@v1.7</code> · Cache docs via <code>README.md</code> inputs table.
+    <code>{SETUP_V_PIN}</code> · Cache docs via <code>README.md</code> inputs table.
   </p>
 </section>
 

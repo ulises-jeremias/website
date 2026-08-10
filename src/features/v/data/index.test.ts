@@ -13,6 +13,8 @@ import {
 } from './index.js';
 
 const getProject = (id: (typeof vProjects)[number]['id']) => vProjects.find((project) => project.id === id)!;
+const readSourceFile = (relativePath: string) =>
+  readFileSync(fileURLToPath(new URL(relativePath, import.meta.url)), 'utf8');
 
 describe('V source-fidelity data', () => {
   it('uses the README-recommended setup-v pin and documented action outputs', () => {
@@ -25,6 +27,17 @@ describe('V source-fidelity data', () => {
     expect(setupVPipeline.find((step) => step.id === 'verify')?.detail).toContain(
       vSourceFacts.setupV.outputs.join(', '),
     );
+
+    const setupDiagram = readSourceFile('../components/SetupVDiagram.astro');
+    const ecosystemDiagram = readSourceFile('../components/EcosystemDiagram.astro');
+
+    expect(`${setupDiagram}\n${ecosystemDiagram}`).not.toContain('vlang/setup-v@v1.7');
+    expect(setupDiagram).toContain(
+      'aria-label="5 Verify — run v version and expose bin-path, v-bin-path, version, and architecture outputs"',
+    );
+    for (const output of vSourceFacts.setupV.outputs) {
+      expect(setupDiagram).toContain(`>${output}</text>`);
+    }
   });
 
   it('publishes only the current RxV operator catalog', () => {
@@ -81,7 +94,7 @@ describe('V source-fidelity data', () => {
       '../components/RxVDiagram.astro',
       '../components/SetupVDiagram.astro',
       '../components/scenes/SetupVScene.astro',
-    ].map((relativePath) => readFileSync(fileURLToPath(new URL(relativePath, import.meta.url)), 'utf8'));
+    ].map(readSourceFile);
     const text = sourceFiles.join('\n');
 
     for (const contradictedClaim of [

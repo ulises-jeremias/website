@@ -1,5 +1,5 @@
 ---
-import { vEcosystemSteps } from '../data/index.js';
+import { SETUP_V_PIN, vEcosystemSteps } from '../data/index.js';
 ---
 
 <section class="eco" aria-labelledby="eco-title">
@@ -206,40 +206,6 @@ import { vEcosystemSteps } from '../data/index.js';
         <text x="808" y="190" text-anchor="end" font-size="17" aria-hidden="true">RX</text>
       </g>
 
-      <!-- down arrows to setup-v -->
-      <g aria-hidden="true">
-        <line
-          x1="170"
-          y1="230"
-          x2="170"
-          y2="250"
-          stroke="rgba(30,90,138,0.35)"
-          stroke-width="2"
-          stroke-dasharray="5 5"
-          stroke-linecap="round"></line>
-        <line
-          x1="440"
-          y1="230"
-          x2="440"
-          y2="250"
-          stroke="rgba(30,90,138,0.45)"
-          stroke-width="2"
-          stroke-dasharray="5 5"
-          stroke-linecap="round"></line>
-        <line
-          x1="710"
-          y1="230"
-          x2="710"
-          y2="250"
-          stroke="rgba(30,90,138,0.35)"
-          stroke-width="2"
-          stroke-dasharray="5 5"
-          stroke-linecap="round"></line>
-        <polygon points="170,256 164,248 176,248" fill="#1e5a8a" opacity="0.9"></polygon>
-        <polygon points="440,256 434,248 446,248" fill="#1e5a8a" opacity="0.95"></polygon>
-        <polygon points="710,256 704,248 716,248" fill="#1e5a8a" opacity="0.9"></polygon>
-      </g>
-
       <!-- setup-v bottom -->
       <g
         class="eco__node"
@@ -279,7 +245,9 @@ import { vEcosystemSteps } from '../data/index.js';
           style="text-transform: uppercase;">CI · action</text
         >
         <text x="224" y="304" font-size="15.5" font-weight="800" fill="#e6f0fb">setup-v</text>
-        <text x="224" y="320" font-size="11" fill="#a8c4df">version · arch · cache · PATH · vlang/setup-v@v1.7</text>
+        <text x="224" y="320" font-size="11" fill="#a8c4df">
+          {`version · arch · cache · PATH · ${SETUP_V_PIN}`}
+        </text>
         <text
           x="700"
           y="302"
@@ -287,7 +255,7 @@ import { vEcosystemSteps } from '../data/index.js';
           font-size="11"
           font-weight="600"
           fill="#cfe1f5"
-          font-family="ui-monospace, monospace">uses: vlang/setup-v@v1.7</text
+          font-family="ui-monospace, monospace">{`uses: ${SETUP_V_PIN}`}</text
         >
       </g>
     </svg>
@@ -310,8 +278,8 @@ import { vEcosystemSteps } from '../data/index.js';
   </div>
 
   <p class="eco__note">
-    V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0. Install V via <code>vlang/setup-v@v1.7</code> and add libraries
-    with <code>v install vsl</code> / <code>v install vtl</code> / <code>v install ulises-jeremias.rxv</code>.
+    V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0. Install V via <code>{SETUP_V_PIN}</code> and add libraries with
+    <code>v install vsl</code> / <code>v install vtl</code> / <code>v install ulises-jeremias.rxv</code>.
   </p>
 </section>
 
