@@ -100,6 +100,8 @@ describe('agent-toolkit inventory truth', () => {
 
   it('documents Herdr/tmux as two UI backends with verified commands', () => {
     expect(uiBackends.map((b) => b.id)).toEqual(['herdr', 'tmux']);
+    expect(uiBackends.find((b) => b.id === 'herdr')?.summary.toLowerCase()).toContain('orchestration ui');
+    expect(uiBackends.find((b) => b.id === 'herdr')?.summary.toLowerCase()).not.toContain('gui');
     expect(uiBackends[0]?.commands.some((c) => c.includes('--ui herdr'))).toBe(true);
     expect(uiBackends[1]?.commands.some((c) => c.includes('--ui tmux'))).toBe(true);
     expect(sharedRunStateFiles).toContain('state.json');

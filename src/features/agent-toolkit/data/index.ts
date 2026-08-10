@@ -312,7 +312,7 @@ export const uiBackends: UiBackend[] = [
   {
     id: 'herdr',
     title: 'Herdr',
-    summary: 'Preferred workspace GUI over the same run state, approvals, and artifacts.',
+    summary: 'Preferred orchestration UI over the same run state, approvals, and artifacts.',
     commands: [
       'agent-toolkit swarm start --recipe pair --ui herdr --runner opencode "…"',
       'agent-toolkit swarm attach RUN_ID',
