@@ -20,5 +20,5 @@ export function isThinWorkstationCompliant(layer: LayerMeta): boolean {
 
 /** Graph-style Personal DX summary — not a forced install ladder. */
 export function getEcosystemFlow(): string {
-  return 'HorneroConfig (optional) · Workstation (L1) ↔ Toolkit (L1.5) ↔ Harness (L2)';
+  return 'HorneroConfig (optional desktop path) · Workstation provisions · Toolkit distributes/orchestrates · Harness persists context';
 }

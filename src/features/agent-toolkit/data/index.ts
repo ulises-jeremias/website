@@ -148,7 +148,7 @@ export const toolkitOverview: ToolkitOverviewSection[] = [
     id: 'principle',
     title: 'One source → many assistants',
     paragraphs: [
-      'Agent Toolkit is the L1.5 capability catalog for the Personal DX graph.',
+      'Agent Toolkit is the canonical capability catalog for the Personal DX graph.',
       'Write a skill, agent, or loop once; compile it into every supported tool target.',
     ],
   },
@@ -156,8 +156,8 @@ export const toolkitOverview: ToolkitOverviewSection[] = [
     id: 'layers',
     title: 'Workstation · toolkit · overlay',
     paragraphs: [
-      'L1 provisions the machine. L1.5 distributes capabilities. The overlay holds memory and run state.',
-      'Precedence is project overlay → toolkit defaults. HorneroConfig is an optional desktop sibling, not a hard dependency.',
+      'Workstation provisions the machine. Toolkit distributes capabilities and owns queue and swarm orchestration.',
+      'Harness provides persistent workspace context; HorneroConfig is an optional desktop path, not a hard dependency.',
     ],
   },
   {

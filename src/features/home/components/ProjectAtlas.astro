@@ -2,6 +2,7 @@
 import { atlasWorlds } from '../data/index.js';
 import AtlasConnections from './AtlasConnections.astro';
 import ProjectWorld from './ProjectWorld.astro';
+import ResponsibilityTopology from '@/shared/components/ResponsibilityTopology.astro';
 
 /**
  * Reference homepage order (also encoded in project-worlds priorities):
@@ -43,4 +44,5 @@ const scaleFor = (id: string): 'lg' | 'md' | 'sm' => {
       }
     </div>
   </div>
+  <ResponsibilityTopology />
 </section>

@@ -11,8 +11,9 @@
     <h2 id="stack-title" class="ws-stack__title">Personal DX graph</h2>
     <p class="ws-stack__lead">
       Nodes, not a mandatory climb. <strong>HorneroConfig</strong> is an optional desktop edge.
-      <strong>Workstation</strong> provisions the thin machine (L1). <strong>Toolkit</strong> distributes capabilities (L1.5).
-      <strong>Agentic Harness</strong> is the persistent runtime workspace (L2) — not the Toolkit.
+      <strong>Workstation</strong> provisions the thin machine. <strong>Toolkit</strong> distributes capabilities and owns
+      orchestration.
+      <strong>Agentic Harness</strong> is the persistent workspace context — not the Toolkit.
     </p>
   </div>
 
@@ -26,8 +27,8 @@
     >
       <title id="ws-stack-svg-title">Agentic Workstation — Personal DX graph</title>
       <desc id="ws-stack-svg-desc"
-        >Optional HorneroConfig desktop connects as a sibling. Thin Agentic Workstation provisions the machine and
-        uplinks to Agent Toolkit. Agentic Harness is the L2 runtime workspace with persistent memory.</desc
+        >HorneroConfig is an optional desktop path. Thin Agentic Workstation provisions the machine; Agent Toolkit
+        distributes capabilities; Agentic Harness provides persistent workspace context.</desc
       >
       <defs>
         <linearGradient id="ws-stack-bg" x1="0" y1="0" x2="0" y2="1">
@@ -49,7 +50,7 @@
         font-family="ui-sans-serif, system-ui, sans-serif"
         font-size="10"
         font-weight="700"
-        letter-spacing="2">DX GRAPH · OPTIONAL DESKTOP · THIN L1 · HARNESS L2</text
+        letter-spacing="2">RESPONSIBILITY MAP · OPTIONAL DESKTOP · MACHINE · CAPABILITIES · CONTEXT</text
       >
 
       <!-- Edges -->
@@ -70,7 +71,7 @@
           stroke="#22D3EE"
           stroke-opacity="0.4"
           stroke-dasharray="6 5"></rect>
-        <text x="16" y="28" fill="#A5F3FC" font-size="10" font-weight="800">L0 OPTIONAL</text>
+        <text x="16" y="28" fill="#A5F3FC" font-size="10" font-weight="800">OPTIONAL DESKTOP</text>
         <text x="16" y="54" fill="#F8FAFC" font-size="15" font-weight="800">HorneroConfig</text>
         <text x="16" y="76" fill="#94A3B8" font-size="11">desktop · sibling edge</text>
       </g>
@@ -78,7 +79,7 @@
       <!-- Workstation center -->
       <g transform="translate(300 180)">
         <rect width="200" height="110" rx="14" fill="#111827" stroke="#A78BFA" stroke-opacity="0.55"></rect>
-        <text x="16" y="28" fill="#EDE9FE" font-size="10" font-weight="800">L1 MACHINE · THIN</text>
+        <text x="16" y="28" fill="#EDE9FE" font-size="10" font-weight="800">MACHINE · THIN</text>
         <text x="16" y="54" fill="#F8FAFC" font-size="15" font-weight="800">Workstation</text>
         <text x="16" y="76" fill="#94A3B8" font-size="11">chezmoi · profiles · LLM policy</text>
         <text x="16" y="96" fill="#64748B" font-size="10" font-family="ui-monospace, monospace">no embedded skills</text
@@ -88,7 +89,7 @@
       <!-- Toolkit -->
       <g transform="translate(540 110)">
         <rect width="200" height="100" rx="14" fill="#0F1A12" stroke="#84CC16" stroke-opacity="0.5"></rect>
-        <text x="16" y="28" fill="#ECFCCB" font-size="10" font-weight="800">L1.5 CAPABILITIES</text>
+        <text x="16" y="28" fill="#ECFCCB" font-size="10" font-weight="800">CAPABILITIES</text>
         <text x="16" y="54" fill="#F8FAFC" font-size="15" font-weight="800">Agent Toolkit</text>
         <text x="16" y="76" fill="#94A3B8" font-size="11">skills · agents · loops · MCP</text>
       </g>
@@ -103,7 +104,7 @@
           stroke="#22D3EE"
           stroke-opacity="0.4"
           stroke-dasharray="7 5"></rect>
-        <text x="16" y="28" fill="#A5F3FC" font-size="10" font-weight="800">L2 RUNTIME</text>
+        <text x="16" y="28" fill="#A5F3FC" font-size="10" font-weight="800">PERSISTENT CONTEXT</text>
         <text x="16" y="54" fill="#F8FAFC" font-size="15" font-weight="800">Agentic Harness</text>
         <text x="16" y="76" fill="#94A3B8" font-size="11">memory · personas · packs</text>
       </g>
@@ -120,9 +121,9 @@
 
   <ul class="ws-stack__fallback" aria-hidden="false">
     <li><strong>Optional — desktop:</strong> HorneroConfig · Hyprland + Quickshell</li>
-    <li><strong>L1 — machine:</strong> agentic-workstation · chezmoi · profiles · thin helpers</li>
-    <li><strong>L1.5 — capabilities:</strong> agent-toolkit · skills · agents · loops</li>
-    <li><strong>L2 — runtime:</strong> agentic-harness · persistent workspace / memory</li>
+    <li><strong>Machine provisioning:</strong> agentic-workstation · chezmoi · profiles · thin helpers</li>
+    <li><strong>Capability distribution:</strong> agent-toolkit · skills · agents · loops</li>
+    <li><strong>Persistent context:</strong> agentic-harness · workspace / memory</li>
   </ul>
 </section>
 

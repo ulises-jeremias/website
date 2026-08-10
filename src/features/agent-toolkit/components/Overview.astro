@@ -4,21 +4,21 @@ import { toolkitOverview } from '../data/index.js';
 
 <section class="toolkit-overview" aria-labelledby="overview-title">
   <header>
-    <p class="toolkit-overview__eyebrow">Stack position</p>
-    <h2 id="overview-title">L1.5 in the Personal DX graph</h2>
+    <p class="toolkit-overview__eyebrow">Responsibility</p>
+    <h2 id="overview-title">Capability distribution in the Personal DX graph</h2>
     <p>
-      Workstation provisions the machine. Toolkit distributes capabilities. Overlay/harness holds memory and run state.
-      Edges are graph-like — HorneroConfig is an optional desktop surface, not a mandatory linear step.
+      Workstation provisions the machine. Toolkit distributes capabilities and owns orchestration. Harness holds
+      persistent context. HorneroConfig is an optional desktop path, not a mandatory step.
     </p>
   </header>
 
   <ol class="toolkit-overview__layers">
-    <li data-layer="l1"><span>L1</span><strong>Workstation</strong><em>machine · provisioning</em></li>
-    <li data-layer="l15" aria-current="true">
-      <span>L1.5</span><strong>Toolkit</strong><em>capabilities · distribution</em>
+    <li data-layer="workstation"><span>Machine</span><strong>Workstation</strong><em>provisioning · policy</em></li>
+    <li data-layer="toolkit" aria-current="true">
+      <span>Capabilities</span><strong>Toolkit</strong><em>distribution · orchestration</em>
     </li>
-    <li data-layer="l2"><span>L2</span><strong>Harness</strong><em>runtime · memory</em></li>
-    <li data-layer="l0"><span>L0</span><strong>HorneroConfig</strong><em>optional desktop sibling</em></li>
+    <li data-layer="harness"><span>Context</span><strong>Harness</strong><em>workspace · memory</em></li>
+    <li data-layer="hornero"><span>Desktop</span><strong>HorneroConfig</strong><em>optional configuration</em></li>
   </ol>
 
   <div class="toolkit-overview__points">

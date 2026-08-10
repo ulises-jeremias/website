@@ -64,12 +64,9 @@ const nodes = [
   { id: 'harness', x: 670, y: 210, layer: workstationLayers[3]! },
 ];
 
-const paths = [
-  { id: 'p-hw', d: 'M130 200 C190 160 220 140 250 130', from: 'hornero', to: 'workstation' },
-  { id: 'p-wt', d: 'M330 120 L450 120', from: 'workstation', to: 'toolkit' },
-  { id: 'p-th', d: 'M530 140 C590 150 620 180 650 200', from: 'toolkit', to: 'harness' },
-  { id: 'p-wh', d: 'M300 150 C380 260 520 270 640 230', from: 'workstation', to: 'harness' },
-];
+// The boot map selects independent responsibility stations. Cross-project
+// semantics live in ResponsibilityTopology, where every edge is verb-labeled.
+const paths: { id: string; d: string; from: string; to: string }[] = [];
 
 const stagesJson = JSON.stringify(bootStages);
 const profilesJson = JSON.stringify(
@@ -109,7 +106,9 @@ const defaultLayer = workstationLayers[1]!;
   <header class="ws-map__header">
     <p class="ws-map__eyebrow">Workstation System Map</p>
     <h1 id="ws-map-title">Boot the Workstation</h1>
-    <p class="ws-map__lede">Fresh → Profile → Provision → Doctor → Toolkit uplink → Harness. Thin L1 · fat L1.5.</p>
+    <p class="ws-map__lede">
+      Fresh → Profile → Provision → Doctor, with optional Toolkit capability integration and persistent Harness context.
+    </p>
   </header>
 
   <div class="vf-scene" data-ws-machine data-profile={defaultProfile.id}>
@@ -118,7 +117,7 @@ const defaultLayer = workstationLayers[1]!;
         class="ws-map__svg"
         viewBox="0 0 760 340"
         role="img"
-        aria-label="Workstation boot machine: fresh host through harness uplink"
+        aria-label="Workstation boot machine and independent responsibility stations"
       >
         <defs>
           <radialGradient id="ws-core" cx="50%" cy="50%" r="50%">
@@ -161,11 +160,11 @@ const defaultLayer = workstationLayers[1]!;
           ))
         }
         <text x="380" y="318" text-anchor="middle" class="ws-map__thin"
-          >thin boundary after L1 — no embedded skills</text
+          >no embedded capabilities — Toolkit remains independently installable</text
         >
       </svg>
 
-      <div class="ws-map__node-controls" role="radiogroup" aria-label="DX layer">
+      <div class="ws-map__node-controls" role="radiogroup" aria-label="Project responsibility">
         {
           workstationLayers.map((layer, i) => (
             <>
@@ -187,7 +186,7 @@ const defaultLayer = workstationLayers[1]!;
       </div>
     </div>
 
-    <SceneInspector eyebrow="Layer" title={defaultLayer.title} id="ws-layer-inspector">
+    <SceneInspector eyebrow="Responsibility" title={defaultLayer.title} id="ws-layer-inspector">
       <p data-layer-copy>{defaultLayer.description}</p>
       <Fragment slot="meta">
         <div data-layer-meta>

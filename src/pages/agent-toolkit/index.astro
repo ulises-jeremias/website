@@ -9,6 +9,7 @@ import {
   SwarmControlRoom,
 } from '@/features/agent-toolkit';
 import { toolkitMeta } from '@/features/agent-toolkit/data/index.js';
+import ResponsibilityTopology from '@/shared/components/ResponsibilityTopology.astro';
 ---
 
 <SectionLayout
@@ -20,6 +21,7 @@ import { toolkitMeta } from '@/features/agent-toolkit/data/index.js';
   immersive
 >
   <ProvenanceStrip />
+  <ResponsibilityTopology />
   <CapabilityNexus />
   <QueueVsSwarmVisual />
   <SwarmControlRoom />

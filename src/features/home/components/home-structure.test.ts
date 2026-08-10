@@ -65,6 +65,16 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(world).toContain('atlas-world__island');
   });
 
+  it('includes the factual responsibility topology with a structured fallback', async () => {
+    const atlas = await readSource('features/home/components/ProjectAtlas.astro');
+    const topology = await readSource('shared/components/ResponsibilityTopology.astro');
+
+    expect(atlas).toContain('ResponsibilityTopology');
+    expect(topology).toContain('aria-hidden="true"');
+    expect(topology).toContain('class="dx-topology__structured"');
+    expect(topology).toContain('Edges describe responsibility, not required installation');
+  });
+
   it('keeps original SVG illustration vocabulary available for non-atlas uses', async () => {
     const illustrations = await readSource('features/home/components/WorldIllustration.astro');
     const expected = [

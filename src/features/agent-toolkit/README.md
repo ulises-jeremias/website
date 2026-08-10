@@ -1,6 +1,6 @@
 # agent-toolkit
 
-Feature for `/agent-toolkit` — Synthwave Systems Atlas flagship for L1.5 capability distribution.
+Feature for `/agent-toolkit` — Synthwave Systems Atlas flagship for capability distribution.
 
 ## Inventory
 
