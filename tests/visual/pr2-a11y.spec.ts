@@ -30,6 +30,32 @@ test.describe('PR 2 value and group semantics', () => {
       }
     });
   }
+
+  test('keeps the Dotfiles meter synchronized after selecting a later Smart Colors stage', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/dotfiles');
+
+    const meter = page.locator('[data-df-colors] .vf-meter');
+    await page.locator('[data-df-colors] [data-stage-index="2"]').click();
+
+    await expect(meter).toHaveAttribute('aria-value' + 'now', '75');
+    await expect(meter).toHaveAttribute('aria-value' + 'text', 'Step 3/4');
+    await expect(meter.locator('[data-vf-meter-value]')).toHaveText('Step 3/4');
+  });
+
+  test('keeps the Workstation meter synchronized after selecting a later boot stage', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/agentic-workstation');
+
+    const meter = page.locator('[data-boot] .vf-meter');
+    await page.locator('[data-boot] [data-stage-index="3"]').click();
+
+    await expect(meter).toHaveAttribute('aria-value' + 'now', '67');
+    await expect(meter).toHaveAttribute('aria-value' + 'text', 'Step 4/6');
+    await expect(meter.locator('[data-vf-meter-value]')).toHaveText('Step 4/6');
+  });
 });
 
 test.describe('PR 2 keyboard-scrollable install code', () => {
