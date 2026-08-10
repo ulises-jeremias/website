@@ -78,7 +78,7 @@ export const workstationLayers: LayerMeta[] = [
   {
     id: 'hornero',
     index: 0,
-    label: 'L0 · DESKTOP (optional)',
+    label: 'DESKTOP · OPTIONAL PATH',
     title: 'HorneroConfig',
     subtitle: 'desktop · dotfiles',
     mapping: 'HorneroConfig / desktop (optional Personal DX surface)',
@@ -97,7 +97,7 @@ export const workstationLayers: LayerMeta[] = [
   {
     id: 'workstation',
     index: 1,
-    label: 'L1 · MACHINE',
+    label: 'MACHINE · PROVISIONING',
     title: 'Workstation',
     subtitle: 'machine · provisioning',
     mapping: 'Workstation / machine',
@@ -120,7 +120,7 @@ export const workstationLayers: LayerMeta[] = [
   {
     id: 'toolkit',
     index: 2,
-    label: 'L1.5 · CAPABILITIES',
+    label: 'CAPABILITIES · DISTRIBUTION',
     title: 'Toolkit',
     subtitle: 'capabilities · distribution',
     mapping: 'Toolkit / capabilities',
@@ -142,10 +142,10 @@ export const workstationLayers: LayerMeta[] = [
   {
     id: 'harness',
     index: 3,
-    label: 'L2 · RUNTIME',
+    label: 'WORKSPACE · PERSISTENT CONTEXT',
     title: 'Agentic Harness',
     subtitle: 'runtime · persistent workspace',
-    mapping: 'Harness / runtime (L2)',
+    mapping: 'Harness / persistent workspace context',
     accent: '#22D3EE',
     description:
       'Persistent AI workspace and runtime layer — memory, personas, packs, indexed repos, and autonomous loops. Consumes toolkit CLIs; it is not the Toolkit. Canonical repo: ulises-jeremias/agentic-harness.',
@@ -237,7 +237,7 @@ export const toolkitRationale: ToolkitRationalePoint[] = [
     icon: '⟡',
     title: 'Provisioning vs capabilities separation',
     description:
-      'Workstation owns machine provisioning (chezmoi, packages, shell, secrets, LLM policy, runner). Toolkit owns capability distribution. Clear L1 vs L1.5 responsibility — workstation stays lean, toolkit evolves independently.',
+      'Workstation owns machine provisioning (chezmoi, packages, shell, secrets, LLM policy, runner). Toolkit owns capability distribution and orchestration. The two projects evolve independently.',
   },
   {
     icon: '⎋',
@@ -255,7 +255,7 @@ export const toolkitRationale: ToolkitRationalePoint[] = [
 
 export const thinWorkstationVerification = {
   statement:
-    'Thin workstation delegates all capabilities to agent-toolkit via uv tool install --force agent-toolkit-cli && agent-toolkit install. The SKILL.md catalog is provided by the toolkit at runtime. Workstation-only runner logic (dev-companion/runner) is retained. Agentic Harness (ulises-jeremias/agentic-harness) is the L2 persistent runtime workspace — not Toolkit.',
+    'Thin workstation delegates all capabilities to agent-toolkit via uv tool install --force agent-toolkit-cli && agent-toolkit install. The SKILL.md catalog is provided by the toolkit at runtime. Workstation-only runner logic (dev-companion/runner) is retained. Agentic Harness (ulises-jeremias/agentic-harness) provides persistent workspace context — it is not the Toolkit.',
   references: [
     'docs/ARCHITECTURE.md',
     'docs/AGENT_TOOLKIT.md',

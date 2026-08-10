@@ -2,6 +2,7 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta } from '@/data/routes';
 import WorkstationSystemMap from '@/features/workstation/components/WorkstationSystemMap.astro';
+import ResponsibilityTopology from '@/shared/components/ResponsibilityTopology.astro';
 
 const meta = getRouteMeta('/agentic-workstation')!;
 ---
@@ -15,4 +16,5 @@ const meta = getRouteMeta('/agentic-workstation')!;
   immersive
 >
   <WorkstationSystemMap />
+  <ResponsibilityTopology />
 </SectionLayout>

@@ -1,6 +1,6 @@
 # Workstation Feature
 
-Domain: **Agentic Workstation — Personal DX graph** (`HorneroConfig` optional · `Workstation` L1 · `Toolkit` L1.5 · `Agentic Harness` L2).
+Domain: **Agentic Workstation — Personal DX graph** (`HorneroConfig` optional · `Workstation` provisioning · `Toolkit` capabilities · `Agentic Harness` persistent context).
 
 **Identity:** midnight `#020617` / cyan `#22D3EE` / violet `#A78BFA` / lime `#84CC16`.
 
@@ -31,7 +31,7 @@ workstation/
 ## Principles
 
 - **Thin workstation:** `agentic-workstation` ships no `skills/*`, `loops/*`, `mcp/*`, `prompts/*`, `agents/*`, `packs/teams`. Capabilities via `uv tool install --force agent-toolkit-cli && agent-toolkit install`. Only `dev-companion/runner` retained.
-- **Harness ≠ Toolkit:** L2 runtime is `ulises-jeremias/agentic-harness` (persistent AI workspace).
+- **Harness ≠ Toolkit:** `ulises-jeremias/agentic-harness` provides persistent AI workspace context.
 - **Profiles:** only from `home/.chezmoidata/profiles.yaml` (technical · non-technical · ai · node · python · data · infra · minimal · custom).
 - Data in `data/index.ts`; import via `@/features/workstation`.
 

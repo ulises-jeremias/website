@@ -14,8 +14,8 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
 >
   <title id="ws-diag-title">Agentic Workstation — Personal DX graph</title>
   <desc id="ws-diag-desc"
-    >Personal DX graph: HorneroConfig is an optional desktop sibling. Workstation provisions the machine, delegates
-    capabilities to agent-toolkit, and Agentic Harness consumes them as the L2 runtime workspace.</desc
+    >Personal DX graph: HorneroConfig is an optional desktop path. Workstation provisions the machine, delegates
+    capabilities to agent-toolkit, and Agentic Harness consumes them as persistent workspace context.</desc
   >
   <defs>
     <linearGradient id="ws-bg" x1="0" y1="0" x2="1" y2="1">
@@ -86,12 +86,12 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
     font-weight="700">thin boundary →</text
   >
   <text x="158" y="137" fill="#94A3B8" font-family="Inter, ui-sans-serif, sans-serif" font-size="10.5"
-    >capabilities delegated after L1 via uv</text
+    >capabilities delegated to Toolkit via uv</text
   >
 
   <!-- Lane backgrounds -->
   <g transform="translate(40 152)">
-    <!-- L0 Hornero -->
+    <!-- HorneroConfig -->
     <g>
       <rect
         width="262"
@@ -110,7 +110,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
         fill="#A5F3FC"
         font-family="Inter, ui-sans-serif, sans-serif"
         font-size="10.5"
-        font-weight="800">L0 DESKTOP</text
+        font-weight="800">OPTIONAL DESKTOP</text
       >
       <text
         x="20"
@@ -176,7 +176,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
       >
     </g>
 
-    <!-- L1 Workstation -->
+    <!-- Agentic Workstation -->
     <g transform="translate(285 0)">
       <rect
         width="262"
@@ -195,7 +195,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
         fill="#EDE9FE"
         font-family="Inter, ui-sans-serif, sans-serif"
         font-size="10.5"
-        font-weight="800">L1 MACHINE</text
+        font-weight="800">MACHINE PROVISIONING</text
       >
       <text
         x="20"
@@ -261,7 +261,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
       >
     </g>
 
-    <!-- L1.5 Toolkit -->
+    <!-- Agent Toolkit -->
     <g transform="translate(570 0)">
       <rect
         width="262"
@@ -280,7 +280,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
         fill="#ECFCCB"
         font-family="Inter, ui-sans-serif, sans-serif"
         font-size="10.5"
-        font-weight="800">L1.5 CAPABILITIES</text
+        font-weight="800">CAPABILITY DISTRIBUTION</text
       >
       <text
         x="20"
@@ -346,7 +346,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
       >
     </g>
 
-    <!-- L2 Harness -->
+    <!-- Agentic Harness -->
     <g transform="translate(855 0)">
       <rect
         width="262"
@@ -365,7 +365,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
         fill="#A5F3FC"
         font-family="Inter, ui-sans-serif, sans-serif"
         font-size="10.5"
-        font-weight="800">L2 RUNTIME</text
+        font-weight="800">PERSISTENT CONTEXT</text
       >
       <text
         x="20"
@@ -427,7 +427,7 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
         text-anchor="middle"
         fill="#94A3B8"
         font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
-        font-size="10">persistent workspace · L2</text
+        font-size="10">persistent workspace · memory · context</text
       >
     </g>
   </g>
@@ -478,8 +478,8 @@ const profilesLine = `MCP · ${inventoryCounts.profiles} profiles · packs/schem
   <!-- Footer identity bar -->
   <rect x="40" y="514" width="1120" height="1" fill="#334155" opacity="0.6"></rect>
   <text x="40" y="536" fill="#475569" font-family="Inter, ui-sans-serif, sans-serif" font-size="10.5"
-    >Identity · midnight #020617 · cyan #22D3EE · violet #A78BFA · lime #84CC16 · thin after L1 — toolkit owns catalog ·
-    harness owns runtime</text
+    >Identity · midnight #020617 · cyan #22D3EE · violet #A78BFA · lime #84CC16 · Toolkit owns the catalog · harness
+    owns runtime</text
   >
   <text x="1046" y="536" fill="#334155" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10"
     >1200×560</text

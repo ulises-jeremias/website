@@ -1,0 +1,285 @@
+---
+import { personalDxRelationships } from '@/data/personal-dx-relationships.js';
+
+const nodes = [
+  {
+    id: 'hornero-config',
+    title: 'HorneroConfig',
+    role: 'Desktop / user-environment configuration',
+    href: '/dotfiles',
+    className: 'hornero',
+  },
+  {
+    id: 'agentic-workstation',
+    title: 'Agentic Workstation',
+    role: 'Machine provisioning, profiles, host policy',
+    href: '/agentic-workstation',
+    className: 'workstation',
+  },
+  {
+    id: 'agent-toolkit',
+    title: 'Agent Toolkit',
+    role: 'Capability distribution and orchestration',
+    href: '/agent-toolkit',
+    className: 'toolkit',
+  },
+  {
+    id: 'agentic-harness',
+    title: 'Agentic Harness',
+    role: 'Persistent workspace context and memory',
+    href: 'https://github.com/ulises-jeremias/agentic-harness',
+    className: 'harness',
+  },
+] as const;
+
+const nodeById = new Map(nodes.map((node) => [node.id, node]));
+const readableRelation = (source: string, target: string, verb: string) => {
+  const sourceTitle = nodeById.get(source)?.title ?? source;
+  const targetTitle = nodeById.get(target)?.title ?? target;
+  return `${sourceTitle} ${verb} ${targetTitle}`;
+};
+---
+
+<section class="dx-topology" aria-labelledby="dx-topology-title">
+  <header class="dx-topology__header">
+    <p class="dx-topology__eyebrow">Responsibility map</p>
+    <h2 id="dx-topology-title">Four projects, distinct responsibilities</h2>
+    <p>
+      Enter any project directly. The connections describe what a project does for another; they are not a required
+      installation order.
+    </p>
+  </header>
+
+  <div class="dx-topology__visual" aria-hidden="true">
+    <svg viewBox="0 0 900 430" role="presentation" focusable="false">
+      <path class="dx-topology__edge dx-topology__edge--optional" d="M210 112 C330 78 355 105 430 178"></path>
+      <path class="dx-topology__edge" d="M220 322 C330 355 585 355 680 300"></path>
+      <path class="dx-topology__edge" d="M680 150 C760 205 755 255 680 300"></path>
+      <g class="dx-topology__edge-label dx-topology__edge-label--optional"
+        ><rect x="235" y="54" width="270" height="38" rx="8"></rect><text x="252" y="78">optionally coexists with</text
+        ></g
+      >
+      <g class="dx-topology__edge-label"
+        ><rect x="315" y="346" width="300" height="38" rx="8"></rect><text x="330" y="370"
+          >can provision host dependencies for</text
+        ></g
+      >
+      <g class="dx-topology__edge-label"
+        ><rect x="700" y="196" width="190" height="54" rx="8"></rect><text x="714" y="219">provides capabilities</text
+        ><text x="714" y="238">and workspace commands to</text></g
+      >
+      {
+        nodes.map((node) => (
+          <a href={node.href} class:list={['dx-topology__node', `dx-topology__node--${node.className}`]}>
+            <rect
+              x={
+                node.className === 'hornero'
+                  ? 24
+                  : node.className === 'workstation'
+                    ? 24
+                    : node.className === 'toolkit'
+                      ? 510
+                      : 510
+              }
+              y={node.className === 'hornero' || node.className === 'toolkit' ? 80 : 265}
+              width="230"
+              height="100"
+              rx="14"
+            />
+            <text
+              class="dx-topology__node-title"
+              x={node.className === 'hornero' || node.className === 'workstation' ? 48 : 534}
+              y={node.className === 'hornero' || node.className === 'toolkit' ? 120 : 305}
+            >
+              {node.title}
+            </text>
+            <text
+              class="dx-topology__node-role"
+              x={node.className === 'hornero' || node.className === 'workstation' ? 48 : 534}
+              y={node.className === 'hornero' || node.className === 'toolkit' ? 148 : 333}
+            >
+              {node.role}
+            </text>
+          </a>
+        ))
+      }
+    </svg>
+  </div>
+
+  <div class="dx-topology__structured">
+    <h3>Relationships</h3>
+    <ul>
+      {
+        personalDxRelationships.map((relation) => (
+          <li>
+            <a href={nodeById.get(relation.source)?.href}>{nodeById.get(relation.source)?.title}</a>
+            <span>{relation.verb}</span>
+            <a href={nodeById.get(relation.target)?.href}>{nodeById.get(relation.target)?.title}</a>
+            {relation.optional ? <small>Optional relationship</small> : null}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="dx-topology__note">
+      Edges describe responsibility, not required installation. Herdr and tmux are Toolkit UI backends, not additional
+      relationship nodes.
+    </p>
+  </div>
+</section>
+
+<style>
+  .dx-topology {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 78rem);
+    margin: 0 auto;
+    padding-block: clamp(2rem, 5vw, 4rem);
+  }
+  .dx-topology__header {
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+  }
+  .dx-topology__eyebrow {
+    margin: 0 0 0.4rem;
+    color: var(--nest-cyan);
+    font: 0.7rem/1.2 var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .dx-topology h2 {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.45rem, 3vw, 2.25rem);
+  }
+  .dx-topology__header p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  .dx-topology__visual {
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 25%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 94%, transparent);
+    padding: 0.75rem;
+  }
+  .dx-topology__visual svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .dx-topology__edge {
+    fill: none;
+    stroke: var(--nest-cyan);
+    stroke-width: 2.5;
+    opacity: 0.78;
+  }
+  .dx-topology__edge--optional {
+    stroke: var(--nest-magenta);
+    stroke-dasharray: 8 7;
+  }
+  .dx-topology__edge-label rect {
+    fill: var(--nest-midnight-950);
+    stroke: color-mix(in srgb, var(--nest-cyan) 45%, transparent);
+  }
+  .dx-topology__edge-label text {
+    fill: var(--color-text-muted);
+    font: 13px var(--font-mono);
+  }
+  .dx-topology__edge-label--optional rect {
+    stroke: color-mix(in srgb, var(--nest-magenta) 55%, transparent);
+  }
+  .dx-topology__node {
+    cursor: pointer;
+  }
+  .dx-topology__node rect {
+    fill: color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
+    stroke: var(--nest-cyan);
+    stroke-width: 2;
+    transition:
+      transform 0.2s ease,
+      stroke 0.2s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .dx-topology__node--hornero rect {
+    stroke: var(--nest-magenta);
+  }
+  .dx-topology__node--harness rect {
+    stroke: var(--nest-violet);
+  }
+  .dx-topology__node:hover rect,
+  .dx-topology__node:focus-visible rect {
+    transform: scale(1.025);
+    stroke: var(--nest-lime, #84cc16);
+  }
+  .dx-topology__node-title {
+    fill: var(--color-text);
+    font: 700 18px var(--font-display);
+  }
+  .dx-topology__node-role {
+    fill: var(--color-text-muted);
+    font: 13px var(--font-mono);
+  }
+  .dx-topology__structured {
+    margin-top: 1rem;
+  }
+  .dx-topology__structured h3 {
+    margin: 0 0 0.6rem;
+    font-size: 1rem;
+  }
+  .dx-topology__structured ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .dx-topology__structured li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45rem 0.65rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+  }
+  .dx-topology__structured a {
+    color: var(--nest-cyan);
+    font-weight: 700;
+  }
+  .dx-topology__structured span {
+    color: var(--color-text-muted);
+  }
+  .dx-topology__structured small {
+    flex-basis: 100%;
+    color: var(--nest-magenta);
+    font: 0.72rem var(--font-mono);
+  }
+  .dx-topology__note {
+    margin: 0.85rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.82rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dx-topology__node rect {
+      transition: none;
+    }
+  }
+  @media (max-width: 700px) {
+    .dx-topology {
+      width: min(100% - 2 * var(--section-padding-x, 1rem), 78rem);
+    }
+    .dx-topology__visual {
+      display: none;
+    }
+    .dx-topology__structured {
+      margin-top: 0;
+    }
+    .dx-topology__structured li {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+    .dx-topology__structured li span::before {
+      content: '→ ';
+      color: var(--nest-magenta);
+    }
+  }
+</style>

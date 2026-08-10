@@ -99,7 +99,7 @@ export const routes: RouteMeta[] = [
     path: '/agentic-workstation',
     title: 'Agentic Workstation — Machine Provisioning',
     description:
-      'Thin AI-native workstation: chezmoi provisioning, profile selector, LLM policy — Personal DX graph with Agentic Harness runtime.',
+      'Thin AI-native workstation: chezmoi provisioning, profile selector, LLM policy — related to Toolkit capabilities and Harness workspace context.',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'workstation',

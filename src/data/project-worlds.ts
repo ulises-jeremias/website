@@ -261,10 +261,10 @@ export type CrossLink = {
  * and for validating that `relatedWorlds` arrays are consistent.
  */
 export const crossLinks: CrossLink[] = [
-  { from: 'workstation', to: 'toolkit', label: 'Powered by Agent Toolkit' },
-  { from: 'toolkit', to: 'workstation', label: 'Installed via Agentic Workstation' },
-  { from: 'dotfiles', to: 'workstation', label: 'Provisions workstation' },
-  { from: 'workstation', to: 'dotfiles', label: 'Uses dotfiles layer' },
+  { from: 'workstation', to: 'toolkit', label: 'Can provision Toolkit host dependencies' },
+  { from: 'toolkit', to: 'workstation', label: 'Can be installed independently' },
+  { from: 'dotfiles', to: 'workstation', label: 'Optionally coexists with Workstation' },
+  { from: 'workstation', to: 'dotfiles', label: 'Links to optional desktop configuration' },
   { from: 'v', to: 'open-source', label: 'V core contributions' },
   { from: 'create-awesome', to: 'community', label: 'Join the shared community' },
   { from: 'blog', to: 'community', label: 'Continue in Discord' },
