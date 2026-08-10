@@ -69,9 +69,16 @@ Guidelines:
 Visual and shell smoke coverage lives under `tests/visual/` and runs with Playwright:
 
 ```sh
-pnpm build
-pnpm test:visual:update   # write baselines
-pnpm test:visual          # compare against baselines
+pnpm test:visual:update   # build static output, own the server, and write baselines
+pnpm test:visual          # build static output, own the server, and compare baselines
 ```
 
-Config: `playwright.config.ts` (Chromium, dark scheme, reduced motion by default, local `astro preview` on `127.0.0.1:4321`).
+Config: `playwright.config.ts` (Chromium, dark scheme, and a Playwright-owned static
+`dist/` server on `127.0.0.1:4173`). Visual runs never reuse an existing server. If
+the port is occupied, the run fails instead of attaching to an ambiguous app or
+worktree. Set `VISUAL_TEST_PORT` to an unused port when running visual suites from
+multiple worktrees concurrently.
+
+Do not start `astro dev` or `astro preview` for these commands. The harness builds
+the current worktree, verifies that the served root document matches that build,
+and rejects Astro/Vite development-toolbar artifacts before tests begin.
