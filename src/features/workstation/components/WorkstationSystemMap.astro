@@ -253,9 +253,15 @@ const defaultLayer = workstationLayers[1]!;
         <div data-profile-groups>
           {
             defaultProfile.groups.length ? (
-              defaultProfile.groups.map((g) => <code data-group={g}>{g}</code>)
+              defaultProfile.groups.map((g) => (
+                <code class="ws-map__profile-token" data-group={g}>
+                  {g}
+                </code>
+              ))
             ) : (
-              <span data-profile-empty>custom — answer every group prompt</span>
+              <span class="ws-map__profile-empty" data-profile-empty>
+                custom — answer every group prompt
+              </span>
             )
           }
         </div>
@@ -444,11 +450,13 @@ const defaultLayer = workstationLayers[1]!;
       if (profile.groups.length) {
         profile.groups.forEach((g) => {
           const code = document.createElement('code');
+          code.className = 'ws-map__profile-token';
           code.textContent = g;
           profileGroups.appendChild(code);
         });
       } else {
         const span = document.createElement('span');
+        span.className = 'ws-map__profile-empty';
         span.textContent = 'custom — answer every group prompt';
         profileGroups.appendChild(span);
       }
@@ -650,6 +658,13 @@ const defaultLayer = workstationLayers[1]!;
     margin-bottom: 0.75rem;
   }
 
+  .ws-map__profile,
+  .ws-map__profile :global(.vf-inspector),
+  .ws-map__profile :global(.vf-inspector__meta) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
   .ws-map__health-list {
     list-style: none;
     margin: 0;
@@ -686,14 +701,26 @@ const defaultLayer = workstationLayers[1]!;
     text-transform: uppercase;
   }
 
-  #ws-profile-inspector [data-profile-groups] {
+  :global(#ws-profile-inspector [data-profile-groups]) {
     display: flex;
     flex-wrap: wrap;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     gap: 0.35rem;
   }
 
-  #ws-profile-inspector code {
+  :global(#ws-profile-inspector .ws-map__profile-token) {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     padding: 0.15rem 0.35rem;
     border: 1px solid var(--color-border);
+    overflow-wrap: anywhere;
+  }
+
+  :global(#ws-profile-inspector .ws-map__profile-empty) {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
   }
 </style>
