@@ -32,12 +32,7 @@ const nodes = [
   },
 ] as const;
 
-const nodeById = new Map(nodes.map((node) => [node.id, node]));
-const readableRelation = (source: string, target: string, verb: string) => {
-  const sourceTitle = nodeById.get(source)?.title ?? source;
-  const targetTitle = nodeById.get(target)?.title ?? target;
-  return `${sourceTitle} ${verb} ${targetTitle}`;
-};
+const nodeById = new Map<string, (typeof nodes)[number]>(nodes.map((node) => [node.id, node]));
 ---
 
 <section class="dx-topology" aria-labelledby="dx-topology-title">
