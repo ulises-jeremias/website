@@ -201,6 +201,25 @@ test.describe('PR 1 correctness baseline', () => {
     await expect(page.locator('.ca-world__stations')).toBeHidden();
     await expect(page.locator('[data-ca-command]:visible')).toHaveCount(0);
   });
+
+  test('Create Awesome keeps the static fallback for incomplete bootstrap data', async ({ page }) => {
+    await page.addInitScript(() => {
+      const originalParse = JSON.parse;
+      JSON.parse = function (text, reviver) {
+        const parsed = originalParse(text, reviver);
+        if (typeof text === 'string' && text.includes('"families"') && parsed?.families) {
+          delete parsed.families.python;
+        }
+        return parsed;
+      };
+    });
+    await page.goto('/create-awesome');
+
+    await expect(page.locator('[data-ca-static-fallback]')).toBeVisible();
+    await expect(page.locator('[data-ca-composer]')).toBeHidden();
+    await expect(page.locator('.ca-world__stations')).toBeHidden();
+    await expect(page.locator('[data-ca-command]:visible')).toHaveCount(0);
+  });
 });
 
 test.describe('PR 1 no-JavaScript baseline', () => {

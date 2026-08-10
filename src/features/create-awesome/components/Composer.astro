@@ -186,7 +186,25 @@ const composerBootstrap = {
     let composerBootstrap;
     try {
       composerBootstrap = JSON.parse(form.getAttribute('data-ca-bootstrap') || '{}');
-      if (!composerBootstrap || typeof composerBootstrap !== 'object' || !composerBootstrap.families) return;
+      const requiredFamilies = ['node', 'python', 'v'];
+      const validBootstrap =
+        composerBootstrap &&
+        typeof composerBootstrap === 'object' &&
+        !Array.isArray(composerBootstrap) &&
+        composerBootstrap.families &&
+        typeof composerBootstrap.families === 'object' &&
+        !Array.isArray(composerBootstrap.families) &&
+        requiredFamilies.every(function (familyId) {
+          const family = composerBootstrap.families[familyId];
+          return (
+            family &&
+            typeof family === 'object' &&
+            !Array.isArray(family) &&
+            family.id === familyId &&
+            typeof family.featuredTemplate === 'string'
+          );
+        });
+      if (!validBootstrap) return;
     } catch (_err) {
       return;
     }
