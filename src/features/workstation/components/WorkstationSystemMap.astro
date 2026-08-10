@@ -375,7 +375,11 @@ const defaultLayer = workstationLayers[1]!;
       if (stageCopy) stageCopy.textContent = stage.summary;
       if (stageCmd) stageCmd.textContent = stage.command;
       const progress = Math.round(((index + 1) / stages.length) * 100);
-      if (meter) meter.style.setProperty('--vf-meter-value', String(progress));
+      if (meter) {
+        meter.style.setProperty('--vf-meter-value', String(progress));
+        meter.setAttribute('aria-valuenow', String(progress));
+        meter.setAttribute('aria-valuetext', `Step ${index + 1}/${stages.length}`);
+      }
       if (meterValue) meterValue.textContent = `Step ${index + 1}/${stages.length}`;
       root.dataset.bootStage = stage.id;
       syncNodeVisuals();

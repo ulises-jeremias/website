@@ -33,7 +33,12 @@ const tabsJson = JSON.stringify(tabs);
     }
   </div>
   <div class="atk-install__panel" role="tabpanel" id="install-panel" aria-labelledby={`install-tab-${tabs[0]!.id}`}>
-    <pre><code data-install-cmd>{tabs[0]!.command}</code></pre>
+    <p class="atk-install__scroll-hint" id="install-scroll-hint">Scroll horizontally to read the full command.</p>
+    <pre
+      tabindex="0"
+      role="region"
+      aria-label="Install command"
+      aria-describedby="install-scroll-hint"><code data-install-cmd>{tabs[0]!.command}</code></pre>
     <button type="button" class="atk-install__copy" data-install-copy>Copy</button>
   </div>
   <p class="atk-install__note" data-install-note>{tabs[0]!.note}</p>
@@ -153,12 +158,24 @@ const tabsJson = JSON.stringify(tabs);
   }
 
   .atk-install__panel pre {
+    max-inline-size: 100%;
     margin: 0;
     padding: 0.75rem 3.5rem 0.75rem 0.75rem;
     overflow-x: auto;
     border: 1px solid var(--color-border);
     background: var(--color-code-bg, #0b0714);
     font-size: 0.78rem;
+  }
+
+  .atk-install__panel pre:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 3px;
+  }
+
+  .atk-install__scroll-hint {
+    margin: 0 0 0.35rem;
+    color: var(--color-text-faint);
+    font-size: 0.72rem;
   }
 
   .atk-install__copy {
