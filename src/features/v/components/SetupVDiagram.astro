@@ -7,9 +7,9 @@ import { setupVPipeline } from '../data/index.js';
     <p class="setup__eyebrow">05 · setup-v</p>
     <h2 id="setup-title" class="setup__title">From workflow line to verified binary</h2>
     <p class="setup__desc">
-      <code>uses: vlang/setup-v@v1.7</code> resolves version, detects arch, restores cache, fetches the prebuilt binary, writes
-      it to PATH, and exposes outputs. On exotic arches it warns and falls back gracefully — no sudo, no build unless you
-      ask.
+      <code>uses: vlang/setup-v@v1.7</code> resolves a ref or version-file value, detects the architecture, conditionally
+      restores an explicit-version cache, and installs a prebuilt release asset or builds V from source. It then adds V to
+      PATH and exposes the documented outputs.
     </p>
   </header>
 
@@ -25,7 +25,8 @@ import { setupVPipeline } from '../data/index.js';
         <title id="setupSvgTitle">setup-v — GH Action pipeline 5 steps</title>
         <desc id="setupSvgDesc">
           Horizontal five-stage pipeline: Resolve version, Arch detection, Cache restore, Install binary, Verify. Each
-          stage is a node with input and output; cache hit short-circuits install; error paths use rollback.
+          stage is a node with input and output. The cache path is available when an explicit version is supplied;
+          missing prebuilts fall back to a source build.
         </desc>
         <rect x="0" y="0" width="720" height="340" rx="14" fill="#0f2a44"></rect>
         <rect x="0" y="0" width="720" height="18" rx="6" fill="rgba(91,155,213,0.16)" aria-hidden="true"></rect>
@@ -58,7 +59,11 @@ import { setupVPipeline } from '../data/index.js';
 
         <!-- stages -->
         <!-- Resolve -->
-        <g tabindex="0" role="listitem" aria-label="1 Resolve — version tag, branch, commit, or .v-version file">
+        <g
+          tabindex="0"
+          role="listitem"
+          aria-label="1 Resolve — tag, branch, SHA, stable release, or version-file value"
+        >
           <title>Resolve — version input or .v-version</title>
           <rect x="16" y="88" width="128" height="96" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.3)"></rect>
           <rect x="16" y="88" width="128" height="4" rx="2" fill="#5b9bd5"></rect>
@@ -74,9 +79,9 @@ import { setupVPipeline } from '../data/index.js';
             style="text-transform: uppercase;">resolve</text
           >
           <text x="30" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Version</text>
-          <text x="30" y="144" font-size="9.5" fill="#b8d0e6">stable / nightly</text>
+          <text x="30" y="144" font-size="9.5" fill="#b8d0e6">stable / ref</text>
           <text x="30" y="158" font-size="9" fill="#8bb8e0" font-family="ui-monospace, monospace">.v-version</text>
-          <text x="120" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ 0.4.9</text>
+          <text x="120" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ resolved ref</text>
         </g>
         <g aria-hidden="true">
           <line x1="144" y1="136" x2="168" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
@@ -84,8 +89,12 @@ import { setupVPipeline } from '../data/index.js';
         </g>
 
         <!-- Arch -->
-        <g tabindex="0" role="listitem" aria-label="2 Arch — detect runner arch x64 or arm64, warn on exotic">
-          <title>Arch — x64 / arm64 — fallback warning</title>
+        <g
+          tabindex="0"
+          role="listitem"
+          aria-label="2 Arch — detect the target architecture and select a mapped prebuilt or source fallback"
+        >
+          <title>Arch — target architecture — prebuilt or source fallback</title>
           <rect x="176" y="88" width="128" height="96" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
           <circle cx="190" cy="106" r="9" fill="rgba(91,155,213,0.92)"></circle>
           <text x="190" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">2</text>
@@ -99,9 +108,9 @@ import { setupVPipeline } from '../data/index.js';
             style="text-transform: uppercase;">arch</text
           >
           <text x="190" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Arch</text>
-          <text x="190" y="144" font-size="9.5" fill="#b8d0e6">x64 · arm64</text>
-          <text x="190" y="158" font-size="9" fill="#8bb8e0">detect + warn</text>
-          <text x="280" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ linux/amd64</text>
+          <text x="190" y="144" font-size="9.5" fill="#b8d0e6">target arch</text>
+          <text x="190" y="158" font-size="9" fill="#8bb8e0">map or build</text>
+          <text x="280" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ platform/arch</text>
         </g>
         <g aria-hidden="true">
           <line x1="304" y1="136" x2="328" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
@@ -112,7 +121,7 @@ import { setupVPipeline } from '../data/index.js';
         <g
           tabindex="0"
           role="listitem"
-          aria-label="3 Cache — restore binary from GitHub cache, key version-os-arch, hit skips install"
+          aria-label="3 Cache — when version is explicit, restore key version operating system architecture"
         >
           <title>Cache — key: version + os + arch</title>
           <rect x="336" y="88" width="128" height="96" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.32)"></rect>
@@ -130,7 +139,7 @@ import { setupVPipeline } from '../data/index.js';
           >
           <text x="350" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Cache</text>
           <text x="350" y="144" font-size="9.5" fill="#b8d0e6">restore</text>
-          <text x="350" y="158" font-size="9" fill="#8bb8e0">key: v+os+arch</text>
+          <text x="350" y="158" font-size="9" fill="#8bb8e0">v+version+os+arch</text>
           <text x="440" y="166" text-anchor="end" font-size="8.5" fill="#7cb7c9">hit → skip</text>
         </g>
         <g aria-hidden="true">
@@ -149,8 +158,8 @@ import { setupVPipeline } from '../data/index.js';
         </g>
 
         <!-- Install -->
-        <g tabindex="0" role="listitem" aria-label="4 Install — fetch prebuilt binary, unpack, add to PATH, no sudo">
-          <title>Install — fetch + unpack + PATH</title>
+        <g tabindex="0" role="listitem" aria-label="4 Install — use a prebuilt when available or build V from source">
+          <title>Install — prebuilt or source build + PATH</title>
           <rect x="496" y="88" width="100" height="96" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
           <circle cx="510" cy="106" r="9" fill="rgba(91,155,213,0.92)"></circle>
           <text x="510" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">4</text>
@@ -164,7 +173,7 @@ import { setupVPipeline } from '../data/index.js';
             style="text-transform: uppercase;">install</text
           >
           <text x="510" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Fetch</text>
-          <text x="510" y="144" font-size="9.5" fill="#b8d0e6">binary</text>
+          <text x="510" y="144" font-size="9.5" fill="#b8d0e6">asset/build</text>
           <text x="510" y="158" font-size="9" fill="#8bb8e0">+ PATH</text>
         </g>
         <g aria-hidden="true">
@@ -173,7 +182,11 @@ import { setupVPipeline } from '../data/index.js';
         </g>
 
         <!-- Verify -->
-        <g tabindex="0" role="listitem" aria-label="5 Verify — run v version, expose outputs v-version and cache-hit">
+        <g
+          tabindex="0"
+          role="listitem"
+          aria-label="5 Verify — run v version and expose binary path, version, and architecture outputs"
+        >
           <title>Verify — v version + outputs</title>
           <rect x="628" y="88" width="76" height="96" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
           <circle cx="642" cy="106" r="9" fill="#5b9bd5"></circle>
@@ -213,14 +226,14 @@ import { setupVPipeline } from '../data/index.js';
         <g aria-hidden="true">
           <rect x="30" y="230" width="140" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <text x="44" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >v-version: 0.4.9</text
+            >version: resolved</text
           >
           <rect x="180" y="230" width="136" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >cache-hit: true</text
+          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">bin-path: /…/v</text
           >
           <rect x="326" y="230" width="160" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="340" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">v path: /…/v/v</text
+          <text x="340" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
+            >architecture: x64</text
           >
         </g>
         <text x="508" y="247" font-size="10" fill="#8bb8e0"
@@ -247,7 +260,7 @@ import { setupVPipeline } from '../data/index.js';
           <text x="258" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">macos-latest</text>
           <rect x="312" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
           <text x="358" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">windows-latest</text>
-          <text x="420" y="304" font-size="10" fill="#8bb8e0">+ self-hosted · arch auto</text>
+          <text x="420" y="304" font-size="10" fill="#8bb8e0">+ runner or requested arch</text>
         </g>
       </svg>
 
@@ -266,29 +279,28 @@ import { setupVPipeline } from '../data/index.js';
 
     <div class="setup__cards">
       <article class="setup__card">
-        <h3 class="setup__card-title">Cache is the feature</h3>
+        <h3 class="setup__card-title">Explicit-version cache</h3>
         <p class="setup__card-text">
-          GitHub cache keyed by version+OS+arch. Cache hit skips the binary download — CI goes from ~40s to ~4s. Core
-          Team keeps prebuilts for x64 + arm64 on every tag.
+          When <code>version</code> is supplied, setup-v can restore a GitHub cache keyed by version, operating system, and
+          architecture. Otherwise it resolves and installs without claiming a reusable version-keyed cache.
         </p>
         <div class="setup__code" role="region" aria-label="setup-v usage yaml">
           <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">vlang/setup-v@v1.7</span>
   <span class="setup__c-kw">with</span>:
-    <span class="setup__c-kw">version</span>: <span class="setup__c-str">'0.4.9'</span>  <span class="setup__c-cmt"># or .v-version</span>
+    <span class="setup__c-kw">version</span>: <span class="setup__c-str">{'${{ vars.V_VERSION }}'}</span>  <span class="setup__c-cmt"># explicit ref enables cache</span>
     <span class="setup__c-kw">cache</span>: <span class="setup__c-kw">true</span></code></pre>
         </div>
       </article>
       <article class="setup__card">
         <h3 class="setup__card-title">Version is flexible</h3>
         <p class="setup__card-text">
-          Accepts tag (<code>0.4.9</code>), branch (<code>master</code>), commit SHA, or file path (<code
-            >.v-version</code
-          >). No token needed for tags — uses blob fetch.
+          The <code>version</code> input accepts a tag, branch, or commit SHA. The separate <code>version-file</code> input
+          can read <code>.v-version</code>. The action uses the workflow token by default.
         </p>
         <ul class="setup__list">
-          <li>Also: <code>latest</code>, <code>stable</code>, semver range</li>
-          <li>Self-hosted: respects pre-installed V</li>
-          <li>Post-job: cleanup via <code>action.yml</code> post entry</li>
+          <li><code>stable: true</code> selects the latest stable V release</li>
+          <li>Mapped prebuilts are preferred; unavailable combinations build from source</li>
+          <li>Post-job cleanup removes credential state on a best-effort basis</li>
         </ul>
       </article>
     </div>

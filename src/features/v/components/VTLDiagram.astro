@@ -7,9 +7,9 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
     <p class="vtl__eyebrow">03 · VTL</p>
     <h2 id="vtl-title" class="vtl__title">Tensors that remember their graph</h2>
     <p class="vtl__desc">
-      Every <code>Tensor[T]</code> is a view. Wrap it in a <code>Variable</code> via <code>Context</code> and each op records
-      a gate. Call <code>backprop()</code> and gradients flow backward — scalars first, then generalized. CPU training is
-      the default path; CUDA and Vulkan remain experimental opt-in.
+      Created <code>Tensor[T]</code> values own storage; <code>view()</code> and selected slicing operations can share it,
+      while <code>copy()</code> clones it. Wrap a tensor in a <code>Variable</code> via <code>Context</code> to record gates
+      for reverse-mode autograd. CPU training is the default beta path; CUDA and Vulkan support is feature-scoped and experimental.
     </p>
   </header>
 
@@ -330,8 +330,8 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
       <article class="vtl__card">
         <h3 class="vtl__card-title">From Tensor[T] to graph</h3>
         <p class="vtl__card-text">
-          Create zeros, ones, or from_slice. Slice and broadcast without copy. When you need learning, wrap via Context
-          and let every op emit a gate.
+          Create zeros, ones, or from_array. Views and selected slices can share storage; copy() owns cloned storage.
+          When you need gradients, wrap tensors through Context so supported operations record gates.
         </p>
         <div class="vtl__code" role="region" aria-label="VTL quick start code snippet">
           <pre><code><span class="vtl__c-kw">mut</span> ctx := autograd.<span class="vtl__c-fn">ctx</span>[<span class="vtl__c-ty">f64</span>]()

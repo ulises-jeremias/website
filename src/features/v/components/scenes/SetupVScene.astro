@@ -1,16 +1,16 @@
 ---
 import { SETUP_V_PIN } from '../../data/index.js';
 
-/** setup-v station — CI conveyor (pin is real; no invented benchmarks). */
+/** setup-v station — CI conveyor (README pin and install stages are source-backed). */
 ---
 
 <div class="v-scene" data-v-scene="setup-v">
   <h2 class="v-scene__title" id="v-scene-setup-title">setup-v</h2>
-  <p class="v-scene__note">CI conveyor for the pinned V toolchain.</p>
+  <p class="v-scene__note">CI conveyor using the README-recommended {SETUP_V_PIN} action pin.</p>
   <ol class="v-scene__conveyor" data-setup-steps>
     <li class="is-active">checkout</li>
+    <li>select ref</li>
     <li>install V</li>
-    <li>pin {SETUP_V_PIN}</li>
     <li>verify</li>
   </ol>
   <button type="button" data-setup-advance>Advance conveyor</button>

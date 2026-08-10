@@ -125,7 +125,7 @@ export const routes: RouteMeta[] = [
     id: 'v',
     path: '/v',
     title: 'V Ecosystem — Systems & Scientific',
-    description: 'V, VSL, VTL, RxV, setup-v — systems programming and scientific exploration.',
+    description: 'V, VSL, VTL, RxV, setup-v, and Awesome V — language, scientific, reactive, CI, and discovery tools.',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'v',

@@ -5,10 +5,10 @@ import { vEcosystemSteps } from '../data/index.js';
 <section class="eco" aria-labelledby="eco-title">
   <header class="eco__header">
     <p class="eco__eyebrow">Architecture</p>
-    <h2 id="eco-title" class="eco__title">One toolchain, five surfaces</h2>
+    <h2 id="eco-title" class="eco__title">Five V ecosystem projects</h2>
     <p class="eco__desc">
-      V compiles it. VSL and VTL compute it. RxV streams it. setup-v installs it. Tab or use a screen reader to walk
-      each node — SVG has title, desc, and keyboard focus per surface.
+      V provides the language and tooling. VSL provides scientific computing, VTL depends on VSL for linear algebra, RxV
+      provides reactive streams, and setup-v installs V in CI. Tab or use a screen reader to inspect each project.
     </p>
   </header>
 
@@ -22,9 +22,8 @@ import { vEcosystemSteps } from '../data/index.js';
     >
       <title id="ecoSvgTitle">V ecosystem — core, libraries, reactive and CI</title>
       <desc id="ecoSvgDesc">
-        Central V node at top center, library nodes below (VSL, VTL, RxV), and setup-v pipeline at bottom spanning full
-        width. Arrows show dependencies: libraries depend on V, RxV is independent channel pipeline, setup-v distributes
-        all.
+        Catalog layout with V above VSL, VTL, and RxV, plus setup-v below. VTL depends on VSL. setup-v installs V for
+        CI; it does not install the libraries. Other placements group projects and do not represent dependency order.
       </desc>
 
       <!-- rail -->
@@ -50,10 +49,10 @@ import { vEcosystemSteps } from '../data/index.js';
         class="eco__node"
         tabindex="0"
         role="listitem"
-        aria-label="V — compiler and tooling — vlang/v — single bootstrap, C output"
+        aria-label="V — self-hosted compiler and tooling — vlang/v — primary C backend"
       >
         <title>V — vlang/v</title>
-        <desc>Compiler, formatter, checker, docs. Single bootstrap.</desc>
+        <desc>Self-hosted compiler, standard library, formatter, tests, and documentation tooling.</desc>
         <rect
           x="300"
           y="12"
@@ -113,10 +112,10 @@ import { vEcosystemSteps } from '../data/index.js';
         class="eco__node"
         tabindex="0"
         role="listitem"
-        aria-label="VSL — scientific library — pure-V BLAS/LAPACK, fractals — vlang/vsl"
+        aria-label="VSL — scientific library — portable pure-V path with optional backends — vlang/vsl"
       >
         <title>VSL — vlang/vsl</title>
-        <desc>Pure-V BLAS/LAPACK, stats, FFT, visualization.</desc>
+        <desc>Scientific computing, linear algebra, stats, FFT, visualization, and optional backends.</desc>
         <rect
           x="40"
           y="152"
@@ -249,7 +248,7 @@ import { vEcosystemSteps } from '../data/index.js';
         aria-label="setup-v — GitHub Action — version, arch, cache, install — vlang/setup-v"
       >
         <title>setup-v — vlang/setup-v</title>
-        <desc>One-line install for every runner.</desc>
+        <desc>GitHub Action that installs V using a prebuilt or source fallback.</desc>
         <rect
           x="160"
           y="262"
@@ -305,15 +304,14 @@ import { vEcosystemSteps } from '../data/index.js';
     </div>
 
     <p class="eco__sr">
-      Structure: V at the top, VSL/VTL/RxV in the middle row, setup-v distributing at the bottom. Arrows show dependency
-      flow.
+      Catalog structure: V, VSL, VTL, RxV, and setup-v. VTL depends on VSL. setup-v installs V for CI and does not
+      distribute VSL, VTL, or RxV. The remaining layout is grouping, not dependency order.
     </p>
   </div>
 
   <p class="eco__note">
-    All projects MIT. Install V via <code>vlang/setup-v@v1.7</code> and add libraries with <code>v install vsl</code> / <code
-      >v install vtl</code
-    > / <code>v install ulises-jeremias.rxv</code>.
+    V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0. Install V via <code>vlang/setup-v@v1.7</code> and add libraries
+    with <code>v install vsl</code> / <code>v install vtl</code> / <code>v install ulises-jeremias.rxv</code>.
   </p>
 </section>
 
