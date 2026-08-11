@@ -268,9 +268,19 @@ const lineModules = [
     let selectedStationId =
       root.querySelector<HTMLInputElement>('[data-ca-station]:checked')?.value ?? defaultStationId;
     let lastFocusedElement: HTMLElement | null = null;
+    let locationBeingRestored: string | undefined;
 
-    document.addEventListener('focusin', (event) => {
-      lastFocusedElement = event.target instanceof HTMLElement && event.target !== document.body ? event.target : null;
+    root.addEventListener('focusin', (event) => {
+      lastFocusedElement = event.target instanceof HTMLElement ? event.target : null;
+    });
+
+    root.addEventListener('focusout', (event) => {
+      const nextTarget = event.relatedTarget;
+      if (nextTarget instanceof Node && root.contains(nextTarget)) return;
+
+      window.requestAnimationFrame(() => {
+        if (!root.contains(document.activeElement)) lastFocusedElement = null;
+      });
     });
 
     const stationForHash = () => {
@@ -348,6 +358,10 @@ const lineModules = [
     });
 
     const restoreFromLocation = () => {
+      const locationKey = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      if (locationBeingRestored === locationKey) return;
+      locationBeingRestored = locationKey;
+
       const focusBeforeRestore = lastFocusedElement;
       const stationId = stationForHash();
       if (stationId) select(stationId, 'restore');
@@ -355,6 +369,7 @@ const lineModules = [
       // Same-document fragment traversal can reset focus to <body>. Restore only
       // the element that already held focus; never choose a new destination.
       window.requestAnimationFrame(() => {
+        if (locationBeingRestored === locationKey) locationBeingRestored = undefined;
         if (
           focusBeforeRestore?.isConnected &&
           (document.activeElement === document.body || document.activeElement === document.documentElement)

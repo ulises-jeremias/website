@@ -49,8 +49,11 @@ describe('community registry', () => {
 
   it('keeps Create Awesome community destinations on canonical family fragments', () => {
     const createProjects = communityProjects.filter((project) => project.ecosystem === 'create-awesome');
-    expect(createProjects.map((project) => project.worldPath)).toEqual(
-      createAwesomeVariants.map((variant) => `/create-awesome#${variant.id}`),
-    );
+    expect(createProjects).toHaveLength(createAwesomeVariants.length);
+
+    for (const variant of createAwesomeVariants) {
+      const project = createProjects.find((candidate) => candidate.id === `create-awesome-${variant.id}`);
+      expect(project?.worldPath).toBe(`/create-awesome#${variant.id}`);
+    }
   });
 });
