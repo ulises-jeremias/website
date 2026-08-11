@@ -11,13 +11,14 @@ const { compact = true } = Astro.props;
 const ordered = [...dotfilesLayers].reverse();
 ---
 
-<div
-  class:list={['df-layers', { 'df-layers--compact': compact }]}
-  data-df-layers
-  role="img"
-  aria-label="HorneroConfig layers: shell, compositor, terminal, scripts, chezmoi"
->
-  <svg class="df-layers__svg" viewBox="0 0 680 540" role="presentation" xmlns="http://www.w3.org/2000/svg">
+<div class:list={['df-layers', { 'df-layers--compact': compact }]} data-df-layers>
+  <svg
+    class="df-layers__svg"
+    viewBox="0 0 680 540"
+    aria-hidden="true"
+    focusable="false"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <rect x="324" y="20" width="12" height="470" rx="6" fill="rgba(255,176,202,0.12)" aria-hidden="true"></rect>
     {
       ordered.map((layer, index) => {
@@ -25,14 +26,7 @@ const ordered = [...dotfilesLayers].reverse();
         const isTop = index === 0;
         const isBottom = index === ordered.length - 1;
         return (
-          <g
-            class="df-layers__layer"
-            tabindex="0"
-            role="button"
-            data-layer={layer.id}
-            aria-pressed={layer.id === 'chezmoi' ? 'true' : 'false'}
-            aria-label={`${layer.label}: ${layer.description}`}
-          >
+          <g class:list={['df-layers__layer', { 'is-selected': layer.id === 'chezmoi' }]} data-layer-visual={layer.id}>
             <rect
               x="56"
               y={String(y)}
@@ -122,18 +116,6 @@ const ordered = [...dotfilesLayers].reverse();
       .chezmoiroot → home/ · atomic apply
     </text>
   </svg>
-
-  <div class="df-layers__sr" role="list" aria-label="HorneroConfig layers">
-    {
-      dotfilesLayers.map((layer) => (
-        <div role="listitem">
-          <span>
-            {layer.label} — {layer.description}
-          </span>
-        </div>
-      ))
-    }
-  </div>
 </div>
 
 <style>
@@ -147,40 +129,32 @@ const ordered = [...dotfilesLayers].reverse();
     height: auto;
   }
 
-  .df-layers__layer {
+  .df-layers__layer.is-pointer-ready {
     cursor: pointer;
-    outline: none;
   }
 
-  .df-layers__layer[aria-pressed='true'] .df-layers__focus,
-  .df-layers__layer:focus-visible .df-layers__focus,
-  .df-layers__layer:hover .df-layers__focus {
+  .df-layers__layer.is-selected .df-layers__focus,
+  .df-layers__layer.is-pointer-ready:hover .df-layers__focus {
     stroke: #ffb0ca;
   }
 
-  .df-layers__layer[aria-pressed='true'] rect[rx='14'] {
+  .df-layers__layer.is-selected rect[rx='14'] {
     stroke: #ffb0ca;
     stroke-width: 1.8;
   }
 
-  .df-layers__sr {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
   @media (prefers-reduced-motion: no-preference) {
-    .df-layers__layer {
+    .df-layers__layer.is-pointer-ready {
       transition: transform 0.18s ease;
     }
-    .df-layers__layer:hover {
+    .df-layers__layer.is-pointer-ready:hover {
       transform: translateX(2px);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .df-layers__layer.is-selected .df-layers__focus {
+      stroke: Highlight;
     }
   }
 </style>

@@ -113,12 +113,7 @@ const defaultLayer = workstationLayers[1]!;
 
   <div class="vf-scene" data-ws-machine data-profile={defaultProfile.id}>
     <div class="vf-stage ws-map__stage">
-      <svg
-        class="ws-map__svg"
-        viewBox="0 0 760 340"
-        role="img"
-        aria-label="Workstation boot machine and independent responsibility stations"
-      >
+      <svg class="ws-map__svg" viewBox="0 0 760 340" aria-hidden="true" focusable="false">
         <defs>
           <radialGradient id="ws-core" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.35"></stop>
@@ -148,7 +143,11 @@ const defaultLayer = workstationLayers[1]!;
         {paths.map((p) => <path class="vf-flow" data-flow={p.id} data-from={p.from} data-to={p.to} d={p.d} />)}
         {
           nodes.map((n) => (
-            <g class="ws-map__node" data-node={n.id} style={`--vf-node-accent:${n.layer.accent}`}>
+            <g
+              class:list={['ws-map__node', { 'is-selected': n.id === defaultLayer.id }]}
+              data-node={n.id}
+              style={`--vf-node-accent:${n.layer.accent}`}
+            >
               <rect x={n.x - 42} y={n.y - 28} width="84" height="56" rx="4" class="ws-map__module" />
               <text x={n.x} y={n.y - 2} text-anchor="middle" class="ws-map__node-label">
                 {n.layer.title}
@@ -164,29 +163,48 @@ const defaultLayer = workstationLayers[1]!;
         >
       </svg>
 
-      <div class="ws-map__node-controls" role="radiogroup" aria-label="Project responsibility">
-        {
-          workstationLayers.map((layer, i) => (
-            <>
-              <input
-                class="ws-map__radio"
-                type="radio"
-                name="ws-layer"
-                id={`ws-layer-${layer.id}`}
-                value={layer.id}
-                checked={i === 1}
-                data-layer={layer.id}
-              />
-              <label class="vf-node" for={`ws-layer-${layer.id}`} style={`--vf-node-accent:${layer.accent}`}>
-                {layer.title}
-              </label>
-            </>
-          ))
-        }
-      </div>
+      <fieldset class="ws-map__node-controls" data-ws-layer-controls disabled>
+        <legend>Inspect a project responsibility</legend>
+        <div class="ws-map__node-options">
+          {
+            workstationLayers.map((layer, i) => (
+              <>
+                <input
+                  class="ws-map__radio"
+                  type="radio"
+                  name="ws-layer"
+                  id={`ws-layer-${layer.id}`}
+                  value={layer.id}
+                  checked={i === 1}
+                  data-layer={layer.id}
+                  data-layer-control={layer.id}
+                  aria-controls="ws-layer-inspector"
+                />
+                <label class="vf-node" for={`ws-layer-${layer.id}`} style={`--vf-node-accent:${layer.accent}`}>
+                  {layer.title}
+                </label>
+              </>
+            ))
+          }
+        </div>
+      </fieldset>
+      <noscript>
+        <div class="ws-map__layer-fallback" data-ws-layer-fallback>
+          <p>Interactive selection is unavailable. Project responsibilities:</p>
+          <ul>
+            {
+              workstationLayers.map((layer) => (
+                <li>
+                  <strong>{layer.title}</strong> — {layer.description}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </noscript>
     </div>
 
-    <SceneInspector eyebrow="Responsibility" title={defaultLayer.title} id="ws-layer-inspector">
+    <SceneInspector eyebrow="Responsibility" title={defaultLayer.title} id="ws-layer-inspector" live={false}>
       <p data-layer-copy>{defaultLayer.description}</p>
       <Fragment slot="meta">
         <div data-layer-meta>
@@ -206,6 +224,7 @@ const defaultLayer = workstationLayers[1]!;
       </Fragment>
     </SceneInspector>
   </div>
+  <p class="ws-map__layer-status" role="status" aria-atomic="true" data-ws-layer-status></p>
 
   <div class="ws-map__boot" data-boot>
     <div class="ws-map__boot-head">
@@ -344,6 +363,9 @@ const defaultLayer = workstationLayers[1]!;
     const meterValue = root.querySelector<HTMLElement>('[data-vf-meter-value]');
     const boot = root.querySelector<HTMLElement>('[data-boot]');
     const machine = root.querySelector<HTMLElement>('[data-ws-machine]');
+    const layerControls = root.querySelector<HTMLFieldSetElement>('[data-ws-layer-controls]');
+    const layerRadios = Array.from(root.querySelectorAll<HTMLInputElement>('[data-layer-control]'));
+    const layerStatus = root.querySelector<HTMLElement>('[data-ws-layer-status]');
 
     let selectedLayerId = 'workstation';
     let bootIndex = 0;
@@ -399,7 +421,7 @@ const defaultLayer = workstationLayers[1]!;
     const layerLabel = root.querySelector<HTMLElement>('[data-layer-label]');
     const layerRepo = root.querySelector<HTMLElement>('[data-layer-repo]');
 
-    const selectLayer = (id: string) => {
+    const selectLayer = (id: string, announce = false) => {
       const layer = layers.find((l) => l.id === id) || layers[1];
       if (!layer) return;
       selectedLayerId = layer.id;
@@ -411,30 +433,21 @@ const defaultLayer = workstationLayers[1]!;
         layerRepo.hidden = !layer.repo;
       }
       syncNodeVisuals();
+      if (announce && layerStatus) {
+        layerStatus.textContent = `Responsibility selected: ${layer.title} — ${layer.subtitle}.`;
+      }
     };
 
-    root.querySelectorAll<HTMLInputElement>('[data-layer]').forEach((input) => {
+    layerRadios.forEach((input) => {
       input.addEventListener('change', () => {
-        if (input.checked) selectLayer(input.value);
+        if (input.checked) selectLayer(input.value, true);
       });
     });
     root.querySelectorAll<SVGGElement>('[data-node]').forEach((g) => {
       g.style.cursor = 'pointer';
       g.addEventListener('click', () => {
         const id = g.dataset.node || '';
-        const radio = root.querySelector<HTMLInputElement>(`#ws-layer-${id}`);
-        if (radio) {
-          radio.checked = true;
-          selectLayer(id);
-        }
-      });
-      g.setAttribute('tabindex', '0');
-      g.setAttribute('role', 'button');
-      g.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          (g as unknown as HTMLElement).dispatchEvent(new Event('click'));
-        }
+        layerRadios.find((input) => input.value === id)?.click();
       });
     });
 
@@ -472,6 +485,7 @@ const defaultLayer = workstationLayers[1]!;
     });
 
     selectLayer('workstation');
+    if (layerControls) layerControls.disabled = false;
     applyStage(0);
   }
 
@@ -593,14 +607,32 @@ const defaultLayer = workstationLayers[1]!;
   }
 
   .ws-map__node-controls {
+    min-inline-size: 0;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .ws-map__node-controls legend {
+    margin: 0 0 0.5rem;
+    padding: 0;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ws-map__node-options {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin-top: 0.75rem;
   }
 
   .ws-map__radio {
     position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
     opacity: 0;
     pointer-events: none;
   }
@@ -610,6 +642,46 @@ const defaultLayer = workstationLayers[1]!;
     border-color: var(--vf-node-accent, var(--nest-cyan));
     color: var(--nest-paper);
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--vf-node-accent, var(--nest-cyan)) 35%, transparent);
+  }
+
+  .ws-map__node-controls:disabled .vf-node {
+    cursor: default;
+    opacity: 0.72;
+  }
+
+  .ws-map__layer-fallback {
+    margin-top: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .ws-map__layer-fallback p,
+  .ws-map__layer-fallback ul {
+    margin-block: 0.45rem 0;
+  }
+
+  .ws-map__layer-status {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (forced-colors: active) {
+    .ws-map__radio:checked + .vf-node {
+      border-color: Highlight;
+    }
+
+    .ws-map__radio:focus-visible + .vf-node {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
   }
 
   .ws-map__boot,

@@ -10,6 +10,8 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 - [Project configuration](./PROJECT_CONFIGURATION.md) — Node/pnpm, Astro, TypeScript, ESLint, Prettier, content collections, env
 - [GitHub setup & CI](./GITHUB_SETUP_GUIDE.md) — actions, branch protection, Dependabot, Danger, MegaLinter
 - [Testing guide](./TESTING_GUIDE.md) — Vitest, coverage, Codecov, adding tests
+- [Interactive diagram semantics](./INTERACTIVE_DIAGRAM_SEMANTICS.md) — static visual figures, native selectors,
+  inspectors, status summaries, and pointer delegation
 
 ## Quick links in the app
 
