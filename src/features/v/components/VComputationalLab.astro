@@ -9,10 +9,20 @@ import SetupVScene from './scenes/SetupVScene.astro';
 import AwesomeVScene from './scenes/AwesomeVScene.astro';
 import { licenseEntries, SETUP_V_PIN, vProjects } from '../data/index.js';
 
+const stationHeadingIds = {
+  v: 'v-scene-v-title',
+  vsl: 'v-scene-vsl-title',
+  vtl: 'v-scene-vtl-title',
+  rxv: 'v-scene-rxv-title',
+  'setup-v': 'v-scene-setup-title',
+  'awesome-v': 'v-scene-awesome-title',
+} as const;
+
 const stations = vProjects.map((project) => ({
   id: project.id,
-  label: project.shortLabel,
+  label: project.title,
   title: project.title,
+  headingId: stationHeadingIds[project.id],
   body: project.description,
   role: project.role,
   repo: project.repo,
@@ -32,19 +42,10 @@ const stationsJson = JSON.stringify(stations);
     <p class="v-lab__lede">Select a station. Diagrams teach — essays stay in the repos.</p>
   </header>
 
-  <div class="v-lab__stations" role="tablist" aria-label="Lab stations">
+  <div class="v-lab__stations" data-v-station-selector hidden>
     {
-      stations.map((station, index) => (
-        <button
-          type="button"
-          class="vf-node"
-          role="tab"
-          id={`v-station-${station.id}`}
-          aria-selected={index === 0 ? 'true' : 'false'}
-          aria-controls={`v-panel-${station.id}`}
-          tabindex={index === 0 ? 0 : -1}
-          data-v-station={station.id}
-        >
+      stations.map((station) => (
+        <button type="button" class="vf-node" id={`v-station-${station.id}`} data-v-station={station.id}>
           {station.label}
         </button>
       ))
@@ -54,22 +55,32 @@ const stationsJson = JSON.stringify(stations);
   <div class="vf-scene">
     <div class="vf-stage v-lab__stage">
       {
-        stations.map((station, index) => (
-          <div
-            class="v-lab__panel"
-            id={`v-panel-${station.id}`}
-            role="tabpanel"
-            aria-labelledby={`v-station-${station.id}`}
-            data-v-panel={station.id}
-            hidden={index !== 0}
-          >
+        stations.map((station) => (
+          <section class="v-lab__panel" id={station.id} aria-labelledby={station.headingId} data-v-panel={station.id}>
             {station.id === 'v' ? <VLanguageScene /> : null}
             {station.id === 'vsl' ? <VSLScene /> : null}
             {station.id === 'vtl' ? <VTLAutoGradScene /> : null}
             {station.id === 'rxv' ? <RxVStreamScene /> : null}
             {station.id === 'setup-v' ? <SetupVScene /> : null}
             {station.id === 'awesome-v' ? <AwesomeVScene chips={station.chips} /> : null}
-          </div>
+            <div class="v-lab__station-summary" data-v-station-summary>
+              <p>{station.body}</p>
+              <p class="v-lab__station-role">{station.role}</p>
+              <p class="v-lab__station-source">
+                <code>{station.repo}</code> · {station.license}
+              </p>
+              <ul class="v-lab__chips" aria-label={`${station.title} highlights`}>
+                {station.chips.map((chip) => (
+                  <li>
+                    <code>{chip}</code>
+                  </li>
+                ))}
+              </ul>
+              <a data-v-station-repo href={station.href} target="_blank" rel="noreferrer">
+                Open {station.repo} ↗
+              </a>
+            </div>
+          </section>
         ))
       }
     </div>
@@ -160,6 +171,10 @@ const stationsJson = JSON.stringify(stations);
     margin: 1rem 0 0.85rem;
   }
 
+  .v-lab__stations[hidden] {
+    display: none;
+  }
+
   .v-lab__stations .vf-node[aria-selected='true'] {
     border-color: var(--world-accent, #5b9bd5);
     color: var(--nest-paper, #f8fafc);
@@ -172,7 +187,64 @@ const stationsJson = JSON.stringify(stations);
   }
 
   .v-lab__panel {
+    scroll-margin-block-start: calc(var(--header-height, 64px) + 1rem);
+  }
+
+  @media (width < 860px) {
+    .v-lab__panel {
+      scroll-margin-block-start: calc(var(--header-height, 64px) + 3rem);
+    }
+  }
+
+  .v-lab[data-v-enhanced] .v-lab__panel {
     min-height: 20rem;
+  }
+
+  .v-lab[data-v-enhanced] .v-lab__station-summary {
+    display: none;
+  }
+
+  .v-lab:not([data-v-enhanced]) .v-lab__stage {
+    grid-column: 1 / -1;
+  }
+
+  .v-lab:not([data-v-enhanced]) .v-lab__panel + .v-lab__panel {
+    margin-block-start: 1rem;
+    padding-block-start: 1rem;
+    border-block-start: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 28%, transparent);
+  }
+
+  .v-lab:not([data-v-enhanced]) :global(#v-lab-inspector) {
+    display: none;
+  }
+
+  .v-lab__station-summary {
+    display: grid;
+    gap: 0.45rem;
+    margin-block-start: 0.8rem;
+    padding: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 28%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950, #020617) 82%, transparent);
+    color: var(--color-text-muted);
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .v-lab__station-summary p {
+    margin: 0;
+  }
+
+  .v-lab__station-role,
+  .v-lab__station-source {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .v-lab__station-summary > a {
+    justify-self: start;
+    color: var(--world-accent, #5b9bd5);
+    font-weight: 700;
+    text-underline-offset: 3px;
   }
 
   .v-lab__panel :global(.eco__wrap),
@@ -311,6 +383,7 @@ const stationsJson = JSON.stringify(stations);
     id: string;
     label: string;
     title: string;
+    headingId: string;
     body: string;
     role: string;
     repo: string;
@@ -335,7 +408,10 @@ const stationsJson = JSON.stringify(stations);
   }
 
   function bindLab(root: HTMLElement) {
+    if (root.hasAttribute('data-v-enhanced')) return;
+
     const stations = JSON.parse(root.dataset.stations || '[]') as Station[];
+    const selector = root.querySelector<HTMLElement>('[data-v-station-selector]');
     const titleEl = root.querySelector('#v-lab-inspector .vf-inspector__title');
     const bodyEl = root.querySelector<HTMLElement>('[data-v-inspector-body]');
     const roleEl = root.querySelector<HTMLElement>('[data-v-inspector-role]');
@@ -344,10 +420,51 @@ const stationsJson = JSON.stringify(stations);
     const chipsEl = root.querySelector<HTMLElement>('[data-v-inspector-chips]');
     const linkEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-link]');
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-v-station]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-v-panel]')];
+    const stationIds = new Set(stations.map((station) => station.id));
+
+    const completeController =
+      stations.length > 0 &&
+      stations.length === tabs.length &&
+      stations.length === panels.length &&
+      stationIds.size === stations.length &&
+      Boolean(selector && titleEl && bodyEl && roleEl && repoEl && licenseEl && chipsEl && linkEl) &&
+      stations.every(
+        (station) =>
+          tabs.some((tab) => tab.dataset.vStation === station.id) &&
+          panels.some((panel) => panel.id === station.id && panel.dataset.vPanel === station.id),
+      );
+
+    if (
+      !completeController ||
+      !selector ||
+      !titleEl ||
+      !bodyEl ||
+      !roleEl ||
+      !repoEl ||
+      !licenseEl ||
+      !chipsEl ||
+      !linkEl
+    ) {
+      return;
+    }
+
+    const controller = new AbortController();
+
+    const hashStation = () => {
+      if (!location.hash) return '';
+      try {
+        return decodeURIComponent(location.hash.slice(1));
+      } catch {
+        return '';
+      }
+    };
+
+    let selectedStationId = '';
 
     const select = (id: string, focusTab = false) => {
       const station = stations.find((s) => s.id === id);
-      if (!station) return;
+      if (!station) return false;
 
       tabs.forEach((btn) => {
         const on = btn.dataset.vStation === id;
@@ -356,7 +473,7 @@ const stationsJson = JSON.stringify(stations);
         if (on && focusTab) btn.focus();
       });
 
-      root.querySelectorAll<HTMLElement>('[data-v-panel]').forEach((panel) => {
+      panels.forEach((panel) => {
         panel.hidden = panel.dataset.vPanel !== id;
       });
 
@@ -370,24 +487,106 @@ const stationsJson = JSON.stringify(stations);
         linkEl.href = station.href;
         linkEl.textContent = `Open ${station.repo} ↗`;
       }
+      selectedStationId = id;
+      return true;
     };
 
-    tabs.forEach((btn, index) => {
-      btn.addEventListener('click', () => select(btn.dataset.vStation || ''));
-      btn.addEventListener('keydown', (event) => {
-        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') {
-          return;
-        }
-        event.preventDefault();
-        let next = index;
-        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-        if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
-        if (event.key === 'Home') next = 0;
-        if (event.key === 'End') next = tabs.length - 1;
-        const target = tabs[next];
-        if (target) select(target.dataset.vStation || '', true);
+    const pushStation = (id: string) => {
+      if (location.hash === `#${id}`) return;
+      history.pushState({ vStation: id }, '', `${location.pathname}${location.search}#${id}`);
+    };
+
+    const selectFromUser = (id: string, focusTab = false) => {
+      const requested = hashStation();
+      if (selectedStationId === id && (!requested || requested === id)) return;
+      if (!select(id, focusTab)) return;
+      pushStation(id);
+    };
+
+    const syncFromLocation = () => {
+      const requested = hashStation();
+      if (!requested) {
+        select(stations[0]!.id);
+        return;
+      }
+      if (stationIds.has(requested)) select(requested);
+    };
+
+    const restoreStaticDocument = () => {
+      controller.abort();
+      root.removeAttribute('data-v-enhanced');
+      selector.hidden = true;
+      selector.removeAttribute('role');
+      selector.removeAttribute('aria-label');
+      selector.removeAttribute('aria-orientation');
+      tabs.forEach((tab) => {
+        tab.removeAttribute('role');
+        tab.removeAttribute('aria-selected');
+        tab.removeAttribute('aria-controls');
+        tab.removeAttribute('tabindex');
       });
-    });
+      panels.forEach((panel) => {
+        panel.hidden = false;
+        panel.removeAttribute('role');
+        const station = stations.find((item) => item.id === panel.id);
+        if (station) panel.setAttribute('aria-labelledby', station.headingId);
+      });
+    };
+
+    try {
+      selector.setAttribute('role', 'tablist');
+      selector.setAttribute('aria-label', 'Lab stations');
+      selector.setAttribute('aria-orientation', 'horizontal');
+
+      tabs.forEach((btn, index) => {
+        const id = btn.dataset.vStation || '';
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-selected', 'false');
+        btn.setAttribute('aria-controls', id);
+        btn.tabIndex = -1;
+        btn.addEventListener('click', () => selectFromUser(id), { signal: controller.signal });
+        btn.addEventListener(
+          'keydown',
+          (event) => {
+            if (
+              event.key !== 'ArrowRight' &&
+              event.key !== 'ArrowLeft' &&
+              event.key !== 'Home' &&
+              event.key !== 'End'
+            ) {
+              return;
+            }
+            event.preventDefault();
+            let next = index;
+            if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+            if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+            if (event.key === 'Home') next = 0;
+            if (event.key === 'End') next = tabs.length - 1;
+            const target = tabs[next];
+            if (target) selectFromUser(target.dataset.vStation || '', true);
+          },
+          { signal: controller.signal },
+        );
+      });
+
+      panels.forEach((panel) => {
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', `v-station-${panel.id}`);
+      });
+
+      addEventListener('hashchange', syncFromLocation, { signal: controller.signal });
+      addEventListener('popstate', syncFromLocation, { signal: controller.signal });
+
+      const requested = hashStation();
+      const initialStation = stationIds.has(requested) ? requested : stations[0]!.id;
+      if (!select(initialStation)) throw new Error('Unable to select the initial V station.');
+
+      selector.hidden = false;
+      root.setAttribute('data-v-enhanced', 'true');
+    } catch (error) {
+      restoreStaticDocument();
+      console.error('V Lab enhancement failed; restored the complete static document.', error);
+    }
   }
 
   document.querySelectorAll<HTMLElement>('[data-v-lab]').forEach(bindLab);

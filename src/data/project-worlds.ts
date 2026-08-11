@@ -135,10 +135,12 @@ export const projectWorlds: ProjectWorld[] = [
     subdomain: 'v',
     relatedWorlds: ['open-source', 'community'],
     subWorlds: [
+      { id: 'v', title: 'V', path: '/v#v', description: 'V language and toolchain' },
       { id: 'vsl', title: 'VSL', path: '/v#vsl', description: 'V Scientific Library' },
       { id: 'vtl', title: 'VTL', path: '/v#vtl', description: 'Beta tensors, autograd, and neural networks for V' },
       { id: 'rxv', title: 'RxV', path: '/v#rxv', description: 'Reactive extensions for V' },
       { id: 'setup-v', title: 'setup-v', path: '/v#setup-v', description: 'GitHub Action for installing V in CI' },
+      { id: 'awesome-v', title: 'Awesome V', path: '/v#awesome-v', description: 'Community-curated V resources' },
     ],
   },
   {

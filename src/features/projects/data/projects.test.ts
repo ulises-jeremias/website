@@ -57,6 +57,7 @@ describe('projects ledger', () => {
       lastVerified: '2026-08-10',
       links: expect.arrayContaining([
         expect.objectContaining({ href: 'https://github.com/vlang/awesome-v', kind: 'repo' }),
+        expect.objectContaining({ href: '/v#awesome-v', kind: 'world' }),
       ]),
     });
   });

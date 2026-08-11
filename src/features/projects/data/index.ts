@@ -119,7 +119,7 @@ const RAW_PROJECTS = [
     group: 'v',
     links: [
       { label: 'Repo', href: 'https://github.com/vlang/awesome-v', kind: 'repo' },
-      { label: 'World', href: '/v', kind: 'world' },
+      { label: 'World', href: '/v#awesome-v', kind: 'world' },
     ],
     lastVerified: '2026-08-10',
   },
