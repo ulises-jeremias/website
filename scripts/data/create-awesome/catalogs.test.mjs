@@ -1,3 +1,5 @@
+// @vitest-environment node
+
 import { describe, expect, it } from 'vitest';
 import { mkdir, mkdtemp, readdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -16,6 +18,7 @@ import {
   validateLockFile,
   validateRegistrySchema,
   validateRegistrySemantics,
+  verifySemanticReferences,
 } from './catalogs.mjs';
 import { CREATE_AWESOME_SOURCES } from './sources.mjs';
 
@@ -117,7 +120,18 @@ describe('Create Awesome catalog generator', () => {
     const apiOnly = normalized.addons.find((addon) => addon.id === 'api-only');
     expect(allProjects.compatibleTemplateIds).toEqual(['api', 'cli']);
     expect(apiOnly.compatibleTemplateIds).toEqual(['api']);
+    expect(allProjects.declaredIncompatibleAddonIds).toEqual(['api-only']);
+    expect(allProjects.incompatibleAddonIds).toEqual(['api-only']);
+    expect(apiOnly.declaredIncompatibleAddonIds).toEqual([]);
     expect(apiOnly.incompatibleAddonIds).toEqual(['all-projects']);
+  });
+
+  it('verifies every pinned semantic tripwire from the offline source cache', async () => {
+    const { familyInputs } = await loadPinnedInputs();
+    for (const source of CREATE_AWESOME_SOURCES) {
+      const input = familyInputs.get(source.id);
+      expect(() => verifySemanticReferences(source, input.semanticReferences)).not.toThrow();
+    }
   });
 
   it('rejects invalid V compatibility references before normalization', async () => {
@@ -202,6 +216,21 @@ describe('Create Awesome catalog generator', () => {
     ).rejects.toThrow(/blob SHA does not match decoded content/);
   });
 
+  it('bounds every GitHub API request with an abort signal', async () => {
+    let requestSignal;
+    const fetchImplementation = async (_url, options) => {
+      requestSignal = options.signal;
+      return {
+        ok: false,
+        status: 503,
+      };
+    };
+    await expect(
+      fetchSourceFile('Create-Node-App/cna-templates', 'b'.repeat(40), 'templates.json', fetchImplementation),
+    ).rejects.toThrow(/GitHub API 503/);
+    expect(requestSignal).toBeInstanceOf(AbortSignal);
+  });
+
   it.each([
     {
       name: 'no change',
@@ -241,6 +270,24 @@ describe('Create Awesome catalog generator', () => {
       currentCommit: 'b',
       files: [{ role: 'schema', pinnedGitBlobSha: '2', currentGitBlobSha: '9' }],
       expected: { status: 'schema-drift', driftDetected: true },
+    },
+    {
+      name: 'semantic change',
+      pinnedCommit: 'a',
+      currentCommit: 'a',
+      additionalHeadChanged: true,
+      files: [{ role: 'semantic', pinnedGitBlobSha: '3', currentGitBlobSha: '9' }],
+      expected: { status: 'semantic-drift', driftDetected: true },
+    },
+    {
+      name: 'catalog and schema change',
+      pinnedCommit: 'a',
+      currentCommit: 'b',
+      files: [
+        { role: 'registry', pinnedGitBlobSha: '1', currentGitBlobSha: '9' },
+        { role: 'schema', pinnedGitBlobSha: '2', currentGitBlobSha: '8' },
+      ],
+      expected: { status: 'catalog+schema-drift', driftDetected: true },
     },
   ])('classifies $name without treating every HEAD move as catalog drift', ({ expected, ...input }) => {
     expect(classifyDrift(input)).toEqual(expect.objectContaining(expected));
@@ -302,5 +349,37 @@ describe('Create Awesome catalog generator', () => {
     expect(await readFile(snapshot, 'utf8')).toBe('previous snapshot\n');
     expect(await readFile(join(pinnedDirectory, 'marker.txt'), 'utf8')).toBe('previous pinned data\n');
     expect((await readdir(temporaryRoot)).sort()).toEqual(['compatibility.json', 'pinned']);
+  });
+
+  it('preserves the original commit failure when a restore operation also fails', async () => {
+    const temporaryRoot = await mkdtemp(join(tmpdir(), 'create-awesome-rollback-'));
+    const pinnedDirectory = join(temporaryRoot, 'pinned');
+    const snapshot = join(temporaryRoot, 'compatibility.json');
+    await mkdir(pinnedDirectory, { recursive: true });
+    await writeFile(join(pinnedDirectory, 'marker.txt'), 'previous pinned data\n', 'utf8');
+    await writeFile(snapshot, 'previous snapshot\n', 'utf8');
+    const paths = {
+      root: temporaryRoot,
+      pinnedDirectory,
+      sourceLock: join(pinnedDirectory, 'source-lock.json'),
+      snapshot,
+      snapshotSchema: DEFAULT_PATHS.snapshotSchema,
+    };
+
+    const originalFailure = Object.freeze(new Error('original snapshot install failure'));
+    const operation = commitRefresh(paths, { generation: 'new' }, new Map(), 'new snapshot\n', {
+      renameImplementation: async (from, to) => {
+        if (from.startsWith(`${snapshot}.refresh-`) && to === snapshot) {
+          throw originalFailure;
+        }
+        if (from.startsWith(`${snapshot}.backup-`) && to === snapshot) {
+          throw new Error('secondary snapshot restore failure');
+        }
+        await rename(from, to);
+      },
+    });
+
+    await expect(operation).rejects.toBe(originalFailure);
+    expect(await readFile(join(pinnedDirectory, 'marker.txt'), 'utf8')).toBe('previous pinned data\n');
   });
 });

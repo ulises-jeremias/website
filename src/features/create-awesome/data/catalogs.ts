@@ -55,7 +55,7 @@ const presentationCategory = (
   return 'tooling';
 };
 
-export const familyCatalogs = Object.fromEntries(
+const projectedFamilyCatalogs: Partial<Record<VariantId, FamilyCatalog>> = Object.fromEntries(
   createAwesomeCompatibilitySnapshot.families.map((family) => {
     const id = family.id;
     const templates = [...family.templates]
@@ -88,4 +88,18 @@ export const familyCatalogs = Object.fromEntries(
       },
     ];
   }),
-) as Record<VariantId, FamilyCatalog>;
+);
+
+const requireFamilyCatalog = (id: VariantId): FamilyCatalog => {
+  const catalog = projectedFamilyCatalogs[id];
+  if (!catalog) {
+    throw new Error(`Create Awesome snapshot is missing the "${id}" family. Run: pnpm data:create-awesome:refresh`);
+  }
+  return catalog;
+};
+
+export const familyCatalogs: Record<VariantId, FamilyCatalog> = {
+  node: requireFamilyCatalog('node'),
+  python: requireFamilyCatalog('python'),
+  v: requireFamilyCatalog('v'),
+};

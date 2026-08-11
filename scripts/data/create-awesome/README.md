@@ -29,6 +29,10 @@ previous committed snapshot remains untouched.
 `src/features/create-awesome/data/generated/compatibility.json` are generated.
 Do not edit them manually.
 
+`src/features/create-awesome/data/generated/compatibility.schema.json` is the
+hand-maintained snapshot contract. Both `refresh` and `check` require it and
+fail if it is absent. Change it deliberately when the normalized shape changes.
+
 Scheduled drift is a maintenance signal, not a normal pull-request gate. A
 repository HEAD change with unchanged catalog/schema/semantic blobs is reported
 as `head-only` and does not fail the drift run.

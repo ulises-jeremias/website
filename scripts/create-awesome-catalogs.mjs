@@ -42,6 +42,10 @@ try {
     process.exitCode = 2;
   }
 } catch (error) {
-  console.error(error instanceof Error ? error.message : error);
+  if (process.env.RUNNER_DEBUG || process.env.DEBUG) {
+    console.error(error);
+  } else {
+    console.error(error instanceof Error ? error.message : error);
+  }
   process.exitCode = 1;
 }

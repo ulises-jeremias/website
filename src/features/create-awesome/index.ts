@@ -15,3 +15,13 @@ export {
   validateComposition,
   variants,
 } from './data/index.js';
+export type {
+  CompatibilityAdapter,
+  CompatibilityTemplate,
+  CompatibilityAddon,
+  CompatibilityFamily,
+  CreateAwesomeCompatibilitySnapshot,
+  CompositionValidationIssueCode,
+  CompositionValidationIssue,
+  CompositionValidationResult,
+} from './data/index.js';

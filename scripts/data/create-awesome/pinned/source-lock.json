@@ -38,7 +38,8 @@
           "path": "packages/create-awesome-node-app/src/templates.ts",
           "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/8ac56fc41d44222c0513f9003670aa7c1f29692a/packages/create-awesome-node-app/src/templates.ts",
           "gitBlobSha": "f13173ff6df21020fa4332fba02e1bb6d09a38a7",
-          "sha256": "7f4403b0d3455c0c1cc12d753805fc7f81477a5830fa29e515fdee55d5acb419"
+          "sha256": "7f4403b0d3455c0c1cc12d753805fc7f81477a5830fa29e515fdee55d5acb419",
+          "cachePath": "node/semantic/cli-compatibility-reference.source"
         }
       ]
     },
@@ -76,7 +77,8 @@
           "path": "packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
           "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/6cd61c6599502c54ec2ca923a8f1478fce5b5e30/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
           "gitBlobSha": "30abd65b9d6dd2ef19c2e80392d0446a7cfa1f3d",
-          "sha256": "641fa27b2127fd306a5416c26c590af61dd526862d89fbef3b1b3f04cdad0c4c"
+          "sha256": "641fa27b2127fd306a5416c26c590af61dd526862d89fbef3b1b3f04cdad0c4c",
+          "cachePath": "python/semantic/cli-compatibility-reference.source"
         }
       ]
     },
@@ -114,7 +116,8 @@
           "path": "modules/create_vlang_app_core/catalog.v",
           "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/c1983071857b4b63cb69243c21265540f1b170b4/modules/create_vlang_app_core/catalog.v",
           "gitBlobSha": "7c4e1c590c408685e402394658370f09da13d776",
-          "sha256": "f1264400f62a0d5ecfabebc332bb71a4c155c312f93186a03a5ea7a891bc72a5"
+          "sha256": "f1264400f62a0d5ecfabebc332bb71a4c155c312f93186a03a5ea7a891bc72a5",
+          "cachePath": "v/semantic/cli-catalog-reference.source"
         },
         {
           "role": "catalog-compatibility-reference",
@@ -124,7 +127,8 @@
           "path": "scripts/ci/registry.py",
           "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/scripts/ci/registry.py",
           "gitBlobSha": "bb19f1793cae3cac883b92f5251b5d87173822a9",
-          "sha256": "f713740afa6961b8aa102d9889d5aa05659d00af1f0656cc162f631eb72dece8"
+          "sha256": "f713740afa6961b8aa102d9889d5aa05659d00af1f0656cc162f631eb72dece8",
+          "cachePath": "v/semantic/catalog-compatibility-reference.source"
         }
       ]
     }

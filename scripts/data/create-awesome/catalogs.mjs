@@ -23,6 +23,7 @@ const FULL_SHA = /^[0-9a-f]{40}$/;
 const SHA256 = /^[0-9a-f]{64}$/;
 const GITHUB_API_ORIGIN = 'https://api.github.com';
 const GITHUB_RAW_ORIGIN = 'https://raw.githubusercontent.com';
+const GITHUB_REQUEST_TIMEOUT_MS = 30_000;
 const SCHEMA_DRAFT_URIS = Object.freeze({
   'draft-04': 'http://json-schema.org/draft-04/schema#',
   'draft-07': 'http://json-schema.org/draft-07/schema#',
@@ -451,10 +452,17 @@ const githubHeaders = () => {
 const githubApi = async (path, fetchImplementation) => {
   const url = new URL(path, GITHUB_API_ORIGIN);
   assert(url.origin === GITHUB_API_ORIGIN, `Rejected non-GitHub API origin: ${url.origin}`);
-  const response = await fetchImplementation(url, {
-    headers: githubHeaders(),
-    redirect: 'error',
-  });
+  let response;
+  try {
+    response = await fetchImplementation(url, {
+      headers: githubHeaders(),
+      redirect: 'error',
+      signal: AbortSignal.timeout(GITHUB_REQUEST_TIMEOUT_MS),
+    });
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error);
+    throw new Error(`GitHub API request failed for ${url.pathname}: ${detail}`, { cause: error });
+  }
   if (!response.ok) {
     throw new Error(`GitHub API ${response.status} for ${url.pathname}`);
   }
@@ -543,6 +551,8 @@ export const fetchCurrentSources = async ({ fetchImplementation = globalThis.fet
         reference.path,
         fetchImplementation,
       );
+      file.cachePath = cachePathFor(source.id, `semantic/${reference.role}.source`);
+      cacheFiles.set(file.cachePath, file.content);
       const lockedReference = {
         role: reference.role,
         repository: reference.repository,
@@ -574,9 +584,7 @@ export const fetchCurrentSources = async ({ fetchImplementation = globalThis.fet
         cachePath: schema.cachePath,
       },
       cliReference: cliCommit,
-      semanticReferences: semanticReferences.map(
-        ({ content: _content, cachePath: _cachePath, ...reference }) => reference,
-      ),
+      semanticReferences: semanticReferences.map(({ content: _content, ...reference }) => reference),
     };
 
     const registryJson = parseJson(registry.content, `${source.id}/${source.registryPath}`);
@@ -591,6 +599,7 @@ export const fetchCurrentSources = async ({ fetchImplementation = globalThis.fet
       lockFamily,
       registry: registryJson,
       schema: schemaJson,
+      semanticReferences: referencesWithContent,
     });
   }
 
@@ -648,16 +657,42 @@ export const commitRefresh = async (paths, lock, cacheFiles, snapshotText, { ren
     await renameImplementation(stagedSnapshot, paths.snapshot);
     snapshotInstalled = true;
   } catch (error) {
-    if (snapshotInstalled) await rm(paths.snapshot, { force: true });
-    if (pinnedInstalled) await rm(paths.pinnedDirectory, { recursive: true, force: true });
-    if (snapshotBackedUp && (await exists(backupSnapshot))) {
-      await renameImplementation(backupSnapshot, paths.snapshot);
+    const rollbackErrors = [];
+    const attemptRollback = async (operation) => {
+      try {
+        await operation();
+      } catch (rollbackError) {
+        rollbackErrors.push(rollbackError);
+      }
+    };
+
+    await attemptRollback(async () => {
+      if (snapshotInstalled) await rm(paths.snapshot, { force: true });
+    });
+    await attemptRollback(async () => {
+      if (pinnedInstalled) await rm(paths.pinnedDirectory, { recursive: true, force: true });
+    });
+    await attemptRollback(async () => {
+      if (snapshotBackedUp && (await exists(backupSnapshot))) {
+        await renameImplementation(backupSnapshot, paths.snapshot);
+      }
+    });
+    await attemptRollback(async () => {
+      if (pinnedBackedUp && (await exists(backupPinned))) {
+        await renameImplementation(backupPinned, paths.pinnedDirectory);
+      }
+    });
+    await attemptRollback(() => rm(stagedPinned, { recursive: true, force: true }));
+    await attemptRollback(() => rm(stagedSnapshot, { force: true }));
+
+    if (rollbackErrors.length > 0 && error instanceof Error && error.cause === undefined) {
+      try {
+        error.cause = new AggregateError(rollbackErrors, 'Create Awesome refresh rollback failed');
+      } catch {
+        // Some callers throw frozen errors. Rollback diagnostics are best-effort;
+        // the original commit failure must always remain the rejection reason.
+      }
     }
-    if (pinnedBackedUp && (await exists(backupPinned))) {
-      await renameImplementation(backupPinned, paths.pinnedDirectory);
-    }
-    await rm(stagedPinned, { recursive: true, force: true });
-    await rm(stagedSnapshot, { force: true });
     throw error;
   }
 
@@ -740,7 +775,7 @@ export const validateLockFile = (lock) => {
         `[${source.id}] mutable or mismatched provenance URL for ${file.path}`,
       );
     }
-    for (const file of [family.registry, family.schema]) {
+    for (const file of [family.registry, family.schema, ...family.semanticReferences]) {
       assert(typeof file.cachePath === 'string' && file.cachePath.length > 0, `[${source.id}] missing cache path`);
       assert(
         file.cachePath.startsWith(`${source.id}/`) && !file.cachePath.includes('..') && !file.cachePath.includes('\\'),
@@ -768,10 +803,16 @@ export const loadPinnedInputs = async ({ paths = DEFAULT_PATHS } = {}) => {
     };
     const registryContent = await readPinnedFile(lockFamily.registry);
     const schemaContent = await readPinnedFile(lockFamily.schema);
+    const semanticReferences = [];
+    for (const reference of lockFamily.semanticReferences) {
+      semanticReferences.push({ ...reference, content: await readPinnedFile(reference) });
+    }
+    verifySemanticReferences(source, semanticReferences);
     familyInputs.set(source.id, {
       lockFamily,
       registry: parseJson(registryContent, `${source.id}/${source.registryPath}`),
       schema: parseJson(schemaContent, `${source.id}/${source.schemaPath}`),
+      semanticReferences,
     });
   }
   return { lock, familyInputs };
