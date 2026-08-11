@@ -19,5 +19,9 @@ trim_trailing_whitespace = false
 
 # These files preserve exact, hash-verified upstream source bytes.
 [scripts/data/create-awesome/pinned/**/semantic/*.source]
+charset = unset
+end_of_line = unset
 indent_style = unset
 indent_size = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset

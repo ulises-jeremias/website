@@ -15,7 +15,7 @@ CSS_STYLELINT_CONFIG_FILE: .stylelintrc.json
 SPELL_CSPELL_CONFIG_FILE: cspell.json
 # JSON Schema identifiers and URI-shaped regex patterns are not navigable links.
 SPELL_LYCHEE_FILTER_REGEX_EXCLUDE: >-
-  (scripts/data/create-awesome/pinned/v/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json)
+  (scripts/data/create-awesome/pinned/[^/]+/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json)
 REPOSITORY_GRYPE_DISABLE_ERRORS: true
 REPOSITORY_TRIVY_DISABLE_ERRORS: true
 
