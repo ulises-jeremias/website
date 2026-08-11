@@ -57,15 +57,16 @@ const diagrams = [
   },
 ] as const;
 
-async function expectSurfaceToFit(page: Page, selector: string) {
-  const bounds = await page.locator(selector).evaluate((element) => {
+async function expectSurfaceToFit(page: Page, selector: string, fallbackSelector: string) {
+  const bounds = await page.locator(selector).evaluate((element, fallback) => {
     const viewport = document.documentElement.clientWidth;
-    const required = [element, ...element.querySelectorAll('fieldset, legend, label, aside, [data-layer-fallback]')];
+    const required = [element, ...element.querySelectorAll(`fieldset, legend, label, aside, ${fallback}`)];
     const offenders = required
       .map((item) => {
         const rect = item.getBoundingClientRect();
         const style = getComputedStyle(item);
         return {
+          element: item.tagName.toLowerCase(),
           left: rect.left,
           right: rect.right,
           width: rect.width,
@@ -74,7 +75,7 @@ async function expectSurfaceToFit(page: Page, selector: string) {
       })
       .filter((item) => item.visible && (item.left < -1 || item.right > viewport + 1 || item.width > viewport + 1));
     return { viewport, offenders };
-  });
+  }, fallbackSelector);
 
   expect(bounds.offenders, `changed diagram surface must fit ${bounds.viewport}px`).toEqual([]);
 }
@@ -116,6 +117,14 @@ test.describe('PR6 native interactive-diagram grammar', () => {
         await expect(svg).not.toHaveAttribute('role', /.+/);
         await expect(svg.locator('[role="button"], [role="radio"], [tabindex]')).toHaveCount(0);
         await expect(svg.locator('[aria-pressed]')).toHaveCount(0);
+        const focusableVisualDescendants = await svg
+          .locator('*')
+          .evaluateAll((elements) =>
+            elements
+              .filter((element) => (element as SVGElement).tabIndex >= 0)
+              .map((element) => element.tagName.toLowerCase()),
+          );
+        expect(focusableVisualDescendants).toEqual([]);
         await expect(controls).toBeEnabled();
         await expect(controls.locator('legend')).toBeVisible();
         await expect(controls.locator('legend')).toHaveText(diagram.legend);
@@ -151,11 +160,11 @@ test.describe('PR6 native interactive-diagram grammar', () => {
         expect(sourceOrder).toBe(true);
 
         const aria = await root.ariaSnapshot();
-        expect(aria).not.toContain('img "');
-        expect(aria).not.toContain('button "');
+        expect(aria).not.toMatch(/^\s*-\s*img\b/m);
+        expect(aria).not.toMatch(/^\s*-\s*button\b/m);
         expect(aria).toContain(`group "${diagram.legend}"`);
-        expect(aria).toContain('radio');
-        await expectSurfaceToFit(page, diagram.root);
+        expect(aria.match(/^\s*-\s*radio\b/gm) ?? []).toHaveLength(diagram.radioCount);
+        await expectSurfaceToFit(page, diagram.root, diagram.fallback);
       }
     });
   }
@@ -238,7 +247,7 @@ test.describe('PR6 no-JavaScript diagram fallback', () => {
         }
         await expect(root.locator(diagram.fallback)).toBeVisible();
         await expect(root.locator(diagram.fallbackItems)).toHaveCount(diagram.radioCount);
-        await expectSurfaceToFit(page, diagram.root);
+        await expectSurfaceToFit(page, diagram.root, diagram.fallback);
       }
     });
   }
