@@ -71,7 +71,7 @@ const composerBootstrap = {
     <div class="ca-composer__fallback-grid">
       {
         staticFamilies.map((family) => (
-          <article data-ca-static-family={family.id}>
+          <article id={family.id} data-ca-static-family={family.id}>
             <p class="ca-composer__fallback-family">{family.label}</p>
             <h3>{family.title}</h3>
             <p>{family.description}</p>
@@ -102,7 +102,11 @@ const composerBootstrap = {
   >
     {/* Runtime radios stay in the form for command state; embedded worlds expose stations instead. */}
     {/* Proxied radios stay in the form for command state but leave the a11y tree when embedded. */}
-    <fieldset class:list={[{ 'ca-composer__runtime--proxy': embedded }]} inert={embedded || undefined}>
+    <fieldset
+      class:list={[{ 'ca-composer__runtime--proxy': embedded }]}
+      inert={embedded || undefined}
+      aria-hidden={embedded ? 'true' : undefined}
+    >
       {embedded ? null : <legend>Runtime</legend>}
       {
         variants.map((variant, index) => (
@@ -386,6 +390,13 @@ const composerBootstrap = {
     padding: 0.8rem;
     border: 1px solid var(--color-border);
     background: color-mix(in srgb, var(--nest-midnight-950) 84%, transparent);
+    scroll-margin-block-start: calc(var(--header-height, 64px) + 1rem);
+  }
+
+  @media (width < 860px) {
+    .ca-composer__fallback article {
+      scroll-margin-block-start: calc(var(--header-height, 64px) + 3rem);
+    }
   }
 
   .ca-composer__fallback article > p {

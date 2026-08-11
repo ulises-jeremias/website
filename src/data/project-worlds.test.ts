@@ -12,6 +12,7 @@ import {
   worldsByPriority,
 } from '@/data/project-worlds';
 import { routes } from '@/data/routes';
+import { variants as createAwesomeVariants } from '@/features/create-awesome/data/index';
 import { vProjects } from '@/features/v/data/index';
 
 describe('project-world taxonomy', () => {
@@ -92,6 +93,14 @@ describe('project-world taxonomy', () => {
       expect(sub.path.startsWith('/v')).toBe(true);
       expect(sub.title.length).toBeGreaterThan(0);
     }
+  });
+
+  it('keeps Create Awesome family fragments aligned with the family registry', () => {
+    const createAwesome = getWorldById('create-awesome')!;
+    expect(createAwesome.subWorlds).toBeDefined();
+    expect(createAwesome.subWorlds!.map((subWorld) => subWorld.path)).toEqual(
+      createAwesomeVariants.map((variant) => `/create-awesome#${variant.id}`),
+    );
   });
 
   it('validateTaxonomy returns no errors for current taxonomy', () => {
