@@ -5,12 +5,11 @@ import { vslBackends } from '../data/index.js';
 <section class="vsl" aria-labelledby="vsl-title">
   <header class="vsl__header">
     <p class="vsl__eyebrow">02 · VSL</p>
-    <h2 id="vsl-title" class="vsl__title">Pure-V by default, C when you ask</h2>
+    <h2 id="vsl-title" class="vsl__title">Portable by default, optional backends when needed</h2>
     <p class="vsl__desc">
-      VSL ships pure-V BLAS/LAPACK with no system deps. Opt into C BLAS/LAPACK for throughput, or experimental GPU
-      backends (OpenCL/VCL, CUDA, Vulkan). Deterministic fractals (Sierpinski, Mandelbrot, Julia) prove CPU paths — with <code
-        >prefers-reduced-motion</code
-      > support.
+      VSL provides a portable pure-V scientific path and optional C BLAS/LAPACK backends. Its current pure-V QR path has
+      a documented correctness caveat. VCL, CUDA, and Vulkan are module- and operation-specific experimental paths. The
+      project also includes fractal examples with <code>prefers-reduced-motion</code> support.
     </p>
   </header>
 
@@ -27,7 +26,7 @@ import { vslBackends } from '../data/index.js';
         <title id="vslSvgTitle">VSL — fractal backends and pure-V pipeline</title>
         <desc id="vslSvgDesc">
           Left: Sierpinski triangle levels showing deterministic subdivision. Right: two backend pills (Pure V default,
-          CBLAS/LAPACKe optional) feeding into LA pipeline via arrow. Bottom: visualization row with mandelbrot/julia
+          CBLAS/LAPACKE optional) feeding into LA pipeline via arrow. Bottom: visualization row with Mandelbrot/Julia
           mini previews.
         </desc>
         <!-- backdrop -->
@@ -102,7 +101,7 @@ import { vslBackends } from '../data/index.js';
         <text x="300" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">LA pipeline</text>
 
         <!-- Pure V pill -->
-        <g tabindex="0" role="listitem" aria-label="Pure V — default — zero deps — competitive speed">
+        <g tabindex="0" role="listitem" aria-label="Pure V — portable default — QR caveat documented upstream">
           <title>Pure V — zero deps</title>
           <rect x="300" y="76" width="232" height="44" rx="11" fill="#5b9bd5" stroke="rgba(255,255,255,0.18)"></rect>
           <text x="318" y="96" font-size="11.5" font-weight="800" fill="#0f2a44">Pure V</text>
@@ -210,13 +209,13 @@ import { vslBackends } from '../data/index.js';
       <article class="vsl__card">
         <h3 class="vsl__card-title">Linear algebra as compiled V</h3>
         <p class="vsl__card-text">
-          Matrices, vectors, eigen, SVD, QR, Cholesky — same APIs whether pure-V or C-backed. Tests are the spec;
-          benchmarks prove parity.
+          VSL exposes matrices, vectors, eigenvalue decomposition, SVD, QR, and Cholesky. Optional C backends provide
+          optimized CPU kernels, and current upstream documentation recommends them when QR correctness is required.
         </p>
         <ul class="vsl__list">
-          <li>Level 1-3 BLAS, LAPACK solvers, eig, SVD</li>
-          <li>C BLAS/LAPACK opt-in; OpenCL/CUDA/Vulkan experimental; MPI optional</li>
-          <li><code>v run benchmarks/compare_backends.v</code> for pure-V vs C</li>
+          <li>Portable pure-V routines with a documented QR limitation</li>
+          <li>C BLAS/LAPACK opt-in; VCL/CUDA/Vulkan operation-specific and experimental</li>
+          <li>MPI is an optional OpenMPI wrapper; benchmarks characterize rather than guarantee parity</li>
         </ul>
       </article>
       <article class="vsl__card">

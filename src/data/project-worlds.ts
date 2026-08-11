@@ -125,7 +125,7 @@ export const projectWorlds: ProjectWorld[] = [
     id: 'v',
     slug: 'v',
     title: 'V Ecosystem',
-    description: 'VSL, VTL, RxV, and setup-v across scientific and systems tooling',
+    description: 'VSL, VTL, RxV, setup-v, and Awesome V across scientific, reactive, CI, and discovery tooling',
     path: '/v',
     theme: 'v',
     accent: 'blue',
@@ -136,9 +136,9 @@ export const projectWorlds: ProjectWorld[] = [
     relatedWorlds: ['open-source', 'community'],
     subWorlds: [
       { id: 'vsl', title: 'VSL', path: '/v#vsl', description: 'V Scientific Library' },
-      { id: 'vtl', title: 'VTL', path: '/v#vtl', description: 'Tensor and autograd experiments for V' },
+      { id: 'vtl', title: 'VTL', path: '/v#vtl', description: 'Beta tensors, autograd, and neural networks for V' },
       { id: 'rxv', title: 'RxV', path: '/v#rxv', description: 'Reactive extensions for V' },
-      { id: 'setup-v', title: 'setup-v', path: '/v#setup-v', description: 'GitHub Action & installer for V' },
+      { id: 'setup-v', title: 'setup-v', path: '/v#setup-v', description: 'GitHub Action for installing V in CI' },
     ],
   },
   {

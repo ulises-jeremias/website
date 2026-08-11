@@ -8,8 +8,8 @@ import { rxvOperatorGroups } from '../data/index.js';
     <h2 id="rxv-title" class="rxv__title">Streams as channels, operators as threads</h2>
     <p class="rxv__desc">
       Create an <code>Observable[T]</code> and chain: <code>source → filter → map → merge/reduce → subscriber</code>.
-      Each step spawns one thread, communicates via <code>chan Item[T]</code>, and forwards error + completion.
-      Deterministic, generic, zero-deps.
+      Each step spawns one thread and communicates via <code>chan Item[T]</code>. Values and errors travel as items;
+      downstream channels close on completion. The implementation is generic and has no package dependencies.
     </p>
   </header>
 
@@ -25,8 +25,8 @@ import { rxvOperatorGroups } from '../data/index.js';
         <title id="rxvSvgTitle">RxV — source through operators to subscriber</title>
         <desc id="rxvSvgDesc">
           Horizontal pipeline: source range emits 1..10, filter even, map double, merge with timer channel, reduce sum,
-          subscriber for_each prints sum. Arrows show item flow; error and completion follow same channel. Bottom row
-          shows thread-per-operator model via chan Item[T].
+          subscriber for_each prints sum. Arrows show item flow; values and errors use Item[T], while completion is
+          channel closure. Bottom row shows thread-per-operator model via chan Item[T].
         </desc>
         <rect x="0" y="0" width="720" height="320" rx="14" fill="#0f2a44"></rect>
         <rect x="0" y="0" width="720" height="18" rx="6" fill="rgba(91,155,213,0.16)" aria-hidden="true"></rect>
@@ -136,11 +136,7 @@ import { rxvOperatorGroups } from '../data/index.js';
         </g>
 
         <!-- subscriber -->
-        <g
-          tabindex="0"
-          role="listitem"
-          aria-label="Subscriber — for_each prints Sum 60 — receives error and completion callbacks"
-        >
+        <g tabindex="0" role="listitem" aria-label="Subscriber — for_each prints Sum 60 and waits for completion">
           <title>Subscriber — for_each — done channel</title>
           <rect x="560" y="42" width="144" height="78" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
           <rect x="560" y="42" width="144" height="4" rx="2" fill="#5b9bd5"></rect>
@@ -184,8 +180,8 @@ import { rxvOperatorGroups } from '../data/index.js';
           style="text-transform: uppercase;">thread per operator · chan Item[T]</text
         >
         <text x="30" y="178" font-size="10" fill="#b8d0e6"
-          >Each operator spawns 1 lightweight thread → reads chan[T], writes chan[T] → error/completion are Item tags →
-          for_each blocks on done.</text
+          >Each operator spawns a thread → reads chan Item[T], writes chan Item[T] → completion closes the channel →
+          for_each waits for done.</text
         >
         <!-- thread dots -->
         <g aria-hidden="true">
@@ -246,13 +242,13 @@ import { rxvOperatorGroups } from '../data/index.js';
       <article class="rxv__card">
         <h3 class="rxv__card-title">Why channels?</h3>
         <p class="rxv__card-text">
-          V channels are typed, buffered, and cheap. RxV leans on them — no global scheduler, no hidden queue. If you
-          know <code>go</code> or <code>spawn</code>, you know RxV.
+          RxV uses typed V channels, with buffering available through <code>with_buffer_size</code> and an unbuffered default.
+          Each operator owns its channel stage and spawned thread.
         </p>
         <ul class="rxv__list">
           <li><code>ObservableImpl[T]</code> generic over any T</li>
-          <li>Errors as <code>Item[T]&#123; error: IError &#125;</code></li>
-          <li><code>Item[T]&#123; is_closed: true &#125;</code> for completion</li>
+          <li>Errors as <code>Item[T]&#123; err: IError &#125;</code></li>
+          <li>Channel closure represents completion</li>
         </ul>
       </article>
       <article class="rxv__card">

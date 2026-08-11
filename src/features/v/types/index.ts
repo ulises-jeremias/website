@@ -7,7 +7,7 @@ export interface VProject {
   repo: string;
   icon: string;
   role: string;
-  highlights: string[];
+  highlights: readonly string[];
   license: string;
 }
 
@@ -37,7 +37,7 @@ export interface VBackend {
   id: 'pure-v' | 'cblas' | 'opencl' | 'cuda' | 'vulkan' | 'mpi';
   label: string;
   flag: string;
-  maturity: 'default' | 'stable-opt-in' | 'experimental' | 'optional';
+  maturity: 'default' | 'experimental' | 'optional';
   bestFor: string;
 }
 
@@ -50,5 +50,5 @@ export interface VtlMaturity {
 
 export interface VOperatorGroup {
   category: string;
-  operators: string[];
+  operators: readonly string[];
 }

@@ -50,6 +50,17 @@ describe('projects ledger', () => {
     expect(mascot?.licenseNote).toMatch(/CC BY-NC/i);
   });
 
+  it('uses the canonical Awesome V repository and contributor role', () => {
+    const awesomeV = projects.find((project) => project.slug === 'awesome-v');
+    expect(awesomeV).toMatchObject({
+      role: 'contributor',
+      lastVerified: '2026-08-10',
+      links: expect.arrayContaining([
+        expect.objectContaining({ href: 'https://github.com/vlang/awesome-v', kind: 'repo' }),
+      ]),
+    });
+  });
+
   it('requires verifiedAt whenever metrics are present', () => {
     for (const project of projects) {
       if (project.metrics) {
