@@ -42,6 +42,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^3.2.4
         version: 3.2.7(vitest@3.2.7(@types/node@26.1.2)(jiti@2.7.0)(jsdom@30.0.1)(lightningcss@1.33.0)(yaml@2.9.0))
+      axe-core:
+        specifier: ^4.13.0
+        version: 4.13.0
       cspell:
         specifier: ^10.0.1
         version: 10.0.1

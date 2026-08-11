@@ -37,6 +37,7 @@ const layersJson = JSON.stringify(
 );
 
 const defaultLayer = dotfilesLayers[0]!;
+const orderedLayers = [...dotfilesLayers].reverse();
 const heroShot = screenshotItems[0]!;
 ---
 
@@ -107,8 +108,46 @@ const heroShot = screenshotItems[0]!;
     <div class="vf-scene">
       <div class="vf-stage df-world__layers-stage">
         <LayersDiagram compact />
+        <fieldset class="df-world__layer-controls" data-df-layer-controls disabled>
+          <legend>Inspect a HorneroConfig layer</legend>
+          <div class="df-world__layer-options">
+            {
+              orderedLayers.map((layer) => (
+                <>
+                  <input
+                    class="df-world__layer-radio"
+                    type="radio"
+                    name="df-layer"
+                    id={`df-layer-${layer.id}`}
+                    value={layer.id}
+                    checked={layer.id === defaultLayer.id}
+                    data-layer-control={layer.id}
+                    aria-controls="df-layer-inspector"
+                  />
+                  <label class="vf-node" for={`df-layer-${layer.id}`}>
+                    {layer.label}
+                  </label>
+                </>
+              ))
+            }
+          </div>
+        </fieldset>
+        <noscript>
+          <div class="df-world__layer-fallback" data-df-layer-fallback>
+            <p>Interactive selection is unavailable. Complete stack, from daily surface to foundation:</p>
+            <ul>
+              {
+                orderedLayers.map((layer) => (
+                  <li>
+                    <strong>{layer.label}</strong> — {layer.description}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </noscript>
       </div>
-      <SceneInspector eyebrow="Layer" title={defaultLayer.label} id="df-layer-inspector">
+      <SceneInspector eyebrow="Layer" title={defaultLayer.label} id="df-layer-inspector" live={false}>
         <p data-layer-copy>{defaultLayer.description}</p>
         <Fragment slot="meta">
           <div data-layer-meta>
@@ -117,6 +156,7 @@ const heroShot = screenshotItems[0]!;
         </Fragment>
       </SceneInspector>
     </div>
+    <p class="df-world__layer-status" role="status" aria-atomic="true" data-df-layer-status></p>
   </div>
 
   <SmartColorsAnimation />
@@ -166,8 +206,11 @@ const heroShot = screenshotItems[0]!;
     const title = root.querySelector('#df-layer-inspector .vf-inspector__title');
     const copy = root.querySelector<HTMLElement>('[data-layer-copy]');
     const meta = root.querySelector<HTMLElement>('[data-layer-meta]');
+    const controls = root.querySelector<HTMLFieldSetElement>('[data-df-layer-controls]');
+    const radios = Array.from(root.querySelectorAll<HTMLInputElement>('[data-layer-control]'));
+    const status = root.querySelector<HTMLElement>('[data-df-layer-status]');
 
-    const selectLayer = (id: string) => {
+    const selectLayer = (id: string, announce = false) => {
       const layer = layers.find((l) => l.id === id) || layers[0];
       if (!layer) return;
       if (title) title.textContent = layer.label;
@@ -180,19 +223,23 @@ const heroShot = screenshotItems[0]!;
           meta.appendChild(code);
         });
       }
-      root.querySelectorAll<SVGGElement>('[data-layer]').forEach((g) => {
-        g.setAttribute('aria-pressed', g.dataset.layer === id ? 'true' : 'false');
+      root.querySelectorAll<SVGGElement>('[data-layer-visual]').forEach((g) => {
+        g.classList.toggle('is-selected', g.dataset.layerVisual === id);
       });
+      if (announce && status) status.textContent = `Layer selected: ${layer.label} — ${layer.description}.`;
     };
 
-    root.querySelectorAll<SVGGElement>('[data-layer]').forEach((g) => {
-      const activate = () => selectLayer(g.dataset.layer || '');
-      g.addEventListener('click', activate);
-      g.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          activate();
-        }
+    radios.forEach((input) => {
+      input.addEventListener('change', () => {
+        if (input.checked) selectLayer(input.value, true);
+      });
+    });
+
+    root.querySelectorAll<SVGGElement>('[data-layer-visual]').forEach((g) => {
+      g.classList.add('is-pointer-ready');
+      g.addEventListener('click', () => {
+        const radio = radios.find((input) => input.value === g.dataset.layerVisual);
+        radio?.click();
       });
     });
 
@@ -206,7 +253,9 @@ const heroShot = screenshotItems[0]!;
       }
     });
 
-    selectLayer('chezmoi');
+    const initialRadio = radios.find((input) => input.checked) ?? radios[0];
+    if (initialRadio) selectLayer(initialRadio.value);
+    if (controls) controls.disabled = false;
   }
 
   document.querySelectorAll<HTMLElement>('[data-df-world]').forEach(initWorld);
@@ -383,6 +432,73 @@ const heroShot = screenshotItems[0]!;
       color-mix(in srgb, #191114 96%, #3a232e);
   }
 
+  .df-world__layer-controls {
+    min-inline-size: 0;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .df-world__layer-controls legend {
+    margin: 0 0 0.5rem;
+    padding: 0;
+    color: #c9a8b2;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .df-world__layer-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .df-world__layer-radio {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .df-world__layer-radio:checked + .vf-node,
+  .df-world__layer-radio:focus-visible + .vf-node {
+    border-color: #ffb0ca;
+    color: var(--nest-paper);
+    box-shadow: 0 0 0 2px color-mix(in srgb, #ffb0ca 35%, transparent);
+  }
+
+  .df-world__layer-controls:disabled .vf-node {
+    cursor: default;
+    opacity: 0.72;
+  }
+
+  .df-world__layer-fallback {
+    margin-top: 0.75rem;
+    color: var(--color-text-muted, #d5c2c6);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .df-world__layer-fallback p,
+  .df-world__layer-fallback ul {
+    margin-block: 0.45rem 0;
+  }
+
+  .df-world__layer-status {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   #df-layer-inspector [data-layer-meta] {
     display: grid;
     gap: 0.35rem;
@@ -392,6 +508,17 @@ const heroShot = screenshotItems[0]!;
     display: block;
     white-space: normal;
     line-height: 1.4;
+  }
+
+  @media (forced-colors: active) {
+    .df-world__layer-radio:checked + .vf-node {
+      border-color: Highlight;
+    }
+
+    .df-world__layer-radio:focus-visible + .vf-node {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
   }
 
   .df-world__prov {
