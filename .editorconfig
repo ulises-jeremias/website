@@ -16,3 +16,8 @@ indent_size = 4
 [*.md]
 insert_final_newline = true
 trim_trailing_whitespace = false
+
+# These files preserve exact, hash-verified upstream source bytes.
+[scripts/data/create-awesome/pinned/**/semantic/*.source]
+indent_style = unset
+indent_size = unset
