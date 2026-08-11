@@ -17,6 +17,10 @@ const readSourceFile = (relativePath: string) =>
   readFileSync(fileURLToPath(new URL(relativePath, import.meta.url)), 'utf8');
 
 describe('V source-fidelity data', () => {
+  it('defines the canonical six-station document order', () => {
+    expect(vProjects.map((project) => project.id)).toEqual(['v', 'vsl', 'vtl', 'rxv', 'setup-v', 'awesome-v']);
+  });
+
   it('uses the README-recommended setup-v pin and documented action outputs', () => {
     expect(SETUP_V_PIN).toBe('vlang/setup-v@v1.7');
     expect(vSourceFacts.setupV.outputs).toEqual(['bin-path', 'v-bin-path', 'version', 'architecture']);

@@ -144,16 +144,19 @@ test.describe('PR5 V progressive enhancement', () => {
     { width: 320, height: 800 },
     { width: 1440, height: 1100 },
   ]) {
-    test(`keeps the default source-backed station truthful without JavaScript at ${viewport.width}px`, async ({
-      page,
-    }) => {
+    test(`keeps every source-backed station truthful without JavaScript at ${viewport.width}px`, async ({ page }) => {
       await page.setViewportSize(viewport);
       await page.goto('/v');
 
-      await expect(page.locator('[data-v-panel="v"]')).toBeVisible();
-      await expect(page.locator('[data-v-inspector-body]')).toContainText('self-hosted compiler');
-      await expect(page.locator('[data-v-inspector-link]')).toHaveAttribute('href', 'https://github.com/vlang/v');
-      await expect(page.locator('[data-v-inspector-link]')).toHaveAccessibleName('Open vlang/v ↗');
+      await expect(page.locator('[data-v-station-selector]')).toBeHidden();
+      await expect(page.locator('[data-v-panel]')).toHaveCount(stationIds.length);
+      await expect(page.locator('#v-lab-inspector')).toBeHidden();
+      for (const stationId of stationIds) {
+        const station = page.locator(`[data-v-panel="${stationId}"]`);
+        await expect(station).toBeVisible();
+        await expect(station.locator('[data-v-station-summary]')).not.toBeEmpty();
+        await expect(station.locator('[data-v-station-repo]')).toHaveAttribute('href', /^https:\/\/github\.com\//);
+      }
       await expectPageToFit(page);
     });
   }

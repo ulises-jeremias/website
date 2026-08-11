@@ -12,6 +12,7 @@ import {
   worldsByPriority,
 } from '@/data/project-worlds';
 import { routes } from '@/data/routes';
+import { vProjects } from '@/features/v/data/index';
 
 describe('project-world taxonomy', () => {
   it('has 9 worlds', () => {
@@ -82,10 +83,11 @@ describe('project-world taxonomy', () => {
     expect(pairs).toContain('dotfiles→workstation');
   });
 
-  it('subWorlds for V are under /v and have required fields', () => {
+  it('keeps all six V station fragments aligned with the V project registry', () => {
     const v = getWorldById('v')!;
     expect(v.subWorlds).toBeDefined();
-    expect(v.subWorlds!.length).toBeGreaterThanOrEqual(4);
+    expect(v.subWorlds!.map((subWorld) => subWorld.id)).toEqual(vProjects.map((project) => project.id));
+    expect(v.subWorlds!.map((subWorld) => subWorld.path)).toEqual(vProjects.map((project) => `/v#${project.id}`));
     for (const sub of v.subWorlds!) {
       expect(sub.path.startsWith('/v')).toBe(true);
       expect(sub.title.length).toBeGreaterThan(0);
