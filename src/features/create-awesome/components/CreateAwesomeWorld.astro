@@ -246,6 +246,8 @@ const lineModules = [
     source: string;
   };
 
+  type SelectionOrigin = 'initial' | 'restore' | 'user';
+
   function initWorld(root: HTMLElement) {
     const stations = JSON.parse(root.dataset.stations || '[]') as Station[];
 
@@ -262,6 +264,20 @@ const lineModules = [
     const composer = root.querySelector<HTMLElement>('[data-ca-composer]');
     const fallback = root.querySelector<HTMLElement>('[data-ca-static-fallback]');
     const stationControls = root.querySelector<HTMLElement>('.ca-world__stations');
+    const defaultStationId = stations[0]?.id;
+    let selectedStationId =
+      root.querySelector<HTMLInputElement>('[data-ca-station]:checked')?.value ?? defaultStationId;
+    let lastFocusedElement: HTMLElement | null = null;
+
+    document.addEventListener('focusin', (event) => {
+      lastFocusedElement = event.target instanceof HTMLElement && event.target !== document.body ? event.target : null;
+    });
+
+    const stationForHash = () => {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return defaultStationId;
+      return stations.some((station) => station.id === hash) ? hash : undefined;
+    };
 
     const activateEnhancedWorld = () => {
       if (composer?.dataset.caReady !== 'true') return;
@@ -271,9 +287,17 @@ const lineModules = [
       root.dataset.caEnhanced = 'true';
     };
 
-    const select = (id: string) => {
-      const station = stations.find((s) => s.id === id) || stations[0];
+    const select = (id: string, origin: SelectionOrigin) => {
+      const station = stations.find((candidate) => candidate.id === id);
       if (!station) return;
+
+      const familyChanged = selectedStationId !== station.id;
+      selectedStationId = station.id;
+
+      const stationInput = root.querySelector<HTMLInputElement>(`[data-ca-station="${station.id}"]`);
+      if (stationInput && !stationInput.checked) {
+        stationInput.checked = true;
+      }
 
       if (title) title.textContent = station.title;
       if (body) body.textContent = station.description;
@@ -309,25 +333,43 @@ const lineModules = [
       root.querySelectorAll<HTMLElement>('[data-visual-node]').forEach((node) => {
         node.classList.toggle('is-active', node.getAttribute('data-visual-node') === station.id);
       });
+
+      if (origin === 'user' && familyChanged && window.location.hash !== `#${station.id}`) {
+        const nextUrl = new URL(window.location.href);
+        nextUrl.hash = station.id;
+        window.history.pushState(null, '', `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`);
+      }
     };
 
     root.querySelectorAll<HTMLInputElement>('[data-ca-station]').forEach((input) => {
       input.addEventListener('change', () => {
-        if (input.checked) select(input.value);
+        if (input.checked) select(input.value, 'user');
       });
     });
 
-    composer?.addEventListener('change', (event) => {
-      const target = event.target as HTMLInputElement | null;
-      if (!target || target.name !== 'ca-runtime') return;
-      const stationInput = root.querySelector<HTMLInputElement>(`#ca-station-${target.value}`);
-      if (stationInput && !stationInput.checked) {
-        stationInput.checked = true;
-      }
-      select(target.value);
-    });
+    const restoreFromLocation = () => {
+      const focusBeforeRestore = lastFocusedElement;
+      const stationId = stationForHash();
+      if (stationId) select(stationId, 'restore');
 
-    select(stations[0]?.id || 'node');
+      // Same-document fragment traversal can reset focus to <body>. Restore only
+      // the element that already held focus; never choose a new destination.
+      window.requestAnimationFrame(() => {
+        if (
+          focusBeforeRestore?.isConnected &&
+          (document.activeElement === document.body || document.activeElement === document.documentElement)
+        ) {
+          focusBeforeRestore.focus({ preventScroll: true });
+        }
+      });
+    };
+
+    const initialStationId = stationForHash() ?? defaultStationId;
+    if (initialStationId) select(initialStationId, 'initial');
+
+    window.addEventListener('hashchange', restoreFromLocation);
+    window.addEventListener('popstate', restoreFromLocation);
+
     if (composer?.dataset.caReady === 'true') {
       activateEnhancedWorld();
     } else {
