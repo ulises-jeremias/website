@@ -139,7 +139,7 @@ async function relevantAxeViolations(page: Page, enhanced: boolean) {
           exclude: [['.v-scene']],
         }
       : {
-          include: [['[data-v-station-summary]']],
+          include: [['[data-v-lab]']],
           exclude: [['.v-scene']],
         };
     const report = await axe.run(context, { resultTypes: ['violations'] });
@@ -184,7 +184,6 @@ test.describe('PR7A static V station document', () => {
 
       for (const stationId of stationIds) {
         await page.goto(`/v#${stationId}`);
-        await page.waitForLoadState('networkidle');
 
         const station = page.locator(`section#${stationId}`);
         await expect(station).toBeVisible();
@@ -333,6 +332,7 @@ test.describe('PR7A enhanced V station state', () => {
     await expect(page.locator('[data-v-panel]:visible')).toHaveCount(stationIds.length);
     await expect(page.locator('[data-v-station-summary]:visible')).toHaveCount(stationIds.length);
     await expect(page).toHaveURL(/\/v\/?#vsl$/);
+    expect(await relevantAxeViolations(page, false)).toEqual([]);
   });
 
   test('implements the complete horizontal tab keyboard contract', async ({ page }) => {
