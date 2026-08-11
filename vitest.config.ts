@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    include: ['src/**/*.{test,spec}.{ts,tsx,js,jsx}'],
+    include: ['src/**/*.{test,spec}.{ts,tsx,js,jsx}', 'scripts/**/*.test.mjs'],
     exclude: ['node_modules', 'dist', '.astro', 'coverage'],
     coverage: {
       provider: 'v8',

@@ -26,6 +26,9 @@
     "test:visual:harness": "playwright test tests/visual/harness.spec.ts",
     "test:visual:update": "playwright test --update-snapshots",
     "data:refresh": "node scripts/refresh-github-data.mjs",
+    "data:create-awesome:refresh": "node scripts/create-awesome-catalogs.mjs refresh",
+    "data:create-awesome:check": "node scripts/create-awesome-catalogs.mjs check",
+    "data:create-awesome:drift": "node scripts/create-awesome-catalogs.mjs drift",
     "cspell": "cspell lint --no-progress .",
     "knip": "knip",
     "prepare": "husky"
@@ -44,6 +47,8 @@
     "@testing-library/jest-dom": "^7.0.0",
     "@types/node": "^26.1.2",
     "@vitest/coverage-v8": "^3.2.4",
+    "ajv": "^8.20.0",
+    "ajv-draft-04": "^1.0.0",
     "axe-core": "^4.13.0",
     "cspell": "^10.0.1",
     "eslint": "^9.39.2",

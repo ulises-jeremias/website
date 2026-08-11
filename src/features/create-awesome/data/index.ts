@@ -10,6 +10,13 @@ import type {
 } from '../types/index.js';
 
 export { familyCatalogs } from './catalogs.js';
+export {
+  createAwesomeCompatibilitySnapshot,
+  getCompatibilityFamily,
+  getCompatibleAddons,
+  isTemplateAddonCompatible,
+  validateComposition,
+} from './compatibility.js';
 export { buildCreateAwesomeCommand } from '../lib/buildCommand.js';
 
 export const familyIntro: FamilyIntro = {

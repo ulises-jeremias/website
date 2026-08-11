@@ -1,0 +1,3437 @@
+{
+  "schemaVersion": 1,
+  "normalizationVersion": 1,
+  "generatedBy": "pnpm data:create-awesome:refresh",
+  "notice": "DO NOT EDIT MANUALLY",
+  "families": [
+    {
+      "id": "node",
+      "adapter": "typed-intersection",
+      "templates": [
+        {
+          "id": "nestjs-boilerplate",
+          "sourceId": "nestjs-boilerplate",
+          "sourceOrder": 0,
+          "name": "NestJS Boilerplate",
+          "description": "Modular NestJS API with TypeScript, ESLint, and Prettier. Reach for it when you want controllers, providers, and clear module boundaries from day one.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/nestjs-starter",
+          "category": "backend-applications",
+          "labels": [
+            "NestJS",
+            "Backend",
+            "TypeScript",
+            "ESLint",
+            "Prettier",
+            "Scalable",
+            "Maintainable"
+          ],
+          "typeIds": [
+            "nestjs-backend"
+          ]
+        },
+        {
+          "id": "nextjs-starter",
+          "sourceId": "nextjs-starter",
+          "sourceOrder": 1,
+          "name": "NextJS Starter",
+          "description": "Next.js App Router starter with TypeScript and a feature-based layout. Use it for full-stack React apps that need server components, routes, and optional auth examples.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/nextjs-starter",
+          "category": "fullstack-applications",
+          "labels": [
+            "Next.js",
+            "FullStack",
+            "TypeScript",
+            "ESLint",
+            "Prettier",
+            "Customizable",
+            "App Router"
+          ],
+          "typeIds": [
+            "nextjs"
+          ]
+        },
+        {
+          "id": "turborepo-boilerplate",
+          "sourceId": "turborepo-boilerplate",
+          "sourceOrder": 2,
+          "name": "Turborepo Boilerplate",
+          "description": "Turborepo workspace with TypeScript, Changesets, and shared packages. Best when multiple apps share UI or config and you want pipeline caching.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/turborepo-starter",
+          "category": "monorepo-boilerplate",
+          "labels": [
+            "Monorepo",
+            "Turborepo",
+            "TypeScript",
+            "Changesets",
+            "Workspaces",
+            "Efficient",
+            "Multi-package"
+          ],
+          "typeIds": [
+            "monorepo"
+          ]
+        },
+        {
+          "id": "react-vite-boilerplate",
+          "sourceId": "react-vite-boilerplate",
+          "sourceOrder": 3,
+          "name": "React Vite Boilerplate",
+          "description": "React SPA on Vite with React Router and TypeScript. Choose it for client-only apps where instant HMR and a lean build matter more than SSR.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/react-vite-starter",
+          "category": "frontend-applications",
+          "labels": [
+            "React",
+            "Vite",
+            "Frontend",
+            "TypeScript",
+            "ESLint",
+            "Prettier",
+            "React Router",
+            "SPA",
+            "HMR"
+          ],
+          "typeIds": [
+            "react"
+          ]
+        },
+        {
+          "id": "web-extension-react-boilerplate",
+          "sourceId": "web-extension-react-boilerplate",
+          "sourceOrder": 4,
+          "name": "Web Extension React Boilerplate",
+          "description": "React + Vite WebExtension with HMR and polyfills. Use it for Chrome/Firefox/Edge extensions that share a React UI across popup and pages.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/webextension-react-vite-starter",
+          "category": "web-extension",
+          "labels": [
+            "WebExtension",
+            "React",
+            "Vite",
+            "TypeScript",
+            "Hot Reload",
+            "Polyfill",
+            "ESLint",
+            "Prettier"
+          ],
+          "typeIds": [
+            "webextension-react"
+          ]
+        },
+        {
+          "id": "webdriverio-boilerplate",
+          "sourceId": "webdriverio-boilerplate",
+          "sourceOrder": 5,
+          "name": "WebdriverIO Boilerplate",
+          "description": "WebdriverIO + TypeScript harness with Selenoid-friendly setup. Scaffold this when the project is an acceptance-test suite, not the app under test.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/wdio-starter",
+          "category": "user-acceptance-testing",
+          "labels": [
+            "WebdriverIO",
+            "Testing",
+            "TypeScript",
+            "Selenoid",
+            "ESLint",
+            "Prettier",
+            "Automated Testing"
+          ],
+          "typeIds": [
+            "webdriverio"
+          ]
+        },
+        {
+          "id": "nextjs-saas-ai-starter",
+          "sourceId": "nextjs-saas-ai-starter",
+          "sourceOrder": 6,
+          "name": "NextJS SaaS AI Starter",
+          "description": "Multi-tenant Next.js SaaS with AI providers, Auth.js v5, Drizzle + PostgreSQL, Tailwind v4, shadcn/ui, RBAC, audit logs, webhooks, and i18n. The flagship product showcase — not a minimal starter.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/nextjs-saas-ai-starter",
+          "category": "fullstack-applications",
+          "labels": [
+            "Next.js",
+            "SaaS",
+            "AI",
+            "Multi-tenant",
+            "TypeScript",
+            "Tailwind CSS",
+            "shadcn/ui",
+            "Drizzle",
+            "PostgreSQL",
+            "Auth.js",
+            "RBAC",
+            "i18n"
+          ],
+          "typeIds": [
+            "nextjs-saas-ai"
+          ]
+        },
+        {
+          "id": "remix-starter",
+          "sourceId": "remix-starter",
+          "sourceOrder": 7,
+          "name": "Remix / React Router v7 Starter",
+          "description": "React Router v7 with file-based routes, loaders/actions, and TypeScript. Pick it when you want SSR and nested data routes without the Next.js App Router model.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/remix-starter",
+          "category": "fullstack-applications",
+          "labels": [
+            "Remix",
+            "React Router",
+            "FullStack",
+            "TypeScript",
+            "SSR",
+            "File-based Routing"
+          ],
+          "typeIds": [
+            "remix"
+          ]
+        },
+        {
+          "id": "astro-starter",
+          "sourceId": "astro-starter",
+          "sourceOrder": 8,
+          "name": "Astro Starter",
+          "description": "Astro static site with TypeScript and island-friendly structure. Ideal for docs, marketing, and content sites that ship HTML first and hydrate only where needed.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/astro-starter",
+          "category": "frontend-applications",
+          "labels": [
+            "Astro",
+            "Static Site",
+            "TypeScript",
+            "Frontend",
+            "Content"
+          ],
+          "typeIds": [
+            "astro"
+          ]
+        },
+        {
+          "id": "hono-starter",
+          "sourceId": "hono-starter",
+          "sourceOrder": 9,
+          "name": "Hono Starter",
+          "description": "Minimal Hono API in TypeScript. Use it for edge, serverless, or small HTTP services where NestJS would be heavier than you need.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/templates/hono-starter",
+          "category": "backend-applications",
+          "labels": [
+            "Hono",
+            "API",
+            "Backend",
+            "TypeScript",
+            "Serverless",
+            "Edge"
+          ],
+          "typeIds": [
+            "hono"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "github-setup",
+          "sourceId": "github-setup",
+          "sourceOrder": 0,
+          "name": "GitHub Setup",
+          "description": "Automate GitHub workflows with Actions, Dependabot, and templates for issues and pull requests.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/all-github-setup",
+          "category": "Tooling",
+          "labels": [
+            "GitHub",
+            "Automation",
+            "Actions",
+            "Dependabot",
+            "Templates",
+            "CI/CD"
+          ],
+          "typeIds": [
+            "react",
+            "webextension-react",
+            "monorepo",
+            "nestjs-backend",
+            "nextjs",
+            "nextjs-saas-ai"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "nextjs-saas-ai-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "webdriverio-boilerplate",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "github-setup-uat",
+          "sourceId": "github-setup-uat",
+          "sourceOrder": 1,
+          "name": "GitHub Setup for User Acceptance Testing",
+          "description": "This extension adds GitHub setup to your project including GitHub Actions, Dependabot, Issue Templates, Pull Request Templates, and more. It also adds a GitHub Action to run User Acceptance Tests using Selenium.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/wdio-github-setup",
+          "category": "Tooling",
+          "labels": [
+            "GitHub",
+            "GitHub Actions",
+            "Dependabot",
+            "Issue Templates",
+            "Pull Request Templates",
+            "Selenium",
+            "User Acceptance Testing"
+          ],
+          "typeIds": [
+            "webdriverio"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "webdriverio-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "husky-lint-staged",
+          "sourceId": "husky-lint-staged",
+          "sourceOrder": 2,
+          "name": "Husky + Lint Staged",
+          "description": "Improve code quality with pre-commit hooks using Husky and Lint Staged.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/all-husky-lint-staged",
+          "category": "Tooling",
+          "labels": [
+            "Husky",
+            "Lint Staged",
+            "Code Quality",
+            "Pre-commit",
+            "Automation"
+          ],
+          "typeIds": [
+            "react",
+            "webextension-react",
+            "webdriverio",
+            "nestjs-backend",
+            "nextjs",
+            "nextjs-saas-ai"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "turborepo-boilerplate",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "monorepo-husky-lint-staged",
+          "sourceId": "monorepo-husky-lint-staged",
+          "sourceOrder": 3,
+          "name": "Husky + Lint Staged (Monorepo)",
+          "description": "Improve code quality with pre-commit hooks using Husky and Lint Staged for monorepo projects.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/monorepo-husky-lint-staged",
+          "category": "Tooling",
+          "labels": [
+            "Husky",
+            "Lint Staged",
+            "Code Quality",
+            "Pre-commit",
+            "Automation",
+            "Monorepo"
+          ],
+          "typeIds": [
+            "monorepo"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "turborepo-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "development-container",
+          "sourceId": "development-container",
+          "sourceOrder": 4,
+          "name": "Development Container",
+          "description": "Set up a development container with Docker and VSCode for consistent environments.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/all-devcontainer",
+          "category": "Tooling",
+          "labels": [
+            "Docker",
+            "VSCode",
+            "DevContainer",
+            "Environment",
+            "Consistency"
+          ],
+          "typeIds": [
+            "react",
+            "webextension-react",
+            "monorepo",
+            "webdriverio",
+            "nestjs-backend",
+            "nextjs",
+            "nextjs-saas-ai"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "jest-react-testing-library",
+          "sourceId": "jest-react-testing-library",
+          "sourceOrder": 5,
+          "name": "Jest + React Testing Library",
+          "description": "Add Jest and React Testing Library for unit and integration testing in React projects.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-testing-library-with-jest",
+          "category": "Testing",
+          "labels": [
+            "Jest",
+            "React Testing Library",
+            "Unit Testing",
+            "Integration Testing",
+            "React"
+          ],
+          "typeIds": [
+            "react",
+            "webextension-react",
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "vitest-react-testing-library",
+          "sourceId": "vitest-react-testing-library",
+          "sourceOrder": 6,
+          "name": "Vitest + React Testing Library",
+          "description": "Add Vitest and React Testing Library for fast Vite-native unit and integration testing in React projects.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-testing-library-with-vitest",
+          "category": "Testing",
+          "labels": [
+            "Vitest",
+            "React Testing Library",
+            "Unit Testing",
+            "Integration Testing",
+            "Vite"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-playwright",
+          "sourceId": "react-playwright",
+          "sourceOrder": 7,
+          "name": "Playwright E2E",
+          "description": "Add Playwright end-to-end browser testing with multi-browser config, dev-server bootstrap, and CI workflow.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-playwright",
+          "category": "Testing",
+          "labels": [
+            "Playwright",
+            "E2E",
+            "Browser Testing",
+            "CI"
+          ],
+          "typeIds": [
+            "react",
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter",
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-i18n",
+          "sourceId": "react-i18n",
+          "sourceOrder": 8,
+          "name": "React i18n",
+          "description": "Add internationalization support to your React app with react-i18n and async backend.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-i18n",
+          "category": "Localization",
+          "labels": [
+            "i18n",
+            "Localization",
+            "React",
+            "Async Backend",
+            "Multi-language"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "tanstack-react-query",
+          "sourceId": "tanstack-react-query",
+          "sourceOrder": 9,
+          "name": "TanStack React Query",
+          "description": "High-quality open-source software for web developers.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-query",
+          "category": "State Management",
+          "labels": [
+            "TanStack",
+            "React Query",
+            "State Management",
+            "Asynchronous State Management",
+            "stale-while-revalidate"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-hook-form",
+          "sourceId": "react-hook-form",
+          "sourceOrder": 10,
+          "name": "React Hook Form",
+          "description": "Extension to add React Hook Form, a performant, flexible and extensible forms with easy-to-use validation.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-hook-form",
+          "category": "State Management",
+          "labels": [
+            "React Hook Form",
+            "State Management",
+            "Form Validation"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "jotai",
+          "sourceId": "jotai",
+          "sourceOrder": 11,
+          "name": "Jotai",
+          "description": "Extension to add Jotai, a small and fast state management library for React",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-jotai",
+          "category": "State Management",
+          "labels": [
+            "Jotai",
+            "State Management",
+            "Atomic State Management"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "recoil-js",
+          "sourceId": "recoil-js",
+          "sourceOrder": 12,
+          "name": "Recoil.js (Deprecated)",
+          "description": "Extension to add Recoil.js, a state management library for React. Note: Recoil is no longer maintained by Meta (formerly Facebook Experimental) and may not receive future updates.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-recoil",
+          "category": "State Management",
+          "labels": [
+            "Recoil.js",
+            "State Management",
+            "Atomic State Management"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "hookstate",
+          "sourceId": "hookstate",
+          "sourceOrder": 13,
+          "name": "Hookstate",
+          "description": "Add Hookstate, a modern state management solution with hooks-based API and TypeScript support.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-hookstate",
+          "category": "State Management",
+          "labels": [
+            "Hookstate",
+            "State Management",
+            "React Hooks",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "mobx",
+          "sourceId": "mobx",
+          "sourceOrder": 14,
+          "name": "MobX",
+          "description": "Extension to add MobX, a tiny state management library for React",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-mobx",
+          "category": "State Management",
+          "labels": [
+            "MobX",
+            "State Management",
+            "Bidirectional State Management"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "teaful",
+          "sourceId": "teaful",
+          "sourceOrder": 15,
+          "name": "Teaful (Deprecated)",
+          "description": "Add Teaful, a tiny and fast state management solution with a simple API and TypeScript support. Note: Teaful has very low adoption (~126 weekly downloads) and may not receive future updates.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-teaful",
+          "category": "State Management",
+          "labels": [
+            "Teaful",
+            "State Management",
+            "React Hooks",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "valtio",
+          "sourceId": "valtio",
+          "sourceOrder": 16,
+          "name": "Valtio",
+          "description": "Extension to add Valtio, a tiny state management library for React",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-valtio",
+          "category": "State Management",
+          "labels": [
+            "Valtio",
+            "State Management",
+            "Bidirectional State Management"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "xstate",
+          "sourceId": "xstate",
+          "sourceOrder": 17,
+          "name": "XState",
+          "description": "Add XState, a state management and orchestration solution for complex state machines and workflows.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-xstate",
+          "category": "State Management",
+          "labels": [
+            "XState",
+            "State Management",
+            "Finite State Machines",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "zustand",
+          "sourceId": "zustand",
+          "sourceOrder": 18,
+          "name": "Zustand",
+          "description": "Add Zustand, a small, fast and scalable state management solution with a simple API and TypeScript support.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-zustand",
+          "category": "State Management",
+          "labels": [
+            "Zustand",
+            "State Management",
+            "Unidirectional State Management",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-redux-saga",
+          "sourceId": "react-redux-saga",
+          "sourceOrder": 19,
+          "name": "React Redux with Redux Saga",
+          "description": "Extension to add Redux Toolkit (RTK) with React Redux bindings and Redux Saga for side-effect management",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-redux-saga",
+          "category": "State Management",
+          "labels": [
+            "React",
+            "State Management",
+            "Unidirectional State Management",
+            "Redux",
+            "React Redux",
+            "Redux Saga"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [
+            "react-redux-thunk"
+          ],
+          "incompatibleAddonIds": [
+            "react-redux-thunk"
+          ]
+        },
+        {
+          "id": "react-redux-thunk",
+          "sourceId": "react-redux-thunk",
+          "sourceOrder": 20,
+          "name": "React Redux with Redux Toolkit",
+          "description": "Extension to add Redux Toolkit (RTK) with React Redux bindings, redux-persist, and redux-logger for a fully configured store",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-redux-thunk",
+          "category": "State Management",
+          "labels": [
+            "React",
+            "State Management",
+            "Unidirectional State Management",
+            "Redux",
+            "React Redux",
+            "Redux Thunk"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [
+            "react-redux-saga"
+          ],
+          "incompatibleAddonIds": [
+            "react-redux-saga"
+          ]
+        },
+        {
+          "id": "ionic-react-capacitor",
+          "sourceId": "ionic-react-capacitor",
+          "sourceOrder": 21,
+          "name": "Cross Platform Apps with Ionic React + Capacitor",
+          "description": "Add Ionic React and Capacitor to your cross platform react app",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-ionic-capacitor",
+          "category": "Cross Platform",
+          "labels": [
+            "Ionic",
+            "Capacitor",
+            "React",
+            "Cross Platform"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "docker-compose-setup",
+          "sourceId": "docker-compose-setup",
+          "sourceOrder": 22,
+          "name": "Docker Compose Setup",
+          "description": "Add docker environments for development and production to your project setup with docker-compose",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-compose",
+          "category": "Tooling",
+          "labels": [
+            "Docker",
+            "Docker Compose",
+            "React",
+            "Next",
+            "Production",
+            "Development"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "android-tools",
+          "sourceId": "android-tools",
+          "sourceOrder": 23,
+          "name": "Android Tools",
+          "description": "Avoid using heavy IDEs by installing this extension that creates an elegant tool setup for your android app",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-android-tools",
+          "category": "Cross Platform",
+          "labels": [
+            "Android",
+            "React",
+            "Android Studio",
+            "Gradle",
+            "Kotlin"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "semantic-ui-react",
+          "sourceId": "semantic-ui-react",
+          "sourceOrder": 24,
+          "name": "Semantic UI React",
+          "description": "Extension to add Semantic UI React to your setup",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-semantic-ui",
+          "category": "UI",
+          "labels": [
+            "React",
+            "Semantic UI",
+            "Semantic UI React",
+            "CSS"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "semantic-ui-react-theme",
+          "sourceId": "semantic-ui-react-theme",
+          "sourceOrder": 25,
+          "name": "Semantic UI React with Theme",
+          "description": "Extension to add Semantic UI React to your setup with theme customization",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-semantic-ui-less",
+          "category": "UI",
+          "labels": [
+            "React",
+            "Semantic UI",
+            "Semantic UI React",
+            "Less",
+            "Theme Customization"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "material-ui",
+          "sourceId": "material-ui",
+          "sourceOrder": 26,
+          "name": "Material UI",
+          "description": "Add Material UI components and theming capabilities to your React application with TypeScript support and best practices.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-material-ui",
+          "category": "UI",
+          "labels": [
+            "React",
+            "Material UI",
+            "Components",
+            "Theming",
+            "UI Library",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "ant-design-react",
+          "sourceId": "ant-design-react",
+          "sourceOrder": 27,
+          "name": "Ant Design for React",
+          "description": "Add Ant Design React components with TypeScript support, theming capabilities and enterprise-grade UI patterns.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-ant-design",
+          "category": "UI",
+          "labels": [
+            "React",
+            "Ant Design",
+            "Ant Design React",
+            "TypeScript",
+            "Enterprise UI",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "bootstrap-react",
+          "sourceId": "bootstrap-react",
+          "sourceOrder": 28,
+          "name": "Bootstrap React",
+          "description": "Add Bootstrap React components with TypeScript support and responsive design patterns.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-bootstrap",
+          "category": "UI",
+          "labels": [
+            "React",
+            "Bootstrap",
+            "Bootstrap React",
+            "TypeScript",
+            "Responsive Design",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "drizzle-orm-sqlite",
+          "sourceId": "drizzle-orm-sqlite",
+          "sourceOrder": 29,
+          "name": "Drizzle ORM SQLite",
+          "description": "Add Drizzle ORM with SQLite to your NestJS API with TypeScript support and best practices for database operations.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-drizzle-sqlite",
+          "category": "Database",
+          "labels": [
+            "NestJS",
+            "Drizzle ORM",
+            "SQLite",
+            "TypeScript",
+            "Database",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "nestjs-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "drizzle-orm-postgresql",
+          "sourceId": "drizzle-orm-postgresql",
+          "sourceOrder": 30,
+          "name": "Drizzle ORM PostgreSQL",
+          "description": "Add Drizzle ORM with PostgreSQL to your NestJS API with TypeScript support and best practices for database operations.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-drizzle-postgres",
+          "category": "Database",
+          "labels": [
+            "NestJS",
+            "Drizzle ORM",
+            "PostgreSQL",
+            "TypeScript",
+            "Database",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "nestjs-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "mongoose-orm-mongodb",
+          "sourceId": "mongoose-orm-mongodb",
+          "sourceOrder": 31,
+          "name": "Mongoose ORM MongoDB",
+          "description": "Add Mongoose ORM with MongoDB to your NestJS API with TypeScript support and best practices for NoSQL database operations.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-mongoose",
+          "category": "Database",
+          "labels": [
+            "NestJS",
+            "Mongoose ORM",
+            "MongoDB",
+            "TypeScript",
+            "NoSQL",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "nestjs-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "serverless-framework",
+          "sourceId": "serverless-framework",
+          "sourceOrder": 32,
+          "name": "Serverless Framework",
+          "description": "Add Serverless Framework packaging to deploy your NestJS API to AWS Lambda with TypeScript support and best practices for serverless architecture.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-serverless",
+          "category": "Deployment",
+          "labels": [
+            "NestJS",
+            "Serverless Framework",
+            "AWS lambda",
+            "AWS",
+            "TypeScript",
+            "Serverless",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "nestjs-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-million-dom-optimization",
+          "sourceId": "react-million-dom-optimization",
+          "sourceOrder": 33,
+          "name": "React Million DOM Optimization",
+          "description": "Extension to add Million DOM Optimization to your React app",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-million",
+          "category": "Tooling",
+          "labels": [
+            "React",
+            "Million",
+            "Optimization"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "openapi",
+          "sourceId": "openapi",
+          "sourceOrder": 34,
+          "name": "OpenAPI",
+          "description": "Extension to add OpenAPI documentation to your NestJS API",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-openapi",
+          "category": "Tooling",
+          "labels": [
+            "NestJS",
+            "OpenAPI",
+            "Swagger"
+          ],
+          "typeIds": [
+            "nestjs-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nestjs-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-electron-vite",
+          "sourceId": "react-electron-vite",
+          "sourceOrder": 35,
+          "name": "React Electron Vite",
+          "description": "Add Electron to your cross platform React Vite app",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-electron-vite",
+          "category": "Cross Platform",
+          "labels": [
+            "React",
+            "Electron",
+            "Vite",
+            "Cross Platform"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "tailwind-css",
+          "sourceId": "tailwind-css",
+          "sourceOrder": 36,
+          "name": "Tailwind CSS",
+          "description": "Add Tailwind CSS utility-first styling with PostCSS and dark mode class strategy.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-tailwindcss",
+          "category": "UI",
+          "labels": [
+            "React",
+            "TailwindCSS",
+            "Utility-First",
+            "Styling",
+            "Dark Mode",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "shadcn-ui",
+          "sourceId": "shadcn-ui",
+          "sourceOrder": 37,
+          "name": "shadcn/ui",
+          "description": "Add shadcn/ui component primitives (Radix UI + Tailwind CSS) with variant-based theming utilities.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-shadcn",
+          "category": "UI",
+          "labels": [
+            "React",
+            "shadcn/ui",
+            "TailwindCSS",
+            "Radix UI",
+            "Components",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-tailwindcss",
+          "sourceId": "nextjs-tailwindcss",
+          "sourceOrder": 38,
+          "name": "Tailwind CSS for Next.js",
+          "description": "Add Tailwind CSS v4 to your Next.js project with PostCSS configuration and utility-first CSS setup.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-tailwindcss",
+          "category": "UI",
+          "labels": [
+            "Tailwind CSS",
+            "CSS",
+            "Styling",
+            "PostCSS"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-shadcn",
+          "sourceId": "nextjs-shadcn",
+          "sourceOrder": 39,
+          "name": "shadcn/ui for Next.js",
+          "description": "Add shadcn/ui component library to your Next.js project with Radix UI primitives, class-variance-authority, and a cn() utility.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-shadcn",
+          "category": "UI",
+          "labels": [
+            "shadcn/ui",
+            "Radix UI",
+            "Components",
+            "Tailwind CSS"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-drizzle-postgres",
+          "sourceId": "nextjs-drizzle-postgres",
+          "sourceOrder": 40,
+          "name": "Drizzle ORM + PostgreSQL for Next.js",
+          "description": "Add Drizzle ORM with PostgreSQL to your Next.js project. Includes schema setup, migrations, Docker Compose for local development, and db:* scripts.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-drizzle-postgres",
+          "category": "Database",
+          "labels": [
+            "Drizzle",
+            "PostgreSQL",
+            "ORM",
+            "Database",
+            "Docker"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-auth",
+          "sourceId": "nextjs-auth",
+          "sourceOrder": 41,
+          "name": "Auth.js v5 for Next.js",
+          "description": "Add Auth.js v5 (next-auth@beta, latest: 5.0.0-beta.31) to your Next.js project with OAuth providers support, database sessions, and TypeScript-typed session. Note: v5 remains in beta as of 2026 — see https://authjs.dev for updates.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-auth",
+          "category": "Auth",
+          "labels": [
+            "Auth.js",
+            "NextAuth",
+            "Authentication",
+            "OAuth",
+            "Session"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [
+            "nextjs-authkit"
+          ],
+          "incompatibleAddonIds": [
+            "nextjs-authkit"
+          ]
+        },
+        {
+          "id": "nextjs-authkit",
+          "sourceId": "nextjs-authkit",
+          "sourceOrder": 42,
+          "name": "WorkOS AuthKit",
+          "description": "Hosted authentication platform with pre-built UI, SSO, MFA, and password reset via WorkOS AuthKit.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-authkit",
+          "category": "Auth",
+          "labels": [
+            "sso",
+            "workos",
+            "authkit",
+            "enterprise",
+            "auth"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [
+            "nextjs-auth"
+          ],
+          "incompatibleAddonIds": [
+            "nextjs-auth"
+          ]
+        },
+        {
+          "id": "nextjs-t3-env",
+          "sourceId": "nextjs-t3-env",
+          "sourceOrder": 43,
+          "name": "t3-env for Next.js",
+          "description": "Add type-safe environment variable validation with @t3-oss/env-nextjs and Zod, including server/client split and SKIP_ENV_VALIDATION for CI.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-t3-env",
+          "category": "Tooling",
+          "labels": [
+            "t3-env",
+            "Environment",
+            "Zod",
+            "Validation",
+            "TypeScript"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-trpc",
+          "sourceId": "nextjs-trpc",
+          "sourceOrder": 44,
+          "name": "tRPC for Next.js",
+          "description": "Add tRPC v11 with TanStack Query and App Router fetch adapter for end-to-end type-safe APIs without code generation.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-trpc",
+          "category": "API",
+          "labels": [
+            "tRPC",
+            "TanStack Query",
+            "TypeScript",
+            "App Router",
+            "API"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-i18n",
+          "sourceId": "nextjs-i18n",
+          "sourceOrder": 45,
+          "name": "next-intl (i18n) for Next.js",
+          "description": "Add internationalization to your Next.js project using next-intl with English and Spanish translations, middleware routing, and type-safe message access.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-i18n",
+          "category": "Tooling",
+          "labels": [
+            "i18n",
+            "Internationalization",
+            "next-intl",
+            "Localization"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "sentry",
+          "sourceId": "sentry",
+          "sourceOrder": 46,
+          "name": "Sentry for Next.js",
+          "description": "Add Sentry error tracking and performance monitoring to your Next.js project with client/server configuration and source map upload support.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/sentry",
+          "category": "Monitoring",
+          "labels": [
+            "Sentry",
+            "Error Tracking",
+            "Performance",
+            "Monitoring"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "apollo-client",
+          "sourceId": "apollo-client",
+          "sourceOrder": 47,
+          "name": "Apollo Client for React",
+          "description": "Add Apollo Client for GraphQL data fetching, caching, and state management in React applications.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-apollo",
+          "category": "Data Fetching",
+          "labels": [
+            "Apollo",
+            "GraphQL",
+            "Data Fetching",
+            "Cache"
+          ],
+          "typeIds": [
+            "react",
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter",
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "storybook",
+          "sourceId": "storybook",
+          "sourceOrder": 48,
+          "name": "Storybook",
+          "description": "Add Storybook for isolated component development, visual testing, and interactive documentation.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/storybook",
+          "category": "Tooling",
+          "labels": [
+            "Storybook",
+            "Components",
+            "Documentation",
+            "Visual Testing"
+          ],
+          "typeIds": [
+            "react",
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter",
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-react-query",
+          "sourceId": "nextjs-react-query",
+          "sourceOrder": 49,
+          "name": "React Query for Next.js",
+          "description": "Add TanStack React Query with SSR-compatible setup for Next.js App Router, including hydration support and query client factory.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-react-query",
+          "category": "Data Fetching",
+          "labels": [
+            "TanStack Query",
+            "React Query",
+            "Data Fetching",
+            "SSR",
+            "Cache"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-prisma",
+          "sourceId": "nextjs-prisma",
+          "sourceOrder": 50,
+          "name": "Prisma for Next.js",
+          "description": "Add Prisma ORM with PostgreSQL for type-safe database access, schema management, and migrations in Next.js.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-prisma",
+          "category": "Database",
+          "labels": [
+            "Prisma",
+            "PostgreSQL",
+            "ORM",
+            "Database",
+            "Migrations"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "nextjs-turso",
+          "sourceId": "nextjs-turso",
+          "sourceOrder": 51,
+          "name": "Turso/libSQL for Next.js",
+          "description": "Add Turso (libSQL) database client with Drizzle ORM for edge-ready SQLite database access in Next.js.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-turso",
+          "category": "Database",
+          "labels": [
+            "Turso",
+            "libSQL",
+            "SQLite",
+            "Database",
+            "Edge",
+            "Drizzle"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "react-react-router",
+          "sourceId": "react-react-router",
+          "sourceOrder": 52,
+          "name": "React Router v7",
+          "description": "Adds React Router v7 with BrowserRouter setup and sample pages.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-react-router",
+          "category": "Tooling",
+          "labels": [
+            "React",
+            "React Router",
+            "Routing",
+            "Vite",
+            "SPA"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        }
+      ],
+      "counts": {
+        "templates": 10,
+        "addons": 53,
+        "compatibilityEdges": 74
+      },
+      "provenance": {
+        "repository": "Create-Node-App/cna-templates",
+        "commit": "4d2da834865272f5c89d9460e48596b504485c60",
+        "commitDate": "2026-08-06T15:25:34Z",
+        "registry": {
+          "path": "templates.json",
+          "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/4d2da834865272f5c89d9460e48596b504485c60/templates.json",
+          "gitBlobSha": "0d3f7cb5639a0594be8fbf403ea7b22b0c6b4ff6",
+          "sha256": "9389c8a99612f5cf38b052fcd07735fd1cc9a372da86486456bc84c6c6b8c0f2"
+        },
+        "schema": {
+          "path": "templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/4d2da834865272f5c89d9460e48596b504485c60/templates.schema.json",
+          "gitBlobSha": "e1d66ac8691fffbe420ad04dbfcd0e0b9a52a7c7",
+          "sha256": "1a30f2205cd33cd9314688df9bc323bcc386e053d989cbbb0b5ac4dc2555703c"
+        },
+        "cliReference": {
+          "repository": "Create-Node-App/create-node-app",
+          "commit": "8ac56fc41d44222c0513f9003670aa7c1f29692a",
+          "commitDate": "2026-08-09T20:40:33Z"
+        },
+        "semanticReferences": [
+          {
+            "role": "cli-compatibility-reference",
+            "repository": "Create-Node-App/create-node-app",
+            "commit": "8ac56fc41d44222c0513f9003670aa7c1f29692a",
+            "commitDate": "2026-08-09T20:40:33Z",
+            "path": "packages/create-awesome-node-app/src/templates.ts",
+            "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/8ac56fc41d44222c0513f9003670aa7c1f29692a/packages/create-awesome-node-app/src/templates.ts",
+            "gitBlobSha": "f13173ff6df21020fa4332fba02e1bb6d09a38a7",
+            "sha256": "7f4403b0d3455c0c1cc12d753805fc7f81477a5830fa29e515fdee55d5acb419"
+          }
+        ]
+      }
+    },
+    {
+      "id": "python",
+      "adapter": "typed-intersection-with-all",
+      "templates": [
+        {
+          "id": "fastapi-starter",
+          "sourceId": "fastapi-starter",
+          "sourceOrder": 0,
+          "name": "FastAPI Starter",
+          "description": "Production-ready FastAPI API with feature-based layout, uv, Ruff, pytest, mypy, pyright, and pydantic-settings. The reference CPA backend template.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/fastapi-starter",
+          "category": "backend-applications",
+          "labels": [
+            "FastAPI",
+            "API",
+            "Python",
+            "uv",
+            "Backend",
+            "Type Hints",
+            "mypy",
+            "pyright"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ]
+        },
+        {
+          "id": "cli-starter",
+          "sourceId": "cli-starter",
+          "sourceOrder": 1,
+          "name": "CLI Starter",
+          "description": "Typer CLI with multi-command layout, uv, Ruff, pytest, and a console script entry point. Best for internal tools and shippable CLIs.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/cli-starter",
+          "category": "cli-applications",
+          "labels": [
+            "CLI",
+            "Typer",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "cli-app"
+          ]
+        },
+        {
+          "id": "celery-worker",
+          "sourceId": "celery-worker",
+          "sourceOrder": 2,
+          "name": "Celery Worker",
+          "description": "Celery worker with modular tasks, Redis defaults, pydantic-settings, and eager-mode tests. Choose it for background jobs outside the HTTP process.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/celery-worker",
+          "category": "backend-applications",
+          "labels": [
+            "Celery",
+            "Worker",
+            "Redis",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "celery-worker"
+          ]
+        },
+        {
+          "id": "django-api",
+          "sourceId": "django-api",
+          "sourceOrder": 3,
+          "name": "Django API",
+          "description": "Django + DRF API with feature apps, OpenAPI-friendly health probes, uv, Ruff, and pytest-django. Use when you want Django's ORM and admin with a clean API layout.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/django-api",
+          "category": "backend-applications",
+          "labels": [
+            "Django",
+            "DRF",
+            "API",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "django-backend"
+          ]
+        },
+        {
+          "id": "uv-workspace-starter",
+          "sourceId": "uv-workspace-starter",
+          "sourceOrder": 4,
+          "name": "uv Workspace Starter",
+          "description": "Python monorepo using uv workspaces: shared packages/ libraries and apps/ deployables with one lockfile, Ruff, Pyright, and pytest.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/uv-workspace-starter",
+          "category": "monorepo",
+          "labels": [
+            "Monorepo",
+            "uv",
+            "Workspace",
+            "Python",
+            "Typer"
+          ],
+          "typeIds": [
+            "uv-workspace"
+          ]
+        },
+        {
+          "id": "mlops-sklearn-starter",
+          "sourceId": "mlops-sklearn-starter",
+          "sourceOrder": 5,
+          "name": "MLOps sklearn Starter",
+          "description": "CPU-first sklearn MLOps pipeline with YAML configs, step architecture, local MLflow, and batch/FastAPI serving.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/mlops-sklearn-starter",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "sklearn",
+            "MLflow",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "mlops-sklearn"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "github-setup",
+          "sourceId": "github-setup",
+          "sourceOrder": 0,
+          "name": "GitHub Setup",
+          "description": "GitHub Actions CI, MegaLinter, Danger PR review, todo-to-issue, Dependabot, and issue/PR templates. Use for any CPA template that lives on GitHub.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-github-setup",
+          "category": "ci",
+          "labels": [
+            "GitHub",
+            "CI",
+            "DevOps",
+            "MegaLinter",
+            "Danger"
+          ],
+          "typeIds": [
+            "celery-worker",
+            "cli-app",
+            "django-backend",
+            "fastapi-backend",
+            "uv-workspace"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "development-container",
+          "sourceId": "development-container",
+          "sourceOrder": 1,
+          "name": "Development Container",
+          "description": "VS Code Dev Container with Python 3.12 and uv for consistent editor environments across stacks.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-devcontainer",
+          "category": "editor",
+          "labels": [
+            "DevContainer",
+            "VS Code",
+            "uv"
+          ],
+          "typeIds": [
+            "celery-worker",
+            "cli-app",
+            "django-backend",
+            "fastapi-backend",
+            "uv-workspace"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "postgres",
+          "sourceId": "postgres",
+          "sourceOrder": 2,
+          "name": "Postgres",
+          "description": "PostgreSQL 16 Compose service under docker/postgres/ plus env examples. Infra-only — does not write application ORM code.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-postgres",
+          "category": "database",
+          "labels": [
+            "PostgreSQL",
+            "Database",
+            "Docker"
+          ],
+          "typeIds": [
+            "celery-worker",
+            "django-backend",
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter",
+            "celery-worker",
+            "django-api"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-cors",
+          "sourceId": "fastapi-cors",
+          "sourceOrder": 3,
+          "name": "FastAPI CORS",
+          "description": "CORS middleware helper for FastAPI (no-op without CORS_ORIGINS).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-cors",
+          "category": "security",
+          "labels": [
+            "CORS",
+            "Security",
+            "FastAPI",
+            "Middleware"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-docker",
+          "sourceId": "fastapi-docker",
+          "sourceOrder": 4,
+          "name": "FastAPI Docker",
+          "description": "Dockerfile and Compose for FastAPI (uvicorn app.main:app). Reach for it when containerizing the FastAPI starter.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-docker",
+          "category": "containers",
+          "labels": [
+            "Docker",
+            "FastAPI",
+            "Container"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "django-docker",
+          "sourceId": "django-docker",
+          "sourceOrder": 5,
+          "name": "Django Docker",
+          "description": "Dockerfile and Compose for Django (runserver / gunicorn config.wsgi). Use with django-api.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/django-docker",
+          "category": "containers",
+          "labels": [
+            "Docker",
+            "Django",
+            "Container"
+          ],
+          "typeIds": [
+            "django-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "django-api"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "celery-docker",
+          "sourceId": "celery-docker",
+          "sourceOrder": 6,
+          "name": "Celery Docker",
+          "description": "Dockerfile and Compose for a Celery worker plus Redis broker. Pair with a reachable BROKER_URL (Compose sets redis://redis:6379/0).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/celery-docker",
+          "category": "containers",
+          "labels": [
+            "Docker",
+            "Celery",
+            "Container"
+          ],
+          "typeIds": [
+            "celery-worker"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "celery-worker"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-sqlalchemy",
+          "sourceId": "fastapi-sqlalchemy",
+          "sourceOrder": 7,
+          "name": "FastAPI SQLAlchemy",
+          "description": "SQLAlchemy 2.x session helpers and Alembic migrations for FastAPI (writes app/db/).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-sqlalchemy",
+          "category": "database",
+          "labels": [
+            "SQLAlchemy",
+            "Alembic",
+            "ORM",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-redis",
+          "sourceId": "fastapi-redis",
+          "sourceOrder": 8,
+          "name": "FastAPI Redis",
+          "description": "Redis client helper under app/core plus a local Redis Compose service for FastAPI apps.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-redis",
+          "category": "database",
+          "labels": [
+            "Redis",
+            "Cache",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-sentry",
+          "sourceId": "fastapi-sentry",
+          "sourceOrder": 9,
+          "name": "FastAPI Sentry",
+          "description": "Sentry SDK helper for FastAPI with env-driven init (no-op without SENTRY_DSN).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-sentry",
+          "category": "observability",
+          "labels": [
+            "Sentry",
+            "Observability",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-auth-jwt",
+          "sourceId": "fastapi-auth-jwt",
+          "sourceOrder": 10,
+          "name": "FastAPI Auth JWT",
+          "description": "JWT auth feature skeleton under app/features/auth for FastAPI starters.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-auth-jwt",
+          "category": "security",
+          "labels": [
+            "Auth",
+            "JWT",
+            "FastAPI",
+            "Security"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "pre-commit",
+          "sourceId": "pre-commit",
+          "sourceOrder": 11,
+          "name": "Pre-commit",
+          "description": "Local quality gates with Ruff, YAML validation, and whitespace checks for every CPA template.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-pre-commit",
+          "category": "ci",
+          "labels": [
+            "Pre-commit",
+            "Quality",
+            "Git Hooks"
+          ],
+          "typeIds": [
+            "celery-worker",
+            "cli-app",
+            "django-backend",
+            "fastapi-backend",
+            "uv-workspace"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-opentelemetry",
+          "sourceId": "fastapi-opentelemetry",
+          "sourceOrder": 12,
+          "name": "FastAPI OpenTelemetry",
+          "description": "OpenTelemetry tracing and logging hooks for FastAPI projects, useful for local debugging and observability setup.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-opentelemetry",
+          "category": "observability",
+          "labels": [
+            "OpenTelemetry",
+            "Tracing",
+            "Observability"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-rate-limit",
+          "sourceId": "fastapi-rate-limit",
+          "sourceOrder": 13,
+          "name": "FastAPI Rate Limit",
+          "description": "Rate limiting helper using slowapi (in-memory by default, Redis-ready).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-rate-limit",
+          "category": "security",
+          "labels": [
+            "Rate Limit",
+            "Security",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-mlflow-tracing",
+          "sourceId": "fastapi-mlflow-tracing",
+          "sourceOrder": 14,
+          "name": "FastAPI MLflow Tracing",
+          "description": "Generic MLflow tracing infrastructure for FastAPI. Disabled by default; exposes reusable primitives for future extensions.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-mlflow-tracing",
+          "category": "observability",
+          "labels": [
+            "MLflow",
+            "Tracing",
+            "Observability",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-rag-pgvector",
+          "sourceId": "fastapi-rag-pgvector",
+          "sourceOrder": 15,
+          "name": "FastAPI RAG pgvector",
+          "description": "Foundational RAG data layer using pgvector. Provides agnostic chunking, embedding generation, and vector retrieval services.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-rag-pgvector",
+          "category": "ai-ml-applications",
+          "labels": [
+            "RAG",
+            "AI",
+            "pgvector",
+            "FastAPI",
+            "PostgreSQL"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-ai-chat",
+          "sourceId": "fastapi-ai-chat",
+          "sourceOrder": 16,
+          "name": "FastAPI AI Chat",
+          "description": "Minimal /chat endpoint backed by LangChain's BaseChatModel. Mock provider by default — drop in a real provider via init_chat_model() with no interface change.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-ai-chat",
+          "category": "ai-ml-applications",
+          "labels": [
+            "LangChain",
+            "AI",
+            "Chat",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "django-spectacular",
+          "sourceId": "django-spectacular",
+          "sourceOrder": 17,
+          "name": "Django Spectacular",
+          "description": "OpenAPI 3 schema generation and Swagger UI for Django REST Framework.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/django-spectacular",
+          "category": "observability",
+          "labels": [
+            "Django",
+            "OpenAPI",
+            "Swagger",
+            "DRF"
+          ],
+          "typeIds": [
+            "django-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "django-api"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        }
+      ],
+      "counts": {
+        "templates": 6,
+        "addons": 18,
+        "compatibilityEdges": 32
+      },
+      "provenance": {
+        "repository": "Create-Python-App/cpa-templates",
+        "commit": "62aacc3ed77e012f01d8ea75c14c66c583fae5b3",
+        "commitDate": "2026-08-10T04:21:59Z",
+        "registry": {
+          "path": "templates.json",
+          "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/62aacc3ed77e012f01d8ea75c14c66c583fae5b3/templates.json",
+          "gitBlobSha": "836ee9e35d0f9efc69c250faa88185732ecac7f7",
+          "sha256": "6d593267719f750e4e5f71e031e5c5c473213bec95e8d3ec843a3fd42c0aff07"
+        },
+        "schema": {
+          "path": "templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/62aacc3ed77e012f01d8ea75c14c66c583fae5b3/templates.schema.json",
+          "gitBlobSha": "43d2dc603d3786a909151785a35221f7495c0ed3",
+          "sha256": "b8eb428fb573a468270ed09036e319dd179b405df8231f0b862ae2e948ff90fd"
+        },
+        "cliReference": {
+          "repository": "Create-Python-App/create-python-app",
+          "commit": "6cd61c6599502c54ec2ca923a8f1478fce5b5e30",
+          "commitDate": "2026-08-09T06:18:50Z"
+        },
+        "semanticReferences": [
+          {
+            "role": "cli-compatibility-reference",
+            "repository": "Create-Python-App/create-python-app",
+            "commit": "6cd61c6599502c54ec2ca923a8f1478fce5b5e30",
+            "commitDate": "2026-08-09T06:18:50Z",
+            "path": "packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
+            "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/6cd61c6599502c54ec2ca923a8f1478fce5b5e30/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
+            "gitBlobSha": "30abd65b9d6dd2ef19c2e80392d0446a7cfa1f3d",
+            "sha256": "641fa27b2127fd306a5416c26c590af61dd526862d89fbef3b1b3f04cdad0c4c"
+          }
+        ]
+      }
+    },
+    {
+      "id": "v",
+      "adapter": "explicit-compatible-with-or-all",
+      "templates": [
+        {
+          "id": "web-server",
+          "sourceId": "web-server",
+          "sourceOrder": 0,
+          "name": "web-server",
+          "description": "HTTP server starter using veb",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/web-server",
+          "category": null,
+          "labels": [
+            "web",
+            "wave-1",
+            "veb"
+          ],
+          "typeIds": []
+        },
+        {
+          "id": "cli-app",
+          "sourceId": "cli-app",
+          "sourceOrder": 1,
+          "name": "cli-app",
+          "description": "CLI application using os and cli modules",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/cli-app",
+          "category": null,
+          "labels": [
+            "cli",
+            "wave-1"
+          ],
+          "typeIds": []
+        },
+        {
+          "id": "library-starter",
+          "sourceId": "library-starter",
+          "sourceOrder": 2,
+          "name": "library-starter",
+          "description": "Publishable V library with examples and tests",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/library-starter",
+          "category": null,
+          "labels": [
+            "library",
+            "wave-1"
+          ],
+          "typeIds": []
+        },
+        {
+          "id": "systems-app",
+          "sourceId": "systems-app",
+          "sourceOrder": 3,
+          "name": "systems-app",
+          "description": "Low-level systems-oriented starter with GC guidance",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/systems-app",
+          "category": null,
+          "labels": [
+            "systems",
+            "wave-1",
+            "no-gc"
+          ],
+          "typeIds": []
+        },
+        {
+          "id": "vsl-starter",
+          "sourceId": "vsl-starter",
+          "sourceOrder": 4,
+          "name": "vsl-starter",
+          "description": "Scientific Computing Starter (vsl) — numerics topology; add plotting/ML via addons",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/vsl-starter",
+          "category": null,
+          "labels": [
+            "scientific",
+            "growth",
+            "vsl",
+            "domain"
+          ],
+          "typeIds": []
+        },
+        {
+          "id": "vtl-starter",
+          "sourceId": "vtl-starter",
+          "sourceOrder": 5,
+          "name": "vtl-starter",
+          "description": "ML / Tensor Starter (vtl) — tensor topology; add NN/bridge via addons",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/vtl-starter",
+          "category": null,
+          "labels": [
+            "machine-learning",
+            "growth",
+            "vtl",
+            "domain"
+          ],
+          "typeIds": []
+        },
+        {
+          "id": "rxv-starter",
+          "sourceId": "rxv-starter",
+          "sourceOrder": 6,
+          "name": "rxv-starter",
+          "description": "Reactive App Starter (rxv) — observable topology; add operators via addons",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=templates/rxv-starter",
+          "category": null,
+          "labels": [
+            "reactive",
+            "growth",
+            "rxv",
+            "domain"
+          ],
+          "typeIds": []
+        }
+      ],
+      "addons": [
+        {
+          "id": "github-setup",
+          "sourceId": "github-setup",
+          "sourceOrder": 0,
+          "name": "github-setup",
+          "description": "GitHub Actions CI using vlang/setup-v",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/github-setup",
+          "category": null,
+          "labels": [
+            "ci",
+            "wave-1",
+            "github"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-docker",
+          "sourceId": "v-docker",
+          "sourceOrder": 1,
+          "name": "v-docker",
+          "description": "Dockerfile and docker-compose for V apps",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-docker",
+          "category": null,
+          "labels": [
+            "docker",
+            "wave-1",
+            "deploy"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-sqlite",
+          "sourceId": "v-sqlite",
+          "sourceOrder": 2,
+          "name": "v-sqlite",
+          "description": "SQLite environment and sample wiring",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-sqlite",
+          "category": null,
+          "labels": [
+            "database",
+            "wave-1",
+            "sqlite"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "incompatibleTemplateIds": [
+            "library-starter",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-postgres",
+          "sourceId": "v-postgres",
+          "sourceOrder": 3,
+          "name": "v-postgres",
+          "description": "Postgres compose overlay and environment sample",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-postgres",
+          "category": null,
+          "labels": [
+            "database",
+            "wave-1",
+            "postgres"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "incompatibleTemplateIds": [
+            "library-starter",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-fmt-vet",
+          "sourceId": "v-fmt-vet",
+          "sourceOrder": 4,
+          "name": "v-fmt-vet",
+          "description": "Format and vet hooks (pre-commit + Makefile targets)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-fmt-vet",
+          "category": null,
+          "labels": [
+            "tooling",
+            "wave-1",
+            "fmt",
+            "vet"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "development-container",
+          "sourceId": "development-container",
+          "sourceOrder": 5,
+          "name": "development-container",
+          "description": "Devcontainer with V toolchain via setup-v patterns",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/development-container",
+          "category": null,
+          "labels": [
+            "devcontainer",
+            "wave-1"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "vsl-plotting",
+          "sourceId": "vsl-plotting",
+          "sourceOrder": 6,
+          "name": "vsl-plotting",
+          "description": "vsl.plot wiring and scatter helper for scientific starters (no GUI in unit tests)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vsl-plotting",
+          "category": null,
+          "labels": [
+            "scientific",
+            "plot",
+            "vsl",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "vsl-starter"
+          ],
+          "compatibleTemplateIds": [
+            "vsl-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "vsl-classical-ml",
+          "sourceId": "vsl-classical-ml",
+          "sourceOrder": 7,
+          "name": "vsl-classical-ml",
+          "description": "Classical ML smoke (linear regression style) on vsl-starter",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vsl-classical-ml",
+          "category": null,
+          "labels": [
+            "scientific",
+            "ml",
+            "vsl",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "vsl-starter"
+          ],
+          "compatibleTemplateIds": [
+            "vsl-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "vtl-nn-cpu",
+          "sourceId": "vtl-nn-cpu",
+          "sourceOrder": 8,
+          "name": "vtl-nn-cpu",
+          "description": "Tiny CPU neural-net training loop for vtl-starter (CI-safe)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vtl-nn-cpu",
+          "category": null,
+          "labels": [
+            "machine-learning",
+            "nn",
+            "vtl",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "vtl-starter"
+          ],
+          "compatibleTemplateIds": [
+            "vtl-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "vtl-vsl-bridge",
+          "sourceId": "vtl-vsl-bridge",
+          "sourceOrder": 9,
+          "name": "vtl-vsl-bridge",
+          "description": "Bridge VTL tensors to vsl.plot (compose vsl+vtl without a combined base)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vtl-vsl-bridge",
+          "category": null,
+          "labels": [
+            "machine-learning",
+            "scientific",
+            "bridge",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "vtl-starter"
+          ],
+          "compatibleTemplateIds": [
+            "vtl-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "rxv-operators",
+          "sourceId": "rxv-operators",
+          "sourceOrder": 10,
+          "name": "rxv-operators",
+          "description": "Reactive operator chain (filter/map/reduce) beyond hello-world rxv",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/rxv-operators",
+          "category": null,
+          "labels": [
+            "reactive",
+            "rxv",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "rxv-starter"
+          ],
+          "compatibleTemplateIds": [
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        }
+      ],
+      "counts": {
+        "templates": 7,
+        "addons": 11,
+        "compatibilityEdges": 39
+      },
+      "provenance": {
+        "repository": "Create-Vlang-App/cva-templates",
+        "commit": "e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c",
+        "commitDate": "2026-07-23T06:01:40Z",
+        "registry": {
+          "path": "templates.json",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/templates.json",
+          "gitBlobSha": "605c3e752151a4cc40faba51aeebd6e1e1860cd0",
+          "sha256": "bc86e9a4686fc24dd2a6bd4a3155e3ad63f29f90d2f03135f415f990e38ee221"
+        },
+        "schema": {
+          "path": "templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/templates.schema.json",
+          "gitBlobSha": "6198718bccb7349b69a01a53e2e6e0d8c498c89e",
+          "sha256": "bf5dd490d8f34d85ab8465f129f4d11f019159fb983442772e0547cc804234af"
+        },
+        "cliReference": {
+          "repository": "Create-Vlang-App/create-vlang-app",
+          "commit": "c1983071857b4b63cb69243c21265540f1b170b4",
+          "commitDate": "2026-08-05T18:48:32Z"
+        },
+        "semanticReferences": [
+          {
+            "role": "cli-catalog-reference",
+            "repository": "Create-Vlang-App/create-vlang-app",
+            "commit": "c1983071857b4b63cb69243c21265540f1b170b4",
+            "commitDate": "2026-08-05T18:48:32Z",
+            "path": "modules/create_vlang_app_core/catalog.v",
+            "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/c1983071857b4b63cb69243c21265540f1b170b4/modules/create_vlang_app_core/catalog.v",
+            "gitBlobSha": "7c4e1c590c408685e402394658370f09da13d776",
+            "sha256": "f1264400f62a0d5ecfabebc332bb71a4c155c312f93186a03a5ea7a891bc72a5"
+          },
+          {
+            "role": "catalog-compatibility-reference",
+            "repository": "Create-Vlang-App/cva-templates",
+            "commit": "e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c",
+            "commitDate": "2026-07-23T06:01:40Z",
+            "path": "scripts/ci/registry.py",
+            "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/scripts/ci/registry.py",
+            "gitBlobSha": "bb19f1793cae3cac883b92f5251b5d87173822a9",
+            "sha256": "f713740afa6961b8aa102d9889d5aa05659d00af1f0656cc162f631eb72dece8"
+          }
+        ]
+      }
+    }
+  ]
+}
