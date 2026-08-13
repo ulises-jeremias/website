@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "normalizationVersion": 1,
+  "generatedBy": "pnpm data:create-awesome:refresh",
+  "notice": "DO NOT EDIT MANUALLY",
+  "families": [
+    {
+      "id": "node",
+      "adapter": "typed-intersection",
+      "repository": "Create-Node-App/cna-templates",
+      "commit": "4d2da834865272f5c89d9460e48596b504485c60",
+      "commitDate": "2026-08-06T15:25:34Z",
+      "registry": {
+        "path": "templates.json",
+        "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/4d2da834865272f5c89d9460e48596b504485c60/templates.json",
+        "gitBlobSha": "0d3f7cb5639a0594be8fbf403ea7b22b0c6b4ff6",
+        "sha256": "9389c8a99612f5cf38b052fcd07735fd1cc9a372da86486456bc84c6c6b8c0f2",
+        "cachePath": "node/templates.json"
+      },
+      "schema": {
+        "path": "templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/4d2da834865272f5c89d9460e48596b504485c60/templates.schema.json",
+        "gitBlobSha": "e1d66ac8691fffbe420ad04dbfcd0e0b9a52a7c7",
+        "sha256": "1a30f2205cd33cd9314688df9bc323bcc386e053d989cbbb0b5ac4dc2555703c",
+        "cachePath": "node/templates.schema.json"
+      },
+      "cliReference": {
+        "repository": "Create-Node-App/create-node-app",
+        "commit": "8ac56fc41d44222c0513f9003670aa7c1f29692a",
+        "commitDate": "2026-08-09T20:40:33Z"
+      },
+      "semanticReferences": [
+        {
+          "role": "cli-compatibility-reference",
+          "repository": "Create-Node-App/create-node-app",
+          "commit": "8ac56fc41d44222c0513f9003670aa7c1f29692a",
+          "commitDate": "2026-08-09T20:40:33Z",
+          "path": "packages/create-awesome-node-app/src/templates.ts",
+          "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/8ac56fc41d44222c0513f9003670aa7c1f29692a/packages/create-awesome-node-app/src/templates.ts",
+          "gitBlobSha": "f13173ff6df21020fa4332fba02e1bb6d09a38a7",
+          "sha256": "7f4403b0d3455c0c1cc12d753805fc7f81477a5830fa29e515fdee55d5acb419",
+          "cachePath": "node/semantic/cli-compatibility-reference.source"
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "adapter": "typed-intersection-with-all",
+      "repository": "Create-Python-App/cpa-templates",
+      "commit": "62aacc3ed77e012f01d8ea75c14c66c583fae5b3",
+      "commitDate": "2026-08-10T04:21:59Z",
+      "registry": {
+        "path": "templates.json",
+        "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/62aacc3ed77e012f01d8ea75c14c66c583fae5b3/templates.json",
+        "gitBlobSha": "836ee9e35d0f9efc69c250faa88185732ecac7f7",
+        "sha256": "6d593267719f750e4e5f71e031e5c5c473213bec95e8d3ec843a3fd42c0aff07",
+        "cachePath": "python/templates.json"
+      },
+      "schema": {
+        "path": "templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/62aacc3ed77e012f01d8ea75c14c66c583fae5b3/templates.schema.json",
+        "gitBlobSha": "43d2dc603d3786a909151785a35221f7495c0ed3",
+        "sha256": "b8eb428fb573a468270ed09036e319dd179b405df8231f0b862ae2e948ff90fd",
+        "cachePath": "python/templates.schema.json"
+      },
+      "cliReference": {
+        "repository": "Create-Python-App/create-python-app",
+        "commit": "6cd61c6599502c54ec2ca923a8f1478fce5b5e30",
+        "commitDate": "2026-08-09T06:18:50Z"
+      },
+      "semanticReferences": [
+        {
+          "role": "cli-compatibility-reference",
+          "repository": "Create-Python-App/create-python-app",
+          "commit": "6cd61c6599502c54ec2ca923a8f1478fce5b5e30",
+          "commitDate": "2026-08-09T06:18:50Z",
+          "path": "packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
+          "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/6cd61c6599502c54ec2ca923a8f1478fce5b5e30/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
+          "gitBlobSha": "30abd65b9d6dd2ef19c2e80392d0446a7cfa1f3d",
+          "sha256": "641fa27b2127fd306a5416c26c590af61dd526862d89fbef3b1b3f04cdad0c4c",
+          "cachePath": "python/semantic/cli-compatibility-reference.source"
+        }
+      ]
+    },
+    {
+      "id": "v",
+      "adapter": "explicit-compatible-with-or-all",
+      "repository": "Create-Vlang-App/cva-templates",
+      "commit": "e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c",
+      "commitDate": "2026-07-23T06:01:40Z",
+      "registry": {
+        "path": "templates.json",
+        "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/templates.json",
+        "gitBlobSha": "605c3e752151a4cc40faba51aeebd6e1e1860cd0",
+        "sha256": "bc86e9a4686fc24dd2a6bd4a3155e3ad63f29f90d2f03135f415f990e38ee221",
+        "cachePath": "v/templates.json"
+      },
+      "schema": {
+        "path": "templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/templates.schema.json",
+        "gitBlobSha": "6198718bccb7349b69a01a53e2e6e0d8c498c89e",
+        "sha256": "bf5dd490d8f34d85ab8465f129f4d11f019159fb983442772e0547cc804234af",
+        "cachePath": "v/templates.schema.json"
+      },
+      "cliReference": {
+        "repository": "Create-Vlang-App/create-vlang-app",
+        "commit": "c1983071857b4b63cb69243c21265540f1b170b4",
+        "commitDate": "2026-08-05T18:48:32Z"
+      },
+      "semanticReferences": [
+        {
+          "role": "cli-catalog-reference",
+          "repository": "Create-Vlang-App/create-vlang-app",
+          "commit": "c1983071857b4b63cb69243c21265540f1b170b4",
+          "commitDate": "2026-08-05T18:48:32Z",
+          "path": "modules/create_vlang_app_core/catalog.v",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/c1983071857b4b63cb69243c21265540f1b170b4/modules/create_vlang_app_core/catalog.v",
+          "gitBlobSha": "7c4e1c590c408685e402394658370f09da13d776",
+          "sha256": "f1264400f62a0d5ecfabebc332bb71a4c155c312f93186a03a5ea7a891bc72a5",
+          "cachePath": "v/semantic/cli-catalog-reference.source"
+        },
+        {
+          "role": "catalog-compatibility-reference",
+          "repository": "Create-Vlang-App/cva-templates",
+          "commit": "e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c",
+          "commitDate": "2026-07-23T06:01:40Z",
+          "path": "scripts/ci/registry.py",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e0db7569fbdca4b2974ec80ce1ba2f4dbfa3459c/scripts/ci/registry.py",
+          "gitBlobSha": "bb19f1793cae3cac883b92f5251b5d87173822a9",
+          "sha256": "f713740afa6961b8aa102d9889d5aa05659d00af1f0656cc162f631eb72dece8",
+          "cachePath": "v/semantic/catalog-compatibility-reference.source"
+        }
+      ]
+    }
+  ]
+}

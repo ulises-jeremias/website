@@ -149,3 +149,4 @@ worktrees
 Worktrees
 wsgi
 yazi
+zizmor

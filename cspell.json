@@ -28,8 +28,10 @@
     "docs/design/visual-first/toolkit-gate/**/*.json",
     "node_modules/**",
     "pnpm-lock.yaml",
+    "scripts/data/create-awesome/pinned/**",
     "src/data/generated/**",
-    "src/features/agent-toolkit/data/inventory.snapshot.json"
+    "src/features/agent-toolkit/data/inventory.snapshot.json",
+    "src/features/create-awesome/data/generated/compatibility.json"
   ],
   "words": [
     "astro",

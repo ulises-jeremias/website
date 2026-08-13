@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://www.ulises-jeremias.dev/schemas/create-awesome-compatibility-v1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "normalizationVersion", "generatedBy", "notice", "families"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "normalizationVersion": { "const": 1 },
+    "generatedBy": { "const": "pnpm data:create-awesome:refresh" },
+    "notice": { "const": "DO NOT EDIT MANUALLY" },
+    "families": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/definitions/family" }
+    }
+  },
+  "definitions": {
+    "sourceFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "url", "gitBlobSha", "sha256"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "pattern": "^https://raw\\.githubusercontent\\.com/[^/]+/[^/]+/[0-9a-f]{40}/" },
+        "gitBlobSha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "semanticReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "repository", "commit", "commitDate", "path", "url", "gitBlobSha", "sha256"],
+      "properties": {
+        "role": { "type": "string", "minLength": 1 },
+        "repository": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "commitDate": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "pattern": "^https://raw\\.githubusercontent\\.com/[^/]+/[^/]+/[0-9a-f]{40}/" },
+        "gitBlobSha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit", "commitDate", "registry", "schema", "cliReference", "semanticReferences"],
+      "properties": {
+        "repository": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "commitDate": { "type": "string", "minLength": 1 },
+        "registry": { "$ref": "#/definitions/sourceFile" },
+        "schema": { "$ref": "#/definitions/sourceFile" },
+        "cliReference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "commit", "commitDate"],
+          "properties": {
+            "repository": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+            "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "commitDate": { "type": "string", "minLength": 1 }
+          }
+        },
+        "semanticReferences": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/semanticReference" }
+        }
+      }
+    },
+    "template": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sourceId",
+        "sourceOrder",
+        "name",
+        "description",
+        "sourceUrl",
+        "category",
+        "labels",
+        "typeIds"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "sourceOrder": { "type": "integer", "minimum": 0 },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "sourceUrl": { "type": "string", "minLength": 1 },
+        "category": { "type": ["string", "null"] },
+        "labels": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "typeIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "addon": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sourceId",
+        "sourceOrder",
+        "name",
+        "description",
+        "sourceUrl",
+        "category",
+        "labels",
+        "typeIds",
+        "declaredCompatibleTemplateIds",
+        "compatibleTemplateIds",
+        "incompatibleTemplateIds",
+        "declaredIncompatibleAddonIds",
+        "incompatibleAddonIds"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "sourceId": { "type": "string", "minLength": 1 },
+        "sourceOrder": { "type": "integer", "minimum": 0 },
+        "name": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "sourceUrl": { "type": "string", "minLength": 1 },
+        "category": { "type": ["string", "null"] },
+        "labels": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "typeIds": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "declaredCompatibleTemplateIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "compatibleTemplateIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "incompatibleTemplateIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "declaredIncompatibleAddonIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "incompatibleAddonIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "adapter", "templates", "addons", "counts", "provenance"],
+      "properties": {
+        "id": { "enum": ["node", "python", "v"] },
+        "adapter": {
+          "enum": ["typed-intersection", "typed-intersection-with-all", "explicit-compatible-with-or-all"]
+        },
+        "templates": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/template" } },
+        "addons": { "type": "array", "items": { "$ref": "#/definitions/addon" } },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["templates", "addons", "compatibilityEdges"],
+          "properties": {
+            "templates": { "type": "integer", "minimum": 0 },
+            "addons": { "type": "integer", "minimum": 0 },
+            "compatibilityEdges": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "provenance": { "$ref": "#/definitions/provenance" }
+      }
+    }
+  }
+}
