@@ -252,3 +252,48 @@ test.describe('PR6 no-JavaScript diagram fallback', () => {
     });
   }
 });
+
+test.describe('static diagram and inspector semantics', () => {
+  test('keeps the Open Source constellation visual-only and public-facing', async ({ page }) => {
+    await page.goto('/open-source');
+
+    const constellation = page.getByTestId('oss-constellation');
+    const svg = constellation.locator('svg');
+    await expect(svg).toHaveAttribute('aria-hidden', 'true');
+    await expect(svg).toHaveAttribute('focusable', 'false');
+    await expect(svg.locator('[role], [tabindex], [aria-pressed]')).toHaveCount(0);
+    await expect(page.locator('body')).not.toContainText(
+      /EDITORIAL_USER_APPROVED|GENERATED_GITHUB_SOURCE|CANONICAL_PROJECT_SOURCE|DERIVED_BUILD_TIME/,
+    );
+    await expect(constellation.locator('time')).not.toContainText('T');
+  });
+
+  test('describes the V language rings without nested SVG controls', async ({ page }) => {
+    await page.goto('/v');
+
+    const scene = page.locator('[data-v-scene="v"]');
+    const svg = scene.locator('svg');
+    await expect(svg).toHaveAttribute('role', 'img');
+    await expect(svg).toHaveAttribute('aria-labelledby', 'v-scene-v-title v-scene-v-description');
+    await expect(svg.locator('[role="button"], [tabindex], [aria-pressed]')).toHaveCount(0);
+    await expect(scene.locator('[aria-live]')).toHaveCount(0);
+  });
+
+  for (const route of ['/dotfiles', '/agentic-workstation', '/create-awesome', '/community', '/v']) {
+    test(`${route} keeps full inspectors out of live regions`, async ({ page }) => {
+      await page.goto(route);
+      await expect(page.locator('.vf-inspector[aria-live]')).toHaveCount(0);
+    });
+  }
+
+  test('Agent Toolkit announces only a concise selected-family summary', async ({ page }) => {
+    await page.goto('/agent-toolkit');
+
+    await expect(page.locator('.atk-nexus__inspector')).not.toHaveAttribute('aria-live', /.+/);
+    const status = page.locator('[data-atk-family-status]');
+    await expect(status).toHaveAttribute('role', 'status');
+    await expect(status).toHaveAttribute('aria-atomic', 'true');
+    await page.locator('label[for="atk-family-agents"]').click();
+    await expect(status).toContainText('Capability family selected:');
+  });
+});

@@ -56,24 +56,24 @@ function primaryHref(project: Project): string {
         data-projects-group-section
       >
         <h3 id={`group-${bucket.id}`}>{bucket.label}</h3>
-        <div class="projects-ledger__table" role="table" aria-label={`${bucket.label} projects`}>
-          <div class="projects-ledger__row projects-ledger__row--head" role="row">
-            <span role="columnheader">Project</span>
-            <span role="columnheader">Status</span>
-            <span role="columnheader">Links</span>
+        <div class="projects-ledger__table">
+          <div class="projects-ledger__row projects-ledger__row--head" aria-hidden="true">
+            <span>Project</span>
+            <span>Status</span>
+            <span>Links</span>
           </div>
           {bucket.projects.map((p) => (
             <article
               class="projects-ledger__row"
-              role="row"
+              aria-labelledby={`project-${p.slug}-title`}
               data-status={p.status}
               data-visibility={p.visibility}
               data-testid="project-row"
               data-projects-row
               data-search={`${p.title} ${p.summary} ${p.tags.join(' ')} ${p.role} ${p.kind} ${p.slug}`}
             >
-              <div role="cell">
-                <h4>
+              <div>
+                <h4 id={`project-${p.slug}-title`}>
                   <a href={primaryHref(p)}>{p.title}</a>
                   {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
                 </h4>
@@ -91,7 +91,7 @@ function primaryHref(project: Project): string {
                   </p>
                 </details>
               </div>
-              <div role="cell">
+              <div>
                 <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>
                   {statusLabels[p.status]}
                 </span>
@@ -99,7 +99,7 @@ function primaryHref(project: Project): string {
                   {p.kind} · {roleLabels[p.role]} · <time datetime={p.lastVerified}>{p.lastVerified}</time>
                 </span>
               </div>
-              <div role="cell" class="projects-ledger__links">
+              <div class="projects-ledger__links">
                 {p.links.map((l) => (
                   <a
                     href={l.href}
@@ -118,6 +118,9 @@ function primaryHref(project: Project): string {
   }
 
   <p class="projects-ledger__empty" data-projects-empty hidden>No projects match this filter.</p>
+  <p class="visually-hidden" role="status" aria-atomic="true" data-projects-status>
+    {ledgerProjects.length} projects shown.
+  </p>
 </section>
 
 <script>
@@ -129,9 +132,11 @@ function primaryHref(project: Project): string {
     const rows = [...ledger.querySelectorAll('[data-projects-row]')];
     const sections = [...ledger.querySelectorAll('[data-projects-group-section]')];
     const empty = ledger.querySelector('[data-projects-empty]');
+    const status = ledger.querySelector('[data-projects-status]');
 
-    const apply = () => {
-      const q = (query instanceof HTMLInputElement ? query.value : '').trim().toLowerCase();
+    const apply = (updateUrl = true) => {
+      const rawQuery = (query instanceof HTMLInputElement ? query.value : '').trim();
+      const q = rawQuery.toLowerCase();
       const g = group instanceof HTMLSelectElement ? group.value : '';
       let visible = 0;
 
@@ -154,10 +159,33 @@ function primaryHref(project: Project): string {
       }
 
       empty?.toggleAttribute('hidden', visible > 0);
+      if (status) status.textContent = `${visible} ${visible === 1 ? 'project' : 'projects'} shown.`;
+
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (rawQuery) url.searchParams.set('q', rawQuery);
+        else url.searchParams.delete('q');
+        if (g) url.searchParams.set('group', g);
+        else url.searchParams.delete('group');
+        window.history.replaceState({}, '', url);
+      }
     };
 
-    root.addEventListener('input', apply);
-    root.addEventListener('change', apply);
+    root.addEventListener('input', () => apply());
+    root.addEventListener('change', () => apply());
+
+    const restoreFromUrl = () => {
+      const params = new URL(window.location.href).searchParams;
+      if (query instanceof HTMLInputElement) query.value = params.get('q') ?? '';
+      if (group instanceof HTMLSelectElement) {
+        const requested = params.get('group') ?? '';
+        group.value = [...group.options].some((option) => option.value === requested) ? requested : '';
+      }
+      apply(false);
+    };
+
+    window.addEventListener('popstate', restoreFromUrl);
+    restoreFromUrl();
   }
 </script>
 
@@ -288,7 +316,11 @@ function primaryHref(project: Project): string {
   .projects-ledger__row h4 a:hover,
   .projects-ledger__row h4 a:focus-visible {
     color: var(--nest-cyan);
-    outline: none;
+  }
+
+  .projects-ledger__row h4 a:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
   }
 
   .projects-ledger__world-tag {

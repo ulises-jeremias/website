@@ -56,6 +56,54 @@ test.describe('PR 2 value and group semantics', () => {
     await expect(meter).toHaveAttribute('aria-value' + 'text', 'Step 4/6');
     await expect(meter.locator('[data-vf-meter-value]')).toHaveText('Step 4/6');
   });
+
+  test('exposes the Projects ledger as named articles rather than a fake table', async ({ page }) => {
+    await page.goto('/projects');
+
+    const ledger = page.getByTestId('projects-ledger');
+    await expect(ledger.locator('[role="table"], [role="row"], [role="cell"], [role="columnheader"]')).toHaveCount(0);
+    const articles = ledger.locator('article');
+    expect(await articles.count()).toBeGreaterThan(0);
+    for (const article of await articles.all()) {
+      await expect(article).toHaveAttribute('aria-labelledby', /project-.+-title/);
+      await expect(article.locator('h4[id]')).toHaveCount(1);
+    }
+  });
+
+  test('restores high-contrast focus on atlas and project links', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' });
+
+    for (const target of [
+      { route: '/', selector: '.atlas-world' },
+      { route: '/projects', selector: '.archipelago__link' },
+      { route: '/projects', selector: '.projects-ledger__row h4 a' },
+    ]) {
+      await page.goto(target.route);
+      const link = page.locator(target.selector).first();
+      await link.focus();
+      const outline = await link.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return { style: style.outlineStyle, width: Number.parseFloat(style.outlineWidth) };
+      });
+      expect(outline.style).not.toBe('none');
+      expect(outline.width).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  test('outlines the visible Agent Toolkit family proxy in forced colors', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' });
+    await page.goto('/agent-toolkit');
+
+    await page.locator('#atk-family-agents').focus();
+    const outline = await page.locator('label[for="atk-family-agents"]').evaluate((element) => {
+      const style = getComputedStyle(element);
+      return { style: style.outlineStyle, width: Number.parseFloat(style.outlineWidth) };
+    });
+    expect(outline.style).not.toBe('none');
+    expect(outline.width).toBeGreaterThanOrEqual(2);
+  });
 });
 
 test.describe('PR 2 keyboard-scrollable install code', () => {

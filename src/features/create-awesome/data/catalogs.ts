@@ -74,6 +74,9 @@ const projectedFamilyCatalogs: Partial<Record<VariantId, FamilyCatalog>> = Objec
         name: id === 'v' ? humanizeVId(addon.name) : addon.name,
         description: conciseDescription(addon.description),
         category: presentationCategory(id, addon.category, addon.labels),
+        labels: [...addon.labels],
+        compatibleTemplateIds: [...addon.compatibleTemplateIds],
+        incompatibleAddonIds: [...addon.incompatibleAddonIds],
       }));
 
     return [

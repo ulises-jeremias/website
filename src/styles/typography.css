@@ -3,8 +3,8 @@
  */
 
 :root {
-  /* ZIP fidelity: JetBrains Mono for UI chrome; Orbitron for display identity */
-  --font-sans: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', menlo, monaco, consolas, 'Liberation Mono', monospace;
+  /* Proportional reading, Orbitron display identity, and JetBrains Mono utility/code. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
   --font-display: 'Orbitron', ui-sans-serif, system-ui, sans-serif;
   --font-sans-display: var(--font-display);
   --font-serif: ui-serif, georgia, cambria, 'Times New Roman', times, serif;
@@ -195,7 +195,7 @@ pre {
 }
 
 code {
-  font-size: var(--text-code);
+  font-size: max(0.75rem, var(--text-code));
   font-weight: var(--weight-medium);
   padding: 0.125em 0.3em;
   border-radius: var(--radius-sm);

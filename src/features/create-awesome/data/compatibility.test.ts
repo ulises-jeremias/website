@@ -6,8 +6,22 @@ import {
   isTemplateAddonCompatible,
   validateComposition,
 } from './compatibility.js';
+import { compositionExamples } from './index.js';
 
 describe('pinned Create Awesome compatibility data', () => {
+  it('keeps every published composition example valid against the pinned snapshot', () => {
+    for (const example of compositionExamples) {
+      expect(
+        validateComposition({
+          familyId: example.variant,
+          templateId: example.template,
+          addonIds: example.addons,
+        }),
+        example.id,
+      ).toEqual({ valid: true, issues: [] });
+    }
+  });
+
   it('pins exactly the three supported families', () => {
     expect(createAwesomeCompatibilitySnapshot.families.map((family) => family.id).sort()).toEqual([
       'node',
@@ -45,6 +59,12 @@ describe('pinned Create Awesome compatibility data', () => {
       expect(familyCatalogs[family.id].templateCount).toBe(expectedTemplates.length);
       expect(familyCatalogs[family.id].addonCount).toBe(expectedAddons.length);
       expect(familyCatalogs[family.id].source).toContain(`/${family.provenance.commit}/`);
+      for (const projectedAddon of familyCatalogs[family.id].addons) {
+        const sourceAddon = family.addons.find((addon) => addon.id === projectedAddon.id)!;
+        expect(projectedAddon.labels).toEqual(sourceAddon.labels);
+        expect(projectedAddon.compatibleTemplateIds).toEqual(sourceAddon.compatibleTemplateIds);
+        expect(projectedAddon.incompatibleAddonIds).toEqual(sourceAddon.incompatibleAddonIds);
+      }
     }
   });
 

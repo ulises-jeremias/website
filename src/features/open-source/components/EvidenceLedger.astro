@@ -1,5 +1,10 @@
 ---
-import { evidenceItems, getEvidenceNotes } from '@/data/open-source/index.js';
+import {
+  evidenceItems,
+  getEvidenceKindLabel,
+  getEvidenceNotes,
+  getEvidenceProvenanceLabel,
+} from '@/data/open-source/index.js';
 
 const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 ---
@@ -18,11 +23,11 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
     {
       evidenceItems.map((row) => (
         <li class="oss-ledger__row">
-          <span class="oss-ledger__kind">{row.kind}</span>
+          <span class="oss-ledger__kind">{getEvidenceKindLabel(row.kind)}</span>
           <span>{row.subject}</span>
           <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
           <a href={row.href} target="_blank" rel="noreferrer" data-testid="oss-row">
-            {row.provenance} ↗
+            {getEvidenceProvenanceLabel(row.provenance)} ↗
           </a>
         </li>
       ))

@@ -133,7 +133,7 @@ const lineModules = [
       </div>
     </div>
 
-    <SceneInspector eyebrow="Runtime" title={defaultStation.title} id="ca-runtime-inspector">
+    <SceneInspector eyebrow="Runtime" title={defaultStation.title} id="ca-runtime-inspector" headingLevel={2}>
       <p data-ca-inspector-body>{defaultStation.description}</p>
       <Fragment slot="meta">
         <span data-ca-inspector-status>
@@ -527,6 +527,7 @@ const lineModules = [
 
   .ca-table-wrap table {
     width: 100%;
+    min-width: 36rem;
     border-collapse: collapse;
     font-size: 0.8rem;
   }

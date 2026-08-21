@@ -105,7 +105,7 @@ const defaultLayer = workstationLayers[1]!;
 >
   <header class="ws-map__header">
     <p class="ws-map__eyebrow">Workstation System Map</p>
-    <h1 id="ws-map-title">Boot the Workstation</h1>
+    <h1 id="ws-map-title">Agentic Workstation</h1>
     <p class="ws-map__lede">
       Fresh → Profile → Provision → Doctor, with optional Toolkit capability integration and persistent Harness context.
     </p>
@@ -204,7 +204,13 @@ const defaultLayer = workstationLayers[1]!;
       </noscript>
     </div>
 
-    <SceneInspector eyebrow="Responsibility" title={defaultLayer.title} id="ws-layer-inspector" live={false}>
+    <SceneInspector
+      eyebrow="Responsibility"
+      title={defaultLayer.title}
+      id="ws-layer-inspector"
+      live={false}
+      headingLevel={2}
+    >
       <p data-layer-copy>{defaultLayer.description}</p>
       <Fragment slot="meta">
         <div data-layer-meta>

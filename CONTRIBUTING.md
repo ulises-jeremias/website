@@ -44,6 +44,8 @@ Tooling is pre-configured: Husky pre-commit/pre-push, lint-staged, commitlint, c
 | `pnpm format` / `pnpm format:check`                    | Prettier (astro plugin)     |
 | `pnpm type-check`                                      | `astro check` (ts + .astro) |
 | `pnpm test` / `pnpm test:watch` / `pnpm test:coverage` | Vitest                      |
+| `pnpm test:visual` / `pnpm test:visual:harness`        | Playwright browser quality  |
+| `pnpm performance:check`                               | Route delivery budgets      |
 | `pnpm cspell`                                          | Spell check                 |
 | `pnpm knip`                                            | Unused code detection       |
 
@@ -142,9 +144,13 @@ docs(structure): update feature template guide
 pnpm test            # run
 pnpm test:watch      # watch
 pnpm test:coverage   # coverage (thresholds: lines 25%, branches 30%)
+pnpm performance:check
+pnpm test:visual
 ```
 
-Coverage is uploaded to Codecov via CI (optional token). Add tests for business logic; snapshot/profile critical UI manually.
+Coverage is uploaded to Codecov via CI (optional token). Chromium owns visual
+goldens; Firefox and WebKit provide route smoke coverage. Refresh visual baselines
+only after reviewing the rendered change.
 
 ## Documentation
 
@@ -156,6 +162,7 @@ Coverage is uploaded to Codecov via CI (optional token). Add tests for business 
 - [ ] `pnpm lint` and `pnpm type-check` pass
 - [ ] `pnpm test` passes (or reason documented)
 - [ ] `pnpm build` succeeds
+- [ ] `pnpm performance:check` and relevant Playwright tests pass
 - [ ] `pnpm format:check` passes (or run `pnpm format`)
 - [ ] Branch up-to-date with `main`
 - [ ] PR is small and focused (<400 lines ideal)

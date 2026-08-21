@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-const outDir = path.join('docs', 'design', 'final', '2026-08-07-zip');
+const outDir = path.join('test-results', 'uiux-review');
 
 const captures: Array<{ path: string; name: string; width: number; height: number; fullPage?: boolean }> = [
   { path: '/', name: 'home/desktop', width: 1440, height: 1100 },
@@ -31,7 +31,7 @@ const captures: Array<{ path: string; name: string; width: number; height: numbe
   { path: '/404.html', name: 'routes/404', width: 390, height: 844 },
 ];
 
-test('capture ZIP-fidelity final screenshots', async ({ page }) => {
+test('capture current UI/UX review package without changing canonical goldens', async ({ page }) => {
   await mkdir(path.join(outDir, 'home'), { recursive: true });
   await mkdir(path.join(outDir, 'routes'), { recursive: true });
   await page.emulateMedia({ reducedMotion: 'reduce' });

@@ -76,6 +76,8 @@ if (hasPost) {
   theme="blog"
   world="Blog"
   canonical={canonical}
+  ogImage={hasPost ? post.data.ogImage : undefined}
+  ogImageAlt={hasPost ? post.data.ogImageAlt : undefined}
   ogType={ogType}
   jsonLd={articleJsonLd}
 >

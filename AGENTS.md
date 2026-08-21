@@ -24,6 +24,8 @@ This file is scoped for AI assistants (Cursor, Copilot Chat, PR bots). Humans: r
 | `pnpm format` / `pnpm format:check` | Prettier (astro plugin)            |
 | `pnpm type-check`                   | `astro check`                      |
 | `pnpm test` / `pnpm test:coverage`  | Vitest (jsdom, coverage 25% lines) |
+| `pnpm test:visual`                  | Playwright browser quality         |
+| `pnpm performance:check`            | Route delivery budgets             |
 | `pnpm cspell`                       | Spell check                        |
 
 Use `pnpm` only — `npm`/`yarn` are not supported (`packageManager: pnpm@10.28.1`).

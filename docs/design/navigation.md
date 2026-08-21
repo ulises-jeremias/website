@@ -1,7 +1,13 @@
 # Navigation — desktop and mobile
 
+> **Historical specification:** This document describes the pre-implementation
+> nine-world navigation proposal. The maintained compact projection is defined by
+> `src/data/routes.ts` and locked by `src/data/routes.test.ts` and
+> `src/shared/components/site-shell.test.ts`. See `docs/design/current/README.md`
+> before changing navigation behavior.
+
 - **Scope**: Epic B — B-03 (desktop) + B-04 (mobile)
-- **Status**: Spec (pre-implementation tokens)
+- **Status**: Historical spec (superseded by the maintained compact projection)
 - **Related**: `docs/adr/ADR-001-route-map.md`, `src/data/project-worlds.ts`, `src/shared/components/Header.astro`, `src/shared/components/MobileNav.astro`
 - **Tokens**: preliminary — see `src/styles/tokens.css` (Epic C owns final palette); this spec uses token names, not hard values
 

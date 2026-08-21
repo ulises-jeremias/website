@@ -102,7 +102,7 @@ describe('Synthwave Systems Atlas homepage', () => {
     ).join('\n');
 
     expect(evidence).toContain('nestStatus');
-    expect(evidence).toContain('nest-status__spark');
+    expect(evidence).not.toContain('nest-status__spark');
     expect(evidence).toContain("from '@/data/profile");
     expect(evidence).toContain('featuredProjectLedger');
     expect(evidence).not.toMatch(/commits|stars|downloads|coffee|generated portrait/i);

@@ -14,6 +14,8 @@ const rest = screenshotItems.slice(1);
   <figure class="df-gallery__hero">
     <img
       src={hero.src}
+      srcset={hero.srcSet}
+      sizes="(min-width: 1184px) 74rem, calc(100vw - 3rem)"
       alt={hero.alt}
       width={hero.width}
       height={hero.height}
@@ -37,13 +39,23 @@ const rest = screenshotItems.slice(1);
             aria-pressed={i === 0 ? 'true' : 'false'}
             data-gallery-id={shot.id}
             data-src={shot.src}
+            data-srcset={shot.srcSet}
             data-alt={shot.alt}
             data-caption={shot.caption}
             data-credit={shot.credit}
             data-w={String(shot.width)}
             data-h={String(shot.height)}
           >
-            <img src={shot.src} alt="" width="160" height="90" loading="lazy" decoding="async" />
+            <img
+              src={shot.src}
+              srcset={shot.srcSet}
+              sizes="160px"
+              alt=""
+              width="160"
+              height="90"
+              loading="lazy"
+              decoding="async"
+            />
             <span>{shot.caption}</span>
           </button>
         </li>
@@ -68,6 +80,7 @@ const rest = screenshotItems.slice(1);
       thumbs.forEach((t) => t.setAttribute('aria-pressed', t === btn ? 'true' : 'false'));
       if (main) {
         main.src = btn.dataset.src || main.src;
+        main.srcset = btn.dataset.srcset || '';
         main.alt = btn.dataset.alt || '';
         if (btn.dataset.w) main.width = Number(btn.dataset.w);
         if (btn.dataset.h) main.height = Number(btn.dataset.h);
@@ -105,7 +118,7 @@ const rest = screenshotItems.slice(1);
   .df-gallery__eyebrow {
     margin: 0 0 0.25rem;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: #ffb0ca;
@@ -147,7 +160,7 @@ const rest = screenshotItems.slice(1);
 
   .df-gallery__credit {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     color: #c9a8b2;
   }
 
@@ -195,7 +208,7 @@ const rest = screenshotItems.slice(1);
   }
 
   .df-gallery__thumb span {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     line-height: 1.3;
     font-family: var(--font-mono);
     letter-spacing: 0.02em;
@@ -215,6 +228,6 @@ const rest = screenshotItems.slice(1);
 
   .df-gallery__note code {
     color: #ffb0ca;
-    font-size: 0.9em;
+    font-size: inherit;
   }
 </style>

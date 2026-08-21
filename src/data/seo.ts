@@ -2,6 +2,9 @@ import { profile } from './profile.js';
 import { getCanonicalUrl, getRouteByPath, getSiteUrl, type RouteMeta } from './routes.js';
 import {
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
   PRODUCTION_SITE_URL,
   SITE_AUTHOR,
   SITE_LOCALE,
@@ -16,6 +19,7 @@ export type PageSeoInput = {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   noIndex?: boolean;
   world?: string;
   siteUrl?: string;
@@ -27,6 +31,9 @@ export type PageSeo = {
   description: string;
   canonical: string;
   ogImage: string;
+  ogImageAlt: string;
+  ogImageWidth: number;
+  ogImageHeight: number;
   ogType: 'website' | 'article' | 'profile';
   robots: string;
   themeColor: string;
@@ -89,6 +96,7 @@ export function buildPageSeo(input: PageSeoInput): PageSeo {
   const description = input.description ?? route?.description ?? profile.summary;
   const canonical = input.canonical ?? getCanonicalUrl(input.path, siteUrl);
   const ogImage = absolutize(input.ogImage ?? route?.ogImage ?? DEFAULT_OG_IMAGE, siteUrl);
+  const ogImageAlt = input.ogImageAlt ?? route?.ogImageAlt ?? DEFAULT_OG_IMAGE_ALT;
   const noIndex = input.noIndex ?? route?.noIndex ?? false;
   const ogType = input.type ?? (input.path === '/' ? 'website' : 'website');
 
@@ -104,6 +112,9 @@ export function buildPageSeo(input: PageSeoInput): PageSeo {
     description,
     canonical,
     ogImage,
+    ogImageAlt,
+    ogImageWidth: OG_IMAGE_WIDTH,
+    ogImageHeight: OG_IMAGE_HEIGHT,
     ogType,
     robots: noIndex ? 'noindex, nofollow' : 'index, follow',
     themeColor: SITE_THEME_COLOR,

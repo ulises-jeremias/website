@@ -1,5 +1,6 @@
 {
   "entry": ["src/**/*.{js,ts,astro}", "astro.config.mjs"],
   "project": ["src/**/*.{js,ts,astro}", "astro.config.mjs", "vitest.config.ts"],
+  "ignoreBinaries": ["fc-match"],
   "ignoreDependencies": ["eslint-config-prettier"]
 }

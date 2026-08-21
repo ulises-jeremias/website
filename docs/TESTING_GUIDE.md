@@ -64,21 +64,57 @@ Guidelines:
 3. Run `pnpm test:coverage` and ensure thresholds pass.
 4. Update this doc if you add integration or E2E tests (Playwright).
 
-## Future: E2E
+## Browser and visual tests
 
 Visual and shell smoke coverage lives under `tests/visual/` and runs with Playwright:
 
 ```sh
 pnpm test:visual:update   # build static output, own the server, and write baselines
 pnpm test:visual          # build static output, own the server, and compare baselines
+pnpm test:visual:harness  # verify the isolated production-server contract
 ```
 
-Config: `playwright.config.ts` (Chromium, dark scheme, and a Playwright-owned static
-`dist/` server on `127.0.0.1:4173`). Visual runs never reuse an existing server. If
-the port is occupied, the run fails instead of attaching to an ambiguous app or
-worktree. Set `VISUAL_TEST_PORT` to an unused port when running visual suites from
-multiple worktrees concurrently.
+Config: `playwright.config.ts` uses Chromium for maintained visual goldens and
+Firefox/WebKit for route smoke coverage. The suite owns a static `dist/` server on
+`127.0.0.1:4173` and never reuses an existing server. If the port is occupied, the
+run fails instead of attaching to an ambiguous app or worktree. Set
+`VISUAL_TEST_PORT` to an unused port when running visual suites from multiple
+worktrees concurrently.
+
+Normal browser runs write current desktop and mobile review captures under
+`test-results/uiux-review/`. CI uploads this ignored directory for human review.
+Only `test:visual:update` may change maintained goldens, and only after the
+product owner approves the review package.
 
 Do not start `astro dev` or `astro preview` for these commands. The harness builds
 the current worktree, verifies that the served root document matches that build,
 and rejects Astro/Vite development-toolbar artifacts before tests begin.
+
+Install the pinned browser binaries before a local run:
+
+```sh
+pnpm exec playwright install chromium firefox webkit
+```
+
+Linux CI uses `--with-deps` so WebKit receives its host libraries. A browser that
+cannot launch is an untested environment, not a passing result.
+
+## Route performance budgets
+
+Route budgets measure a fresh browser context at 390x844 and 1440x1000. Text
+resources use deterministic gzip size; images and fonts use their already
+compressed source bytes.
+
+```sh
+pnpm performance:check      # build and enforce config/route-budgets.json
+pnpm performance:baseline   # intentionally refresh the reviewed baseline
+pnpm lighthouse:ci          # mobile lab audit for all public routes
+```
+
+The accepted measurement artifact lives at
+`docs/design/current/performance-baseline.json`. Do not refresh it merely to make
+CI green; investigate the changed route and adjust a limit only with evidence.
+Lighthouse reports are written to `.lighthouse/reports` and uploaded by the
+browser-quality workflow. Accessibility, best-practices, and SEO scores are
+required; performance and Web Vitals thresholds are warning-level lab signals
+because field Core Web Vitals are not available for this static pre-release.

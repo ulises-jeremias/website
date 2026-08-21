@@ -21,8 +21,8 @@ const islands = worldPointerProjects.map((project, index) => ({
 <section class="archipelago" aria-labelledby="archipelago-title" data-testid="projects-archipelago">
   <div class="archipelago__intro">
     <p class="archipelago__eyebrow">Projects · archipelago</p>
-    <h1 id="archipelago-title">World islands, then the ledger</h1>
-    <p class="archipelago__lede">World islands first. Full ledger below.</p>
+    <h1 id="archipelago-title">Projects</h1>
+    <p class="archipelago__lede">Project worlds first. Curated additional and archived work in the ledger below.</p>
   </div>
 
   <ul class="archipelago__map" role="list">
@@ -121,9 +121,13 @@ const islands = worldPointerProjects.map((project, index) => ({
 
   .archipelago__link:hover,
   .archipelago__link:focus-visible {
-    outline: none;
     transform: translateY(-3px);
     color: var(--nest-cyan);
+  }
+
+  .archipelago__link:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
   }
 
   .archipelago__link:focus-visible .archipelago__art {

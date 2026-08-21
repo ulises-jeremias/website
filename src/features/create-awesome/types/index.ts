@@ -13,6 +13,9 @@ export interface AddonSummary {
   name: string;
   description: string;
   category: 'styling' | 'tooling' | 'data' | 'deploy';
+  labels: string[];
+  compatibleTemplateIds: string[];
+  incompatibleAddonIds: string[];
 }
 
 export interface DistributionChannel {

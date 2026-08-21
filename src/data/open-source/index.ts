@@ -16,7 +16,6 @@ function applyOverrides(items: EvidenceItem[]): EvidenceItem[] {
         role: override.role ?? item.role,
         summary: override.summary ?? item.summary,
         evidence: override.evidence ?? item.evidence,
-        provenance: item.provenance === 'GENERATED_GITHUB_SOURCE' ? item.provenance : item.provenance,
       };
     })
     .filter((item) => !item.hidden);
@@ -38,6 +37,38 @@ export const evidenceByKind: Record<EvidenceKind, EvidenceItem[]> = {
 
 export function getEvidenceLastUpdated(): string {
   return parsedCache.generatedAt;
+}
+
+const evidenceKindLabels: Record<EvidenceKind, string> = {
+  owned: 'Owned project',
+  maintained: 'Maintained project',
+  org: 'Organization work',
+  external: 'External contribution',
+};
+
+const evidenceProvenanceLabels: Record<EvidenceItem['provenance'], string> = {
+  GENERATED_GITHUB_SOURCE: 'GitHub source',
+  EDITORIAL_USER_APPROVED: 'Reviewed evidence',
+  CANONICAL_PROJECT_SOURCE: 'Canonical project source',
+  DERIVED_BUILD_TIME: 'Derived from source',
+};
+
+export function getEvidenceKindLabel(kind: EvidenceKind): string {
+  return evidenceKindLabels[kind];
+}
+
+export function getEvidenceProvenanceLabel(provenance: EvidenceItem['provenance']): string {
+  return evidenceProvenanceLabels[provenance];
+}
+
+export function formatEvidenceDate(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Date unavailable';
+
+  return new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'medium',
+    timeZone: 'UTC',
+  }).format(date);
 }
 
 export function getEvidenceNotes(): string[] {

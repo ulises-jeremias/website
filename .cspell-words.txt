@@ -1,4 +1,5 @@
 archivados
+apos
 astro
 authkit
 Autodetecta
@@ -7,6 +8,7 @@ autoplay
 autoplayed
 backprop
 blas
+blinkmacsystemfont
 Blurple
 btop
 caelestia
@@ -71,6 +73,7 @@ lede
 libadwaita
 logits
 LSTM
+magick
 materialyoucolor
 matmul
 Menlo
@@ -81,6 +84,7 @@ networkidle
 nombre
 nord
 noscript
+Noto
 oneline
 opencode
 orbitron
@@ -93,6 +97,7 @@ pipx
 pline
 Plotly
 pmuted
+pointsize
 Powerlevel
 prebuilts
 Preferido

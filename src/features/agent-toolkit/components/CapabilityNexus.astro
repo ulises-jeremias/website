@@ -113,7 +113,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       </div>
     </div>
 
-    <aside class="atk-nexus__inspector" aria-live="polite">
+    <aside class="atk-nexus__inspector">
       {
         capabilityNodes.map((node, index) => (
           <div
@@ -172,6 +172,8 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       </p>
     </aside>
   </div>
+
+  <p class="visually-hidden" role="status" aria-atomic="true" data-atk-family-status></p>
 
   <noscript>
     <p class="atk-nexus__noscript">
@@ -350,7 +352,8 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     color: var(--nest-paper);
     border-color: var(--node-color, var(--nest-magenta));
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--node-color, var(--nest-magenta)) 45%, transparent);
-    outline: none;
+    outline: 2px solid var(--node-color, var(--nest-magenta));
+    outline-offset: 2px;
   }
 
   .atk-nexus__inspector {
@@ -527,6 +530,12 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       animation: none !important;
     }
   }
+
+  @media (forced-colors: active) {
+    .atk-nexus__radio:focus-visible + .atk-nexus__chip {
+      outline-color: Highlight;
+    }
+  }
 </style>
 
 <script>
@@ -536,6 +545,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     const marks = Array.from(root.querySelectorAll<SVGElement>('[data-family-mark]'));
     const packets = Array.from(root.querySelectorAll<SVGCircleElement>('.atk-nexus__packet'));
     const targets = Array.from(root.querySelectorAll<SVGGElement>('.atk-nexus__target'));
+    const status = root.querySelector<HTMLElement>('[data-atk-family-status]');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const visual = root.querySelector<HTMLElement>('.atk-nexus__visual');
 
@@ -548,7 +558,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       window.setTimeout(() => visual.classList.remove('is-beaming'), 2000);
     };
 
-    const setFamily = (id: string) => {
+    const setFamily = (id: string, announce = false) => {
       panels.forEach((panel) => {
         const active = panel.dataset.familyPanel === id;
         panel.hidden = !active;
@@ -563,6 +573,11 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       });
       targets.forEach((t) => t.classList.add('is-verified'));
       pulseBeamsOnce();
+      if (announce && status) {
+        const selected = radios.find((radio) => radio.value === id);
+        const label = selected ? root.querySelector(`label[for="${selected.id}"]`)?.textContent?.trim() : id;
+        status.textContent = `Capability family selected: ${label ?? id}.`;
+      }
       if (!reduce && packets.length && targets.length && 'animate' in packets[0]!) {
         packets.forEach((packet, index) => {
           const target = targets[index % targets.length]!;
@@ -584,7 +599,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
 
     radios.forEach((radio) => {
       radio.addEventListener('change', () => {
-        if (radio.checked) setFamily(radio.value);
+        if (radio.checked) setFamily(radio.value, true);
       });
     });
 

@@ -4,14 +4,23 @@ export interface Props {
   title: string;
   id?: string;
   live?: boolean;
+  headingLevel?: 2 | 3 | 4;
 }
 
-const { eyebrow = 'Inspector', title, id, live = true } = Astro.props;
+const { eyebrow = 'Inspector', title, id, live = false, headingLevel = 3 } = Astro.props;
 ---
 
 <aside class="vf-inspector" id={id} aria-live={live ? 'polite' : undefined}>
   {eyebrow ? <p class="vf-inspector__eyebrow">{eyebrow}</p> : null}
-  <h3 class="vf-inspector__title">{title}</h3>
+  {
+    headingLevel === 2 ? (
+      <h2 class="vf-inspector__title">{title}</h2>
+    ) : headingLevel === 4 ? (
+      <h4 class="vf-inspector__title">{title}</h4>
+    ) : (
+      <h3 class="vf-inspector__title">{title}</h3>
+    )
+  }
   <div class="vf-inspector__body">
     <slot />
   </div>

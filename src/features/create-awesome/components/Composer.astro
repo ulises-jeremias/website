@@ -1,5 +1,5 @@
 ---
-import { catalogTotals, variants } from '../data/index.js';
+import { catalogTotals, compositionExamples, variants } from '../data/index.js';
 import { buildCreateAwesomeCommand, DEFAULT_PROJECT_NAME } from '../lib/buildCommand.js';
 
 interface Props {
@@ -28,6 +28,13 @@ const staticFamilies = variants.map((variant) => ({
   baseExample: variant.id === 'v' ? 'create-vlang-app my-app' : variant.install,
   exampleNote: variant.id === 'v' ? 'after installing the CLI' : 'no template or addons selected',
 }));
+
+const addonCategories = [
+  { id: 'styling', label: 'Styling and UI' },
+  { id: 'data', label: 'Data and integration' },
+  { id: 'deploy', label: 'Deployment' },
+  { id: 'tooling', label: 'Tooling and quality' },
+] as const;
 
 const composerBootstrap = {
   defaultProjectName: DEFAULT_PROJECT_NAME,
@@ -158,14 +165,64 @@ const composerBootstrap = {
               ))}
             </select>
           </label>
+          <div class="ca-composer__addon-tools">
+            <label class="ca-composer__addon-search">
+              Search addons
+              <input
+                type="search"
+                autocomplete="off"
+                placeholder={`Filter ${variant.label} addons`}
+                data-ca-addon-search={variant.id}
+              />
+            </label>
+            <div class="ca-composer__presets" role="group" aria-label={`${variant.label} presets`}>
+              {compositionExamples
+                .filter((example) => example.variant === variant.id)
+                .map((example) => (
+                  <button
+                    type="button"
+                    data-ca-preset={example.id}
+                    data-template={example.template}
+                    data-addons={JSON.stringify(example.addons)}
+                  >
+                    {example.title}
+                  </button>
+                ))}
+            </div>
+          </div>
           <fieldset class="ca-composer__addons">
             <legend>Addons ({variant.addons.length})</legend>
-            {variant.addons.map((addon) => (
-              <label title={addon.description}>
-                <input type="checkbox" name={`addon-${variant.id}`} value={addon.id} data-ca-addon />
-                <code>{addon.id}</code>
-              </label>
-            ))}
+            {addonCategories.map((category) => {
+              const addons = variant.addons.filter((addon) => addon.category === category.id);
+              if (addons.length === 0) return null;
+
+              return (
+                <section class="ca-composer__addon-group" data-ca-addon-group>
+                  <h3>{category.label}</h3>
+                  <div>
+                    {addons.map((addon) => (
+                      <label
+                        data-ca-addon-row
+                        data-addon-search={`${addon.id} ${addon.name} ${addon.description} ${addon.labels.join(' ')}`}
+                      >
+                        <input
+                          type="checkbox"
+                          name={`addon-${variant.id}`}
+                          value={addon.id}
+                          data-ca-addon
+                          data-compatible-templates={JSON.stringify(addon.compatibleTemplateIds)}
+                          data-incompatible-addons={JSON.stringify(addon.incompatibleAddonIds)}
+                        />
+                        <span>
+                          <code>{addon.id}</code>
+                          <small>{addon.description}</small>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
           </fieldset>
         </div>
       ))
@@ -174,7 +231,9 @@ const composerBootstrap = {
     <p class="ca-composer__preview">
       <span>Composable command</span>
       <code data-ca-command>{initialCommand}</code>
+      <button type="button" data-ca-command-copy hidden>Copy command</button>
     </p>
+    <p class="visually-hidden" role="status" aria-atomic="true" data-ca-composer-status></p>
   </form>
 </section>
 
@@ -237,6 +296,119 @@ const composerBootstrap = {
         .filter(Boolean);
     }
 
+    function parseList(value) {
+      try {
+        const parsed = JSON.parse(value || '[]');
+        return Array.isArray(parsed)
+          ? parsed.filter(function (item) {
+              return typeof item === 'string';
+            })
+          : [];
+      } catch (_err) {
+        return [];
+      }
+    }
+
+    function familyFor(element) {
+      const panel = element && element.closest ? element.closest('[data-ca-panel]') : null;
+      return panel ? panel.getAttribute('data-ca-panel') : activeFamily();
+    }
+
+    function setStatus(message) {
+      const status = form.querySelector('[data-ca-composer-status]');
+      if (status) status.textContent = message;
+    }
+
+    function applyCompatibility(family, preferredAddon) {
+      const panel = form.querySelector('[data-ca-panel="' + family + '"]');
+      if (!panel) return [];
+
+      const template = selectedTemplate(family);
+      const inputs = Array.prototype.slice.call(panel.querySelectorAll('[data-ca-addon]'));
+      const byId = new Map(
+        inputs.map(function (input) {
+          return [input.value, input];
+        }),
+      );
+      const removed = [];
+
+      if (preferredAddon) {
+        const preferred = byId.get(preferredAddon);
+        const conflicts = preferred ? parseList(preferred.getAttribute('data-incompatible-addons')) : [];
+        for (let i = 0; i < conflicts.length; i++) {
+          const conflicting = byId.get(conflicts[i]);
+          if (conflicting && conflicting.checked) {
+            conflicting.checked = false;
+            removed.push(conflicting.value);
+          }
+        }
+        for (let i = 0; i < inputs.length; i++) {
+          const input = inputs[i];
+          if (
+            input.value !== preferredAddon &&
+            input.checked &&
+            parseList(input.getAttribute('data-incompatible-addons')).includes(preferredAddon)
+          ) {
+            input.checked = false;
+            removed.push(input.value);
+          }
+        }
+      }
+
+      for (let i = 0; i < inputs.length; i++) {
+        const input = inputs[i];
+        const templateCompatible = parseList(input.getAttribute('data-compatible-templates')).includes(template);
+        if (!templateCompatible && input.checked) {
+          input.checked = false;
+          removed.push(input.value);
+        }
+        input.disabled = !templateCompatible;
+      }
+
+      const selected = inputs.filter(function (input) {
+        return input.checked;
+      });
+      for (let i = 0; i < inputs.length; i++) {
+        const input = inputs[i];
+        const templateCompatible = parseList(input.getAttribute('data-compatible-templates')).includes(template);
+        const conflicts = selected.some(function (selectedInput) {
+          if (selectedInput.value === input.value) return false;
+          return (
+            parseList(input.getAttribute('data-incompatible-addons')).includes(selectedInput.value) ||
+            parseList(selectedInput.getAttribute('data-incompatible-addons')).includes(input.value)
+          );
+        });
+        input.disabled = !templateCompatible || (!input.checked && conflicts);
+        const row = input.closest('[data-ca-addon-row]');
+        if (row) {
+          row.toggleAttribute('data-ca-unavailable', input.disabled);
+          row.setAttribute('aria-disabled', input.disabled ? 'true' : 'false');
+        }
+      }
+
+      return Array.from(new Set(removed));
+    }
+
+    function filterAddons(search) {
+      const family = search.getAttribute('data-ca-addon-search');
+      const panel = form.querySelector('[data-ca-panel="' + family + '"]');
+      if (!panel) return;
+      const query = search.value.trim().toLowerCase();
+      const rows = Array.prototype.slice.call(panel.querySelectorAll('[data-ca-addon-row]'));
+      let visible = 0;
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const matches = !query || (row.getAttribute('data-addon-search') || '').toLowerCase().includes(query);
+        row.hidden = !matches;
+        if (matches) visible += 1;
+      }
+      const groups = panel.querySelectorAll('[data-ca-addon-group]');
+      for (let i = 0; i < groups.length; i++) {
+        groups[i].hidden = groups[i].querySelectorAll('[data-ca-addon-row]:not([hidden])').length === 0;
+      }
+      setStatus(visible + (visible === 1 ? ' addon shown.' : ' addons shown.'));
+    }
+
     function buildCommand(family, projectName, template, addons) {
       const name =
         (projectName || composerBootstrap.defaultProjectName || 'my-app').trim().replace(/\s+/g, '-') || 'my-app';
@@ -279,21 +451,84 @@ const composerBootstrap = {
       }
     }
 
-    function refresh() {
+    function refresh(preferredAddon, announce) {
       const family = activeFamily();
       syncPanels(family);
+      const removed = applyCompatibility(family, preferredAddon);
       const projectInput = form.querySelector('[data-ca-project]');
       const projectName = projectInput ? projectInput.value : composerBootstrap.defaultProjectName;
       const command = buildCommand(family, projectName, selectedTemplate(family), selectedAddons(family));
       const out = form.querySelector('[data-ca-command]');
       if (!out) return false;
       out.textContent = command;
+      if (announce) {
+        const selection = selectedAddons(family);
+        const suffix = removed.length ? ' Removed incompatible addons: ' + removed.join(', ') + '.' : '';
+        setStatus(
+          family +
+            ' command updated with ' +
+            selection.length +
+            (selection.length === 1 ? ' addon.' : ' addons.') +
+            suffix,
+        );
+      }
       return true;
     }
 
     try {
-      form.addEventListener('change', refresh);
-      form.addEventListener('input', refresh);
+      form.addEventListener('change', function (event) {
+        const target = event.target;
+        if (!target || !target.matches) return;
+        const preferred = target.matches('[data-ca-addon]:checked') ? target.value : undefined;
+        refresh(preferred, true);
+      });
+      form.addEventListener('input', function (event) {
+        const target = event.target;
+        if (!target || !target.matches) return;
+        if (target.matches('[data-ca-addon-search]')) filterAddons(target);
+        else if (target.matches('[data-ca-project]')) refresh(undefined, false);
+      });
+      form.querySelectorAll('[data-ca-preset]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          const family = familyFor(button);
+          const panel = form.querySelector('[data-ca-panel="' + family + '"]');
+          if (!panel) return;
+          const template = panel.querySelector('[data-ca-template]');
+          const requestedTemplate = button.getAttribute('data-template') || '';
+          if (
+            template &&
+            Array.prototype.some.call(template.options, function (option) {
+              return option.value === requestedTemplate;
+            })
+          ) {
+            template.value = requestedTemplate;
+          }
+          panel.querySelectorAll('[data-ca-addon]').forEach(function (input) {
+            input.checked = false;
+          });
+          applyCompatibility(family);
+          const requestedAddons = parseList(button.getAttribute('data-addons'));
+          for (let i = 0; i < requestedAddons.length; i++) {
+            const input = panel.querySelector('[data-ca-addon][value="' + CSS.escape(requestedAddons[i]) + '"]');
+            if (input && !input.disabled) input.checked = true;
+          }
+          refresh(undefined, false);
+          setStatus(button.textContent.trim() + ' preset applied with ' + selectedAddons(family).length + ' addons.');
+        });
+      });
+      const copy = form.querySelector('[data-ca-command-copy]');
+      if (copy) {
+        copy.addEventListener('click', async function () {
+          const command = form.querySelector('[data-ca-command]');
+          try {
+            await navigator.clipboard.writeText(command ? command.textContent || '' : '');
+            setStatus('Command copied.');
+          } catch (_err) {
+            setStatus('Copy failed. Select and copy the command manually.');
+          }
+        });
+        copy.hidden = false;
+      }
       if (!refresh()) return;
       form.setAttribute('data-ca-ready', 'true');
       if (!embedded) {
@@ -491,6 +726,7 @@ const composerBootstrap = {
   }
 
   .ca-composer__project input,
+  .ca-composer__addon-search input,
   .ca-composer select {
     inline-size: 100%;
     min-inline-size: 0;
@@ -518,12 +754,65 @@ const composerBootstrap = {
     font-size: 0.9rem;
   }
 
+  .ca-composer__addon-tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: end;
+  }
+
+  .ca-composer__addon-search {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  .ca-composer__presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .ca-composer__presets:empty {
+    display: none;
+  }
+
+  .ca-composer__presets button,
+  .ca-composer__preview button {
+    min-block-size: 44px;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--color-border);
+    background: var(--nest-midnight-950);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    cursor: pointer;
+  }
+
+  .ca-composer__presets button:hover,
+  .ca-composer__presets button:focus-visible,
+  .ca-composer__preview button:hover,
+  .ca-composer__preview button:focus-visible {
+    border-color: var(--nest-cyan);
+    color: var(--nest-cyan);
+  }
+
   .ca-composer__addons {
     display: grid;
-    gap: 0.25rem;
-    max-block-size: 14rem;
-    overflow: auto;
-    padding-right: 0.25rem;
+    gap: 1rem;
+  }
+
+  .ca-composer__addon-group h3 {
+    margin: 0 0 0.45rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .ca-composer__addon-group > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
   }
 
   .ca-composer__addons label {
@@ -531,17 +820,41 @@ const composerBootstrap = {
     min-inline-size: 0;
     max-inline-size: 100%;
     gap: 0.55rem;
-    align-items: center;
-    min-block-size: 40px;
-    padding: 0.2rem 0;
+    align-items: start;
+    min-block-size: 44px;
+    padding: 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
     font-size: 0.82rem;
     color: var(--color-text-muted);
+    cursor: pointer;
+  }
+
+  .ca-composer__addons label:has(input:focus-visible) {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .ca-composer__addons label[data-ca-unavailable] {
+    opacity: 0.48;
+    cursor: not-allowed;
+  }
+
+  .ca-composer__addons label > span {
+    display: grid;
+    gap: 0.25rem;
+    min-inline-size: 0;
   }
 
   .ca-composer__addons code {
     min-inline-size: 0;
     max-inline-size: 100%;
     overflow-wrap: anywhere;
+  }
+
+  .ca-composer__addons small {
+    font-size: 0.76rem;
+    line-height: 1.45;
+    color: var(--color-text-faint);
   }
 
   .ca-composer__preview {
@@ -568,6 +881,30 @@ const composerBootstrap = {
     font-size: 0.78rem;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .ca-composer__preview button {
+    justify-self: start;
+  }
+
+  @media (width < 720px) {
+    .ca-composer__addon-tools,
+    .ca-composer__addon-group > div {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .ca-composer__addons label[data-ca-unavailable] {
+      color: GrayText;
+      opacity: 1;
+    }
+
+    .ca-composer__addons label:has(input:focus-visible),
+    .ca-composer__presets button:focus-visible,
+    .ca-composer__preview button:focus-visible {
+      outline-color: Highlight;
+    }
   }
 
   /* Keep radios queryable when the world owns the station UI. */

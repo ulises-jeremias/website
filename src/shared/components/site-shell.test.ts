@@ -30,6 +30,13 @@ describe('global site shell', () => {
     expect(header).toContain('<DigitalNestMark');
     expect(mobile).not.toContain("from '@/data/project-worlds");
     expect(mobile).toContain('PrimaryNavigationItem[]');
+    expect(header).toContain('data-compact-navigation');
+    expect(mobile).toContain('id="site-navigation-drawer"');
+    expect(mobile).not.toContain('<aside');
+    expect(mobile).toContain("element.setAttribute('inert', '')");
+    expect(mobile).toContain("element.setAttribute('aria-hidden', 'true')");
+    expect(mobile).toContain("element.removeAttribute('inert')");
+    expect(mobile).toContain("element.removeAttribute('aria-hidden')");
   });
 
   it('sources footer routes and contact links from canonical data', async () => {

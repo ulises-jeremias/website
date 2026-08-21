@@ -586,6 +586,12 @@ describe('global design system architecture', () => {
     expect(fonts).toContain("font-family: 'JetBrains Mono'");
     expect(typography).toContain("'Orbitron'");
     expect(typography).toContain("'JetBrains Mono'");
+    const sans = typography.match(/--font-sans:\s*([^;]+);/)?.[1] ?? '';
+    const mono = typography.match(/--font-mono:\s*([^;]+);/)?.[1] ?? '';
+    expect(sans).not.toContain('JetBrains Mono');
+    expect(sans).not.toContain('ui-monospace');
+    expect(mono).toContain('JetBrains Mono');
+    expect(typography).toMatch(/html\s*\{[\s\S]*?font-family:\s*var\(--font-sans\);/);
     expect(blog).toMatch(/\.blog-page\s*\{[\s\S]*?font-family:\s*var\(--font-sans\);/);
     expect(cna).toMatch(/\.cna-landing\s*\{[\s\S]*?font-family:\s*var\(--font-sans\);/);
     expect(cna).toMatch(/\.cna-landing__code\s*\{[\s\S]*?font-family:\s*var\(--font-mono\);/);

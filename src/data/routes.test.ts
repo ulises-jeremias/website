@@ -1,4 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { existsSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as routeModule from './routes.js';
 import {
   getCanonicalUrl,
@@ -24,6 +27,7 @@ const getPrimaryNavigation = (
     getPrimaryNavigation?: (currentPath: string) => PrimaryNavigationItem[];
   }
 ).getPrimaryNavigation;
+const publicDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '../../public');
 
 describe('routes', () => {
   it('all routes validate against Zod schema', () => {
@@ -70,6 +74,7 @@ describe('routes', () => {
   it('getNavRoutes returns the compact canonical header navigation', () => {
     const nav = getNavRoutes();
     expect(nav.map((route) => route.id)).toEqual(['home', 'projects', 'blog', 'open-source', 'community']);
+    expect(nav.map((route) => route.navLabel)).toEqual(['Home', 'Projects', 'Blog', 'Open Source', 'Community']);
     for (let i = 1; i < nav.length; i++) {
       expect((nav[i].headerNavOrder as number) >= (nav[i - 1].headerNavOrder as number)).toBe(true);
     }
@@ -110,6 +115,15 @@ describe('routes', () => {
     expect(getNavLabel(withLabel)).toBe(withLabel.navLabel);
     const dynamic = getRouteById('blog-post')!;
     expect(getNavLabel(dynamic)).toBe(dynamic.title);
+  });
+
+  it('gives every route a distinct, accessible social card', () => {
+    for (const route of routes) {
+      expect(route.ogImage, `${route.id} social image`).toMatch(/^\/social\/.+\.jpg$/);
+      expect(route.ogImageAlt, `${route.id} social image alt`).toBeTruthy();
+      expect(existsSync(resolve(publicDirectory, route.ogImage!.slice(1))), route.ogImage).toBe(true);
+    }
+    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(10);
   });
 
   it('getCanonicalUrl builds absolute URL', () => {

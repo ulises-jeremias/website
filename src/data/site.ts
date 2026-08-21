@@ -13,7 +13,10 @@ export const SITE_AUTHOR = 'Ulises Jeremias';
 export const SITE_LOCALE = 'en_US';
 export const SITE_THEME_COLOR = '#050317';
 export const SITE_BACKGROUND_COLOR = '#040212';
-export const DEFAULT_OG_IMAGE = '/assets/nest/hero-bg-sm.webp';
+export const DEFAULT_OG_IMAGE = '/social/home.jpg';
+export const DEFAULT_OG_IMAGE_ALT = 'Digital Nest by Ulises Jeremias';
+export const OG_IMAGE_WIDTH = 1200;
+export const OG_IMAGE_HEIGHT = 630;
 export const TWITTER_HANDLE = '@ulisesjcf';
 
 export type SiteUrlWarning = {

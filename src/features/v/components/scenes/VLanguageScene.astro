@@ -1,59 +1,31 @@
 ---
 /**
- * V language station — interactive ecosystem map (no essay dump).
+ * V language station — concise ecosystem relationship map.
  */
 ---
 
 <div class="v-scene" data-v-scene="v">
   <h2 class="v-scene__title" id="v-scene-v-title">V language</h2>
-  <p class="v-scene__note">Compiler → stdlib → tooling. Select a ring to highlight the path.</p>
-  <svg class="v-scene__svg" viewBox="0 0 560 280" role="img" aria-labelledby="v-scene-v-title">
+  <p class="v-scene__note">Compiler → standard library → tooling.</p>
+  <svg class="v-scene__svg" viewBox="0 0 560 280" role="img" aria-labelledby="v-scene-v-title v-scene-v-description">
+    <desc id="v-scene-v-description">
+      Three concentric rings place the V compiler at the center, surrounded by the standard library and tooling.
+    </desc>
     <rect width="560" height="280" fill="#0f172a" rx="8"></rect>
-    <g data-v-ring="compiler" class="v-scene__ring is-active" tabindex="0" role="button" aria-pressed="true">
+    <g class="v-scene__ring">
       <circle cx="280" cy="140" r="36" fill="#1e3a5f" stroke="#5b9bd5" stroke-width="2"></circle>
       <text x="280" y="145" text-anchor="middle" fill="#e2e8f0" font-size="11" font-family="monospace">V</text>
     </g>
-    <g data-v-ring="stdlib" class="v-scene__ring" tabindex="0" role="button" aria-pressed="false">
+    <g class="v-scene__ring">
       <circle cx="280" cy="140" r="72" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4 6"></circle>
       <text x="280" y="58" text-anchor="middle" fill="#7dd3fc" font-size="10" font-family="monospace">stdlib</text>
     </g>
-    <g data-v-ring="tooling" class="v-scene__ring" tabindex="0" role="button" aria-pressed="false">
+    <g class="v-scene__ring">
       <circle cx="280" cy="140" r="110" fill="none" stroke="#a78bfa" stroke-width="2"></circle>
       <text x="280" y="28" text-anchor="middle" fill="#c4b5fd" font-size="10" font-family="monospace">tooling</text>
     </g>
   </svg>
-  <p class="v-scene__live" data-v-scene-live aria-live="polite">Compiler core selected.</p>
 </div>
-
-<script>
-  function init(root: HTMLElement) {
-    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
-    const copy: Record<string, string> = {
-      compiler: 'Compiler core selected.',
-      stdlib: 'Stdlib ring — modules ship with V.',
-      tooling: 'Tooling ring — fmt, test, and package helpers.',
-    };
-    root.querySelectorAll<SVGGElement>('[data-v-ring]').forEach((ring) => {
-      const activate = () => {
-        const id = ring.dataset.vRing || 'compiler';
-        root.querySelectorAll<SVGGElement>('[data-v-ring]').forEach((r) => {
-          const on = r === ring;
-          r.classList.toggle('is-active', on);
-          r.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        if (live) live.textContent = copy[id] ?? id;
-      };
-      ring.addEventListener('click', activate);
-      ring.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          activate();
-        }
-      });
-    });
-  }
-  document.querySelectorAll<HTMLElement>('[data-v-scene="v"]').forEach(init);
-</script>
 
 <style>
   .v-scene {
@@ -67,8 +39,7 @@
     text-transform: uppercase;
     color: var(--world-accent, #5b9bd5);
   }
-  .v-scene__note,
-  .v-scene__live {
+  .v-scene__note {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.85rem;
@@ -77,12 +48,5 @@
     width: 100%;
     height: auto;
     display: block;
-  }
-  .v-scene__ring {
-    cursor: pointer;
-  }
-  .v-scene__ring.is-active circle {
-    stroke-width: 3;
-    filter: drop-shadow(0 0 8px color-mix(in srgb, #5b9bd5 50%, transparent));
   }
 </style>

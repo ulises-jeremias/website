@@ -27,7 +27,7 @@ const { items, githubHref, emailHref } = Astro.props as Props;
 
   <div class="mobile-nav__backdrop" data-mobile-backdrop hidden aria-hidden="true"></div>
 
-  <aside
+  <div
     id="site-navigation-drawer"
     class="mobile-nav__drawer"
     role="dialog"
@@ -78,7 +78,7 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       >
       <a href={emailHref}>Start a conversation</a>
     </div>
-  </aside>
+  </div>
 </div>
 
 <script>
@@ -95,14 +95,47 @@ const { items, githubHref, emailHref } = Astro.props as Props;
     const navDrawer = drawer;
     const navBackdrop = backdrop;
     const navCloseButton = closeButton;
+    document.body.append(navBackdrop, navDrawer);
     root.setAttribute('data-mobile-nav-ready', '');
     const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
     let previousFocus: HTMLElement | null = null;
+    let restoreFocusAfterClose = true;
     let hideTimer = 0;
+    let backgroundStates: Array<{ element: HTMLElement; inert: boolean; ariaHidden: string | null }> = [];
 
     const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const focusableElements = () =>
       Array.from(navDrawer.querySelectorAll<HTMLElement>(focusableSelector)).filter((element) => !element.hidden);
+
+    function isolateBackground() {
+      backgroundStates = Array.from(document.body.children)
+        .filter(
+          (element): element is HTMLElement =>
+            element instanceof HTMLElement &&
+            element !== navDrawer &&
+            element !== navBackdrop &&
+            !['SCRIPT', 'STYLE', 'LINK'].includes(element.tagName),
+        )
+        .map((element) => ({
+          element,
+          inert: element.hasAttribute('inert'),
+          ariaHidden: element.getAttribute('aria-hidden'),
+        }));
+
+      for (const { element } of backgroundStates) {
+        element.setAttribute('inert', '');
+        element.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function restoreBackground() {
+      for (const { element, inert, ariaHidden } of backgroundStates) {
+        if (!inert) element.removeAttribute('inert');
+        if (ariaHidden === null) element.removeAttribute('aria-hidden');
+        else element.setAttribute('aria-hidden', ariaHidden);
+      }
+      backgroundStates = [];
+    }
 
     function openNavigation() {
       window.clearTimeout(hideTimer);
@@ -112,11 +145,12 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       navBackdrop.removeAttribute('aria-hidden');
       navTrigger.setAttribute('aria-expanded', 'true');
       navTrigger.setAttribute('aria-label', 'Close navigation');
+      navCloseButton.focus();
+      isolateBackground();
       document.documentElement.classList.add('mobile-nav-open');
       requestAnimationFrame(() => {
         navDrawer.classList.add('is-open');
         navBackdrop.classList.add('is-open');
-        navCloseButton.focus();
       });
       document.addEventListener('keydown', handleKeydown);
     }
@@ -125,6 +159,9 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       navDrawer.hidden = true;
       navBackdrop.hidden = true;
       navBackdrop.setAttribute('aria-hidden', 'true');
+      restoreBackground();
+      if (restoreFocusAfterClose) (previousFocus ?? navTrigger).focus();
+      previousFocus = null;
     }
 
     function closeNavigation({ restoreFocus = true } = {}) {
@@ -134,8 +171,8 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       navTrigger.setAttribute('aria-label', 'Open navigation');
       document.documentElement.classList.remove('mobile-nav-open');
       document.removeEventListener('keydown', handleKeydown);
+      restoreFocusAfterClose = restoreFocus;
       hideTimer = window.setTimeout(finishClose, reducedMotion() ? 0 : 220);
-      if (restoreFocus) (previousFocus ?? navTrigger).focus();
     }
 
     function handleKeydown(event: KeyboardEvent) {
@@ -331,7 +368,7 @@ const { items, githubHref, emailHref } = Astro.props as Props;
   .mobile-nav__index {
     color: var(--nest-cyan);
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
   }
 
   .mobile-nav__link svg {

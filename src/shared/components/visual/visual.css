@@ -43,7 +43,7 @@
   background: color-mix(in srgb, var(--nest-midnight-950, #020617) 70%, transparent);
   color: var(--color-text-muted, #94a3b8);
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
@@ -123,7 +123,7 @@
   background: transparent;
   color: var(--color-text-muted, #94a3b8);
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
@@ -131,7 +131,7 @@
 
 .vf-scrubber button span {
   opacity: 0.65;
-  font-size: 0.62rem;
+  font-size: 0.75rem;
 }
 
 .vf-scrubber button[aria-pressed='true'] {
@@ -154,7 +154,7 @@
   background: transparent;
   color: var(--color-text-muted, #94a3b8);
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
@@ -208,7 +208,7 @@
 }
 
 .vf-meter__label span {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--color-text-faint, #64748b);
 }
 
@@ -228,7 +228,7 @@
   padding: 0.45rem 0.9rem;
   border: 1px solid var(--color-border, #334155);
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
@@ -246,7 +246,7 @@
 
 .vf-dock__code {
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--nest-cyan, #22d3ee);
   padding: 0.35rem 0.55rem;
   border: 1px dashed color-mix(in srgb, var(--nest-cyan, #22d3ee) 40%, transparent);

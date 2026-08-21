@@ -1,6 +1,8 @@
 # Design tokens — Digital Nest (Epic C · C-04 → C-08)
 
-> Source of truth for the umbrella design system. Code implementation in `src/styles/`.
+> **Historical specification:** This warm/light proposal was superseded by
+> `docs/design/synthwave-systems-atlas.md`. Maintained values live in
+> `src/styles/`; see `docs/design/current/README.md` before changing tokens.
 > WCAG 2.1 AA required for every text/background pair; failing pairs are **forbidden** and documented with alternatives.
 
 ## Files

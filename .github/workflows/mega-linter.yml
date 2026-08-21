@@ -15,6 +15,7 @@ on:
   pull_request:
     branches:
       - main
+    types: [opened, synchronize, reopened, ready_for_review]
 
 # Restrict default permissions for all jobs (CKV2_GHA_1)
 permissions: {}

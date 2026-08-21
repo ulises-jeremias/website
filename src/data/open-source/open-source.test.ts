@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { editorialOverrides } from './overrides.js';
 import { githubEvidenceCacheSchema } from './schema.js';
-import { evidenceItems, getConstellationNodes, getEvidenceLastUpdated, githubEvidenceCache } from './index.js';
+import {
+  evidenceItems,
+  formatEvidenceDate,
+  getConstellationNodes,
+  getEvidenceKindLabel,
+  getEvidenceLastUpdated,
+  getEvidenceProvenanceLabel,
+  githubEvidenceCache,
+} from './index.js';
 
 describe('open-source evidence pipeline', () => {
   it('parses the committed GitHub evidence cache', () => {
@@ -36,5 +44,24 @@ describe('open-source evidence pipeline', () => {
     const nodes = getConstellationNodes();
     expect(nodes.length).toBe(evidenceItems.length);
     expect(getEvidenceLastUpdated()).toBeTruthy();
+  });
+
+  it('maps internal evidence values to public labels', () => {
+    expect((['owned', 'maintained', 'org', 'external'] as const).map(getEvidenceKindLabel)).toEqual([
+      'Owned project',
+      'Maintained project',
+      'Organization work',
+      'External contribution',
+    ]);
+    expect(
+      ['GENERATED_GITHUB_SOURCE', 'EDITORIAL_USER_APPROVED', 'CANONICAL_PROJECT_SOURCE', 'DERIVED_BUILD_TIME'].map(
+        (value) => getEvidenceProvenanceLabel(value as (typeof evidenceItems)[number]['provenance']),
+      ),
+    ).toEqual(['GitHub source', 'Reviewed evidence', 'Canonical project source', 'Derived from source']);
+  });
+
+  it('formats source dates without exposing raw timestamps', () => {
+    expect(formatEvidenceDate('2026-08-21T12:34:56.000Z')).toBe('Aug 21, 2026');
+    expect(formatEvidenceDate('not-a-date')).toBe('Date unavailable');
   });
 });

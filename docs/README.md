@@ -9,7 +9,8 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 - [State management](./STATE_MANAGEMENT.md) — content collections, page-local data, islands
 - [Project configuration](./PROJECT_CONFIGURATION.md) — Node/pnpm, Astro, TypeScript, ESLint, Prettier, content collections, env
 - [GitHub setup & CI](./GITHUB_SETUP_GUIDE.md) — actions, branch protection, Dependabot, Danger, MegaLinter
-- [Testing guide](./TESTING_GUIDE.md) — Vitest, coverage, Codecov, adding tests
+- [Testing guide](./TESTING_GUIDE.md) — Vitest, Playwright, route budgets, coverage, and CI
+- [Current design state](./design/current/README.md) — accepted identity, maintained goldens, historical specs, and open gates
 - [Interactive diagram semantics](./INTERACTIVE_DIAGRAM_SEMANTICS.md) — static visual figures, native selectors,
   inspectors, status summaries, and pointer delegation
 
@@ -28,4 +29,4 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 
 ## Tooling parity
 
-Borrowed from [Create-Node-App/cna-templates](https://github.com/Create-Node-App/cna-templates) and [nextjs-saas-ai-template](https://github.com/Create-Node-App/nextjs-saas-ai-template) to keep this Astro site CI-ready: pnpm, Husky/lint-staged, commitlint, cspell, MegaLinter, Vitest, GitHub Actions (build/lint/type-check/tests).
+Borrowed from [Create-Node-App/cna-templates](https://github.com/Create-Node-App/cna-templates) and [nextjs-saas-ai-template](https://github.com/Create-Node-App/nextjs-saas-ai-template) to keep this Astro site CI-ready: pnpm, Husky/lint-staged, commitlint, cspell, MegaLinter, Vitest, Playwright, and GitHub Actions.

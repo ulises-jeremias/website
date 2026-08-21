@@ -11,6 +11,7 @@ import '../styles/index.css';
  * @property {string} [path]
  * @property {string} [canonical]
  * @property {string} [ogImage]
+ * @property {string} [ogImageAlt]
  * @property {boolean} [noIndex]
  * @property {string} [world]
  * @property {'website' | 'article' | 'profile'} [type]
@@ -25,6 +26,7 @@ const {
   path = '/',
   canonical,
   ogImage,
+  ogImageAlt,
   noIndex,
   world,
   type,
@@ -40,6 +42,7 @@ const seo = buildPageSeo({
   description,
   canonical,
   ogImage,
+  ogImageAlt,
   noIndex,
   world,
   type: type ?? (ogType === 'article' || ogType === 'profile' ? ogType : 'website'),
@@ -56,6 +59,9 @@ const mergedJsonLd = [...seo.jsonLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonL
       description={seo.description}
       canonical={seo.canonical}
       ogImage={seo.ogImage}
+      ogImageAlt={seo.ogImageAlt}
+      ogImageWidth={seo.ogImageWidth}
+      ogImageHeight={seo.ogImageHeight}
       noIndex={noIndex}
       ogType={seo.ogType}
       themeColor={themeColor ?? seo.themeColor}

@@ -34,6 +34,7 @@ export interface Props {
   canonical?: string;
   noIndex?: boolean;
   ogImage?: string;
+  ogImageAlt?: string;
   /** Open Graph type — e.g. "website" (default) or "article" for blog posts. */
   ogType?: string;
   /** Optional JSON-LD graph(s) for SEO (BlogPosting, CollectionPage, etc.). */
@@ -51,6 +52,7 @@ const {
   canonical,
   noIndex,
   ogImage,
+  ogImageAlt,
   ogType = 'website',
   jsonLd,
   immersive = false,
@@ -68,6 +70,7 @@ const seoType = ogType === 'article' || ogType === 'profile' ? ogType : 'website
   path={pagePath}
   canonical={canonicalUrl}
   ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
   noIndex={noIndex}
   world={world}
   type={seoType}

@@ -4,29 +4,36 @@ CI is **required** on `main` — every PR must pass before merge. Setup mirrors 
 
 ## Workflows (`.github/workflows/`)
 
-| Workflow          | Trigger                  | Purpose                                           |
-| ----------------- | ------------------------ | ------------------------------------------------- |
-| `build.yml`       | push/PR to `main`        | `pnpm build` (Astro static)                       |
-| `lint.yml`        | push/PR to `main`        | `pnpm lint` + `pnpm format:check`                 |
-| `type-check.yml`  | push/PR to `main`        | `pnpm type-check` (`astro check`)                 |
-| `tests.yml`       | push/PR to `main`        | `pnpm test:coverage` + Codecov upload             |
-| `mega-linter.yml` | PR to `main` (non-draft) | MegaLinter (JS flavor) — reads `.mega-linter.yml` |
-| `pr-review.yml`   | PR to `main` (non-draft) | Danger.js — PR hygiene (see `dangerfile.ts`)      |
-| `todo.yml`        | push to `main`           | `todo-to-issue` — converts TODOs to issues        |
+| Workflow              | Trigger                  | Purpose                                               |
+| --------------------- | ------------------------ | ----------------------------------------------------- |
+| `build.yml`           | push/PR to `main`        | `pnpm build` (Astro static)                           |
+| `lint.yml`            | push/PR to `main`        | `pnpm lint` + `pnpm format:check`                     |
+| `type-check.yml`      | push/PR to `main`        | `pnpm type-check` (`astro check`)                     |
+| `tests.yml`           | push/PR to `main`        | `pnpm test:coverage` + Codecov upload                 |
+| `browser-quality.yml` | push/PR to `main`        | Route budgets, Chromium goldens, Firefox/WebKit smoke |
+| `mega-linter.yml`     | PR to `main` (non-draft) | MegaLinter (JS flavor) — reads `.mega-linter.yml`     |
+| `pr-review.yml`       | PR to `main` (non-draft) | Danger.js — PR hygiene (see `dangerfile.ts`)          |
+| `todo.yml`            | push to `main`           | `todo-to-issue` — converts TODOs to issues            |
 
-All use `pnpm/action-setup@v4` + `actions/setup-node@v4` with `node-version-file: .node-version` and `cache: 'pnpm'`, plus `pnpm install --frozen-lockfile`.
+Node workflows use `pnpm/action-setup@v6` + `actions/setup-node@v7` with
+`node-version-file: .node-version` and `cache: 'pnpm'`, plus
+`pnpm install --frozen-lockfile`. Browser quality installs pinned Chromium,
+Firefox, WebKit, and their Linux host dependencies through Playwright.
 
 **Draft PRs** are excluded from build/lint/type-check/tests/mega-linter (see `if: draft == false`) to save minutes — mark ready for review to run CI.
 
-## Branch protection (recommended)
+## Branch protection
 
 Enable on `main`:
 
 - Require PR before merging
-- Require status checks: `build`, `lint`, `type-check`, `test`
+- Require status checks: `build`, `lint`, `type-check`, `test`, `browser`
 - Require branches up to date
 - Dismiss stale approvals
 - Restrict push to maintainers
+
+Repository settings, not this document, determine whether these checks are
+enforced. Verify the active rule after changing workflow job names.
 
 ## Dependabot (`.github/dependabot.yml`)
 
@@ -54,7 +61,13 @@ Checks PR body for required sections and checklist; warns on large PRs. Workflow
 Run same as CI before pushing:
 
 ```sh
-pnpm lint && pnpm format:check && pnpm type-check && pnpm test:coverage && pnpm build
+pnpm lint
+pnpm format:check
+pnpm type-check
+pnpm test:coverage
+pnpm build
+pnpm performance:check
+pnpm test:visual
 ```
 
 ## Secrets

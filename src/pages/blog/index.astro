@@ -10,31 +10,18 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const hasPosts = posts.length > 0;
 
-const collectionJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: meta.title,
-  description: meta.description,
-  url: getCanonicalUrl('/blog'),
-  isPartOf: {
-    '@type': 'WebSite',
-    name: 'Digital Nest',
-    url: getCanonicalUrl('/'),
-  },
-  ...(hasPosts
-    ? {
-        mainEntity: {
-          '@type': 'ItemList',
-          itemListElement: posts.map((post, index) => ({
-            '@type': 'ListItem',
-            position: index + 1,
-            url: getCanonicalUrl(`/blog/${post.id}/`),
-            name: post.data.title,
-          })),
-        },
-      }
-    : {}),
-};
+const itemListJsonLd = hasPosts
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: posts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: getCanonicalUrl(`/blog/${post.id}/`),
+        name: post.data.title,
+      })),
+    }
+  : undefined;
 ---
 
 <SectionLayout
@@ -43,7 +30,7 @@ const collectionJsonLd = {
   title={meta.title}
   description={meta.description}
   theme="blog"
-  jsonLd={collectionJsonLd}
+  jsonLd={itemListJsonLd}
 >
   <div class="blog-page">
     <div class="blog-page__inner">

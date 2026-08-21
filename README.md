@@ -4,6 +4,7 @@
 [![Lint](https://github.com/ulises-jeremias/website/actions/workflows/lint.yml/badge.svg)](https://github.com/ulises-jeremias/website/actions/workflows/lint.yml)
 [![Typecheck](https://github.com/ulises-jeremias/website/actions/workflows/type-check.yml/badge.svg)](https://github.com/ulises-jeremias/website/actions/workflows/type-check.yml)
 [![Tests](https://github.com/ulises-jeremias/website/actions/workflows/tests.yml/badge.svg)](https://github.com/ulises-jeremias/website/actions/workflows/tests.yml)
+[![Browser quality](https://github.com/ulises-jeremias/website/actions/workflows/browser-quality.yml/badge.svg)](https://github.com/ulises-jeremias/website/actions/workflows/browser-quality.yml)
 [![codecov](https://codecov.io/gh/ulises-jeremias/website/branch/main/graph/badge.svg)](https://codecov.io/gh/ulises-jeremias/website)
 
 Personal website — **Astro 7**, content-first, feature-based architecture. Migrated from [`create-awesome-node-app` Astro starter](https://github.com/Create-Node-App/cna-templates) and hardened with tooling from [`nextjs-saas-ai-template`](https://github.com/Create-Node-App/nextjs-saas-ai-template).

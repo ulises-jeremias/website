@@ -52,7 +52,9 @@ test.describe('homepage visual coverage', () => {
     await toggle.click();
 
     await expect(page.getByRole('button', { name: 'Close navigation' }).first()).toBeVisible();
-    await expect(page.getByRole('navigation', { name: 'Primary' }).first()).toBeVisible();
+    await expect(page.getByRole('dialog', { name: 'Navigate the atlas' })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Primary', exact: true })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Primary (compact)', exact: true })).toHaveCount(0);
 
     await expect(page).toHaveScreenshot('home-mobile-nav-open.png', {
       fullPage: false,

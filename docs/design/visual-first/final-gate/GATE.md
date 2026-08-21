@@ -1,8 +1,8 @@
-# PENDING PRODUCT REVIEW — Full Visual-First Pass
+# APPROVED — Full Visual-First Pass
 
-**Status:** PENDING PRODUCT REVIEW  
+**Status:** APPROVED
 **Date:** 2026-08-09  
-**Decision:** Not approved for merge. Awaiting product-owner re-review after CHANGES REQUESTED.  
+**Decision:** Product owner approved the pass and authorized merge to `main` with green CI in commit `4b2171a`.
 **Branch:** `feat/visual-first-agent-toolkit`  
 **Parent epic:** #319 (kept OPEN — use `Refs #319`, not `Fixes #319`)  
 **Prior gate:** Toolkit Operations Room — **APPROVED** 2026-08-09  
@@ -12,18 +12,17 @@
 
 ## Decision recorded
 
-| Option              | Result                                                             |
-| ------------------- | ------------------------------------------------------------------ |
-| APPROVED            | —                                                                  |
-| APPROVED WITH NOTES | —                                                                  |
-| REJECTED            | —                                                                  |
-| **PENDING REVIEW**  | ✅ Selected — do **not** merge; do **not** update accepted goldens |
+| Option              | Result                                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| **APPROVED**        | ✅ Selected — ship to `main`; update maintained goldens only for reviewed visual deltas |
+| APPROVED WITH NOTES | —                                                                                       |
+| REJECTED            | —                                                                                       |
 
-Product owner requested CHANGES REQUESTED on PR #325. This gate stays pending until human re-review returns APPROVED / APPROVED WITH NOTES / REJECTED.
+The approval was recorded after the earlier changes-requested state. PR #325 subsequently merged as `be8ac60`. Issue #319 remains open for the broader UI/UX recovery track.
 
 ---
 
-## Review package (candidate evidence)
+## Review package (approved historical evidence)
 
 | Asset                                   | Path                                                                                                                |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -34,7 +33,7 @@ Product owner requested CHANGES REQUESTED on PR #325. This gate stays pending un
 | Toolkit gate (approved)                 | `../toolkit-gate/GATE.md`                                                                                           |
 | After metrics                           | `_metrics.json` / `_after-metrics.json`                                                                             |
 | QA screenshots (all routes, 1440 + 390) | `../qa/{home,dotfiles,agentic-workstation,agent-toolkit,v,create-awesome,community,blog,projects,open-source,404}/` |
-| Interaction evidence                    | `interactions/` (candidate only — not accepted goldens)                                                             |
+| Interaction evidence                    | `interactions/` (historical review evidence, not maintained goldens)                                                |
 
 ### Interactions captured (candidates)
 
@@ -56,9 +55,9 @@ See `../CONTENT-REDUCTION.md` and `../qa/_metrics.json` for the live table after
 
 ---
 
-## Explicit stop
+## Post-approval state
 
-1. **Do not merge** PR #325
-2. **Do not update** accepted Playwright goldens
-3. Keep #319 OPEN
-4. Await product-owner decision: APPROVED / APPROVED WITH NOTES / REJECTED
+1. PR #325 is merged.
+2. Maintained Chromium goldens live under `tests/visual/*-snapshots/`.
+3. Dated captures remain historical and must not be overwritten by normal test runs.
+4. Keep #319 open until the current recovery roadmap receives final acceptance.

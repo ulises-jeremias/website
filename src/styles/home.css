@@ -588,7 +588,11 @@
 .atlas-world:focus-visible {
   transform: translateY(-0.35rem);
   z-index: 4;
-  outline: none;
+}
+
+.atlas-world:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
 }
 
 @media (width >= 1024px) {
@@ -750,17 +754,6 @@
 
 .nest-status__sep {
   color: color-mix(in srgb, var(--nest-magenta) 60%, transparent);
-}
-
-.nest-status__spark {
-  display: block;
-  inline-size: 100%;
-  block-size: 4rem;
-  margin-block-start: var(--space-5);
-}
-
-.nest-status__spark-line {
-  filter: drop-shadow(0 0 6px var(--nest-magenta));
 }
 
 .about-panel__corner,

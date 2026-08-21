@@ -31,7 +31,8 @@
     "scripts/data/create-awesome/pinned/**",
     "src/data/generated/**",
     "src/features/agent-toolkit/data/inventory.snapshot.json",
-    "src/features/create-awesome/data/generated/compatibility.json"
+    "src/features/create-awesome/data/generated/compatibility.json",
+    "test-results/**"
   ],
   "words": [
     "astro",
@@ -50,6 +51,7 @@
     "codespaces",
     "collections",
     "commitlint",
+    "contentful",
     "content",
     "contentinfo",
     "Coordin",
@@ -89,6 +91,8 @@
     "labelledby",
     "linecap",
     "linejoin",
+    "libflite",
+    "libicu",
     "linter",
     "linters",
     "lintstagedrc",

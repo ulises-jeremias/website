@@ -1,0 +1,25 @@
+{
+  "routes": [
+    "/",
+    "/dotfiles/",
+    "/agentic-workstation/",
+    "/agent-toolkit/",
+    "/v/",
+    "/create-awesome/",
+    "/community/",
+    "/blog/",
+    "/projects/",
+    "/open-source/"
+  ],
+  "categories": {
+    "accessibility": { "level": "error", "minScore": 0.9 },
+    "best-practices": { "level": "error", "minScore": 0.9 },
+    "seo": { "level": "error", "minScore": 0.9 },
+    "performance": { "level": "warning", "minScore": 0.8 }
+  },
+  "audits": {
+    "cumulative-layout-shift": { "level": "warning", "maxNumericValue": 0.1 },
+    "largest-contentful-paint": { "level": "warning", "maxNumericValue": 2500 },
+    "total-blocking-time": { "level": "warning", "maxNumericValue": 300 }
+  }
+}

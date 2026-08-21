@@ -1,9 +1,8 @@
 ---
-import { getConstellationNodes, getEvidenceLastUpdated } from '@/data/open-source/index.js';
+import { formatEvidenceDate, getConstellationNodes, getEvidenceLastUpdated } from '@/data/open-source/index.js';
 
 const nodes = getConstellationNodes();
 const lastUpdated = getEvidenceLastUpdated();
-const defaultNode = nodes[0]!;
 
 /** Deterministic layout positions for the constellation (no fake metrics). */
 const positions = nodes.map((node, index) => {
@@ -11,44 +10,23 @@ const positions = nodes.map((node, index) => {
   const radius = node.featured ? 34 : 28;
   const cx = 50 + Math.cos(angle) * radius;
   const cy = 50 + Math.sin(angle) * (radius * 0.72);
-  return { ...node, cx, cy, index };
+  return { ...node, cx, cy };
 });
-
-const nodesJson = JSON.stringify(
-  positions.map((n) => ({
-    id: n.id,
-    label: n.label,
-    kind: n.kind,
-    href: n.href,
-    featured: n.featured,
-  })),
-);
 ---
 
-<section
-  class="constellation"
-  aria-labelledby="constellation-title"
-  data-testid="oss-constellation"
-  data-oss-constellation
-  data-nodes={nodesJson}
->
+<section class="constellation" aria-labelledby="constellation-title" data-testid="oss-constellation">
   <p class="constellation__eyebrow">Open Source · contribution constellation</p>
-  <h1 id="constellation-title">Evidence first</h1>
-  <p class="constellation__lede">Owned · maintained · org · external — verified subjects only.</p>
+  <h1 id="constellation-title">Open Source evidence</h1>
+  <p class="constellation__lede">
+    Owned projects · maintained projects · organization work · external contributions. Verified subjects only.
+  </p>
 
   <div class="constellation__stage">
-    <svg class="constellation__svg" viewBox="0 0 100 100" role="img" aria-label="Contribution constellation">
+    <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
       <circle cx="50" cy="50" r="3.2" class="constellation__hub"></circle>
       {
         positions.map((node) => (
-          <g
-            class="constellation__hit"
-            data-oss-node={node.id}
-            tabindex="0"
-            role="button"
-            aria-pressed={node.id === defaultNode.id ? 'true' : 'false'}
-            aria-label={`${node.label}, ${node.kind}`}
-          >
+          <g>
             <line
               x1="50"
               y1="50"
@@ -66,59 +44,12 @@ const nodesJson = JSON.stringify(
         ))
       }
     </svg>
-
-    <aside class="constellation__inspector" aria-live="polite">
-      <p class="constellation__k">Subject</p>
-      <p data-oss-label>{defaultNode.label}</p>
-      <p data-oss-kind>{defaultNode.kind}</p>
-      <a data-oss-link href={defaultNode.href} target="_blank" rel="noreferrer"> Open evidence ↗ </a>
-    </aside>
   </div>
 
   <p class="constellation__meta">
-    verified <time datetime={lastUpdated}>{lastUpdated}</time>
+    Evidence refreshed <time datetime={lastUpdated}>{formatEvidenceDate(lastUpdated)}</time>
   </p>
 </section>
-
-<script>
-  type Node = { id: string; label: string; kind: string; href: string };
-
-  function init(root: HTMLElement) {
-    const nodes = JSON.parse(root.dataset.nodes || '[]') as Node[];
-    const label = root.querySelector<HTMLElement>('[data-oss-label]');
-    const kind = root.querySelector<HTMLElement>('[data-oss-kind]');
-    const link = root.querySelector<HTMLAnchorElement>('[data-oss-link]');
-    const hits = Array.from(root.querySelectorAll<SVGGElement>('[data-oss-node]'));
-
-    const select = (id: string) => {
-      const node = nodes.find((n) => n.id === id);
-      if (!node) return;
-      hits.forEach((h) => {
-        const on = h.dataset.ossNode === id;
-        h.classList.toggle('is-active', on);
-        h.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      if (label) label.textContent = node.label;
-      if (kind) kind.textContent = node.kind;
-      if (link) {
-        link.href = node.href;
-        link.textContent = 'Open evidence ↗';
-      }
-    };
-
-    hits.forEach((h) => {
-      h.addEventListener('click', () => select(h.dataset.ossNode || ''));
-      h.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          select(h.dataset.ossNode || '');
-        }
-      });
-    });
-  }
-
-  document.querySelectorAll<HTMLElement>('[data-oss-constellation]').forEach(init);
-</script>
 
 <style>
   .constellation {
@@ -149,10 +80,7 @@ const nodesJson = JSON.stringify(
   }
 
   .constellation__stage {
-    display: grid;
-    gap: 1.25rem;
-    grid-template-columns: minmax(0, 1.4fr) minmax(12rem, 0.8fr);
-    align-items: center;
+    display: block;
   }
 
   .constellation__svg {
@@ -178,61 +106,10 @@ const nodesJson = JSON.stringify(
     stroke-width: 0.35;
   }
 
-  .constellation__hit {
-    cursor: pointer;
-  }
-
-  .constellation__hit.is-active .constellation__node {
-    fill: var(--nest-cyan);
-    r: 3;
-  }
-
-  .constellation__inspector {
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--color-border);
-    background: color-mix(in srgb, var(--nest-midnight-900) 90%, transparent);
-    clip-path: var(--clip-corner-sm);
-  }
-
-  .constellation__k {
-    margin: 0 0 0.35rem;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
-  }
-
-  .constellation__inspector [data-oss-label] {
-    margin: 0;
-    font-weight: 700;
-  }
-
-  .constellation__inspector [data-oss-kind] {
-    margin: 0.25rem 0 0.55rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--nest-cyan);
-  }
-
-  .constellation__inspector a {
-    color: var(--nest-cyan);
-    font-weight: 700;
-    text-decoration: none;
-  }
-
   .constellation__meta {
     margin: 0.85rem 0 0;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     color: var(--color-text-faint);
-  }
-
-  @media (width < 720px) {
-    .constellation__stage {
-      grid-template-columns: 1fr;
-    }
   }
 </style>

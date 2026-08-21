@@ -6,7 +6,9 @@ test.describe('agent-toolkit flagship', () => {
     await page.setViewportSize({ width: 1440, height: 1100 });
     await page.goto('/agent-toolkit');
 
-    await expect(page.getByRole('heading', { name: /^agent toolkit$/i }).first()).toBeVisible();
+    const headings = page.locator('main h1, main h2, main h3, main h4, main h5, main h6');
+    await expect(page.locator('main h1')).toHaveCount(1);
+    await expect(headings.first()).toHaveText('Agent Toolkit');
     await expect(page.locator('.atk-nexus')).toBeVisible();
     await expect(page.locator('.atk-qvs')).toBeVisible();
     await expect(page.locator('.atk-swarm')).toBeVisible();

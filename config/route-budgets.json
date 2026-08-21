@@ -1,0 +1,228 @@
+{
+  "policy": {
+    "source": "docs/design/current/performance-baseline.json",
+    "headroom": "10% rounded up to 1 KiB for bytes; two requests"
+  },
+  "routes": {
+    "/": {
+      "mobile": {
+        "total": 395264,
+        "document": 10240,
+        "script": 0,
+        "style": 16384,
+        "image": 292864,
+        "font": 76800,
+        "requests": 23
+      },
+      "desktop": {
+        "total": 456704,
+        "document": 10240,
+        "script": 0,
+        "style": 16384,
+        "image": 354304,
+        "font": 76800,
+        "requests": 23
+      }
+    },
+    "/dotfiles/": {
+      "mobile": {
+        "total": 198656,
+        "document": 13312,
+        "script": 2048,
+        "style": 15360,
+        "image": 75776,
+        "font": 93184,
+        "requests": 19
+      },
+      "desktop": {
+        "total": 336896,
+        "document": 13312,
+        "script": 2048,
+        "style": 15360,
+        "image": 214016,
+        "font": 93184,
+        "requests": 23
+      }
+    },
+    "/agentic-workstation/": {
+      "mobile": {
+        "total": 126976,
+        "document": 12288,
+        "script": 3072,
+        "style": 15360,
+        "image": 5120,
+        "font": 93184,
+        "requests": 16
+      },
+      "desktop": {
+        "total": 126976,
+        "document": 12288,
+        "script": 3072,
+        "style": 15360,
+        "image": 5120,
+        "font": 93184,
+        "requests": 16
+      }
+    },
+    "/agent-toolkit/": {
+      "mobile": {
+        "total": 133120,
+        "document": 15360,
+        "script": 3072,
+        "style": 17408,
+        "image": 5120,
+        "font": 93184,
+        "requests": 15
+      },
+      "desktop": {
+        "total": 133120,
+        "document": 15360,
+        "script": 3072,
+        "style": 17408,
+        "image": 5120,
+        "font": 93184,
+        "requests": 15
+      }
+    },
+    "/v/": {
+      "mobile": {
+        "total": 100352,
+        "document": 12288,
+        "script": 0,
+        "style": 14336,
+        "image": 5120,
+        "font": 69632,
+        "requests": 12
+      },
+      "desktop": {
+        "total": 100352,
+        "document": 12288,
+        "script": 0,
+        "style": 14336,
+        "image": 5120,
+        "font": 69632,
+        "requests": 12
+      }
+    },
+    "/create-awesome/": {
+      "mobile": {
+        "total": 109568,
+        "document": 21504,
+        "script": 0,
+        "style": 15360,
+        "image": 5120,
+        "font": 69632,
+        "requests": 12
+      },
+      "desktop": {
+        "total": 109568,
+        "document": 21504,
+        "script": 0,
+        "style": 15360,
+        "image": 5120,
+        "font": 69632,
+        "requests": 12
+      }
+    },
+    "/community/": {
+      "mobile": {
+        "total": 98304,
+        "document": 11264,
+        "script": 0,
+        "style": 14336,
+        "image": 5120,
+        "font": 69632,
+        "requests": 12
+      },
+      "desktop": {
+        "total": 98304,
+        "document": 11264,
+        "script": 0,
+        "style": 14336,
+        "image": 5120,
+        "font": 69632,
+        "requests": 12
+      }
+    },
+    "/blog/": {
+      "mobile": {
+        "total": 66560,
+        "document": 6144,
+        "script": 0,
+        "style": 12288,
+        "image": 5120,
+        "font": 45056,
+        "requests": 10
+      },
+      "desktop": {
+        "total": 66560,
+        "document": 6144,
+        "script": 0,
+        "style": 12288,
+        "image": 5120,
+        "font": 45056,
+        "requests": 10
+      }
+    },
+    "/projects/": {
+      "mobile": {
+        "total": 225280,
+        "document": 9216,
+        "script": 0,
+        "style": 13312,
+        "image": 128000,
+        "font": 76800,
+        "requests": 17
+      },
+      "desktop": {
+        "total": 225280,
+        "document": 9216,
+        "script": 0,
+        "style": 13312,
+        "image": 128000,
+        "font": 76800,
+        "requests": 17
+      }
+    },
+    "/open-source/": {
+      "mobile": {
+        "total": 67584,
+        "document": 8192,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      },
+      "desktop": {
+        "total": 67584,
+        "document": 8192,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      }
+    },
+    "/404.html": {
+      "mobile": {
+        "total": 66560,
+        "document": 7168,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      },
+      "desktop": {
+        "total": 66560,
+        "document": 7168,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      }
+    }
+  }
+}

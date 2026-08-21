@@ -27,6 +27,7 @@ export interface ScreenshotItem {
   caption: string;
   credit: string;
   src: string;
+  srcSet: string;
   width: number;
   height: number;
 }
