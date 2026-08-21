@@ -1,2 +1,7 @@
 packages:
   - '.'
+
+# Lighthouse's browser data can publish multiple times per day. Keep Dependabot
+# updates usable while its injected three-day maturity gate protects all other packages.
+minimumReleaseAgeExclude:
+  - web-features
