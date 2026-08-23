@@ -788,6 +788,7 @@
   margin: var(--space-5) 0 var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
+  font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--nest-cyan);
