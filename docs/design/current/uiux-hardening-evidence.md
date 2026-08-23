@@ -1,5 +1,9 @@
 # UI/UX hardening evidence
 
+> **Historical record:** this file describes the pre-merge hardening baseline from
+> 2026-08-21. For the current state after PRs #347–#352, use
+> `uiux-assessment-2026-08.md` and `uiux-manual-qa-checklist.md`.
+
 Date: 2026-08-21
 Implementation baseline: `main@2a1c562ae7c508f1b686d1c11b537b10d417eadf`
 Working branch: `fix/uiux-hardening`

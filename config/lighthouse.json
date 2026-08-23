@@ -9,13 +9,17 @@
     "/community/",
     "/blog/",
     "/projects/",
-    "/open-source/"
+    "/open-source/",
+    "/404.html"
   ],
   "categories": {
     "accessibility": { "level": "error", "minScore": 0.9 },
     "best-practices": { "level": "error", "minScore": 0.9 },
     "seo": { "level": "error", "minScore": 0.9 },
     "performance": { "level": "warning", "minScore": 0.8 }
+  },
+  "routeOverrides": {
+    "/404.html": { "skipCategories": ["seo"] }
   },
   "audits": {
     "cumulative-layout-shift": { "level": "warning", "maxNumericValue": 0.1 },

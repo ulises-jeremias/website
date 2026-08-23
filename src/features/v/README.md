@@ -7,13 +7,15 @@
 ```text
 v/
 ├── components/
-│   ├── VOverview.astro           # ecosystem narrative + facts + verify details + sections
+│   ├── VOverview.astro           # thin V Lab identity strip and station labels
+│   ├── VComputationalLab.astro   # station scenes, inspector, dock, and license list
 │   ├── VCard.astro               # reusable project card (icon, repo, highlights)
 │   ├── VCards.astro              # grid of VProject cards
 │   ├── VSLDiagram.astro          # SVG: Sierpinski fractal + backend pills + vis row
 │   ├── VTLDiagram.astro          # SVG: autograd forward/backward graph + code + modules
 │   ├── RxVDiagram.astro          # SVG: source→filter→map→reduce→subscriber + thread row
-│   └── SetupVDiagram.astro       # SVG: 5-stage GH Action pipeline + outputs + runners
+│   ├── SetupVDiagram.astro       # SVG: 5-stage GH Action pipeline + outputs + runners
+│   └── scenes/                   # station-specific computational lab scenes
 ├── data/
 │   └── index.ts                  # vProjects, vSections, backends, modules, operators, pipeline, licenses, meta
 ├── types/
@@ -28,7 +30,7 @@ v/
 - **Cards**: HTML/CSS only, hover lift + border tint, keyboard `:focus-within` outline, `↗` external affordance with `rel="noopener noreferrer"` and sr-only text.
 - **Diagrams**: pure SVG `role="img"` + `<title>`/`<desc>` + per-node `tabindex="0"` + `role="listitem"` + `aria-label`, dashed arrows for dependency / backward flow, `prefers-reduced-motion` disables transitions, fallback chips/tables as CSS grids.
 - **Sections**: data-driven `vSections` for overview; each diagram has paired explanatory cards with code snippets (monospace on dark #0f2a44).
-- **Verification**: `VOverview` includes `<details>` verifying proof-over-vanity and Veasel policy. Licenses exported from `data/index.ts`.
+- **Verification**: `VComputationalLab` renders the visible license list and Veasel policy note from `licenseEntries`; the station inspector keeps project details discoverable without disclosure controls.
 
 ## Usage
 
@@ -50,6 +52,7 @@ Page thin router: `src/pages/v/index.astro` via `SectionLayout(theme="v")`.
 ## Licenses verified
 
 - `website/LICENSE` — MIT 2025-2026 Ulises Jeremias Cornejo Fandos
-- `vlang/v`, `vlang/vsl`, `vlang/vtl`, `vlang/setup-v`, `vlang/awesome-v` — MIT
+- `vlang/v`, `vlang/vsl`, `vlang/vtl`, `vlang/setup-v` — MIT
+- `vlang/awesome-v` — CC0 1.0
 - `ulises-jeremias/rxv` — MIT, zero dependencies
 - `vlang/v-mascot` — check LICENSE before using Veasel; otherwise original illustration

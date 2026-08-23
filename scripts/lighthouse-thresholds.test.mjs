@@ -58,4 +58,27 @@ describe('Lighthouse thresholds', () => {
       '/projects/ largest-contentful-paint did not return a numeric value',
     );
   });
+
+  it('skips a route category explicitly marked not applicable', () => {
+    const routeConfig = {
+      ...config,
+      categories: {
+        ...config.categories,
+        seo: { level: 'error', minScore: 0.9 },
+      },
+      routeOverrides: { '/404.html': { skipCategories: ['seo'] } },
+    };
+    const result = {
+      ...passingResult,
+      categories: {
+        ...passingResult.categories,
+        accessibility: { score: 0.5 },
+        seo: { score: 0.69 },
+      },
+    };
+
+    const inspection = inspectLighthouseThresholds(routeConfig, '/404.html', result);
+    expect(inspection.failures).toContain('/404.html accessibility score 0.50 is below 0.90');
+    expect(inspection.failures).not.toContain(expect.stringContaining('/404.html seo'));
+  });
 });

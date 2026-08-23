@@ -30,6 +30,7 @@ const ROUTES = [
   '/open-source/',
   '/projects/',
   '/v/',
+  '/404.html',
 ];
 
 const MIME = {

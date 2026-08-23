@@ -24,7 +24,7 @@ CI (`tests.yml`) runs `pnpm test:coverage` and uploads to Codecov.
 
 Place next to feature code:
 
-```
+```text
 src/features/_feature-template_/services/exampleService.test.ts
 src/shared/lib/utils.test.ts
 src/features/blog/services/blog.test.ts  # when blog logic grows
@@ -108,13 +108,15 @@ compressed source bytes.
 ```sh
 pnpm performance:check      # build and enforce config/route-budgets.json
 pnpm performance:baseline   # intentionally refresh the reviewed baseline
-pnpm lighthouse:ci          # mobile lab audit for all public routes
+pnpm lighthouse:ci          # mobile lab audit for all audited routes
 ```
 
 The accepted measurement artifact lives at
 `docs/design/current/performance-baseline.json`. Do not refresh it merely to make
 CI green; investigate the changed route and adjust a limit only with evidence.
 Lighthouse reports are written to `.lighthouse/reports` and uploaded by the
-browser-quality workflow. Accessibility, best-practices, and SEO scores are
-required; performance and Web Vitals thresholds are warning-level lab signals
-because field Core Web Vitals are not available for this static pre-release.
+browser-quality workflow. Accessibility and best-practices scores are required
+on every audited route; SEO is required for indexable routes and is explicitly
+skipped for the intentionally `noindex` `/404.html` route. Performance and Web
+Vitals thresholds are warning-level lab signals because field Core Web Vitals
+are not available for this static pre-release.
