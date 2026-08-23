@@ -99,6 +99,7 @@ test.describe('PR5 V source-fidelity route', () => {
     }
 
     const licenses = page.locator('.v-lab__licenses');
+    await expect(licenses.locator('h2')).toHaveText('Licenses');
     await expect(licenses).toContainText('Awesome V · CC0 1.0');
     await expect(licenses).toContainText('Veasel / V mascot · CC BY-NC 4.0');
     await expect(licenses).toContainText('This site ships no Veasel asset');

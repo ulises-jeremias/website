@@ -79,7 +79,7 @@ const heroShot = screenshotItems[0]!;
   <p class="df-world__copy-status" role="status" aria-atomic="true" data-df-copy-status></p>
 
   <section class="df-world__methods">
-    <p class="df-world__label">Other methods &amp; docs</p>
+    <h2 class="df-world__label">Other methods &amp; docs</h2>
     <ul>
       <li><code>yay -S dots-stable</code></li>
       <li><code>chezmoi init --apply ulises-jeremias</code></li>
@@ -176,7 +176,7 @@ const heroShot = screenshotItems[0]!;
   </aside>
 
   <section class="df-world__attribution">
-    <p class="df-world__label">Attribution &amp; licenses</p>
+    <h2 class="df-world__label">Attribution &amp; licenses</h2>
     <ul>
       {
         attributionEntries.map((entry) => (
@@ -293,9 +293,13 @@ const heroShot = screenshotItems[0]!;
     margin-bottom: 0.5rem;
   }
 
+  .df-world__hero > * {
+    min-inline-size: 0;
+  }
+
   @media (min-width: 960px) {
     .df-world__hero {
-      grid-template-columns: 0.85fr 1.25fr;
+      grid-template-columns: minmax(22rem, 0.85fr) minmax(0, 1.25fr);
       align-items: end;
     }
   }
@@ -358,6 +362,7 @@ const heroShot = screenshotItems[0]!;
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     color: #c9a8b2;
+    overflow-wrap: anywhere;
   }
 
   .df-world__methods,
@@ -371,6 +376,7 @@ const heroShot = screenshotItems[0]!;
     margin: 0 0 0.5rem;
     font-family: var(--font-mono);
     font-size: 0.75rem;
+    font-weight: 400;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text-faint, #c9a8b2);
