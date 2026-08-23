@@ -12,22 +12,22 @@ Before-captures for all 11 routes at all three widths were reviewed; CI
 
 ## Diagnosis
 
-1. **Structural cloning.** Six routes (Dotfiles, Workstation, Toolkit, V,
-   Create Awesome, Community) share one scaffold: eyebrow → title → lede →
-   SVG diagram → radio/inspector → dock. The diagrams differ; the rhythm,
-   framing, and interaction grammar do not.
-2. **Duplicated topology.** `ResponsibilityTopology` renders in full on `/`,
-   `/agentic-workstation/`, and `/agent-toolkit/`. Only the Workstation route
-   is its canonical documented home (`docs/INTERACTIVE_DIAGRAM_SEMANTICS.md`).
-3. **Concrete defects.** The Dotfiles `h1` fractures mid-word before its final letter —
-   global `overflow-wrap: break-word` breaks the 13-character brand word
-   inside its narrow hero column. `/blog/` and `/404.html` are mostly empty
-   vertical space. The Open Source constellation is decorative and offers no
-   legend for its four contribution kinds. The Create Awesome catalog renders
-   as one undifferentiated full-width wall of ~150 rows.
-4. **Deflective or generic copy.** "Diagrams teach — essays stay in the
-   repos" (V), "Desk clear." (Blog), unexplained metaphors (assembly line,
-   plaza, operations room), and interchangeable ledger descriptions.
+- **Structural cloning.** Six routes (Dotfiles, Workstation, Toolkit, V,
+  Create Awesome, Community) share one scaffold: eyebrow → title → lede →
+  SVG diagram → radio/inspector → dock. The diagrams differ; the rhythm,
+  framing, and interaction grammar do not.
+- **Duplicated topology.** `ResponsibilityTopology` renders in full on `/`,
+  `/agentic-workstation/`, and `/agent-toolkit/`. Only the Workstation route
+  is its canonical documented home (`docs/INTERACTIVE_DIAGRAM_SEMANTICS.md`).
+- **Concrete defects.** The Dotfiles `h1` fractures mid-word before its
+  final letter — global `overflow-wrap: break-word` breaks the 13-character
+  brand word inside its narrow hero column. `/blog/` and `/404.html` are
+  mostly empty vertical space. The Open Source constellation is decorative
+  and offers no legend for its four contribution kinds. The Create Awesome
+  catalog renders as one undifferentiated full-width wall of ~150 rows.
+- **Deflective or generic copy.** "Diagrams teach — essays stay in the
+  repos" (V), "Desk clear." (Blog), unexplained metaphors (assembly line,
+  plaza, operations room), and interchangeable ledger descriptions.
 
 ## Constraints honored
 
