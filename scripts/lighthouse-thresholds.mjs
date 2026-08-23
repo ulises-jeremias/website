@@ -5,6 +5,7 @@ function record(level, message, failures, warnings) {
 export function inspectLighthouseThresholds(config, route, result) {
   const failures = [];
   const warnings = [];
+  const skippedCategories = new Set(config.routeOverrides?.[route]?.skipCategories ?? []);
 
   if (result.runtimeError) {
     const code = result.runtimeError.code ? ` ${result.runtimeError.code}` : '';
@@ -13,6 +14,7 @@ export function inspectLighthouseThresholds(config, route, result) {
   }
 
   for (const [id, threshold] of Object.entries(config.categories)) {
+    if (skippedCategories.has(id)) continue;
     const score = result.categories?.[id]?.score;
     if (typeof score !== 'number') {
       record(threshold.level, `${route} ${id} did not return a numeric score`, failures, warnings);

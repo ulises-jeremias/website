@@ -14,14 +14,15 @@ exploration.
    for interactive diagrams.
 5. `tests/visual/*-snapshots/` contains maintained Chromium visual goldens.
 6. `performance-baseline.json` records the measured route delivery baseline.
-7. `uiux-hardening-evidence.md` records automated results and unresolved human gates.
+7. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates.
+   `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
 
 ## Accepted baseline
 
 - Visual direction: Synthwave Systems Atlas, approved in issue #52.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Assessment implementation baseline: `main@2a1c562`.
+- Assessment implementation baseline: `main@e8b561c5`.
 - UI/UX recovery epic: #319 remains open for current corrective work and final
   acceptance.
 

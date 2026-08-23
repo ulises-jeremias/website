@@ -1,38 +1,39 @@
 # UI/UX Design Assessment — Digital Nest website
 
-**Product:** ulises-jeremias.dev (Digital Nest) · **Commit audited:** `main@0cbcde0` (identical to production deployment) · **Period:** 2026-08-23
+**Product:** ulises-jeremias.dev (Digital Nest) · **Commit audited:** `main@e8b561c5` (identical to production deployment) · **Period:** 2026-08-23
 **Assessor:** ox-alpha orchestration (5 parallel specialist reviews) · **Purpose:** end-to-end baseline before next visual iteration · **Audience:** site owner + future contributors
-**Method:** `design-assessment` router — parallel evidence fan-out (structural map, axe-core ×22 combos, production E2E flows, head/SEO/governance audit, vision-based visual review). No fake precision: ratings carry confidence; severity bands are Blocking/Major/Minor.
+**Method:** `design-assessment` router — parallel evidence fan-out (structural map, axe-core ×22 combos, production E2E flows, head/SEO/governance audit, contrast probe, reflow checks, and heuristic visual review). No fake precision: ratings carry confidence; severity bands are Blocking/Major/Minor.
 
 ---
 
 ## Evidence summary
 
-| Source                                                                                         | Location                                                                      | Freshness  | Strength    | Confidence   | Indicators informed                                        |
-| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------- | ----------- | ------------ | ---------------------------------------------------------- |
-| axe-core 4.13.0 runs (22 combos: 11 routes × mobile/desktop, dark + reduced-motion)            | `/tmp/opencode/uiux-audit-v2/axe/raw/*.json`, `findings.md`                   | 2026-08-23 | Direct      | High         | A11y, Semantics                                            |
-| Production E2E interaction flows (F1–F10, 91 assertions, 23 screenshots)                       | `/tmp/opencode/uiux-audit-v2/flows/findings.md`                               | 2026-08-23 | Direct      | High         | UX friction, Interaction, Consistency                      |
-| Head/SEO/governance audit (11 routes, JSON-LD ×13, sitemap/RSS/manifest, contract cross-check) | `/tmp/opencode/uiux-audit-v2/content-seo-findings.md`                         | 2026-08-23 | Direct      | High         | Content trust, Compliance, Governance                      |
-| Structural map (routes/components/tokens/tests inventory)                                      | `/tmp/opencode/uiux-audit-v2/structural-map.md`                               | 2026-08-23 | Direct      | High         | System shape, Coverage gaps                                |
-| Vision-based visual review (text-only heuristic — harness vision unavailable)                  | src/styles/* + atlas doc + flows captures                                     | 2026-08-23 | Direct      | High         | Distinctiveness, Hierarchy, Typography, Responsive quality |
-| Lighthouse CI (10 routes, fail-closed thresholds) + route byte budgets                         | `.lighthouse/reports/`, GitHub run `32520687969`, `config/route-budgets.json` | 2026-08-21 | Direct      | High         | Performance (UI)                                           |
-| Screen-reader pilots (NVDA / VoiceOver / TalkBack)                                             | —                                                                             | —          | **Missing** | Not assessed | A11y (deep)                                                |
+| Source                                                                        | Location                                                                    | Freshness  | Strength    | Confidence   | Indicators informed                                        |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------- | ----------- | ------------ | ---------------------------------------------------------- |
+| axe-core 4.13.0 pre-fix run (22 combos: 11 routes × mobile/desktop)           | Historical session artifact; current CI revalidated the fixes               | 2026-08-23 | Historical  | Medium       | A11y, Semantics                                            |
+| Production E2E pre-fix flows (F1–F10, 91 assertions, 23 screenshots)          | Historical session artifact; current browser suite revalidated the flows    | 2026-08-23 | Historical  | Medium       | UX friction, Interaction, Consistency                      |
+| Head/SEO pre-fix audit (11 routes, JSON-LD ×13, sitemap/RSS/manifest)         | Historical session artifact; current build spot-check below                 | 2026-08-23 | Historical  | Medium       | Content trust, Compliance, Governance                      |
+| Structural map (routes/components/tokens/tests inventory)                     | Historical review artifact; current source tree and CI provide the baseline | 2026-08-23 | Historical  | Medium       | System shape, Coverage gaps                                |
+| Vision-based visual review (text-only heuristic — harness vision unavailable) | src/styles/* + atlas doc + production/CI captures                           | 2026-08-23 | Indirect    | Low          | Distinctiveness, Hierarchy, Typography, Responsive quality |
+| Current main CI baseline (Browser quality)                                    | GitHub run `32661138508`                                                    | 2026-08-23 | Direct      | High         | Performance, A11y, Responsive, Regression                  |
+| Current production route sweep                                                | `https://www.ulises-jeremias.dev` — 11 routes, no details/Inspect markup    | 2026-08-23 | Direct      | High         | Content discoverability, Responsive                        |
+| Screen-reader pilots (NVDA / VoiceOver / TalkBack)                            | —                                                                           | —          | **Missing** | Not assessed | A11y (deep)                                                |
 
 ---
 
 ## What is already excellent (keep & protect)
 
-- **Interaction correctness is exceptional:** 89/91 scripted assertions pass against production. Mobile drawer implements the full isolation grammar (dialog semantics, `inert`, focus trap, Esc restore, scroll lock). Composer conflict handling is _prevention-first_ (locked partner + dimmed + `aria-disabled` + explanatory status). Shareable project filters announce counts via live region and survive deep-linking.
-- **Semantic discipline:** every route exactly one `<h1>`, zero heading-order violations, single `<main>`, valid skip link, 100% image alt coverage (55/55), zero button/link misuse found.
+- **Interaction correctness is exceptional:** the pre-fix production flow baseline passed 89/91 assertions; current CI passes 206/206 browser checks. Mobile drawer implements the full isolation grammar (dialog semantics, `inert`, focus trap, Esc restore, scroll lock). Composer conflict handling is _prevention-first_ (locked partner + dimmed + `aria-disabled` + explanatory status). Shareable project filters announce counts via live region and survive deep-linking.
+- **Semantic discipline:** the current build has one `<h1>` per generated route, zero heading-order violations, one `<main>`, a valid skip link, 50/50 images with an `alt` attribute, and zero button/link misuse found in the current spot-check.
 - **Diagram contract honored where it ships:** Dotfiles LayersDiagram and WorkstationSystemMap implement the native-radio + hidden-SVG + status pattern from `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md`, with tests.
-- **Performance governance is fail-closed:** per-route byte budgets (script ≈ 0 on most worlds), Lighthouse error-thresholds ≥0.9 a11y/BP/SEO enforced in CI, CSS-only motion with global reduced-motion kill-switch.
-- **Content trust chain:** social cards 10/10 correct (1200×630, alt, live), JSON-LD 13/13 valid, canonical host guarded at build time, pinned Create Awesome snapshot verified by SHA.
+- **Performance governance is fail-closed:** per-route byte budgets (script ≈ 0 on most worlds), Lighthouse error thresholds ≥0.9 for indexable routes, and explicit 404 coverage with SEO skipped because it is intentionally `noindex, nofollow`; CSS-only motion has a global reduced-motion kill-switch.
+- **Content trust chain:** social cards 10/10 correct (1200×630, alt, live), current JSON-LD blocks 11/11 valid, canonical host guarded at build time, pinned Create Awesome snapshot verified by SHA.
 
 ---
 
 ## Implementation status (applied in this delivery)
 
-Every finding below was implemented and verified in the same change set, except the explicitly deferred items noted at the end. Verification: `format:check` ✅ · `lint` 0 errors ✅ · `type-check` 0 errors ✅ · `test:coverage` 21 files / 164 tests ✅ · `build` 11 pages ✅ · `scripts/check-contrast.mjs` **0 violations** ✅ · full Playwright suite **187/187** in `mcr.microsoft.com/playwright:v1.62.1-noble` (Chromium + Firefox + WebKit, CI parity) ✅.
+Every machine-checkable finding below was implemented and verified across PRs #347, #348, #350, #351, and #352. Current local verification: `format:check` ✅ · `lint` 0 errors ✅ · `type-check` 0 errors ✅ · `test` 21 files / 165 tests ✅ · `build` 11 pages ✅ · `scripts/check-contrast.mjs` **0 solid-color violations** ✅ · reflow **22/22** (320px and 640px equivalent) ✅ · `performance:check` ✅ · `lighthouse:ci` ✅. The GitHub Actions Browser quality baseline run `32661138508` passed **206/206** with Playwright 1.62.1 on `ubuntu-latest` (Chromium + Firefox + WebKit); this PR adds 404 and 640px-equivalent coverage for CI revalidation.
 
 - **Blocking 1** — `tabindex="-1"` on decorative SVG anchors in `ResponsibilityTopology.astro`.
 - **Major 2** — deleted 24 orphan components + 2 residual orphans (`WorkstationAtlas`, entire `agentic-workstation` feature); pruned 8 barrels.
@@ -41,30 +42,30 @@ Every finding below was implemented and verified in the same change set, except 
 - **Major 5** — retracted (false positive: `<header>`/`<footer>` present on every route via `SectionLayout`).
 - **Minor 6–11** — sitemap → `sitemap.xml`; meta descriptions lengthened (blog/open-source/create-awesome); projects dates localized; `rel="noopener noreferrer"` normalized (37 anchors); scrubber `aria-label="Stage N of M"`; reduced-motion Play announces via a self-managed live region.
 
-**Deferred (explicitly out of scope):** v's `EcosystemDiagram.astro` (app-unused but anchored by `v/data/index.test.ts` — confirm intent before removal) · dead `toolkitRationale` data export (harmless; knip flags) · vision-based aesthetic review (harness vision unavailable) · NVDA/VoiceOver/TalkBack pilots · any palette/brand refinement that would cascade into golden regeneration.
+**Remaining gates:** screen-reader pilots (NVDA/VoiceOver/TalkBack), manual sampling of gradient/clipped text contrast, real 200% browser zoom, subjective visual/brand sign-off, representative visitor testing for homepage hierarchy, the empty Blog navigation/product decision, final owner review of production captures, and ongoing production feedback. The repository includes `docs/design/current/uiux-manual-qa-checklist.md`; automated contrast, reflow, mobile snapshots, dead-code, and CSS-cleanup items are complete.
 
 ---
 
 ## Design-unit scorecard (1–5 · confidence)
 
-| Indicator                         | Score | Confidence | Basis                                                                                                                   |
-| --------------------------------- | ----- | ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Visual identity / distinctiveness | **3** | Low        | Heuristic (vision unavailable): token system, type scale, motion rules documented + test-locked; aesthetic unverified   |
-| Hierarchy & layout                | **3** | Low        | Heuristic: single primary action per view + documented rhythm; visual pacing unverified                                 |
-| UX friction / interaction         | **4** | High       | Flows F1–F10 near-perfect; feedback patterns consistent                                                                 |
-| Consistency                       | **4** | Medium     | Cross-route shell/CTA patterns uniform; orphan-component drift risk open                                                |
-| Accessibility                     | **3** | High       | Strong semantics + keyboard behavior, but 1 serious axe violation (4.1.2) + unverified SVG/chrome-text contrast cluster |
-| Responsiveness                    | **3** | Medium     | Mobile recomposition functionally proven; snapshots desktop-biased; visual quality judgment pending                     |
-| Design-system compliance          | **3** | High       | Tokens locked by tests; shipped diagrams comply; Toolkit nexus test gap; dead copies violate contract                   |
-| Performance (UI)                  | **4** | High       | Fail-closed budgets + green CI Lighthouse + CSS-only ambient motion                                                     |
+| Indicator                         | Score | Confidence | Basis                                                                                                                          |
+| --------------------------------- | ----- | ---------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Visual identity / distinctiveness | **3** | Low        | Heuristic (vision unavailable): token system, type scale, motion rules documented + test-locked; aesthetic unverified          |
+| Hierarchy & layout                | **3** | Low        | Heuristic: single primary action per view + documented rhythm; visual pacing unverified                                        |
+| UX friction / interaction         | **4** | High       | Flows F1–F10 near-perfect; feedback patterns consistent                                                                        |
+| Consistency                       | **4** | High       | Cross-route shell, visible content sections, labels, and CTA patterns are consistent; dead CSS was removed                     |
+| Accessibility                     | **4** | Medium     | Automated semantics, contrast, reflow, keyboard, focus, and axe checks pass; screen-reader pilots and gradient sampling remain |
+| Responsiveness                    | **4** | High       | 320px and 640px-equivalent reflow pass on 11 routes; mobile snapshots cover all flagship worlds; human device review remains   |
+| Design-system compliance          | **4** | High       | Tokens and diagram contract are test-backed; nexus convergence and stale CSS gaps are closed                                   |
+| Performance (UI)                  | **4** | High       | Fail-closed budgets + green CI Lighthouse + CSS-only ambient motion                                                            |
 
-**Overall narrative:** engineering-grade UI foundations rare for a personal site — semantics, performance gates and interaction truth are near-exemplary. The distance to “best possible” is concentrated in three places: (1) one real WCAG violation plus an unverifiable-by-machine contrast cluster, (2) dead/duplicated legacy surface that can silently regress contracts, (3) the aesthetic layer itself, which this assessment scores heuristically (Low confidence — harness vision unavailable) and leaves to the human/design follow-up. The one WCAG violation, the contrast cluster, and the dead legacy surface identified below are now resolved in this same change set (see Implementation status).
+**Overall narrative:** the site now has a strong, content-forward UX foundation: primary content is visible, interactions are keyboard- and pointer-safe, route budgets remain green, and mobile reflow is tested rather than assumed. The remaining gap is not automated correctness but human, product, and design judgment: screen-reader behavior, gradient contrast, real browser zoom, visitor feedback, Blog direction, and final visual/brand sign-off.
 
 ---
 
 ## Findings (severity-ranked, evidence-cited)
 
-> Status: every item in this section is **implemented and verified** in this change set (see Implementation status above). Items marked _deferred_ remain as follow-ups.
+> The observations below are retained for traceability. Every machine-checkable item is **resolved and verified** in PRs #347, #348, #350, #351, and #352; only the human and product/design gates listed below remain.
 
 ### Blocking
 
@@ -111,23 +112,23 @@ Every finding below was implemented and verified in the same change set, except 
 
 ### Not assessed (missing evidence)
 
-| Indicator                               | Reason                          | What would enable assessment                              |
-| --------------------------------------- | ------------------------------- | --------------------------------------------------------- |
-| A11y — screen readers                   | No NVDA/VoiceOver/TalkBack run  | Manual pilot script (drawer, topology, composer) recorded |
-| Contrast (definitive)                   | axe incomplete on SVG/gradients | Computed-style probe or manual sampling (feeds Finding 4) |
-| 200% zoom reflow                        | Not exercised                   | Browser zoom pass at 200%/400% on home + dotfiles         |
-| Distinctiveness & hierarchy (aesthetic) | Vision reviewer in flight       | Merges into this doc on completion                        |
+| Indicator                         | Reason                                                    | What would enable assessment           |
+| --------------------------------- | --------------------------------------------------------- | -------------------------------------- |
+| Contrast on gradient/clipped text | Automated probe excludes transparent gradient text        | Manual visual contrast sampling        |
+| Real screen-reader behavior       | No NVDA/VoiceOver/TalkBack run                            | Manual pilot using the checklist below |
+| Real browser zoom behavior        | Automated 320px and 640px-equivalent checks pass          | Manual 200%/400% zoom pass             |
+| Product/visitor validation        | No representative visitor study or Blog decision recorded | Owner/product review                   |
+| Subjective visual/brand sign-off  | Vision tooling unavailable in this harness                | Owner review of production captures    |
 
 ---
 
 ## Roadmap
 
-| Priority                    | Item                                                                                                                                                      | Effort | Source                 |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ---------------------- |
-| **Quick wins (one PR)**     | Findings 1, 5, 6, 9, 10, 11 (+8 copy tweak)                                                                                                               | S each | axe/flows/SEO          |
-| **Next sprint**             | Prune orphan surface (2) · nexus convergence tests (3) · contrast probe + fixes (4) · mobile snapshot lock per world · description-length schema rule (8) | S–M    | structural-map/SEO/axe |
-| **Needs design**            | Aesthetic-layer actions from visual review (distinctiveness, hierarchy pacing, responsive polish) — merged below when reviewer reports                    | L      | vision                 |
-| **Human gates (unchanged)** | NVDA/VoiceOver pilots; production feedback loop remains source of next iteration                                                                          | —      | prior evidence doc     |
+| Priority                | Item                                                                                                                    | Effort | Source                           |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------- |
+| **Complete**            | Findings 1–11 · dead-code/CSS pruning · nexus convergence · contrast probe/fix · reflow · mobile snapshots · budgets/CI | S–M    | PRs #347, #348, #350, #351, #352 |
+| **Human gate**          | NVDA/VoiceOver/TalkBack, gradient contrast, and real browser-zoom pilot using `uiux-manual-qa-checklist.md`             | —      | owner                            |
+| **Product/design gate** | Visitor testing, empty Blog/navigation decision, visual/brand sign-off, and production feedback review                  | —      | owner                            |
 
 ---
 
@@ -135,4 +136,4 @@ Every finding below was implemented and verified in the same change set, except 
 
 - **Destination:** this file (`docs/design/current/uiux-assessment-2026-08.md`) via PR to `main`.
 - **Reviewer:** Ulises Jeremias (owner) approves before any roadmap item becomes work.
-- **Status:** draft-complete pending visual-review merge (same day).
+- **Status:** automated assessment and implementation complete; human review gates remain explicitly listed above.
