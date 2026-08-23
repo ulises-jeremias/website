@@ -68,46 +68,46 @@ Every finding below was implemented and verified in the same change set, except 
 
 ### Blocking
 
-1. **[A11y · WCAG 2.x A 4.1.2] Focusable links hidden behind `aria-hidden="true"`**
-   - **Observation:** `.dx-topology__visual` container sets `aria-hidden="true"` (`src/shared/components/ResponsibilityTopology.astro:48`) while containing `<a href>` diagram nodes (`:68`). Fires `aria-hidden-focus` [serious] on desktop `/`, `/agent-toolkit/`, `/agentic-workstation/`.
-   - **Impact:** keyboard/SR users can tab into links that assistive tech is told to ignore — invisible focus stops on 3 high-traffic routes.
-   - **Effort:** S · **Severity:** Blocking · **Confidence:** High
-   - **Recommended fix:** add `tabindex="-1"` to the anchors inside the decorative SVG (the accessible duplicate lives in `.dx-topology__structured`, `:104`); drop the now-dead `.dx-topology__node:focus-visible` rule (`:203`) or scope it out.
-   - **Evidence:** axe findings.md §top-issues; code refs above.
+- **1 — [A11y · WCAG 2.x A 4.1.2] Focusable links hidden behind `aria-hidden="true"`**
+  - **Observation:** `.dx-topology__visual` container sets `aria-hidden="true"` (`src/shared/components/ResponsibilityTopology.astro:48`) while containing `<a href>` diagram nodes (`:68`). Fires `aria-hidden-focus` [serious] on desktop `/`, `/agent-toolkit/`, `/agentic-workstation/`.
+  - **Impact:** keyboard/SR users can tab into links that assistive tech is told to ignore — invisible focus stops on 3 high-traffic routes.
+  - **Effort:** S · **Severity:** Blocking · **Confidence:** High
+  - **Recommended fix:** add `tabindex="-1"` to the anchors inside the decorative SVG (the accessible duplicate lives in `.dx-topology__structured`, `:104`); drop the now-dead `.dx-topology__node:focus-visible` rule (`:203`) or scope it out.
+  - **Evidence:** axe findings.md §top-issues; code refs above.
 
 ### Major
 
-2. **[Consistency/Governance] Orphaned legacy component surface (~20 files) with one contract-violating copy**
-   - **Observation:** exported-but-unimported components: workstation {Hero, DoctorChecks, ProvisioningSection, LayersSection, LayerCard, StackDiagram, **EcosystemDiagram**, ToolkitRationale, ThinWorkstationBadge}, toolkit {Hero, Overview, CapabilityAnatomy, DistributionMap, QueueSeparation, SwarmStory}, six per-feature `Hero.astro`, entire `features/landing`. The workstation `EcosystemDiagram` copy violates _every_ clause of the diagram contract (no aria-hidden / radio / status).
-   - **Impact:** one accidental import ships a non-compliant diagram; barrels rot; reviewers audit ghosts.
-   - **Effort:** S–M · **Severity:** Major · **Confidence:** High
-   - **Fix:** delete both `EcosystemDiagram` copies + prune orphan exports (knip already flags duplicates); keep history via git.
-   - **Evidence:** structural-map §gaps(a); content-seo-findings F6.
+- **2 — [Consistency/Governance] Orphaned legacy component surface (~20 files) with one contract-violating copy**
+  - **Observation:** exported-but-unimported components: workstation {Hero, DoctorChecks, ProvisioningSection, LayersSection, LayerCard, StackDiagram, **EcosystemDiagram**, ToolkitRationale, ThinWorkstationBadge}, toolkit {Hero, Overview, CapabilityAnatomy, DistributionMap, QueueSeparation, SwarmStory}, six per-feature `Hero.astro`, entire `features/landing`. The workstation `EcosystemDiagram` copy violates _every_ clause of the diagram contract (no aria-hidden / radio / status).
+  - **Impact:** one accidental import ships a non-compliant diagram; barrels rot; reviewers audit ghosts.
+  - **Effort:** S–M · **Severity:** Major · **Confidence:** High
+  - **Fix:** delete both `EcosystemDiagram` copies + prune orphan exports (knip already flags duplicates); keep history via git.
+  - **Evidence:** structural-map §gaps(a); content-seo-findings F6.
 
-3. **[Compliance] Toolkit nexus lacks the contract-mandated keyboard/pointer convergence tests**
-   - **Observation:** `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md:70-77` requires radio/keyboard/pointer sync for _every_ adoption; CapabilityNexus ships only a status-announcement assertion.
-   - **Impact:** the largest interactive diagram on the site can silently regress its a11y grammar.
-   - **Effort:** M · **Severity:** Major · **Confidence:** High
-   - **Fix:** parameterize existing pr6 spec fixture for the nexus.
-   - **Evidence:** content-seo-findings F7.
+- **3 — [Compliance] Toolkit nexus lacks the contract-mandated keyboard/pointer convergence tests**
+  - **Observation:** `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md:70-77` requires radio/keyboard/pointer sync for _every_ adoption; CapabilityNexus ships only a status-announcement assertion.
+  - **Impact:** the largest interactive diagram on the site can silently regress its a11y grammar.
+  - **Effort:** M · **Severity:** Major · **Confidence:** High
+  - **Fix:** parameterize existing pr6 spec fixture for the nexus.
+  - **Evidence:** content-seo-findings F7.
 
-4. **[A11y risk] Unverified contrast cluster on dark surfaces (~465 nodes flagged incomplete across 15 combos)**
-   - **Observation:** axe cannot evaluate SVG `<text>` fills (`#67e8f9` chassis labels, palette indices) nor gradient chrome hero text (`.hero__name-line.chrome-text`); V-page notes (`.v-scene__note`) and toolkit copy/state labels form the biggest cluster.
-   - **Impact:** potential real AA failures invisible to CI (Lighthouse samples differently); muted-on-midnight body text is the usual offender.
-   - **Effort:** M · **Severity:** Major (risk) · **Confidence:** Medium
-   - **Fix:** scripted contrast probe (computed styles incl. SVG fills + effective gradient stops) → fix failures by raising text tones one ramp step; record results as the manual evidence.
-   - **Evidence:** axe findings.md items 3–8.
+- **4 — [A11y risk] Unverified contrast cluster on dark surfaces (~465 nodes flagged incomplete across 15 combos)**
+  - **Observation:** axe cannot evaluate SVG `<text>` fills (`#67e8f9` chassis labels, palette indices) nor gradient chrome hero text (`.hero__name-line.chrome-text`); V-page notes (`.v-scene__note`) and toolkit copy/state labels form the biggest cluster.
+  - **Impact:** potential real AA failures invisible to CI (Lighthouse samples differently); muted-on-midnight body text is the usual offender.
+  - **Effort:** M · **Severity:** Major (risk) · **Confidence:** Medium
+  - **Fix:** scripted contrast probe (computed styles incl. SVG fills + effective gradient stops) → fix failures by raising text tones one ramp step; record results as the manual evidence.
+  - **Evidence:** axe findings.md items 3–8.
 
-5. **[Retracted — false positive] "Landmark inconsistency"** — removed after verification: every route renders `<header>`/`<footer>` via `SectionLayout` → `SiteHeader`/`SiteFooter`. The earlier axe-side structural note was incorrect; no change required.
+- **5 — [Retracted — false positive] "Landmark inconsistency"** — removed after verification: every route renders `<header>`/`<footer>` via `SectionLayout` → `SiteHeader`/`SiteFooter`. The earlier axe-side structural note was incorrect; no change required.
 
 ### Minor
 
-6. **Sitemap format/name mismatch** — `sitemap-index.xml` served a flat URL set under an index filename; renamed to `sitemap.xml`. (content-seo-findings F5) · Effort S
-7. **Latent i18n leak + date drift** — Spanish-language placeholder text in two _unused_ Hero components; raw ISO dates on projects vs localized “Aug 7, 2026” on blog. (F9/F10) · Effort S
-8. **Meta descriptions below own target** — blog/open-source/create-awesome at 59–66 chars vs the 120–160 ideal declared in `src/data/routes.ts`; schema doesn’t enforce. (F3) · Effort S
-9. **External link rel hygiene** — 31 anchors use `noreferrer` without `noopener` (functionally safe; normalize convention). (flows Minor-1) · Effort S
-10. **Scrubber accessible names concatenate** (“00Wallpaper”) — index span + title in `StageScrubber.astro`; add `aria-label="Stage N of M: <title>"`. (flows Minor-2) · Effort S
-11. **Reduced-motion Play button gives zero feedback** — silent no-op feels broken; add one-line status or disabled styling. (flows Minor-3) · Effort S
+- **6 — Sitemap format/name mismatch** — `sitemap-index.xml` served a flat URL set under an index filename; renamed to `sitemap.xml`. (content-seo-findings F5) · Effort S
+- **7 — Latent i18n leak + date drift** — Spanish-language placeholder text in two _unused_ Hero components; raw ISO dates on projects vs localized “Aug 7, 2026” on blog. (F9/F10) · Effort S
+- **8 — Meta descriptions below own target** — blog/open-source/create-awesome at 59–66 chars vs the 120–160 ideal declared in `src/data/routes.ts`; schema doesn’t enforce. (F3) · Effort S
+- **9 — External link rel hygiene** — 31 anchors use `noreferrer` without `noopener` (functionally safe; normalize convention). (flows Minor-1) · Effort S
+- **10 — Scrubber accessible names concatenate** (“00Wallpaper”) — index span + title in `StageScrubber.astro`; add `aria-label="Stage N of M: <title>"`. (flows Minor-2) · Effort S
+- **11 — Reduced-motion Play button gives zero feedback** — silent no-op feels broken; add one-line status or disabled styling. (flows Minor-3) · Effort S
 
 ### Not assessed (missing evidence)
 
