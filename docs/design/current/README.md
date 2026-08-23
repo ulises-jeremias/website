@@ -19,7 +19,7 @@ exploration.
 - Visual direction: Synthwave Systems Atlas, approved in issue #52.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Assessment implementation baseline: `main@e8b561c5`.
+- Assessment implementation baseline: `main@fe489798`.
 - UI/UX recovery epic: #319 remains open for current corrective work and final
   acceptance.
 

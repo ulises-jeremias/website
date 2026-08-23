@@ -2,7 +2,7 @@
 
 **Site:** `https://www.ulises-jeremias.dev`
 **Target:** WCAG 2.2 AA and final visual/brand sign-off
-**Automated baseline:** `main@e8b561c5`
+**Automated baseline:** `main@fe489798`
 **Owner:** Ulises Jeremias
 
 This checklist covers the evidence that browser automation cannot reliably replace. Record the date, browser version, assistive technology version, viewport, and any reproduction URL beside each finding. Use keyboard-only input for keyboard checks; use touch exploration and touch scrolling for TalkBack checks. Do not claim screen-reader acceptance until all applicable pilots are complete.
