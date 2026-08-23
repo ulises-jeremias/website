@@ -24,7 +24,7 @@ CI (`tests.yml`) runs `pnpm test:coverage` and uploads to Codecov.
 
 Place next to feature code:
 
-```
+```text
 src/features/_feature-template_/services/exampleService.test.ts
 src/shared/lib/utils.test.ts
 src/features/blog/services/blog.test.ts  # when blog logic grows
