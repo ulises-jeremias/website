@@ -46,7 +46,11 @@ const nodesJson = JSON.stringify(nodes);
   <header class="cm-plaza__header">
     <p class="cm-plaza__eyebrow">Digital Nest · shared workshop</p>
     <h1 id="cm-plaza-title" class="cm-plaza__title">Digital Nest Community</h1>
-    <p class="cm-plaza__lede">One Discord for Personal DX, agentic tooling, Create Awesome, V, and incubating work.</p>
+    <p class="cm-plaza__lede">
+      One Discord server hosts every project in this atlas. The plaza below maps its five neighborhoods — Personal DX,
+      agentic tooling, Create Awesome, the V ecosystem, and incubating work — pick one to see what people build there
+      and where to jump in.
+    </p>
   </header>
 
   <ul class="cm-plaza__principles" aria-label="Workshop principles">
@@ -241,6 +245,11 @@ const nodesJson = JSON.stringify(nodes);
     margin: 0 auto;
     padding: 0 1rem 2rem;
     width: 100%;
+    /* Workshop surface: faint pegboard grid over the midnight background. */
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--nest-sunset-orange) 3%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 3%, transparent) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
   }
 
   @media (width >= 860px) {

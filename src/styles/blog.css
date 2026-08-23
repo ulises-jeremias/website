@@ -68,6 +68,13 @@
   outline-offset: 3px;
 }
 
+.blog-page__masthead {
+  margin: 0 0 2.25rem;
+  padding-block: 1.5rem 1.75rem;
+  border-block-start: 3px double var(--blog-border);
+  border-block-end: 1px solid var(--blog-border);
+}
+
 .blog-page__title {
   margin: 0 0 0.5rem;
   font-size: clamp(1.75rem, 4vw, 2.35rem);
@@ -76,7 +83,7 @@
 }
 
 .blog-page__lead {
-  margin: 0 0 2rem;
+  margin: 0;
   color: var(--blog-muted);
   max-inline-size: 58ch;
 }

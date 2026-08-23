@@ -15,7 +15,14 @@
 .dotfiles-page {
   background:
     radial-gradient(ellipse 80% 40% at 50% -10%, rgba(255, 176, 202, 0.18), transparent 60%),
-    radial-gradient(ellipse 60% 30% at 85% 100%, rgba(226, 189, 199, 0.12), transparent 60%), var(--dotfiles-plum);
+    radial-gradient(ellipse 60% 30% at 85% 100%, rgba(226, 189, 199, 0.12), transparent 60%),
+    linear-gradient(rgba(255, 176, 202, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 176, 202, 0.045) 1px, transparent 1px), var(--dotfiles-plum);
+  background-size:
+    auto,
+    auto,
+    3.5rem 3.5rem,
+    3.5rem 3.5rem;
   color: var(--dotfiles-text);
   min-height: 100vh;
 }

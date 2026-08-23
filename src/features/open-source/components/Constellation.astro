@@ -4,6 +4,17 @@ import { formatEvidenceDate, getConstellationNodes, getEvidenceLastUpdated } fro
 const nodes = getConstellationNodes();
 const lastUpdated = getEvidenceLastUpdated();
 
+const kindLegend = [
+  { kind: 'owned', label: 'Owned', detail: 'repositories I created and own' },
+  { kind: 'maintained', label: 'Maintained', detail: 'projects I maintain for their communities' },
+  { kind: 'org', label: 'Organization', detail: 'work inside organizations I belong to' },
+  { kind: 'external', label: 'External', detail: 'merged contributions to projects I do not run' },
+] as const;
+
+const kindCounts = Object.fromEntries(
+  kindLegend.map((entry) => [entry.kind, nodes.filter((node) => node.kind === entry.kind).length]),
+);
+
 /** Deterministic layout positions for the constellation (no fake metrics). */
 const positions = nodes.map((node, index) => {
   const angle = (index / Math.max(nodes.length, 1)) * Math.PI * 2 - Math.PI / 2;
@@ -22,6 +33,19 @@ const positions = nodes.map((node, index) => {
   </p>
 
   <div class="constellation__stage">
+    <ul class="constellation__legend" aria-label="Contribution kinds">
+      {
+        kindLegend.map((entry) => (
+          <li class="constellation__legend-item">
+            <span class:list={['constellation__swatch', `constellation__swatch--${entry.kind}`]} aria-hidden="true" />
+            <span class="constellation__legend-label">
+              {entry.label} ({kindCounts[entry.kind]})
+            </span>
+            <span class="constellation__legend-detail">{entry.detail}</span>
+          </li>
+        ))
+      }
+    </ul>
     <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
       <circle cx="50" cy="50" r="3.2" class="constellation__hub"></circle>
       {
@@ -80,7 +104,66 @@ const positions = nodes.map((node, index) => {
   }
 
   .constellation__stage {
-    display: block;
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 860px) {
+    .constellation__stage {
+      grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.1fr);
+    }
+  }
+
+  .constellation__legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .constellation__legend-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.15rem 0.6rem;
+    align-items: baseline;
+  }
+
+  .constellation__swatch {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    border: 1px solid var(--nest-paper);
+  }
+
+  .constellation__swatch--owned {
+    background: var(--nest-magenta);
+  }
+
+  .constellation__swatch--maintained {
+    background: var(--nest-cyan);
+  }
+
+  .constellation__swatch--org {
+    background: var(--nest-violet);
+  }
+
+  .constellation__swatch--external {
+    background: var(--nest-sunset-orange);
+  }
+
+  .constellation__legend-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .constellation__legend-detail {
+    grid-column: 2;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
   }
 
   .constellation__svg {
@@ -104,6 +187,26 @@ const positions = nodes.map((node, index) => {
     fill: var(--nest-paper);
     stroke: var(--nest-cyan);
     stroke-width: 0.35;
+  }
+
+  .constellation__node--owned {
+    fill: var(--nest-magenta);
+    stroke: var(--nest-pink);
+  }
+
+  .constellation__node--maintained {
+    fill: var(--nest-cyan);
+    stroke: var(--nest-blue);
+  }
+
+  .constellation__node--org {
+    fill: var(--nest-violet);
+    stroke: var(--nest-purple);
+  }
+
+  .constellation__node--external {
+    fill: var(--nest-sunset-orange);
+    stroke: var(--nest-sunset-pink);
   }
 
   .constellation__meta {
