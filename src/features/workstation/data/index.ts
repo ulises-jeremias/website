@@ -3,7 +3,6 @@ import type {
   DoctorCheck,
   LayerMeta,
   ProvisioningStep,
-  ToolkitRationalePoint,
   WorkstationIdentity,
   WorkstationProfile,
 } from '../types/index.js';
@@ -223,33 +222,6 @@ export const doctorChecks: DoctorCheck[] = [
     command: 'dots-devcompanion llm-status',
     description: 'Verifies active provider allowlist/strict before queuing devcompanion jobs — never invokes model.',
     when: 'Before queueing any background job for client engagements',
-  },
-];
-
-export const toolkitRationale: ToolkitRationalePoint[] = [
-  {
-    icon: '◐',
-    title: 'Thin workstation = single source of truth',
-    description:
-      'Workstation ships no skills/*, loops/*, mcp/*, prompts/*, agents/*, packs/teams. Catalog is provided by toolkit at runtime. Prevents duplication and version drift across machines.',
-  },
-  {
-    icon: '⟡',
-    title: 'Provisioning vs capabilities separation',
-    description:
-      'Workstation owns machine provisioning (chezmoi, packages, shell, secrets, LLM policy, runner). Toolkit owns capability distribution and orchestration. The two projects evolve independently.',
-  },
-  {
-    icon: '⎋',
-    title: 'Independent versioning & delivery',
-    description:
-      'Toolkit updates via uv tool install --force agent-toolkit-cli && agent-toolkit install without reinstalling the workstation. Also ships as Claude Code / Cursor plugin marketplace bundles.',
-  },
-  {
-    icon: '◎',
-    title: 'One sync, every AI tool',
-    description:
-      'dots-skills sync (delegated) creates symlinks for Claude Code, OpenCode, Cursor, Copilot, Windsurf, Pi, Codex from the same catalog. No manual per-tool copies.',
   },
 ];
 

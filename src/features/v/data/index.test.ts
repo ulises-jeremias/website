@@ -33,9 +33,8 @@ describe('V source-fidelity data', () => {
     );
 
     const setupDiagram = readSourceFile('../components/SetupVDiagram.astro');
-    const ecosystemDiagram = readSourceFile('../components/EcosystemDiagram.astro');
 
-    expect(`${setupDiagram}\n${ecosystemDiagram}`).not.toContain('vlang/setup-v@v1.7');
+    expect(setupDiagram).not.toContain('vlang/setup-v@v1.7');
     expect(setupDiagram).toContain(
       'aria-label="5 Verify — run v version and expose bin-path, v-bin-path, version, and architecture outputs"',
     );
@@ -92,7 +91,6 @@ describe('V source-fidelity data', () => {
   it('does not reintroduce contradicted V ecosystem claims', () => {
     const sourceFiles = [
       './index.ts',
-      '../components/EcosystemDiagram.astro',
       '../components/VSLDiagram.astro',
       '../components/VTLDiagram.astro',
       '../components/RxVDiagram.astro',

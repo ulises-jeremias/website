@@ -28,12 +28,6 @@ export interface DoctorCheck {
   when: string;
 }
 
-export interface ToolkitRationalePoint {
-  title: string;
-  description: string;
-  icon: string;
-}
-
 export interface WorkstationIdentity {
   midnight: string;
   cyan: string;
