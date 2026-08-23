@@ -53,5 +53,12 @@ test.describe('flagship route visuals', () => {
       await page.goto(route.path);
       await expect(page).toHaveScreenshot(`${route.name}-desktop-1440.png`, { fullPage: false });
     });
+
+    test(`${route.name} mobile capture`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(route.path);
+      await expect(page).toHaveScreenshot(`${route.name}-mobile-390.png`, { fullPage: false });
+    });
   }
 });

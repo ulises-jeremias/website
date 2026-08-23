@@ -164,7 +164,7 @@ const defaultLayer = workstationLayers[1]!;
       </svg>
 
       <fieldset class="ws-map__node-controls" data-ws-layer-controls disabled>
-        <legend>Inspect a project responsibility</legend>
+        <legend>Choose a responsibility</legend>
         <div class="ws-map__node-options">
           {
             workstationLayers.map((layer, i) => (
@@ -305,15 +305,15 @@ const defaultLayer = workstationLayers[1]!;
         ))
       }
     </ul>
-    <details>
-      <summary>Thin workstation verification</summary>
+    <section class="ws-map__verification">
+      <h3>Thin workstation verification</h3>
       <p>{thinWorkstationVerification.statement}</p>
       <p>
         No embedded: {thinWorkstationVerification.noEmbedded.join(', ')}. Kept: {
           thinWorkstationVerification.kept.join(', ')
         }.
       </p>
-    </details>
+    </section>
   </div>
 
   <WorldDock label="Get started">

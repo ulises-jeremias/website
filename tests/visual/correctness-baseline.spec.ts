@@ -151,9 +151,6 @@ test.describe('PR 1 correctness baseline', () => {
         ]);
       }
 
-      await page.locator('.ca-world__fold').evaluate((element: HTMLDetailsElement) => {
-        element.open = true;
-      });
       const table = page.locator('.ca-table-wrap');
       await expect(table).toBeVisible();
       await expectPageAndElementsToFit(page, ['[data-ca-world]', '.ca-world__fold', '.ca-table-wrap']);
@@ -161,8 +158,7 @@ test.describe('PR 1 correctness baseline', () => {
       await expect(table).toHaveAttribute('aria-label', 'Create Awesome family comparison');
 
       if (viewport.width <= 390) {
-        await page.locator('.ca-world__fold summary').focus();
-        await page.keyboard.press('Tab');
+        await table.focus();
         await expect(table).toBeFocused();
         await page.keyboard.press('ArrowRight');
         await expect.poll(() => table.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);

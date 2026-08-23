@@ -99,7 +99,6 @@ test.describe('PR5 V source-fidelity route', () => {
     }
 
     const licenses = page.locator('.v-lab__licenses');
-    await licenses.locator('summary').click();
     await expect(licenses).toContainText('Awesome V · CC0 1.0');
     await expect(licenses).toContainText('Veasel / V mascot · CC BY-NC 4.0');
     await expect(licenses).toContainText('This site ships no Veasel asset');
@@ -114,7 +113,6 @@ test.describe('PR5 V source-fidelity route', () => {
     await expect(row).toHaveCount(1);
     await expect(row.locator('h4 > a')).toHaveAttribute('href', 'https://github.com/vlang/awesome-v');
     await expect(row.locator('.projects-ledger__kind')).toContainText('Contributor · Aug 10, 2026');
-    await row.locator('summary').click();
     await expect(row).toContainText('Community-curated list of V frameworks, libraries, software, and resources');
     await row.scrollIntoViewIfNeeded();
     await capture(page, 'projects-390-awesome-v.png');

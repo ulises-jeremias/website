@@ -36,14 +36,14 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
   {
     notes.length > 0 && (
-      <details class="oss-ledger__notes">
-        <summary>Notes</summary>
+      <div class="oss-ledger__notes">
+        <p class="oss-ledger__notes-label">Notes</p>
         <ul>
           {notes.map((note) => (
             <li>{note}</li>
           ))}
         </ul>
-      </details>
+      </div>
     )
   }
 </section>

@@ -84,11 +84,8 @@ function formatVerifiedDate(value: string): string {
                   <a href={primaryHref(p)}>{p.title}</a>
                   {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
                 </h4>
-                <details class="projects-ledger__inspect">
-                  <summary>
-                    Inspect <span class="visually-hidden">{p.title}</span>
-                  </summary>
-                  <p>{p.summary}</p>
+                <div class="projects-ledger__meta">
+                  <p class="projects-ledger__summary">{p.summary}</p>
                   {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
                   {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
                   <p class="projects-ledger__tags">
@@ -96,7 +93,7 @@ function formatVerifiedDate(value: string): string {
                       <span>#{t}</span>
                     ))}
                   </p>
-                </details>
+                </div>
               </div>
               <div>
                 <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>
