@@ -43,7 +43,7 @@ Home (`/`) is the brand link, not a world. Nav shows worlds in priority order.
 
 ### Layout
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────────────────┐
 │ [◉ Hornero] Ulises Jeremias   Dotfiles  Workstation  Toolkit  V  Create…  More ▾   [Collaborate] │
 │                                ────────                                              (CTA)       │
@@ -88,11 +88,11 @@ All states respect `prefers-reduced-motion: reduce` — no transition, instant.
 - Focus visible: `a:focus-visible`, `button:focus-visible`, `summary:focus-visible` share token outline.
 - Color contrast: text AA (4.5:1) via tokens; active underline is extra affordance beyond color.
 - No trap, no scroll lock on desktop.
-- External links (future) use `rel="noreferrer"` + external icon with `aria-label` “(external)”.
+- External links (future) use `rel="noopener noreferrer"` + external icon with `aria-label` “(external)”.
 
 ### Tokens (preliminary)
 
-```
+```text
 --color-bg, --color-text, --color-muted, --color-border, --color-accent,
 --color-paper, --color-focus,
 --space-2, --space-3, --space-4, --space-8,
@@ -114,7 +114,7 @@ Final values live in `src/styles/tokens.css` (Epic C). Header uses only these na
 
 ### Layout
 
-```
+```text
 Closed:
 ┌──────────────────────────────────┐
 │ [◉] Ulises  ───────────  [☰ Menu] │  ← hamburger, 44px touch target

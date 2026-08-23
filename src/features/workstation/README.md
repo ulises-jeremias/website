@@ -9,16 +9,7 @@ Domain: **Agentic Workstation — Personal DX graph** (`HorneroConfig` optional 
 ```text
 workstation/
 ├── components/
-│   ├── EcosystemDiagram.astro   # Personal DX graph SVG
-│   ├── StackDiagram.astro       # Graph nodes (not a forced ladder)
-│   ├── WorkstationAtlas.astro   # Stations: terminal, profiles, uplink, harness
-│   ├── WorkstationHero.astro
-│   ├── LayerCard.astro
-│   ├── LayersSection.astro
-│   ├── ProvisioningSection.astro
-│   ├── DoctorChecks.astro
-│   ├── ToolkitRationale.astro
-│   └── ThinWorkstationBadge.astro
+│   └── WorkstationSystemMap.astro   # Boot stages + responsibility inspector (native radio grammar)
 ├── data/
 │   └── index.ts                 # Layers, canonical profiles, provisioning, doctor, rationale
 ├── services/

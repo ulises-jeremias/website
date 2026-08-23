@@ -4,10 +4,9 @@
 
 ## Structure
 
-```
+```text
 v/
 ├── components/
-│   ├── Hero.astro                # world hero — eyebrow, title, lead, badges
 │   ├── VOverview.astro           # ecosystem narrative + facts + verify details + sections
 │   ├── VCard.astro               # reusable project card (icon, repo, highlights)
 │   ├── VCards.astro              # grid of VProject cards
@@ -27,7 +26,7 @@ v/
 ## Design decisions
 
 - **Identity**: `v.css` accent #1e5a8a (6.43 AA on warm-paper), subtle `color-mix(7%, warm-paper)`, border `16% sand`. No Veasel binary — text note references `vlang/v-mascot/LICENSE` and prefers original illustration.
-- **Cards**: HTML/CSS only, hover lift + border tint, keyboard `:focus-within` outline, `↗` external affordance with `rel=noreferrer` and sr-only text.
+- **Cards**: HTML/CSS only, hover lift + border tint, keyboard `:focus-within` outline, `↗` external affordance with `rel="noopener noreferrer"` and sr-only text.
 - **Diagrams**: pure SVG `role="img"` + `<title>`/`<desc>` + per-node `tabindex="0"` + `role="listitem"` + `aria-label`, dashed arrows for dependency / backward flow, `prefers-reduced-motion` disables transitions, fallback chips/tables as CSS grids.
 - **Sections**: data-driven `vSections` for overview; each diagram has paired explanatory cards with code snippets (monospace on dark #0f2a44).
 - **Verification**: `VOverview` includes `<details>` verifying proof-over-vanity and Veasel policy. Licenses exported from `data/index.ts`.

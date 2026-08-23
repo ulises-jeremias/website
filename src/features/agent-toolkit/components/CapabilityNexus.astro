@@ -160,7 +160,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
                 })}
               </ul>
             ) : null}
-            <a class="atk-nexus__browse" href={node.href} target="_blank" rel="noreferrer">
+            <a class="atk-nexus__browse" href={node.href} target="_blank" rel="noopener noreferrer">
               Browse {node.title.toLowerCase()} ↗
             </a>
           </div>
@@ -168,7 +168,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       }
       <p class="atk-nexus__dist-note">
         Compile once → land in {distributionTargets.length} native profiles.
-        <a href={toolkitDocs.repo} target="_blank" rel="noreferrer">Docs ↗</a>
+        <a href={toolkitDocs.repo} target="_blank" rel="noopener noreferrer">Docs ↗</a>
       </p>
     </aside>
   </div>
@@ -343,7 +343,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
   }
 
   .atk-nexus__chip-count {
-    color: var(--node-color, var(--nest-magenta));
+    color: color-mix(in srgb, var(--node-color, var(--nest-magenta)) 72%, #fff 28%);
     font-weight: 700;
   }
 

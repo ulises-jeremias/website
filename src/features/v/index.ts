@@ -1,4 +1,3 @@
-export { default as Hero } from './components/Hero.astro';
 export { default as VOverview } from './components/VOverview.astro';
 export { default as VCard } from './components/VCard.astro';
 export { default as VCards } from './components/VCards.astro';

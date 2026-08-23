@@ -71,8 +71,8 @@ const heroShot = screenshotItems[0]!;
   </header>
 
   <WorldDock label="Install">
-    <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noreferrer"> GitHub </a>
-    <a href={verifiedFacts.wikiUrl} target="_blank" rel="noreferrer">Wiki ↗</a>
+    <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer"> GitHub </a>
+    <a href={verifiedFacts.wikiUrl} target="_blank" rel="noopener noreferrer">Wiki ↗</a>
     <button type="button" data-df-copy aria-label="Copy install command" hidden>Copy install</button>
     <code class="vf-dock__code" data-df-install>{verifiedFacts.installCurl}</code>
   </WorldDock>
@@ -86,7 +86,7 @@ const heroShot = screenshotItems[0]!;
       <li><code>dots appearance</code></li>
       <li>
         Smart Colors:
-        <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noreferrer">wiki ↗</a>
+        <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noopener noreferrer">wiki ↗</a>
       </li>
     </ul>
   </details>
@@ -193,7 +193,7 @@ const heroShot = screenshotItems[0]!;
     <a href="/community">Community</a>
     <a href="/agentic-workstation">Workstation</a>
     <a href="/agent-toolkit">Toolkit</a>
-    <a href={verifiedFacts.repoUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+    <a href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
   </nav>
 </section>
 

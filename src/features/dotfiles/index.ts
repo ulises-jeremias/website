@@ -1,4 +1,3 @@
-export { default as Hero } from './components/Hero.astro';
 export { default as DotfilesWorld } from './components/DotfilesWorld.astro';
 export { default as DotfilesNarrative } from './components/DotfilesNarrative.astro';
 export { default as LayersDiagram } from './components/LayersDiagram.astro';

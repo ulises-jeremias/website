@@ -9,6 +9,13 @@ const groupOptions = groups.map((g) => ({ id: g.id, label: g.label, count: g.pro
 function primaryHref(project: Project): string {
   return project.links[0]?.href ?? '#';
 }
+
+const verifiedDateFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' });
+
+function formatVerifiedDate(value: string): string {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? value : verifiedDateFormatter.format(date);
+}
 ---
 
 <Archipelago />
@@ -96,7 +103,8 @@ function primaryHref(project: Project): string {
                   {statusLabels[p.status]}
                 </span>
                 <span class="projects-ledger__kind">
-                  {p.kind} · {roleLabels[p.role]} · <time datetime={p.lastVerified}>{p.lastVerified}</time>
+                  {p.kind} · {roleLabels[p.role]} ·{' '}
+                  <time datetime={p.lastVerified}>{formatVerifiedDate(p.lastVerified)}</time>
                 </span>
               </div>
               <div class="projects-ledger__links">
@@ -104,7 +112,7 @@ function primaryHref(project: Project): string {
                   <a
                     href={l.href}
                     target={l.href.startsWith('http') ? '_blank' : undefined}
-                    rel={l.href.startsWith('http') ? 'noreferrer' : undefined}
+                    rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   >
                     {l.label}
                   </a>

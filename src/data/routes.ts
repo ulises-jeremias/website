@@ -150,7 +150,8 @@ export const routes: RouteMeta[] = [
     id: 'create-awesome',
     path: '/create-awesome',
     title: 'Create Awesome — App Scaffolding Family',
-    description: 'Choose template + addons → production-ready app (Node, Python, V).',
+    description:
+      'Choose a template and add-ons to scaffold a production-ready app in Node, Python, or V — shared tooling and quality checks included.',
     ogImage: '/social/create-awesome.jpg',
     ogImageAlt: 'Create Awesome application scaffolding for Node, Python, and V',
     structuredDataType: 'CollectionPage',
@@ -181,7 +182,8 @@ export const routes: RouteMeta[] = [
     id: 'blog',
     path: '/blog',
     title: 'Blog — Field Notes',
-    description: 'Field notes on DX, systems, and open-source — writing desk.',
+    description:
+      'Field notes on developer experience, systems, and open-source — essays, project logs, and lessons learned while building the Digital Nest.',
     ogImage: '/social/blog.jpg',
     ogImageAlt: 'Digital Nest field notes on developer experience and open source',
     structuredDataType: 'CollectionPage',
@@ -223,7 +225,8 @@ export const routes: RouteMeta[] = [
     id: 'open-source',
     path: '/open-source',
     title: 'Open Source — Evidence-Based Contributions',
-    description: 'Evidence-based open-source contributions across ecosystems.',
+    description:
+      'Evidence-based open-source contributions across the V, agentic tooling, and developer-experience ecosystems — merged PRs and maintained projects.',
     ogImage: '/social/open-source.jpg',
     ogImageAlt: 'Evidence-based open-source contributions across ecosystems',
     structuredDataType: 'CollectionPage',

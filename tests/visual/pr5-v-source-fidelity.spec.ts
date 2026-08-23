@@ -113,7 +113,7 @@ test.describe('PR5 V source-fidelity route', () => {
     const row = page.locator('[data-projects-row]:visible');
     await expect(row).toHaveCount(1);
     await expect(row.locator('h4 > a')).toHaveAttribute('href', 'https://github.com/vlang/awesome-v');
-    await expect(row.locator('.projects-ledger__kind')).toContainText('Contributor · 2026-08-10');
+    await expect(row.locator('.projects-ledger__kind')).toContainText('Contributor · Aug 10, 2026');
     await row.locator('summary').click();
     await expect(row).toContainText('Community-curated list of V frameworks, libraries, software, and resources');
     await row.scrollIntoViewIfNeeded();

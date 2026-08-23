@@ -27,3 +27,5 @@ docs/design/baselines/*/laptop-*/
 docs/design/baselines/*/tablet-*/
 docs/design/baselines/*/mobile-*/
 !docs/design/baselines/*/contact-sheets/
+
+.pnpm-store

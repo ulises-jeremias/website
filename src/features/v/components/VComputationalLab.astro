@@ -76,7 +76,7 @@ const stationsJson = JSON.stringify(stations);
                   </li>
                 ))}
               </ul>
-              <a data-v-station-repo href={station.href} target="_blank" rel="noreferrer">
+              <a data-v-station-repo href={station.href} target="_blank" rel="noopener noreferrer">
                 Open {station.repo} ↗
               </a>
             </div>
@@ -103,7 +103,7 @@ const stationsJson = JSON.stringify(stations);
               ))
             }
           </ul>
-          <a data-v-inspector-link href={defaultStation.href} target="_blank" rel="noreferrer">
+          <a data-v-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer">
             Open {defaultStation.repo} ↗
           </a>
         </div>
@@ -112,10 +112,12 @@ const stationsJson = JSON.stringify(stations);
   </div>
 
   <WorldDock label="Install & explore">
-    <a class="vf-dock__primary" href="https://github.com/vlang/v" target="_blank" rel="noreferrer"> vlang/v </a>
-    <a href="https://github.com/vlang/vsl" target="_blank" rel="noreferrer">VSL</a>
-    <a href="https://github.com/vlang/vtl" target="_blank" rel="noreferrer">VTL</a>
-    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noreferrer">RxV</a>
+    <a class="vf-dock__primary" href="https://github.com/vlang/v" target="_blank" rel="noopener noreferrer">
+      vlang/v
+    </a>
+    <a href="https://github.com/vlang/vsl" target="_blank" rel="noopener noreferrer">VSL</a>
+    <a href="https://github.com/vlang/vtl" target="_blank" rel="noopener noreferrer">VTL</a>
+    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noopener noreferrer">RxV</a>
     <a href="/community">Community</a>
     <code class="vf-dock__code">v install vsl · v install vtl · uses: {SETUP_V_PIN}</code>
   </WorldDock>

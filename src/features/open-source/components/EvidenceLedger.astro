@@ -26,7 +26,7 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
           <span class="oss-ledger__kind">{getEvidenceKindLabel(row.kind)}</span>
           <span>{row.subject}</span>
           <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
-          <a href={row.href} target="_blank" rel="noreferrer" data-testid="oss-row">
+          <a href={row.href} target="_blank" rel="noopener noreferrer" data-testid="oss-row">
             {getEvidenceProvenanceLabel(row.provenance)} ↗
           </a>
         </li>
