@@ -129,14 +129,6 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
     color: var(--nest-cyan);
   }
 
-  .oss-ledger__prov {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.04em;
-    color: var(--color-text-faint);
-    word-break: break-word;
-  }
-
   .oss-ledger__notes {
     margin: 1rem 0 0;
     padding-inline-start: 1.1rem;
@@ -152,12 +144,6 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text-muted);
-  }
-
-  .oss-ledger__foot {
-    margin: 1rem 0 0;
-    color: var(--color-text-faint);
-    font-size: 0.82rem;
   }
 
   @media (width < 820px) {
