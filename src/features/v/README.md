@@ -4,10 +4,9 @@
 
 ## Structure
 
-```
+```text
 v/
 ├── components/
-│   ├── Hero.astro                # world hero — eyebrow, title, lead, badges
 │   ├── VOverview.astro           # ecosystem narrative + facts + verify details + sections
 │   ├── VCard.astro               # reusable project card (icon, repo, highlights)
 │   ├── VCards.astro              # grid of VProject cards
