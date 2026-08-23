@@ -12,8 +12,9 @@
  * Thresholds: 4.5:1 normal text, 3:1 large text (>= 24px or >= 18.66px bold).
  */
 import { chromium } from 'playwright';
+
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 
 const PORT = Number(process.argv[2] ?? 4598);
