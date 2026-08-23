@@ -1,4 +1,5 @@
 export { default as ProvenanceStrip } from './components/ProvenanceStrip.astro';
+export { default as EcosystemContext } from './components/EcosystemContext.astro';
 export { default as CapabilityNexus } from './components/CapabilityNexus.astro';
 export { default as QueueVsSwarmVisual } from './components/QueueVsSwarmVisual.astro';
 export { default as SwarmControlRoom } from './components/SwarmControlRoom.astro';

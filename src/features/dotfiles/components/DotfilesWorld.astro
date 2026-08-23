@@ -306,10 +306,13 @@ const heroShot = screenshotItems[0]!;
 
   .df-world h1 {
     margin: 0;
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.6rem, 5vw, 2.75rem);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     line-height: 1.05;
+    /* The brand name is a single 13-character word; never fracture it. */
+    overflow-wrap: normal;
+    word-break: keep-all;
   }
 
   .df-world__lede {

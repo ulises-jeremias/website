@@ -39,8 +39,13 @@ const itemListJsonLd = hasPosts
         <span class="blog-page__nav-sep" aria-hidden="true">·</span>
         <a href="/rss.xml">RSS</a>
       </p>
-      <h1 class="blog-page__title">Blog</h1>
-      <p class="blog-page__lead">Field notes on tooling and open source.</p>
+      <header class="blog-page__masthead">
+        <h1 class="blog-page__title">Field Notes</h1>
+        <p class="blog-page__lead">
+          A technical journal on developer tooling, agent workflows, and open source — written from shipped work, not
+          announcements.
+        </p>
+      </header>
 
       {
         hasPosts ? (
@@ -64,14 +69,23 @@ const itemListJsonLd = hasPosts
             ))}
           </ul>
         ) : (
-          <div class="blog-empty" role="status">
+          <div class="blog-empty">
             <div class="blog-empty__desk" aria-hidden="true">
               <span class="blog-empty__lamp" />
               <span class="blog-empty__pad" />
             </div>
-            <h2>Desk clear.</h2>
+            <h2>No posts published yet.</h2>
             <p>
-              Notes soon. Browse <a href="/projects">projects</a> or <a href="/community">community</a>.
+              Entries land here only when there is something verified to write up — HorneroConfig internals, agent
+              orchestration patterns from Agent Toolkit, and V ecosystem engineering. No filler posts.
+            </p>
+            <p class="blog-empty__elsewhere">
+              Until then, the work itself is documented in <a href="/projects">the project ledger</a> and the{' '}
+              <a href="/open-source">open-source evidence trail</a>, and discussed in{' '}
+              <a href="/community">the community workshop</a>.
+            </p>
+            <p class="blog-empty__elsewhere">
+              <a href="/rss.xml">Subscribe to the RSS feed</a> to get the first entry when it ships.
             </p>
           </div>
         )

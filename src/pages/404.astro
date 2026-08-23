@@ -1,5 +1,8 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getFooterRoutes, getNavLabel } from '@/data/routes';
+
+const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
 ---
 
 <SectionLayout
@@ -15,7 +18,8 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
     <p class="lost-world__signal" aria-hidden="true">SIGNAL LOST</p>
     <h1 id="lost-title" class="lost-world__title">WORLD NOT FOUND</h1>
     <p class="lost-world__lead">
-      This coordinate is outside the Digital Nest network — an isolated platform with no uplink.
+      There is no page at this address — the link may be outdated or mistyped. In atlas terms: this coordinate is an
+      isolated platform with no uplink.
     </p>
     <div class="lost-world__platform" aria-hidden="true">
       <span class="lost-world__glow"></span>
@@ -23,9 +27,23 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
     </div>
     <nav class="lost-world__actions" aria-label="Recovery">
       <a class="lost-world__cta lost-world__cta--primary" href="/">Return to Digital Nest</a>
-      <a class="lost-world__cta" href="/#project-atlas">Explore Worlds</a>
-      <a class="lost-world__cta" href="/blog">Blog</a>
-      <a class="lost-world__cta" href="/community">Community</a>
+    </nav>
+    <nav class="lost-world__atlas" aria-labelledby="lost-atlas-title">
+      <h2 id="lost-atlas-title" class="lost-world__atlas-title">Or jump straight to a world</h2>
+      <ul class="lost-world__atlas-list">
+        {
+          atlasRoutes.map((route) => (
+            <li>
+              <a class="lost-world__atlas-link" href={route.path}>
+                <span class="lost-world__atlas-index" aria-hidden="true">
+                  {String(route.navOrder).padStart(2, '0')}
+                </span>
+                {getNavLabel(route)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </nav>
   </section>
 </SectionLayout>
@@ -120,6 +138,49 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
   .lost-world__cta:focus-visible {
     outline: 2px solid var(--color-focus-ring);
     outline-offset: 2px;
+  }
+  .lost-world__atlas {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+  }
+  .lost-world__atlas-title {
+    margin: 0 0 1rem;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--nest-text-faint);
+  }
+  .lost-world__atlas-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.4rem 1rem;
+    text-align: left;
+  }
+  .lost-world__atlas-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .lost-world__atlas-link:hover {
+    color: var(--nest-cyan);
+  }
+  .lost-world__atlas-link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+  .lost-world__atlas-index {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    color: var(--nest-cyan);
   }
 
   @keyframes lost-world-pulse {

@@ -39,8 +39,27 @@ const stationsJson = JSON.stringify(stations);
   <header class="v-lab__header">
     <p class="v-lab__eyebrow">V Ecosystem · computational lab</p>
     <h1 id="v-lab-title">V Ecosystem</h1>
-    <p class="v-lab__lede">Select a station. Diagrams teach — essays stay in the repos.</p>
+    <p class="v-lab__lede">
+      Six lab stations cover my work across the V ecosystem — the compiler core, scientific computing, tensors and
+      autograd, reactive streams, CI tooling, and the community catalog. Each station pairs a working diagram with the
+      verified role, repository, and license behind it.
+    </p>
   </header>
+
+  <nav class="v-lab__index" aria-label="Lab stations">
+    <ol class="v-lab__index-list">
+      {
+        stations.map((station) => (
+          <li>
+            <a class="v-lab__index-link" href={`#${station.id}`}>
+              <strong>{station.title}</strong>
+              <span class="v-lab__index-role">{station.role}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
 
   <div class="v-lab__stations" data-v-station-selector hidden>
     {
@@ -163,7 +182,58 @@ const stationsJson = JSON.stringify(stations);
   .v-lab__lede {
     margin: 0.45rem 0 0;
     color: var(--color-text-muted);
-    max-inline-size: 48ch;
+    max-inline-size: 64ch;
+    line-height: 1.55;
+  }
+
+  .v-lab__index {
+    margin: 1.1rem 0 0;
+  }
+
+  /* The enhanced selector replaces the static index once JavaScript is ready. */
+  .v-lab[data-v-enhanced] .v-lab__index {
+    display: none;
+  }
+
+  .v-lab__index-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem 1.25rem;
+  }
+
+  @media (min-width: 760px) {
+    .v-lab__index-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .v-lab__index-link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    min-height: 44px;
+    align-content: center;
+    color: var(--color-text);
+    text-decoration: none;
+    border-block-end: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 18%, transparent);
+  }
+
+  .v-lab__index-link:hover strong,
+  .v-lab__index-link:focus-visible strong {
+    color: var(--world-accent, #5b9bd5);
+  }
+
+  .v-lab__index-link:focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .v-lab__index-role {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
   }
 
   .v-lab__stations {
