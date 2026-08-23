@@ -102,8 +102,8 @@ Every finding below was implemented and verified in the same change set, except 
 
 ### Minor
 
-6. **Sitemap format/name mismatch** — `sitemap-index.xml` serves a flat `<urlset>`; rename to `sitemap.xml` or emit true `<sitemapindex>`. (content-seo-findings F5) · Effort S
-7. **Latent i18n leak + date drift** — Spanish placeholder (“Estructura base M1…”) in two _unused_ Hero components; raw ISO dates on projects/open-source vs localized “Aug 7, 2026” on blog. (F9/F10) · Effort S
+6. **Sitemap format/name mismatch** — `sitemap-index.xml` served a flat URL set under an index filename; renamed to `sitemap.xml`. (content-seo-findings F5) · Effort S
+7. **Latent i18n leak + date drift** — Spanish-language placeholder text in two _unused_ Hero components; raw ISO dates on projects vs localized “Aug 7, 2026” on blog. (F9/F10) · Effort S
 8. **Meta descriptions below own target** — blog/open-source/create-awesome at 59–66 chars vs the 120–160 ideal declared in `src/data/routes.ts`; schema doesn’t enforce. (F3) · Effort S
 9. **External link rel hygiene** — 31 anchors use `noreferrer` without `noopener` (functionally safe; normalize convention). (flows Minor-1) · Effort S
 10. **Scrubber accessible names concatenate** (“00Wallpaper”) — index span + title in `StageScrubber.astro`; add `aria-label="Stage N of M: <title>"`. (flows Minor-2) · Effort S
