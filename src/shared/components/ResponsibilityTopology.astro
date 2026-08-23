@@ -65,7 +65,7 @@ const nodeById = new Map<string, (typeof nodes)[number]>(nodes.map((node) => [no
       >
       {
         nodes.map((node) => (
-          <a href={node.href} class:list={['dx-topology__node', `dx-topology__node--${node.className}`]}>
+          <a href={node.href} tabindex="-1" class:list={['dx-topology__node', `dx-topology__node--${node.className}`]}>
             <rect
               x={
                 node.className === 'hornero'

@@ -4,7 +4,7 @@ const mocks = vi.hoisted(() => ({ getCollection: vi.fn() }));
 
 vi.mock('astro:content', () => ({ getCollection: mocks.getCollection }));
 
-import { GET } from '../pages/sitemap-index.xml.js';
+import { GET } from '../pages/sitemap.xml.js';
 
 describe('sitemap', () => {
   beforeEach(() => {

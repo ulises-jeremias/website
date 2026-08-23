@@ -16,7 +16,7 @@ import { vProjects } from '../data/index.js';
     {
       vProjects.map((p) => (
         <li role="listitem">
-          <a href={p.href} target="_blank" rel="noreferrer">
+          <a href={p.href} target="_blank" rel="noopener noreferrer">
             <span>{p.title}</span>
             <code>{p.repo}</code>
           </a>

@@ -15,10 +15,11 @@ const { stages, label = 'Pipeline stage', initialIndex = 0 } = Astro.props;
         <button
           type="button"
           aria-pressed={i === initialIndex ? 'true' : 'false'}
+          aria-label={`Stage ${i + 1} of ${stages.length}: ${stage.title}`}
           data-stage={stage.id}
           data-stage-index={String(stage.index ?? i)}
         >
-          <span>{String(stage.index ?? i).padStart(2, '0')}</span>
+          <span aria-hidden="true">{String(stage.index ?? i).padStart(2, '0')}</span>
           {stage.title}
         </button>
       </li>

@@ -88,7 +88,7 @@ All states respect `prefers-reduced-motion: reduce` — no transition, instant.
 - Focus visible: `a:focus-visible`, `button:focus-visible`, `summary:focus-visible` share token outline.
 - Color contrast: text AA (4.5:1) via tokens; active underline is extra affordance beyond color.
 - No trap, no scroll lock on desktop.
-- External links (future) use `rel="noreferrer"` + external icon with `aria-label` “(external)”.
+- External links (future) use `rel="noopener noreferrer"` + external icon with `aria-label` “(external)”.
 
 ### Tokens (preliminary)
 

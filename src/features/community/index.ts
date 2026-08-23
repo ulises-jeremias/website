@@ -1,4 +1,3 @@
-export { default as Hero } from './components/Hero.astro';
 export { default as DiscordCTA } from './components/DiscordCTA.astro';
 export { default as WorkshopNarrative } from './components/WorkshopNarrative.astro';
 export { default as WorkshopGraph } from './components/WorkshopGraph.astro';

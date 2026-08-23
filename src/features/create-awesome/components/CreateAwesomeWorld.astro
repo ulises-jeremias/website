@@ -146,7 +146,7 @@ const lineModules = [
           <code data-ca-inspector-install>{defaultStation.install}</code>
         </span>
         <span>
-          <a data-ca-inspector-link href={defaultStation.href} target="_blank" rel="noreferrer"> Catalog ↗ </a>
+          <a data-ca-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer"> Catalog ↗ </a>
         </span>
       </Fragment>
     </SceneInspector>
@@ -197,7 +197,7 @@ const lineModules = [
             {step.href ? (
               <>
                 {' '}
-                <a href={step.href} target="_blank" rel="noreferrer">
+                <a href={step.href} target="_blank" rel="noopener noreferrer">
                   ↗
                 </a>
               </>
@@ -219,10 +219,16 @@ const lineModules = [
   </details>
 
   <WorldDock label="Create Awesome links">
-    <a class="vf-dock__primary" href={defaultStation.href} target="_blank" rel="noreferrer" data-ca-dock-catalog>
+    <a
+      class="vf-dock__primary"
+      href={defaultStation.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-ca-dock-catalog
+    >
       Catalog
     </a>
-    <a href={`https://github.com/${defaultStation.repo}`} target="_blank" rel="noreferrer" data-ca-dock-repo>
+    <a href={`https://github.com/${defaultStation.repo}`} target="_blank" rel="noopener noreferrer" data-ca-dock-repo>
       GitHub
     </a>
     <a href="/community">Community</a>

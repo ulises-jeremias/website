@@ -42,6 +42,21 @@ export function initStagePlayer(options: StagePlayerOptions): StagePlayer {
 
   const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Play is intentionally suppressed under reduced motion; give users feedback instead of a silent no-op.
+  const announceReducedMotionNotice = () => {
+    let live = root.querySelector<HTMLElement>('[data-vf-reduced-notice]');
+    if (!live) {
+      live = document.createElement('span');
+      live.dataset.vfReducedNotice = '';
+      live.setAttribute('role', 'status');
+      live.setAttribute('aria-live', 'polite');
+      live.style.cssText =
+        'position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;';
+      root.appendChild(live);
+    }
+    live.textContent = 'Autoplay is paused to respect reduced-motion settings';
+  };
+
   const scrubberButtons = () =>
     Array.from(root.querySelectorAll<HTMLButtonElement>('[data-stage-index], [data-stage]'));
 
@@ -114,7 +129,15 @@ export function initStagePlayer(options: StagePlayerOptions): StagePlayer {
     });
   });
 
-  root.querySelectorAll<HTMLElement>('[data-play], [data-vf-play]').forEach((el) => el.addEventListener('click', play));
+  root.querySelectorAll<HTMLElement>('[data-play], [data-vf-play]').forEach((el) =>
+    el.addEventListener('click', () => {
+      if (reduced && stageCount >= 2) {
+        announceReducedMotionNotice();
+        return;
+      }
+      play();
+    }),
+  );
   root
     .querySelectorAll<HTMLElement>('[data-pause], [data-vf-pause]')
     .forEach((el) => el.addEventListener('click', pause));
@@ -135,6 +158,7 @@ export function initStagePlayer(options: StagePlayerOptions): StagePlayer {
     if (e.key === ' ' || e.code === 'Space') {
       e.preventDefault();
       if (timer) pause();
+      else if (reduced && stageCount >= 2) announceReducedMotionNotice();
       else play();
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
