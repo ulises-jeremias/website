@@ -1,6 +1,6 @@
 # UI/UX Design Assessment — Digital Nest website
 
-**Product:** ulises-jeremias.dev (Digital Nest) · **Commit audited:** `main@e8b561c5` (identical to production deployment) · **Period:** 2026-08-23
+**Product:** ulises-jeremias.dev (Digital Nest) · **Commit audited:** `main@fe489798` (identical to production deployment) · **Period:** 2026-08-23
 **Assessor:** ox-alpha orchestration (5 parallel specialist reviews) · **Purpose:** end-to-end baseline before next visual iteration · **Audience:** site owner + future contributors
 **Method:** `design-assessment` router — parallel evidence fan-out (structural map, axe-core ×22 combos, production E2E flows, head/SEO/governance audit, contrast probe, reflow checks, and heuristic visual review). No fake precision: ratings carry confidence; severity bands are Blocking/Major/Minor.
 
@@ -15,7 +15,7 @@
 | Head/SEO pre-fix audit (11 routes, JSON-LD ×13, sitemap/RSS/manifest)         | Historical session artifact; current build spot-check below                 | 2026-08-23 | Historical  | Medium       | Content trust, Compliance, Governance                      |
 | Structural map (routes/components/tokens/tests inventory)                     | Historical review artifact; current source tree and CI provide the baseline | 2026-08-23 | Historical  | Medium       | System shape, Coverage gaps                                |
 | Vision-based visual review (text-only heuristic — harness vision unavailable) | src/styles/* + atlas doc + production/CI captures                           | 2026-08-23 | Indirect    | Low          | Distinctiveness, Hierarchy, Typography, Responsive quality |
-| Current main CI baseline (Browser quality)                                    | GitHub run `32661138508`                                                    | 2026-08-23 | Direct      | High         | Performance, A11y, Responsive, Regression                  |
+| Current main CI baseline (Browser quality)                                    | GitHub run `32665651809`                                                    | 2026-08-23 | Direct      | High         | Performance, A11y, Responsive, Regression                  |
 | Current production route sweep                                                | `https://www.ulises-jeremias.dev` — 11 routes, no details/Inspect markup    | 2026-08-23 | Direct      | High         | Content discoverability, Responsive                        |
 | Screen-reader pilots (NVDA / VoiceOver / TalkBack)                            | —                                                                           | —          | **Missing** | Not assessed | A11y (deep)                                                |
 
@@ -33,7 +33,7 @@
 
 ## Implementation status (applied in this delivery)
 
-Every machine-checkable finding below was implemented and verified across PRs #347, #348, #350, #351, and #352. Current local verification: `format:check` ✅ · `lint` 0 errors ✅ · `type-check` 0 errors ✅ · `test` 21 files / 165 tests ✅ · `build` 11 pages ✅ · `scripts/check-contrast.mjs` **0 solid-color violations** ✅ · reflow **22/22** (320px and 640px equivalent) ✅ · `performance:check` ✅ · `lighthouse:ci` ✅. The GitHub Actions Browser quality baseline run `32661138508` passed **206/206** with Playwright 1.62.1 on `ubuntu-latest` (Chromium + Firefox + WebKit); this PR adds 404 and 640px-equivalent coverage for CI revalidation.
+Every machine-checkable finding below was implemented and verified across PRs #347, #348, #350, #351, #352, and #353. Current local verification: `format:check` ✅ · `lint` 0 errors ✅ · `type-check` 0 errors ✅ · `test` 21 files / 165 tests ✅ · `build` 11 pages ✅ · `scripts/check-contrast.mjs` **0 solid-color violations** ✅ · reflow **22/22** (320px and 640px equivalent) ✅ · `performance:check` ✅ · `lighthouse:ci` ✅. The GitHub Actions Browser quality run `32665651809` on `main@fe489798` passed with Playwright 1.62.1 on `ubuntu-latest` (Chromium + Firefox + WebKit), including the added 404 and 640px-equivalent coverage.
 
 - **Blocking 1** — `tabindex="-1"` on decorative SVG anchors in `ResponsibilityTopology.astro`.
 - **Major 2** — deleted 24 orphan components + 2 residual orphans (`WorkstationAtlas`, entire `agentic-workstation` feature); pruned 8 barrels.
@@ -65,7 +65,7 @@ Every machine-checkable finding below was implemented and verified across PRs #3
 
 ## Findings (severity-ranked, evidence-cited)
 
-> The observations below are retained for traceability. Every machine-checkable item is **resolved and verified** in PRs #347, #348, #350, #351, and #352; only the human and product/design gates listed below remain.
+> The observations below are retained for traceability. Every machine-checkable item is **resolved and verified** in PRs #347, #348, #350, #351, #352, and #353; only the human and product/design gates listed below remain.
 
 ### Blocking
 
@@ -124,11 +124,11 @@ Every machine-checkable finding below was implemented and verified across PRs #3
 
 ## Roadmap
 
-| Priority                | Item                                                                                                                    | Effort | Source                           |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------- |
-| **Complete**            | Findings 1–11 · dead-code/CSS pruning · nexus convergence · contrast probe/fix · reflow · mobile snapshots · budgets/CI | S–M    | PRs #347, #348, #350, #351, #352 |
-| **Human gate**          | NVDA/VoiceOver/TalkBack, gradient contrast, and real browser-zoom pilot using `uiux-manual-qa-checklist.md`             | —      | owner                            |
-| **Product/design gate** | Visitor testing, empty Blog/navigation decision, visual/brand sign-off, and production feedback review                  | —      | owner                            |
+| Priority                | Item                                                                                                                    | Effort | Source                                 |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------ | -------------------------------------- |
+| **Complete**            | Findings 1–11 · dead-code/CSS pruning · nexus convergence · contrast probe/fix · reflow · mobile snapshots · budgets/CI | S–M    | PRs #347, #348, #350, #351, #352, #353 |
+| **Human gate**          | NVDA/VoiceOver/TalkBack, gradient contrast, and real browser-zoom pilot using `uiux-manual-qa-checklist.md`             | —      | owner                                  |
+| **Product/design gate** | Visitor testing, empty Blog/navigation decision, visual/brand sign-off, and production feedback review                  | —      | owner                                  |
 
 ---
 

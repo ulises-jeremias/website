@@ -1,7 +1,7 @@
 # UI/UX hardening evidence
 
 > **Historical record:** this file describes the pre-merge hardening baseline from
-> 2026-08-21. For the current state after PRs #347–#352, use
+> 2026-08-21. For the current state after PRs #347–#353, use
 > `uiux-assessment-2026-08.md` and `uiux-manual-qa-checklist.md`.
 
 Date: 2026-08-21
