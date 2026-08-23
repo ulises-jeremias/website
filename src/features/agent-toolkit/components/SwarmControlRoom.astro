@@ -135,7 +135,7 @@ const stageCount = swarmStages.length;
           </div>
         </div>
         <div class="atk-swarm__state-files">
-          <p class="atk-swarm__label">Run state</p>
+          <h3 class="atk-swarm__label">Run state</h3>
           <ul>
             {
               sharedRunStateFiles.map((file) => (
@@ -199,13 +199,13 @@ const stageCount = swarmStages.length;
   </div>
 
   <div class="atk-swarm__cli">
-    <p class="atk-swarm__label">CLI</p>
+    <h3 class="atk-swarm__label">CLI</h3>
     <div class="atk-swarm__cli-grid">
       {
         uiBackends.map((backend) => (
           <figure>
             <figcaption>{backend.title}</figcaption>
-            <pre>
+            <pre tabindex="0" role="region" aria-label={`${backend.title} CLI command`}>
               <code>{backend.commands[0]}</code>
             </pre>
           </figure>
@@ -651,8 +651,8 @@ const stageCount = swarmStages.length;
     color: var(--color-text-faint);
   }
 
-  .atk-swarm__state-files summary {
-    cursor: pointer;
+  .atk-swarm__label {
+    margin: 0 0 0.4rem;
     font-family: var(--font-mono);
     font-size: 0.7rem;
     letter-spacing: 0.1em;
@@ -823,15 +823,6 @@ const stageCount = swarmStages.length;
     margin-top: 0.85rem;
   }
 
-  .atk-swarm__cli summary {
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
   .atk-swarm__cli-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -840,6 +831,7 @@ const stageCount = swarmStages.length;
   }
 
   .atk-swarm__cli figure {
+    min-inline-size: 0;
     margin: 0;
   }
 
@@ -850,6 +842,8 @@ const stageCount = swarmStages.length;
   }
 
   .atk-swarm__cli pre {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     margin: 0;
     padding: 0.65rem;
     overflow-x: auto;
@@ -858,7 +852,7 @@ const stageCount = swarmStages.length;
     font-size: 0.72rem;
   }
 
-  .atk-swarm__cli p {
+  .atk-swarm__cli > p:not(.atk-swarm__label) {
     margin: 0.55rem 0 0;
     font-size: 0.85rem;
     color: var(--color-text-muted);
@@ -885,6 +879,11 @@ const stageCount = swarmStages.length;
 
     .atk-swarm__cli-grid {
       grid-template-columns: 1fr;
+    }
+
+    .atk-swarm__cli pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
   }
 </style>

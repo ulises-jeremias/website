@@ -123,7 +123,7 @@ const stationsJson = JSON.stringify(stations);
   </WorldDock>
 
   <section class="v-lab__licenses">
-    <h3>Licenses</h3>
+    <h2>Licenses</h2>
     <ul>
       {
         licenseEntries.map((entry) => (
@@ -364,12 +364,13 @@ const stationsJson = JSON.stringify(stations);
     background: var(--world-surface-tint);
   }
 
-  .v-lab__licenses summary {
-    cursor: pointer;
+  .v-lab__licenses h2 {
+    margin: 0;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: var(--color-text);
   }
 
   .v-lab__licenses ul {

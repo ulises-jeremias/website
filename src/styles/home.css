@@ -784,6 +784,15 @@
   line-height: var(--leading-relaxed);
 }
 
+.about-panel__label {
+  margin: var(--space-5) 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nest-cyan);
+}
+
 .about-panel__tags {
   display: flex;
   flex-wrap: wrap;
