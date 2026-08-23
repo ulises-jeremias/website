@@ -10,7 +10,6 @@ v/
 │   ├── VOverview.astro           # ecosystem narrative + facts + verify details + sections
 │   ├── VCard.astro               # reusable project card (icon, repo, highlights)
 │   ├── VCards.astro              # grid of VProject cards
-│   ├── EcosystemDiagram.astro    # SVG: V → VSL/VTL/RxV → setup-v
 │   ├── VSLDiagram.astro          # SVG: Sierpinski fractal + backend pills + vis row
 │   ├── VTLDiagram.astro          # SVG: autograd forward/backward graph + code + modules
 │   ├── RxVDiagram.astro          # SVG: source→filter→map→reduce→subscriber + thread row
@@ -35,11 +34,10 @@ v/
 
 ```astro
 ---
-import { VOverview, VCards, EcosystemDiagram, VSLDiagram, VTLDiagram, RxVDiagram, SetupVDiagram } from '@/features/v';
+import { VOverview, VCards, VSLDiagram, VTLDiagram, RxVDiagram, SetupVDiagram } from '@/features/v';
 ---
 
 <VOverview />
-<EcosystemDiagram />
 <VCards />
 <VSLDiagram />
 <VTLDiagram />

@@ -5,7 +5,6 @@ export {
   workstationProfiles,
   provisioningSteps,
   doctorChecks,
-  toolkitRationale,
   workstationIdentity,
   thinWorkstationVerification,
 } from './data/index.js';
@@ -17,7 +16,6 @@ export type {
   LayerId,
   ProvisioningStep,
   DoctorCheck,
-  ToolkitRationalePoint,
   WorkstationIdentity,
   WorkstationProfile,
   WorkstationProfileId,
