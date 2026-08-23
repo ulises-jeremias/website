@@ -13,8 +13,8 @@ import { profile } from '@/data/profile.js';
   <div class="about-panel__body">
     <p class="about-panel__bio">{profile.bio}</p>
     <p class="about-panel__summary">{profile.summary}</p>
-    <details class="about-panel__more">
-      <summary>Roles &amp; focus</summary>
+    <div class="about-panel__more">
+      <p class="about-panel__label">Roles &amp; focus</p>
       <ul class="about-panel__roles">
         {
           profile.roles.map((role) => (
@@ -37,6 +37,6 @@ import { profile } from '@/data/profile.js';
           ))
         }
       </ul>
-    </details>
+    </div>
   </div>
 </section>

@@ -134,8 +134,8 @@ const stageCount = swarmStages.length;
             <span>demo constraint · not live telemetry</span>
           </div>
         </div>
-        <details class="atk-swarm__state-files">
-          <summary>Inspect run state</summary>
+        <div class="atk-swarm__state-files">
+          <p class="atk-swarm__label">Run state</p>
           <ul>
             {
               sharedRunStateFiles.map((file) => (
@@ -145,7 +145,7 @@ const stageCount = swarmStages.length;
               ))
             }
           </ul>
-        </details>
+        </div>
       </aside>
     </div>
 
@@ -198,8 +198,8 @@ const stageCount = swarmStages.length;
     </div>
   </div>
 
-  <details class="atk-swarm__cli">
-    <summary>Show CLI</summary>
+  <div class="atk-swarm__cli">
+    <p class="atk-swarm__label">CLI</p>
     <div class="atk-swarm__cli-grid">
       {
         uiBackends.map((backend) => (
@@ -216,7 +216,7 @@ const stageCount = swarmStages.length;
       Full swarm manual:
       <a href={toolkitDocs.swarm} target="_blank" rel="noopener noreferrer">docs/SWARMS.md ↗</a>
     </p>
-  </details>
+  </div>
 
   <noscript>
     <div class="atk-swarm__fallback">

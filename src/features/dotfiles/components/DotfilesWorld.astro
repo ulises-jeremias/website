@@ -78,8 +78,8 @@ const heroShot = screenshotItems[0]!;
   </WorldDock>
   <p class="df-world__copy-status" role="status" aria-atomic="true" data-df-copy-status></p>
 
-  <details class="df-world__methods">
-    <summary>Other methods &amp; docs</summary>
+  <section class="df-world__methods">
+    <p class="df-world__label">Other methods &amp; docs</p>
     <ul>
       <li><code>yay -S dots-stable</code></li>
       <li><code>chezmoi init --apply ulises-jeremias</code></li>
@@ -89,7 +89,7 @@ const heroShot = screenshotItems[0]!;
         <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noopener noreferrer">wiki ↗</a>
       </li>
     </ul>
-  </details>
+  </section>
 
   <div class="df-world__principles" role="list" aria-label="Visual principles">
     {
@@ -112,7 +112,7 @@ const heroShot = screenshotItems[0]!;
       <div class="vf-stage df-world__layers-stage">
         <LayersDiagram compact />
         <fieldset class="df-world__layer-controls" data-df-layer-controls disabled>
-          <legend>Inspect a HorneroConfig layer</legend>
+          <legend>Choose a HorneroConfig layer</legend>
           <div class="df-world__layer-options">
             {
               orderedLayers.map((layer) => (
@@ -175,8 +175,8 @@ const heroShot = screenshotItems[0]!;
     </p>
   </aside>
 
-  <details class="df-world__attribution">
-    <summary>Attribution &amp; licenses</summary>
+  <section class="df-world__attribution">
+    <p class="df-world__label">Attribution &amp; licenses</p>
     <ul>
       {
         attributionEntries.map((entry) => (
@@ -187,7 +187,7 @@ const heroShot = screenshotItems[0]!;
         ))
       }
     </ul>
-  </details>
+  </section>
 
   <nav class="df-world__links" aria-label="Related worlds">
     <a href="/community">Community</a>
@@ -367,13 +367,13 @@ const heroShot = screenshotItems[0]!;
     font-size: 0.86rem;
   }
 
-  .df-world__methods summary,
-  .df-world__attribution summary {
-    cursor: pointer;
+  .df-world__label {
+    margin: 0 0 0.5rem;
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: var(--color-text-faint, #c9a8b2);
   }
 
   .df-world__methods ul,
