@@ -102,6 +102,8 @@ The external deployment smoke command is `pnpm test:deployment` with an HTTPS
 project-owned Vercel preview domain. Protected Vercel previews additionally
 require the `VERCEL_AUTOMATION_BYPASS_SECRET` environment variable; production
 checks do not need it. The deployment Playwright config disables traces so the
-secret cannot be persisted in retry artifacts.
+secret cannot be persisted in retry artifacts. The GitHub workflow obtains
+deployment URLs from Vercel `deployment_status` events rather than accepting
+arbitrary workflow inputs.
 
 If you need SSR, server islands, or on-demand rendering, add an [Astro adapter](https://docs.astro.build/en/guides/deploy/) and update `astro.config.mjs`.

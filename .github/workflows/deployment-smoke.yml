@@ -3,12 +3,6 @@ name: Deployment smoke
 on:
   deployment_status:
   workflow_dispatch:
-    inputs:
-      deployment_url:
-        description: HTTPS production or preview URL to verify
-        required: false
-        default: https://www.ulises-jeremias.dev
-        type: string
 
 permissions:
   contents: read
@@ -20,13 +14,14 @@ concurrency:
 jobs:
   smoke:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'deployment_status' &&
-      github.event.deployment_status.state == 'success' &&
-      github.event.deployment_status.environment == 'Production')
+      github.event_name == 'workflow_dispatch' || (github.event_name ==
+      'deployment_status' && github.event.deployment_status.state == 'success' &&
+      github.event.deployment_status.environment_url != '')
     runs-on: ubuntu-latest
     env:
-      DEPLOYMENT_BASE_URL: ${{ inputs.deployment_url || 'https://www.ulises-jeremias.dev' }}
+      DEPLOYMENT_BASE_URL: >-
+        ${{ github.event.deployment_status.environment_url ||
+        'https://www.ulises-jeremias.dev' }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -52,7 +47,8 @@ jobs:
       - name: Run deployment smoke
         env:
           VERCEL_AUTOMATION_BYPASS_SECRET: >-
-            ${{ inputs.deployment_url != '' &&
-            inputs.deployment_url != 'https://www.ulises-jeremias.dev' &&
+            ${{ github.event_name == 'deployment_status' &&
+            github.event.deployment_status.environment_url !=
+            'https://www.ulises-jeremias.dev' &&
             secrets.VERCEL_AUTOMATION_BYPASS_SECRET || '' }}
         run: pnpm test:deployment
