@@ -12,7 +12,7 @@
   --dotfiles-shadow: 0 10px 30px rgba(0, 0, 0, 0.36);
 }
 
-.dotfiles-page {
+.df-world {
   background:
     radial-gradient(ellipse 80% 40% at 50% -10%, rgba(255, 176, 202, 0.18), transparent 60%),
     radial-gradient(ellipse 60% 30% at 85% 100%, rgba(226, 189, 199, 0.12), transparent 60%),
@@ -27,8 +27,8 @@
   min-height: 100vh;
 }
 
-.dotfiles-page a:focus-visible,
-.dotfiles-page button:focus-visible {
+.df-world a:focus-visible,
+.df-world button:focus-visible {
   outline: 2px solid #ffb0ca;
   outline-offset: 3px;
 }

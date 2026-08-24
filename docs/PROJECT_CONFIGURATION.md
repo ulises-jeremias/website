@@ -1,6 +1,6 @@
 # ⚙️ Project Configuration
 
-This project is bootstrapped with [create-awesome-node-app](https://www.npmjs.com/package/create-awesome-node-app). Dependencies and scripts are resolved from the template's `package/` folder at generation time.
+This project is bootstrapped with [create-awesome-node-app](https://github.com/Create-Node-App/create-node-app). Dependencies and scripts are resolved from the template's `package/` folder at generation time.
 
 ## Node.js
 
@@ -89,5 +89,25 @@ Codecov, cspell, knip, and MegaLinter. Commands and CI parity are documented in
 ## Deployment
 
 `pnpm build` writes static assets to `dist/`. Deploy that folder to any static host (Netlify, Vercel, Cloudflare Pages, S3 + CDN).
+
+When deployed on Vercel, `vercel.json` applies baseline response headers to every
+route: MIME sniffing and framing are disabled, referrer sharing is restricted to
+the configured policy, and camera, microphone, geolocation, and browsing topics
+are disabled. Stable files under `/fonts/` and `/assets/` use a one-day browser
+cache; they are not marked `immutable` because their public filenames are not
+content-hashed.
+
+The external deployment smoke command is `pnpm test:deployment` with an HTTPS
+`DEPLOYMENT_BASE_URL` restricted to the public production origin or the
+project-owned Vercel deployment domain. Protected Vercel previews additionally
+require a project branch-preview URL, the `VERCEL_AUTOMATION_BYPASS_SECRET`, and
+explicit `DEPLOYMENT_PREVIEW=true` environment variables; production checks do
+not need either. The deployment Playwright config disables traces and isolates
+bypass headers from redirects and cross-origin requests so the secret cannot be
+persisted or forwarded to another origin. The GitHub workflow obtains
+production deployment status from Vercel `deployment_status` events and checks
+the public production origin rather than the protected deployment alias. Preview
+checks remain an explicit manual command so a protected preview never receives a
+credential by accident.
 
 If you need SSR, server islands, or on-demand rendering, add an [Astro adapter](https://docs.astro.build/en/guides/deploy/) and update `astro.config.mjs`.

@@ -20,6 +20,13 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     <p class="atk-nexus__eyebrow">Agent Operations Room</p>
     <h1 id="atk-nexus-title">Agent Toolkit</h1>
     <p class="atk-nexus__lede">One source → many assistants.</p>
+    <div class="atk-nexus__hero-rail" aria-label="Toolkit distribution model">
+      <span>CATALOG</span>
+      <span aria-hidden="true">→</span>
+      <span>NATIVE PROFILES</span>
+      <span aria-hidden="true">→</span>
+      <span>ORCHESTRATION</span>
+    </div>
   </header>
 
   <div class="atk-nexus__stage">
@@ -90,7 +97,8 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
         </g>
       </svg>
 
-      <div class="atk-nexus__family-controls" role="radiogroup" aria-label="Capability family">
+      <fieldset class="atk-nexus__family-controls" disabled>
+        <legend>Capability family</legend>
         {
           capabilityNodes.map((node, index) => (
             <>
@@ -102,6 +110,8 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
                 value={node.id}
                 checked={index === 0}
                 data-family={node.id}
+                data-family-status={`${node.title} — ${node.count} catalog items`}
+                aria-controls="atk-family-inspector"
               />
               <label class="atk-nexus__chip" for={`atk-family-${node.id}`} style={`--node-color: ${node.color}`}>
                 <span class="atk-nexus__chip-count">{node.count}</span>
@@ -110,10 +120,36 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
             </>
           ))
         }
-      </div>
+      </fieldset>
+
+      <aside class="atk-nexus__static-index" data-atk-static-index aria-labelledby="atk-static-index-title">
+        <p id="atk-static-index-title" class="atk-nexus__static-index-kicker">Static distribution index</p>
+        <ul class="atk-nexus__static-families" aria-label="Capability families">
+          {
+            capabilityNodes.map((node) => (
+              <li>
+                <strong>{node.title}</strong>
+                <span>{node.count}</span>
+                <span class="atk-nexus__static-family-summary">{node.summary}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="atk-nexus__static-targets-title">Native profiles</p>
+        <ul class="atk-nexus__static-targets" aria-label="Native assistant profiles">
+          {
+            distributionTargets.map((target) => (
+              <li>
+                <strong>{target.label}</strong>
+                <code>{target.path}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
     </div>
 
-    <aside class="atk-nexus__inspector">
+    <aside class="atk-nexus__inspector" id="atk-family-inspector">
       {
         capabilityNodes.map((node, index) => (
           <div
@@ -185,14 +221,25 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
 
 <style>
   .atk-nexus {
-    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 78rem);
     margin: 0 auto;
     padding-block: clamp(1.25rem, 3vw, 2rem) clamp(2rem, 5vw, 3.5rem);
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-violet) 18%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-violet) 5%, transparent), transparent 26%),
+      color-mix(in srgb, var(--nest-midnight-950) 88%, transparent);
   }
 
   .atk-nexus__hero {
-    text-align: center;
-    margin-bottom: 1.25rem;
+    display: grid;
+    justify-items: start;
+    max-inline-size: 56rem;
+    margin-bottom: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-violet) 32%, transparent);
+    border-inline-start: 2px solid var(--nest-violet);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-violet) 8%, transparent), transparent 68%);
   }
 
   .atk-nexus__eyebrow {
@@ -219,25 +266,53 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     color: var(--nest-magenta);
   }
 
+  .atk-nexus__hero-rail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    align-items: center;
+    margin-top: 1.15rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .atk-nexus__hero-rail span:not([aria-hidden='true']) {
+    padding: 0.35rem 0.5rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 38%, transparent);
+    color: var(--nest-cyan);
+  }
+
   .atk-nexus__stage {
     display: grid;
     gap: 1.25rem;
-    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.9fr);
+    grid-template-columns: minmax(0, 1.7fr) minmax(15rem, 0.72fr);
     align-items: start;
   }
 
   .atk-nexus__visual {
     position: relative;
     border: 1px solid color-mix(in srgb, var(--nest-violet) 40%, transparent);
+    clip-path: var(--clip-corner-md);
+    padding: clamp(0.75rem, 2vw, 1.25rem);
+    min-block-size: 34rem;
+    display: grid;
+    align-content: center;
     background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-violet) 5%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in srgb, var(--nest-cyan) 4%, transparent) 1px, transparent 1px),
       radial-gradient(
         ellipse 60% 50% at 50% 45%,
         color-mix(in srgb, var(--nest-violet) 22%, transparent),
         transparent 70%
       ),
       color-mix(in srgb, var(--nest-midnight-900) 92%, transparent);
-    clip-path: var(--clip-corner-md);
-    padding: 0.75rem;
+    background-size:
+      2rem 2rem,
+      2rem 2rem,
+      auto,
+      auto;
   }
 
   .atk-nexus__svg {
@@ -316,8 +391,24 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
-    justify-content: center;
-    margin-top: 0.75rem;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    margin-inline: 0;
+    padding-top: 0.85rem;
+    min-inline-size: 0;
+    padding-inline: 0;
+    border: 0;
+    border-top: 1px dashed color-mix(in srgb, var(--nest-cyan) 28%, transparent);
+  }
+
+  .atk-nexus__family-controls legend {
+    margin: 0 0 0.55rem;
+    padding: 0;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .atk-nexus__radio {
@@ -360,8 +451,13 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     border: 1px solid color-mix(in srgb, var(--nest-magenta) 35%, transparent);
     background: color-mix(in srgb, var(--nest-midnight-900) 94%, transparent);
     clip-path: var(--clip-corner-md);
-    padding: 1rem 1.1rem;
-    min-height: 18rem;
+    padding: 1.25rem 1.35rem;
+    min-height: 34rem;
+    border-inline-start: 2px solid color-mix(in srgb, var(--nest-magenta) 68%, transparent);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--nest-magenta) 8%, transparent), transparent 35%),
+      color-mix(in srgb, var(--nest-midnight-900) 94%, transparent);
+    align-self: stretch;
   }
 
   .atk-nexus__panel-kicker {
@@ -412,7 +508,7 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
 
   .atk-nexus__domain {
     display: grid;
-    grid-template-columns: 5.5rem 1fr 1.5rem;
+    grid-template-columns: 7rem minmax(0, 1fr) 1.5rem;
     gap: 0.4rem;
     align-items: center;
     font-family: var(--font-mono);
@@ -512,6 +608,79 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     font-size: 0.85rem;
   }
 
+  .atk-nexus__static-index {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border-block: 1px dashed color-mix(in srgb, var(--nest-cyan) 30%, transparent);
+    color: var(--color-text-muted);
+  }
+
+  .atk-nexus__static-index[hidden] {
+    display: none;
+  }
+
+  .atk-nexus__static-index-kicker,
+  .atk-nexus__static-targets-title {
+    margin: 0;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .atk-nexus__static-families,
+  .atk-nexus__static-targets {
+    display: grid;
+    gap: 0.35rem 0.75rem;
+    margin: 0.65rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .atk-nexus__static-families {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .atk-nexus__static-families li,
+  .atk-nexus__static-targets li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-block: 0.3rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--nest-violet) 22%, transparent);
+    font-size: 0.75rem;
+  }
+
+  .atk-nexus__static-families span {
+    color: var(--nest-magenta);
+    font-family: var(--font-mono);
+  }
+
+  .atk-nexus__static-families .atk-nexus__static-family-summary {
+    grid-column: 1 / -1;
+    color: var(--color-text-muted);
+    font-family: inherit;
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .atk-nexus__static-targets-title {
+    margin-top: 1rem;
+  }
+
+  .atk-nexus__static-targets li {
+    display: grid;
+    justify-content: initial;
+  }
+
+  .atk-nexus__static-targets code {
+    color: var(--color-text-faint);
+    font-size: 0.7rem;
+    overflow-wrap: anywhere;
+  }
+
   @keyframes atk-beam {
     to {
       stroke-dashoffset: -48;
@@ -521,6 +690,28 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
   @media (width < 900px) {
     .atk-nexus__stage {
       grid-template-columns: 1fr;
+    }
+
+    .atk-nexus__visual,
+    .atk-nexus__inspector {
+      min-block-size: auto;
+      min-height: 0;
+    }
+  }
+
+  @media (width < 620px) {
+    .atk-nexus__svg {
+      display: none;
+    }
+
+    .atk-nexus__family-controls {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .atk-nexus__static-families {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -546,8 +737,10 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
     const packets = Array.from(root.querySelectorAll<SVGCircleElement>('.atk-nexus__packet'));
     const targets = Array.from(root.querySelectorAll<SVGGElement>('.atk-nexus__target'));
     const status = root.querySelector<HTMLElement>('[data-atk-family-status]');
+    const controls = root.querySelector<HTMLFieldSetElement>('.atk-nexus__family-controls');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const visual = root.querySelector<HTMLElement>('.atk-nexus__visual');
+    const staticIndex = root.querySelector<HTMLElement>('[data-atk-static-index]');
 
     const pulseBeamsOnce = () => {
       if (!visual || reduce) return;
@@ -575,8 +768,8 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       pulseBeamsOnce();
       if (announce && status) {
         const selected = radios.find((radio) => radio.value === id);
-        const label = selected ? root.querySelector(`label[for="${selected.id}"]`)?.textContent?.trim() : id;
-        status.textContent = `Capability family selected: ${label ?? id}.`;
+        const label = selected?.dataset.familyStatus ?? id;
+        status.textContent = `Capability family selected: ${label}.`;
       }
       if (!reduce && packets.length && targets.length && 'animate' in packets[0]!) {
         packets.forEach((packet, index) => {
@@ -603,17 +796,26 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
       });
     });
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          const checked = radios.find((r) => r.checked);
-          if (checked) setFamily(checked.value);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.35 },
-    );
-    io.observe(root);
+    if (controls) controls.disabled = false;
+
+    if (staticIndex) staticIndex.hidden = true;
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            const checked = radios.find((r) => r.checked);
+            if (checked) setFamily(checked.value);
+            io.disconnect();
+          }
+        },
+        { threshold: 0.35 },
+      );
+      io.observe(root);
+    } else {
+      const checked = radios.find((r) => r.checked);
+      if (checked) setFamily(checked.value);
+    }
   }
 
   document.querySelectorAll<HTMLElement>('[data-atk-nexus]').forEach(initNexus);

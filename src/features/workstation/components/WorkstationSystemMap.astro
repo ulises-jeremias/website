@@ -109,6 +109,12 @@ const defaultLayer = workstationLayers[1]!;
     <p class="ws-map__lede">
       Fresh → Profile → Provision → Doctor, with optional Toolkit capability integration and persistent Harness context.
     </p>
+    <div class="ws-map__header-rail" aria-label="Personal DX layer boundaries">
+      <span><strong>L0</strong> optional desktop path</span>
+      <span><strong>L1</strong> machine provisioning</span>
+      <span><strong>L1.5</strong> capability distribution</span>
+      <span><strong>L3</strong> workspace context</span>
+    </div>
   </header>
 
   <div class="vf-scene" data-ws-machine data-profile={defaultProfile.id}>
@@ -245,7 +251,11 @@ const defaultLayer = workstationLayers[1]!;
     </div>
     <StageScrubber stages={bootStages} label="Boot stage" />
     <p class="ws-map__stage-copy" data-stage-copy>{bootStages[0]!.summary}</p>
-    <pre class="ws-map__stage-cmd"><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
+    <pre
+      class="ws-map__stage-cmd"
+      tabindex="0"
+      role="region"
+      aria-label="Current boot command"><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
     <PlaybackControls label="Boot playback" />
   </div>
 
@@ -500,9 +510,12 @@ const defaultLayer = workstationLayers[1]!;
 
 <style>
   .ws-map {
-    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 78rem);
     margin: 0 auto;
     padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-cyan) 18%, transparent);
+    background-color: color-mix(in srgb, var(--nest-midnight-950) 84%, transparent);
     /* Operations-room surface: faint horizontal rules behind the provisioning content. */
     background-image: repeating-linear-gradient(
       180deg,
@@ -511,6 +524,40 @@ const defaultLayer = workstationLayers[1]!;
       color-mix(in srgb, var(--nest-cyan) 4%, transparent) 3.5rem,
       color-mix(in srgb, var(--nest-cyan) 4%, transparent) calc(3.5rem + 1px)
     );
+  }
+
+  .ws-map__header {
+    display: grid;
+    gap: 0.45rem;
+    max-inline-size: 62rem;
+    padding: clamp(1.5rem, 4vw, 3.25rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 30%, transparent);
+    border-inline-start: 2px solid var(--nest-cyan);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 8%, transparent), transparent 65%);
+  }
+
+  .ws-map__header-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .ws-map__header-rail span {
+    padding-top: 0.45rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 35%, transparent);
+  }
+
+  .ws-map__header-rail strong {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--nest-cyan);
+    font-size: 0.75rem;
   }
 
   .ws-map__health {
@@ -551,6 +598,38 @@ const defaultLayer = workstationLayers[1]!;
 
   .ws-map__stage {
     padding: 0.75rem;
+    min-height: 25rem;
+    border-color: color-mix(in srgb, var(--nest-cyan) 58%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in srgb, var(--nest-violet) 4%, transparent) 1px, transparent 1px),
+      radial-gradient(
+        ellipse 80% 70% at 50% 35%,
+        color-mix(in srgb, var(--nest-violet) 18%, transparent),
+        transparent 72%
+      ),
+      var(--nest-midnight-950);
+    background-size:
+      2rem 2rem,
+      2rem 2rem,
+      auto,
+      auto;
+  }
+
+  .ws-map > .vf-scene {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ws-map > .vf-scene > .ws-map__stage {
+    border-block-end: 0;
+  }
+
+  .ws-map > .vf-scene > :global(.vf-inspector) {
+    min-height: 0;
+    border-block-start: 2px solid color-mix(in srgb, var(--nest-violet) 58%, transparent);
+    border-inline-start: 0;
+    clip-path: var(--clip-corner-sm);
   }
 
   .ws-map__svg {
@@ -691,6 +770,19 @@ const defaultLayer = workstationLayers[1]!;
     margin-top: 1.75rem;
   }
 
+  .ws-map__boot {
+    margin-top: 2.5rem;
+    padding: 1.15rem 1.25rem 1.25rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 30%, transparent);
+    border-inline-start: 2px solid var(--nest-cyan);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 7%, transparent), transparent 72%);
+  }
+
+  .ws-map__boot .vf-scrubber {
+    padding-block-end: 0.8rem;
+    border-block-end: 1px dashed color-mix(in srgb, var(--nest-cyan) 26%, transparent);
+  }
+
   .ws-map h2 {
     margin: 0 0 0.65rem;
     font-size: 1.05rem;
@@ -734,6 +826,25 @@ const defaultLayer = workstationLayers[1]!;
     margin-bottom: 0.75rem;
   }
 
+  .ws-map__profile {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 1fr);
+    gap: 0.75rem 1.25rem;
+    align-items: start;
+    padding: 1.15rem 1.25rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-violet) 28%, transparent);
+  }
+
+  .ws-map__profile > h2,
+  .ws-map__profile > .ws-map__profile-grid {
+    grid-column: 1;
+  }
+
+  .ws-map__profile > :global(.vf-inspector) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
   .ws-map__profile,
   .ws-map__profile :global(.vf-inspector),
   .ws-map__profile :global(.vf-inspector__meta) {
@@ -747,6 +858,12 @@ const defaultLayer = workstationLayers[1]!;
     padding: 0;
     display: grid;
     gap: 0.4rem;
+  }
+
+  .ws-map__health {
+    padding: 1.15rem 1.25rem;
+    border-block: 1px solid color-mix(in srgb, var(--theme-lime, #84cc16) 24%, transparent);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--theme-lime, #84cc16) 5%, transparent), transparent 72%);
   }
 
   .ws-map__health-list li {
@@ -799,5 +916,39 @@ const defaultLayer = workstationLayers[1]!;
     min-inline-size: 0;
     max-inline-size: 100%;
     overflow-wrap: anywhere;
+  }
+
+  @media (width < 680px) {
+    .ws-map__header-rail {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ws-map__profile {
+      display: block;
+    }
+
+    .ws-map__profile :global(.vf-inspector) {
+      margin-top: 0.85rem;
+    }
+
+    .ws-map__svg {
+      min-height: 10rem;
+    }
+
+    .ws-map__svg .ws-map__node-label,
+    .ws-map__svg .ws-map__node-sub,
+    .ws-map__svg .ws-map__thin,
+    .ws-map__svg .ws-map__chassis-label {
+      visibility: hidden;
+    }
+
+    .ws-map__stage {
+      min-height: 0;
+    }
+
+    .ws-map__node-controls {
+      margin-top: 0;
+      padding-block: 0.75rem;
+    }
   }
 </style>

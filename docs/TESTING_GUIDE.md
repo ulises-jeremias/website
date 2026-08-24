@@ -75,11 +75,31 @@ pnpm test:visual:harness  # verify the isolated production-server contract
 ```
 
 Config: `playwright.config.ts` uses Chromium for maintained visual goldens and
-Firefox/WebKit for route smoke coverage. The suite owns a static `dist/` server on
-`127.0.0.1:4173` and never reuses an existing server. If the port is occupied, the
-run fails instead of attaching to an ambiguous app or worktree. Set
-`VISUAL_TEST_PORT` to an unused port when running visual suites from multiple
-worktrees concurrently.
+Firefox/WebKit for route smoke coverage. The `mobile-chrome` and `mobile-safari`
+projects use Playwright's Pixel 7 and iPhone 15 device profiles for mobile
+emulation and run `mobile-device-smoke.spec.ts`; they do not replace physical
+device testing. The suite owns a static `dist/` server on `127.0.0.1:4173` and
+never reuses an existing server. If the port is occupied, the run fails instead
+of attaching to an ambiguous app or worktree. Set `VISUAL_TEST_PORT` to an unused
+port when running visual suites from multiple worktrees concurrently.
+
+`production-build-smoke.spec.ts` checks the generated static build's robots,
+sitemap, RSS, manifest, representative assets, and canonical/OG metadata. It
+uses the local production-build harness; it does not assert Vercel preview or
+CDN behavior.
+
+External deployment checks use `playwright.deployment.config.ts` and require an
+HTTPS `DEPLOYMENT_BASE_URL`. Run `pnpm test:deployment` against production or a
+deployment alias from the approved Vercel project domain. For a protected Vercel
+branch preview (`website-odsf-git-...-create-node-app.vercel.app`), provide
+`VERCEL_AUTOMATION_BYPASS_SECRET` from a secret store and set
+`DEPLOYMENT_PREVIEW=true`; the test config sends it only to that exact preview
+class, does not follow redirects for API requests, strips bypass headers across
+origins for page requests, and does not record traces. `.github/workflows/deployment-smoke.yml` runs after a
+successful Vercel Production deployment and checks the public production origin;
+it also supports a manual production run. Approved project Preview environments
+can be checked manually by setting the preview URL and bypass secret in the
+shell; preview events are not sent a secret automatically.
 
 Normal browser runs write current desktop and mobile review captures under
 `test-results/uiux-review/`. CI uploads this ignored directory for human review.
