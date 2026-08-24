@@ -251,7 +251,11 @@ const defaultLayer = workstationLayers[1]!;
     </div>
     <StageScrubber stages={bootStages} label="Boot stage" />
     <p class="ws-map__stage-copy" data-stage-copy>{bootStages[0]!.summary}</p>
-    <pre class="ws-map__stage-cmd"><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
+    <pre
+      class="ws-map__stage-cmd"
+      tabindex="0"
+      role="region"
+      aria-label="Current boot command"><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
     <PlaybackControls label="Boot playback" />
   </div>
 
