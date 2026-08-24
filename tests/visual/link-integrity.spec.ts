@@ -17,6 +17,7 @@ const PRIMARY_ROUTES = [
   '/blog',
   '/projects',
   '/open-source',
+  '/agentic-harness',
   '/404.html',
 ] as const;
 

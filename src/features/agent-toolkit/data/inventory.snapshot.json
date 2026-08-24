@@ -10,21 +10,37 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "b6700ca",
-  "commitFull": "b6700cad300a7d4527da5f0eb02ad7a1f8cfd3ad",
-  "verifiedAt": "2026-08-07",
-  "version": "1.8.4",
+  "commit": "834e6f8",
+  "commitFull": "834e6f82a89a049d2c23ee1429130de35feb4f10",
+  "verifiedAt": "2026-08-24",
+  "version": "1.22.3",
   "counts": {
-    "skills": 61,
-    "agents": 16,
+    "skills": 84,
+    "agents": 17,
     "loops": 10,
-    "profiles": 7,
-    "packs": 3,
-    "plugins": 4,
-    "mcp": 6,
-    "skillDomains": 9
+    "profiles": 9,
+    "packs": 7,
+    "plugins": 5,
+    "mcp": 7,
+    "skillDomains": 14
   },
   "skillDomains": [
+    {
+      "id": "accessibility",
+      "count": 1
+    },
+    {
+      "id": "agentic-security",
+      "count": 4
+    },
+    {
+      "id": "architecture",
+      "count": 1
+    },
+    {
+      "id": "cloud",
+      "count": 2
+    },
     {
       "id": "core",
       "count": 8
@@ -39,11 +55,11 @@
     },
     {
       "id": "design",
-      "count": 6
+      "count": 10
     },
     {
       "id": "forge",
-      "count": 8
+      "count": 7
     },
     {
       "id": "integrations",
@@ -58,15 +74,34 @@
       "count": 6
     },
     {
+      "id": "quality",
+      "count": 9
+    },
+    {
       "id": "tooling",
-      "count": 4
+      "count": 7
     }
   ],
-  "profiles": ["claude-code", "copilot", "cursor", "muse-code", "opencode", "pi", "windsurf"],
-  "packs": ["delivery-discipline", "engineering-workflow", "oss-maintenance"],
-  "plugins": ["agent-toolkit-agents", "agent-toolkit-complete", "agent-toolkit-core", "agent-toolkit-forge"],
-  "mcp": ["clickup", "figma", "github", "linear", "notion", "slack"],
+  "profiles": ["claude-code", "codex", "copilot", "cursor", "gemini-cli", "muse-code", "opencode", "pi", "windsurf"],
+  "packs": [
+    "agentic-security",
+    "architecture",
+    "code-quality",
+    "delivery-discipline",
+    "design-engineering",
+    "engineering-workflow",
+    "oss-maintenance"
+  ],
+  "plugins": [
+    "agent-toolkit-agents",
+    "agent-toolkit-complete",
+    "agent-toolkit-core",
+    "agent-toolkit-craft",
+    "agent-toolkit-forge"
+  ],
+  "mcp": ["chrome-devtools", "clickup", "figma", "github", "linear", "notion", "slack"],
   "agentIds": [
+    "agentic-security-reviewer",
     "architect",
     "assistant",
     "build-error-resolver",
@@ -123,7 +158,7 @@
         "id": "forge/github-cli-workflow",
         "name": "github-cli-workflow",
         "domain": "forge",
-        "description": "HOW \u2014 GitHub CLI (gh): push branch, create draft PR with title/body from template or file; fallback untracked PR_DESCRIPTION_*.md. Use when origin is GitHub.",
+        "description": "'HOW \u2014 GitHub CLI (gh): push branch, create draft PR with title/body from template or file; fallback untracked PR_DESCRIPTION_*.md. Use when origin is GitHub.'",
         "stability": "stable"
       }
     ],
@@ -181,9 +216,29 @@
     ],
     "packs": [
       {
+        "id": "agentic-security",
+        "name": "Agentic-Security Pack \u2014 docs-only",
+        "description": "Curated for agentic-security per #390: supply-chain, MCP audit, OWASP agentic, threat-modeling."
+      },
+      {
+        "id": "architecture",
+        "name": "Architecture Pack \u2014 docs-only, vendor-neutral",
+        "description": "Curated for architecture per #390: vendor-neutral core + optional cloud."
+      },
+      {
+        "id": "code-quality",
+        "name": "Code-Quality Pack \u2014 docs-only",
+        "description": "Curated for code-quality per #390: MegaLinter + CodeQL + CI."
+      },
+      {
         "id": "delivery-discipline",
         "name": "Delivery Discipline Pack",
         "description": "Ticket hygiene, traceability, and process compliance for engineering teams."
+      },
+      {
+        "id": "design-engineering",
+        "name": "Design-Engineering Pack \u2014 docs-only",
+        "description": "Curated workflow for frontend/design-engineering per #390 and ADR-0003 (docs-only, not compiler-wired)."
       },
       {
         "id": "engineering-workflow",
@@ -200,17 +255,22 @@
       {
         "id": "agent-toolkit-agents",
         "name": "agent-toolkit-agents",
-        "description": "Full set of 16 AI agent personas: architect, code-reviewer, security-reviewer, planner, database-reviewer, TypeScript-reviewer, and more."
+        "description": "Full set of 17 AI agent personas: architect, code-reviewer, security-reviewer, planner, database-reviewer, TypeScript-reviewer, and more."
       },
       {
         "id": "agent-toolkit-complete",
         "name": "agent-toolkit-complete",
-        "description": "Full stable skill catalog coverage for consumers who want everything (#50)"
+        "description": "Full stable skill catalog coverage for consumers who want everything ("
       },
       {
         "id": "agent-toolkit-core",
         "name": "agent-toolkit-core",
         "description": "Core orchestration skills, dev companion, output handshake, PR fallback, and code-reviewer agent. The baseline install for any project."
+      },
+      {
+        "id": "agent-toolkit-craft",
+        "name": "agent-toolkit-craft",
+        "description": "Writing quality and change-safety toolkit: cut AI tells (unslop), remove code slop (deslop), and prove blast radius before shipping."
       },
       {
         "id": "agent-toolkit-forge",
@@ -219,6 +279,11 @@
       }
     ],
     "mcp": [
+      {
+        "id": "chrome-devtools",
+        "name": "Chrome DevTools",
+        "description": "Control and inspect a live Chrome instance \u2014 network, console, performance traces, rendering diagnostics, reliable automation via Puppeteer + DevTools protocol"
+      },
       {
         "id": "clickup",
         "name": "ClickUp",
@@ -247,7 +312,7 @@
       {
         "id": "slack",
         "name": "Slack",
-        "description": "Read channel history, post messages, add reactions, and browse Slack canvases"
+        "description": "Read channel history, post messages, add reactions, and browse Slack workspaces"
       }
     ]
   }

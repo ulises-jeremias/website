@@ -41,7 +41,7 @@ test.describe('PR6b Agent Toolkit capability-nexus convergence', () => {
     await expect(page.locator('[data-family-mark="agents"]')).toHaveClass(/is-active/);
     await expect(page.locator('[data-atk-family-status]')).toContainText('Capability family selected:');
     await expect(page.locator('[data-atk-family-status]')).toHaveText(
-      'Capability family selected: Agents — 16 catalog items.',
+      'Capability family selected: Agents — 17 catalog items.',
     );
 
     await page.locator('label[for="atk-family-loops"]').click();

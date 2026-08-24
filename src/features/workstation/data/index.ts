@@ -119,16 +119,16 @@ export const workstationLayers: LayerMeta[] = [
   {
     id: 'toolkit',
     index: 2,
-    label: 'CAPABILITIES · DISTRIBUTION',
+    label: 'PLATFORM · EXECUTION',
     title: 'Toolkit',
-    subtitle: 'capabilities · distribution',
-    mapping: 'Toolkit / capabilities',
+    subtitle: 'capabilities · runtime',
+    mapping: 'Toolkit / capabilities + runtime',
     accent: '#84CC16',
-    description: `Sole capability distribution. agent-toolkit provides ${inventoryStrip()}, MCP templates and tool profiles via uv. Single source of truth — versioned independently from the workstation.`,
+    description: `Installed, not owned. agent-toolkit provides ${inventoryStrip()}, plugins, and the workspace, memory, loop, devcompanion, and swarm runtimes as a native V binary. The workstation provisions it; the Toolkit executes.`,
     responsibilities: [
       `${inventoryCounts.skills} skills (${inventoryCounts.skillDomains} domains) + ${inventoryCounts.agents} agent personas`,
-      `${inventoryCounts.loops} loop templates + tool profiles (Claude/Cursor/OpenCode…)`,
-      'MCP templates + packs/prompts/schemas',
+      `${inventoryCounts.loops} loop templates + workspace/memory/project CLIs`,
+      'MCP templates + compiled plugins (Agent Plugins 1.0)',
       'Symlink sync via dots-skills (delegated)',
     ],
     delivers: [
@@ -168,9 +168,9 @@ export const provisioningSteps: ProvisioningStep[] = [
   },
   {
     step: 'Toolchain',
-    command: 'uv tool install --force agent-toolkit-cli && agent-toolkit install',
+    command: 'dots-skills install-toolkit && agent-toolkit doctor',
     description:
-      'Thin-workstation canonical path. Single installer — no AUR/pipx fallbacks. Installs skills, agents, loops, MCP, prompts and syncs per-tool symlinks.',
+      'Installs the agent-toolkit native V binary (Homebrew, AUR agent-toolkit-bin, GitHub Release, or the PyPI launcher) and deploys capabilities to every detected AI tool.',
     note: 'Also via run_once_after_50-install-agent-toolkit.sh.tmpl + run_onchange_45-install-ai-agents.sh.tmpl (delegated)',
   },
   {
@@ -227,7 +227,7 @@ export const doctorChecks: DoctorCheck[] = [
 
 export const thinWorkstationVerification = {
   statement:
-    'Thin workstation delegates all capabilities to agent-toolkit via uv tool install --force agent-toolkit-cli && agent-toolkit install. The SKILL.md catalog is provided by the toolkit at runtime. Workstation-only runner logic (dev-companion/runner) is retained. Agentic Harness (ulises-jeremias/agentic-harness) provides persistent workspace context — it is not the Toolkit.',
+    'Thin workstation delegates all capabilities to agent-toolkit — installed via dots-skills install-toolkit (Homebrew, AUR agent-toolkit-bin, GitHub Release, or the PyPI launcher over the native V binary). The SKILL.md catalog is provided by the toolkit at runtime. Workstation-only runner logic (dev-companion/runner) is retained for host-level LLM policy. Agentic Harness (ulises-jeremias/agentic-harness) provides persistent workspace context — it is not the Toolkit.',
   references: [
     'docs/ARCHITECTURE.md',
     'docs/AGENT_TOOLKIT.md',
@@ -235,5 +235,5 @@ export const thinWorkstationVerification = {
   ],
   noEmbedded: ['skills/*', 'loops/*', 'mcp/*', 'prompts/*', 'agents/*', 'packs/teams'],
   kept: ['dev-companion/runner', 'scopes/', 'telemetry/', 'pacman-hooks/'],
-  installPath: 'uv tool install --force agent-toolkit-cli && agent-toolkit install',
+  installPath: 'dots-skills install-toolkit',
 };

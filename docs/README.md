@@ -13,6 +13,7 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 - [Current design state](./design/current/README.md) — accepted identity, maintained goldens, historical specs, and open gates
 - [Launch readiness records](./launch/2026-08-24-launch-checklist.md) — launch gates, asset and content audits, and post-launch operations
 - [v1.1 and subdomain boundary](./adr/ADR-002-v1-1-and-subdomain-boundary.md) — accepted launch architecture boundary
+- [Personal DX stack model](../src/data/personal-dx-stack.ts) — canonical ecosystem responsibilities and adoption paths
 - [Interactive diagram semantics](./INTERACTIVE_DIAGRAM_SEMANTICS.md) — static visual figures, native selectors,
   inspectors, status summaries, and pointer delegation
 

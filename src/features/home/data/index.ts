@@ -9,6 +9,7 @@ export const islandArtByWorldId: Record<string, string> = {
   dotfiles: 'island-dotfiles',
   workstation: 'island-workstation',
   toolkit: 'island-agent',
+  harness: 'island-harness',
   v: 'island-v',
   'create-awesome': 'island-scaffold',
   community: 'island-community',

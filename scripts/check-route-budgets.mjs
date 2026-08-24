@@ -12,6 +12,7 @@ const ROUTES = [
   '/dotfiles/',
   '/agentic-workstation/',
   '/agent-toolkit/',
+  '/agentic-harness/',
   '/v/',
   '/create-awesome/',
   '/community/',

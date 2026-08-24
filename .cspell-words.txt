@@ -1,5 +1,5 @@
-archivados
 apos
+archivados
 astro
 authkit
 Autodetecta
@@ -27,6 +27,7 @@ contenteditable
 contentinfo
 Conv
 Cornejo
+crosslinks
 cuda
 deployables
 devcompanion
@@ -71,6 +72,7 @@ lapack
 lapacke
 lede
 libadwaita
+Linuxbrew
 logits
 LSTM
 magick
@@ -121,6 +123,7 @@ spinbutton
 sqlalchemy
 stdlib
 Stdlib
+sublabel
 subpaths
 sutil
 synthwave

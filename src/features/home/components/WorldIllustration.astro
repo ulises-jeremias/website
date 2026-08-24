@@ -54,6 +54,21 @@ const { illustration } = Astro.props as Props;
   }
 
   {
+    illustration === 'persistent-workspace' && (
+      <g class="world-illustration__scene">
+        <path class="world-illustration__solid" d="M40 24h80v34H40z" />
+        <path class="world-illustration__line" d="M40 24h80v34H40zM52 38h22m8 0h24" />
+        <path class="world-illustration__line" d="M64 58v10m52-10v10M64 68h52" />
+        <rect class="world-illustration__solid" x="56" y="70" width="48" height="12" rx="4" />
+        <circle class="world-illustration__node" cx="126" cy="42" r="5" />
+        <circle class="world-illustration__node" cx="36" cy="60" r="5" />
+        <path class="world-illustration__fine" d="M50 76h8m6 0h8m6 0h8M44 32h6m-6 6h10m40-6h8m-8 6h12" />
+        <path class="world-illustration__accent" d="M118 74l5 5 9-11" />
+      </g>
+    )
+  }
+
+  {
     illustration === 'computation-lab' && (
       <g class="world-illustration__scene">
         <path class="world-illustration__grid" d="M37 68 63 28l25 40 27-40m-69 9h62M40 48h70M34 59h80" />

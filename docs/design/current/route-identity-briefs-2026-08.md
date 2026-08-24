@@ -130,3 +130,22 @@ Before-captures for all 11 routes at all three widths were reviewed; CI
 
 Homepage hierarchy variants, Blog navigation removal, production WebGL,
 screen-reader pilots, owner visual sign-off, representative visitor testing.
+
+## Addendum — Agentic Harness route (2026-08-24)
+
+After the agent-toolkit / agentic-workstation / agentic-harness architecture
+normalization, Harness became a first-class world.
+
+- **Route**: `/agentic-harness` — theme `harness`, accent `emerald`,
+  illustration `persistent-workspace`.
+- **Dominant surface**: persistent workspace — knowledge, context, projects
+  feeding the Toolkit runtime, which drives loops, jobs, and sessions.
+- **Boundary copy**: Harness owns state, never engines. It calls the Toolkit
+  CLIs; the workstation provisions the host.
+- **Canonical model**: `src/data/personal-dx-stack.ts` (responsibilities,
+  adoption paths, ownership matrix). Shared renders live in
+  `src/features/personal-dx/`.
+- **Inventory provenance**: Toolkit counts derive from
+  `src/features/agent-toolkit/data/inventory.snapshot.json`
+  (v1.22.3, commit `834e6f8`, 2026-08-24). Refresh with
+  `AGENT_TOOLKIT_ROOT=<checkout> python3 scripts/sync-agent-toolkit-inventory.py`.

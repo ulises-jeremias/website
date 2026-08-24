@@ -5,6 +5,7 @@
 @import './dotfiles.css';
 @import './workstation.css';
 @import './toolkit.css';
+@import './harness.css';
 @import './v.css';
 @import './create-awesome.css';
 @import './community.css';
@@ -56,6 +57,11 @@
 [data-section='toolkit'],
 [data-theme='toolkit'] {
   --theme-id: 'toolkit';
+}
+
+[data-section='harness'],
+[data-theme='harness'] {
+  --theme-id: 'harness';
 }
 
 [data-section='v'],

@@ -1,0 +1,15 @@
+/**
+ * harness.css — Agentic Harness section theme
+ * Dark world roles use a persistent-emerald accent: memory, continuity, state.
+ */
+
+[data-section='harness'],
+[data-theme='harness'] {
+  --world-accent: #34d399;
+  --world-accent-strong: #6ee7b7;
+  --world-accent-secondary: var(--nest-cyan);
+  --world-accent-tertiary: var(--nest-violet);
+  --theme-illustration: 'persistent nodes, stacked session traces, linked context rails';
+  --theme-shape: 'workspace panels, state timelines, connected archives';
+  --theme-texture: 'continuity strokes, checkpoint ticks, knowledge threads';
+}

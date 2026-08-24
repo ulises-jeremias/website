@@ -67,6 +67,7 @@ export interface UiBackend {
 }
 
 export interface InstallSnippet {
+  id: string;
   label: string;
   command: string;
   note: string;

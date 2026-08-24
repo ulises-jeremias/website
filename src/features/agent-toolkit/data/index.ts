@@ -119,12 +119,14 @@ export const capabilityNodes: CapabilityNode[] = [
 
 const PROFILE_LABELS: Record<string, { label: string; path: string }> = {
   'claude-code': { label: 'Claude Code', path: '~/.claude/skills + marketplace plugins' },
-  cursor: { label: 'Cursor', path: 'profiles/cursor/rules/*.mdc' },
+  codex: { label: 'Codex CLI', path: 'compiled plugin skills (Agent Plugins 1.0)' },
+  copilot: { label: 'GitHub Copilot', path: '.github/copilot-instructions.md' },
+  cursor: { label: 'Cursor', path: 'marketplace plugins + .cursor/rules/*.mdc' },
+  'gemini-cli': { label: 'Gemini CLI', path: 'GEMINI.md context + skills' },
   opencode: { label: 'OpenCode', path: 'profiles/opencode/agents + opencode.json' },
-  copilot: { label: 'Copilot', path: 'profiles/copilot' },
-  windsurf: { label: 'Windsurf', path: 'profiles/windsurf/memories' },
-  pi: { label: 'Pi', path: 'profiles/pi/skills' },
-  'muse-code': { label: 'Muse Code', path: 'profiles/muse-code' },
+  windsurf: { label: 'Windsurf', path: '~/.codeium/windsurf rules + memories' },
+  pi: { label: 'Pi Agent', path: '~/.pi/agent/skills' },
+  'muse-code': { label: 'Muse Code', path: '~/.config/muse/skills' },
 };
 
 export const distributionTargets: DistributionTarget[] = inventory.profiles.map((id) => ({
@@ -333,19 +335,41 @@ export const uiBackends: UiBackend[] = [
 
 export const installSnippets: InstallSnippet[] = [
   {
-    label: 'Preferred (uv)',
-    command: 'uvx --from agent-toolkit-cli agent-toolkit install\nagent-toolkit doctor',
-    note: 'Autodetects supported tool targets.',
+    id: 'release',
+    label: 'GitHub Release',
+    command:
+      '# Native V binary + SHA256SUMS — https://github.com/ulises-jeremias/agent-toolkit/releases/latest\nagent-toolkit install && agent-toolkit doctor',
+    note: 'Primary channel: the product CLI is a native V binary (v1.11.0+).',
   },
   {
-    label: 'Persistent install',
-    command: 'uv tool install agent-toolkit-cli\nagent-toolkit install',
-    note: 'Keeps the CLI on PATH across shells.',
+    id: 'brew',
+    label: 'Homebrew',
+    command: 'brew tap ulises-jeremias/homebrew-tap && brew install agent-toolkit\nagent-toolkit install',
+    note: 'macOS and Linuxbrew.',
   },
   {
-    label: 'Claude Code marketplace',
+    id: 'aur',
+    label: 'AUR (Arch)',
+    command: 'yay -S agent-toolkit-bin && agent-toolkit install',
+    note: 'Native V binary package; not the Python AUR package.',
+  },
+  {
+    id: 'uvx',
+    label: 'uv / PyPI launcher',
+    command: "uv tool install 'agent-toolkit-cli>=1.11.0'\nagent-toolkit install",
+    note: 'Thin launcher that execs the bundled V binary (ADR-021) — not the implementation.',
+  },
+  {
+    id: 'npm',
+    label: 'npm',
+    command: 'npm i -g agent-toolkit-cli\nagent-toolkit install',
+    note: 'Installs platform packages via optionalDependencies.',
+  },
+  {
+    id: 'marketplace',
+    label: 'Plugin marketplaces',
     command: '/plugin marketplace add ulises-jeremias/agent-toolkit\n/plugin install agent-toolkit-core@agent-toolkit',
-    note: 'Native plugins compiled from the same catalog.',
+    note: 'Claude Code marketplace; Cursor ships the same plugins natively.',
   },
 ];
 
@@ -405,8 +429,8 @@ export const personaVisuals: Record<
 };
 
 export const toolkitMeta = {
-  title: 'Agent Toolkit — Skills, Agents, Loops, Swarms',
-  description: `One source catalog: ${inventoryStrip()} — compiled into every assistant target.`,
+  title: 'Agent Toolkit — Capabilities & Runtime',
+  description: `Portable capabilities plus the runtime that executes them: ${inventoryStrip()} — deployed to every major coding assistant.`,
   accent: '#a05cff',
   accentStrong: '#7358ff',
   violet: '#a05cff',

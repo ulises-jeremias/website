@@ -1,0 +1,144 @@
+---
+import { ADOPTION_PATHS, OWNERSHIP_MATRIX } from '@/data/personal-dx-stack.js';
+import type { OwnershipMark } from '@/data/personal-dx-stack.js';
+
+const MARK_LABELS: Record<OwnershipMark, string> = {
+  owns: 'Owns',
+  installs: 'Installs',
+  uses: 'Uses',
+  executes: 'Executes',
+  reads: 'Reads',
+  respects: 'Respects',
+  collects: 'Collects',
+  state: 'Holds state',
+  no: '—',
+};
+
+const COLUMNS = [
+  { key: 'workstation', label: 'Workstation' },
+  { key: 'toolkit', label: 'Toolkit' },
+  { key: 'harness', label: 'Harness' },
+  { key: 'project', label: 'Project' },
+] as const;
+---
+
+<section class="stack-matrix" aria-labelledby="stack-matrix-title">
+  <header>
+    <p class="stack-matrix__eyebrow">Boundaries</p>
+    <h2 id="stack-matrix-title">Who owns what</h2>
+    <p>
+      The normalization was about boundaries. Each concept has exactly one owner; everything else installs, uses, or
+      simply stays out of the way.
+    </p>
+  </header>
+  <div class="stack-matrix__scroll" role="region" aria-label="Ownership matrix" tabindex="0">
+    <table>
+      <caption class="visually-hidden"
+        >Ownership of platform concepts across Workstation, Toolkit, Harness, and project repositories</caption
+      >
+      <thead>
+        <tr>
+          <th scope="col">Concept</th>
+          {COLUMNS.map((column) => <th scope="col">{column.label}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          OWNERSHIP_MATRIX.map((row) => (
+            <tr>
+              <th scope="row">{row.concept}</th>
+              {COLUMNS.map((column) => {
+                const mark = row[column.key];
+                return (
+                  <td data-mark={mark} class:list={{ 'stack-matrix__cell--owned': mark === 'owns' }}>
+                    <span class="visually-hidden">{MARK_LABELS[mark]}</span>
+                    <span aria-hidden="true" class="stack-matrix__mark">
+                      {MARK_LABELS[mark]}
+                    </span>
+                  </td>
+                );
+              })}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="stack-matrix__note">
+    Derived from the normalized repositories at agent-toolkit <code>834e6f8</code>, agentic-workstation
+    <code>1b0ea45</code>, and agentic-harness <code>cd90943</code> (2026-08-24).
+  </p>
+</section>
+
+<style>
+  .stack-matrix {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .stack-matrix__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-strong, var(--nest-cyan));
+  }
+
+  .stack-matrix h2 {
+    margin: 0 0 0.5rem;
+  }
+
+  .stack-matrix header p {
+    max-width: 56ch;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .stack-matrix__scroll {
+    position: relative;
+    margin-top: 1.25rem;
+    overflow-x: auto;
+    border: 1px solid var(--world-border-accent);
+    border-radius: 12px;
+    background: var(--world-surface-tint);
+  }
+
+  .stack-matrix table {
+    width: 100%;
+    min-inline-size: 40rem;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+
+  .stack-matrix th,
+  .stack-matrix td {
+    padding: 0.6rem 0.85rem;
+    text-align: left;
+    border-block-end: 1px solid color-mix(in srgb, var(--world-border-accent) 60%, transparent);
+  }
+
+  .stack-matrix thead th {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .stack-matrix tbody th[scope='row'] {
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  .stack-matrix td {
+    color: var(--color-text-muted);
+  }
+
+  .stack-matrix__cell--owned .stack-matrix__mark {
+    color: var(--world-accent-strong, var(--nest-cyan));
+    font-weight: 700;
+  }
+</style>
