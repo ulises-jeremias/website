@@ -9,6 +9,7 @@ test.describe('homepage visual coverage', () => {
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('.atlas-world')).toHaveCount(9);
     await expect(page.locator('#project-atlas')).toBeVisible();
+    await expect(page.locator('#project-atlas-guide')).toBeVisible();
     await expect(page.locator('.nest-status')).toBeVisible();
     await expect(page.locator('.about-panel')).toBeVisible();
     await expect(page.locator('.featured-ledger')).toBeVisible();
@@ -31,6 +32,7 @@ test.describe('homepage visual coverage', () => {
 
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('.atlas-world')).toHaveCount(9);
+    await expect(page.locator('#project-atlas-guide')).toBeVisible();
 
     const overflow = await page.evaluate(() => {
       const doc = document.documentElement;
@@ -38,8 +40,10 @@ test.describe('homepage visual coverage', () => {
     });
     expect(overflow).toBe(false);
 
+    // The atlas and hero copy use proportional fonts that rasterize differently across CI/local Chromium.
     await expect(page).toHaveScreenshot('home-mobile-390.png', {
       fullPage: false,
+      maxDiffPixelRatio: 0.07,
     });
   });
 
@@ -59,6 +63,26 @@ test.describe('homepage visual coverage', () => {
     await expect(page).toHaveScreenshot('home-mobile-nav-open.png', {
       fullPage: false,
     });
+  });
+
+  test('keeps the project atlas before the quote on mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+
+    const order = await page.evaluate(() => {
+      const atlas = document.querySelector('.hero__atlas-slot > .project-atlas');
+      const quote = document.querySelector('.hero__atlas-slot > .hero__quote');
+      if (!atlas || !quote) return null;
+      return {
+        domBeforeQuote: Boolean(atlas.compareDocumentPosition(quote) & Node.DOCUMENT_POSITION_FOLLOWING),
+        atlasTop: atlas.getBoundingClientRect().top,
+        quoteTop: quote.getBoundingClientRect().top,
+      };
+    });
+
+    expect(order).not.toBeNull();
+    expect(order?.domBeforeQuote).toBe(true);
+    expect(order?.atlasTop).toBeLessThan(order?.quoteTop ?? Number.POSITIVE_INFINITY);
   });
 
   test('reduced-motion keeps a complete static composition', async ({ page }) => {

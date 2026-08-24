@@ -40,11 +40,22 @@ const itemListJsonLd = hasPosts
         <a href="/rss.xml">RSS</a>
       </p>
       <header class="blog-page__masthead">
-        <h1 class="blog-page__title">Field Notes</h1>
-        <p class="blog-page__lead">
-          A technical journal on developer tooling, agent workflows, and open source — written from shipped work, not
-          announcements.
-        </p>
+        <div class="blog-page__masthead-copy">
+          <p class="blog-page__kicker">Digital Nest · publication desk</p>
+          <h1 class="blog-page__title">Field Notes</h1>
+          <p class="blog-page__lead">
+            A technical journal on developer tooling, agent workflows, and open source — written from shipped work, not
+            announcements.
+          </p>
+        </div>
+        <aside class="blog-page__contract" aria-label="Field Notes publication contract">
+          <p>Publication contract</p>
+          <dl>
+            <div><dt>Topics</dt><dd>tools · agents · OSS</dd></div>
+            <div><dt>Source</dt><dd>shipped work</dd></div>
+            <div><dt>Status</dt><dd>{hasPosts ? `${posts.length} published` : 'desk open'}</dd></div>
+          </dl>
+        </aside>
       </header>
 
       {
@@ -87,6 +98,29 @@ const itemListJsonLd = hasPosts
             <p class="blog-empty__elsewhere">
               <a href="/rss.xml">Subscribe to the RSS feed</a> to get the first entry when it ships.
             </p>
+            <aside class="blog-empty__routes" aria-label="Read current work elsewhere">
+              <p class="blog-empty__routes-title">Read the current work</p>
+              <ul>
+                <li>
+                  <>
+                    <a href="/projects">01 · Project ledger</a>
+                    <span>systems and outcomes</span>
+                  </>
+                </li>
+                <li>
+                  <>
+                    <a href="/open-source">02 · Open-source evidence</a>
+                    <span>contributions and provenance</span>
+                  </>
+                </li>
+                <li>
+                  <>
+                    <a href="/community">03 · Community workshop</a>
+                    <span>questions and coordination</span>
+                  </>
+                </li>
+              </ul>
+            </aside>
           </div>
         )
       }

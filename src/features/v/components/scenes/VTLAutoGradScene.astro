@@ -6,10 +6,19 @@
   <h2 class="v-scene__title" id="v-scene-vtl-title">VTL</h2>
   <p class="v-scene__note">Forward compute, then reverse gradients. Scrub the tape.</p>
   <div class="v-scene__controls" role="group" aria-label="Autograd direction">
-    <button type="button" data-vtl-dir="forward" aria-pressed="true">Forward</button>
-    <button type="button" data-vtl-dir="reverse" aria-pressed="false">Reverse</button>
+    <button type="button" data-vtl-dir="forward" aria-pressed="true" disabled>Forward</button>
+    <button type="button" data-vtl-dir="reverse" aria-pressed="false" disabled>Reverse</button>
   </div>
-  <svg class="v-scene__svg" viewBox="0 0 560 200" role="img" aria-labelledby="v-scene-vtl-title">
+  <svg
+    class="v-scene__svg"
+    viewBox="0 0 560 200"
+    role="img"
+    aria-labelledby="v-scene-vtl-title"
+    aria-describedby="v-scene-vtl-description"
+  >
+    <desc id="v-scene-vtl-description"
+      >Three nodes connect in a left-to-right computation path for forward and reverse passes.</desc
+    >
     <rect width="560" height="200" fill="#111827" rx="8"></rect>
     <g data-vtl-nodes>
       <circle cx="100" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="x"></circle>
@@ -52,6 +61,7 @@
     };
     root.querySelectorAll<HTMLButtonElement>('[data-vtl-dir]').forEach((b) => {
       b.addEventListener('click', () => setDir(b.dataset.vtlDir || 'forward'));
+      b.disabled = false;
     });
   }
   document.querySelectorAll<HTMLElement>('[data-v-scene="vtl"]').forEach(init);
@@ -80,7 +90,7 @@
     gap: 0.4rem;
   }
   .v-scene__controls button {
-    min-height: 40px;
+    min-height: 44px;
     padding: 0.35rem 0.75rem;
     border: 1px solid var(--color-border);
     background: transparent;

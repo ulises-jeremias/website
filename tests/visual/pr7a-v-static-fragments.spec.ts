@@ -174,6 +174,10 @@ test.describe('PR7A static V station document', () => {
         );
       }
 
+      for (const control of await page.locator('section[data-v-panel] button').all()) {
+        await expect(control).toBeDisabled();
+      }
+
       await expectPageToFit(page);
     });
   }
@@ -369,6 +373,18 @@ test.describe('PR7A enhanced V station state', () => {
 
     await page.keyboard.press('Tab');
     await expectNoStationFocus(page);
+  });
+
+  test('announces the newly selected station without moving focus', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/v');
+
+    await page.locator('[data-v-station="vsl"]').click();
+
+    await expect(page.locator('[data-v-station-status]')).toHaveText(
+      'Station selected: VSL — Maintainer — scientific modules, compute dispatch, backend integration.',
+    );
+    await expect(page.locator('[data-v-station="vsl"]')).toBeFocused();
   });
 
   for (const viewport of viewports) {

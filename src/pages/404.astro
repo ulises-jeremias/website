@@ -14,22 +14,33 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
   noIndex={true}
 >
   <section class="lost-world" aria-labelledby="lost-title">
-    <p class="lost-world__eyebrow">404 · Digital Nest</p>
-    <p class="lost-world__signal" aria-hidden="true">SIGNAL LOST</p>
-    <h1 id="lost-title" class="lost-world__title">WORLD NOT FOUND</h1>
-    <p class="lost-world__lead">
-      There is no page at this address — the link may be outdated or mistyped. In atlas terms: this coordinate is an
-      isolated platform with no uplink.
-    </p>
-    <div class="lost-world__platform" aria-hidden="true">
-      <span class="lost-world__glow"></span>
-      <span class="lost-world__island"></span>
-    </div>
-    <nav class="lost-world__actions" aria-label="Recovery">
-      <a class="lost-world__cta lost-world__cta--primary" href="/">Return to Digital Nest</a>
-    </nav>
+    <header class="lost-world__header">
+      <div>
+        <p class="lost-world__eyebrow">404 · Digital Nest recovery</p>
+        <p class="lost-world__signal" aria-hidden="true">COORDINATE UNRESOLVED</p>
+        <h1 id="lost-title" class="lost-world__title">This world is unlisted</h1>
+        <p class="lost-world__lead">
+          There is no page at this address. The link may be outdated or mistyped; use the verified route index below to
+          continue.
+        </p>
+      </div>
+      <aside class="lost-world__console" aria-label="Recovery console">
+        <p class="lost-world__console-kicker">Recovery console</p>
+        <dl>
+          <div><dt>Coordinate</dt><dd>404 / unresolved</dd></div>
+          <div><dt>Next action</dt><dd>Return home</dd></div>
+          <div><dt>Route source</dt><dd>Digital Nest index</dd></div>
+        </dl>
+        <nav class="lost-world__actions" aria-label="Primary recovery">
+          <a class="lost-world__cta lost-world__cta--primary" href="/">Return to Digital Nest</a>
+          <a class="lost-world__cta" href="/projects">Browse project worlds</a>
+        </nav>
+      </aside>
+    </header>
+
     <nav class="lost-world__atlas" aria-labelledby="lost-atlas-title">
-      <h2 id="lost-atlas-title" class="lost-world__atlas-title">Or jump straight to a world</h2>
+      <p class="lost-world__atlas-kicker">Verified destination index</p>
+      <h2 id="lost-atlas-title" class="lost-world__atlas-title">Jump to a known route</h2>
       <ul class="lost-world__atlas-list">
         {
           atlasRoutes.map((route) => (
@@ -38,7 +49,10 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
                 <span class="lost-world__atlas-index" aria-hidden="true">
                   {String(route.navOrder).padStart(2, '0')}
                 </span>
-                {getNavLabel(route)}
+                <span>
+                  <strong>{getNavLabel(route)}</strong>
+                  <code>{route.path}</code>
+                </span>
               </a>
             </li>
           ))
@@ -50,10 +64,77 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
 
 <style>
   .lost-world {
-    width: min(100% - 2 * var(--section-padding-x), 42rem);
+    width: min(100% - 2 * var(--section-padding-x), 78rem);
     margin: 0 auto;
-    padding-block: clamp(3rem, 12vw, 6rem);
-    text-align: center;
+    padding-block: clamp(1.5rem, 5vw, 3.5rem) clamp(2rem, 6vw, 4rem);
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-magenta) 18%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-magenta) 5%, transparent), transparent 36%),
+      color-mix(in srgb, var(--nest-midnight-950) 70%, transparent);
+  }
+
+  .lost-world__header {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 3vw, 2.75rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-magenta) 32%, transparent);
+    border-inline-start: 2px solid var(--nest-magenta);
+    text-align: left;
+  }
+
+  @media (min-width: 820px) {
+    .lost-world__header {
+      grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+      align-items: end;
+    }
+  }
+
+  .lost-world__console {
+    padding: 0.9rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 38%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  }
+
+  .lost-world__console-kicker,
+  .lost-world__atlas-kicker {
+    margin: 0 0 0.55rem;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .lost-world__console dl {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .lost-world__console dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 22%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .lost-world__console dt,
+  .lost-world__console dd {
+    margin: 0;
+  }
+
+  .lost-world__console dt {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .lost-world__console dd {
+    color: var(--color-text);
+    text-align: right;
   }
   .lost-world__eyebrow {
     margin: 0;
@@ -77,47 +158,22 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
     margin: 0.65rem 0 0;
     font-family: var(--font-display);
     font-size: clamp(1.8rem, 6vw, 2.8rem);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     color: var(--nest-magenta);
     text-shadow: 0 0 28px color-mix(in srgb, var(--nest-magenta) 40%, transparent);
   }
   .lost-world__lead {
-    margin: 0.85rem auto 0;
-    max-width: 42ch;
+    margin: 0.85rem 0 0;
+    max-width: 56ch;
     color: var(--color-text-muted);
     line-height: 1.6;
-  }
-  .lost-world__platform {
-    position: relative;
-    width: 8rem;
-    height: 5rem;
-    margin: 2rem auto;
-  }
-  .lost-world__glow {
-    position: absolute;
-    inset: 40% 10% 0;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, color-mix(in srgb, var(--nest-cyan) 45%, transparent), transparent 70%);
-    filter: blur(8px);
-  }
-  .lost-world__island {
-    position: absolute;
-    left: 50%;
-    top: 30%;
-    width: 4.5rem;
-    height: 2.2rem;
-    translate: -50% 0;
-    border-radius: 40% 40% 35% 35%;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--nest-violet) 55%, #1a1028), #0b0614);
-    border: 1px solid color-mix(in srgb, var(--nest-cyan) 40%, transparent);
-    box-shadow: 0 12px 24px color-mix(in srgb, #000 55%, transparent);
   }
   .lost-world__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem;
-    justify-content: center;
-    margin-top: 0.5rem;
+    justify-content: flex-start;
+    margin-top: 1rem;
   }
   .lost-world__cta {
     display: inline-flex;
@@ -140,9 +196,13 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
     outline-offset: 2px;
   }
   .lost-world__atlas {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem clamp(0.75rem, 3vw, 2rem) 0;
     border-top: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+  }
+
+  .lost-world__atlas-kicker {
+    color: var(--nest-sunset-orange);
   }
   .lost-world__atlas-title {
     margin: 0 0 1rem;
@@ -158,17 +218,33 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
-    gap: 0.4rem 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.55rem;
     text-align: left;
   }
   .lost-world__atlas-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.65rem;
     min-height: 44px;
     color: var(--color-text);
     text-decoration: none;
+  }
+
+  .lost-world__atlas-link > span:last-child {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .lost-world__atlas-link strong {
+    font-weight: 500;
+  }
+
+  .lost-world__atlas-link code {
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 400;
   }
   .lost-world__atlas-link:hover {
     color: var(--nest-cyan);
@@ -197,9 +273,6 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
     .lost-world__signal {
       animation: none;
       opacity: 0.9;
-    }
-    .lost-world__glow {
-      filter: none;
     }
   }
 </style>

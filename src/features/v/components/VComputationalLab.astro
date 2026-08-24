@@ -37,13 +37,32 @@ const stationsJson = JSON.stringify(stations);
 
 <section class="v-lab" aria-labelledby="v-lab-title" data-v-lab data-stations={stationsJson}>
   <header class="v-lab__header">
-    <p class="v-lab__eyebrow">V Ecosystem · computational lab</p>
-    <h1 id="v-lab-title">V Ecosystem</h1>
-    <p class="v-lab__lede">
-      Six lab stations cover my work across the V ecosystem — the compiler core, scientific computing, tensors and
-      autograd, reactive streams, CI tooling, and the community catalog. Each station pairs a working diagram with the
-      verified role, repository, and license behind it.
-    </p>
+    <div class="v-lab__header-copy">
+      <p class="v-lab__eyebrow">V Ecosystem · computational lab</p>
+      <h1 id="v-lab-title">V Ecosystem</h1>
+      <p class="v-lab__lede">
+        Six lab stations cover my work across the V ecosystem — the compiler core, scientific computing, tensors and
+        autograd, reactive streams, CI tooling, and the community catalog. Each station pairs a working diagram with the
+        verified role, repository, and license behind it.
+      </p>
+    </div>
+    <aside class="v-lab__header-readout" aria-label="V lab readout">
+      <p class="v-lab__readout-kicker">Bench readout</p>
+      <dl>
+        <div>
+          <dt>Stations</dt>
+          <dd>{stations.length}</dd>
+        </div>
+        <div>
+          <dt>Evidence</dt>
+          <dd>repo + license</dd>
+        </div>
+        <div>
+          <dt>Primary output</dt>
+          <dd>source-backed notes</dd>
+        </div>
+      </dl>
+    </aside>
   </header>
 
   <nav class="v-lab__index" aria-label="Lab stations">
@@ -71,7 +90,7 @@ const stationsJson = JSON.stringify(stations);
     }
   </div>
 
-  <div class="vf-scene">
+  <div class="vf-scene v-lab__scene">
     <div class="vf-stage v-lab__stage">
       {
         stations.map((station) => (
@@ -130,6 +149,8 @@ const stationsJson = JSON.stringify(stations);
     </SceneInspector>
   </div>
 
+  <p class="visually-hidden" role="status" aria-atomic="true" data-v-station-status></p>
+
   <WorldDock label="Install & explore">
     <a class="vf-dock__primary" href="https://github.com/vlang/v" target="_blank" rel="noopener noreferrer">
       vlang/v
@@ -158,9 +179,82 @@ const stationsJson = JSON.stringify(stations);
 
 <style>
   .v-lab {
-    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 78rem);
     margin: 0 auto;
     padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-blue) 20%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-blue) 5%, transparent), transparent 24%),
+      repeating-linear-gradient(
+        165deg,
+        transparent 0,
+        transparent 5rem,
+        color-mix(in srgb, var(--nest-blue) 4%, transparent) 5rem,
+        color-mix(in srgb, var(--nest-blue) 4%, transparent) calc(5rem + 1px)
+      );
+  }
+
+  .v-lab__header {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-blue) 34%, transparent);
+    border-inline-start: 2px solid var(--nest-blue);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-blue) 8%, transparent), transparent 70%);
+  }
+
+  @media (min-width: 820px) {
+    .v-lab__header {
+      grid-template-columns: minmax(0, 1.4fr) minmax(15rem, 0.65fr);
+      align-items: end;
+    }
+  }
+
+  .v-lab__header-readout {
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 38%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  }
+
+  .v-lab__readout-kicker {
+    margin: 0 0 0.7rem;
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .v-lab__header-readout dl {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .v-lab__header-readout dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-blue) 24%, transparent);
+  }
+
+  .v-lab__header-readout dt,
+  .v-lab__header-readout dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .v-lab__header-readout dt {
+    color: var(--color-text-faint);
+    text-transform: uppercase;
+  }
+
+  .v-lab__header-readout dd {
+    color: var(--nest-cyan);
+    text-align: right;
   }
 
   .v-lab__eyebrow {
@@ -187,7 +281,11 @@ const stationsJson = JSON.stringify(stations);
   }
 
   .v-lab__index {
-    margin: 1.1rem 0 0;
+    margin: 1.25rem 0 0;
+    padding: 0.85rem 1rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 28%, transparent);
+    border-inline-start: 2px solid color-mix(in srgb, var(--nest-cyan) 58%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 74%, transparent);
   }
 
   /* The enhanced selector replaces the static index once JavaScript is ready. */
@@ -201,6 +299,17 @@ const stationsJson = JSON.stringify(stations);
     padding: 0;
     display: grid;
     gap: 0.3rem 1.25rem;
+  }
+
+  .v-lab__index::before {
+    display: block;
+    margin-bottom: 0.55rem;
+    content: 'Station index / choose an instrument';
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   @media (min-width: 760px) {
@@ -255,7 +364,32 @@ const stationsJson = JSON.stringify(stations);
 
   .v-lab__stage {
     padding: 0.65rem;
-    min-height: 22rem;
+    min-height: 24rem;
+    border-color: color-mix(in srgb, var(--nest-blue) 58%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-blue) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in srgb, var(--nest-cyan) 3%, transparent) 1px, transparent 1px),
+      radial-gradient(
+        ellipse 90% 70% at 50% 0%,
+        color-mix(in srgb, var(--nest-blue) 19%, transparent),
+        transparent 72%
+      ),
+      var(--nest-midnight-950);
+    background-size:
+      2rem 2rem,
+      2rem 2rem,
+      auto,
+      auto;
+  }
+
+  .v-lab__scene {
+    margin-top: 1.5rem;
+  }
+
+  .v-lab__scene > :global(.vf-inspector) {
+    min-height: 100%;
+    border-inline-start: 2px solid color-mix(in srgb, var(--nest-sunset-orange) 62%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--nest-sunset-orange) 8%, transparent), transparent 38%);
   }
 
   .v-lab__panel {
@@ -378,7 +512,10 @@ const stationsJson = JSON.stringify(stations);
   }
 
   .v-lab__licenses {
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem 1.15rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-violet) 28%, transparent);
+    border-inline-start: 2px solid color-mix(in srgb, var(--nest-violet) 62%, transparent);
     font-size: 0.86rem;
     color: var(--color-text-muted);
   }
@@ -386,6 +523,20 @@ const stationsJson = JSON.stringify(stations);
   .v-lab :global(.vf-dock__primary) {
     background: var(--world-accent);
     color: var(--color-text-on-accent);
+  }
+
+  @media (width < 620px) {
+    .v-lab__stage {
+      min-height: 0;
+    }
+
+    .v-lab[data-v-enhanced] .v-lab__panel {
+      min-height: 0;
+    }
+
+    .v-lab__panel :global(svg) {
+      display: none;
+    }
   }
 
   .v-lab__licenses h2 {
@@ -447,6 +598,7 @@ const stationsJson = JSON.stringify(stations);
     const licenseEl = root.querySelector<HTMLElement>('[data-v-inspector-license]');
     const chipsEl = root.querySelector<HTMLElement>('[data-v-inspector-chips]');
     const linkEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-link]');
+    const statusEl = root.querySelector<HTMLElement>('[data-v-station-status]');
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-v-station]')];
     const panels = [...root.querySelectorAll<HTMLElement>('[data-v-panel]')];
     const stationIds = new Set(stations.map((station) => station.id));
@@ -490,7 +642,7 @@ const stationsJson = JSON.stringify(stations);
 
     let selectedStationId = '';
 
-    const select = (id: string, focusTab = false) => {
+    const select = (id: string, focusTab = false, announce = false) => {
       const station = stations.find((s) => s.id === id);
       if (!station) return false;
 
@@ -515,6 +667,7 @@ const stationsJson = JSON.stringify(stations);
         linkEl.href = station.href;
         linkEl.textContent = `Open ${station.repo} ↗`;
       }
+      if (announce && statusEl) statusEl.textContent = `Station selected: ${station.title} — ${station.role}.`;
       selectedStationId = id;
       return true;
     };
@@ -527,7 +680,7 @@ const stationsJson = JSON.stringify(stations);
     const selectFromUser = (id: string, focusTab = false) => {
       const requested = hashStation();
       if (selectedStationId === id && (!requested || requested === id)) return;
-      if (!select(id, focusTab)) return;
+      if (!select(id, focusTab, true)) return;
       pushStation(id);
     };
 

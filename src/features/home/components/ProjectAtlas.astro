@@ -20,7 +20,12 @@ const scaleFor = (id: string): 'lg' | 'md' | 'sm' => {
 };
 ---
 
-<section id="project-atlas" class="project-atlas" aria-labelledby="project-atlas-title">
+<section
+  id="project-atlas"
+  class="project-atlas"
+  aria-labelledby="project-atlas-title"
+  aria-describedby="project-atlas-guide"
+>
   <header class="project-atlas__header">
     <div class="project-atlas__label">
       <span class="project-atlas__label-rule" aria-hidden="true"></span>
@@ -29,6 +34,10 @@ const scaleFor = (id: string): 'lg' | 'md' | 'sm' => {
     </div>
     <span class="project-atlas__chevron" aria-hidden="true"></span>
   </header>
+
+  <p id="project-atlas-guide" class="project-atlas__guide">
+    Build surfaces first → workshop, notes, archive, and evidence complete the route.
+  </p>
 
   <div class="project-atlas__stage">
     <AtlasConnections />

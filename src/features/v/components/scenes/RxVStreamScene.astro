@@ -6,15 +6,24 @@
   <h2 class="v-scene__title" id="v-scene-rxv-title">RxV</h2>
   <p class="v-scene__note">Reactive streams. Emit once, then stop — replay to see again.</p>
   <div class="v-scene__controls" role="group" aria-label="Stream playback">
-    <button type="button" data-rxv-emit>Emit</button>
-    <button type="button" data-rxv-replay>Replay</button>
+    <button type="button" data-rxv-emit disabled>Emit</button>
+    <button type="button" data-rxv-replay disabled>Replay</button>
   </div>
-  <svg class="v-scene__svg" viewBox="0 0 560 160" role="img" aria-labelledby="v-scene-rxv-title">
+  <svg
+    class="v-scene__svg"
+    viewBox="0 0 560 160"
+    role="img"
+    aria-labelledby="v-scene-rxv-title"
+    aria-describedby="v-scene-rxv-description"
+  >
+    <desc id="v-scene-rxv-description">A horizontal event timeline receives a burst of emitted stream values.</desc>
     <rect width="560" height="160" fill="#0b1220" rx="8"></rect>
     <line x1="40" y1="80" x2="520" y2="80" stroke="#334155" stroke-width="2"></line>
     <g data-rxv-events></g>
   </svg>
-  <p class="v-scene__live" data-v-scene-live aria-live="polite">Stream idle. Press Emit for a demo burst.</p>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">
+    Static preview. Enable JavaScript to emit a demo burst.
+  </p>
 </div>
 
 <script>
@@ -50,8 +59,12 @@
       if (live) live.textContent = 'Demo burst emitted · stream complete (not live).';
     };
 
-    root.querySelector('[data-rxv-emit]')?.addEventListener('click', emit);
-    root.querySelector('[data-rxv-replay]')?.addEventListener('click', emit);
+    root.querySelector<HTMLButtonElement>('[data-rxv-emit]')?.addEventListener('click', emit);
+    root.querySelector<HTMLButtonElement>('[data-rxv-replay]')?.addEventListener('click', emit);
+    root.querySelectorAll<HTMLButtonElement>('[data-rxv-emit], [data-rxv-replay]').forEach((button) => {
+      button.disabled = false;
+    });
+    if (live) live.textContent = 'Stream idle. Press Emit for a demo burst.';
   }
   document.querySelectorAll<HTMLElement>('[data-v-scene="rxv"]').forEach(init);
 </script>
@@ -79,7 +92,7 @@
     gap: 0.4rem;
   }
   .v-scene__controls button {
-    min-height: 40px;
+    min-height: 44px;
     padding: 0.35rem 0.75rem;
     border: 1px solid var(--color-border);
     background: transparent;

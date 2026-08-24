@@ -11,6 +11,8 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 - [GitHub setup & CI](./GITHUB_SETUP_GUIDE.md) — actions, branch protection, Dependabot, Danger, MegaLinter
 - [Testing guide](./TESTING_GUIDE.md) — Vitest, Playwright, route budgets, coverage, and CI
 - [Current design state](./design/current/README.md) — accepted identity, maintained goldens, historical specs, and open gates
+- [Launch readiness records](./launch/2026-08-24-launch-checklist.md) — launch gates, asset and content audits, and post-launch operations
+- [v1.1 and subdomain boundary](./adr/ADR-002-v1-1-and-subdomain-boundary.md) — accepted launch architecture boundary
 - [Interactive diagram semantics](./INTERACTIVE_DIAGRAM_SEMANTICS.md) — static visual figures, native selectors,
   inspectors, status summaries, and pointer delegation
 

@@ -37,8 +37,8 @@ Before-captures for all 11 routes at all three widths were reviewed; CI
 - No new dependencies, frameworks, or WebGL.
 - Route budget baselines are regenerated only where a documented content
   change justifies it; JS payloads do not grow.
-- Open product gates are respected: the accepted homepage hierarchy and the
-  empty-Blog navigation entry are **not** changed here.
+- Open product gates are respected: the empty-Blog navigation entry remains
+  unchanged; the homepage receives its separate Wave E closure pass.
 
 ## Route briefs
 
@@ -46,10 +46,10 @@ Before-captures for all 11 routes at all three widths were reviewed; CI
 
 - **Purpose / task:** orient, then route to a project world or contact.
 - **Primary CTA:** Explore projects (unchanged — hierarchy is an open gate).
-- **Direction:** keep the accepted composition unchanged. The featured-ledger
-  descriptions were audited and already read as specific verified outcomes,
-  so no home change ships in this pass.
-- **Acceptance:** no home diff; snapshots unchanged.
+- **Direction:** preserve the accepted project-first observatory while making
+  the atlas reading order and mobile route relationship explicit.
+- **Acceptance:** project-first hierarchy, source order, mobile relationship
+  cue, and updated desktop/mobile/reduced-motion evidence.
 
 ### `/dotfiles/` — Configuration cockpit
 

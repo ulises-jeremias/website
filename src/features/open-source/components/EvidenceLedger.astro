@@ -10,8 +10,16 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 ---
 
 <section class="oss-ledger" aria-labelledby="oss-ledger-title" data-testid="oss-ledger">
-  <h2 id="oss-ledger-title">Evidence ledger</h2>
-  <p class="oss-ledger__lede">Roles and merged work from the evidence cache.</p>
+  <header class="oss-ledger__header">
+    <div>
+      <p class="oss-ledger__kicker">Primary record</p>
+      <h2 id="oss-ledger-title">Evidence ledger</h2>
+      <p class="oss-ledger__lede">
+        Roles and merged work from the evidence cache, with a provenance link on every row.
+      </p>
+    </div>
+    <p class="oss-ledger__reading-key">Kind → subject → evidence → source</p>
+  </header>
 
   <ul class="oss-ledger__table" aria-label="Contribution evidence">
     <li class="oss-ledger__row oss-ledger__row--head" aria-hidden="true">
@@ -50,9 +58,42 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
 <style>
   .oss-ledger {
-    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    width: min(100% - 2 * var(--section-padding-x), 78rem);
     margin: 0 auto;
     padding-block: 1rem 2.75rem;
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-cyan) 18%, transparent);
+  }
+
+  .oss-ledger__header {
+    display: grid;
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 820px) {
+    .oss-ledger__header {
+      grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.5fr);
+    }
+  }
+
+  .oss-ledger__kicker,
+  .oss-ledger__reading-key {
+    margin: 0 0 0.45rem;
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .oss-ledger__reading-key {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border: 1px dashed color-mix(in srgb, var(--nest-cyan) 32%, transparent);
+    color: var(--color-text-muted);
+    line-height: 1.5;
   }
 
   .oss-ledger h2 {
@@ -88,8 +129,11 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
   }
 
   .oss-ledger__row a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-min, 44px);
     color: var(--nest-cyan);
-    text-decoration: none;
+    text-underline-offset: 0.15em;
     font-family: var(--font-mono);
     font-size: 0.72rem;
   }
