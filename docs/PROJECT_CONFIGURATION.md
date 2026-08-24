@@ -1,6 +1,6 @@
 # ⚙️ Project Configuration
 
-This project is bootstrapped with [create-awesome-node-app](https://www.npmjs.com/package/create-awesome-node-app). Dependencies and scripts are resolved from the template's `package/` folder at generation time.
+This project is bootstrapped with [create-awesome-node-app](https://github.com/Create-Node-App/create-node-app). Dependencies and scripts are resolved from the template's `package/` folder at generation time.
 
 ## Node.js
 
