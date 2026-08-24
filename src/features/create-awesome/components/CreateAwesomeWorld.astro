@@ -781,6 +781,15 @@ const lineModules = [
     background: color-mix(in srgb, var(--nest-midnight-950) 82%, transparent);
   }
 
+  .ca-world :global(.vf-dock__code) {
+    flex: 1 1 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
   @media (width < 620px) {
     .ca-world__stage {
       min-height: 0;
