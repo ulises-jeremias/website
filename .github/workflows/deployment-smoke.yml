@@ -19,9 +19,7 @@ jobs:
       github.event.deployment_status.environment == 'Production')
     runs-on: ubuntu-latest
     env:
-      DEPLOYMENT_BASE_URL: >-
-        ${{ github.event.deployment_status.environment_url ||
-        'https://www.ulises-jeremias.dev' }}
+      DEPLOYMENT_BASE_URL: https://www.ulises-jeremias.dev
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7

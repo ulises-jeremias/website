@@ -99,12 +99,15 @@ content-hashed.
 
 The external deployment smoke command is `pnpm test:deployment` with an HTTPS
 `DEPLOYMENT_BASE_URL` restricted to the public production origin or the
-project-owned Vercel preview domain. Protected Vercel previews additionally
-require the `VERCEL_AUTOMATION_BYPASS_SECRET` environment variable; production
-checks do not need it. The deployment Playwright config disables traces so the
-secret cannot be persisted in retry artifacts. The GitHub workflow obtains
-production deployment URLs from Vercel `deployment_status` events rather than
-accepting arbitrary workflow inputs. Preview checks remain an explicit manual
-command so a protected preview never receives a credential by accident.
+project-owned Vercel deployment domain. Protected Vercel previews additionally
+require a project branch-preview URL, the `VERCEL_AUTOMATION_BYPASS_SECRET`, and
+explicit `DEPLOYMENT_PREVIEW=true` environment variables; production checks do
+not need either. The deployment Playwright config disables traces and isolates
+bypass headers from redirects and cross-origin requests so the secret cannot be
+persisted or forwarded to another origin. The GitHub workflow obtains
+production deployment status from Vercel `deployment_status` events and checks
+the public production origin rather than the protected deployment alias. Preview
+checks remain an explicit manual command so a protected preview never receives a
+credential by accident.
 
 If you need SSR, server islands, or on-demand rendering, add an [Astro adapter](https://docs.astro.build/en/guides/deploy/) and update `astro.config.mjs`.

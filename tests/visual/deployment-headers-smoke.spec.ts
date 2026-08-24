@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { getDeploymentRequestOptions } from './deployment-request';
 
 const routes = ['/', '/404.html'] as const;
 const assets = ['/fonts/jetbrains-mono-latin-400-normal.woff2', '/assets/nest/logo-nest-sm.webp'] as const;
@@ -13,7 +14,7 @@ const expectedSecurityHeaders = {
 test.describe('deployed security headers', () => {
   for (const route of routes) {
     test(`${route} returns the security header contract`, async ({ request }) => {
-      const response = await request.get(route);
+      const response = await request.get(route, getDeploymentRequestOptions());
       expect(response.status(), `${route} HTTP status`).toBeGreaterThanOrEqual(200);
       expect(response.status(), `${route} HTTP status`).toBeLessThan(300);
 
@@ -28,7 +29,7 @@ test.describe('deployed security headers', () => {
 test.describe('deployed asset caching', () => {
   for (const asset of assets) {
     test(`${asset} has a bounded browser cache policy`, async ({ request }) => {
-      const response = await request.get(asset);
+      const response = await request.get(asset, getDeploymentRequestOptions());
       expect(response.status(), `${asset} HTTP status`).toBeGreaterThanOrEqual(200);
       expect(response.status(), `${asset} HTTP status`).toBeLessThan(300);
       expect(response.headers()['cache-control'], `${asset} Cache-Control`).toBe('public, max-age=86400');
