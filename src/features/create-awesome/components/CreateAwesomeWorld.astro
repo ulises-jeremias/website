@@ -52,24 +52,30 @@ const lineModules = [
   data-stations={stationsJson}
 >
   <header class="ca-world__hero">
-    <p class="ca-world__eyebrow">Create Awesome · assembly line</p>
-    <h1 id="ca-world-title">{familyIntro.title}</h1>
-    <p class="ca-world__lede">
-      {familyIntro.principle} · Node {catalogTotals.node.templates}+{catalogTotals.node.addons} · Python{' '}
-      {catalogTotals.python.templates}+{catalogTotals.python.addons} · V {catalogTotals.v.templates}+{
-        catalogTotals.v.addons
-      }
-    </p>
+    <div class="ca-world__hero-copy">
+      <p class="ca-world__eyebrow">Create Awesome · assembly line</p>
+      <h1 id="ca-world-title">{familyIntro.title}</h1>
+      <p class="ca-world__lede">
+        {familyIntro.principle} · Node {catalogTotals.node.templates}+{catalogTotals.node.addons} · Python{' '}
+        {catalogTotals.python.templates}+{catalogTotals.python.addons} · V {catalogTotals.v.templates}+{
+          catalogTotals.v.addons
+        }
+      </p>
+    </div>
+    <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
+      <p>Catalog counter</p>
+      <ul>
+        <li><strong>Node</strong><span>{catalogTotals.node.templates} + {catalogTotals.node.addons}</span></li>
+        <li><strong>Python</strong><span>{catalogTotals.python.templates} + {catalogTotals.python.addons}</span></li>
+        <li><strong>V</strong><span>{catalogTotals.v.templates} + {catalogTotals.v.addons}</span></li>
+      </ul>
+      <small>templates + addons · sourced totals</small>
+    </aside>
   </header>
 
   <div class="vf-scene ca-world__scene">
     <div class="vf-stage ca-world__stage">
-      <svg
-        class="ca-world__line"
-        viewBox="0 0 720 220"
-        role="img"
-        aria-label="Assembly line: runtime, template, addons, app"
-      >
+      <svg class="ca-world__line" viewBox="0 0 720 220" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="ca-line-glow" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.35"></stop>
@@ -101,7 +107,20 @@ const lineModules = [
         }
       </svg>
 
-      <div class="ca-world__stations" role="radiogroup" aria-label="Runtime station" hidden>
+      <ol class="ca-world__flow-index" aria-label="Composition stages">
+        {
+          lineModules.map((mod, index) => (
+            <li>
+              <span class="ca-world__flow-number">{String(index + 1).padStart(2, '0')}</span>
+              <strong>{mod.label}</strong>
+              <small>{mod.hint}</small>
+            </li>
+          ))
+        }
+      </ol>
+
+      <fieldset class="ca-world__stations" role="radiogroup" aria-labelledby="ca-runtime-legend" disabled hidden>
+        <legend id="ca-runtime-legend">Runtime station</legend>
         {
           stations.map((station, index) => (
             <>
@@ -113,6 +132,7 @@ const lineModules = [
                 value={station.id}
                 checked={index === 0}
                 data-ca-station={station.id}
+                aria-controls="ca-runtime-inspector"
               />
               <label
                 class="vf-node"
@@ -130,7 +150,7 @@ const lineModules = [
             </>
           ))
         }
-      </div>
+      </fieldset>
     </div>
 
     <SceneInspector eyebrow="Runtime" title={defaultStation.title} id="ca-runtime-inspector" headingLevel={2}>
@@ -151,6 +171,23 @@ const lineModules = [
       </Fragment>
     </SceneInspector>
   </div>
+
+  <WorldDock label="Current command">
+    <a
+      class="vf-dock__primary"
+      href={defaultStation.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-ca-dock-catalog
+    >
+      Catalog
+    </a>
+    <a href={`https://github.com/${defaultStation.repo}`} target="_blank" rel="noopener noreferrer" data-ca-dock-repo>
+      GitHub
+    </a>
+    <a href="/community">Community</a>
+    <code class="vf-dock__code" data-ca-dock-install>{defaultStation.install}</code>
+  </WorldDock>
 
   <Composer embedded />
 
@@ -217,23 +254,6 @@ const lineModules = [
       }
     </ul>
   </section>
-
-  <WorldDock label="Create Awesome links">
-    <a
-      class="vf-dock__primary"
-      href={defaultStation.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-ca-dock-catalog
-    >
-      Catalog
-    </a>
-    <a href={`https://github.com/${defaultStation.repo}`} target="_blank" rel="noopener noreferrer" data-ca-dock-repo>
-      GitHub
-    </a>
-    <a href="/community">Community</a>
-    <code class="vf-dock__code" data-ca-dock-install>{defaultStation.install}</code>
-  </WorldDock>
 </section>
 
 <script>
@@ -269,7 +289,7 @@ const lineModules = [
     const modules = root.querySelectorAll<SVGGElement>('[data-module]');
     const composer = root.querySelector<HTMLElement>('[data-ca-composer]');
     const fallback = root.querySelector<HTMLElement>('[data-ca-static-fallback]');
-    const stationControls = root.querySelector<HTMLElement>('.ca-world__stations');
+    const stationControls = root.querySelector<HTMLFieldSetElement>('.ca-world__stations');
     const defaultStationId = stations[0]?.id;
     let selectedStationId =
       root.querySelector<HTMLInputElement>('[data-ca-station]:checked')?.value ?? defaultStationId;
@@ -362,6 +382,7 @@ const lineModules = [
         if (input.checked) select(input.value, 'user');
       });
     });
+    if (stationControls) stationControls.disabled = false;
 
     const restoreFromLocation = () => {
       const locationKey = `${window.location.pathname}${window.location.search}${window.location.hash}`;
@@ -403,9 +424,84 @@ const lineModules = [
 
 <style>
   .ca-world {
-    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 78rem);
     margin: 0 auto;
     padding: clamp(1.25rem, 3.5vw, 2.5rem) 0 clamp(2rem, 5vw, 3.25rem);
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 22%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 5%, transparent), transparent 28%),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 4rem,
+        color-mix(in srgb, var(--nest-cyan) 3%, transparent) 4rem,
+        color-mix(in srgb, var(--nest-cyan) 3%, transparent) calc(4rem + 1px)
+      );
+  }
+
+  .ca-world__hero {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 34%, transparent);
+    border-inline-start: 2px solid var(--nest-sunset-orange);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 8%, transparent), transparent 70%);
+  }
+
+  @media (min-width: 820px) {
+    .ca-world__hero {
+      grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+      align-items: end;
+    }
+  }
+
+  .ca-world__hero-ledger {
+    padding: 0.9rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 38%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  }
+
+  .ca-world__hero-ledger > p {
+    margin: 0 0 0.65rem;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ca-world__hero-ledger ul {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ca-world__hero-ledger li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 24%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .ca-world__hero-ledger li span {
+    color: var(--nest-sunset-orange);
+  }
+
+  .ca-world__hero-ledger li strong {
+    font-weight: 400;
+  }
+
+  .ca-world__hero-ledger small {
+    display: block;
+    margin-top: 0.7rem;
+    color: var(--color-text-faint);
+    font-size: 0.68rem;
   }
 
   .ca-world__eyebrow {
@@ -433,14 +529,89 @@ const lineModules = [
   }
 
   .ca-world__scene {
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 900px) {
+    .ca-world__scene {
+      grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.7fr);
+    }
   }
 
   .ca-world__stage {
     display: grid;
     gap: 0.85rem;
     padding: 0.85rem;
-    min-height: 0;
+    min-height: 25rem;
+    border-color: color-mix(in srgb, var(--nest-sunset-orange) 58%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(color-mix(in srgb, var(--nest-cyan) 4%, transparent) 1px, transparent 1px),
+      radial-gradient(
+        ellipse 90% 70% at 50% 25%,
+        color-mix(in srgb, var(--nest-sunset-orange) 17%, transparent),
+        transparent 72%
+      ),
+      var(--nest-midnight-950);
+    background-size:
+      2rem 2rem,
+      2rem 2rem,
+      auto,
+      auto;
+  }
+
+  .ca-world__stage::before {
+    display: block;
+    margin-bottom: 0.65rem;
+    content: 'WORKBENCH / COMPOSITION PATH';
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+  }
+
+  .ca-world__flow-index {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin: 0.85rem 0 0;
+    padding: 0.75rem 0 0;
+    list-style: none;
+    border-top: 1px dashed color-mix(in srgb, var(--nest-cyan) 32%, transparent);
+  }
+
+  .ca-world__flow-index li {
+    display: grid;
+    gap: 0.2rem;
+    min-inline-size: 0;
+  }
+
+  .ca-world__flow-number {
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .ca-world__flow-index strong {
+    color: var(--nest-paper);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ca-world__flow-index small {
+    color: var(--color-text-faint);
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  .ca-world__scene > :global(.vf-inspector) {
+    min-height: 100%;
+    border-inline-start: 2px solid color-mix(in srgb, var(--nest-cyan) 68%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--nest-cyan) 7%, transparent), transparent 42%);
   }
 
   .ca-world__line {
@@ -479,6 +650,22 @@ const lineModules = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
+    order: -1;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .ca-world__stations legend {
+    inline-size: 100%;
+    margin: 0 0 0.45rem;
+    padding: 0;
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
   .ca-world__stations[hidden] {
@@ -507,7 +694,10 @@ const lineModules = [
   }
 
   .ca-world__fold {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
+    padding: 1rem 1.15rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-violet) 28%, transparent);
+    border-inline-start: 2px solid color-mix(in srgb, var(--nest-violet) 58%, transparent);
     color: var(--color-text-muted);
     font-size: 0.86rem;
   }
@@ -575,6 +765,34 @@ const lineModules = [
 
   .ca-world :global(.ca-composer > header h2) {
     font-size: 1.1rem;
+  }
+
+  .ca-world :global(.ca-composer--embedded) {
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.15rem 0.75rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 32%, transparent);
+    border-inline-start: 2px solid var(--nest-cyan);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 6%, transparent), transparent 70%);
+  }
+
+  .ca-world :global(.ca-composer--embedded .ca-composer__fallback),
+  .ca-world :global(.ca-composer--embedded .ca-composer__form) {
+    border-color: color-mix(in srgb, var(--nest-cyan) 38%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 82%, transparent);
+  }
+
+  @media (width < 620px) {
+    .ca-world__stage {
+      min-height: 0;
+    }
+
+    .ca-world__line {
+      display: none;
+    }
+
+    .ca-world__flow-index {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {

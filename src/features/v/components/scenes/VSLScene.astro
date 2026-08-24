@@ -6,10 +6,17 @@
   <h2 class="v-scene__title" id="v-scene-vsl-title">VSL</h2>
   <p class="v-scene__note">Pure-V numerics by default. Advance the matrix → plot conveyor.</p>
   <div class="v-scene__controls" role="group" aria-label="VSL demo steps">
-    <button type="button" data-vsl-step="matrix" aria-pressed="true">Matrix</button>
-    <button type="button" data-vsl-step="plot" aria-pressed="false">Plot</button>
+    <button type="button" data-vsl-step="matrix" aria-pressed="true" disabled>Matrix</button>
+    <button type="button" data-vsl-step="plot" aria-pressed="false" disabled>Plot</button>
   </div>
-  <svg class="v-scene__svg" viewBox="0 0 560 240" role="img" aria-labelledby="v-scene-vsl-title">
+  <svg
+    class="v-scene__svg"
+    viewBox="0 0 560 240"
+    role="img"
+    aria-labelledby="v-scene-vsl-title"
+    aria-describedby="v-scene-vsl-description"
+  >
+    <desc id="v-scene-vsl-description">A four-by-four matrix feeds a separate plot stage from left to right.</desc>
     <rect width="560" height="240" fill="#0f2a44" rx="8"></rect>
     <g data-vsl-panel="matrix" class="is-active">
       {
@@ -47,6 +54,7 @@
     };
     root.querySelectorAll<HTMLButtonElement>('[data-vsl-step]').forEach((b) => {
       b.addEventListener('click', () => setStep(b.dataset.vslStep || 'matrix'));
+      b.disabled = false;
     });
   }
   document.querySelectorAll<HTMLElement>('[data-v-scene="vsl"]').forEach(init);
@@ -75,7 +83,7 @@
     gap: 0.4rem;
   }
   .v-scene__controls button {
-    min-height: 40px;
+    min-height: 44px;
     padding: 0.35rem 0.75rem;
     border: 1px solid var(--color-border);
     background: transparent;
