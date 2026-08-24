@@ -97,4 +97,11 @@ are disabled. Stable files under `/fonts/` and `/assets/` use a one-day browser
 cache; they are not marked `immutable` because their public filenames are not
 content-hashed.
 
+The external deployment smoke command is `pnpm test:deployment` with an HTTPS
+`DEPLOYMENT_BASE_URL` restricted to the public production origin or the
+project-owned Vercel preview domain. Protected Vercel previews additionally
+require the `VERCEL_AUTOMATION_BYPASS_SECRET` environment variable; production
+checks do not need it. The deployment Playwright config disables traces so the
+secret cannot be persisted in retry artifacts.
+
 If you need SSR, server islands, or on-demand rendering, add an [Astro adapter](https://docs.astro.build/en/guides/deploy/) and update `astro.config.mjs`.

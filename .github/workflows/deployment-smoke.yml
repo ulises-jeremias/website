@@ -1,0 +1,58 @@
+name: Deployment smoke
+
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        description: HTTPS production or preview URL to verify
+        required: false
+        default: https://www.ulises-jeremias.dev
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deployment-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'deployment_status' &&
+      github.event.deployment_status.state == 'success' &&
+      github.event.deployment_status.environment == 'Production')
+    runs-on: ubuntu-latest
+    env:
+      DEPLOYMENT_BASE_URL: ${{ inputs.deployment_url || 'https://www.ulises-jeremias.dev' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.deployment.sha || github.sha }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version-file: .node-version
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run deployment smoke
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: >-
+            ${{ inputs.deployment_url != '' &&
+            inputs.deployment_url != 'https://www.ulises-jeremias.dev' &&
+            secrets.VERCEL_AUTOMATION_BYPASS_SECRET || '' }}
+        run: pnpm test:deployment

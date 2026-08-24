@@ -88,6 +88,15 @@ sitemap, RSS, manifest, representative assets, and canonical/OG metadata. It
 uses the local production-build harness; it does not assert Vercel preview or
 CDN behavior.
 
+External deployment checks use `playwright.deployment.config.ts` and require an
+HTTPS `DEPLOYMENT_BASE_URL`. Run `pnpm test:deployment` against production or a
+preview deployment from the approved Vercel project domain. For a Vercel preview
+protected by authentication, provide `VERCEL_AUTOMATION_BYPASS_SECRET` from a
+secret store; the test config sends it only to an approved project preview and
+does not record traces. `.github/workflows/deployment-smoke.yml` runs after a
+successful Vercel Production deployment and supports manual production or
+approved-preview runs.
+
 Normal browser runs write current desktop and mobile review captures under
 `test-results/uiux-review/`. CI uploads this ignored directory for human review.
 Only `test:visual:update` may change maintained goldens, and only after the
