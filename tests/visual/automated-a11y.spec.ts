@@ -33,6 +33,7 @@ const PRIMARY_ROUTES = [
   '/blog',
   '/projects',
   '/open-source',
+  '/404.html',
 ] as const;
 
 // Rules already verified by dedicated specs — skip to avoid duplicate noise.
