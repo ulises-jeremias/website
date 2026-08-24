@@ -4,6 +4,9 @@ import { getDeploymentTarget } from './deployment-target-policy.mjs';
 const productionUrl = 'https://www.ulises-jeremias.dev';
 const deploymentUrl = 'https://website-odsf-9nvb6mvol-create-node-app.vercel.app';
 const branchPreviewUrl = 'https://website-odsf-git-feature-create-node-app.vercel.app';
+const credentialUrl = new URL(branchPreviewUrl);
+credentialUrl.username = 'user';
+credentialUrl.password = 'password';
 
 describe('deployment target policy', () => {
   it('accepts the public production origin without a preview bypass', () => {
@@ -35,7 +38,7 @@ describe('deployment target policy', () => {
   it.each([
     'https://example.com',
     'http://website-odsf-git-feature-create-node-app.vercel.app',
-    'https://user:password@website-odsf-git-feature-create-node-app.vercel.app',
+    credentialUrl.toString(),
     'https://@www.ulises-jeremias.dev',
     'https://www.ulises-jeremias.dev:443',
     'https://website-odsf-git-feature-create-node-app.vercel.app:8443',
