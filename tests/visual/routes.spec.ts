@@ -44,6 +44,7 @@ test.describe('flagship route visuals', () => {
     { path: '/blog', name: 'blog' },
     { path: '/projects', name: 'projects' },
     { path: '/open-source', name: 'open-source' },
+    { path: '/404.html', name: 'not-found' },
   ] as const;
 
   for (const route of captureRoutes) {

@@ -1,5 +1,11 @@
 ---
-import { formatEvidenceDate, getConstellationNodes, getEvidenceLastUpdated } from '@/data/open-source/index.js';
+import {
+  evidenceItems,
+  featuredEvidence,
+  formatEvidenceDate,
+  getConstellationNodes,
+  getEvidenceLastUpdated,
+} from '@/data/open-source/index.js';
 
 const nodes = getConstellationNodes();
 const lastUpdated = getEvidenceLastUpdated();
@@ -26,60 +32,151 @@ const positions = nodes.map((node, index) => {
 ---
 
 <section class="constellation" aria-labelledby="constellation-title" data-testid="oss-constellation">
-  <p class="constellation__eyebrow">Open Source · contribution constellation</p>
-  <h1 id="constellation-title">Open Source evidence</h1>
-  <p class="constellation__lede">
-    Owned projects · maintained projects · organization work · external contributions. Verified subjects only.
-  </p>
+  <header class="constellation__header">
+    <div>
+      <p class="constellation__eyebrow">Open Source · evidence archive</p>
+      <h1 id="constellation-title">Evidence archive</h1>
+      <p class="constellation__lede">
+        Owned projects · maintained projects · organization work · external contributions. Verified subjects only, with
+        exact provenance in the ledger below.
+      </p>
+    </div>
+    <aside class="constellation__brief" aria-label="Evidence archive readout">
+      <p class="constellation__brief-kicker">Archive readout</p>
+      <dl>
+        <div><dt>Visible records</dt><dd>{evidenceItems.length}</dd></div>
+        <div><dt>Featured subjects</dt><dd>{featuredEvidence.length}</dd></div>
+        <div><dt>Last refresh</dt><dd>{formatEvidenceDate(lastUpdated)}</dd></div>
+      </dl>
+    </aside>
+  </header>
 
   <div class="constellation__stage">
-    <ul class="constellation__legend" aria-label="Contribution kinds">
-      {
-        kindLegend.map((entry) => (
-          <li class="constellation__legend-item">
-            <span class:list={['constellation__swatch', `constellation__swatch--${entry.kind}`]} aria-hidden="true" />
-            <span class="constellation__legend-label">
-              {entry.label} ({kindCounts[entry.kind]})
-            </span>
-            <span class="constellation__legend-detail">{entry.detail}</span>
-          </li>
-        ))
-      }
-    </ul>
-    <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <circle cx="50" cy="50" r="3.2" class="constellation__hub"></circle>
-      {
-        positions.map((node) => (
-          <g>
-            <line
-              x1="50"
-              y1="50"
-              x2={node.cx}
-              y2={node.cy}
-              class:list={['constellation__edge', `constellation__edge--${node.kind}`]}
-            />
-            <circle
-              cx={node.cx}
-              cy={node.cy}
-              r={node.featured ? 2.4 : 1.8}
-              class:list={['constellation__node', `constellation__node--${node.kind}`]}
-            />
-          </g>
-        ))
-      }
-    </svg>
+    <div class="constellation__legend-panel">
+      <p class="constellation__legend-kicker">Reading key</p>
+      <p class="constellation__legend-note">
+        The map is a relationship index. Read exact subjects, roles, and source links below.
+      </p>
+      <ul class="constellation__legend" aria-label="Contribution kinds">
+        {
+          kindLegend.map((entry) => (
+            <li class="constellation__legend-item">
+              <span class:list={['constellation__swatch', `constellation__swatch--${entry.kind}`]} aria-hidden="true" />
+              <span class="constellation__legend-label">
+                {entry.label} ({kindCounts[entry.kind]})
+              </span>
+              <span class="constellation__legend-detail">{entry.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="constellation__map" aria-label="Contribution evidence map">
+      <p class="constellation__map-label">Relationship index · not a popularity graph</p>
+      <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <circle cx="50" cy="50" r="3.2" class="constellation__hub"></circle>
+        {
+          positions.map((node) => (
+            <g>
+              <line
+                x1="50"
+                y1="50"
+                x2={node.cx}
+                y2={node.cy}
+                class:list={['constellation__edge', `constellation__edge--${node.kind}`]}
+              />
+              <circle
+                cx={node.cx}
+                cy={node.cy}
+                r={node.featured ? 2.4 : 1.8}
+                class:list={['constellation__node', `constellation__node--${node.kind}`]}
+              />
+            </g>
+          ))
+        }
+      </svg>
+    </div>
   </div>
 
   <p class="constellation__meta">
-    Evidence refreshed <time datetime={lastUpdated}>{formatEvidenceDate(lastUpdated)}</time>
+    Evidence refreshed <time datetime={lastUpdated}>{formatEvidenceDate(lastUpdated)}</time> · exact records follow below.
   </p>
 </section>
 
 <style>
   .constellation {
-    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    width: min(100% - 2 * var(--section-padding-x), 78rem);
     margin: 0 auto;
     padding-block: clamp(1.5rem, 4vw, 3rem) 1rem;
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 18%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 5%, transparent), transparent 34%),
+      color-mix(in srgb, var(--nest-midnight-950) 68%, transparent);
+  }
+
+  .constellation__header {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 32%, transparent);
+    border-inline-start: 2px solid var(--nest-sunset-orange);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 7%, transparent), transparent 70%);
+  }
+
+  @media (min-width: 820px) {
+    .constellation__header {
+      grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
+      align-items: end;
+    }
+  }
+
+  .constellation__brief {
+    padding: 0.9rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 38%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  }
+
+  .constellation__brief-kicker,
+  .constellation__legend-kicker,
+  .constellation__map-label {
+    margin: 0;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .constellation__brief dl {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.65rem 0 0;
+  }
+
+  .constellation__brief dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 22%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .constellation__brief dt,
+  .constellation__brief dd {
+    margin: 0;
+  }
+
+  .constellation__brief dt {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .constellation__brief dd {
+    color: var(--color-text);
+    text-align: right;
   }
 
   .constellation__eyebrow {
@@ -107,6 +204,7 @@ const positions = nodes.map((node, index) => {
     display: grid;
     gap: 1.5rem;
     align-items: center;
+    margin-top: 1.5rem;
   }
 
   @media (min-width: 860px) {
@@ -121,6 +219,24 @@ const positions = nodes.map((node, index) => {
     padding: 0;
     display: grid;
     gap: 0.75rem;
+  }
+
+  .constellation__legend-panel,
+  .constellation__map {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  }
+
+  .constellation__legend-note {
+    margin: 0.45rem 0 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .constellation__map-label {
+    color: var(--color-text-faint);
   }
 
   .constellation__legend-item {
@@ -171,7 +287,7 @@ const positions = nodes.map((node, index) => {
     max-width: 28rem;
     height: auto;
     display: block;
-    margin-inline: auto;
+    margin: 0.75rem auto 0;
   }
 
   .constellation__hub {

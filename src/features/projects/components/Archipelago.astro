@@ -1,5 +1,5 @@
 ---
-import { worldPointerProjects } from '../data/index.js';
+import { ledgerProjects, worldPointerProjects } from '../data/index.js';
 import { groupLabels } from '../types/index.js';
 
 const islandByWorld: Record<string, string> = {
@@ -16,14 +16,31 @@ const islands = worldPointerProjects.map((project, index) => ({
   number: String(index + 1).padStart(2, '0'),
   href: project.links.find((l) => l.kind === 'world')?.href ?? project.links[0]?.href ?? '/projects',
 }));
+
+const groupCount = new Set(ledgerProjects.map((project) => project.group)).size;
 ---
 
 <section class="archipelago" aria-labelledby="archipelago-title" data-testid="projects-archipelago">
-  <div class="archipelago__intro">
-    <p class="archipelago__eyebrow">Projects · archipelago</p>
-    <h1 id="archipelago-title">Projects</h1>
-    <p class="archipelago__lede">Project worlds first. Curated additional and archived work in the ledger below.</p>
-  </div>
+  <header class="archipelago__header">
+    <div class="archipelago__intro">
+      <p class="archipelago__eyebrow">Projects · archive index</p>
+      <h1 id="archipelago-title">Project archive</h1>
+      <p class="archipelago__lede">
+        Start with the project worlds, then read the curated detail and archived work in the ledger below. Links are the
+        source of truth; no popularity ranking is implied.
+      </p>
+    </div>
+    <aside class="archipelago__readout" aria-label="Project archive readout">
+      <p class="archipelago__readout-kicker">Archive readout</p>
+      <dl>
+        <div><dt>World pointers</dt><dd>{islands.length}</dd></div>
+        <div><dt>Groups represented</dt><dd>{groupCount}</dd></div>
+        <div><dt>Next record</dt><dd>Grouped ledger</dd></div>
+      </dl>
+    </aside>
+  </header>
+
+  <p class="archipelago__index-note">01–{String(islands.length).padStart(2, '0')} · Dedicated project worlds</p>
 
   <ul class="archipelago__map" role="list">
     {
@@ -68,6 +85,81 @@ const islands = worldPointerProjects.map((project, index) => ({
     width: min(100% - 2 * var(--section-padding-x), 74rem);
     margin: 0 auto;
     padding-block: clamp(1.5rem, 4vw, 2.75rem) 0.5rem;
+    padding-inline: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 18%, transparent);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 5%, transparent), transparent 34%),
+      color-mix(in srgb, var(--nest-midnight-950) 68%, transparent);
+  }
+
+  .archipelago__header {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 32%, transparent);
+    border-inline-start: 2px solid var(--nest-sunset-orange);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 7%, transparent), transparent 70%);
+  }
+
+  @media (min-width: 820px) {
+    .archipelago__header {
+      grid-template-columns: minmax(0, 1.3fr) minmax(17rem, 0.7fr);
+      align-items: end;
+    }
+  }
+
+  .archipelago__readout {
+    padding: 0.9rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 38%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  }
+
+  .archipelago__readout-kicker,
+  .archipelago__index-note {
+    margin: 0;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .archipelago__readout dl {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.65rem 0 0;
+  }
+
+  .archipelago__readout dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 22%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .archipelago__readout dt,
+  .archipelago__readout dd {
+    margin: 0;
+  }
+
+  .archipelago__readout dt {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .archipelago__readout dd {
+    color: var(--color-text);
+    text-align: right;
+  }
+
+  .archipelago__index-note {
+    margin-top: 1.5rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px dashed var(--color-border);
+    color: var(--nest-sunset-orange);
   }
 
   .archipelago__eyebrow {
@@ -94,7 +186,7 @@ const islands = worldPointerProjects.map((project, index) => ({
 
   .archipelago__map {
     list-style: none;
-    margin: 1.5rem 0 0;
+    margin: 0.85rem 0 0;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -111,6 +203,7 @@ const islands = worldPointerProjects.map((project, index) => ({
     color: inherit;
     text-decoration: none;
     padding: 0.35rem 0.15rem 0.55rem;
+    min-block-size: var(--touch-min, 44px);
     border: 0;
     background: transparent;
     position: relative;
