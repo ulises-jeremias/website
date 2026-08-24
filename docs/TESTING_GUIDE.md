@@ -90,14 +90,16 @@ CDN behavior.
 
 External deployment checks use `playwright.deployment.config.ts` and require an
 HTTPS `DEPLOYMENT_BASE_URL`. Run `pnpm test:deployment` against production or a
-preview deployment from the approved Vercel project domain. For a Vercel preview
-protected by authentication, provide `VERCEL_AUTOMATION_BYPASS_SECRET` from a
-secret store; the test config sends it only to an approved project preview and
-does not record traces. `.github/workflows/deployment-smoke.yml` runs after a
-successful Vercel Production deployment with its trusted environment URL and
-supports a manual production run. Approved project Preview environments can be
-checked manually by setting the bypass secret in the shell; preview events are
-not sent a secret automatically.
+deployment alias from the approved Vercel project domain. For a protected Vercel
+branch preview (`website-odsf-git-...-create-node-app.vercel.app`), provide
+`VERCEL_AUTOMATION_BYPASS_SECRET` from a secret store and set
+`DEPLOYMENT_PREVIEW=true`; the test config sends it only to that exact preview
+class, does not follow redirects for API requests, strips bypass headers across
+origins for page requests, and does not record traces. `.github/workflows/deployment-smoke.yml` runs after a
+successful Vercel Production deployment and checks the public production origin;
+it also supports a manual production run. Approved project Preview environments
+can be checked manually by setting the preview URL and bypass secret in the
+shell; preview events are not sent a secret automatically.
 
 Normal browser runs write current desktop and mobile review captures under
 `test-results/uiux-review/`. CI uploads this ignored directory for human review.

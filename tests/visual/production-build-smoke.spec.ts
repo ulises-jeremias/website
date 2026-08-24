@@ -1,4 +1,5 @@
 import { expect, type Page, test } from '@playwright/test';
+import { configureDeploymentPage, getDeploymentRequestOptions } from './deployment-request';
 
 const PRODUCTION_ORIGIN = 'https://www.ulises-jeremias.dev';
 
@@ -35,8 +36,12 @@ async function parseXml(page: Page, source: string) {
 }
 
 test.describe('static build assets', () => {
+  test.beforeEach(async ({ page }) => {
+    await configureDeploymentPage(page);
+  });
+
   test('robots.txt serves correctly', async ({ request }) => {
-    const response = await request.get('/robots.txt');
+    const response = await request.get('/robots.txt', getDeploymentRequestOptions());
     expect(response.status()).toBe(200);
     const body = await response.text();
     expect(body).toContain('User-agent: *');
@@ -45,7 +50,7 @@ test.describe('static build assets', () => {
   });
 
   test('sitemap.xml is valid XML with urlset', async ({ page, request }) => {
-    const response = await request.get('/sitemap.xml');
+    const response = await request.get('/sitemap.xml', getDeploymentRequestOptions());
     expect(response.status()).toBe(200);
     const parsed = await parseXml(page, await response.text());
     expect(parsed.root).toBe('urlset');
@@ -57,7 +62,7 @@ test.describe('static build assets', () => {
   });
 
   test('rss.xml is valid RSS', async ({ page, request }) => {
-    const response = await request.get('/rss.xml');
+    const response = await request.get('/rss.xml', getDeploymentRequestOptions());
     expect(response.status()).toBe(200);
     const parsed = await parseXml(page, await response.text());
     expect(parsed.root).toBe('rss');
@@ -67,7 +72,7 @@ test.describe('static build assets', () => {
   });
 
   test('site.webmanifest is valid JSON', async ({ request }) => {
-    const response = await request.get('/site.webmanifest');
+    const response = await request.get('/site.webmanifest', getDeploymentRequestOptions());
     expect(response.status()).toBe(200);
     const contentType = response.headers()['content-type'] ?? '';
     expect(contentType).toContain('json');
@@ -80,7 +85,7 @@ test.describe('static build assets', () => {
 
   for (const asset of REPRESENTATIVE_ASSETS) {
     test(`${asset} serves from the production build`, async ({ request }) => {
-      const response = await request.get(asset);
+      const response = await request.get(asset, getDeploymentRequestOptions());
       expect(response.status(), `${asset} HTTP status`).toBeGreaterThanOrEqual(200);
       expect(response.status(), `${asset} HTTP status`).toBeLessThan(300);
       expect((response.headers()['content-type'] ?? '').length, `${asset} content type`).toBeGreaterThan(0);
@@ -89,6 +94,10 @@ test.describe('static build assets', () => {
 });
 
 test.describe('indexable static page metadata', () => {
+  test.beforeEach(async ({ page }) => {
+    await configureDeploymentPage(page);
+  });
+
   for (const route of INDEXABLE_STATIC_ROUTES) {
     test(`${route} has title, OG tags, and canonical`, async ({ page }) => {
       const response = await page.goto(route);
