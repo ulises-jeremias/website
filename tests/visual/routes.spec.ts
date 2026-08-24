@@ -58,8 +58,10 @@ test.describe('flagship route visuals', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(route.path);
-      // Long proportional copy in V reflows slightly between CI and local font rendering.
-      const screenshotOptions = route.name === 'v' ? { fullPage: false, maxDiffPixelRatio: 0.07 } : { fullPage: false };
+      // Long proportional copy in V and Community reflows slightly between CI and local font rendering.
+      const screenshotOptions = ['v', 'community'].includes(route.name)
+        ? { fullPage: false, maxDiffPixelRatio: 0.07 }
+        : { fullPage: false };
       await expect(page).toHaveScreenshot(`${route.name}-mobile-390.png`, screenshotOptions);
     });
   }
