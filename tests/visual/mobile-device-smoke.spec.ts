@@ -16,9 +16,10 @@ const routes = [
 
 test.describe('mobile device smoke', () => {
   for (const route of routes) {
-    test(`${route} renders on real mobile viewport`, async ({ page }) => {
+    test(`${route} renders on a mobile device profile`, async ({ page }) => {
       const response = await page.goto(route, { waitUntil: 'networkidle' });
-      expect(response?.status(), `${route} HTTP status`).toBeLessThan(400);
+      expect(response?.status(), `${route} HTTP status`).toBeGreaterThanOrEqual(200);
+      expect(response?.status(), `${route} HTTP status`).toBeLessThan(300);
 
       await expect(page.locator('main')).toBeVisible();
 
@@ -28,7 +29,7 @@ test.describe('mobile device smoke', () => {
       expect(overflow, `${route} horizontal overflow`).toBeLessThanOrEqual(1);
     });
 
-    test(`${route} has no visible desktop-only layout leakage`, async ({ page }) => {
+    test(`${route} body fits the mobile viewport`, async ({ page }) => {
       await page.goto(route, { waitUntil: 'networkidle' });
 
       const viewportWidth = page.viewportSize()?.width ?? 390;
