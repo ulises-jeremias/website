@@ -73,12 +73,12 @@ const keywordRows = [heroKeywords.slice(0, 3), heroKeywords.slice(3)] as const;
     </div>
 
     <div class="hero__atlas-slot">
+      <slot name="atlas" />
       <blockquote class="hero__quote neon-frame clip-corner">
         <span class="hero__quote-prompt" aria-hidden="true">&gt;</span>
         {terminalQuote}
         <footer class="hero__quote-footer" aria-hidden="true">—</footer>
       </blockquote>
-      <slot name="atlas" />
     </div>
   </div>
 </section>
