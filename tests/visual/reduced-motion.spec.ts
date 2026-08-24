@@ -102,10 +102,14 @@ test.describe('Agent Toolkit — JS animation gating', () => {
     const reduceSeen = await page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     expect(reduceSeen).toBe(true);
 
-    // Switching family radio triggers pulseBeamsOnce() which should bail early
+    // Switching family radio triggers pulseBeamsOnce() which should bail early.
+    // Use evaluate+dispatchEvent because the radio is visually hidden by its label overlay.
     const secondRadio = page.locator('.atk-nexus input[name="atk-family"]').nth(1);
     if ((await secondRadio.count()) > 0) {
-      await secondRadio.click();
+      await secondRadio.evaluate((el) => {
+        (el as HTMLInputElement).checked = true;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
     }
 
     const isBeaming = await page.locator('.atk-nexus__visual').evaluate((el) => el.classList.contains('is-beaming'));
