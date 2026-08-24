@@ -43,20 +43,17 @@ describe('vercel.json security headers', () => {
     });
   }
 
-  it('X-Frame-Options is DENY or SAMEORIGIN', async () => {
+  it('uses exact security header values', async () => {
     const raw = await readFile(VERCEL_PATH, 'utf8');
     config = JSON.parse(raw);
     const globalRule = config.headers.find((rule) => rule.source === '/(.*)');
-    const header = globalRule?.headers.find((h) => h.key === 'X-Frame-Options');
-    expect(['DENY', 'SAMEORIGIN']).toContain(header?.value);
-  });
-
-  it('X-Content-Type-Options is nosniff', async () => {
-    const raw = await readFile(VERCEL_PATH, 'utf8');
-    config = JSON.parse(raw);
-    const globalRule = config.headers.find((rule) => rule.source === '/(.*)');
-    const header = globalRule?.headers.find((h) => h.key === 'X-Content-Type-Options');
-    expect(header?.value).toBe('nosniff');
+    const headers = Object.fromEntries(globalRule?.headers.map((header) => [header.key, header.value]) ?? []);
+    expect(headers).toMatchObject({
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+    });
   });
 
   it('static assets have immutable Cache-Control headers', async () => {
@@ -67,7 +64,7 @@ describe('vercel.json security headers', () => {
       const rule = config.headers.find((r) => r.source === source);
       expect(rule, `missing Cache-Control rule for ${source}`).toBeTruthy();
       const cacheHeader = rule?.headers.find((h) => h.key === 'Cache-Control');
-      expect(cacheHeader?.value, `Cache-Control for ${source} should include immutable`).toContain('immutable');
+      expect(cacheHeader?.value, `Cache-Control for ${source}`).toBe('public, max-age=86400');
     }
   });
 });
