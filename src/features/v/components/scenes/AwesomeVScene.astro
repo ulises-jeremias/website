@@ -13,7 +13,7 @@ const { chips } = Astro.props;
     {
       chips.map((chip, i) => (
         <li>
-          <button type="button" data-awesome-chip aria-pressed={i === 0 ? 'true' : 'false'}>
+          <button type="button" data-awesome-chip aria-pressed={i === 0 ? 'true' : 'false'} disabled>
             <code>{chip}</code>
           </button>
         </li>
@@ -32,6 +32,7 @@ const { chips } = Astro.props;
         buttons.forEach((b) => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
         if (live) live.textContent = btn.textContent?.trim() || '';
       });
+      btn.disabled = false;
     });
   }
   document.querySelectorAll<HTMLElement>('[data-v-scene="awesome-v"]').forEach(init);
@@ -64,7 +65,7 @@ const { chips } = Astro.props;
     list-style: none;
   }
   .v-scene__chips button {
-    min-height: 40px;
+    min-height: 44px;
     padding: 0.35rem 0.65rem;
     border: 1px solid var(--color-border);
     background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
