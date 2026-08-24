@@ -35,14 +35,19 @@ for (const viewport of [
 
     await page.goto('/projects/');
     await page.addStyleTag({ content: '.site-header { position: static !important; }' });
-    await expect(page.locator('.projects-ledger')).toHaveScreenshot(`projects-ledger-${viewport.label}.png`, {
-      animations: 'disabled',
-      maxDiffPixelRatio: 0.07,
-    });
+    for (const section of await page.locator('[data-projects-group-section]').all()) {
+      const group = (await section.getAttribute('data-group')) ?? 'unknown';
+      await section.scrollIntoViewIfNeeded();
+      await expect(page).toHaveScreenshot(`projects-${group}-${viewport.label}.png`, {
+        animations: 'disabled',
+        maxDiffPixelRatio: 0.07,
+      });
+    }
 
     await page.goto('/open-source/');
     await page.addStyleTag({ content: '.site-header { position: static !important; }' });
-    await expect(page.locator('.oss-ledger')).toHaveScreenshot(`open-source-ledger-${viewport.label}.png`, {
+    await page.locator('.oss-ledger__table').scrollIntoViewIfNeeded();
+    await expect(page).toHaveScreenshot(`open-source-ledger-${viewport.label}.png`, {
       animations: 'disabled',
       maxDiffPixelRatio: 0.07,
     });
