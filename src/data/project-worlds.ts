@@ -10,6 +10,7 @@ export const themeIdSchema = z.enum([
   'dotfiles',
   'workstation',
   'toolkit',
+  'harness',
   'v',
   'create-awesome',
   'community',
@@ -20,13 +21,14 @@ export const themeIdSchema = z.enum([
 
 export type ThemeId = z.infer<typeof themeIdSchema>;
 
-export const worldAccentSchema = z.enum(['magenta', 'pink', 'violet', 'blue', 'cyan', 'orange']);
+export const worldAccentSchema = z.enum(['magenta', 'pink', 'violet', 'blue', 'cyan', 'orange', 'emerald']);
 export type WorldAccent = z.infer<typeof worldAccentSchema>;
 
 export const worldIllustrationSchema = z.enum([
   'desktop',
   'workstation',
   'capability-core',
+  'persistent-workspace',
   'computation-lab',
   'scaffold',
   'contributor-network',
@@ -120,6 +122,20 @@ export const projectWorlds: ProjectWorld[] = [
     featured: true,
     subdomain: 'workstation',
     relatedWorlds: ['toolkit', 'dotfiles', 'community'],
+  },
+  {
+    id: 'harness',
+    slug: 'agentic-harness',
+    title: 'Agentic Harness',
+    description: 'Persistent workspace context and state for Agent Toolkit — knowledge, personas, packs, run history.',
+    path: '/agentic-harness',
+    theme: 'harness',
+    accent: 'emerald',
+    illustration: 'persistent-workspace',
+    priority: 35,
+    featured: true,
+    subdomain: 'harness',
+    relatedWorlds: ['toolkit', 'workstation', 'community'],
   },
   {
     id: 'v',
@@ -265,6 +281,9 @@ export type CrossLink = {
 export const crossLinks: CrossLink[] = [
   { from: 'workstation', to: 'toolkit', label: 'Can provision Toolkit host dependencies' },
   { from: 'toolkit', to: 'workstation', label: 'Can be installed independently' },
+  { from: 'toolkit', to: 'harness', label: 'Provides the runtime Harness state drives' },
+  { from: 'harness', to: 'toolkit', label: 'Calls Toolkit CLIs for all execution' },
+  { from: 'workstation', to: 'harness', label: 'Can provision the host this workspace runs on' },
   { from: 'dotfiles', to: 'workstation', label: 'Optionally coexists with Workstation' },
   { from: 'workstation', to: 'dotfiles', label: 'Links to optional desktop configuration' },
   { from: 'v', to: 'open-source', label: 'V core contributions' },

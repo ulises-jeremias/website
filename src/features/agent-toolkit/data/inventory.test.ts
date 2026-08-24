@@ -29,13 +29,13 @@ describe('agent-toolkit inventory truth', () => {
   });
 
   it('matches verified HEAD inventory counts from a single snapshot', () => {
-    expect(inventoryCounts.skills).toBe(61);
-    expect(inventoryCounts.agents).toBe(16);
+    expect(inventoryCounts.skills).toBe(84);
+    expect(inventoryCounts.agents).toBe(17);
     expect(inventoryCounts.loops).toBe(10);
-    expect(inventoryCounts.profiles).toBe(7);
-    expect(inventoryCounts.packs).toBe(3);
-    expect(inventoryCounts.plugins).toBe(4);
-    expect(inventoryCounts.mcp).toBe(6);
+    expect(inventoryCounts.profiles).toBe(9);
+    expect(inventoryCounts.packs).toBe(7);
+    expect(inventoryCounts.plugins).toBe(5);
+    expect(inventoryCounts.mcp).toBe(7);
     expect(toolkitStats.find((s) => s.label === 'skills')?.value).toBe(String(inventoryCounts.skills));
     expect(toolkitStats.find((s) => s.label === 'agents')?.value).toBe(String(inventoryCounts.agents));
     expect(toolkitStats.find((s) => s.label === 'loops')?.value).toBe(String(inventoryCounts.loops));

@@ -7,7 +7,7 @@ test.describe('homepage visual coverage', () => {
     await page.goto('/');
 
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.locator('.atlas-world')).toHaveCount(9);
+    await expect(page.locator('.atlas-world')).toHaveCount(10);
     await expect(page.locator('#project-atlas')).toBeVisible();
     await expect(page.locator('#project-atlas-guide')).toBeVisible();
     await expect(page.locator('.nest-status')).toBeVisible();
@@ -31,7 +31,7 @@ test.describe('homepage visual coverage', () => {
     await page.goto('/');
 
     await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('.atlas-world')).toHaveCount(9);
+    await expect(page.locator('.atlas-world')).toHaveCount(10);
     await expect(page.locator('#project-atlas-guide')).toBeVisible();
 
     const overflow = await page.evaluate(() => {
@@ -91,7 +91,7 @@ test.describe('homepage visual coverage', () => {
     await page.goto('/');
 
     await expect(page.locator('.synthwave-environment')).toBeVisible();
-    await expect(page.locator('.atlas-world')).toHaveCount(9);
+    await expect(page.locator('.atlas-world')).toHaveCount(10);
 
     await expect(page).toHaveScreenshot('home-desktop-reduced-motion.png', {
       fullPage: false,

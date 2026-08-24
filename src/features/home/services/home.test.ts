@@ -31,14 +31,25 @@ const contactLinks = (
 ).contactLinks;
 
 describe('homepage canonical data', () => {
-  it('projects all nine canonical worlds into a numbered atlas', () => {
+  it('projects all ten canonical worlds into a numbered atlas', () => {
     expect(atlasWorlds).toBeTypeOf('object');
     if (!atlasWorlds) return;
 
-    expect(atlasWorlds).toHaveLength(9);
+    expect(atlasWorlds).toHaveLength(10);
     expect(atlasWorlds.map((world) => world.id)).toEqual(projectWorlds.map((world) => world.id));
-    expect(atlasWorlds.map((world) => world.number)).toEqual(['01', '02', '03', '04', '05', '06', '07', '08', '09']);
-    expect(new Set(atlasWorlds.map((world) => world.path)).size).toBe(9);
+    expect(atlasWorlds.map((world) => world.number)).toEqual([
+      '01',
+      '02',
+      '03',
+      '04',
+      '05',
+      '06',
+      '07',
+      '08',
+      '09',
+      '10',
+    ]);
+    expect(new Set(atlasWorlds.map((world) => world.path)).size).toBe(10);
   });
 
   it('uses qualitative or derived status instead of generated telemetry', () => {

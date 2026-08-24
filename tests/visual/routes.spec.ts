@@ -11,6 +11,7 @@ const routes = [
   '/blog',
   '/projects',
   '/open-source',
+  '/agentic-harness',
 ] as const;
 
 test.describe('route smoke', () => {
@@ -36,6 +37,8 @@ test.describe('route smoke', () => {
 
 test.describe('flagship route visuals', () => {
   const captureRoutes = [
+    { path: '/agent-toolkit', name: 'agent-toolkit' },
+    { path: '/agentic-harness', name: 'agentic-harness' },
     { path: '/dotfiles', name: 'dotfiles' },
     { path: '/agentic-workstation', name: 'workstation' },
     { path: '/v', name: 'v' },

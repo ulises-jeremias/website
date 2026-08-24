@@ -1,0 +1,304 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import AdoptionPaths from '@/features/personal-dx/components/AdoptionPaths.astro';
+import StackMatrix from '@/features/personal-dx/components/StackMatrix.astro';
+import { HarnessWorkspace } from '@/features/agentic-harness';
+import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from '@/features/agentic-harness/index.js';
+---
+
+<SectionLayout
+  title={harnessMeta.title}
+  description={harnessMeta.description}
+  currentPath="/agentic-harness"
+  world="Agentic Harness"
+  theme="harness"
+  immersive
+>
+  <section class="ah-hero" aria-labelledby="ah-hero-title">
+    <p class="ah-hero__eyebrow">Persistent workspace layer · powered by Agent Toolkit</p>
+    <h1 id="ah-hero-title">Your coding agent sessions are temporary.<br />Your workspace should not be.</h1>
+    <p class="ah-hero__lead">
+      Agentic Harness is a workspace scaffold, not another runtime. It holds the knowledge, personas, packs, project
+      collections, and run history that Agent Toolkit's engines read and write — so context survives across sessions,
+      repositories, and clients.
+    </p>
+    <div class="ah-hero__actions">
+      <a class="ah-hero__cta" href={harnessMeta.repo} target="_blank" rel="noopener noreferrer">
+        GitHub repository ↗
+      </a>
+      <a class="ah-hero__secondary" href="/agent-toolkit">How the runtime works</a>
+    </div>
+  </section>
+
+  <HarnessWorkspace />
+
+  <section class="ah-quickstart" aria-labelledby="ah-quickstart-title">
+    <header>
+      <p class="ah-quickstart__eyebrow">Quick start</p>
+      <h2 id="ah-quickstart-title">Clone it. Initialize. Put it to work.</h2>
+      <p>
+        Every command runs through the Toolkit CLI you already installed. The workspace only owns the state those
+        commands act on.
+      </p>
+    </header>
+    <ol class="ah-quickstart__steps">
+      {
+        harnessQuickStart.map((step) => (
+          <li>
+            <span class="ah-quickstart__label">{step.label}</span>
+            <pre tabindex="0" role="region" aria-label={`${step.label} command`}>
+              <code>{step.command}</code>
+            </pre>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="ah-quickstart__note">
+      Alternative scaffold: <code>agent-toolkit workspace init --dir my-workspace</code> creates the same structure anywhere.
+    </p>
+  </section>
+
+  <section class="ah-packs" aria-labelledby="ah-packs-title">
+    <header>
+      <p class="ah-packs__eyebrow">Terminology</p>
+      <h2 id="ah-packs-title">Three things called “pack”</h2>
+      <p>Same noun, three precise meanings — defined in the Toolkit's concept docs.</p>
+    </header>
+    <ul class="ah-packs__list">
+      {
+        packSemantics.map((pack) => (
+          <li>
+            <strong>{pack.name}</strong>
+            <span class="ah-packs__location">{pack.location}</span>
+            <p>{pack.detail}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <StackMatrix />
+  <AdoptionPaths />
+
+  <nav class="ah-crosslinks" aria-label="Related projects">
+    {
+      harnessCrossLinks.map((link) => (
+        <a href={link.href}>
+          <p class="ah-crosslinks__lead">{link.lead}</p>
+          <span class="ah-crosslinks__title">
+            {link.title} <span aria-hidden="true">→</span>
+          </span>
+          <p class="ah-crosslinks__detail">{link.detail}</p>
+        </a>
+      ))
+    }
+  </nav>
+</SectionLayout>
+
+<style>
+  .ah-hero {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .ah-hero__eyebrow {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--world-accent);
+  }
+
+  .ah-hero h1 {
+    max-width: 24ch;
+    margin: 0 0 1rem;
+    font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+    line-height: 1.12;
+  }
+
+  .ah-hero__lead {
+    max-width: 60ch;
+    margin: 0 0 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .ah-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .ah-hero__cta,
+  .ah-hero__secondary {
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .ah-hero__cta {
+    background: var(--world-accent);
+    color: #04120c;
+  }
+
+  .ah-hero__cta:hover {
+    background: var(--world-accent-strong);
+  }
+
+  .ah-hero__secondary {
+    border: 1px solid var(--world-border-accent);
+    color: var(--color-text);
+  }
+
+  .ah-quickstart,
+  .ah-packs {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .ah-quickstart__eyebrow,
+  .ah-packs__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent);
+  }
+
+  .ah-quickstart h2,
+  .ah-packs h2 {
+    margin: 0 0 0.5rem;
+  }
+
+  .ah-quickstart header > p:last-child,
+  .ah-packs header > p:last-child {
+    max-width: 56ch;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .ah-quickstart__steps {
+    display: grid;
+    gap: 0.8rem;
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .ah-quickstart__steps li {
+    counter-increment: step;
+    display: grid;
+    gap: 0.3rem;
+    min-inline-size: 0;
+  }
+
+  .ah-quickstart__steps li::before {
+    content: '0' counter(step);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--world-accent);
+  }
+
+  .ah-quickstart__label {
+    font-weight: 600;
+  }
+
+  .ah-quickstart pre {
+    margin: 0;
+    padding: 0.65rem 0.9rem;
+    overflow-x: auto;
+    border: 1px solid var(--world-border-accent);
+    border-radius: 10px;
+    background: var(--world-surface-tint);
+    font-size: 0.84rem;
+  }
+
+  .ah-quickstart__note {
+    margin-top: 0.9rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .ah-packs__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    margin: 1.4rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ah-packs__list li {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--world-border-accent);
+    border-radius: 12px;
+    background: var(--world-surface-tint);
+  }
+
+  .ah-packs__location {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--world-accent-strong);
+  }
+
+  .ah-packs__list p {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+  }
+
+  .ah-crosslinks {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem) clamp(2.5rem, 6vw, 4rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1rem;
+  }
+
+  .ah-crosslinks a {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--world-border-accent);
+    border-radius: 12px;
+    background: var(--world-surface-tint);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ah-crosslinks a:focus-visible {
+    outline: 2px solid var(--world-accent);
+    outline-offset: 2px;
+  }
+
+  .ah-crosslinks__lead {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .ah-crosslinks__title {
+    font-weight: 700;
+    color: var(--world-accent-strong);
+  }
+
+  .ah-crosslinks__detail {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--color-text-muted);
+  }
+</style>

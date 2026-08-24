@@ -166,20 +166,20 @@
     },
     "/projects/": {
       "mobile": {
-        "total": 225280,
+        "total": 254976,
         "document": 9216,
         "script": 0,
         "style": 13312,
-        "image": 128000,
+        "image": 155648,
         "font": 76800,
         "requests": 17
       },
       "desktop": {
-        "total": 225280,
+        "total": 254976,
         "document": 9216,
         "script": 0,
         "style": 13312,
-        "image": 128000,
+        "image": 155648,
         "font": 76800,
         "requests": 17
       }
@@ -189,7 +189,7 @@
         "total": 67584,
         "document": 8192,
         "script": 0,
-        "style": 11264,
+        "style": 13312,
         "image": 5120,
         "font": 45056,
         "requests": 9
@@ -198,7 +198,7 @@
         "total": 67584,
         "document": 8192,
         "script": 0,
-        "style": 11264,
+        "style": 13312,
         "image": 5120,
         "font": 45056,
         "requests": 9
@@ -222,6 +222,26 @@
         "image": 5120,
         "font": 45056,
         "requests": 9
+      }
+    },
+    "/agentic-harness/": {
+      "mobile": {
+        "total": 126976,
+        "document": 10240,
+        "script": 0,
+        "style": 13312,
+        "image": 5120,
+        "font": 100352,
+        "requests": 13
+      },
+      "desktop": {
+        "total": 126976,
+        "document": 10240,
+        "script": 0,
+        "style": 13312,
+        "image": 5120,
+        "font": 100352,
+        "requests": 13
       }
     }
   }

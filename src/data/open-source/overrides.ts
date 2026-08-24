@@ -49,6 +49,11 @@ export const editorialOverrides: EditorialOverride[] = [
     featured: true,
     role: 'owner',
   },
+  {
+    id: 'agentic-harness-owned',
+    featured: true,
+    role: 'owner',
+  },
 ];
 
 export const overridesById = new Map(editorialOverrides.map((o) => [o.id, o]));

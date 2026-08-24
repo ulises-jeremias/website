@@ -33,6 +33,13 @@ const cards = [
     art: 'island-agent.webp',
   },
   {
+    id: 'agentic-harness',
+    title: 'AGENTIC\nHARNESS',
+    subtitle: 'Persistent workspace context · knowledge · state',
+    accent: '#34d399',
+    art: 'island-harness.webp',
+  },
+  {
     id: 'v',
     title: 'V ECOSYSTEM',
     subtitle: 'Systems · scientific computing · reactive tools',

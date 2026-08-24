@@ -1,0 +1,97 @@
+---
+import { ADOPTION_PATHS, getStackProject } from '@/data/personal-dx-stack.js';
+---
+
+<section class="adoption" aria-labelledby="adoption-title">
+  <header>
+    <p class="adoption__eyebrow">Composable, not sequential</p>
+    <h2 id="adoption-title">Which one do I need?</h2>
+    <p>
+      There is no required install order. Each project is a valid starting point, and each one works without the others.
+    </p>
+  </header>
+  <ul class="adoption__list">
+    {
+      ADOPTION_PATHS.map((entry) => {
+        const project = getStackProject(entry.projectId);
+        return (
+          <li class="adoption__item">
+            <p class="adoption__need">{entry.need}</p>
+            {project?.path ? (
+              <a class="adoption__answer" href={project.path}>
+                {project.title} <span aria-hidden="true">→</span>
+              </a>
+            ) : (
+              <span class="adoption__answer">{project?.title}</span>
+            )}
+            <p class="adoption__detail">{entry.detail}</p>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
+
+<style>
+  .adoption {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .adoption__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent-strong, var(--nest-cyan));
+  }
+
+  .adoption h2 {
+    margin: 0 0 0.5rem;
+  }
+
+  .adoption header p {
+    max-width: 56ch;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .adoption__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .adoption__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--world-border-accent);
+    border-radius: 12px;
+    background: var(--world-surface-tint);
+  }
+
+  .adoption__need {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .adoption__answer {
+    font-weight: 700;
+    color: var(--world-accent-strong, var(--nest-cyan));
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  }
+
+  .adoption__detail {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+  }
+</style>

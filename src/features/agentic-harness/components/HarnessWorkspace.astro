@@ -1,0 +1,238 @@
+---
+/**
+ * HarnessWorkspace — persistent workspace visual.
+ *
+ * Informative static figure per docs/INTERACTIVE_DIAGRAM_SEMANTICS.md:
+ * the SVG is aria-hidden; the structured list below is the accessible
+ * equivalent. No animation carries meaning.
+ */
+import { runtimeSurfaces, workspaceStateSections } from '../data/index.js';
+---
+
+<section class="ah-workspace" aria-labelledby="ah-workspace-title">
+  <header>
+    <p class="ah-workspace__eyebrow">Mental model</p>
+    <h2 id="ah-workspace-title">The session disappears. The workspace does not.</h2>
+    <p>
+      Agent Toolkit owns the engines — loops, queues, swarms, memory commands. A harness workspace owns the concrete
+      state those engines read and write: knowledge, personas, packs, project collections, and run history.
+    </p>
+  </header>
+
+  <div class="ah-workspace__visual" aria-hidden="true">
+    <svg viewBox="0 0 880 380" role="presentation" focusable="false">
+      <rect class="ah-workspace__frame" x="30" y="34" width="360" height="150" rx="16"></rect>
+      <text class="ah-workspace__label" x="58" y="72">WORKSPACE STATE</text>
+      {
+        workspaceStateSections.map((section, index) => (
+          <g>
+            <circle class="ah-workspace__node" cx={92 + index * 118} cy="122" r="26" />
+            <text class="ah-workspace__node-label" x={92 + index * 118} y="127" text-anchor="middle">
+              {section.title}
+            </text>
+          </g>
+        ))
+      }
+
+      <path class="ah-workspace__edge" d="M210 184 L210 232"></path>
+      <text class="ah-workspace__edge-label" x="224" y="214">drives</text>
+
+      <rect class="ah-workspace__core" x="150" y="236" width="580" height="64" rx="14"></rect>
+      <text class="ah-workspace__label" x="178" y="264">AGENT TOOLKIT RUNTIME</text>
+      <text class="ah-workspace__sublabel" x="178" y="286">loops · devcompanion · swarm · memory · project CLIs</text>
+
+      {
+        runtimeSurfaces.map((surface, index) => (
+          <g>
+            <path
+              class="ah-workspace__edge ah-workspace__edge--thin"
+              d={`M${300 + index * 140} 300 L${300 + index * 140} 322`}
+            />
+            <rect class="ah-workspace__leaf" x={222 + index * 140} y="324" width="156" height="40" rx="10" />
+            <text class="ah-workspace__node-label" x={300 + index * 140} y="349" text-anchor="middle">
+              {surface.title}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+  </div>
+
+  <div class="ah-workspace__structured">
+    <h3>What persists here</h3>
+    <ul class="ah-workspace__state-list">
+      {
+        workspaceStateSections.map((section) => (
+          <li>
+            <h4>{section.title}</h4>
+            <p>{section.summary}</p>
+            <ul>
+              {section.items.map((item) => (
+                <li>
+                  <code>{item}</code>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h3>Where Toolkit execution meets this state</h3>
+    <ul class="ah-workspace__runtime-list">
+      {
+        runtimeSurfaces.map((surface) => (
+          <li>
+            <strong>{surface.title}</strong> — {surface.detail}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ah-workspace {
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
+    margin: 0 auto;
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .ah-workspace__eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--world-accent);
+  }
+
+  .ah-workspace h2 {
+    margin: 0 0 0.6rem;
+  }
+
+  .ah-workspace header > p:last-child {
+    max-width: 62ch;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .ah-workspace__visual {
+    margin-block: 1.5rem;
+  }
+
+  .ah-workspace__visual svg {
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .ah-workspace__frame,
+  .ah-workspace__core,
+  .ah-workspace__leaf {
+    fill: var(--world-surface-tint);
+    stroke: var(--world-border-accent);
+    stroke-width: 1.5;
+  }
+
+  .ah-workspace__core {
+    stroke: color-mix(in srgb, var(--nest-violet) 55%, transparent);
+  }
+
+  .ah-workspace__node {
+    fill: color-mix(in srgb, var(--world-accent) 16%, transparent);
+    stroke: var(--world-accent);
+    stroke-width: 1.5;
+  }
+
+  .ah-workspace__edge {
+    fill: none;
+    stroke: var(--world-accent);
+    stroke-width: 1.5;
+    opacity: 0.65;
+  }
+
+  .ah-workspace__edge--thin {
+    stroke-dasharray: 4 4;
+  }
+
+  text {
+    fill: var(--color-text);
+  }
+
+  .ah-workspace__label {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.14em;
+    fill: var(--world-accent-strong);
+  }
+
+  .ah-workspace__sublabel {
+    font-size: 12px;
+    fill: var(--color-text-muted);
+  }
+
+  .ah-workspace__node-label {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .ah-workspace__edge-label {
+    font-size: 11px;
+    fill: var(--color-text-muted);
+  }
+
+  .ah-workspace__structured h3 {
+    margin: 1.5rem 0 0.6rem;
+    font-size: 1.05rem;
+  }
+
+  .ah-workspace__state-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ah-workspace__state-list li {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--world-border-accent);
+    border-radius: 12px;
+    background: var(--world-surface-tint);
+  }
+
+  .ah-workspace__state-list h4 {
+    margin: 0 0 0.35rem;
+  }
+
+  .ah-workspace__state-list p {
+    margin: 0 0 0.5rem;
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+  }
+
+  .ah-workspace__state-list ul {
+    margin: 0;
+    padding-inline-start: 1rem;
+    font-size: 0.76rem;
+    color: var(--color-text-muted);
+  }
+
+  .ah-workspace__runtime-list {
+    margin: 0;
+    padding-inline-start: 1.2rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .ah-workspace__runtime-list li + li {
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 47.9rem) {
+    .ah-workspace__visual {
+      display: none;
+    }
+  }
+</style>

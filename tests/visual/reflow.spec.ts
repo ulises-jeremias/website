@@ -9,6 +9,7 @@ const routes = [
   '/create-awesome/',
   '/dotfiles/',
   '/open-source/',
+  '/agentic-harness/',
   '/projects/',
   '/v/',
   '/404.html',

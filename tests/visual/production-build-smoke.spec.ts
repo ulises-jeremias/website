@@ -14,6 +14,7 @@ const INDEXABLE_STATIC_ROUTES = [
   '/blog/',
   '/projects/',
   '/open-source/',
+  '/agentic-harness/',
 ] as const;
 
 const REPRESENTATIVE_ASSETS = [

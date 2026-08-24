@@ -16,8 +16,8 @@ import { variants as createAwesomeVariants } from '@/features/create-awesome/dat
 import { vProjects } from '@/features/v/data/index';
 
 describe('project-world taxonomy', () => {
-  it('has 9 worlds', () => {
-    expect(projectWorlds).toHaveLength(9);
+  it('has 10 worlds', () => {
+    expect(projectWorlds).toHaveLength(10);
   });
 
   it('all worlds validate against Zod schema', () => {
@@ -29,7 +29,7 @@ describe('project-world taxonomy', () => {
   it('gives every world a typed illustration and synthwave accent', () => {
     for (const world of projectWorlds) {
       expect(world.illustration).toMatch(/^[a-z][a-z0-9-]+$/);
-      expect(world.accent).toMatch(/^(magenta|pink|violet|blue|cyan|orange)$/);
+      expect(world.accent).toMatch(/^(magenta|pink|violet|blue|cyan|orange|emerald)$/);
     }
   });
 
@@ -46,10 +46,10 @@ describe('project-world taxonomy', () => {
     }
   });
 
-  it('featuredWorlds contains exactly the 5 hero worlds', () => {
-    expect(featuredWorlds).toHaveLength(5);
+  it('featuredWorlds contains exactly the 6 hero worlds', () => {
+    expect(featuredWorlds).toHaveLength(6);
     const ids = featuredWorlds.map((w) => w.id);
-    expect(ids).toEqual(['dotfiles', 'toolkit', 'workstation', 'v', 'create-awesome']);
+    expect(ids).toEqual(['dotfiles', 'toolkit', 'workstation', 'harness', 'v', 'create-awesome']);
   });
 
   it('all featured worlds have subdomain candidates', () => {
@@ -137,6 +137,13 @@ describe('project-world taxonomy', () => {
   it('homepage can render worlds in defined priority order', () => {
     // Simulate homepage hero rendering: featuredWorlds in priority order
     const rendered = featuredWorlds.map((w) => w.title);
-    expect(rendered).toEqual(['Dotfiles', 'Agent Toolkit', 'Agentic Workstation', 'V Ecosystem', 'Create Awesome']);
+    expect(rendered).toEqual([
+      'Dotfiles',
+      'Agent Toolkit',
+      'Agentic Workstation',
+      'Agentic Harness',
+      'V Ecosystem',
+      'Create Awesome',
+    ]);
   });
 });

@@ -13,7 +13,7 @@ test.describe('agent-toolkit flagship', () => {
     await expect(page.locator('.atk-qvs')).toBeVisible();
     await expect(page.locator('.atk-swarm')).toBeVisible();
 
-    await expect(page.getByText('61', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('84', { exact: true }).first()).toBeVisible();
     await expect(page.getByText(/implementer/i).first()).toBeVisible();
 
     await page.locator('label[for="atk-recipe-team"]').click({ force: true });

@@ -64,6 +64,13 @@ Encapsulated domains under `src/features/<name>`:
 └── README.md
 ```
 
+Active features include `home`, `agent-toolkit`, `agentic-harness`,
+`workstation`, `dotfiles`, `v`, `create-awesome`, `community`, `blog`,
+`projects`, and `open-source`. The shared Personal DX ecosystem model
+(responsibilities, adoption paths, ownership matrix) lives in
+`src/data/personal-dx-stack.ts` and renders through
+`src/features/personal-dx/`.
+
 **Rules:**
 
 - Import only via public API: `import { BlogCard } from '@/features/blog'` — never `from '@/features/blog/services/blog'`.

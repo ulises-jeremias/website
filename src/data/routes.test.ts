@@ -46,6 +46,7 @@ describe('routes', () => {
       '/dotfiles',
       '/agentic-workstation',
       '/agent-toolkit',
+      '/agentic-harness',
       '/v',
       '/create-awesome',
       '/community',
@@ -90,6 +91,7 @@ describe('routes', () => {
       ['/dotfiles', 'projects'],
       ['/agentic-workstation', 'projects'],
       ['/agent-toolkit/', 'projects'],
+      ['/agentic-harness', 'projects'],
       ['/v', 'projects'],
       ['/create-awesome', 'projects'],
       ['/projects', 'projects'],
@@ -123,7 +125,7 @@ describe('routes', () => {
       expect(route.ogImageAlt, `${route.id} social image alt`).toBeTruthy();
       expect(existsSync(resolve(publicDirectory, route.ogImage!.slice(1))), route.ogImage).toBe(true);
     }
-    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(10);
+    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(11);
   });
 
   it('getCanonicalUrl builds absolute URL', () => {

@@ -12,14 +12,14 @@ test('Agent Toolkit keeps its distribution index without JavaScript', async ({ b
     const controls = page.locator('.atk-nexus__family-controls');
     await expect(controls).toHaveAttribute('disabled', '');
     await expect(index.locator('.atk-nexus__static-families li')).toHaveCount(6);
-    await expect(index.locator('.atk-nexus__static-targets li')).toHaveCount(7);
+    await expect(index.locator('.atk-nexus__static-targets li')).toHaveCount(9);
     for (const radio of await controls.locator('input[type="radio"]').all()) {
       await expect(radio).toBeDisabled();
     }
     for (const label of ['Skills', 'Agents', 'Loops', 'Packs', 'Plugins', 'MCP', 'Claude Code', 'Copilot']) {
       await expect(index).toContainText(label);
     }
-    await expect(index).toContainText('profiles/cursor/rules/*.mdc');
+    await expect(index).toContainText('marketplace plugins + .cursor/rules/*.mdc');
   } finally {
     await context.close();
   }

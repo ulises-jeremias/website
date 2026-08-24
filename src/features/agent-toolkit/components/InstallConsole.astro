@@ -1,9 +1,9 @@
 ---
 import { installSnippets, toolkitDocs } from '../data/index.js';
 
-const tabs = installSnippets.map((s, i) => ({
-  id: ['uvx', 'persistent', 'marketplace'][i] ?? `tab-${i}`,
-  label: ['uvx', 'persistent', 'Claude marketplace'][i] ?? s.label,
+const tabs = installSnippets.map((s) => ({
+  id: s.id,
+  label: s.label,
   command: s.command,
   note: s.note,
 }));

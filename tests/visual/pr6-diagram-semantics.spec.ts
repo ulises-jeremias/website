@@ -47,7 +47,7 @@ const diagrams = [
     keyboardRadio: '#ws-layer-toolkit',
     keyboardVisual: '[data-node="toolkit"]',
     keyboardTitle: 'Toolkit',
-    keyboardStatus: 'Responsibility selected: Toolkit — capabilities · distribution.',
+    keyboardStatus: 'Responsibility selected: Toolkit — capabilities · runtime.',
     pointerRadio: '#ws-layer-harness',
     pointerVisual: '[data-node="harness"]',
     pointerTitle: 'Agentic Harness',

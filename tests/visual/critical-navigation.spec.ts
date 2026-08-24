@@ -18,6 +18,7 @@ const PRIMARY_ROUTES = [
   '/blog',
   '/projects',
   '/open-source',
+  '/agentic-harness',
 ] as const;
 
 test.describe('Skip link', () => {
