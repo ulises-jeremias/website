@@ -75,11 +75,13 @@ pnpm test:visual:harness  # verify the isolated production-server contract
 ```
 
 Config: `playwright.config.ts` uses Chromium for maintained visual goldens and
-Firefox/WebKit for route smoke coverage. The suite owns a static `dist/` server on
-`127.0.0.1:4173` and never reuses an existing server. If the port is occupied, the
-run fails instead of attaching to an ambiguous app or worktree. Set
-`VISUAL_TEST_PORT` to an unused port when running visual suites from multiple
-worktrees concurrently.
+Firefox/WebKit for route smoke coverage. The `mobile-chrome` and `mobile-safari`
+projects use Playwright's Pixel 7 and iPhone 15 device profiles for mobile
+emulation and run `mobile-device-smoke.spec.ts`; they do not replace physical
+device testing. The suite owns a static `dist/` server on `127.0.0.1:4173` and
+never reuses an existing server. If the port is occupied, the run fails instead
+of attaching to an ambiguous app or worktree. Set `VISUAL_TEST_PORT` to an unused
+port when running visual suites from multiple worktrees concurrently.
 
 Normal browser runs write current desktop and mobile review captures under
 `test-results/uiux-review/`. CI uploads this ignored directory for human review.

@@ -40,6 +40,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: /mobile-device-smoke\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
@@ -51,6 +52,16 @@ export default defineConfig({
       name: 'webkit-smoke',
       testMatch: /cross-browser-smoke\.spec\.ts/,
       use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'mobile-chrome',
+      testMatch: /mobile-device-smoke\.spec\.ts/,
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'mobile-safari',
+      testMatch: /mobile-device-smoke\.spec\.ts/,
+      use: { ...devices['iPhone 15'] },
     },
   ],
   expect: {
