@@ -52,6 +52,16 @@ export default defineConfig({
       testMatch: /cross-browser-smoke\.spec\.ts/,
       use: { ...devices['Desktop Safari'] },
     },
+    {
+      name: 'mobile-chrome',
+      testMatch: /mobile-device-smoke\.spec\.ts/,
+      use: { ...devices['Pixel 7'] },
+    },
+    {
+      name: 'mobile-safari',
+      testMatch: /mobile-device-smoke\.spec\.ts/,
+      use: { ...devices['iPhone 15'] },
+    },
   ],
   expect: {
     toHaveScreenshot: {
