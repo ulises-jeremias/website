@@ -45,6 +45,15 @@ const heroShot = screenshotItems[0]!;
   <header class="df-world__hero">
     <div class="df-world__hero-copy">
       <p class="df-world__eyebrow">HorneroConfig · desktop</p>
+      <div class="df-world__hero-rail" aria-label="Smart Colors pipeline">
+        <span>WALLPAPER</span>
+        <span aria-hidden="true">→</span>
+        <span>PALETTE</span>
+        <span aria-hidden="true">→</span>
+        <span>SCHEME.JSON</span>
+        <span aria-hidden="true">→</span>
+        <span>CONSUMERS</span>
+      </div>
       <h1 id="df-world-title">HorneroConfig</h1>
       <p class="df-world__lede">Hyprland + Quickshell — Smart Colors turns wallpaper into a live system palette.</p>
       <p class="df-world__fact-line">
@@ -74,7 +83,15 @@ const heroShot = screenshotItems[0]!;
     <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer"> GitHub </a>
     <a href={verifiedFacts.wikiUrl} target="_blank" rel="noopener noreferrer">Wiki ↗</a>
     <button type="button" data-df-copy aria-label="Copy install command" hidden>Copy install</button>
-    <code class="vf-dock__code" data-df-install>{verifiedFacts.installCurl}</code>
+    <code
+      class="vf-dock__code"
+      data-df-install
+      tabindex="0"
+      role="region"
+      aria-label="HorneroConfig install command"
+      aria-describedby="df-install-hint">{verifiedFacts.installCurl}</code
+    >
+    <span class="df-world__install-hint" id="df-install-hint">Scroll horizontally to inspect the full command.</span>
   </WorldDock>
   <p class="df-world__copy-status" role="status" aria-atomic="true" data-df-copy-status></p>
 
@@ -249,6 +266,21 @@ const heroShot = screenshotItems[0]!;
     const install = root.querySelector<HTMLElement>('[data-df-install]');
     const copyButton = root.querySelector<HTMLButtonElement>('[data-df-copy]');
     const copyStatus = root.querySelector<HTMLElement>('[data-df-copy-status]');
+    install?.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === 'Home') {
+        install.scrollLeft = 0;
+        return;
+      }
+      if (event.key === 'End') {
+        install.scrollLeft = install.scrollWidth;
+        return;
+      }
+      const amount = 120;
+      const direction = event.key === 'ArrowLeft' || event.key === 'PageUp' ? -1 : 1;
+      install.scrollBy({ left: amount * direction, behavior: 'auto' });
+    });
     if (copyButton) {
       copyButton.addEventListener('click', async () => {
         const text = install?.textContent || '';
@@ -272,10 +304,12 @@ const heroShot = screenshotItems[0]!;
 
 <style>
   .df-world {
-    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
     margin: 0 auto;
     padding-block: clamp(1.25rem, 3vw, 2.5rem) clamp(2rem, 5vw, 3.5rem);
-    --vf-node-accent: #ffb0ca;
+    padding-inline: clamp(0.85rem, 2vw, 1.5rem);
+    width: min(100% - 2 * var(--section-padding-x, 1.5rem), 78rem);
+    border-inline: 1px solid color-mix(in srgb, var(--dotfiles-pink) 16%, transparent);
+    --vf-node-accent: var(--dotfiles-pink);
   }
 
   .df-world__eyebrow {
@@ -284,7 +318,7 @@ const heroShot = screenshotItems[0]!;
     font-size: 0.75rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #ffb0ca;
+    color: var(--dotfiles-pink);
   }
 
   .df-world__hero {
@@ -295,6 +329,34 @@ const heroShot = screenshotItems[0]!;
 
   .df-world__hero > * {
     min-inline-size: 0;
+  }
+
+  .df-world__hero {
+    position: relative;
+    padding-block: clamp(1.5rem, 4vw, 3.5rem);
+    border-block: 1px solid color-mix(in srgb, var(--dotfiles-pink) 22%, transparent);
+  }
+
+  .df-world__hero-copy {
+    padding-inline-start: clamp(0.75rem, 2vw, 1.5rem);
+    border-inline-start: 2px solid color-mix(in srgb, var(--dotfiles-pink) 68%, transparent);
+  }
+
+  .df-world__hero-rail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.55rem;
+    align-items: center;
+    margin: 0 0 0.65rem;
+    color: color-mix(in srgb, var(--dotfiles-pink) 72%, var(--nest-paper));
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .df-world__hero-rail span:not([aria-hidden='true']) {
+    padding: 0.18rem 0.35rem;
+    border-block: 1px solid color-mix(in srgb, var(--dotfiles-pink) 38%, transparent);
   }
 
   @media (min-width: 960px) {
@@ -333,6 +395,8 @@ const heroShot = screenshotItems[0]!;
     display: flex;
     flex-wrap: wrap;
     gap: 0.45rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--dotfiles-pink) 28%, transparent);
   }
 
   .df-world__copy-status {
@@ -341,6 +405,26 @@ const heroShot = screenshotItems[0]!;
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--color-text-muted, #d5c2c6);
+  }
+
+  .df-world :global(.vf-dock__code) {
+    display: block;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .df-world :global(.vf-dock__code:focus-visible) {
+    outline: 2px solid var(--dotfiles-pink);
+    outline-offset: 3px;
+  }
+
+  .df-world__install-hint {
+    flex: 1 1 100%;
+    color: var(--dotfiles-pink-soft);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
   }
 
   .df-world__hero-scene {
@@ -375,6 +459,13 @@ const heroShot = screenshotItems[0]!;
     font-size: 0.86rem;
   }
 
+  .df-world__methods {
+    margin-top: 1.5rem;
+    padding: 0.9rem 1rem;
+    border-block: 1px solid color-mix(in srgb, var(--dotfiles-pink) 22%, transparent);
+    background: color-mix(in srgb, var(--dotfiles-plum) 72%, transparent);
+  }
+
   .df-world__label {
     margin: 0 0 0.5rem;
     font-family: var(--font-mono);
@@ -401,6 +492,8 @@ const heroShot = screenshotItems[0]!;
     display: grid;
     gap: 0.75rem;
     margin: 1.35rem 0 1.5rem;
+    padding-block: 1.25rem;
+    border-block: 1px solid color-mix(in srgb, var(--dotfiles-pink) 18%, transparent);
   }
 
   @media (min-width: 760px) {
@@ -439,7 +532,9 @@ const heroShot = screenshotItems[0]!;
   }
 
   .df-world__layers-head {
-    margin-bottom: 0.65rem;
+    margin: 1.75rem 0 0.65rem;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 2px solid color-mix(in srgb, var(--dotfiles-pink) 60%, transparent);
   }
 
   .df-world__layers-head h2 {
