@@ -83,6 +83,11 @@ never reuses an existing server. If the port is occupied, the run fails instead
 of attaching to an ambiguous app or worktree. Set `VISUAL_TEST_PORT` to an unused
 port when running visual suites from multiple worktrees concurrently.
 
+`production-build-smoke.spec.ts` checks the generated static build's robots,
+sitemap, RSS, manifest, representative assets, and canonical/OG metadata. It
+uses the local production-build harness; it does not assert Vercel preview or
+CDN behavior.
+
 Normal browser runs write current desktop and mobile review captures under
 `test-results/uiux-review/`. CI uploads this ignored directory for human review.
 Only `test:visual:update` may change maintained goldens, and only after the
