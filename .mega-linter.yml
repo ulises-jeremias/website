@@ -18,6 +18,10 @@ SPELL_LYCHEE_FILTER_REGEX_EXCLUDE: >-
   (scripts/data/create-awesome/pinned/[^/]+/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json)
 REPOSITORY_GRYPE_DISABLE_ERRORS: true
 REPOSITORY_TRIVY_DISABLE_ERRORS: true
+# Checkov crashes with an empty file list on deletion-only diffs
+# ("argument -f/--file: expected at least one argument"); keep it advisory
+# like Grype/Trivy so docs-only PRs are not blocked by scanner infra.
+REPOSITORY_CHECKOV_DISABLE_ERRORS: true
 
 # Disable formatters already covered by Prettier/ESLint to avoid conflicts
 DISABLE_LINTERS:
