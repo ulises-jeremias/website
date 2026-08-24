@@ -25,6 +25,7 @@
     "test:visual": "playwright test",
     "test:visual:harness": "playwright test tests/visual/harness.spec.ts",
     "test:visual:update": "playwright test --update-snapshots",
+    "test:deployment": "playwright test --config=playwright.deployment.config.ts",
     "performance:baseline": "pnpm build && node scripts/check-route-budgets.mjs --write-baseline",
     "performance:check": "pnpm build && node scripts/check-route-budgets.mjs",
     "lighthouse:ci": "pnpm build && node scripts/run-lighthouse-ci.mjs",

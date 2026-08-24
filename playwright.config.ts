@@ -40,7 +40,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /mobile-device-smoke\.spec\.ts/,
+      testIgnore: /(?:mobile-device-smoke|deployment-headers-smoke)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
