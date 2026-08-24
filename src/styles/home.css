@@ -351,6 +351,16 @@
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
+.project-atlas__guide {
+  max-inline-size: 48ch;
+  margin: 0 auto var(--space-3);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .project-atlas__eyebrow,
 .nest-status__eyebrow,
 .about-panel__eyebrow,
@@ -369,6 +379,26 @@
   flex: 1;
   min-block-size: 36rem;
   overflow: visible;
+}
+
+@media (width < 1024px) {
+  .project-atlas__stage::before {
+    position: absolute;
+    inset-block: 0.75rem;
+    inset-inline-start: 50%;
+    z-index: 1;
+    inline-size: 1px;
+    content: '';
+    background: repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--nest-cyan) 65%, transparent) 0,
+      color-mix(in srgb, var(--nest-cyan) 65%, transparent) 0.35rem,
+      transparent 0.35rem,
+      transparent 0.75rem
+    );
+    opacity: 0.55;
+    pointer-events: none;
+  }
 }
 
 .atlas-connections {
@@ -831,7 +861,8 @@
 
 .about-panel__roles a {
   color: var(--nest-cyan);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .about-panel__roles a:hover {
