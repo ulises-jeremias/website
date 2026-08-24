@@ -139,7 +139,7 @@ describe('pinned Create Awesome compatibility data', () => {
     expect(isTemplateAddonCompatible('python', 'cli-starter', 'fastapi-cors')).toBe(false);
     expect(isTemplateAddonCompatible('python', 'fastapi-starter', 'github-setup')).toBe(true);
     expect(isTemplateAddonCompatible('python', 'cli-starter', 'github-setup')).toBe(true);
-    expect(isTemplateAddonCompatible('python', 'mlops-sklearn-starter', 'github-setup')).toBe(false);
+    expect(isTemplateAddonCompatible('python', 'mlops-sklearn-starter', 'github-setup')).toBe(true);
     expect(getCompatibleAddons('python', 'django-api').map((addon) => addon.id)).toContain('django-docker');
   });
 
