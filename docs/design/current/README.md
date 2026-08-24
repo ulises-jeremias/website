@@ -14,6 +14,7 @@ exploration.
 6. `performance-baseline.json` records the measured route delivery baseline.
 7. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
 8. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
+9. `route-redesign-plan-2026-08.md` records the active substantial route redesign waves and evidence contract.
 
 ## Accepted baseline
 
