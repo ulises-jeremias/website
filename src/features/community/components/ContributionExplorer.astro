@@ -24,7 +24,7 @@ const opsJson = JSON.stringify(
   </header>
 
   <div class="cm-explore__filters" role="group" aria-label="Interest filters">
-    <button type="button" class="cm-explore__chip" data-cm-filter="all" aria-pressed="true">All</button>
+    <button type="button" class="cm-explore__chip" data-cm-filter="all" aria-pressed="true" disabled>All</button>
     {
       interestFilters.map((filter) => (
         <button
@@ -32,6 +32,7 @@ const opsJson = JSON.stringify(
           class="cm-explore__chip"
           data-cm-filter={filter.id}
           aria-pressed="false"
+          disabled
           title={filter.hint}
         >
           {filter.label}
@@ -110,7 +111,7 @@ const opsJson = JSON.stringify(
   .cm-explore__chip {
     display: inline-flex;
     align-items: center;
-    min-height: 40px;
+    min-height: var(--touch-min, 44px);
     padding: 0 0.7rem;
     clip-path: var(--clip-corner-sm);
     border: 1px solid color-mix(in srgb, var(--nest-cyan, #22d3ee) 40%, transparent);
@@ -203,6 +204,7 @@ const opsJson = JSON.stringify(
 
     chips.forEach((chip) => {
       chip.addEventListener('click', () => apply(chip.dataset.cmFilter || 'all'));
+      chip.disabled = false;
     });
   }
 
