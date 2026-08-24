@@ -6,10 +6,10 @@
  * every static route has a budget entry, each entry covers both viewports
  * with positive numeric limits, and no orphaned entries exist.
  */
-import { readFile } from 'node:fs/promises';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { readFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BUDGET_PATH = resolve(ROOT, 'config', 'route-budgets.json');
@@ -31,6 +31,8 @@ const EXPECTED_ROUTES = [
 
 const VIEWPORTS = ['mobile', 'desktop'];
 const BUDGET_KEYS = ['total', 'document', 'script', 'style', 'image', 'font', 'requests'];
+// script and image can be 0 for JS-free or image-free routes
+const NON_ZERO_KEYS = new Set(['total', 'document', 'style', 'font', 'requests']);
 
 describe('route-budgets.json', () => {
   /** @type {{ policy: object; routes: Record<string, Record<string, Record<string, number>>> }} */
@@ -86,7 +88,11 @@ describe('route-budgets.json', () => {
       for (const [vp, budget] of Object.entries(entry)) {
         for (const key of BUDGET_KEYS) {
           expect(typeof budget[key], `${route} / ${vp} / ${key} must be a number`).toBe('number');
-          expect(budget[key], `${route} / ${vp} / ${key} must be positive`).toBeGreaterThan(0);
+          if (NON_ZERO_KEYS.has(key)) {
+            expect(budget[key], `${route} / ${vp} / ${key} must be positive`).toBeGreaterThan(0);
+          } else {
+            expect(budget[key], `${route} / ${vp} / ${key} must be non-negative`).toBeGreaterThanOrEqual(0);
+          }
         }
       }
     }
