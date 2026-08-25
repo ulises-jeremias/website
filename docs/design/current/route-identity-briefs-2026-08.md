@@ -147,5 +147,5 @@ normalization, Harness became a first-class world.
   `src/features/personal-dx/`.
 - **Inventory provenance**: Toolkit counts derive from
   `src/features/agent-toolkit/data/inventory.snapshot.json`
-  (v1.22.3, commit `834e6f8`, 2026-08-24). Refresh with
+  (v1.22.3, commit `b3ea86a`, 2026-08-25). Refresh with
   `AGENT_TOOLKIT_ROOT=<checkout> python3 scripts/sync-agent-toolkit-inventory.py`.
