@@ -1,7 +1,7 @@
 /**
  * Agentic Harness — persistent workspace layer powered by Agent Toolkit.
  *
- * Sources (verified 2026-08-24, agentic-harness@cd90943):
+ * Sources (verified 2026-08-25, agentic-harness@086c2bf):
  * - README.md (structure, quick start, key concepts)
  * - AGENTS.md (work context, persona enforcement, devcompanion routing)
  */
@@ -37,7 +37,7 @@ export const workspaceStateSections: StateSection[] = [
     title: 'Context',
     summary: 'Personas scope how the AI works; packs carry per-client and per-project context.',
     items: [
-      'personas/implementer.md · reviewer · researcher · architect · writer',
+      'personas/implementer.md · reviewer · researcher · architect · writer · debugger · tester',
       'agent-toolkit workspace use-persona reviewer',
       'agent-toolkit workspace load packs/my-client.yaml',
     ],

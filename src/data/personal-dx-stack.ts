@@ -9,10 +9,10 @@ import { z } from 'astro/zod';
  * workstation, toolkit, harness) render from this registry instead of
  * re-describing relationships in prose.
  *
- * Sources (verified 2026-08-24):
- * - agent-toolkit@834e6f8 README + docs/CONCEPTS.md + docs/SWARM_ARCHITECTURE.md
- * - agentic-workstation@1b0ea45 README ("thin workstation" delegation note)
- * - agentic-harness@cd90943 README + AGENTS.md
+ * Sources (verified 2026-08-25):
+ * - agent-toolkit@b3ea86a README + docs/CONCEPTS.md + docs/ARCHITECTURE.md (two-plane model)
+ * - agentic-workstation@0f6ff93 README ("thin workstation" delegation note)
+ * - agentic-harness@086c2bf README + AGENTS.md (persistent workspace layer)
  */
 
 export const stackRoleSchema = z.enum(['environment', 'machine', 'platform', 'workspace']);
@@ -66,7 +66,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Host validation via dots-doctor',
     ],
     doesNotOwn: ['Skills, agents, loops, or MCP templates', 'Swarm orchestration', 'Workspace or engagement state'],
-    verifiedAt: '2026-08-24',
+    verifiedAt: '2026-08-25',
   },
   {
     id: 'agent-toolkit',
@@ -83,7 +83,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Swarm engine, recipes, budgets, gates',
     ],
     doesNotOwn: ['Machine provisioning', 'Your persistent engagement state'],
-    verifiedAt: '2026-08-24',
+    verifiedAt: '2026-08-25',
   },
   {
     id: 'agentic-harness',
@@ -100,7 +100,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Loop instances, job queues, run history',
     ],
     doesNotOwn: ['Capability definitions', 'Execution engines — it calls the Toolkit'],
-    verifiedAt: '2026-08-24',
+    verifiedAt: '2026-08-25',
   },
 ];
 
