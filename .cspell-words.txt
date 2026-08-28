@@ -158,3 +158,5 @@ Worktrees
 wsgi
 yazi
 zizmor
+pngs
+travelling
