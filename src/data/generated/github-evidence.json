@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T00:00:00.000Z",
-  "generator": "seed",
-  "mode": "seed",
+  "generatedAt": "2026-08-28T05:00:08.800Z",
+  "generator": "scripts/refresh-github-data.mjs",
+  "mode": "refresh",
   "evidence": [
     {
       "id": "rxv-owned",
@@ -13,8 +13,8 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "agent-toolkit-owned",
@@ -25,8 +25,8 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "agentic-workstation-owned",
@@ -37,8 +37,8 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "agentic-harness-owned",
@@ -49,8 +49,8 @@
       "role": "owner",
       "featured": false,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "setup-v-maintained",
@@ -61,8 +61,8 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "vtl-maintained",
@@ -73,8 +73,8 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "vsl-maintained",
@@ -85,8 +85,8 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-08-28",
+      "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "v-external-prs",
@@ -115,6 +115,7 @@
   ],
   "volatile": {},
   "notes": [
-    "Committed cache from verified editorial evidence. Run `pnpm data:refresh` with GITHUB_TOKEN (optional) to re-verify public repo existence. Volatile counts omitted until refresh succeeds."
+    "Committed cache from verified editorial evidence. Run `pnpm data:refresh` with GITHUB_TOKEN (optional) to re-verify public repo existence. Volatile counts omitted until refresh succeeds.",
+    "[refresh] verified 7/7 public repos on 2026-08-28"
   ]
 }

@@ -2,6 +2,7 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getCollection } from 'astro:content';
 import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
+import { EmptyDesk } from '@/features/blog';
 import '@/styles/blog.css';
 
 const meta = getRouteMeta('/blog')!;
@@ -81,10 +82,7 @@ const itemListJsonLd = hasPosts
           </ul>
         ) : (
           <div class="blog-empty">
-            <div class="blog-empty__desk" aria-hidden="true">
-              <span class="blog-empty__lamp" />
-              <span class="blog-empty__pad" />
-            </div>
+            <EmptyDesk />
             <h2>No posts published yet.</h2>
             <p>
               Entries land here only when there is something verified to write up — HorneroConfig internals, agent

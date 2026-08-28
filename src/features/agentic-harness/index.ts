@@ -8,3 +8,4 @@ export {
 } from './data/index.js';
 export type { RuntimeSurface, StateSection } from './data/index.js';
 export { default as HarnessWorkspace } from './components/HarnessWorkspace.astro';
+export { default as PersistenceCore } from './components/PersistenceCore.astro';

@@ -13,8 +13,13 @@ test.describe('agent-toolkit flagship', () => {
     await expect(page.locator('.atk-qvs')).toBeVisible();
     await expect(page.locator('.atk-swarm')).toBeVisible();
 
-    await expect(page.getByText('84', { exact: true }).first()).toBeVisible();
-    await expect(page.getByText(/implementer/i).first()).toBeVisible();
+    await expect(page.getByText('116', { exact: true }).first()).toBeVisible();
+    await expect(
+      page
+        .locator('.atk-qvs')
+        .getByText(/implementer/i)
+        .first(),
+    ).toBeVisible();
 
     await page.locator('label[for="atk-recipe-team"]').click({ force: true });
     await expect(page.locator('#atk-recipe-team')).toBeChecked();

@@ -2,7 +2,7 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import AdoptionPaths from '@/features/personal-dx/components/AdoptionPaths.astro';
 import StackMatrix from '@/features/personal-dx/components/StackMatrix.astro';
-import { HarnessWorkspace } from '@/features/agentic-harness';
+import { HarnessWorkspace, PersistenceCore } from '@/features/agentic-harness';
 import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from '@/features/agentic-harness/index.js';
 ---
 
@@ -15,24 +15,29 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
   immersive
 >
   <section class="ah-hero" aria-labelledby="ah-hero-title">
-    <p class="ah-hero__eyebrow">Persistent workspace layer · powered by Agent Toolkit</p>
-    <h1 id="ah-hero-title">Your coding agent sessions are temporary.<br />Your workspace should not be.</h1>
-    <p class="ah-hero__lead">
-      Agentic Harness is a workspace scaffold, not another runtime. It holds the knowledge, personas, packs, project
-      collections, and run history that Agent Toolkit's engines read and write — so context survives across sessions,
-      repositories, and clients.
-    </p>
-    <div class="ah-hero__actions">
-      <a class="ah-hero__cta" href={harnessMeta.repo} target="_blank" rel="noopener noreferrer">
-        GitHub repository ↗
-      </a>
-      <a class="ah-hero__secondary" href="/agent-toolkit">How the runtime works</a>
+    <div class="ah-hero__copy">
+      <p class="ah-hero__eyebrow">Persistent workspace layer · powered by Agent Toolkit</p>
+      <h1 id="ah-hero-title">Your coding agent sessions are temporary.<br />Your workspace should not be.</h1>
+      <p class="ah-hero__lead">
+        Agentic Harness is a workspace scaffold, not another runtime. It holds the knowledge, personas, packs, project
+        collections, and run history that Agent Toolkit's engines read and write — so context survives across sessions,
+        repositories, and clients.
+      </p>
+      <div class="ah-hero__actions">
+        <a class="ah-hero__cta" href={harnessMeta.repo} target="_blank" rel="noopener noreferrer">
+          GitHub repository ↗
+        </a>
+        <a class="ah-hero__secondary" href="/agent-toolkit">How the runtime works</a>
+      </div>
+    </div>
+    <div class="ah-hero__scene">
+      <PersistenceCore />
     </div>
   </section>
 
   <HarnessWorkspace />
 
-  <section class="ah-quickstart" aria-labelledby="ah-quickstart-title">
+  <section class="ah-quickstart" data-reveal aria-labelledby="ah-quickstart-title">
     <header>
       <p class="ah-quickstart__eyebrow">Quick start</p>
       <h2 id="ah-quickstart-title">Clone it. Initialize. Put it to work.</h2>
@@ -58,7 +63,7 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
     </p>
   </section>
 
-  <section class="ah-packs" aria-labelledby="ah-packs-title">
+  <section class="ah-packs" data-reveal aria-labelledby="ah-packs-title">
     <header>
       <p class="ah-packs__eyebrow">Terminology</p>
       <h2 id="ah-packs-title">Three things called “pack”</h2>
@@ -100,6 +105,24 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
     width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
     margin: 0 auto;
     padding-block: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  @media (min-width: 1024px) {
+    .ah-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      align-items: center;
+    }
+  }
+
+  .ah-hero__copy {
+    min-inline-size: 0;
+  }
+
+  .ah-hero__scene {
+    min-inline-size: 0;
+    margin-block-start: clamp(1.5rem, 4vw, 0rem);
   }
 
   .ah-hero__eyebrow {
