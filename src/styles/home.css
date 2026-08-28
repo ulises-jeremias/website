@@ -122,16 +122,20 @@
   z-index: 2;
   max-inline-size: 36rem;
   padding-block-end: clamp(1rem, 3vw, 2.5rem);
+  container-type: inline-size;
 }
 
 .hero__name {
   margin: 0;
+  /* Scale with the identity column so "JEREMIAS" never breaks mid-word. */
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 10vw, 4.8rem);
+  font-size: clamp(2.6rem, 14.5cqw, 4.8rem);
   font-weight: 900;
   line-height: 0.94;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .hero__name-line {
@@ -1046,7 +1050,7 @@
   }
 
   .hero__name {
-    font-size: clamp(2.6rem, 14vw, 3.6rem);
+    font-size: clamp(2.6rem, 15cqw, 3.6rem);
   }
 
   .hero__quote {

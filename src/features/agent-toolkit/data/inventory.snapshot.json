@@ -10,13 +10,13 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "b3ea86a",
-  "commitFull": "b3ea86a6de08b2a797d33ddd5a93d904b91f86cd",
-  "verifiedAt": "2026-08-24",
-  "version": "1.22.3",
+  "commit": "f619050",
+  "commitFull": "f61905072f3ecd4132229fe74218cf6f85ed938a",
+  "verifiedAt": "2026-08-27",
+  "version": "1.25.0",
   "counts": {
-    "skills": 84,
-    "agents": 17,
+    "skills": 116,
+    "agents": 18,
     "loops": 10,
     "profiles": 9,
     "packs": 7,
@@ -35,7 +35,7 @@
     },
     {
       "id": "architecture",
-      "count": 1
+      "count": 2
     },
     {
       "id": "cloud",
@@ -63,7 +63,7 @@
     },
     {
       "id": "integrations",
-      "count": 5
+      "count": 36
     },
     {
       "id": "loops",
@@ -107,17 +107,18 @@
     "build-error-resolver",
     "client-workflow-bootstrap",
     "code-reviewer",
-    "database-reviewer",
-    "docs-lookup",
+    "data-engineer",
+    "designer",
     "e2e-runner",
-    "performance-optimizer",
+    "implementer",
     "planner",
-    "refactor-cleaner",
-    "reference-lookup",
+    "platform-engineer",
+    "qa-engineer",
+    "researcher",
+    "reviewer",
+    "security-engineer",
     "security-reviewer",
-    "tdd-guide",
-    "tech-assistant",
-    "typescript-reviewer"
+    "tdd-guide"
   ],
   "loopIds": [
     "changelog-drafter",
@@ -171,17 +172,17 @@
       {
         "id": "code-reviewer",
         "name": "code-reviewer",
-        "description": "Expert code review specialist. Proactively reviews code for quality, security, and maintainability. Use immediately after writing or modifying any significant code."
+        "description": "Expert code review specialist \u2014 quality/correctness/security/performance/testing with severity-ranked findings. Use when reviewer/qa-engineer delegates deep craft or PR explicitly "
       },
       {
         "id": "tdd-guide",
         "name": "tdd-guide",
-        "description": "Test-Driven Development specialist. Enforces write-tests-first methodology. Use when implementing new features to ensure proper test coverage from the start."
+        "description": "Test-Driven Development specialist \u2014 enforces red-green-refactor with AAA, test doubles and behavior-first coverage. Use when implementer delegates test-first discipline or task ex"
       },
       {
         "id": "security-reviewer",
         "name": "security-reviewer",
-        "description": "Security vulnerability detection specialist. Use proactively after implementing authentication, data handling, API endpoints, or any user-facing functionality."
+        "description": "App-code security review specialist \u2014 OWASP Top 10 (injection, auth, data exposure, deps), CVE-mapped. Use when security-engineer delegates app-surface hardening or code change tou"
       }
     ],
     "loops": [
@@ -255,7 +256,7 @@
       {
         "id": "agent-toolkit-agents",
         "name": "agent-toolkit-agents",
-        "description": "Full set of 17 AI agent personas: architect, code-reviewer, security-reviewer, planner, database-reviewer, TypeScript-reviewer, and more."
+        "description": "18 AI agent personas: 11 holistic (planner, architect, designer, implementer, reviewer, qa-engineer, security-engineer, platform-engineer, researcher, data-engineer) + orchestrator"
       },
       {
         "id": "agent-toolkit-complete",
