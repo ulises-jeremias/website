@@ -63,7 +63,9 @@ test.describe('flagship route visuals', () => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(route.path);
       // Long proportional copy in V, Community, and Projects reflows slightly between CI and local font rendering.
-      const screenshotOptions = ['v', 'community', 'projects'].includes(route.name)
+      // Harness joins the font-reflow group: its PersistenceCore scene uses
+      // soft gradients and filters that rasterize differently on CI GPUs.
+      const screenshotOptions = ['v', 'community', 'projects', 'agentic-harness'].includes(route.name)
         ? { fullPage: false, maxDiffPixelRatio: 0.07 }
         : { fullPage: false };
       await expect(page).toHaveScreenshot(`${route.name}-mobile-390.png`, screenshotOptions);
