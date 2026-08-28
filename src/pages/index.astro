@@ -6,6 +6,7 @@ import ProjectAtlas from '../features/home/components/ProjectAtlas.astro';
 import NestStatus from '../features/home/components/NestStatus.astro';
 import AboutPanel from '../features/home/components/AboutPanel.astro';
 import FeaturedProjectLedger from '../features/home/components/FeaturedProjectLedger.astro';
+import ResponsibilityTopology from '../shared/components/ResponsibilityTopology.astro';
 import '../styles/home.css';
 
 const route = getRouteById('home');
@@ -25,7 +26,9 @@ if (!route) throw new Error('Home route metadata is required');
       <ProjectAtlas slot="atlas" />
     </Hero>
 
-    <div class="home-evidence">
+    <ResponsibilityTopology />
+
+    <div class="home-evidence" data-reveal>
       <NestStatus />
       <AboutPanel />
       <FeaturedProjectLedger />

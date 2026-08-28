@@ -1,0 +1,86 @@
+---
+export interface Props {
+  /** Short caption, e.g. "Rendered by VSL · v0.1.51" */
+  caption: string;
+  /** Optional leading logo (src, alt). */
+  logo?: { src: string; alt: string; width?: number };
+  /** Evidence images (real screenshots/renders from the project). */
+  images: Array<{ src: string; alt: string; width?: number }>;
+}
+
+const { caption, logo, images } = Astro.props as Props;
+---
+
+<figure class="scene-evidence">
+  {
+    logo && (
+      <img
+        class="scene-evidence__logo"
+        src={logo.src}
+        alt={logo.alt}
+        width={logo.width ?? 44}
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+  <div class="scene-evidence__items">
+    {
+      images.map((img) => (
+        <img
+          class="scene-evidence__img"
+          src={img.src}
+          alt={img.alt}
+          width={img.width ?? 132}
+          loading="lazy"
+          decoding="async"
+        />
+      ))
+    }
+  </div>
+  <figcaption class="scene-evidence__caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .scene-evidence {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.5rem 0.85rem;
+    width: 100%;
+    margin: 0.35rem 0 0;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--world-accent, #22d3ee) 22%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--nest-midnight-900, #0b1020) 65%, transparent);
+  }
+
+  .scene-evidence__logo {
+    grid-row: 1 / span 2;
+    inline-size: 44px;
+    block-size: auto;
+  }
+
+  .scene-evidence__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-inline-size: 0;
+  }
+
+  .scene-evidence__img {
+    inline-size: clamp(96px, 22cqw, 148px);
+    block-size: auto;
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, var(--world-accent, #22d3ee) 25%, transparent);
+    background: #050317;
+  }
+
+  .scene-evidence__caption {
+    grid-column: 2;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+    color: var(--color-text-faint);
+  }
+</style>

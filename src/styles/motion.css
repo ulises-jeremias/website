@@ -20,6 +20,10 @@
   --ease-default: var(--motion-ease-standard);
   --ease-emphasized: var(--motion-ease-emphasized);
   --ease-out: var(--motion-ease-out);
+
+  /* Scroll reveal primitives (see [data-reveal] below). */
+  --reveal-distance: 14px;
+  --reveal-delay: 0ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -43,5 +47,41 @@
     animation-iteration-count: 1 !important;
     transition-delay: 0ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Scroll reveal — progressive enhancement primitive.
+ * Elements opt in with [data-reveal]. Hidden state only applies once JS
+ * marks <html class="reveal-ready">; reduced motion freezes the transition.
+ * ------------------------------------------------------------------------- */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition:
+    opacity 560ms var(--motion-ease-emphasized),
+    transform 560ms var(--motion-ease-emphasized);
+  transition-delay: var(--reveal-delay);
+  will-change: opacity, transform;
+}
+
+html.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition-duration: 0.01ms;
+    transition-delay: 0ms;
+  }
+}
+
+@media (forced-colors: active) {
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }

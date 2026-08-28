@@ -340,6 +340,7 @@ const heroShot = screenshotItems[0]!;
   .df-world__hero-copy {
     padding-inline-start: clamp(0.75rem, 2vw, 1.5rem);
     border-inline-start: 2px solid color-mix(in srgb, var(--dotfiles-pink) 68%, transparent);
+    container-type: inline-size;
   }
 
   .df-world__hero-rail {
@@ -368,7 +369,8 @@ const heroShot = screenshotItems[0]!;
 
   .df-world h1 {
     margin: 0;
-    font-size: clamp(1.6rem, 5vw, 2.75rem);
+    /* 13-character brand word — scale to the copy column so it never clips. */
+    font-size: clamp(1.6rem, 10.5cqw, 2.75rem);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     line-height: 1.05;

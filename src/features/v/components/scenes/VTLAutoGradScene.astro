@@ -1,5 +1,6 @@
 ---
 /** VTL station — reverse-mode autograd teaching beat. */
+import SceneEvidence from './SceneEvidence.astro';
 ---
 
 <div class="v-scene" data-v-scene="vtl">
@@ -38,6 +39,11 @@
     </defs>
   </svg>
   <p class="v-scene__live" data-v-scene-live aria-live="polite">Forward pass · values flow left → right.</p>
+  <SceneEvidence
+    caption="VTL · MIT — pure-V tensors with autograd (needs VSL for LA backends)"
+    logo={{ src: '/media/v/vtl-logo.webp', alt: 'VTL logo' }}
+    images={[]}
+  />
 </div>
 
 <script>

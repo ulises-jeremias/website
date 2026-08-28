@@ -74,9 +74,12 @@ const positions = nodes.map((node, index) => {
     <div class="constellation__map" aria-label="Contribution evidence map">
       <p class="constellation__map-label">Relationship index · not a popularity graph</p>
       <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <g class="constellation__sweep" aria-hidden="true">
+          <line x1="50" y1="50" x2="50" y2="4" class="constellation__sweep-line"></line>
+        </g>
         <circle cx="50" cy="50" r="3.2" class="constellation__hub"></circle>
         {
-          positions.map((node) => (
+          positions.map((node, index) => (
             <g>
               <line
                 x1="50"
@@ -84,13 +87,17 @@ const positions = nodes.map((node, index) => {
                 x2={node.cx}
                 y2={node.cy}
                 class:list={['constellation__edge', `constellation__edge--${node.kind}`]}
+                style={`animation-delay: ${(index * 0.45).toFixed(2)}s`}
               />
               <circle
                 cx={node.cx}
                 cy={node.cy}
                 r={node.featured ? 2.4 : 1.8}
                 class:list={['constellation__node', `constellation__node--${node.kind}`]}
-              />
+                style={`animation-delay: ${(index * 0.7).toFixed(2)}s`}
+              >
+                <title>{node.label}</title>
+              </circle>
             </g>
           ))
         }
@@ -292,17 +299,77 @@ const positions = nodes.map((node, index) => {
 
   .constellation__hub {
     fill: var(--nest-cyan);
+    filter: drop-shadow(0 0 1.2px rgba(28, 239, 255, 0.9));
+    animation: constellation-hub 4.5s ease-in-out infinite;
+  }
+
+  @keyframes constellation-hub {
+    0%,
+    100% {
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Radar sweep — one slow pass around the relationship index. */
+  .constellation__sweep {
+    transform-origin: 50px 50px;
+    animation: constellation-sweep 26s linear infinite;
+  }
+
+  .constellation__sweep-line {
+    stroke: var(--nest-cyan);
+    stroke-width: 0.22;
+    opacity: 0.28;
+    stroke-linecap: round;
+  }
+
+  @keyframes constellation-sweep {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .constellation__edge {
     stroke: color-mix(in srgb, var(--nest-violet) 45%, transparent);
     stroke-width: 0.35;
+    /* Traffic toward the hub: dashes crawl inward on a long, calm loop. */
+    stroke-dasharray: 1.2 2.6;
+    animation: constellation-edge-flow 9s linear infinite;
+  }
+
+  @keyframes constellation-edge-flow {
+    to {
+      stroke-dashoffset: -38;
+    }
   }
 
   .constellation__node {
     fill: var(--nest-paper);
     stroke: var(--nest-cyan);
     stroke-width: 0.35;
+    animation: constellation-twinkle 6s ease-in-out infinite;
+  }
+
+  @keyframes constellation-twinkle {
+    0%,
+    100% {
+      opacity: 0.72;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .constellation__hub,
+    .constellation__sweep,
+    .constellation__edge,
+    .constellation__node {
+      animation: none;
+    }
   }
 
   .constellation__node--owned {
