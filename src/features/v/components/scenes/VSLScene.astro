@@ -1,5 +1,6 @@
 ---
 /** VSL station — matrix → plot teaching beat (no invented benchmarks). */
+import SceneEvidence from './SceneEvidence.astro';
 ---
 
 <div class="v-scene" data-v-scene="vsl">
@@ -35,6 +36,15 @@
     </g>
   </svg>
   <p class="v-scene__live" data-v-scene-live aria-live="polite">Matrix stage — values ready for a plot.</p>
+  <SceneEvidence
+    caption="Rendered by VSL · MIT · v install vsl"
+    logo={{ src: '/media/v/vsl-logo.png', alt: 'VSL logo' }}
+    images={[
+      { src: '/media/v/vsl-mandelbrot.png', alt: 'Mandelbrot set rendered by VSL' },
+      { src: '/media/v/vsl-julia-basic.png', alt: 'Julia set rendered by VSL' },
+      { src: '/media/v/vsl-sierpinski.png', alt: 'Sierpinski triangle rendered by VSL' },
+    ]}
+  />
 </div>
 
 <script>

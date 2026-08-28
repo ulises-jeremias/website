@@ -1,0 +1,241 @@
+---
+/**
+ * EmptyDesk — the blog's "publication desk open" scene.
+ *
+ * A night desk: terminal waiting for the first draft, lamp cone, steaming mug,
+ * and a placeholder sheet for the next entry. Pure SVG + CSS; the global
+ * reduced-motion kill switch freezes cursor, steam, and lamp breathing.
+ */
+---
+
+<div
+  class="empty-desk"
+  role="img"
+  aria-label="Illustration: a night desk with a terminal waiting for the first entry, a desk lamp, a steaming mug, and a draft sheet labeled next entry."
+>
+  <svg viewBox="0 0 520 300" fill="none" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="ed-lamp-glow" cx="50%" cy="0%" r="90%">
+        <stop offset="0%" stop-color="#c084fc" stop-opacity="0.34"></stop>
+        <stop offset="100%" stop-color="#c084fc" stop-opacity="0"></stop>
+      </radialGradient>
+      <linearGradient id="ed-cone" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.4"></stop>
+        <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"></stop>
+      </linearGradient>
+    </defs>
+
+    <!-- lamp cone + ambient glow -->
+    <polygon points="128,96 250,250 60,250" fill="url(#ed-cone)"></polygon>
+    <ellipse cx="155" cy="150" rx="150" ry="110" fill="url(#ed-lamp-glow)"></ellipse>
+
+    <!-- lamp -->
+    <g class="ed-lamp">
+      <rect x="58" y="244" width="42" height="6" rx="3" class="ed-lamp__base"></rect>
+      <path d="M79 244 L 96 130 L 132 108" class="ed-lamp__arm"></path>
+      <path d="M110 116 L 154 116 L 142 96 L 122 96 Z" class="ed-lamp__head"></path>
+      <circle cx="132" cy="112" r="3" class="ed-lamp__bulb"></circle>
+    </g>
+
+    <!-- terminal -->
+    <g class="ed-terminal">
+      <rect x="180" y="118" width="210" height="126" rx="8" class="ed-terminal__frame"></rect>
+      <line x1="180" y1="140" x2="390" y2="140" class="ed-terminal__divider"></line>
+      <circle cx="192" cy="129" r="2.6" class="ed-terminal__dot ed-terminal__dot--r"></circle>
+      <circle cx="201" cy="129" r="2.6" class="ed-terminal__dot ed-terminal__dot--y"></circle>
+      <circle cx="210" cy="129" r="2.6" class="ed-terminal__dot ed-terminal__dot--g"></circle>
+      <text x="192" y="160" class="ed-terminal__line">~/digital-nest</text>
+      <text x="192" y="178" class="ed-terminal__line ed-terminal__cmd">$ notes draft --topic "shipped work"</text>
+      <text x="192" y="196" class="ed-terminal__line ed-terminal__dim">waiting for the first entry…</text>
+      <rect x="192" y="206" width="9" height="14" class="ed-terminal__cursor"></rect>
+      <text x="206" y="218" class="ed-terminal__line ed-terminal__dim">▍</text>
+    </g>
+
+    <!-- draft pad -->
+    <g class="ed-pad">
+      <rect x="410" y="176" width="88" height="68" rx="4" class="ed-pad__sheet"></rect>
+      <line x1="420" y1="194" x2="478" y2="194" class="ed-pad__line"></line>
+      <line x1="420" y1="206" x2="468" y2="206" class="ed-pad__line"></line>
+      <line x1="420" y1="218" x2="474" y2="218" class="ed-pad__line"></line>
+      <text x="420" y="236" class="ed-pad__label">next entry…</text>
+    </g>
+
+    <!-- mug + steam -->
+    <g class="ed-mug">
+      <path d="M352 232 h26 v18 a6 6 0 0 1 -6 6 h-14 a6 6 0 0 1 -6 -6 Z" class="ed-mug__body"></path>
+      <path d="M378 236 h5 a5 5 0 0 1 0 10 h-5" class="ed-mug__handle"></path>
+      <path class="ed-steam ed-steam--a" d="M359 224 c -3 -5, 3 -9, 0 -14"></path>
+      <path class="ed-steam ed-steam--b" d="M369 224 c -3 -5, 3 -9, 0 -14"></path>
+    </g>
+
+    <!-- desk edge -->
+    <line x1="20" y1="250" x2="500" y2="250" class="ed-desk"></line>
+  </svg>
+</div>
+
+<style>
+  .empty-desk {
+    max-width: 34rem;
+    margin-block-end: 1.25rem;
+  }
+
+  .empty-desk svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .ed-desk {
+    stroke: color-mix(in srgb, var(--blog-accent, #ff42d0) 45%, transparent);
+    stroke-width: 2;
+  }
+
+  .ed-lamp__base,
+  .ed-lamp__arm,
+  .ed-lamp__head {
+    stroke: color-mix(in srgb, var(--nest-violet, #8b5cf6) 75%, var(--nest-paper, #fff));
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    fill: none;
+  }
+
+  .ed-lamp__head {
+    fill: rgba(139, 92, 246, 0.18);
+  }
+
+  .ed-lamp__bulb {
+    fill: #e9d5ff;
+    animation: ed-lamp-breathe 6s ease-in-out infinite;
+  }
+
+  @keyframes ed-lamp-breathe {
+    0%,
+    100% {
+      opacity: 0.75;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .ed-terminal__frame {
+    fill: rgba(5, 3, 23, 0.88);
+    stroke: var(--blog-border, rgba(255, 66, 208, 0.25));
+    stroke-width: 1.2;
+  }
+
+  .ed-terminal__divider {
+    stroke: var(--blog-border, rgba(255, 66, 208, 0.25));
+    stroke-width: 1;
+  }
+
+  .ed-terminal__dot--r {
+    fill: #fb7185;
+  }
+
+  .ed-terminal__dot--y {
+    fill: #fbbf24;
+  }
+
+  .ed-terminal__dot--g {
+    fill: #34d399;
+  }
+
+  .ed-terminal__line {
+    fill: var(--color-text-muted, #b9c4d4);
+    font-family: var(--font-mono, monospace);
+    font-size: 9.5px;
+  }
+
+  .ed-terminal__cmd {
+    fill: var(--nest-cyan, #1cefff);
+  }
+
+  .ed-terminal__dim {
+    opacity: 0.6;
+  }
+
+  .ed-terminal__cursor {
+    fill: var(--blog-accent, #ff42d0);
+    animation: ed-cursor 1.15s steps(2, start) infinite;
+  }
+
+  @keyframes ed-cursor {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .ed-pad__sheet {
+    fill: rgba(5, 3, 23, 0.7);
+    stroke: var(--blog-border, rgba(255, 66, 208, 0.25));
+    stroke-width: 1;
+    transform: rotate(-2deg);
+    transform-origin: 454px 210px;
+  }
+
+  .ed-pad__line {
+    stroke: color-mix(in srgb, var(--color-text-muted, #b9c4d4) 40%, transparent);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+  }
+
+  .ed-pad__label {
+    fill: var(--color-text-faint, #8b93a5);
+    font-family: var(--font-mono, monospace);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+
+  .ed-mug__body {
+    fill: rgba(139, 92, 246, 0.2);
+    stroke: var(--nest-violet, #8b5cf6);
+    stroke-width: 1.4;
+  }
+
+  .ed-mug__handle {
+    stroke: var(--nest-violet, #8b5cf6);
+    stroke-width: 1.4;
+    fill: none;
+  }
+
+  .ed-steam {
+    stroke: color-mix(in srgb, var(--color-text-muted, #b9c4d4) 55%, transparent);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    animation: ed-steam 3.6s ease-in-out infinite;
+  }
+
+  .ed-steam--b {
+    animation-delay: 1.4s;
+  }
+
+  @keyframes ed-steam {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    35% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ed-terminal__cursor,
+    .ed-lamp__bulb,
+    .ed-steam {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .ed-terminal__line,
+    .ed-pad__label {
+      fill: CanvasText;
+    }
+  }
+</style>

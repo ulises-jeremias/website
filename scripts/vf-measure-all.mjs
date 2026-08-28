@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
+import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
 import { measureVisibleContent } from './lib/vf-visible-content.mjs';
 
 const BASE = process.env.VF_BASE || 'http://127.0.0.1:4321';

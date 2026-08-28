@@ -29,3 +29,4 @@ docs/design/baselines/*/mobile-*/
 !docs/design/baselines/*/contact-sheets/
 
 .pnpm-store
+.playwright-cli/

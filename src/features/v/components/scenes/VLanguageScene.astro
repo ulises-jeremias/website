@@ -2,6 +2,7 @@
 /**
  * V language station — concise ecosystem relationship map.
  */
+import SceneEvidence from './SceneEvidence.astro';
 ---
 
 <div class="v-scene" data-v-scene="v">
@@ -25,6 +26,14 @@
       <text x="280" y="28" text-anchor="middle" fill="#c4b5fd" font-size="10" font-family="monospace">tooling</text>
     </g>
   </svg>
+  <SceneEvidence
+    caption="The V language · MIT · compiled, fast, safe"
+    logo={{ src: '/media/v/v-logo.svg', alt: 'V logo' }}
+    images={[
+      { src: '/media/v/tetris.png', alt: 'Tetris game written in V' },
+      { src: '/media/v/v-ui.webp', alt: 'Native V UI example' },
+    ]}
+  />
 </div>
 
 <style>

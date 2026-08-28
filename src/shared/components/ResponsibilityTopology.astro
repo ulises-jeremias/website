@@ -35,7 +35,7 @@ const nodes = [
 const nodeById = new Map<string, (typeof nodes)[number]>(nodes.map((node) => [node.id, node]));
 ---
 
-<section class="dx-topology" aria-labelledby="dx-topology-title">
+<section class="dx-topology" data-reveal aria-labelledby="dx-topology-title">
   <header class="dx-topology__header">
     <p class="dx-topology__eyebrow">Responsibility map</p>
     <h2 id="dx-topology-title">Four projects, distinct responsibilities</h2>
@@ -55,13 +55,13 @@ const nodeById = new Map<string, (typeof nodes)[number]>(nodes.map((node) => [no
         ></g
       >
       <g class="dx-topology__edge-label"
-        ><rect x="315" y="346" width="300" height="38" rx="8"></rect><text x="330" y="370"
+        ><rect x="285" y="388" width="330" height="34" rx="8"></rect><text x="300" y="410"
           >can provision host dependencies for</text
         ></g
       >
       <g class="dx-topology__edge-label"
-        ><rect x="700" y="196" width="190" height="54" rx="8"></rect><text x="714" y="219">provides capabilities</text
-        ><text x="714" y="238">and workspace commands to</text></g
+        ><rect x="676" y="192" width="212" height="54" rx="8"></rect><text x="690" y="215">provides capabilities</text
+        ><text x="690" y="234">and workspace commands</text></g
       >
       {
         nodes.map((node) => (

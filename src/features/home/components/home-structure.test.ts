@@ -66,10 +66,11 @@ describe('Synthwave Systems Atlas homepage', () => {
   });
 
   it('includes the factual responsibility topology with a structured fallback', async () => {
-    const atlas = await readSource('features/home/components/ProjectAtlas.astro');
+    const home = await readSource('pages/index.astro');
     const topology = await readSource('shared/components/ResponsibilityTopology.astro');
 
-    expect(atlas).toContain('ResponsibilityTopology');
+    // Rendered as a full-width home section (not nested inside the atlas column).
+    expect(home).toContain('ResponsibilityTopology');
     expect(topology).toContain('aria-hidden="true"');
     expect(topology).toContain('class="dx-topology__structured"');
     expect(topology).toContain('Edges describe responsibility, not required installation');
