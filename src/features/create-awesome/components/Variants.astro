@@ -27,6 +27,13 @@ const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
               <h3 class="ca-variant__name">{v.title}</h3>
               <span class={`ca-variant__status ca-variant__status--${v.status}`}>{v.status}</span>
             </header>
+            <img
+              class="ca-variant__hero"
+              src={`/media/create-awesome/${v.id === 'node' ? 'cna' : v.id === 'python' ? 'cpa' : 'cva'}-hero.svg`}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
             <p class="ca-variant__desc">{v.description}</p>
             <p class="ca-variant__count">
               <strong>
@@ -104,6 +111,14 @@ const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
     justify-content: space-between;
     align-items: center;
     gap: var(--space-2);
+  }
+  .ca-variant__hero {
+    width: 100%;
+    height: auto;
+    margin-top: var(--space-3);
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--v-accent) 30%, transparent);
+    background: color-mix(in srgb, var(--v-bg, #0b1020) 80%, transparent);
   }
   .ca-variant__name {
     font-size: 1rem;

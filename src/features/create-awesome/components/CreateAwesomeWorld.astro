@@ -2,6 +2,7 @@
 import { SceneInspector, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
 import Composer from './Composer.astro';
+import Variants from './Variants.astro';
 import {
   catalogTotals,
   comparisonRows,
@@ -196,6 +197,8 @@ const lineModules = [
   </WorldDock>
 
   <Composer embedded />
+
+  <Variants />
 
   <section class="ca-world__fold">
     <h2 class="ca-world__fold-label">Compare · distribute · contribute · examples</h2>

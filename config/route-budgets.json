@@ -86,40 +86,40 @@
     },
     "/v/": {
       "mobile": {
-        "total": 100352,
-        "document": 12288,
+        "total": 156672,
+        "document": 13312,
         "script": 0,
         "style": 14336,
-        "image": 5120,
+        "image": 61440,
         "font": 69632,
-        "requests": 12
+        "requests": 14
       },
       "desktop": {
-        "total": 100352,
-        "document": 12288,
+        "total": 156672,
+        "document": 13312,
         "script": 0,
         "style": 14336,
-        "image": 5120,
+        "image": 61440,
         "font": 69632,
-        "requests": 12
+        "requests": 14
       }
     },
     "/create-awesome/": {
       "mobile": {
         "total": 109568,
-        "document": 21504,
+        "document": 23552,
         "script": 0,
         "style": 15360,
-        "image": 5120,
+        "image": 6144,
         "font": 69632,
         "requests": 12
       },
       "desktop": {
         "total": 109568,
-        "document": 21504,
+        "document": 23552,
         "script": 0,
         "style": 15360,
-        "image": 5120,
+        "image": 6144,
         "font": 69632,
         "requests": 12
       }
@@ -127,7 +127,7 @@
     "/community/": {
       "mobile": {
         "total": 98304,
-        "document": 11264,
+        "document": 12288,
         "script": 0,
         "style": 14336,
         "image": 5120,
@@ -136,7 +136,7 @@
       },
       "desktop": {
         "total": 98304,
-        "document": 11264,
+        "document": 12288,
         "script": 0,
         "style": 14336,
         "image": 5120,

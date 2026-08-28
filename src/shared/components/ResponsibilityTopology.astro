@@ -35,7 +35,7 @@ const nodes = [
 const nodeById = new Map<string, (typeof nodes)[number]>(nodes.map((node) => [node.id, node]));
 ---
 
-<section class="dx-topology" aria-labelledby="dx-topology-title">
+<section class="dx-topology" data-reveal aria-labelledby="dx-topology-title">
   <header class="dx-topology__header">
     <p class="dx-topology__eyebrow">Responsibility map</p>
     <h2 id="dx-topology-title">Four projects, distinct responsibilities</h2>

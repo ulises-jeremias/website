@@ -1,4 +1,6 @@
 ---
+import SceneEvidence from './SceneEvidence.astro';
+
 interface Props {
   chips: string[];
 }
@@ -21,6 +23,11 @@ const { chips } = Astro.props;
     }
   </ul>
   <p class="v-scene__live" data-v-scene-live aria-live="polite">{chips[0] ?? 'Catalog'}</p>
+  <SceneEvidence
+    caption="Awesome V · CC0 — the curated V catalog"
+    logo={{ src: '/media/v/awesome-v-logo.svg', alt: 'Awesome V logo' }}
+    images={[]}
+  />
 </div>
 
 <script>

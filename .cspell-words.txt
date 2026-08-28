@@ -161,3 +161,10 @@ zizmor
 pngs
 travelling
 retrowave
+octonan
+mandelbrot
+sierpinski
+Mandelbrot
+Sierpinski
+tetris
+Tetris
