@@ -119,9 +119,9 @@
         "document": 23552,
         "script": 0,
         "style": 15360,
-        "image": 6144,
+        "image": 8192,
         "font": 69632,
-        "requests": 12
+        "requests": 14
       }
     },
     "/community/": {
