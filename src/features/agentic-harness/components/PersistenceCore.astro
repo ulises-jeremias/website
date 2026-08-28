@@ -329,6 +329,23 @@
       animation: none;
     }
 
+    /* Deterministic static frame — frozen animation state can differ per
+       environment and would break cross-run visual goldens. */
+    .pc-link {
+      stroke-dashoffset: 0;
+      opacity: 0.65;
+    }
+
+    .pc-runtime__dash {
+      transform: rotate(0deg);
+    }
+
+    .pc-core--k .pc-core__ring,
+    .pc-core--c .pc-core__ring,
+    .pc-core--p .pc-core__ring {
+      stroke-opacity: 0.8;
+    }
+
     /* Freeze packets mid-lane instead of stacking them at the start. */
     .pc-packet--a {
       offset-distance: 40%;
