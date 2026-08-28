@@ -213,7 +213,7 @@ const stageCount = swarmStages.length;
       }
     </div>
     <p>
-      Full swarm manual:
+      Full swarm manual:{' '}
       <a href={toolkitDocs.swarm} target="_blank" rel="noopener noreferrer">docs/SWARMS.md ↗</a>
     </p>
   </div>
@@ -237,7 +237,10 @@ const stageCount = swarmStages.length;
   </noscript>
 </section>
 
-<style>
+<style is:global>
+  /* Global (not scoped): the control room builds its DOM at runtime via JS,
+     so scoped data-astro attributes would never match these selectors.
+     Every rule is namespaced under .atk-swarm to contain leakage. */
   .atk-swarm {
     width: min(100% - 2 * var(--section-padding-x, 1.5rem), 74rem);
     margin: 0 auto;
@@ -851,6 +854,11 @@ const stageCount = swarmStages.length;
     border: 1px solid var(--color-border);
     background: var(--color-code-bg, #120a22);
     font-size: 0.72rem;
+    text-align: left;
+  }
+
+  .atk-swarm__cli code {
+    white-space: pre;
   }
 
   .atk-swarm__cli > p:not(.atk-swarm__label) {

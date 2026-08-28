@@ -709,6 +709,7 @@
 .about-panel,
 .featured-ledger {
   position: relative;
+  align-self: start;
   padding: clamp(1.1rem, 2vw, 1.5rem);
 }
 
@@ -726,14 +727,14 @@
 
 .nest-status__grid {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.75rem;
   margin: var(--space-5) 0 0;
 }
 
 .nest-status__item {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.2rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -742,7 +743,6 @@
 .nest-status__item dt {
   display: flex;
   min-inline-size: 0;
-  flex: 1;
   align-items: baseline;
   gap: 0.45rem;
   font-family: var(--font-mono);
@@ -754,9 +754,11 @@
 
 .nest-status__item dd {
   margin: 0;
+  padding-inline-start: 1.35rem;
   font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
+  line-height: 1.35;
   color: var(--nest-magenta);
   text-shadow: 0 0 12px color-mix(in srgb, var(--nest-magenta) 45%, transparent);
 }
@@ -900,7 +902,7 @@
   gap: 0.75rem;
   align-items: center;
   min-block-size: var(--touch-min);
-  padding: 0.75rem 0.25rem;
+  padding: 0.75rem 0.9rem 0.75rem 0.25rem;
   border: 0;
   color: inherit;
   text-decoration: none;

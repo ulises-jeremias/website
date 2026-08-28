@@ -99,6 +99,13 @@
   color: var(--color-text-faint, #64748b);
 }
 
+.vf-inspector__meta [data-layer-meta] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+}
+
 .vf-inspector__meta code {
   color: var(--nest-cyan, #22d3ee);
 }
