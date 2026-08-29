@@ -23,16 +23,21 @@ if (!danger.github.pr.title) {
   fail(':id: Missing PR Title - Please add a title.');
 }
 
-const hasSection = (section: string) => danger.github.pr.body.includes(section);
+// Bot-authored PRs (Dependabot, ImgBot, …) don't fill in the human PR
+// template. Lint their content by all means, but skip template policing.
+const isBotAuthored = /(\[bot\]|^app\/)/.test(danger.github.pr.user.login ?? '');
+const hasSection = (section: string) => Boolean(danger.github.pr.body?.includes(section));
 
-templateSections.forEach((section) => {
-  if (!hasSection(section)) {
-    fail(`:clipboard: Missing Section - Please include \`${section}\` in your PR description.`);
-  }
-});
+if (!isBotAuthored) {
+  templateSections.forEach((section) => {
+    if (!hasSection(section)) {
+      fail(`:clipboard: Missing Section - Please include \`${section}\` in your PR description.`);
+    }
+  });
 
-checklistItems.forEach((item) => {
-  if (!danger.github.pr.body.includes(`- [x] ${item}`)) {
-    warn(`:clipboard: Unchecked Checklist Item - Please check \`${item}\` in your PR description.`);
-  }
-});
+  checklistItems.forEach((item) => {
+    if (!danger.github.pr.body?.includes(`- [x] ${item}`)) {
+      warn(`:clipboard: Unchecked Checklist Item - Please check \`${item}\` in your PR description.`);
+    }
+  });
+}
