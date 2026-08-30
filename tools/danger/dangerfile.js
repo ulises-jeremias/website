@@ -21,18 +21,24 @@ if (!danger.github.pr.body) {
 if (!danger.github.pr.title) {
   fail(':id: Missing PR Title - Please add a title.');
 }
+// Bot-authored PRs (Dependabot, ImgBot, Renovate, ...) never fill the human
+// PR template - skip template/checklist policing for them. Content lints
+// below still run for everyone.
+const isBotAuthored = /([bot]$|^app\/)/.test(danger.github.pr.user.login || '');
 const hasSection = (section) => danger.github.pr.body.includes(section);
 const isChecklistItemChecked = (item) => danger.github.pr.body.includes(`- [x] ${item}`);
-templateSections.forEach((section) => {
-  if (!hasSection(section)) {
-    fail(`:clipboard: Missing Section - Please include the section: <i>${section}</i> in your PR description.`);
-  }
-});
-checklistItems.forEach((item) => {
-  if (!isChecklistItemChecked(item)) {
-    warn(`:clipboard: Unchecked Checklist Item - Please check the item: <i>${item}</i> in your PR description.`);
-  }
-});
+if (!isBotAuthored) {
+  templateSections.forEach((section) => {
+    if (!hasSection(section)) {
+      fail(`:clipboard: Missing Section - Please include the section: <i>${section}</i> in your PR description.`);
+    }
+  });
+  checklistItems.forEach((item) => {
+    if (!isChecklistItemChecked(item)) {
+      warn(`:clipboard: Unchecked Checklist Item - Please check the item: <i>${item}</i> in your PR description.`);
+    }
+  });
+}
 const touchedFiles = danger.git.created_files.concat(danger.git.modified_files);
 const allFiles = touchedFiles.concat(danger.git.deleted_files);
 const diffsList = Promise.all(allFiles.map((p) => danger.git.diffForFile(p)));
