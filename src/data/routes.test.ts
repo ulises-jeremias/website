@@ -74,21 +74,21 @@ describe('routes', () => {
 
   it('getNavRoutes returns the compact canonical header navigation', () => {
     const nav = getNavRoutes();
-    // Writing (/blog) is secondary while the collection is empty (#396) — not in header nav.
-    expect(nav.map((route) => route.id)).toEqual(['home', 'projects', 'open-source', 'community']);
-    expect(nav.map((route) => route.navLabel)).toEqual(['Home', 'Projects', 'Open Source', 'Community']);
+    // Visitor-goal navigation (#397): the brand covers Home; Writing and
+    // Community are secondary while the Blog collection is empty (#396).
+    expect(nav.map((route) => route.id)).toEqual(['projects', 'open-source']);
+    expect(nav.map((route) => route.navLabel)).toEqual(['Work', 'Open Source']);
     for (let i = 1; i < nav.length; i++) {
       expect((nav[i].headerNavOrder as number) >= (nav[i - 1].headerNavOrder as number)).toBe(true);
     }
-    expect(nav[0].path).toBe('/');
   });
 
   it('projects known routes into exactly one active header item', () => {
     expect(getPrimaryNavigation).toBeTypeOf('function');
     if (!getPrimaryNavigation) return;
 
-    const expectations = new Map([
-      ['/', 'home'],
+    const expectations = new Map<string, string | null>([
+      ['/', null],
       ['/dotfiles', 'projects'],
       ['/agentic-workstation', 'projects'],
       ['/agent-toolkit/', 'projects'],
@@ -99,7 +99,7 @@ describe('routes', () => {
       ['/blog', null],
       ['/blog/a-field-note', null],
       ['/open-source', 'open-source'],
-      ['/community', 'community'],
+      ['/community', null],
     ]);
 
     for (const [path, expectedId] of expectations) {
