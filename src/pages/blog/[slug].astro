@@ -24,7 +24,7 @@ const { post } = Astro.props as Props;
 const hasPost = Boolean(post);
 
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
-let pageTitle = 'Note not found — Blog';
+let pageTitle = 'Note not found — Writing';
 let pageDescription = 'This note has not been published yet. The writing desk is ready for future field notes.';
 let articleJsonLd: Record<string, unknown> | undefined;
 let ogType = 'website';
@@ -33,7 +33,7 @@ const canonical = hasPost ? getCanonicalUrlForSlug(post.id) : getCanonicalUrl('/
 if (hasPost) {
   const rendered = await render(post);
   Content = rendered.Content;
-  pageTitle = post.data.title + ' — Blog';
+  pageTitle = post.data.title + ' — Writing';
   pageDescription = post.data.description;
   ogType = 'article';
   articleJsonLd = {
@@ -62,7 +62,7 @@ if (hasPost) {
     url: canonical,
     isPartOf: {
       '@type': 'Blog',
-      name: 'Ulises Jeremias — Blog',
+      name: 'Ulises Jeremias — Writing',
       url: getCanonicalUrl('/blog'),
     },
   };
@@ -83,8 +83,8 @@ if (hasPost) {
 >
   <div class="blog-page">
     <div class="blog-page__inner">
-      <nav class="blog-page__nav" aria-label="Blog">
-        <a href="/blog">← Blog</a>
+      <nav class="blog-page__nav" aria-label="Writing">
+        <a href="/blog">← Writing</a>
         <span class="blog-page__nav-sep" aria-hidden="true">·</span>
         <a href="/rss.xml">RSS</a>
       </nav>

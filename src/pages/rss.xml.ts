@@ -28,8 +28,8 @@ export async function GET() {
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Ulises Jeremias — Blog</title>
-    <description>Field notes on DX, systems, and open-source</description>
+    <title>Ulises Jeremias — Writing</title>
+    <description>Field notes on developer tooling, agent workflows, and open source</description>
     <link>${site}/blog</link>
     <language>en-us</language>${items}
   </channel>

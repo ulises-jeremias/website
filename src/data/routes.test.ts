@@ -74,8 +74,9 @@ describe('routes', () => {
 
   it('getNavRoutes returns the compact canonical header navigation', () => {
     const nav = getNavRoutes();
-    expect(nav.map((route) => route.id)).toEqual(['home', 'projects', 'blog', 'open-source', 'community']);
-    expect(nav.map((route) => route.navLabel)).toEqual(['Home', 'Projects', 'Blog', 'Open Source', 'Community']);
+    // Writing (/blog) is secondary while the collection is empty (#396) — not in header nav.
+    expect(nav.map((route) => route.id)).toEqual(['home', 'projects', 'open-source', 'community']);
+    expect(nav.map((route) => route.navLabel)).toEqual(['Home', 'Projects', 'Open Source', 'Community']);
     for (let i = 1; i < nav.length; i++) {
       expect((nav[i].headerNavOrder as number) >= (nav[i - 1].headerNavOrder as number)).toBe(true);
     }
@@ -95,18 +96,25 @@ describe('routes', () => {
       ['/v', 'projects'],
       ['/create-awesome', 'projects'],
       ['/projects', 'projects'],
-      ['/blog', 'blog'],
-      ['/blog/a-field-note', 'blog'],
+      ['/blog', null],
+      ['/blog/a-field-note', null],
       ['/open-source', 'open-source'],
       ['/community', 'community'],
     ]);
 
     for (const [path, expectedId] of expectations) {
       const navigation = getPrimaryNavigation(path);
-      expect(
-        navigation.filter((item) => item.isActive).map((item) => item.id),
-        `active header item for ${path}`,
-      ).toEqual([expectedId]);
+      if (expectedId === null) {
+        expect(
+          navigation.filter((item) => item.isActive),
+          `no active header item for secondary route ${path}`,
+        ).toEqual([]);
+      } else {
+        expect(
+          navigation.filter((item) => item.isActive).map((item) => item.id),
+          `active header item for ${path}`,
+        ).toEqual([expectedId]);
+      }
     }
 
     expect(getPrimaryNavigation('/not-found').filter((item) => item.isActive)).toEqual([]);
