@@ -877,6 +877,22 @@
   text-underline-offset: 3px;
 }
 
+.about-panel__cta {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--nest-cyan);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--nest-cyan) 50%, transparent);
+  padding-bottom: 1px;
+}
+
+.about-panel__cta:hover {
+  color: var(--nest-paper);
+  border-bottom-color: var(--nest-paper);
+}
+
 .about-panel__fun {
   margin: 0;
   font-family: var(--font-mono);

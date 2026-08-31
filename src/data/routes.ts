@@ -9,6 +9,7 @@ import { z } from 'astro/zod';
 
 export const routeThemeSchema = z.enum([
   'home',
+  'about',
   'dotfiles',
   'workstation',
   'toolkit',
@@ -83,6 +84,21 @@ export const routes: RouteMeta[] = [
     theme: 'home',
     navLabel: 'Home',
     navOrder: 0,
+  },
+  {
+    id: 'about',
+    path: '/about',
+    title: 'About — Ulises Jeremias',
+    description:
+      'The trajectory behind the work: developer tooling, open source, the V ecosystem, reproducible environments, and AI-native workflows.',
+    ogImage: '/social/about.jpg',
+    ogImageAlt: 'About Ulises Jeremias — developer tooling engineer and open-source builder',
+    structuredDataType: 'ProfilePage',
+    dataSource: 'static',
+    theme: 'about',
+    navLabel: 'About',
+    navOrder: 11,
+    headerNavOrder: 2,
   },
   {
     id: 'dotfiles',
