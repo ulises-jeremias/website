@@ -83,7 +83,6 @@ export const routes: RouteMeta[] = [
     theme: 'home',
     navLabel: 'Home',
     navOrder: 0,
-    headerNavOrder: 0,
   },
   {
     id: 'dotfiles',
@@ -193,7 +192,6 @@ export const routes: RouteMeta[] = [
     theme: 'community',
     navLabel: 'Community',
     navOrder: 7,
-    headerNavOrder: 4,
     subdomain: 'community',
   },
   {
@@ -233,7 +231,7 @@ export const routes: RouteMeta[] = [
     structuredDataType: 'CollectionPage',
     dataSource: 'generated',
     theme: 'projects',
-    navLabel: 'Projects',
+    navLabel: 'Work',
     navOrder: 9,
     headerNavOrder: 1,
   },
