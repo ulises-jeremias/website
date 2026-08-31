@@ -75,7 +75,7 @@ export const routes: RouteMeta[] = [
     path: '/',
     title: 'Ulises Jeremias — Digital Nest',
     description:
-      'Ulises Jeremias builds the Digital Nest — personal workshop, documentation atlas, and open-source portfolio.',
+      'Ulises Jeremias builds developer tooling — from Linux environments and programming-language ecosystems to AI-native workflows.',
     ogImage: '/social/home.jpg',
     ogImageAlt: 'Digital Nest developer tooling and open-source portfolio',
     structuredDataType: 'WebSite',
