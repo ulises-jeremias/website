@@ -65,24 +65,28 @@ test.describe('homepage visual coverage', () => {
     });
   });
 
-  test('keeps the project atlas before the quote on mobile', async ({ page }) => {
+  test('mobile: hero quote stays in the hero; atlas renders later as secondary exploration (#403)', async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
 
     const order = await page.evaluate(() => {
-      const atlas = document.querySelector('.hero__atlas-slot > .project-atlas');
-      const quote = document.querySelector('.hero__atlas-slot > .hero__quote');
-      if (!atlas || !quote) return null;
+      const hero = document.querySelector('.hero');
+      const atlas = document.querySelector('.nest-explore > .nest-explore__atlas > .project-atlas');
+      if (!hero || !atlas) return null;
       return {
-        domBeforeQuote: Boolean(atlas.compareDocumentPosition(quote) & Node.DOCUMENT_POSITION_FOLLOWING),
-        atlasTop: atlas.getBoundingClientRect().top,
-        quoteTop: quote.getBoundingClientRect().top,
+        atlasOutsideHero: !hero.contains(atlas),
+        domAfterHero: Boolean(hero.compareDocumentPosition(atlas) & Node.DOCUMENT_POSITION_FOLLOWING),
       };
     });
 
     expect(order).not.toBeNull();
-    expect(order?.domBeforeQuote).toBe(true);
-    expect(order?.atlasTop).toBeLessThan(order?.quoteTop ?? Number.POSITIVE_INFINITY);
+    expect(order?.atlasOutsideHero).toBe(true);
+    expect(order?.domAfterHero).toBe(true);
+    // The textual route list precedes the visual map.
+    await expect(page.locator('.nest-explore__routes a').first()).toBeVisible();
+    await expect(page.locator('#project-atlas')).toBeVisible();
   });
 
   test('reduced-motion keeps a complete static composition', async ({ page }) => {
