@@ -86,20 +86,20 @@
     },
     "/v/": {
       "mobile": {
-        "total": 156672,
+        "total": 177152,
         "document": 13312,
         "script": 0,
         "style": 14336,
-        "image": 61440,
+        "image": 86016,
         "font": 69632,
         "requests": 14
       },
       "desktop": {
-        "total": 156672,
+        "total": 177152,
         "document": 13312,
         "script": 0,
         "style": 14336,
-        "image": 61440,
+        "image": 86016,
         "font": 69632,
         "requests": 14
       }

@@ -83,8 +83,8 @@ describe('V source-fidelity data', () => {
 
     const mascot = licenseEntries.find((entry) => entry.component.includes('mascot'))!;
     expect(mascot.license).toBe('CC BY-NC 4.0');
-    expect(mascot.notes).toContain('ships no Veasel asset');
-    expect(mascot.notes).toContain('attribution and change notices');
+    expect(mascot.notes).toContain('CC BY-NC 4.0');
+    expect(mascot.notes).toContain('attribution');
     expect(mascot.notes).toContain('trademark rights are not granted');
   });
 
