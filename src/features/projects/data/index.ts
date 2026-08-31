@@ -190,17 +190,22 @@ const RAW_PROJECTS = [
   },
   {
     slug: 'recoil-devtools',
-    title: 'recoil-devtools',
-    summary: 'Community Recoil DevTools (log monitor, dock, logger). Experimental React tooling — not a Nest world.',
-    status: 'experimental',
+    title: 'Recoil DevTools',
+    summary:
+      'Maintained DevTools for existing Recoil applications (log monitor, dock, logger). Upstream Recoil is archived; this tool stays maintained for compatibility — not a Nest world.',
+    status: 'maintained',
     visibility: 'public',
     featured: false,
     tags: ['recoil', 'devtools', 'react'],
     kind: 'tool',
     role: 'maintainer',
     group: 'dev-tools',
-    links: [{ label: 'Repo', href: 'https://github.com/ulises-jeremias/recoil-devtools', kind: 'repo' }],
-    lastVerified: '2026-08-07',
+    links: [
+      { label: 'Repo', href: 'https://github.com/ulises-jeremias/recoil-devtools', kind: 'repo' },
+      { label: 'Demo', href: 'https://ulises-jeremias.github.io/recoil-devtools/', kind: 'site' },
+      { label: 'npm', href: 'https://www.npmjs.com/package/recoil-devtools', kind: 'site' },
+    ],
+    lastVerified: '2026-08-31',
     // stars omitted — only attach via GENERATED_GITHUB_SOURCE metrics with verifiedAt
   },
 ] as const;
