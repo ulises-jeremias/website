@@ -28,21 +28,27 @@ export async function GET() {
     .filter((path) => !path.includes('['));
 
   let blogEntries: Array<{ loc: string; lastmod: string }> = [];
+  let hasPublishedPosts = false;
   try {
     const posts = await getCollection('blog');
-    blogEntries = posts
-      .filter((post) => !post.data.draft)
-      .map((post) => ({
-        loc: getCanonicalUrl(blogPath(post.id), site),
-        lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
-      }));
+    const published = posts.filter((post) => !post.data.draft);
+    hasPublishedPosts = published.length > 0;
+    blogEntries = published.map((post) => ({
+      loc: getCanonicalUrl(blogPath(post.id), site),
+      lastmod: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+    }));
   } catch {
     blogEntries = [];
+    hasPublishedPosts = false;
   }
+
+  // The empty Writing index is noindexed (#396) — exclude it from the sitemap
+  // until content exists so search engines never see a noindexed sitemap URL.
+  const sitemapRoutes = hasPublishedPosts ? routes : routes.filter((path) => path !== '/blog');
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes
+${sitemapRoutes
   .map(
     (path) => `  <url>
     <loc>${escapeXml(getCanonicalUrl(path, site))}</loc>

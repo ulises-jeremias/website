@@ -47,4 +47,30 @@ describe('sitemap', () => {
     expect(body).toContain('<urlset');
     expect(body).toContain('<loc>https://www.ulises-jeremias.dev/</loc>');
   });
+
+  it('excludes the empty Writing index from the sitemap when no posts are published (#396)', async () => {
+    mocks.getCollection.mockResolvedValue([]);
+
+    const response = await GET();
+    const body = await response.text();
+
+    expect(body).toContain('<urlset');
+    expect(body).not.toContain('<loc>https://www.ulises-jeremias.dev/blog</loc>');
+    expect(body).toContain('<loc>https://www.ulises-jeremias.dev/projects</loc>');
+  });
+
+  it('includes the Writing index in the sitemap once posts are published', async () => {
+    mocks.getCollection.mockResolvedValue([
+      {
+        id: 'published-note',
+        data: { draft: false, pubDate: new Date('2025-02-01T00:00:00.000Z') },
+      },
+    ]);
+
+    const response = await GET();
+    const body = await response.text();
+
+    expect(body).toContain('<loc>https://www.ulises-jeremias.dev/blog</loc>');
+    expect(body).toContain('<loc>https://www.ulises-jeremias.dev/blog/published-note</loc>');
+  });
 });
