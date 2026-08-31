@@ -166,8 +166,8 @@
     },
     "/projects/": {
       "mobile": {
-        "total": 254976,
-        "document": 9216,
+        "total": 255102,
+        "document": 9342,
         "script": 0,
         "style": 13312,
         "image": 155648,
@@ -175,8 +175,8 @@
         "requests": 17
       },
       "desktop": {
-        "total": 254976,
-        "document": 9216,
+        "total": 255102,
+        "document": 9342,
         "script": 0,
         "style": 13312,
         "image": 155648,
