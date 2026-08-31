@@ -43,6 +43,8 @@ describe('routes', () => {
     const paths = routes.map((r) => r.path);
     const expected = [
       '/',
+      '/about',
+      '/agentic',
       '/dotfiles',
       '/agentic-workstation',
       '/agent-toolkit',
@@ -134,7 +136,7 @@ describe('routes', () => {
       expect(route.ogImageAlt, `${route.id} social image alt`).toBeTruthy();
       expect(existsSync(resolve(publicDirectory, route.ogImage!.slice(1))), route.ogImage).toBe(true);
     }
-    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(12);
+    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(13);
   });
 
   it('getCanonicalUrl builds absolute URL', () => {
@@ -171,5 +173,23 @@ describe('routes', () => {
     // About page exists on disk as a thin route.
     const aboutPage = resolve(dirname(fileURLToPath(import.meta.url)), '../pages/about/index.astro');
     expect(existsSync(aboutPage)).toBe(true);
+  });
+
+  it('exposes /agentic as a secondary overview that does not duplicate detail routes (#400)', () => {
+    const agentic = getRouteByPath('/agentic');
+    expect(agentic).toBeDefined();
+    expect(agentic!.structuredDataType).toBe('ItemList');
+    expect(agentic!.ogImage).toBe('/social/agentic.jpg');
+    // The overview is secondary — it must NOT occupy primary header nav.
+    expect(agentic!.headerNavOrder).toBeUndefined();
+    // The three detail routes remain canonical and independently present.
+    for (const detailPath of ['/agent-toolkit', '/agentic-workstation', '/agentic-harness']) {
+      const detail = getRouteByPath(detailPath);
+      expect(detail, `${detailPath} remains canonical`).toBeDefined();
+      expect(detail!.path).toBe(detailPath);
+    }
+    // The overview page exists on disk.
+    const agenticPage = resolve(dirname(fileURLToPath(import.meta.url)), '../pages/agentic/index.astro');
+    expect(existsSync(agenticPage)).toBe(true);
   });
 });

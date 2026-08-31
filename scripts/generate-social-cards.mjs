@@ -88,6 +88,13 @@ const cards = [
     accent: '#a78bfa',
     art: 'logo-nest.webp',
   },
+  {
+    id: 'agentic',
+    title: 'AGENTIC\nDEVELOPER STACK',
+    subtitle: 'Toolkit · Workstation · Harness — composable',
+    accent: '#ff4fd8',
+    art: 'island-agent.webp',
+  },
 ];
 
 const root = process.cwd();

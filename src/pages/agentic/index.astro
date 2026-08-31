@@ -1,0 +1,266 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
+import { ADOPTION_PATHS, getStackProject, type StackProjectId } from '@/data/personal-dx-stack';
+
+const meta = getRouteMeta('/agentic')!;
+
+/** The three agentic stack projects — HorneroConfig is NOT a required layer. */
+const agenticIds: StackProjectId[] = ['agent-toolkit', 'agentic-workstation', 'agentic-harness'];
+const stackMembers = agenticIds
+  .map((id) => getStackProject(id))
+  .filter((project): project is NonNullable<ReturnType<typeof getStackProject>> => Boolean(project));
+
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Agentic Developer Stack',
+  itemListElement: stackMembers.map((project, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: project.title,
+    url: getCanonicalUrl(project.path ?? '/'),
+  })),
+};
+
+const detailRoutes: Array<{ label: string; href: string; note: string }> = [
+  { label: 'Agent Toolkit', href: '/agent-toolkit', note: 'capabilities, swarms, loops, install' },
+  { label: 'Agentic Workstation', href: '/agentic-workstation', note: 'boot sequence, profiles, health' },
+  { label: 'Agentic Harness', href: '/agentic-harness', note: 'workspace anatomy, packs, ownership' },
+];
+---
+
+<SectionLayout
+  currentPath="/agentic"
+  world="Agentic"
+  title={meta.title}
+  description={meta.description}
+  jsonLd={itemListJsonLd}
+>
+  <div class="agentic-page">
+    <div class="agentic-page__inner">
+      <header class="agentic-page__masthead">
+        <p class="agentic-page__kicker">Agentic Developer Stack · overview</p>
+        <h1 class="agentic-page__title">Stop rebuilding your AI workflow for every coding assistant.</h1>
+        <p class="agentic-page__lead">
+          The Agentic Developer Stack is three composable projects with distinct responsibilities — not one monolith and
+          not a required sequence. Adopt what you need; each part works alone.
+        </p>
+      </header>
+
+      <section class="agentic-page__members" aria-labelledby="agentic-members-title">
+        <h2 id="agentic-members-title">Three responsibilities</h2>
+        <ul class="agentic-page__member-list">
+          {
+            stackMembers.map((project) => (
+              <li class="agentic-page__member">
+                <p class="agentic-page__member-role">{project.role}</p>
+                <h3 class="agentic-page__member-title">
+                  <a href={project.path}>{project.title}</a>
+                </h3>
+                <p class="agentic-page__member-responsibility">{project.responsibility}</p>
+                <p class="agentic-page__member-boundary">
+                  <strong>Owns:</strong> {project.owns.slice(0, 3).join(' · ')}
+                </p>
+                <p class="agentic-page__member-boundary">
+                  <strong>Does not own:</strong> {project.doesNotOwn.join(' · ')}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="agentic-page__adoption" aria-labelledby="agentic-adoption-title">
+        <h2 id="agentic-adoption-title">Where do I start?</h2>
+        <ul class="agentic-page__adoption-list">
+          {
+            ADOPTION_PATHS.map((path) => (
+              <li>
+                <p class="agentic-page__adoption-need">{path.need}</p>
+                <p class="agentic-page__adoption-detail">{path.detail}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="agentic-page__demo" aria-labelledby="agentic-demo-title">
+        <h2 id="agentic-demo-title">See it in action</h2>
+        <p>
+          <a
+            href="https://github.com/ulises-jeremias/agentic-workstation-demo"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            agentic-workstation-demo <span aria-hidden="true">↗</span>
+          </a>{' '}
+          is a supporting demo of the provisioning flow — a reference, not a fourth product.
+        </p>
+      </section>
+
+      <section class="agentic-page__details" aria-labelledby="agentic-details-title">
+        <h2 id="agentic-details-title">Go deeper</h2>
+        <ul class="agentic-page__detail-list">
+          {
+            detailRoutes.map((route) => (
+              <li>
+                <a href={route.href}>
+                  <strong>{route.label}</strong>
+                  <span>{route.note}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="agentic-page__related">
+          HorneroConfig is an optional, adjacent desktop environment — not part of the stack. See{' '}
+          <a href="/dotfiles">HorneroConfig</a> or the <a href="/projects">Work</a> overview for the full portfolio.
+        </p>
+      </section>
+    </div>
+  </div>
+</SectionLayout>
+
+<style>
+  .agentic-page__inner {
+    display: grid;
+    gap: 2rem;
+    max-inline-size: 72ch;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+  }
+
+  .agentic-page__kicker {
+    margin: 0 0 0.3rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .agentic-page__title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.5rem, 4vw, 2.3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .agentic-page__lead {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .agentic-page h2 {
+    margin: 0 0 0.9rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .agentic-page__member-list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .agentic-page__member {
+    padding: 1rem;
+    border: 1px solid var(--color-border, currentColor);
+    border-radius: 8px;
+  }
+
+  .agentic-page__member-role {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .agentic-page__member-title {
+    margin: 0.2rem 0 0.4rem;
+    font-size: 1.05rem;
+  }
+
+  .agentic-page__member-responsibility {
+    margin: 0 0 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .agentic-page__member-boundary {
+    margin: 0.2rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--color-text-faint);
+  }
+
+  .agentic-page__adoption-list {
+    display: grid;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .agentic-page__adoption-list li {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--color-border, currentColor);
+    border-radius: 8px;
+  }
+
+  .agentic-page__adoption-need {
+    margin: 0 0 0.25rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .agentic-page__adoption-detail {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .agentic-page__demo p {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .agentic-page__detail-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .agentic-page__detail-list a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-border, currentColor);
+    border-radius: 8px;
+  }
+
+  .agentic-page__detail-list span {
+    font-size: 0.8rem;
+    color: var(--color-text-faint);
+  }
+
+  .agentic-page__related {
+    margin: 0.9rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--color-text-faint);
+  }
+</style>

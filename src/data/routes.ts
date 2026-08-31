@@ -101,6 +101,19 @@ export const routes: RouteMeta[] = [
     headerNavOrder: 2,
   },
   {
+    id: 'agentic',
+    path: '/agentic',
+    title: 'Agentic Developer Stack — Toolkit, Workstation, Harness',
+    description:
+      'Three composable responsibilities: Agent Toolkit for portable capabilities and execution, Agentic Workstation for machine provisioning, Agentic Harness for persistent workspace context.',
+    ogImage: '/social/agentic.jpg',
+    ogImageAlt: 'Agentic Developer Stack — Agent Toolkit, Agentic Workstation, and Agentic Harness',
+    structuredDataType: 'ItemList',
+    dataSource: 'static',
+    navLabel: 'Agentic',
+    navOrder: 12,
+  },
+  {
     id: 'dotfiles',
     path: '/dotfiles',
     title: 'HorneroConfig — Dotfiles & Workstation OS',
