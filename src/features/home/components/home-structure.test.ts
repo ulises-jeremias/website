@@ -38,6 +38,21 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(hero).not.toMatch(/avatar\.png|placeholder-user/i);
   });
 
+  it('leads with developer-tooling positioning before Digital Nest exploration (#395)', async () => {
+    const hero = await readSource('features/home/components/Hero.astro');
+
+    // Positioning statement: concrete developer-tooling identity, not internal catalog.
+    expect(hero).toContain('I build developer tooling');
+    // Primary CTA leads to Work (/projects); secondary to GitHub.
+    expect(hero).toContain('href="/projects"');
+    expect(hero).toContain('Explore my work');
+    expect(hero).toContain('View on GitHub');
+    // CTA no longer anchors into the atlas — the atlas is secondary exploration.
+    expect(hero).not.toContain('href="#project-atlas"');
+    // No inventory counts or fake metrics in the hero.
+    expect(hero).not.toMatch(/\d+\s+(skills|agents|loops|stars|downloads)/i);
+  });
+
   it('builds the atmosphere from the ZIP hero plate plus CSS/SVG layers', async () => {
     const environment = await readSource('features/home/components/SynthwaveEnvironment.astro');
 
