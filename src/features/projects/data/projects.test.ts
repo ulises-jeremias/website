@@ -32,16 +32,20 @@ describe('projects ledger', () => {
     expect(ids).toContain('dev-tools');
   });
 
-  it('classifies recoil-devtools and v-mascot honestly', () => {
+  it('classifies recoil-devtools as maintained selected work with upstream-archived context (#398)', () => {
     const recoil = projects.find((p) => p.slug === 'recoil-devtools');
     const mascot = projects.find((p) => p.slug === 'vlang-v-mascot');
     expect(recoil).toMatchObject({
       group: 'dev-tools',
-      status: 'experimental',
+      status: 'maintained',
       role: 'maintainer',
       featured: false,
       visibility: 'public',
     });
+    // Upstream archive context must be explicit — Recoil DevTools itself is NOT archived.
+    expect(recoil?.summary.toLowerCase()).toContain('maintained');
+    expect(recoil?.summary.toLowerCase()).toContain('upstream recoil is archived');
+    expect(recoil?.lastVerified).toBe('2026-08-31');
     expect(recoil?.metrics).toBeUndefined();
     expect(mascot).toMatchObject({
       featured: false,
