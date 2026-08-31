@@ -1,0 +1,71 @@
+---
+/**
+ * ProofStrip — contextual evidence lines for portfolio entries (#399).
+ *
+ * Renders short dated proof sentences. Not a scoreboard: no stars, no
+ * rankings, no color-only maturity encoding. Each line may carry its own
+ * verification date; the strip is a plain list so it degrades without CSS
+ * and reads correctly with screen readers.
+ */
+import type { PortfolioEntry } from '@/data/portfolio.js';
+
+interface Props {
+  entry: PortfolioEntry;
+  /** Heading level for the accessible label; defaults to h3 semantics via aria-label only. */
+  label?: string;
+}
+
+const { entry, label = `Contextual proof for ${entry.title}` } = Astro.props as Props;
+const lines = entry.proofLines;
+---
+
+{
+  lines.length > 0 && (
+    <ul class="proof-strip" aria-label={label}>
+      {lines.map((line) => (
+        <li class="proof-strip__line" data-proof-kind={line.kind}>
+          <span class="proof-strip__text">{line.text}</span>
+          {line.verifiedAt && (
+            <time class="proof-strip__date" datetime={line.verifiedAt}>
+              verified {line.verifiedAt}
+            </time>
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .proof-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .proof-strip__line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--color-text-muted, inherit);
+  }
+
+  .proof-strip__text::before {
+    content: '·';
+    margin-inline-end: 0.4rem;
+    color: var(--color-text-faint, currentColor);
+  }
+
+  .proof-strip__date {
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    color: var(--color-text-faint, currentColor);
+    white-space: nowrap;
+  }
+</style>
