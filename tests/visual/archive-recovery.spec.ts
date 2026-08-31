@@ -7,9 +7,12 @@ test.describe('Archive and recovery routes', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
 
       await page.goto('/projects/');
-      await expect(page.locator('#archipelago-title')).toHaveText('Project archive');
+      await expect(page.locator('#archipelago-title')).toHaveText('What I build');
       await expect(page.locator('.archipelago__readout')).toContainText('World pointers');
       await expect(page.locator('[data-projects-row]')).not.toHaveCount(0);
+      // Work tiers (#404): featured → maintained → selected → labs precede the ledger.
+      await expect(page.locator('[data-testid="work-tiers"]')).toContainText('Featured work');
+      await expect(page.locator('[data-testid="work-tiers"]')).toContainText('Recoil DevTools');
 
       await page.goto('/open-source/');
       await expect(page.locator('#constellation-title')).toHaveText('Evidence archive');

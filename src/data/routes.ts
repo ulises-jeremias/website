@@ -253,8 +253,9 @@ export const routes: RouteMeta[] = [
   {
     id: 'projects',
     path: '/projects',
-    title: 'Projects — Curated Catalog',
-    description: 'Curated additional and archived projects beyond the main worlds.',
+    title: 'Work — Portfolio & Project Catalog',
+    description:
+      'What Ulises builds: featured developer-tooling areas, maintained ecosystems, selected work, labs, and the full source-backed project ledger.',
     ogImage: '/social/projects.jpg',
     ogImageAlt: 'Digital Nest project worlds and curated project catalog',
     structuredDataType: 'CollectionPage',

@@ -23,15 +23,16 @@ const groupCount = new Set(ledgerProjects.map((project) => project.group)).size;
 <section class="archipelago" aria-labelledby="archipelago-title" data-testid="projects-archipelago">
   <header class="archipelago__header">
     <div class="archipelago__intro">
-      <p class="archipelago__eyebrow">Projects · archive index</p>
-      <h1 id="archipelago-title">Project archive</h1>
+      <p class="archipelago__eyebrow">Work · portfolio</p>
+      <h1 id="archipelago-title">What I build</h1>
       <p class="archipelago__lede">
-        Start with the project worlds, then read the curated detail and archived work in the ledger below. Links are the
-        source of truth; no popularity ranking is implied.
+        A curated portfolio across developer tooling, language ecosystems, and developer environments. Work answers what
+        I build; <a href="/open-source">Open Source</a> answers what I own, maintain, and contribute to. Links are the source
+        of truth; no popularity ranking is implied.
       </p>
     </div>
-    <aside class="archipelago__readout" aria-label="Project archive readout">
-      <p class="archipelago__readout-kicker">Archive readout</p>
+    <aside class="archipelago__readout" aria-label="Work portfolio readout">
+      <p class="archipelago__readout-kicker">Portfolio readout</p>
       <dl>
         <div><dt>World pointers</dt><dd>{islands.length}</dd></div>
         <div><dt>Groups represented</dt><dd>{groupCount}</dd></div>
@@ -40,7 +41,7 @@ const groupCount = new Set(ledgerProjects.map((project) => project.group)).size;
     </aside>
   </header>
 
-  <p class="archipelago__index-note">01–{String(islands.length).padStart(2, '0')} · Dedicated project worlds</p>
+  <p class="archipelago__index-note">01–{String(islands.length).padStart(2, '0')} · Dedicated project pages</p>
 
   <ul class="archipelago__map" role="list">
     {

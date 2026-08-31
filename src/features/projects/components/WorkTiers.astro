@@ -1,0 +1,212 @@
+---
+/**
+ * WorkTiers — visitor-oriented portfolio tiers (#404, ADR-003).
+ *
+ * The /projects (Work) page leads with four editorial tiers sourced from the
+ * portfolio taxonomy, then the detailed grouped ledger continues below
+ * (Catalog). Tier order: Featured → Maintained ecosystems → Selected work →
+ * Labs/demos. No popularity ranking; roles distinguish ownership.
+ */
+import {
+  portfolioAreas,
+  portfolioEntries,
+  getPortfolioEntriesByArea,
+  getPortfolioEntriesByTier,
+  type PortfolioEntry,
+} from '@/data/portfolio.js';
+
+const featured: Array<{ areaId: string; title: string; path: string; proposition: string; note?: string }> =
+  portfolioAreas.map((area) => {
+    const entries = getPortfolioEntriesByArea(area.id);
+    const flagship = entries.find((entry) => entry.homepageEligible);
+    return {
+      areaId: area.id,
+      title: area.title,
+      path: area.overviewPath ?? area.path,
+      proposition: area.proposition,
+      note: flagship?.channels.join(' · '),
+    };
+  });
+
+/** Maintained ecosystems: significant responsibility with external/org ownership. */
+const maintained: PortfolioEntry[] = portfolioEntries.filter(
+  (entry) =>
+    entry.tier === 'flagship-component' &&
+    entry.repositoryOwner !== 'ulises-jeremias' &&
+    ['primary-maintainer', 'maintainer'].includes(entry.responsibility),
+);
+
+/** Selected work: narrower/earlier tooling with continuing relevance. */
+const selected = getPortfolioEntriesByTier('selected-work');
+
+/** Labs, demos, and supporting resources. */
+const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesByTier('supporting-resource')];
+---
+
+<div class="work-tiers" data-testid="work-tiers">
+  <section class="work-tiers__tier" aria-labelledby="work-featured-title">
+    <h2 id="work-featured-title" class="work-tiers__heading">Featured work</h2>
+    <ul class="work-tiers__featured-grid">
+      {
+        featured.map((area) => (
+          <li>
+            <a class="work-tiers__card" href={area.path}>
+              <strong>{area.title}</strong>
+              <span class="work-tiers__proposition">{area.proposition}</span>
+              {area.note && <span class="work-tiers__meta">{area.note}</span>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    maintained.length > 0 && (
+      <section class="work-tiers__tier" aria-labelledby="work-maintained-title">
+        <h2 id="work-maintained-title" class="work-tiers__heading">
+          Maintained ecosystems
+        </h2>
+        <p class="work-tiers__tier-note">
+          Projects where I hold significant responsibility but external or organization ownership stays explicit.
+        </p>
+        <ul class="work-tiers__entry-list">
+          {maintained.map((entry) => (
+            <li>
+              <a class="work-tiers__row" href={entry.path}>
+                <strong>{entry.title}</strong>
+                <span>
+                  {entry.responsibility.replaceAll('-', ' ')} · {entry.repositoryOwner}/{entry.repositorySlug}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    selected.length > 0 && (
+      <section class="work-tiers__tier" aria-labelledby="work-selected-title">
+        <h2 id="work-selected-title" class="work-tiers__heading">
+          Selected work
+        </h2>
+        <ul class="work-tiers__entry-list">
+          {selected.map((entry) => (
+            <li>
+              <a class="work-tiers__row" href={entry.path}>
+                <strong>{entry.title}</strong>
+                <span>{entry.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    labs.length > 0 && (
+      <section class="work-tiers__tier" aria-labelledby="work-labs-title">
+        <h2 id="work-labs-title" class="work-tiers__heading">
+          Labs, demos &amp; references
+        </h2>
+        <p class="work-tiers__tier-note">Supporting material — useful context, not flagship products.</p>
+        <ul class="work-tiers__entry-list">
+          {labs.map((entry) => (
+            <li>
+              <a class="work-tiers__row" href={entry.path}>
+                <strong>{entry.title}</strong>
+                <span>{entry.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</div>
+
+<style>
+  .work-tiers {
+    display: grid;
+    gap: 1.75rem;
+    width: min(100% - 2 * var(--section-padding-x, 1rem), 74rem);
+    margin: 0 auto;
+    padding: 1.5rem clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .work-tiers__heading {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .work-tiers__tier-note {
+    margin: -0.4rem 0 0.75rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-text-faint);
+  }
+
+  .work-tiers__featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-tiers__card {
+    display: grid;
+    gap: 0.35rem;
+    block-size: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--nest-violet) 5%, transparent);
+  }
+
+  .work-tiers__card:hover,
+  .work-tiers__card:focus-visible {
+    border-color: var(--nest-violet);
+  }
+
+  .work-tiers__proposition {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .work-tiers__meta {
+    font-size: 0.72rem;
+    color: var(--color-text-faint);
+  }
+
+  .work-tiers__entry-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-tiers__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.75rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 22%, transparent);
+    border-radius: 8px;
+  }
+
+  .work-tiers__row span {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--color-text-faint);
+  }
+</style>
