@@ -413,7 +413,7 @@ export const licenseEntries: VLicenseEntry[] = [
     license: vSourceFacts.licenses.vMascot,
     source: 'github.com/vlang/v-mascot/blob/add-mascot/LICENSE',
     notes:
-      'This site ships no Veasel asset. Sharing or adapting the mascot is limited to noncommercial use and requires attribution and change notices; trademark rights are not granted.',
+      'Veasel shown with attribution under CC BY-NC 4.0 (noncommercial use). This is a personal portfolio site; trademark rights are not granted.',
   },
 ];
 
