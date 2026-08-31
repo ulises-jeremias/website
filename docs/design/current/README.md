@@ -6,19 +6,22 @@ exploration.
 
 ## Authority order
 
-1. `docs/design/synthwave-systems-atlas.md` is the approved visual identity.
-2. `src/styles/` contains the maintained production tokens and type roles.
-3. `src/data/routes.ts` defines canonical routes and the compact navigation projection; its unit tests lock labels and active-item behavior.
-4. `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md` defines the native-control contract for interactive diagrams.
-5. `tests/visual/*-snapshots/` contains maintained Chromium visual goldens.
-6. `performance-baseline.json` records the measured route delivery baseline.
-7. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
-8. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
-9. `route-redesign-plan-2026-08.md` records the active substantial route redesign waves and evidence contract.
+1. `docs/adr/ADR-003-portfolio-first-ia.md` defines the portfolio-first information architecture: four flagship areas, public labels, and route responsibilities. It supersedes the flat world ordering as the visitor hierarchy while preserving all canonical URLs.
+2. `docs/design/synthwave-systems-atlas.md` is the approved visual identity.
+3. `src/styles/` contains the maintained production tokens and type roles.
+4. `src/data/routes.ts` defines canonical routes and the compact navigation projection; its unit tests lock labels and active-item behavior.
+5. `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md` defines the native-control contract for interactive diagrams.
+6. `tests/visual/*-snapshots/` contains maintained Chromium visual goldens.
+7. `performance-baseline.json` records the measured route delivery baseline.
+8. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
+9. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
+10. `route-redesign-plan-2026-08.md` records the completed substantial route redesign waves and evidence contract; the portfolio-first IA (ADR-003) amends the route set with `/agentic` and `/about`.
 
 ## Accepted baseline
 
 - Visual direction: Synthwave Systems Atlas, approved in issue #52.
+- Information architecture: portfolio-first, defined in ADR-003 and tracked
+  through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
 - Assessment implementation baseline: `main@fe489798`.
@@ -40,10 +43,11 @@ normal Playwright runs.
 
 ## Open product decisions
 
-- Homepage hierarchy: compare contact-first and project-first variants before
-  changing the accepted composition.
-- Empty Blog navigation: remove it from the primary projection or commit to a
-  publishing cadence after product-owner review.
+- Homepage flagship hierarchy: the portfolio-first evolution (#392–#405)
+  replaces the contact-first vs project-first comparison with the accepted
+  ADR-003 hierarchy.
+- Empty Blog navigation: the Writing label (#396) defines a deterministic
+  promotion rule after the first published post.
 - Production WebGL: not approved. Any OGL experiment remains local to the VSL
   station and requires a separate decision after comparative testing.
 
