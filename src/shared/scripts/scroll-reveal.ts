@@ -1,10 +1,11 @@
 /**
  * Scroll reveal — one progressive-enhancement primitive for the whole site.
  *
- * Elements marked with `data-reveal` fade/rise in the first time they enter
- * the viewport. No-JS and reduced-motion users see everything immediately:
- * the hidden state is only applied when JS is running (`.reveal-ready` on
- * <html>) and the global reduced-motion kill switch freezes the transition.
+ * Elements marked with `data-reveal` fade/rise the first time they enter the
+ * viewport. No-JS and reduced-motion users see everything immediately.
+ *
+ * Safety net: all elements are revealed after a short timeout so content is
+ * never permanently hidden (full-page screenshots, printing, bots).
  */
 (() => {
   const doc = document.documentElement;
@@ -37,4 +38,8 @@
     if (el.getBoundingClientRect().top < window.innerHeight * 0.9) show(el);
     else observer.observe(el);
   }
+
+  // Safety net: reveal everything after 3 s so full-page screenshots,
+  // printing, and non-scrolling contexts never show hidden content.
+  setTimeout(() => targets.forEach(show), 3000);
 })();
