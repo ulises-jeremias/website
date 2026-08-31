@@ -5,6 +5,11 @@
 **Direction:** Synthwave Systems Atlas
 **Delivery:** route-specific waves through protected pull requests
 
+> **Amended 2026-08-31:** ADR-003 (`docs/adr/ADR-003-portfolio-first-ia.md`)
+> supersedes the flat world priority ordering as the visitor hierarchy and adds
+> `/agentic` and `/about` to the route set. All canonical URLs from this plan
+> remain preserved. The route-specific wave work described here is complete.
+
 ## Intent
 
 The first route-identity pass corrected content, spacing, and obvious density
