@@ -81,6 +81,13 @@ const cards = [
     accent: '#ffb45e',
     art: 'island-oss.webp',
   },
+  {
+    id: 'about',
+    title: 'ABOUT',
+    subtitle: 'Developer tooling · open source · the trajectory',
+    accent: '#a78bfa',
+    art: 'logo-nest.webp',
+  },
 ];
 
 const root = process.cwd();

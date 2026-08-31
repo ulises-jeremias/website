@@ -17,7 +17,7 @@ import { profile } from '@/data/profile.js';
       <h3 class="about-panel__label">Roles &amp; focus</h3>
       <ul class="about-panel__roles">
         {
-          profile.roles.map((role) => (
+          profile.roles.slice(0, 3).map((role) => (
             <li>
               <strong>{role.label}</strong>
               {role.organization && (
@@ -37,6 +37,9 @@ import { profile } from '@/data/profile.js';
           ))
         }
       </ul>
+      <a class="about-panel__cta" href="/about">
+        Read the full trajectory <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>

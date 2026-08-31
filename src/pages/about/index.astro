@@ -1,0 +1,343 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
+import { profile } from '@/data/profile';
+
+const meta = getRouteMeta('/about')!;
+
+const trajectory = [
+  {
+    period: 'Foundations',
+    heading: 'Developer and tooling engineer',
+    body: 'Started building CLIs, automation, and developer environments — the habit of treating developer experience as a product, not an afterthought.',
+  },
+  {
+    period: 'Open source',
+    heading: 'Scaffolding and community tooling',
+    body: 'Created the Create Awesome family (Node, Python, V) and maintained Recoil DevTools for the React community — years of composability-first developer tooling.',
+  },
+  {
+    period: 'Ecosystems',
+    heading: 'V language and scientific computing',
+    body: 'Contributing to the V ecosystem: maintainer work on VSL (scientific computing), VTL (tensors/autograd), and setup-v (CI), plus RxV for reactive streams.',
+  },
+  {
+    period: 'Environments',
+    heading: 'Reproducible Linux workstations',
+    body: 'HorneroConfig: a reproducible Linux desktop environment around Hyprland, Quickshell, Smart Colors, and chezmoi — developer-controlled systems by default.',
+  },
+  {
+    period: 'Agentic',
+    heading: 'AI-native developer workflows',
+    body: 'The Agentic Developer Stack: Agent Toolkit for portable capabilities, Agentic Workstation for machine provisioning, and Agentic Harness for persistent workspace context.',
+  },
+];
+
+const values = [
+  {
+    title: 'Developer experience',
+    body: 'Tools should reduce friction for the person using them — measurable in time saved, not features shipped.',
+  },
+  {
+    title: 'Composability',
+    body: 'Small pieces with clear boundaries. Capabilities that survive the next assistant, framework, or machine.',
+  },
+  {
+    title: 'Open source',
+    body: 'Work in public, document decisions, and keep the durable trail on GitHub where anyone can inspect it.',
+  },
+  {
+    title: 'Automation',
+    body: 'If a step is repeated, script it. If a script is repeated, productize it.',
+  },
+  {
+    title: 'Reproducibility',
+    body: 'Environments should be declared, versioned, and rebuilt — never hand-assembled.',
+  },
+  {
+    title: 'Developer-controlled systems',
+    body: 'Automation serves the developer; provenance and control stay explicit.',
+  },
+];
+
+const currentFocus = [
+  { label: 'Agentic Developer Stack', href: '/agent-toolkit', note: 'Toolkit · Workstation · Harness' },
+  { label: 'HorneroConfig', href: '/dotfiles', note: 'Reproducible Linux environment' },
+  { label: 'V Ecosystem', href: '/v', note: 'VSL · VTL · RxV · setup-v' },
+  { label: 'Create Awesome', href: '/create-awesome', note: 'Node · Python · V scaffolding' },
+];
+
+const profilePageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: profile.displayName,
+    url: getCanonicalUrl('/'),
+    jobTitle: profile.title,
+    sameAs: [profile.links.github, profile.links.linkedin],
+  },
+  url: getCanonicalUrl('/about'),
+};
+---
+
+<SectionLayout
+  currentPath="/about"
+  world="About"
+  title={meta.title}
+  description={meta.description}
+  theme="about"
+  jsonLd={profilePageJsonLd}
+>
+  <div class="about-page">
+    <div class="about-page__inner">
+      <header class="about-page__masthead">
+        <p class="about-page__kicker">Digital Nest · builder profile</p>
+        <h1 class="about-page__title">{profile.displayName}</h1>
+        <p class="about-page__lead">
+          Developer-tooling engineer and open-source builder — I build the layers developers work on: environments,
+          language ecosystems, and AI-native workflows.
+        </p>
+      </header>
+
+      <section class="about-page__trajectory" aria-labelledby="about-trajectory-title">
+        <h2 id="about-trajectory-title">The trajectory</h2>
+        <ol class="about-page__timeline">
+          {
+            trajectory.map((stage) => (
+              <li class="about-page__stage">
+                <p class="about-page__stage-period">{stage.period}</p>
+                <h3 class="about-page__stage-heading">{stage.heading}</h3>
+                <p class="about-page__stage-body">{stage.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="about-page__values" aria-labelledby="about-values-title">
+        <h2 id="about-values-title">What I care about</h2>
+        <ul class="about-page__value-grid">
+          {
+            values.map((value) => (
+              <li class="about-page__value">
+                <h3 class="about-page__value-title">{value.title}</h3>
+                <p class="about-page__value-body">{value.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="about-page__focus" aria-labelledby="about-focus-title">
+        <h2 id="about-focus-title">Current focus</h2>
+        <ul class="about-page__focus-list">
+          {
+            currentFocus.map((item) => (
+              <li>
+                <a href={item.href}>
+                  <strong>{item.label}</strong>
+                  <span>{item.note}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="about-page__roles" aria-labelledby="about-roles-title">
+        <h2 id="about-roles-title">Roles &amp; responsibility</h2>
+        <ul class="about-page__role-list">
+          {
+            profile.roles.map((role) => (
+              <li>
+                <strong>{role.label}</strong>
+                {role.organization && <span> · {role.organization}</span>}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="about-page__provenance">
+          Repository ownership, maintainer roles, and organization contributions are distinguished throughout the site —
+          see <a href="/open-source">Open Source</a> for the evidence trail.
+        </p>
+      </section>
+
+      <section class="about-page__contact" aria-labelledby="about-contact-title">
+        <h2 id="about-contact-title">Contact &amp; collaboration</h2>
+        <ul class="about-page__social">
+          {
+            profile.socials.map((social) => (
+              <li>
+                <a href={social.href} target="_blank" rel="noopener noreferrer">
+                  {social.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</SectionLayout>
+
+<style>
+  .about-page {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .about-page__inner {
+    display: grid;
+    gap: 2rem;
+    max-inline-size: 72ch;
+    margin-inline: auto;
+    padding: clamp(1.25rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+  }
+
+  .about-page__kicker {
+    margin: 0 0 0.3rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about-page__title {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .about-page__lead {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .about-page h2 {
+    margin: 0 0 0.9rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .about-page__timeline {
+    display: grid;
+    gap: 1.1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-page__stage {
+    padding-inline-start: 0.9rem;
+    border-inline-start: 2px solid var(--color-border, currentColor);
+  }
+
+  .about-page__stage-period {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  .about-page__stage-heading {
+    margin: 0.15rem 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .about-page__stage-body {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .about-page__value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-page__value {
+    padding: 0.9rem;
+    border: 1px solid var(--color-border, currentColor);
+    border-radius: 8px;
+  }
+
+  .about-page__value-title {
+    margin: 0 0 0.3rem;
+    font-size: 0.92rem;
+  }
+
+  .about-page__value-body {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .about-page__focus-list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-page__focus-list a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-border, currentColor);
+    border-radius: 8px;
+  }
+
+  .about-page__focus-list span {
+    font-size: 0.8rem;
+    color: var(--color-text-faint);
+  }
+
+  .about-page__role-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.92rem;
+  }
+
+  .about-page__provenance {
+    margin: 0.8rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-text-faint);
+  }
+
+  .about-page__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-page__social a {
+    display: inline-block;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--color-border, currentColor);
+    border-radius: 8px;
+  }
+</style>

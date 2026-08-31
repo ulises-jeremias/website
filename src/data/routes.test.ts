@@ -76,8 +76,9 @@ describe('routes', () => {
     const nav = getNavRoutes();
     // Visitor-goal navigation (#397): the brand covers Home; Writing and
     // Community are secondary while the Blog collection is empty (#396).
-    expect(nav.map((route) => route.id)).toEqual(['projects', 'open-source']);
-    expect(nav.map((route) => route.navLabel)).toEqual(['Work', 'Open Source']);
+    // About joins the header as a first-class destination (#401).
+    expect(nav.map((route) => route.id)).toEqual(['projects', 'about', 'open-source']);
+    expect(nav.map((route) => route.navLabel)).toEqual(['Work', 'About', 'Open Source']);
     for (let i = 1; i < nav.length; i++) {
       expect((nav[i].headerNavOrder as number) >= (nav[i - 1].headerNavOrder as number)).toBe(true);
     }
@@ -133,7 +134,7 @@ describe('routes', () => {
       expect(route.ogImageAlt, `${route.id} social image alt`).toBeTruthy();
       expect(existsSync(resolve(publicDirectory, route.ogImage!.slice(1))), route.ogImage).toBe(true);
     }
-    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(11);
+    expect(new Set(routes.filter((route) => route.id !== 'blog-post').map((route) => route.ogImage)).size).toBe(12);
   });
 
   it('getCanonicalUrl builds absolute URL', () => {
@@ -156,5 +157,19 @@ describe('routes', () => {
     expect(isExternalHref('/blog')).toBe(false);
     expect(isExternalHref('/projects#anchor')).toBe(false);
     expect(isExternalHref('mailto:a@b.com')).toBe(false);
+  });
+
+  it('exposes /about as a first-class ProfilePage route (#401)', () => {
+    const about = getRouteByPath('/about');
+    expect(about).toBeDefined();
+    expect(about!.navLabel).toBe('About');
+    expect(about!.structuredDataType).toBe('ProfilePage');
+    expect(about!.ogImage).toBe('/social/about.jpg');
+    // About sits between Work and Open Source in the header.
+    const nav = getNavRoutes();
+    expect(nav.map((route) => route.id)).toEqual(['projects', 'about', 'open-source']);
+    // About page exists on disk as a thin route.
+    const aboutPage = resolve(dirname(fileURLToPath(import.meta.url)), '../pages/about/index.astro');
+    expect(existsSync(aboutPage)).toBe(true);
   });
 });
