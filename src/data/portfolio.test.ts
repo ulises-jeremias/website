@@ -144,4 +144,63 @@ describe('portfolio taxonomy', () => {
       expect(entry.tier).toBe('flagship-component');
     }
   });
+
+  describe('contextual proof lines (#399)', () => {
+    it('volatile proof kinds always carry verifiedAt', () => {
+      const volatileKinds = new Set(['release', 'maintenance', 'channel-freshness']);
+      for (const entry of portfolioEntries) {
+        for (const [index, line] of entry.proofLines.entries()) {
+          if (volatileKinds.has(line.kind)) {
+            expect(
+              line.verifiedAt,
+              `${entry.id} proofLines[${index}] "${line.kind}" requires verifiedAt`,
+            ).toBeDefined();
+          }
+        }
+      }
+    });
+
+    it('ecosystem-scale proof only appears on externally owned entries', () => {
+      for (const entry of portfolioEntries) {
+        for (const line of entry.proofLines) {
+          if (line.kind === 'ecosystem-scale') {
+            expect(entry.repositoryOwner, `${entry.id} ecosystem-scale requires external owner`).not.toBe(
+              'ulises-jeremias',
+            );
+          }
+        }
+      }
+    });
+
+    it('proof text never presents raw popularity metrics as value scores', () => {
+      const forbiddenPatterns = [/\d+\s+stars\b/i, /\d+\s+forks\b/i, /\d+\s+downloads?\b/i, /\d+\s+users\b/i];
+      for (const entry of portfolioEntries) {
+        for (const line of entry.proofLines) {
+          for (const pattern of forbiddenPatterns) {
+            expect(line.text, `${entry.id} proof line must not contain popularity metrics: ${line.text}`).not.toMatch(
+              pattern,
+            );
+          }
+        }
+      }
+    });
+
+    it('flagship entries carry at least one proof line for adoption context', () => {
+      const proofEntryIds = ['horneroconfig', 'agent-toolkit', 'recoil-devtools', 'create-node-app'];
+      for (const id of proofEntryIds) {
+        const entry = portfolioEntries.find((e) => e.id === id);
+        expect(entry, `${id} exists`).toBeDefined();
+        expect(entry!.proofLines.length, `${id} has contextual proof lines`).toBeGreaterThan(0);
+      }
+    });
+
+    it('V ecosystem-scale proof attributes scale to the vlang organization', () => {
+      const v = portfolioEntries.find((e) => e.id === 'v');
+      expect(v).toBeDefined();
+      const scaleLine = v!.proofLines.find((line) => line.kind === 'ecosystem-scale');
+      expect(scaleLine).toBeDefined();
+      expect(scaleLine!.text.toLowerCase()).toContain('organization');
+      expect(scaleLine!.text.toLowerCase()).not.toContain('my project');
+    });
+  });
 });

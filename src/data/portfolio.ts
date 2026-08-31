@@ -114,6 +114,33 @@ export const portfolioEntrySchema = z
     channels: z.array(z.string().min(1)).default([]),
     /** Proof/evidence reference. */
     evidence: portfolioEvidenceSchema,
+    /**
+     * Short contextual proof lines (issue #399). Each line is a plain sentence
+     * with an allowlisted fact kind — never a raw popularity metric. Lines for
+     * volatile kinds (release, maintenance, channel-freshness) must carry a
+     * verification date.
+     */
+    proofLines: z
+      .array(
+        z.object({
+          kind: z.enum([
+            'maintenance',
+            'distribution',
+            'release',
+            'demo',
+            'role',
+            'ecosystem-scale',
+            'history',
+            'channel-freshness',
+          ]),
+          text: z.string().min(1),
+          verifiedAt: z
+            .string()
+            .regex(/^\d{4}-\d{2}-\d{2}/, 'ISO date required')
+            .optional(),
+        }),
+      )
+      .default([]),
     /** Whether this may appear as a homepage flagship. */
     homepageEligible: z.boolean().default(false),
   })
@@ -149,6 +176,25 @@ export const portfolioEntrySchema = z
         message: 'generated-snapshot evidence requires verifiedAt',
         path: ['evidence', 'verifiedAt'],
       });
+    }
+    // Volatile proof kinds require verifiedAt (#399 evidence policy).
+    const volatileProofKinds = new Set(['release', 'maintenance', 'channel-freshness']);
+    for (const [index, line] of value.proofLines.entries()) {
+      if (volatileProofKinds.has(line.kind) && !line.verifiedAt) {
+        ctx.addIssue({
+          code: 'custom',
+          message: `proofLines[${index}] kind "${line.kind}" is volatile and requires verifiedAt`,
+          path: ['proofLines', index, 'verifiedAt'],
+        });
+      }
+      // ecosystem-scale lines require an external owner (never personal scale).
+      if (line.kind === 'ecosystem-scale' && value.repositoryOwner === 'ulises-jeremias') {
+        ctx.addIssue({
+          code: 'custom',
+          message: `proofLines[${index}] ecosystem-scale requires an external repository owner`,
+          path: ['proofLines', index, 'kind'],
+        });
+      }
     }
   });
 
@@ -211,7 +257,11 @@ export const portfolioAreas: PortfolioAreaMeta[] = [
   },
 ];
 
-export const portfolioEntries: PortfolioEntry[] = [
+/**
+ * Raw portfolio entry definitions — parsed through `portfolioEntrySchema` on
+ * export (see `portfolioEntries` below) so schema defaults apply.
+ */
+const rawPortfolioEntries = [
   // --- Agentic Developer Stack ---
   {
     id: 'agent-toolkit',
@@ -226,6 +276,17 @@ export const portfolioEntries: PortfolioEntry[] = [
     relationship: 'component-product',
     description: 'Portable agentic capabilities and execution runtime across major coding assistants.',
     channels: ['GitHub Releases', 'npm', 'PyPI', 'AUR', 'Homebrew tap'],
+    proofLines: [
+      {
+        kind: 'distribution',
+        text: 'Distributed through GitHub Releases, npm, PyPI, AUR, and a custom Homebrew tap.',
+      },
+      {
+        kind: 'channel-freshness',
+        text: 'GitHub, npm, PyPI, and AUR binary channel aligned at the current release.',
+        verifiedAt: '2026-08-31',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/ulises-jeremias/agent-toolkit',
       sourceType: 'editorial',
@@ -305,6 +366,17 @@ export const portfolioEntries: PortfolioEntry[] = [
     relationship: 'parent-family',
     description: 'Reproducible Linux desktop environment — Hyprland, Quickshell, Smart Colors, chezmoi.',
     channels: ['GitHub', 'AUR'],
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'Maintained as an established personal dotfiles framework distributed through GitHub and AUR.',
+      },
+      {
+        kind: 'maintenance',
+        text: 'Default-branch activity continues alongside published documentation.',
+        verifiedAt: '2026-08-31',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/ulises-jeremias/dotfiles',
       sourceType: 'editorial',
@@ -327,6 +399,17 @@ export const portfolioEntries: PortfolioEntry[] = [
     description: 'Simple, fast, safe compiled language. Core Team contributions to compiler, tooling, and docs.',
     channels: [],
     externalContext: 'vlang organization project — external scale is context, not personal ownership',
+    proofLines: [
+      {
+        kind: 'ecosystem-scale',
+        text: 'vlang organization project — scale belongs to the ecosystem, not to personal ownership.',
+      },
+      {
+        kind: 'role',
+        text: 'Contributor and organization member with verified default-branch commits.',
+        verifiedAt: '2026-08-31',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/vlang/v',
       sourceType: 'repository-metadata',
@@ -462,6 +545,17 @@ export const portfolioEntries: PortfolioEntry[] = [
     relationship: 'component-product',
     description: 'Mature Node.js scaffolding — 10 templates, 53 extensions, npm distribution.',
     channels: ['npm'],
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'The mature family member — maintained since 2020 with npm distribution.',
+      },
+      {
+        kind: 'channel-freshness',
+        text: 'npm channel runs ahead of secondary Homebrew/Docker/AUR package tags.',
+        verifiedAt: '2026-08-31',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/Create-Node-App/create-node-app',
       sourceType: 'editorial',
@@ -522,6 +616,18 @@ export const portfolioEntries: PortfolioEntry[] = [
     description:
       'Maintained DevTools for existing Recoil applications. Upstream Recoil is archived; this tool remains maintained for compatibility.',
     channels: ['npm'],
+    proofLines: [
+      {
+        kind: 'release',
+        text: 'Published v1.2.3 with current npm packages and a live demo.',
+        verifiedAt: '2026-08-31',
+      },
+      {
+        kind: 'maintenance',
+        text: 'Independently maintained for existing Recoil applications while upstream Recoil is archived.',
+        verifiedAt: '2026-08-31',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/ulises-jeremias/recoil-devtools',
       sourceType: 'repository-metadata',
@@ -529,6 +635,20 @@ export const portfolioEntries: PortfolioEntry[] = [
     homepageEligible: false,
   },
 ];
+
+/**
+ * Parsed portfolio entries — schema defaults (e.g. proofLines: []) are applied
+ * at import time so consumers never see missing optional fields.
+ */
+export const portfolioEntries: PortfolioEntry[] = rawPortfolioEntries.map((entry, index) => {
+  const parsed = portfolioEntrySchema.safeParse(entry);
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid portfolio entry at index ${index} (${(entry as { id?: string }).id}): ${parsed.error.message}`,
+    );
+  }
+  return parsed.data;
+});
 
 // ---------------------------------------------------------------------------
 // Helpers
