@@ -3,10 +3,10 @@ import SectionLayout from '../layouts/SectionLayout.astro';
 import { getRouteById } from '../data/routes.js';
 import Hero from '../features/home/components/Hero.astro';
 import FeaturedAreas from '../features/home/components/FeaturedAreas.astro';
-import ProjectAtlas from '../features/home/components/ProjectAtlas.astro';
 import NestStatus from '../features/home/components/NestStatus.astro';
 import AboutPanel from '../features/home/components/AboutPanel.astro';
 import FeaturedProjectLedger from '../features/home/components/FeaturedProjectLedger.astro';
+import NestExplore from '../features/home/components/NestExplore.astro';
 import '../styles/home.css';
 
 const route = getRouteById('home');
@@ -22,9 +22,7 @@ if (!route) throw new Error('Home route metadata is required');
   immersive
 >
   <div class="home">
-    <Hero>
-      <ProjectAtlas slot="atlas" />
-    </Hero>
+    <Hero />
 
     <FeaturedAreas />
 
@@ -33,5 +31,7 @@ if (!route) throw new Error('Home route metadata is required');
       <AboutPanel />
       <FeaturedProjectLedger />
     </div>
+
+    <NestExplore />
   </div>
 </SectionLayout>
