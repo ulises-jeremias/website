@@ -1,0 +1,190 @@
+---
+/**
+ * FeaturedAreas — the four flagship portfolio bodies of work (#402, ADR-003).
+ *
+ * The first project-oriented homepage section: exactly four areas, sourced
+ * from the portfolio taxonomy via home data. No popularity ranking, no
+ * interchangeable cards — each area keeps its synthwave identity and a
+ * verified lens/proof cue.
+ */
+import { featuredAreas } from '../data/index.js';
+
+const accentTokens = {
+  magenta: 'var(--nest-magenta)',
+  pink: 'var(--nest-pink)',
+  violet: 'var(--nest-violet)',
+  blue: 'var(--nest-blue)',
+  cyan: 'var(--nest-cyan)',
+  orange: 'var(--nest-sunset-orange)',
+} as const;
+---
+
+<section class="featured-areas" aria-labelledby="featured-areas-title">
+  <header class="featured-areas__header">
+    <h2 id="featured-areas-title" class="featured-areas__eyebrow text-glow-accent">
+      <span aria-hidden="true">/</span> Featured Work
+    </h2>
+    <p class="featured-areas__lead">
+      Four bodies of work — current direction and long-running open-source credibility.
+    </p>
+  </header>
+
+  <ol class="featured-areas__grid">
+    {
+      featuredAreas.map((area, index) => (
+        <li class="featured-areas__item" style={`--world-color: ${accentTokens[area.accent]}`}>
+          <a class="featured-areas__link" href={area.path}>
+            <span class="featured-areas__art clip-corner-sm" aria-hidden="true">
+              <img
+                class="art-fade"
+                src={`/assets/${area.island}.png`}
+                srcset={`/assets/nest/${area.island}-sm.webp 320w, /assets/nest/${area.island}.webp 640w`}
+                sizes="(max-width: 768px) 72px, 96px"
+                width="96"
+                height="96"
+                alt=""
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </span>
+            <span class="featured-areas__body">
+              <span class="featured-areas__lens">{area.lens}</span>
+              <strong class="featured-areas__title">
+                <span class="featured-areas__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                {area.title}
+              </strong>
+              <span class="featured-areas__proposition">{area.proposition}</span>
+              {area.members && <span class="featured-areas__members">{area.members}</span>}
+              {area.proof && <span class="featured-areas__proof">{area.proof}</span>}
+            </span>
+            <span class="featured-areas__enter" aria-hidden="true">
+              Explore →
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .featured-areas {
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+  }
+
+  .featured-areas__header {
+    display: grid;
+    gap: 0.35rem;
+    margin-block-end: 1.25rem;
+  }
+
+  .featured-areas__eyebrow {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .featured-areas__lead {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text-muted, var(--nest-text-muted));
+  }
+
+  .featured-areas__grid {
+    display: grid;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  }
+
+  .featured-areas__link {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    block-size: 100%;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--world-color) 32%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--world-color) 6%, transparent);
+    text-decoration: none;
+    transition:
+      border-color 160ms ease,
+      background 160ms ease;
+  }
+
+  .featured-areas__link:hover,
+  .featured-areas__link:focus-visible {
+    border-color: var(--world-color);
+    background: color-mix(in srgb, var(--world-color) 12%, transparent);
+  }
+
+  .featured-areas__art img {
+    inline-size: clamp(64px, 9vw, 96px);
+    block-size: auto;
+  }
+
+  .featured-areas__body {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .featured-areas__lens {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--world-color);
+  }
+
+  .featured-areas__title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    font-size: 1.05rem;
+    color: var(--color-text, var(--nest-paper));
+  }
+
+  .featured-areas__index {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    color: var(--world-color);
+  }
+
+  .featured-areas__proposition {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--color-text-muted, var(--nest-text-muted));
+  }
+
+  .featured-areas__members,
+  .featured-areas__proof {
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--color-text-faint, var(--nest-text-faint));
+  }
+
+  .featured-areas__enter {
+    grid-column: 1 / -1;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--world-color);
+  }
+
+  @media (max-width: 480px) {
+    .featured-areas__link {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-areas__art img {
+      inline-size: 64px;
+    }
+  }
+</style>
