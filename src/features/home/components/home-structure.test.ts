@@ -18,12 +18,15 @@ describe('Synthwave Systems Atlas homepage', () => {
   it('uses the immersive hero, atlas, and three evidence structures', async () => {
     const homepage = await readSource('pages/index.astro');
 
-    expect(homepage).toContain("import ProjectAtlas from '../features/home/components/ProjectAtlas.astro'");
+    // The atlas is composed inside NestExplore (secondary exploration, #403).
+    expect(homepage).toContain("import NestExplore from '../features/home/components/NestExplore.astro'");
     expect(homepage).toContain("import NestStatus from '../features/home/components/NestStatus.astro'");
     expect(homepage).toContain("import AboutPanel from '../features/home/components/AboutPanel.astro'");
     expect(homepage).toContain(
       "import FeaturedProjectLedger from '../features/home/components/FeaturedProjectLedger.astro'",
     );
+    // The hero no longer hosts the atlas — identity-first (#395).
+    expect(homepage).not.toContain('slot="atlas"');
     expect(homepage).not.toMatch(/ProfileSection|CurrentlyBuilding|FeaturedWorlds|Strengths|OpenSourceProof|Contact/);
   });
 
@@ -31,12 +34,15 @@ describe('Synthwave Systems Atlas homepage', () => {
     const homepage = await readSource('pages/index.astro');
     const data = await readSource('features/home/data/index.ts');
 
-    // FeaturedAreas renders immediately after the hero, before evidence panels.
-    const heroIndex = homepage.indexOf('<Hero>');
+    // FeaturedAreas renders immediately after the hero, before evidence panels
+    // and before the Digital Nest exploration (#403).
+    const heroIndex = homepage.indexOf('<Hero />');
     const featuredIndex = homepage.indexOf('<FeaturedAreas />');
     const evidenceIndex = homepage.indexOf('home-evidence');
+    const nestIndex = homepage.indexOf('<NestExplore />');
     expect(featuredIndex).toBeGreaterThan(heroIndex);
     expect(featuredIndex).toBeLessThan(evidenceIndex);
+    expect(nestIndex).toBeGreaterThan(evidenceIndex);
 
     // Exactly four areas, in canonical order.
     const areaIds = [...data.matchAll(/^\s{4}id: '([a-z-]+)',$/gm)].map((m) => m[1]);
@@ -45,6 +51,24 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(data).toContain('Agent Toolkit · Agentic Workstation · Agentic Harness');
     // No stars/downloads popularity ranking.
     expect(data).not.toMatch(/\d+\s+stars/i);
+  });
+
+  it('repositions Digital Nest as labeled secondary exploration with textual routes (#403)', async () => {
+    const nest = await readSource('features/home/components/NestExplore.astro');
+    const homepage = await readSource('pages/index.astro');
+
+    // Labeled as an alternate visual map — not the primary taxonomy.
+    expect(nest).toContain('Explore the Digital Nest');
+    expect(nest).toContain('alternate visual map');
+    // Compact textual route list links every world.
+    expect(nest).toContain('nest-explore__routes');
+    expect(nest).toContain('atlasWorlds.map');
+    // The atlas remains embedded (visual identity preserved).
+    expect(nest).toContain('<ProjectAtlas />');
+    // NestExplore appears after evidence panels in the homepage DOM.
+    const evidenceIndex = homepage.indexOf('home-evidence');
+    const nestIndex = homepage.indexOf('<NestExplore />');
+    expect(nestIndex).toBeGreaterThan(evidenceIndex);
   });
 
   it('renders verified profile identity as accessible HTML text', async () => {

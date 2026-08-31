@@ -1,0 +1,102 @@
+---
+/**
+ * NestExplore — secondary Digital Nest exploration section (#403, ADR-003).
+ *
+ * Wraps the Project Atlas as an intentional exploration experience placed
+ * after the personal/featured-work hierarchy. Includes a plain intro sentence
+ * and a compact textual route list so the map degrades to complete text
+ * navigation without JavaScript, hover, or motion.
+ */
+import ProjectAtlas from './ProjectAtlas.astro';
+import { atlasWorlds } from '../data/index.js';
+---
+
+<section class="nest-explore" aria-labelledby="nest-explore-title">
+  <header class="nest-explore__header">
+    <h2 id="nest-explore-title" class="nest-explore__eyebrow text-glow-accent">
+      <span aria-hidden="true">/</span> Explore the Digital Nest
+    </h2>
+    <p class="nest-explore__intro">
+      An alternate visual map of the same work — worlds, relationships, and community. Prefer a direct route? The list
+      below links to every destination.
+    </p>
+  </header>
+
+  <nav class="nest-explore__textual" aria-label="Digital Nest route list">
+    <ul class="nest-explore__routes">
+      {
+        atlasWorlds.map((world) => (
+          <li>
+            <a href={world.path}>{world.title}</a>
+            <span>{world.description}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="nest-explore__atlas">
+    <ProjectAtlas />
+  </div>
+</section>
+
+<style>
+  .nest-explore {
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+    border-block-start: 1px solid color-mix(in srgb, var(--nest-magenta) 30%, transparent);
+  }
+
+  .nest-explore__header {
+    display: grid;
+    gap: 0.4rem;
+    max-inline-size: 72ch;
+    margin-inline: auto;
+    margin-block-end: 1.25rem;
+  }
+
+  .nest-explore__eyebrow {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nest-explore__intro {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--color-text-muted, var(--nest-text-muted));
+  }
+
+  .nest-explore__textual {
+    max-inline-size: 72ch;
+    margin-inline: auto;
+    margin-block-end: 1.5rem;
+  }
+
+  .nest-explore__routes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 0.4rem 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nest-explore__routes li {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .nest-explore__routes a {
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .nest-explore__routes span {
+    font-size: 0.74rem;
+    line-height: 1.4;
+    color: var(--color-text-faint, var(--nest-text-faint));
+  }
+</style>
