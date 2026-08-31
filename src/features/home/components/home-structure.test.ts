@@ -27,6 +27,26 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(homepage).not.toMatch(/ProfileSection|CurrentlyBuilding|FeaturedWorlds|Strengths|OpenSourceProof|Contact/);
   });
 
+  it('presents exactly four flagship areas as the first project-oriented section (#402)', async () => {
+    const homepage = await readSource('pages/index.astro');
+    const data = await readSource('features/home/data/index.ts');
+
+    // FeaturedAreas renders immediately after the hero, before evidence panels.
+    const heroIndex = homepage.indexOf('<Hero>');
+    const featuredIndex = homepage.indexOf('<FeaturedAreas />');
+    const evidenceIndex = homepage.indexOf('home-evidence');
+    expect(featuredIndex).toBeGreaterThan(heroIndex);
+    expect(featuredIndex).toBeLessThan(evidenceIndex);
+
+    // Exactly four areas, in canonical order.
+    const areaIds = [...data.matchAll(/^\s{4}id: '([a-z-]+)',$/gm)].map((m) => m[1]);
+    expect(areaIds).toEqual(['agentic', 'horneroconfig', 'v-ecosystem', 'create-awesome']);
+    // Agentic entry carries the three stack members, not separate flagships.
+    expect(data).toContain('Agent Toolkit · Agentic Workstation · Agentic Harness');
+    // No stars/downloads popularity ranking.
+    expect(data).not.toMatch(/\d+\s+stars/i);
+  });
+
   it('renders verified profile identity as accessible HTML text', async () => {
     const hero = await readSource('features/home/components/Hero.astro');
 
@@ -84,8 +104,10 @@ describe('Synthwave Systems Atlas homepage', () => {
     const home = await readSource('pages/index.astro');
     const topology = await readSource('shared/components/ResponsibilityTopology.astro');
 
-    // Rendered as a full-width home section (not nested inside the atlas column).
-    expect(home).toContain('ResponsibilityTopology');
+    // The Personal DX topology is out of the top-level flagship classification (#402);
+    // responsibility boundaries live textually in /agentic. The component remains
+    // available for Personal DX stories.
+    expect(home).not.toContain('ResponsibilityTopology');
     expect(topology).toContain('aria-hidden="true"');
     expect(topology).toContain('class="dx-topology__structured"');
     expect(topology).toContain('Edges describe responsibility, not required installation');

@@ -86,6 +86,74 @@ export const featuredProjectLedger: FeaturedProjectRow[] = canonicalFeaturedWorl
   island: islandArtByWorldId[world.id] ?? 'island-projects',
 }));
 
+// ---------------------------------------------------------------------------
+// Featured Work — four flagship portfolio areas (ADR-003, #402)
+// Sourced from the portfolio taxonomy; no stars, no rankings, no fabricated
+// metrics. Time lens comes from verified member data.
+// ---------------------------------------------------------------------------
+
+export interface FeaturedArea {
+  id: string;
+  title: string;
+  path: string;
+  proposition: string;
+  accent: 'magenta' | 'pink' | 'violet' | 'blue' | 'cyan' | 'orange';
+  island: string;
+  /** One-line proven/maturity cue from verified member data. */
+  lens: 'Building now' | 'Proven over time' | 'Building now · Proven over time';
+  /** Concise member summary for the Agentic area. */
+  members?: string;
+  proof?: string;
+}
+
+export const featuredAreas: FeaturedArea[] = [
+  {
+    id: 'agentic',
+    title: 'Agentic Developer Stack',
+    path: '/agentic',
+    proposition:
+      'Portable agentic capabilities, machine provisioning, and persistent workspace context — three composable responsibilities.',
+    accent: 'violet',
+    island: 'island-agent',
+    lens: 'Building now',
+    members: 'Agent Toolkit · Agentic Workstation · Agentic Harness',
+  },
+  {
+    id: 'horneroconfig',
+    title: 'HorneroConfig',
+    path: '/dotfiles',
+    proposition: 'A reproducible Linux developer environment built on Hyprland, Quickshell, Smart Colors, and chezmoi.',
+    accent: 'magenta',
+    island: 'island-dotfiles',
+    lens: 'Building now · Proven over time',
+    proof: 'Established personal dotfiles framework distributed through GitHub and AUR.',
+  },
+  {
+    id: 'v-ecosystem',
+    title: 'V Ecosystem',
+    path: '/v',
+    proposition:
+      'Contributions to the V programming language and its scientific computing, tensor/ML, reactive, and CI tooling ecosystems.',
+    accent: 'blue',
+    island: 'island-v',
+    lens: 'Building now · Proven over time',
+    proof:
+      'Maintainer and contributor roles across vlang organization projects — ecosystem scale belongs to V, not to personal ownership.',
+  },
+  {
+    id: 'create-awesome',
+    title: 'Create Awesome',
+    path: '/create-awesome',
+    proposition:
+      'Composable application scaffolding across Node.js, Python, and V — one composition model, three runtimes.',
+    accent: 'orange',
+    island: 'island-scaffold',
+    lens: 'Building now · Proven over time',
+    proof:
+      'Node App is the mature family member (maintained since 2020, npm distribution); Python and V are newer expansions.',
+  },
+];
+
 export const contactLinks: ContactLink[] = [
   {
     label: 'GitHub',
