@@ -31,6 +31,20 @@ if (!existsSync(chromePath)) {
 }
 
 const config = JSON.parse(await readFile(configPath, 'utf8'));
+
+// The empty Writing index is intentionally noindexed (#396). Lighthouse's SEO
+// category penalizes noindex pages, so skip SEO for that route only while the
+// built output actually carries the noindex directive. When a post is
+// published, the page becomes indexable again and SEO assertions resume.
+const blogIndexPath = path.join(root, 'dist', 'blog', 'index.html');
+if (existsSync(blogIndexPath)) {
+  const blogHtml = await readFile(blogIndexPath, 'utf8');
+  if (blogHtml.includes('noindex') && !config.routeOverrides['/blog/']) {
+    config.routeOverrides['/blog/'] = { skipCategories: ['seo'] };
+    console.log('Skipping SEO category for /blog/ — empty Writing index is intentionally noindexed.');
+  }
+}
+
 const baseURL = `http://127.0.0.1:${port}`;
 
 function digest(value) {
