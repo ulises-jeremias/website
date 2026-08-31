@@ -45,6 +45,18 @@ const stationsJson = JSON.stringify(stations);
         autograd, reactive streams, CI tooling, and the community catalog. Each station pairs a working diagram with the
         verified role, repository, and license behind it.
       </p>
+      <figure class="v-lab__mascot" aria-label="Veasel — the V mascot (CC BY-NC 4.0, vlang.io)">
+        <img
+          class="v-lab__mascot-img"
+          src="/media/v/veasel.webp"
+          alt=""
+          width="96"
+          height="56"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="v-lab__mascot-caption">Veasel · V mascot</figcaption>
+      </figure>
     </div>
     <aside class="v-lab__header-readout" aria-label="V lab readout">
       <p class="v-lab__readout-kicker">Bench readout</p>
@@ -278,6 +290,33 @@ const stationsJson = JSON.stringify(stations);
     color: var(--color-text-muted);
     max-inline-size: 64ch;
     line-height: 1.55;
+  }
+
+  .v-lab__mascot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.85rem 0 0;
+    padding: 0.45rem 0.75rem 0.45rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 28%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--nest-midnight-900, #0b1020) 60%, transparent);
+    max-inline-size: fit-content;
+  }
+
+  .v-lab__mascot-img {
+    inline-size: 72px;
+    block-size: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--world-accent, #5b9bd5) 25%, transparent));
+  }
+
+  .v-lab__mascot-caption {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    color: var(--color-text-faint);
+    white-space: nowrap;
   }
 
   .v-lab__index {
