@@ -2,10 +2,37 @@
 
 **Site:** `https://www.ulises-jeremias.dev`
 **Target:** WCAG 2.2 AA and final visual/brand sign-off
-**Automated baseline:** `main@fe489798`
+**Automated baseline:** current `main` (browser-quality CI: axe on 14 routes, critical navigation, reflow, reduced-motion, no-JS fallbacks, cross-browser smoke, route budgets, Lighthouse CI)
 **Owner:** Ulises Jeremias
+**Status:** #295 — automated evidence complete; all manual rows below remain PENDING MANUAL until executed on real devices. Automated checks (axe, Lighthouse, Playwright) are **not** substitutes for screen-reader or hardware testing.
 
 This checklist covers the evidence that browser automation cannot reliably replace. Record the date, browser version, assistive technology version, viewport, and any reproduction URL beside each finding. Use keyboard-only input for keyboard checks; use touch exploration and touch scrolling for TalkBack checks. Do not claim screen-reader acceptance until all applicable pilots are complete.
+
+## Route coverage matrix (representative routes, current portfolio IA)
+
+Routes: Home `/`, Work `/projects`, flagship detail `/dotfiles` (HorneroConfig), Agentic overview `/agentic`, Open Source `/open-source`.
+
+| Check                                                     | Home                                                                    | Work                       | Flagship detail            | Agentic                    | Open Source                |
+| --------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------- | -------------------------- | -------------------------- | -------------------------- |
+| Skip link lands on `#main-content`                        | PASS (automated, critical-navigation)                                   | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| Landmarks + single H1                                     | PASS (automated)                                                        | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| axe WCAG 2.1 AA desktop+mobile, no critical/serious       | PASS (automated, #428)                                                  | PASS (automated, #428)     | PASS (automated, #428)     | PASS (automated, #428)     | PASS (automated, #428)     |
+| Keyboard-only traversal (headings/landmarks/controls)     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+| Accessible names on all controls                          | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+| SVG diagrams have text equivalents / are excluded from AT | PASS (automated, INTERACTIVE_DIAGRAM_SEMANTICS + pr6-diagram-semantics) | PENDING MANUAL             | PASS (automated)           | PENDING MANUAL             | PENDING MANUAL             |
+| Reduced-motion: no permanently hidden content             | PASS (automated, reduced-motion.spec + scroll-reveal safety net #389)   | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| No-JS: nav, hierarchy, content, diagram text complete     | PASS (automated, no-JS suites)                                          | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| NVDA + Firefox full pilot                                 | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+| VoiceOver + Safari full pilot (rotor, drawer `inert`)     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+| TalkBack + Chrome full pilot (touch exploration)          | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+| 200% zoom, no 2-D scrolling                               | PASS (automated reflow at 200%-equivalent)                              | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| 400% zoom / 320px viewport                                | PASS (automated reflow 320px, all routes incl. #428)                    | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| Human visual zoom review (subjective)                     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+| Forced-colors emulation (focus visibility)                | PASS (automated, pr2-a11y)                                              | PASS (automated, pr2-a11y) | PASS (automated, pr2-a11y) | PASS (automated, pr2-a11y) | PASS (automated, pr2-a11y) |
+| Mobile touch targets ≥ 44px / no hover-only               | PASS (automated, mobile-device-smoke + a11y rules)                      | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| Mobile touch exploration reaches every primary action     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
+
+Statuses: **PASS** = verified by an automated suite or named test (never hand-asserted); **PENDING MANUAL** = requires the listed human/AT procedure; **NOT APPLICABLE** = none currently identified for these routes.
 
 ## Screen Reader Pilots
 
