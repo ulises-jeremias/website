@@ -7,7 +7,11 @@
 [![Browser quality](https://github.com/ulises-jeremias/website/actions/workflows/browser-quality.yml/badge.svg)](https://github.com/ulises-jeremias/website/actions/workflows/browser-quality.yml)
 [![codecov](https://codecov.io/gh/ulises-jeremias/website/branch/main/graph/badge.svg)](https://codecov.io/gh/ulises-jeremias/website)
 
-Personal website — **Astro 7**, content-first, feature-based architecture. Migrated from [`create-awesome-node-app` Astro starter](https://github.com/Create-Node-App/cna-templates) and hardened with tooling from [`nextjs-saas-ai-template`](https://github.com/Create-Node-App/nextjs-saas-ai-template).
+**The Digital Nest** — Ulises Jeremias's personal portfolio and open-source engineering hub: [ulises-jeremias.dev](https://www.ulises-jeremias.dev).
+
+It presents four flagship bodies of work — the **Agentic Developer Stack** ([Agent Toolkit](https://github.com/ulises-jeremias/agent-toolkit), [Agentic Workstation](https://github.com/ulises-jeremias/agentic-workstation), [Agentic Harness](https://github.com/ulises-jeremias/agentic-harness)), **HorneroConfig** ([dotfiles](https://github.com/ulises-jeremias/dotfiles)), the **V Ecosystem**, and **Create Awesome** — alongside selected open-source work, with source-backed, dated evidence for every volatile claim.
+
+Built with **Astro 7**, content-first, feature-based architecture — scaffolded from [`create-awesome-node-app`](https://github.com/Create-Node-App/cna-templates) and hardened with tooling from [`nextjs-saas-ai-template`](https://github.com/Create-Node-App/nextjs-saas-ai-template).
 
 > **Stack:** Astro 7 · TypeScript (strict) · pnpm · ESLint + Prettier · Vitest · Husky + lint-staged · commitlint · cspell · MegaLinter · GitHub Actions
 
