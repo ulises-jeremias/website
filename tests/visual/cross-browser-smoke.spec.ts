@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 
 const routes = [
   '/',
+  '/about/',
+  '/agentic/',
   '/dotfiles/',
   '/agentic-workstation/',
   '/agent-toolkit/',

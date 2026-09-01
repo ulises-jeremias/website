@@ -8,6 +8,8 @@ import { expect, test } from '@playwright/test';
 
 const PRIMARY_ROUTES = [
   '/',
+  '/about',
+  '/agentic',
   '/dotfiles',
   '/agentic-workstation',
   '/agent-toolkit',
