@@ -10,7 +10,7 @@ This document defines how the website sources, refreshes, and displays evidence.
 | Layer                   | Source                                                                         | Refresh mechanism                                                                                                               | Consumers                                                                   |
 | ----------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | Open Source evidence    | `src/data/generated/github-evidence.json` (committed cache)                    | `pnpm data:refresh` → `scripts/refresh-github-data.mjs`                                                                         | `/open-source` ledger + constellation                                       |
-| Agent Toolkit inventory | `src/features/agent-toolkit/data/inventory.snapshot.json`                      | `scripts/sync-agent-toolkit-inventory.py`                                                                                       | `/agent-toolkit` nexus, provenance strip                                    |
+| Agent Toolkit inventory | `src/features/agent-toolkit/data/inventory.snapshot.json`                      | `scripts/sync-agent-toolkit-inventory.py` (+ scheduled drift workflow)                                                          | `/agent-toolkit` nexus, provenance strip                                    |
 | Create Awesome catalogs | `src/features/create-awesome/data/generated/compatibility.json`                | `pnpm data:create-awesome:refresh` + scheduled drift workflow                                                                   | `/create-awesome` composer/variants                                         |
 | Portfolio proof lines   | `src/data/portfolio.ts` `proofLines` (editorial + repository-metadata sources) | Manual editorial review; volatile lines carry `verifiedAt` and are re-verified against the linked repository before any refresh | Flagship provenance blocks, ProofStrip, Work tiers, homepage featured areas |
 
@@ -45,6 +45,21 @@ Client code must not call GitHub, npm, PyPI, AUR, Homebrew, or Docker APIs. All 
 - Stars are fetched but intentionally never written (no vanity metrics without a promotion decision).
 
 ## Staleness thresholds
+
+### Agent Toolkit inventory drift
+
+The website deliberately serves a committed last-known-good snapshot — browser code never calls
+GitHub or any other provider. Because Agent Toolkit evolves quickly, a scheduled workflow
+(`.github/workflows/agent-toolkit-inventory-drift.yml`, weekdays) regenerates the snapshot from
+upstream `main` and opens a reviewed PR whenever the output differs from the committed file.
+Maintainers can run the same deterministic check locally:
+
+```bash
+pnpm data:agent-toolkit:check   # regenerates and fails when the committed snapshot is stale
+```
+
+The workflow never auto-merges; drift lands only through a reviewed PR, and a green local check
+(`git diff --exit-code`) is the acceptance criterion.
 
 - Open Source `generatedAt`: reviewers should refresh before content releases; there is no automated staleness alarm by design (refresh is a review-gated editorial action).
 - Toolkit inventory exposes its own `verifiedAt` on the page.
