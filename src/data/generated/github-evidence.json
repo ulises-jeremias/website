@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T05:00:08.800Z",
+  "generatedAt": "2026-09-01T13:54:12.261Z",
   "generator": "scripts/refresh-github-data.mjs",
   "mode": "refresh",
   "evidence": [
@@ -13,7 +13,7 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -25,7 +25,7 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -37,7 +37,7 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -49,7 +49,7 @@
       "role": "owner",
       "featured": false,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -61,7 +61,7 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -73,7 +73,7 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -85,7 +85,7 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-28",
+      "verifiedAt": "2026-09-01",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -116,6 +116,6 @@
   "volatile": {},
   "notes": [
     "Committed cache from verified editorial evidence. Run `pnpm data:refresh` with GITHUB_TOKEN (optional) to re-verify public repo existence. Volatile counts omitted until refresh succeeds.",
-    "[refresh] verified 7/7 public repos on 2026-08-28"
+    "[refresh] verified 7/7 public repos on 2026-09-01"
   ]
 }
