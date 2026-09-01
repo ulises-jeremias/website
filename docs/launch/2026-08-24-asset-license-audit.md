@@ -99,7 +99,7 @@ The 2026-08-24 audit recorded "no Veasel asset is embedded". That stopped being 
 - `public/media/v/veasel.png` is byte-identical to `vlang/v-mascot`'s `veasel.png`;
   `veasel.webp` is a format conversion of the same artwork.
 - Upstream license (verified 2026-09-01): full CC BY-NC 4.0 text in
-  [vlang/v-mascot LICENSE](https://github.com/vlang/v-mascot/blob/main/LICENSE) — attribution
+  [vlang/v-mascot LICENSE](https://github.com/vlang/v-mascot/blob/add-mascot/LICENSE) — attribution
   required, **NonCommercial only**, trademark rights not licensed. The `vlang/v` MIT license does
   not cover the mascot.
 - On-site attribution: aria-label + figcaption on `VComputationalLab` and the license-table entry
