@@ -10,10 +10,10 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "f619050",
-  "commitFull": "f61905072f3ecd4132229fe74218cf6f85ed938a",
-  "verifiedAt": "2026-08-27",
-  "version": "1.25.0",
+  "commit": "f6ada2e",
+  "commitFull": "f6ada2e6edcdcfc261c71f7b2ce28e96fca4911d",
+  "verifiedAt": "2026-09-01",
+  "version": "1.28.0",
   "counts": {
     "skills": 116,
     "agents": 18,
@@ -159,7 +159,7 @@
         "id": "forge/github-cli-workflow",
         "name": "github-cli-workflow",
         "domain": "forge",
-        "description": "'HOW \u2014 GitHub CLI (gh): push branch, create draft PR with title/body from template or file; fallback untracked PR_DESCRIPTION_*.md. Use when origin is GitHub.'",
+        "description": "HOW \u2014 GitHub CLI (gh): push branch, create draft PR with title/body from template or file; fallback untracked PR_DESCRIPTION_*.md. Use when origin is GitHub.",
         "stability": "stable"
       }
     ],
