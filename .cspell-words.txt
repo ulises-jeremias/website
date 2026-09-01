@@ -65,6 +65,7 @@ horneroos
 hypr
 hyprlock
 idempotently
+imgbotconfig
 indexability
 Inicio
 islands
