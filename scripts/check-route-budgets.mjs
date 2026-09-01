@@ -9,6 +9,8 @@ import { gzipSync } from 'node:zlib';
 
 const ROUTES = [
   '/',
+  '/about/',
+  '/agentic/',
   '/dotfiles/',
   '/agentic-workstation/',
   '/agent-toolkit/',
