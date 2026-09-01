@@ -1,4 +1,5 @@
 ---
+import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import { SceneInspector, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
 import LayersDiagram from './LayersDiagram.astro';
@@ -55,7 +56,17 @@ const heroShot = screenshotItems[0]!;
         <span>CONSUMERS</span>
       </div>
       <h1 id="df-world-title">HorneroConfig</h1>
-      <p class="df-world__lede">Hyprland + Quickshell — Smart Colors turns wallpaper into a live system palette.</p>
+      <p class="df-world__problem">
+        Hand-assembled Linux setups drift: themes, shells, and tools get configured once and cannot be reproduced.
+      </p>
+      <p class="df-world__lede">
+        HorneroConfig is a reproducible Linux developer environment — Hyprland + Quickshell, with Smart Colors turning
+        your wallpaper into a live system palette and chezmoi keeping it declarative.
+      </p>
+      <FlagshipProvenance
+        entryId="horneroconfig"
+        note="More than a dotfiles backup: a configurable desktop framework with themes, Smart Colors, and AUR distribution."
+      />
       <p class="df-world__fact-line">
         <span>{verifiedFacts.themeCount} themes</span>
         <span aria-hidden="true">·</span>
@@ -377,6 +388,14 @@ const heroShot = screenshotItems[0]!;
     /* The brand name is a single 13-character word; never fracture it. */
     overflow-wrap: normal;
     word-break: keep-all;
+  }
+
+  .df-world__problem {
+    margin: 0.6rem 0 0;
+    max-inline-size: 44ch;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text-muted, #d5c2c6);
   }
 
   .df-world__lede {

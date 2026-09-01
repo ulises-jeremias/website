@@ -1,4 +1,5 @@
 ---
+import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import { SceneInspector, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
 import Composer from './Composer.astro';
@@ -56,12 +57,15 @@ const lineModules = [
     <div class="ca-world__hero-copy">
       <p class="ca-world__eyebrow">Create Awesome · assembly line</p>
       <h1 id="ca-world-title">{familyIntro.title}</h1>
-      <p class="ca-world__lede">
-        {familyIntro.principle} · Node {catalogTotals.node.templates}+{catalogTotals.node.addons} · Python{' '}
-        {catalogTotals.python.templates}+{catalogTotals.python.addons} · V {catalogTotals.v.templates}+{
-          catalogTotals.v.addons
-        }
+      <p class="ca-world__problem">
+        Starting a new project means re-assembling the same tooling decisions — linting, CI, structure — in every
+        language you use.
       </p>
+      <p class="ca-world__lede">{familyIntro.principle}</p>
+      <FlagshipProvenance
+        entryId="create-node-app"
+        note="One composable scaffolding family across Node.js, Python, and V — created and maintained by Ulises across the three Create Awesome organizations."
+      />
     </div>
     <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
       <p>Catalog counter</p>
@@ -528,6 +532,14 @@ const lineModules = [
     text-transform: uppercase;
     letter-spacing: 0.03em;
     font-size: clamp(1.45rem, 3vw, 2.1rem);
+  }
+
+  .ca-world__problem {
+    margin: 0.6rem 0 0;
+    max-inline-size: 56ch;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
   }
 
   .ca-world__lede {

@@ -26,8 +26,8 @@
     },
     "/dotfiles/": {
       "mobile": {
-        "total": 198656,
-        "document": 13312,
+        "total": 198766,
+        "document": 13422,
         "script": 2048,
         "style": 15360,
         "image": 75776,
@@ -35,8 +35,8 @@
         "requests": 19
       },
       "desktop": {
-        "total": 336896,
-        "document": 13312,
+        "total": 337006,
+        "document": 13422,
         "script": 2048,
         "style": 15360,
         "image": 214016,
@@ -86,8 +86,8 @@
     },
     "/v/": {
       "mobile": {
-        "total": 177152,
-        "document": 13312,
+        "total": 177231,
+        "document": 13391,
         "script": 0,
         "style": 14336,
         "image": 86016,
@@ -95,8 +95,8 @@
         "requests": 14
       },
       "desktop": {
-        "total": 177152,
-        "document": 13312,
+        "total": 177231,
+        "document": 13391,
         "script": 0,
         "style": 14336,
         "image": 86016,
@@ -226,8 +226,8 @@
     },
     "/agentic-harness/": {
       "mobile": {
-        "total": 126976,
-        "document": 10240,
+        "total": 127278,
+        "document": 10542,
         "script": 0,
         "style": 13312,
         "image": 5120,
@@ -235,8 +235,8 @@
         "requests": 13
       },
       "desktop": {
-        "total": 126976,
-        "document": 10240,
+        "total": 127278,
+        "document": 10542,
         "script": 0,
         "style": 13312,
         "image": 5120,

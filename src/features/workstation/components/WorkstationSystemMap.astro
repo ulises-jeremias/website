@@ -1,4 +1,5 @@
 ---
+import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import { PlaybackControls, SceneInspector, StageScrubber, StatusMeter, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
 import {
@@ -106,9 +107,17 @@ const defaultLayer = workstationLayers[1]!;
   <header class="ws-map__header">
     <p class="ws-map__eyebrow">Workstation System Map</p>
     <h1 id="ws-map-title">Agentic Workstation</h1>
-    <p class="ws-map__lede">
-      Fresh → Profile → Provision → Doctor, with optional Toolkit capability integration and persistent Harness context.
+    <p class="ws-map__problem">
+      A fresh machine drifts — packages, shells, and AI-tool policies get assembled by hand and cannot be rebuilt.
     </p>
+    <p class="ws-map__lede">
+      Agentic Workstation provisions the machine reproducibly — packages, shell, developer tooling, LLM policy — and
+      installs Agent Toolkit rather than duplicating it.
+    </p>
+    <FlagshipProvenance
+      entryId="agentic-workstation"
+      note="Capabilities stay in Agent Toolkit; workspace state stays in Agentic Harness — Workstation owns only the host."
+    />
     <div class="ws-map__header-rail" aria-label="Personal DX layer boundaries">
       <span><strong>Desktop</strong> optional personal surface</span>
       <span><strong>Machine</strong> provisioning + host policy</span>
@@ -588,6 +597,14 @@ const defaultLayer = workstationLayers[1]!;
     font-size: clamp(1.6rem, 3.5vw, 2.35rem);
     text-transform: uppercase;
     letter-spacing: 0.03em;
+  }
+
+  .ws-map__problem {
+    margin: 0.65rem 0 0;
+    max-inline-size: 54ch;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
   }
 
   .ws-map__lede {
