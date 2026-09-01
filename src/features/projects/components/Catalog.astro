@@ -1,5 +1,6 @@
 ---
 import Archipelago from './Archipelago.astro';
+import WorkTiers from './WorkTiers.astro';
 import { getGroupedLedger, ledgerProjects } from '../data/index.js';
 import { roleLabels, statusLabels, type Project } from '../types/index.js';
 
@@ -22,10 +23,12 @@ function formatVerifiedDate(value: string): string {
 
 <Archipelago />
 
+<WorkTiers />
+
 <section class="projects-ledger" data-reveal aria-labelledby="projects-ledger-title" data-testid="projects-ledger">
   <div class="projects-ledger__head">
     <div class="projects-ledger__head-copy">
-      <p class="projects-ledger__eyebrow">Projects · ledger</p>
+      <p class="projects-ledger__eyebrow">Work · detailed ledger</p>
       <h2 id="projects-ledger-title">Grouped ledger</h2>
       <p class="projects-ledger__lede">
         Every project I own or maintain, grouped by ecosystem. Entries marked
