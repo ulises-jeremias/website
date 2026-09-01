@@ -37,16 +37,16 @@ limits.
 
 ## Provenance Matrix
 
-| Asset family                  | Source and owner                                                                                                  | License or permission basis                                                                                 | Product treatment                                                                       |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Digital Nest atlas art        | First-party Digital Nest assets committed in this repository; owner Ulises Jeremias                               | Site `LICENSE` (MIT) for site-owned code and assets                                                         | Used by the home observatory, Projects archive, shared shell, and social-card generator |
-| Dotfiles captures             | `ulises-jeremias/dotfiles/static`; source and credit are recorded in `src/features/dotfiles/data/index.ts`        | Dotfiles repository MIT; adapted Quickshell attribution is separately recorded as GPL-3.0                   | Gallery uses only the six approved first-party capture sets and responsive derivatives  |
-| Social cards                  | `scripts/generate-social-cards.mjs`, using first-party Nest art and locally installed Noto Sans for rendered text | First-party art permissions plus the source licenses above; Noto Sans is only a local generation dependency | Ten 1200x630 cards reviewed for route text, artwork, safe canvas, and missing assets    |
-| Favicon and application icons | `public/favicon.svg` and the first-party Digital Nest mark                                                        | Site-owned asset under the site MIT license                                                                 | PNG and ICO derivatives are used by the document head and manifest                      |
-| JetBrains Mono                | `@fontsource/jetbrains-mono` 5.3.0 package                                                                        | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten shipped WOFF2 files are embedded locally; no remote font request                    |
-| Orbitron                      | `@fontsource/orbitron` 5.3.0 package                                                                              | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten total font files include the six Orbitron weights used by the site                  |
-| V ecosystem references        | License table in `src/features/v/data/index.ts`                                                                   | V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0 1.0                                                 | Repository links and text references only; no upstream artwork is copied                |
-| V mascot reference            | `vlang/v-mascot`, recorded in the Projects and V license data                                                     | CC BY-NC 4.0; non-commercial and attribution restrictions apply                                             | No Veasel asset is embedded or featured; tests protect this boundary                    |
+| Asset family                  | Source and owner                                                                                                  | License or permission basis                                                                                 | Product treatment                                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Digital Nest atlas art        | First-party Digital Nest assets committed in this repository; owner Ulises Jeremias                               | Site `LICENSE` (MIT) for site-owned code and assets                                                         | Used by the home observatory, Projects archive, shared shell, and social-card generator                                     |
+| Dotfiles captures             | `ulises-jeremias/dotfiles/static`; source and credit are recorded in `src/features/dotfiles/data/index.ts`        | Dotfiles repository MIT; adapted Quickshell attribution is separately recorded as GPL-3.0                   | Gallery uses only the six approved first-party capture sets and responsive derivatives                                      |
+| Social cards                  | `scripts/generate-social-cards.mjs`, using first-party Nest art and locally installed Noto Sans for rendered text | First-party art permissions plus the source licenses above; Noto Sans is only a local generation dependency | Ten 1200x630 cards reviewed for route text, artwork, safe canvas, and missing assets                                        |
+| Favicon and application icons | `public/favicon.svg` and the first-party Digital Nest mark                                                        | Site-owned asset under the site MIT license                                                                 | PNG and ICO derivatives are used by the document head and manifest                                                          |
+| JetBrains Mono                | `@fontsource/jetbrains-mono` 5.3.0 package                                                                        | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten shipped WOFF2 files are embedded locally; no remote font request                                                        |
+| Orbitron                      | `@fontsource/orbitron` 5.3.0 package                                                                              | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten total font files include the six Orbitron weights used by the site                                                      |
+| V ecosystem references        | License table in `src/features/v/data/index.ts`                                                                   | V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0 1.0                                                 | Repository links and text references only; no upstream artwork is copied                                                    |
+| V mascot reference            | `vlang/v-mascot`, recorded in the Projects and V license data                                                     | CC BY-NC 4.0; non-commercial and attribution restrictions apply                                             | Veasel is embedded on `/v` since 2026-08-31 (#390, #391); attribution rendered on the page; licensing decision open in #170 |
 
 ## Cleanup
 
@@ -90,3 +90,19 @@ owner must review it before calling the audit a legal approval.
 - `scripts/generate-social-cards.mjs`
 - `public/`
 - Issue [#307](https://github.com/ulises-jeremias/website/issues/307)
+
+## Amendment — 2026-09-01 (Veasel)
+
+The 2026-08-24 audit recorded "no Veasel asset is embedded". That stopped being true on
+2026-08-31, when PRs #390/#391 embedded the mascot on `/v`:
+
+- `public/media/v/veasel.png` is byte-identical to `vlang/v-mascot`'s `veasel.png`;
+  `veasel.webp` is a format conversion of the same artwork.
+- Upstream license (verified 2026-09-01): full CC BY-NC 4.0 text in
+  [vlang/v-mascot LICENSE](https://github.com/vlang/v-mascot/blob/add-mascot/LICENSE) — attribution
+  required, **NonCommercial only**, trademark rights not licensed. The `vlang/v` MIT license does
+  not cover the mascot.
+- On-site attribution: aria-label + figcaption on `VComputationalLab` and the license-table entry
+  in `src/features/v/data/index.ts` (state CC BY-NC 4.0, attribution, no endorsement/trademark).
+- Open question: whether a personal portfolio qualifies as "NonCommercial" is not settled by the
+  license or upstream statements. Decision and options are tracked in #170.
