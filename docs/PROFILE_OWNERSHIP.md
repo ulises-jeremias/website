@@ -57,11 +57,9 @@ requirement).
 
 ## Update workflow
 
-1. Edit `src/data/profile.ts` (schema-validated) **and** the same fields in
-   `src/content/profile.yaml`.
-2. `pnpm test` — `profile.test.ts` must pass; the build fails on schema violations.
-3. Open a PR. Review expectations: owner approves personal-fact changes; reviewers check schema
-   validity and that any new link was actually verified (paste the check result in the PR body).
+1. Edit `src/data/profile.ts` (schema-validated) and the same fields in `src/content/profile.yaml`.
+2. Run `pnpm test` — `profile.test.ts` must pass; the build fails on schema violations.
+3. Open a PR. Review expectations: the owner approves personal-fact changes; reviewers check schema validity and that any new link was actually verified (paste the check result in the PR body).
 4. Merge → build → production.
 
 ## Stale-link behavior
