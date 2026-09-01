@@ -115,6 +115,13 @@ export const portfolioEntrySchema = z
     /** Proof/evidence reference. */
     evidence: portfolioEvidenceSchema,
     /**
+     * Verified public role title — the human-facing wording (e.g.
+     * "Core Team Member", "Maintainer") distinct from the generic
+     * `responsibility` classification enum. Use this for display; use
+     * `responsibility` for classification and validation.
+     */
+    roleLabel: z.string().min(1).optional(),
+    /**
      * Short contextual proof lines (issue #399). Each line is a plain sentence
      * with an allowlisted fact kind — never a raw popularity metric. Lines for
      * volatile kinds (release, maintenance, channel-freshness) must carry a
@@ -269,6 +276,7 @@ const rawPortfolioEntries = [
     path: '/agent-toolkit',
     area: 'agentic',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'agent-toolkit',
@@ -299,6 +307,7 @@ const rawPortfolioEntries = [
     path: '/agentic-workstation',
     area: 'agentic',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'agentic-workstation',
@@ -318,6 +327,7 @@ const rawPortfolioEntries = [
     path: '/agentic-harness',
     area: 'agentic',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'agentic-harness',
@@ -338,6 +348,7 @@ const rawPortfolioEntries = [
     path: 'https://github.com/ulises-jeremias/agentic-workstation-demo',
     area: 'agentic',
     tier: 'lab-demo',
+    roleLabel: 'Creator',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'agentic-workstation-demo',
@@ -359,6 +370,7 @@ const rawPortfolioEntries = [
     path: '/dotfiles',
     area: 'horneroconfig',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'dotfiles',
@@ -391,6 +403,7 @@ const rawPortfolioEntries = [
     path: '/v#v',
     area: 'v-ecosystem',
     tier: 'flagship-component',
+    roleLabel: 'Core Team Member',
     responsibility: 'org-member-work',
     repositoryOwner: 'vlang',
     repositorySlug: 'v',
@@ -422,6 +435,7 @@ const rawPortfolioEntries = [
     path: '/v#vsl',
     area: 'v-ecosystem',
     tier: 'flagship-component',
+    roleLabel: 'Maintainer',
     responsibility: 'primary-maintainer',
     repositoryOwner: 'vlang',
     repositorySlug: 'vsl',
@@ -441,6 +455,7 @@ const rawPortfolioEntries = [
     path: '/v#vtl',
     area: 'v-ecosystem',
     tier: 'flagship-component',
+    roleLabel: 'Maintainer',
     responsibility: 'primary-maintainer',
     repositoryOwner: 'vlang',
     repositorySlug: 'vtl',
@@ -460,6 +475,7 @@ const rawPortfolioEntries = [
     path: '/v#rxv',
     area: 'v-ecosystem',
     tier: 'flagship-component',
+    roleLabel: 'Author and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'rxv',
@@ -479,6 +495,7 @@ const rawPortfolioEntries = [
     path: '/v#setup-v',
     area: 'v-ecosystem',
     tier: 'flagship-component',
+    roleLabel: 'Maintainer',
     responsibility: 'primary-maintainer',
     repositoryOwner: 'vlang',
     repositorySlug: 'setup-v',
@@ -498,6 +515,7 @@ const rawPortfolioEntries = [
     path: '/v#awesome-v',
     area: 'v-ecosystem',
     tier: 'supporting-resource',
+    roleLabel: 'Contributor',
     responsibility: 'contributor',
     repositoryOwner: 'vlang',
     repositorySlug: 'awesome-v',
@@ -517,6 +535,7 @@ const rawPortfolioEntries = [
     path: 'https://github.com/ulises-jeremias/hello-vsl',
     area: 'v-ecosystem',
     tier: 'lab-demo',
+    roleLabel: 'Author',
     responsibility: 'author-owner',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'hello-vsl',
@@ -538,6 +557,7 @@ const rawPortfolioEntries = [
     path: '/create-awesome#node',
     area: 'create-awesome',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'Create-Node-App',
     repositorySlug: 'create-node-app',
@@ -568,6 +588,7 @@ const rawPortfolioEntries = [
     path: '/create-awesome#python',
     area: 'create-awesome',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'Create-Python-App',
     repositorySlug: 'create-python-app',
@@ -575,6 +596,12 @@ const rawPortfolioEntries = [
     relationship: 'component-product',
     description: 'Python scaffolding — 6 templates, 19 extensions, synchronized beta channels.',
     channels: ['PyPI', 'Homebrew', 'AUR', 'Docker Hub'],
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'Newer family expansion with synchronized beta distribution channels.',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/Create-Python-App/create-python-app',
       sourceType: 'editorial',
@@ -587,6 +614,7 @@ const rawPortfolioEntries = [
     path: '/create-awesome#v',
     area: 'create-awesome',
     tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
     repositoryOwner: 'Create-Vlang-App',
     repositorySlug: 'create-vlang-app',
@@ -594,6 +622,12 @@ const rawPortfolioEntries = [
     relationship: 'component-product',
     description: 'V scaffolding — 7 templates, 11 extensions, early release.',
     channels: ['GitHub Releases', 'Homebrew'],
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'Newer family expansion — early shipped release.',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/Create-Vlang-App/create-vlang-app',
       sourceType: 'editorial',
@@ -608,6 +642,7 @@ const rawPortfolioEntries = [
     path: 'https://github.com/ulises-jeremias/recoil-devtools',
     area: 'agentic', // closest area; it is standalone developer tooling
     tier: 'selected-work',
+    roleLabel: 'Maintainer',
     responsibility: 'maintainer',
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'recoil-devtools',
@@ -649,6 +684,73 @@ export const portfolioEntries: PortfolioEntry[] = rawPortfolioEntries.map((entry
   }
   return parsed.data;
 });
+
+// ---------------------------------------------------------------------------
+// Boundary (ADR-003, #393)
+//
+// portfolio.ts answers: "What does Ulises build and how should it be
+// interpreted professionally?" It owns flagship areas, tiers,
+// responsibility, maturity, proof, and ownership.
+//
+// project-worlds.ts answers: "How is the Digital Nest exploratory world
+// organized?" It owns visual world identity, atlas ordering, immersive
+// navigation, themes, and illustrations. Inventory counts inside a
+// projectWorlds description are exploration-layer content.
+//
+// Editorial facts must not be retyped in both places: consumers derive from
+// the selectors below.
+// ---------------------------------------------------------------------------
+
+/** Contextual (non-volatile) proof kinds acceptable for homepage summaries. */
+const SUMMARY_PROOF_KINDS = new Set(['history', 'distribution', 'role', 'ecosystem-scale', 'release', 'demo']);
+
+export interface HomepagePortfolioArea {
+  id: string;
+  title: string;
+  /** Overview route when one exists (Agentic), else the area's canonical path. */
+  path: string;
+  proposition: string;
+  /** Derived from member timeLens — not hand-maintained. */
+  lens: 'Building now' | 'Proven over time' | 'Building now · Proven over time';
+  /** Member titles when the area has more than one flagship component. */
+  members?: string;
+  /** Contextual proof summary from member proofLines (non-volatile kinds). */
+  proof?: string;
+}
+
+/**
+ * Homepage view model for the four flagship areas. Canonical editorial facts
+ * (title, path, proposition, lens, members, proof) come from the taxonomy;
+ * purely visual concerns (accent, island art) stay in the consuming feature.
+ */
+export function getHomepagePortfolioAreas(): HomepagePortfolioArea[] {
+  return portfolioAreas.map((area) => {
+    const members = area.memberIds
+      .map((id) => getPortfolioEntryById(id))
+      .filter((entry): entry is PortfolioEntry => Boolean(entry));
+
+    const timeLenses = new Set(members.map((entry) => entry.timeLens));
+    const hasCurrent = timeLenses.has('current') || timeLenses.has('current-and-proven');
+    const hasProven = timeLenses.has('proven') || timeLenses.has('current-and-proven');
+    const lens: HomepagePortfolioArea['lens'] =
+      hasCurrent && hasProven ? 'Building now · Proven over time' : hasCurrent ? 'Building now' : 'Proven over time';
+
+    const componentTitles = members.filter((entry) => entry.tier === 'flagship-component').map((entry) => entry.title);
+    const membersLabel = componentTitles.length > 1 ? componentTitles.join(' · ') : undefined;
+
+    const proof = members.flatMap((entry) => entry.proofLines).find((line) => SUMMARY_PROOF_KINDS.has(line.kind))?.text;
+
+    return {
+      id: area.id,
+      title: area.title,
+      path: area.overviewPath ?? area.path,
+      proposition: area.proposition,
+      lens,
+      members: membersLabel,
+      proof,
+    };
+  });
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
