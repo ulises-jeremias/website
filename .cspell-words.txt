@@ -1,5 +1,6 @@
 apos
 archivados
+archlinux
 astro
 authkit
 Autodetecta
@@ -118,6 +119,7 @@ Preferido
 ptext
 pxinj
 pydantic
+pypi
 pytest
 pywal
 Quze
