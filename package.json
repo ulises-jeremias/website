@@ -32,7 +32,7 @@
     "assets:social": "node scripts/generate-social-cards.mjs",
     "data:refresh": "node scripts/refresh-github-data.mjs",
     "data:agent-toolkit:sync": "python3 scripts/sync-agent-toolkit-inventory.py",
-    "data:agent-toolkit:check": "python3 scripts/sync-agent-toolkit-inventory.py && git diff --exit-code -- src/features/agent-toolkit/data/inventory.snapshot.json",
+    "data:agent-toolkit:check": "python3 scripts/sync-agent-toolkit-inventory.py && prettier --write --log-level warn src/features/agent-toolkit/data/inventory.snapshot.json && git diff --exit-code -- src/features/agent-toolkit/data/inventory.snapshot.json",
     "data:create-awesome:refresh": "node scripts/create-awesome-catalogs.mjs refresh",
     "data:create-awesome:check": "node scripts/create-awesome-catalogs.mjs check",
     "data:create-awesome:drift": "node scripts/create-awesome-catalogs.mjs drift",

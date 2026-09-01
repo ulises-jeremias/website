@@ -31,11 +31,16 @@ jobs:
           path: agent-toolkit
           persist-credentials: false
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Regenerate inventory snapshot from upstream
         run: |
           python3 -m pip install --quiet --disable-pip-version-check pyyaml
           AGENT_TOOLKIT_ROOT="$GITHUB_WORKSPACE/agent-toolkit" \
             python3 scripts/sync-agent-toolkit-inventory.py
+          pnpm exec prettier --write --log-level warn \
+            src/features/agent-toolkit/data/inventory.snapshot.json
 
       - name: Detect drift
         id: drift
