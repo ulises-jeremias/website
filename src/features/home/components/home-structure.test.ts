@@ -15,16 +15,15 @@ async function readSource(path: string): Promise<string> {
 }
 
 describe('Synthwave Systems Atlas homepage', () => {
-  it('uses the immersive hero, atlas, and three evidence structures', async () => {
+  it('uses the immersive hero, flagship areas, evidence, and secondary exploration (#402)', async () => {
     const homepage = await readSource('pages/index.astro');
 
     // The atlas is composed inside NestExplore (secondary exploration, #403).
     expect(homepage).toContain("import NestExplore from '../features/home/components/NestExplore.astro'");
     expect(homepage).toContain("import NestStatus from '../features/home/components/NestStatus.astro'");
     expect(homepage).toContain("import AboutPanel from '../features/home/components/AboutPanel.astro'");
-    expect(homepage).toContain(
-      "import FeaturedProjectLedger from '../features/home/components/FeaturedProjectLedger.astro'",
-    );
+    // The legacy six-project ledger is removed; FeaturedAreas is the primary surface.
+    expect(homepage).not.toContain('FeaturedProjectLedger');
     // The hero no longer hosts the atlas — identity-first (#395).
     expect(homepage).not.toContain('slot="atlas"');
     expect(homepage).not.toMatch(/ProfileSection|CurrentlyBuilding|FeaturedWorlds|Strengths|OpenSourceProof|Contact/);
@@ -165,16 +164,28 @@ describe('Synthwave Systems Atlas homepage', () => {
       await Promise.all([
         readSource('features/home/components/NestStatus.astro'),
         readSource('features/home/components/AboutPanel.astro'),
-        readSource('features/home/components/FeaturedProjectLedger.astro'),
+        readSource('features/home/components/FeaturedAreas.astro'),
       ])
     ).join('\n');
 
     expect(evidence).toContain('nestStatus');
     expect(evidence).not.toContain('nest-status__spark');
     expect(evidence).toContain("from '@/data/profile");
-    expect(evidence).toContain('featuredProjectLedger');
+    expect(evidence).toContain('featuredAreas');
     expect(evidence).not.toMatch(/commits|stars|downloads|coffee|generated portrait/i);
     expect(evidence).not.toMatch(/avatar\.png|placeholder-user/i);
+  });
+
+  it('keeps the legacy six-project ledger out of the homepage hierarchy (#402)', async () => {
+    // The old featuredWorlds-based "Recent Projects" ledger reintroduced the
+    // flat world hierarchy below the four-area section. Decision (documented
+    // in #402): removed — Featured Work + Work page + Digital Nest cover it.
+    const homepage = await readSource('pages/index.astro');
+    expect(homepage).not.toContain('FeaturedProjectLedger');
+    const data = await readSource('features/home/data/index.ts');
+    expect(data).not.toContain('featuredProjectLedger');
+    // The four-area section remains the primary project surface.
+    expect(homepage).toContain('<FeaturedAreas />');
   });
 
   it('applies chrome-text and recomposes the atlas for mobile and reduced motion', async () => {

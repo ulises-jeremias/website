@@ -20,11 +20,6 @@ export type NestStatusItem = {
   tone: 'magenta' | 'cyan' | 'violet' | 'muted';
 };
 
-export type FeaturedProjectRow = Pick<
-  AtlasWorld,
-  'id' | 'title' | 'description' | 'path' | 'accent' | 'illustration' | 'island'
->;
-
 export type ContactLink = {
   label: string;
   href: string;

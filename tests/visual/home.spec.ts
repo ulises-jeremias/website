@@ -12,7 +12,8 @@ test.describe('homepage visual coverage', () => {
     await expect(page.locator('#project-atlas-guide')).toBeVisible();
     await expect(page.locator('.nest-status')).toBeVisible();
     await expect(page.locator('.about-panel')).toBeVisible();
-    await expect(page.locator('.featured-ledger')).toBeVisible();
+    // The four-area Featured Work section replaced the legacy ledger (#402).
+    await expect(page.locator('.featured-areas')).toBeVisible();
 
     const overflow = await page.evaluate(() => {
       const doc = document.documentElement;
