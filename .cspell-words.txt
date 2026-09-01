@@ -90,6 +90,7 @@ Mandelbrot
 materialyoucolor
 matmul
 Menlo
+mktemp
 mlflow
 mlops
 mypy
@@ -123,6 +124,7 @@ pydantic
 pypi
 pytest
 pywal
+pyyaml
 Quze
 rasterizer
 rasterizers
