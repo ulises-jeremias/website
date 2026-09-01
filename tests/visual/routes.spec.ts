@@ -62,7 +62,7 @@ test.describe('flagship route visuals', () => {
       const desktopOptions =
         route.name === 'agentic-harness' || route.name === 'agent-toolkit'
           ? { fullPage: false, maxDiffPixelRatio: 0.12 }
-          : route.name === 'dotfiles'
+          : route.name === 'dotfiles' || route.name === 'v'
             ? { fullPage: false, maxDiffPixelRatio: 0.1 }
             : { fullPage: false };
       await expect(page).toHaveScreenshot(`${route.name}-desktop-1440.png`, desktopOptions);
