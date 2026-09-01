@@ -367,7 +367,16 @@
 
 .project-atlas__eyebrow,
 .nest-status__eyebrow,
-.about-panel__eyebrow,
+.about-panel__eyebrow {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--nest-cyan);
+}
+
 .project-atlas__stage {
   position: relative;
   flex: 1;
@@ -696,7 +705,12 @@
 }
 
 .nest-status,
-.about-panel,
+.about-panel {
+  position: relative;
+  align-self: start;
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+}
+
 .nest-status__header {
   display: flex;
   align-items: center;
@@ -776,8 +790,20 @@
   color: color-mix(in srgb, var(--nest-magenta) 60%, transparent);
 }
 
-.about-panel__corner,
-.about-panel__eyebrow,
+.about-panel__corner {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  background: var(--nest-magenta);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.about-panel__eyebrow {
+  margin-block-end: var(--space-5);
+}
+
 .about-panel__slash {
   color: var(--nest-magenta);
 }
@@ -1008,7 +1034,10 @@
 
   .atlas-world:hover,
   .atlas-world:focus-visible,
-  .hero__cta--primary:hover,
+  .hero__cta--primary:hover {
+    transform: none;
+  }
+
   .atlas-world--rise,
   .atlas-world--mid,
   .atlas-world--drop,
@@ -1030,6 +1059,12 @@
 @media (forced-colors: active) {
   .nest-status,
   .about-panel,
+  .hero__cta,
+  .atlas-world {
+    border: 1px solid CanvasText;
+    box-shadow: none;
+  }
+
   .chrome-text,
   .hero__name-line {
     color: CanvasText;
