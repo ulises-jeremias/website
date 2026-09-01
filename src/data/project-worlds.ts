@@ -2,6 +2,14 @@ import { z } from 'astro/zod';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 
 // ---------------------------------------------------------------------------
+// Boundary (ADR-003, #393): this module owns the DIGITAL NEST EXPLORATION
+// layer — visual world identity, atlas ordering, immersive navigation,
+// themes, and illustrations. Professional/editorial interpretation (flagship
+// areas, responsibility, maturity, proof, ownership) lives in
+// `src/data/portfolio.ts`. Do not retype portfolio facts here.
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 // Theme tokens — shared with navigation for world-aware styling.
 // ---------------------------------------------------------------------------
 

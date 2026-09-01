@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   getHomepageFlagships,
+  getHomepagePortfolioAreas,
   getLabAndDemo,
   getPortfolioAreaById,
   getPortfolioEntriesByArea,
@@ -201,6 +202,65 @@ describe('portfolio taxonomy', () => {
       expect(scaleLine).toBeDefined();
       expect(scaleLine!.text.toLowerCase()).toContain('organization');
       expect(scaleLine!.text.toLowerCase()).not.toContain('my project');
+    });
+  });
+
+  describe('homepage selector + role labels (#393)', () => {
+    it('getHomepagePortfolioAreas derives facts from the taxonomy without retyping', () => {
+      const areas = getHomepagePortfolioAreas();
+      expect(areas).toHaveLength(4);
+      for (const [index, area] of areas.entries()) {
+        expect(area.id).toBe(portfolioAreas[index]!.id);
+        expect(area.title).toBe(portfolioAreas[index]!.title);
+        expect(area.proposition).toBe(portfolioAreas[index]!.proposition);
+      }
+    });
+
+    it('derives the lens from member timeLens values', () => {
+      const areas = getHomepagePortfolioAreas();
+      const agentic = areas.find((a) => a.id === 'agentic')!;
+      expect(agentic.lens).toBe('Building now'); // all members current
+      const hornero = areas.find((a) => a.id === 'horneroconfig')!;
+      expect(hornero.lens).toBe('Building now · Proven over time'); // current-and-proven
+      const vArea = areas.find((a) => a.id === 'v-ecosystem')!;
+      expect(vArea.lens).toBe('Building now · Proven over time'); // mixed members
+    });
+
+    it('exposes member titles only for multi-component areas', () => {
+      const areas = getHomepagePortfolioAreas();
+      expect(areas.find((a) => a.id === 'agentic')!.members).toBe(
+        'Agent Toolkit · Agentic Workstation · Agentic Harness',
+      );
+      expect(areas.find((a) => a.id === 'horneroconfig')!.members).toBeUndefined();
+    });
+
+    it('agentic overview path is used as the area path', () => {
+      const areas = getHomepagePortfolioAreas();
+      expect(areas.find((a) => a.id === 'agentic')!.path).toBe('/agentic');
+      expect(areas.find((a) => a.id === 'horneroconfig')!.path).toBe('/dotfiles');
+    });
+
+    it('surfaces contextual proof from member proofLines', () => {
+      const areas = getHomepagePortfolioAreas();
+      expect(areas.find((a) => a.id === 'horneroconfig')!.proof).toContain('GitHub and AUR');
+      expect(areas.find((a) => a.id === 'create-awesome')!.proof).toContain('mature family member');
+    });
+
+    it('verified public role labels exist and are distinct from the classification enum', () => {
+      for (const entry of portfolioEntries) {
+        if (entry.roleLabel) {
+          // roleLabel is human-facing prose; responsibility stays classification.
+          expect(typeof entry.roleLabel).toBe('string');
+          expect(entry.roleLabel.length).toBeGreaterThan(0);
+        }
+      }
+      const v = portfolioEntries.find((e) => e.id === 'v')!;
+      // The precise public role label must not be collapsed into the enum value.
+      expect(v.roleLabel).toBe('Core Team Member');
+      expect(v.responsibility).toBe('org-member-work');
+      const vsl = portfolioEntries.find((e) => e.id === 'vsl')!;
+      expect(vsl.roleLabel).toBe('Maintainer');
+      expect(vsl.repositoryOwner).toBe('vlang');
     });
   });
 });

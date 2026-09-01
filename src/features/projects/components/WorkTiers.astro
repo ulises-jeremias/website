@@ -76,7 +76,8 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
               <a class="work-tiers__row" href={entry.path}>
                 <strong>{entry.title}</strong>
                 <span>
-                  {entry.responsibility.replaceAll('-', ' ')} · {entry.repositoryOwner}/{entry.repositorySlug}
+                  {entry.roleLabel ?? entry.responsibility.replaceAll('-', ' ')} · {entry.repositoryOwner}/
+                  {entry.repositorySlug}
                 </span>
               </a>
             </li>

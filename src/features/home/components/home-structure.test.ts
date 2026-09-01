@@ -44,11 +44,17 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(featuredIndex).toBeLessThan(evidenceIndex);
     expect(nestIndex).toBeGreaterThan(evidenceIndex);
 
-    // Exactly four areas, in canonical order.
-    const areaIds = [...data.matchAll(/^\s{4}id: '([a-z-]+)',$/gm)].map((m) => m[1]);
-    expect(areaIds).toEqual(['agentic', 'horneroconfig', 'v-ecosystem', 'create-awesome']);
+    // Exactly four areas, derived from the portfolio taxonomy (#393) —
+    // not retyped: the home data imports the selector and maps visuals only.
+    expect(data).toContain('getHomepagePortfolioAreas()');
+    expect(data).not.toContain("proposition: 'Portable agentic capabilities");
+    const { getHomepagePortfolioAreas, portfolioAreas } = await import('@/data/portfolio');
+    const derived = getHomepagePortfolioAreas();
+    expect(derived).toHaveLength(4);
+    expect(derived.map((area) => area.id)).toEqual(portfolioAreas.map((area) => area.id));
     // Agentic entry carries the three stack members, not separate flagships.
-    expect(data).toContain('Agent Toolkit · Agentic Workstation · Agentic Harness');
+    const agentic = derived.find((area) => area.id === 'agentic');
+    expect(agentic?.members).toBe('Agent Toolkit · Agentic Workstation · Agentic Harness');
     // No stars/downloads popularity ranking.
     expect(data).not.toMatch(/\d+\s+stars/i);
   });

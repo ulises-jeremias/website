@@ -1,3 +1,4 @@
+import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
 import { profile } from '@/data/profile.js';
 import { featuredWorlds as canonicalFeaturedWorlds, worldsByPriority } from '@/data/project-worlds.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
@@ -87,9 +88,11 @@ export const featuredProjectLedger: FeaturedProjectRow[] = canonicalFeaturedWorl
 }));
 
 // ---------------------------------------------------------------------------
-// Featured Work — four flagship portfolio areas (ADR-003, #402)
-// Sourced from the portfolio taxonomy; no stars, no rankings, no fabricated
-// metrics. Time lens comes from verified member data.
+// Featured Work — four flagship portfolio areas (ADR-003, #393/#402)
+//
+// Editorial facts (title, path, proposition, lens, members, proof) derive
+// from the portfolio taxonomy via getHomepagePortfolioAreas() — not retyped.
+// Only purely visual presentation (accent token, island art) lives here.
 // ---------------------------------------------------------------------------
 
 export interface FeaturedArea {
@@ -99,60 +102,27 @@ export interface FeaturedArea {
   proposition: string;
   accent: 'magenta' | 'pink' | 'violet' | 'blue' | 'cyan' | 'orange';
   island: string;
-  /** One-line proven/maturity cue from verified member data. */
+  /** Derived from member timeLens via the portfolio selector. */
   lens: 'Building now' | 'Proven over time' | 'Building now · Proven over time';
-  /** Concise member summary for the Agentic area. */
+  /** Member summary when the area has more than one flagship component. */
   members?: string;
+  /** Contextual proof summary from member proofLines via the selector. */
   proof?: string;
 }
 
-export const featuredAreas: FeaturedArea[] = [
-  {
-    id: 'agentic',
-    title: 'Agentic Developer Stack',
-    path: '/agentic',
-    proposition:
-      'Portable agentic capabilities, machine provisioning, and persistent workspace context — three composable responsibilities.',
-    accent: 'violet',
-    island: 'island-agent',
-    lens: 'Building now',
-    members: 'Agent Toolkit · Agentic Workstation · Agentic Harness',
-  },
-  {
-    id: 'horneroconfig',
-    title: 'HorneroConfig',
-    path: '/dotfiles',
-    proposition: 'A reproducible Linux developer environment built on Hyprland, Quickshell, Smart Colors, and chezmoi.',
-    accent: 'magenta',
-    island: 'island-dotfiles',
-    lens: 'Building now · Proven over time',
-    proof: 'Established personal dotfiles framework distributed through GitHub and AUR.',
-  },
-  {
-    id: 'v-ecosystem',
-    title: 'V Ecosystem',
-    path: '/v',
-    proposition:
-      'Contributions to the V programming language and its scientific computing, tensor/ML, reactive, and CI tooling ecosystems.',
-    accent: 'blue',
-    island: 'island-v',
-    lens: 'Building now · Proven over time',
-    proof:
-      'Maintainer and contributor roles across vlang organization projects — ecosystem scale belongs to V, not to personal ownership.',
-  },
-  {
-    id: 'create-awesome',
-    title: 'Create Awesome',
-    path: '/create-awesome',
-    proposition:
-      'Composable application scaffolding across Node.js, Python, and V — one composition model, three runtimes.',
-    accent: 'orange',
-    island: 'island-scaffold',
-    lens: 'Building now · Proven over time',
-    proof:
-      'Node App is the mature family member (maintained since 2020, npm distribution); Python and V are newer expansions.',
-  },
-];
+/** Visual-only mapping per portfolio area id (presentation, not editorial facts). */
+const featuredAreaVisuals: Record<string, { accent: FeaturedArea['accent']; island: string }> = {
+  agentic: { accent: 'violet', island: 'island-agent' },
+  horneroconfig: { accent: 'magenta', island: 'island-dotfiles' },
+  'v-ecosystem': { accent: 'blue', island: 'island-v' },
+  'create-awesome': { accent: 'orange', island: 'island-scaffold' },
+};
+
+export const featuredAreas: FeaturedArea[] = getHomepagePortfolioAreas().map((area) => {
+  const visual = featuredAreaVisuals[area.id];
+  if (!visual) throw new Error(`Missing featured-area visual mapping for portfolio area: ${area.id}`);
+  return { ...area, accent: visual.accent, island: visual.island };
+});
 
 export const contactLinks: ContactLink[] = [
   {
