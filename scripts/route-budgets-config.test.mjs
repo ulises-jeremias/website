@@ -17,6 +17,8 @@ const BUDGET_PATH = resolve(ROOT, 'config', 'route-budgets.json');
 // Static routes produced by the build (trailing-slash canonical form used by the budget script).
 const EXPECTED_ROUTES = [
   '/',
+  '/about/',
+  '/agentic/',
   '/dotfiles/',
   '/agentic-workstation/',
   '/agent-toolkit/',

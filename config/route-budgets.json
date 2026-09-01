@@ -24,6 +24,46 @@
         "requests": 23
       }
     },
+    "/about/": {
+      "mobile": {
+        "total": 68608,
+        "document": 8192,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      },
+      "desktop": {
+        "total": 68608,
+        "document": 8192,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      }
+    },
+    "/agentic/": {
+      "mobile": {
+        "total": 68608,
+        "document": 8192,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      },
+      "desktop": {
+        "total": 68608,
+        "document": 8192,
+        "script": 0,
+        "style": 11264,
+        "image": 5120,
+        "font": 45056,
+        "requests": 9
+      }
+    },
     "/dotfiles/": {
       "mobile": {
         "total": 198766,
