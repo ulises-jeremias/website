@@ -5,7 +5,6 @@ import Hero from '../features/home/components/Hero.astro';
 import FeaturedAreas from '../features/home/components/FeaturedAreas.astro';
 import NestStatus from '../features/home/components/NestStatus.astro';
 import AboutPanel from '../features/home/components/AboutPanel.astro';
-import FeaturedProjectLedger from '../features/home/components/FeaturedProjectLedger.astro';
 import NestExplore from '../features/home/components/NestExplore.astro';
 import '../styles/home.css';
 
@@ -29,7 +28,6 @@ if (!route) throw new Error('Home route metadata is required');
     <div class="home-evidence" data-reveal>
       <NestStatus />
       <AboutPanel />
-      <FeaturedProjectLedger />
     </div>
 
     <NestExplore />

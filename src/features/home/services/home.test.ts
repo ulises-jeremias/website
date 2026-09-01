@@ -19,11 +19,6 @@ type NestStatusItem = {
 
 const atlasWorlds = (homeData as unknown as { atlasWorlds?: AtlasWorld[] }).atlasWorlds;
 const nestStatus = (homeData as unknown as { nestStatus?: NestStatusItem[] }).nestStatus;
-const featuredProjectLedger = (
-  homeData as unknown as {
-    featuredProjectLedger?: Array<{ id: string; path: string; title: string; description: string }>;
-  }
-).featuredProjectLedger;
 const contactLinks = (
   homeData as unknown as {
     contactLinks?: Array<{ label: string; href: string; illustration: string }>;
@@ -61,14 +56,20 @@ describe('homepage canonical data', () => {
     expect(JSON.stringify(nestStatus)).not.toMatch(/commits|stars|downloads|coffee|years.hacking/i);
   });
 
-  it('derives featured project rows from canonical worlds', () => {
-    expect(featuredProjectLedger).toBeTypeOf('object');
-    if (!featuredProjectLedger) return;
+  it('derives featured flagship areas from the portfolio taxonomy, not the legacy world list (#402)', async () => {
+    const { featuredAreas } = await import('../data/index.js');
+    const { getHomepagePortfolioAreas } = await import('@/data/portfolio');
 
-    expect(featuredProjectLedger.map((item) => item.id)).toEqual(
-      projectWorlds.filter((world) => world.featured).map((world) => world.id),
-    );
-    expect(featuredProjectLedger.every((item) => item.path.startsWith('/'))).toBe(true);
+    expect(featuredAreas).toHaveLength(4);
+    // Editorial facts match the selector output exactly — no retyping.
+    for (const [index, area] of featuredAreas.entries()) {
+      const canonical = getHomepagePortfolioAreas()[index]!;
+      expect(area.id).toBe(canonical.id);
+      expect(area.proposition).toBe(canonical.proposition);
+      expect(area.lens).toBe(canonical.lens);
+      // Visual mapping present per area.
+      expect(area.island).toMatch(/^island-/);
+    }
   });
 
   it('derives contact links from the verified profile', () => {

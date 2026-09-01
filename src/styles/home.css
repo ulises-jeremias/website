@@ -368,16 +368,6 @@
 .project-atlas__eyebrow,
 .nest-status__eyebrow,
 .about-panel__eyebrow,
-.featured-ledger__eyebrow {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--nest-cyan);
-}
-
 .project-atlas__stage {
   position: relative;
   flex: 1;
@@ -707,12 +697,6 @@
 
 .nest-status,
 .about-panel,
-.featured-ledger {
-  position: relative;
-  align-self: start;
-  padding: clamp(1.1rem, 2vw, 1.5rem);
-}
-
 .nest-status__header {
   display: flex;
   align-items: center;
@@ -793,21 +777,7 @@
 }
 
 .about-panel__corner,
-.featured-ledger__corner {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  inline-size: 1.5rem;
-  block-size: 1.5rem;
-  background: var(--nest-magenta);
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-}
-
 .about-panel__eyebrow,
-.featured-ledger__eyebrow {
-  margin-block-end: var(--space-5);
-}
-
 .about-panel__slash {
   color: var(--nest-magenta);
 }
@@ -899,116 +869,6 @@
   font-size: var(--text-xs);
   letter-spacing: 0.04em;
   color: var(--nest-pink);
-}
-
-.featured-ledger__list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0;
-}
-
-.featured-ledger__row {
-  border-block-end: 1px solid color-mix(in srgb, var(--nest-magenta) 15%, transparent);
-}
-
-.featured-ledger__link {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  min-block-size: var(--touch-min);
-  padding: 0.75rem 0.9rem 0.75rem 0.25rem;
-  border: 0;
-  color: inherit;
-  text-decoration: none;
-  background: transparent;
-  clip-path: none;
-  transition: background var(--motion-duration-fast) var(--motion-ease-out);
-}
-
-.featured-ledger__link:hover,
-.featured-ledger__link:focus-visible {
-  background: color-mix(in srgb, var(--nest-magenta) 5%, transparent);
-  transform: none;
-}
-
-.featured-ledger__mark {
-  display: grid;
-  place-items: center;
-  inline-size: 2.5rem;
-  block-size: 2.5rem;
-  flex-shrink: 0;
-  border: 1px solid color-mix(in srgb, var(--nest-magenta) 30%, transparent);
-  background: color-mix(in srgb, var(--nest-midnight-950) 60%, transparent);
-  overflow: hidden;
-}
-
-.featured-ledger__mark img {
-  inline-size: 2rem;
-  block-size: 2rem;
-  object-fit: contain;
-}
-
-.featured-ledger__index {
-  margin-inline-end: 0.4rem;
-  color: var(--world-color);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-}
-
-.featured-ledger__copy {
-  display: grid;
-  gap: 0.15rem;
-  min-inline-size: 0;
-  flex: 1;
-}
-
-.featured-ledger__copy strong {
-  font-size: 0.8125rem;
-}
-
-.featured-ledger__status {
-  display: inline-block;
-  margin-top: 0.2rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--world-color, var(--nest-cyan));
-}
-
-.featured-ledger__copy span {
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-}
-
-.featured-ledger__enter {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  color: var(--world-color);
-  white-space: nowrap;
-}
-
-.featured-ledger__all {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-block-start: var(--space-5);
-  color: var(--nest-cyan);
-  font-size: 0.8125rem;
-  text-decoration: none;
-}
-
-.featured-ledger__all:hover {
-  text-shadow: 0 0 12px color-mix(in srgb, var(--nest-cyan) 45%, transparent);
-}
-
-.featured-ledger__all svg {
-  inline-size: 1rem;
-  block-size: 1rem;
 }
 
 .sr-only {
@@ -1119,14 +979,6 @@
   .about-panel {
     grid-template-columns: 1fr;
   }
-
-  .featured-ledger__link {
-    grid-template-columns: auto 1fr auto;
-  }
-
-  .featured-ledger__visual {
-    display: none;
-  }
 }
 
 @media (width < 480px) {
@@ -1157,11 +1009,6 @@
   .atlas-world:hover,
   .atlas-world:focus-visible,
   .hero__cta--primary:hover,
-  .featured-ledger__link:hover,
-  .featured-ledger__link:focus-visible {
-    transform: none;
-  }
-
   .atlas-world--rise,
   .atlas-world--mid,
   .atlas-world--drop,
@@ -1183,13 +1030,6 @@
 @media (forced-colors: active) {
   .nest-status,
   .about-panel,
-  .featured-ledger,
-  .hero__cta,
-  .atlas-world {
-    border: 1px solid CanvasText;
-    box-shadow: none;
-  }
-
   .chrome-text,
   .hero__name-line {
     color: CanvasText;

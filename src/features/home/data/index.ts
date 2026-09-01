@@ -1,9 +1,9 @@
 import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
 import { profile } from '@/data/profile.js';
-import { featuredWorlds as canonicalFeaturedWorlds, worldsByPriority } from '@/data/project-worlds.js';
+import { worldsByPriority } from '@/data/project-worlds.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 import { verifiedFacts as dotfilesFacts } from '@/features/dotfiles/data/index.js';
-import type { AtlasWorld, ContactLink, FeaturedProjectRow, NestStatusItem } from '../types/index.js';
+import type { AtlasWorld, ContactLink, NestStatusItem } from '../types/index.js';
 
 /** ZIP island art filenames (under /assets/nest/), mapped from project-world ids. */
 export const islandArtByWorldId: Record<string, string> = {
@@ -76,16 +76,6 @@ export const nestStack = [
   ['Linux', 'Neovim', 'Tmux', 'Zsh', 'Git'],
   ['TypeScript', 'Go', 'Shell', 'Python', 'V'],
 ] as const;
-
-export const featuredProjectLedger: FeaturedProjectRow[] = canonicalFeaturedWorlds.map((world) => ({
-  id: world.id,
-  title: world.title,
-  description: world.description,
-  path: world.path,
-  accent: world.accent,
-  illustration: world.illustration,
-  island: islandArtByWorldId[world.id] ?? 'island-projects',
-}));
 
 // ---------------------------------------------------------------------------
 // Featured Work — four flagship portfolio areas (ADR-003, #393/#402)
