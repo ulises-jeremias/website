@@ -13,9 +13,11 @@ ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
 
 CSS_STYLELINT_CONFIG_FILE: .stylelintrc.json
 SPELL_CSPELL_CONFIG_FILE: cspell.json
-# JSON Schema identifiers and URI-shaped regex patterns are not navigable links.
+# Schema identifiers are not navigable links, and workflow files embed
+# operational credential push URLs that are not content links either.
+# NOTE: this is MegaLinter's FILE filter, not a URL exclusion.
 SPELL_LYCHEE_FILTER_REGEX_EXCLUDE: >-
-  (scripts/data/create-awesome/pinned/[^/]+/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json)
+  (scripts/data/create-awesome/pinned/[^/]+/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json|\.github/workflows/)
 REPOSITORY_GRYPE_DISABLE_ERRORS: true
 REPOSITORY_TRIVY_DISABLE_ERRORS: true
 # Checkov crashes with an empty file list on deletion-only diffs
