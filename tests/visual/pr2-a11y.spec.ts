@@ -104,6 +104,27 @@ test.describe('PR 2 value and group semantics', () => {
     expect(outline.style).not.toBe('none');
     expect(outline.width).toBeGreaterThanOrEqual(2);
   });
+
+  test('keeps forced-colors focus visible on the newer portfolio routes', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' });
+
+    for (const target of [
+      { route: '/about', selector: 'a[href="/projects"]' },
+      { route: '/agentic', selector: 'a[href="/agent-toolkit"]' },
+      { route: '/open-source', selector: 'a' },
+    ]) {
+      await page.goto(target.route);
+      const link = page.locator(target.selector).first();
+      await link.focus();
+      const outline = await link.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return { style: style.outlineStyle, width: Number.parseFloat(style.outlineWidth) };
+      });
+      expect(outline.style, `${target.route} focus outline`).not.toBe('none');
+      expect(outline.width).toBeGreaterThanOrEqual(2);
+    }
+  });
 });
 
 test.describe('PR 2 keyboard-scrollable install code', () => {
