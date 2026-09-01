@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 
 const routes = [
   '/',
+  '/about',
+  '/agentic',
   '/agent-toolkit',
   '/dotfiles',
   '/agentic-workstation',
@@ -37,6 +39,8 @@ test.describe('route smoke', () => {
 
 test.describe('flagship route visuals', () => {
   const captureRoutes = [
+    { path: '/about', name: 'about' },
+    { path: '/agentic', name: 'agentic' },
     { path: '/agent-toolkit', name: 'agent-toolkit' },
     { path: '/agentic-harness', name: 'agentic-harness' },
     { path: '/dotfiles', name: 'dotfiles' },
