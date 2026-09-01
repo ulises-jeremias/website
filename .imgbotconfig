@@ -1,0 +1,4 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dabutvin/ImgBot/master/.imgbotconfig/schema.json",
+  "ignorePaths": ["docs/design/**", "tests/**", "test-results/**", "coverage/**", "**/__snapshots__/**"]
+}
