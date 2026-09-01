@@ -66,8 +66,8 @@
     },
     "/agent-toolkit/": {
       "mobile": {
-        "total": 133120,
-        "document": 15360,
+        "total": 133173,
+        "document": 15413,
         "script": 3072,
         "style": 17408,
         "image": 5120,
@@ -75,8 +75,8 @@
         "requests": 15
       },
       "desktop": {
-        "total": 133120,
-        "document": 15360,
+        "total": 133173,
+        "document": 15413,
         "script": 3072,
         "style": 17408,
         "image": 5120,
@@ -166,8 +166,8 @@
     },
     "/projects/": {
       "mobile": {
-        "total": 256000,
-        "document": 10240,
+        "total": 256400,
+        "document": 10640,
         "script": 0,
         "style": 13312,
         "image": 155648,
@@ -175,8 +175,8 @@
         "requests": 17
       },
       "desktop": {
-        "total": 256000,
-        "document": 10240,
+        "total": 256400,
+        "document": 10640,
         "script": 0,
         "style": 13312,
         "image": 155648,

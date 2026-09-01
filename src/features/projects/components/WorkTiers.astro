@@ -14,6 +14,7 @@ import {
   getPortfolioEntriesByTier,
   type PortfolioEntry,
 } from '@/data/portfolio.js';
+import ProofStrip from '@/shared/components/ProofStrip.astro';
 
 const featured: Array<{ areaId: string; title: string; path: string; proposition: string; note?: string }> =
   portfolioAreas.map((area) => {
@@ -100,6 +101,7 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
                 <strong>{entry.title}</strong>
                 <span>{entry.description}</span>
               </a>
+              <ProofStrip entry={entry} label={`Contextual proof for ${entry.title}`} />
             </li>
           ))}
         </ul>
