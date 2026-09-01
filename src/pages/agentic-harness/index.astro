@@ -1,5 +1,6 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import AdoptionPaths from '@/features/personal-dx/components/AdoptionPaths.astro';
 import StackMatrix from '@/features/personal-dx/components/StackMatrix.astro';
 import { HarnessWorkspace, PersistenceCore } from '@/features/agentic-harness';
@@ -23,6 +24,7 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
         collections, and run history that Agent Toolkit's engines read and write — so context survives across sessions,
         repositories, and clients.
       </p>
+      <FlagshipProvenance entryId="agentic-harness" />
       <div class="ah-hero__actions">
         <a class="ah-hero__cta" href={harnessMeta.repo} target="_blank" rel="noopener noreferrer">
           GitHub repository ↗

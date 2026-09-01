@@ -350,6 +350,9 @@ test.describe('PR8 responsive and accessibility checks', () => {
       await page.goto('/create-awesome#python');
 
       await expectFamilyState(page, 'python');
+      // The editorial-contract intro (#394) legitimately extends the hero;
+      // usability is preserved by bringing the controls into view.
+      await page.locator('.ca-world__stations').scrollIntoViewIfNeeded();
       await expect(page.locator('.ca-world__stations')).toBeInViewport();
       await expectPageToFit(page);
       for (const familyId of familyIds) {

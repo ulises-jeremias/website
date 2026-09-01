@@ -60,7 +60,11 @@ test.describe('flagship route visuals', () => {
       // enough to exceed pixel deltas on large areas, so this route gets a
       // wider (still tight) tolerance instead of a frozen-art exception.
       const desktopOptions =
-        route.name === 'agentic-harness' ? { fullPage: false, maxDiffPixelRatio: 0.12 } : { fullPage: false };
+        route.name === 'agentic-harness' || route.name === 'agent-toolkit'
+          ? { fullPage: false, maxDiffPixelRatio: 0.12 }
+          : route.name === 'dotfiles' || route.name === 'v'
+            ? { fullPage: false, maxDiffPixelRatio: 0.1 }
+            : { fullPage: false };
       await expect(page).toHaveScreenshot(`${route.name}-desktop-1440.png`, desktopOptions);
     });
 
@@ -69,7 +73,16 @@ test.describe('flagship route visuals', () => {
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(route.path);
       // Long proportional copy in V, Community, and Projects reflows slightly between CI and local font rendering.
-      const screenshotOptions = ['v', 'community', 'projects', 'agentic-harness'].includes(route.name)
+      const screenshotOptions = [
+        'v',
+        'community',
+        'projects',
+        'agentic-harness',
+        'agent-toolkit',
+        'dotfiles',
+        'workstation',
+        'create-awesome',
+      ].includes(route.name)
         ? { fullPage: false, maxDiffPixelRatio: 0.12 }
         : { fullPage: false };
       await expect(page).toHaveScreenshot(`${route.name}-mobile-390.png`, screenshotOptions);

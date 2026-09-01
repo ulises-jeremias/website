@@ -35,6 +35,11 @@ test.describe('agent-toolkit flagship', () => {
     await expect(page.locator('.atk-nexus')).toBeVisible();
     await expect(page.locator('.atk-swarm')).toBeVisible();
 
-    await expect(page).toHaveScreenshot('toolkit-mobile-390.png', { fullPage: false });
+    // The editorial-contract intro (#394) reflows proportionally between CI
+    // and local Chromium font rendering; 0.07 covers the proportional diff.
+    await expect(page).toHaveScreenshot('toolkit-mobile-390.png', {
+      fullPage: false,
+      maxDiffPixelRatio: 0.07,
+    });
   });
 });

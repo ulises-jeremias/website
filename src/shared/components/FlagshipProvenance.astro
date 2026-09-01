@@ -1,0 +1,73 @@
+---
+/**
+ * FlagshipProvenance — role, ownership, and contextual proof for a flagship
+ * route (#394 editorial contract, #399 evidence policy).
+ *
+ * Renders one compact block:
+ *  - role line: verified public role (roleLabel) + repository ownership,
+ *    always explicit so personal responsibility is never implied as
+ *    organization ownership.
+ *  - ProofStrip lines from the portfolio taxonomy (source-linked proof with
+ *    verification dates when volatile).
+ *
+ * Data comes exclusively from `src/data/portfolio.ts` — routes never retype
+ * role or ownership strings.
+ */
+import { getPortfolioEntryById } from '@/data/portfolio.js';
+import ProofStrip from './ProofStrip.astro';
+
+export interface Props {
+  /** Portfolio entry id, e.g. "agent-toolkit". */
+  entryId: string;
+  /** Optional extra context sentence (e.g. per-station note on /v). */
+  note?: string;
+}
+
+const { entryId, note } = Astro.props as Props;
+const entry = getPortfolioEntryById(entryId);
+if (!entry) throw new Error(`FlagshipProvenance: unknown portfolio entry "${entryId}"`);
+
+const role = entry.roleLabel ?? entry.responsibility.replaceAll('-', ' ');
+const ownership =
+  entry.repositoryOwner === 'ulises-jeremias'
+    ? `owned and maintained at ${entry.repositoryOwner}/${entry.repositorySlug}`
+    : `${entry.repositoryOwner}/${entry.repositorySlug} — ${entry.roleLabel ? 'maintained by Ulises, owned by the organization' : 'external project'}`;
+---
+
+<aside class="flagship-provenance" aria-label={`Role, ownership, and proof for ${entry.title}`}>
+  <p class="flagship-provenance__role">
+    <strong>{role}</strong>
+    <span aria-hidden="true">·</span>
+    <span>{ownership}</span>
+  </p>
+  {note && <p class="flagship-provenance__note">{note}</p>}
+  <ProofStrip entry={entry} />
+</aside>
+
+<style>
+  .flagship-provenance {
+    display: grid;
+    gap: 0.45rem;
+    max-inline-size: 64ch;
+    margin: 0.85rem 0 0;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--color-border, currentColor) 60%, transparent);
+    border-inline-start: 2px solid var(--world-accent, currentColor);
+    border-radius: 6px;
+    font-size: 0.82rem;
+  }
+
+  .flagship-provenance__role {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0;
+  }
+
+  .flagship-provenance__note {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--color-text-muted, inherit);
+  }
+</style>

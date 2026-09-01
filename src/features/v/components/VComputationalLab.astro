@@ -1,4 +1,5 @@
 ---
+import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import { SceneInspector, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
 import VLanguageScene from './scenes/VLanguageScene.astro';
@@ -45,6 +46,10 @@ const stationsJson = JSON.stringify(stations);
         autograd, reactive streams, CI tooling, and the community catalog. Each station pairs a working diagram with the
         verified role, repository, and license behind it.
       </p>
+      <FlagshipProvenance
+        entryId="v"
+        note="Per-station roles below distinguish ownership: vlang organization projects are maintained by Ulises, not owned; RxV is personally authored; scale belongs to the ecosystem."
+      />
       <figure class="v-lab__mascot" aria-label="Veasel — the V mascot (CC BY-NC 4.0, vlang.io)">
         <img
           class="v-lab__mascot-img"
