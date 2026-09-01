@@ -24,6 +24,8 @@ type AxeRuntime = {
 
 const PRIMARY_ROUTES = [
   '/',
+  '/about',
+  '/agentic',
   '/dotfiles',
   '/agentic-workstation',
   '/agent-toolkit',
