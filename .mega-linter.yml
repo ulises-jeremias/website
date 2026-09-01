@@ -13,9 +13,10 @@ ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
 
 CSS_STYLELINT_CONFIG_FILE: .stylelintrc.json
 SPELL_CSPELL_CONFIG_FILE: cspell.json
-# JSON Schema identifiers and URI-shaped regex patterns are not navigable links.
+# JSON Schema identifiers, URI-shaped regex patterns, and git-over-https push URLs
+# with inline credentials are not navigable links.
 SPELL_LYCHEE_FILTER_REGEX_EXCLUDE: >-
-  (scripts/data/create-awesome/pinned/[^/]+/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json)
+  (scripts/data/create-awesome/pinned/[^/]+/templates\.schema\.json|src/features/create-awesome/data/generated/compatibility\.schema\.json|https://x-access-token:)
 REPOSITORY_GRYPE_DISABLE_ERRORS: true
 REPOSITORY_TRIVY_DISABLE_ERRORS: true
 # Checkov crashes with an empty file list on deletion-only diffs
