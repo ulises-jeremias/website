@@ -43,8 +43,8 @@
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/orbitron": "^5.3.0",
-    "astro": "^7.2.6",
-    "zod": "^4.4.3"
+    "astro": "^7.2.10",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -52,13 +52,13 @@
     "@commitlint/config-conventional": "^21.2.2",
     "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^7.0.1",
-    "@types/node": "^26.3.0",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@types/node": "^26.4.0",
+    "@vitest/coverage-v8": "^4.1.11",
     "ajv": "^8.20.0",
     "ajv-draft-04": "^1.0.0",
     "axe-core": "^4.13.0",
     "chrome-launcher": "^1.2.1",
-    "cspell": "^10.0.1",
+    "cspell": "^10.2.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
@@ -67,15 +67,15 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^9.1.7",
     "jsdom": "^30.0.1",
-    "knip": "^6.32.2",
+    "knip": "^6.34.0",
     "lighthouse": "^13.4.1",
-    "lint-staged": "^17.3.0",
+    "lint-staged": "^17.4.1",
     "playwright": "1.62.1",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.68.0",
-    "vitest": "^3.2.4"
+    "typescript-eslint": "^8.69.0",
+    "vitest": "^4.1.11"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,astro}": [
