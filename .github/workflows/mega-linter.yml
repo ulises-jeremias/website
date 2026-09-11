@@ -57,8 +57,10 @@ jobs:
 
     steps:
       # Git Checkout
+      # NOTE: credentials must persist here: stefanzweifel/git-auto-commit-action
+      # below pushes linter fixes with plain `git push` and takes no token input.
       - name: Checkout Code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 # zizmor: ignore[artipacked] Pushes linter fixes via git-auto-commit-action, which takes no token input.
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
 
@@ -71,7 +73,7 @@ jobs:
 
         # You can override MegaLinter flavor used to have faster performances
         # More info at https://megalinter.io/latest/flavors/
-        uses: oxsecurity/megalinter/flavors/javascript@v9
+        uses: oxsecurity/megalinter/flavors/javascript@ef3e84b8b836d76db562d0f3ed7da61e8fd538bc # v9
 
         id: ml
 
@@ -110,7 +112,7 @@ jobs:
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         if: success() || failure()
         with:
           name: MegaLinter reports
@@ -121,7 +123,7 @@ jobs:
       # Create pull request if applicable
       # (for now works only on PR from same repository, not from forks)
       - name: Create Pull Request with applied fixes
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         id: cpr
         if: >-
           steps.ml.outputs.has_updated_sources == 1 &&
@@ -154,9 +156,12 @@ jobs:
             github.event.pull_request.head.repo.full_name == github.repository
           ) &&
           !contains(github.event.head_commit.message, 'skip fix')
+        env:
+          CPR_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+          CPR_PULL_REQUEST_URL: ${{ steps.cpr.outputs.pull-request-url }}
         run: |
-          echo "PR Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "PR URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          echo "PR Number - $CPR_PULL_REQUEST_NUMBER"
+          echo "PR URL - $CPR_PULL_REQUEST_URL"
 
       # Push new commit if applicable
       # (for now works only on PR from same repository, not from forks)
@@ -177,7 +182,7 @@ jobs:
         run: sudo chown -Rc $UID .git/
 
       - name: Commit and push applied linter fixes
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d # v7
         if: >-
           steps.ml.outputs.has_updated_sources == 1 &&
           (
