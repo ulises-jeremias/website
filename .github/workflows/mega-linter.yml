@@ -57,8 +57,10 @@ jobs:
 
     steps:
       # Git Checkout
+      # NOTE: credentials must persist here: stefanzweifel/git-auto-commit-action
+      # below pushes linter fixes with plain `git push` and takes no token input.
       - name: Checkout Code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7 # zizmor: ignore[artipacked] Pushes linter fixes via git-auto-commit-action, which takes no token input.
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
 
@@ -154,9 +156,12 @@ jobs:
             github.event.pull_request.head.repo.full_name == github.repository
           ) &&
           !contains(github.event.head_commit.message, 'skip fix')
+        env:
+          CPR_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+          CPR_PULL_REQUEST_URL: ${{ steps.cpr.outputs.pull-request-url }}
         run: |
-          echo "PR Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "PR URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          echo "PR Number - $CPR_PULL_REQUEST_NUMBER"
+          echo "PR URL - $CPR_PULL_REQUEST_URL"
 
       # Push new commit if applicable
       # (for now works only on PR from same repository, not from forks)
