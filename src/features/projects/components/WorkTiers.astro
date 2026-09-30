@@ -8,26 +8,22 @@
  * Labs/demos. No popularity ranking; roles distinguish ownership.
  */
 import {
-  portfolioAreas,
+  getHomepagePortfolioAreas,
   portfolioEntries,
-  getPortfolioEntriesByArea,
   getPortfolioEntriesByTier,
   type PortfolioEntry,
 } from '@/data/portfolio.js';
 import ProofStrip from '@/shared/components/ProofStrip.astro';
 
-const featured: Array<{ areaId: string; title: string; path: string; proposition: string; note?: string }> =
-  portfolioAreas.map((area) => {
-    const entries = getPortfolioEntriesByArea(area.id);
-    const flagship = entries.find((entry) => entry.homepageEligible);
-    return {
-      areaId: area.id,
-      title: area.title,
-      path: area.overviewPath ?? area.path,
-      proposition: area.proposition,
-      note: flagship?.channels.join(' · '),
-    };
-  });
+/** Featured areas share the homepage selector — facts are never retyped. */
+const featured = getHomepagePortfolioAreas();
+
+const maturityLabel: Record<string, string> = {
+  established: 'established',
+  active: 'active',
+  early: 'early',
+  preview: 'preview · not installable',
+};
 
 /** Maintained ecosystems: significant responsibility with external/org ownership. */
 const maintained: PortfolioEntry[] = portfolioEntries.filter(
@@ -50,16 +46,27 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
     <ul class="work-tiers__featured-grid">
       {
         featured.map((area) => (
-          <li>
-            <a class="work-tiers__card" href={area.path}>
-              <strong>{area.title}</strong>
-              <span class="work-tiers__proposition">{area.proposition}</span>
-              {area.note && <span class="work-tiers__meta">{area.note}</span>}
-            </a>
+          <li class="work-tiers__card">
+            <h3>
+              <a href={area.path}>{area.title}</a>
+            </h3>
+            <p class="work-tiers__proposition">{area.proposition}</p>
+            <ul class="work-tiers__members" aria-label={`${area.title} projects`}>
+              {area.memberLinks.map((member) => (
+                <li>
+                  <a href={member.path}>{member.title}</a>
+                  {member.maturity && <span class="work-tiers__maturity">{maturityLabel[member.maturity]}</span>}
+                </li>
+              ))}
+            </ul>
           </li>
         ))
       }
     </ul>
+    <p class="work-tiers__support">
+      Building on one of these, or want to support one? <a href="/sponsor">Sponsorship and partnerships</a> are disclosed
+      and scoped per area.
+    </p>
   </section>
 
   {
@@ -156,7 +163,7 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
 
   .work-tiers__featured-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
     gap: 0.8rem;
     margin: 0;
     padding: 0;
@@ -165,17 +172,63 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
 
   .work-tiers__card {
     display: grid;
-    gap: 0.35rem;
+    align-content: start;
+    gap: 0.45rem;
     block-size: 100%;
-    padding: 0.9rem 1rem;
+    padding: 0.95rem 1.05rem;
     border: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
     border-radius: 8px;
     background: color-mix(in srgb, var(--nest-violet) 5%, transparent);
   }
 
   .work-tiers__card:hover,
-  .work-tiers__card:focus-visible {
+  .work-tiers__card:focus-within {
     border-color: var(--nest-violet);
+  }
+
+  .work-tiers__card h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .work-tiers__card h3 a {
+    color: var(--nest-paper);
+    text-underline-offset: 0.2em;
+  }
+
+  .work-tiers__proposition {
+    margin: 0;
+  }
+
+  .work-tiers__members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.82rem;
+  }
+
+  .work-tiers__members a {
+    color: var(--nest-cyan);
+  }
+
+  .work-tiers__maturity {
+    margin-inline-start: 0.35rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .work-tiers__support {
+    margin: 0.9rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+  }
+
+  .work-tiers__support a {
+    color: var(--nest-pink);
   }
 
   .work-tiers__proposition {

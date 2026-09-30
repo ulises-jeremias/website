@@ -31,8 +31,11 @@ describe('community registry', () => {
       expect(item.workingTitle.toLowerCase()).not.toContain('sin nombre');
     }
     expect(incubatingProjects.map((i) => i.id)).toEqual(
-      expect.arrayContaining(['skypiea-home', 'horneroos', 'agent-workspace-experiment']),
+      expect.arrayContaining(['skypiea-home', 'agent-workspace-experiment']),
     );
+    // Hornero OS is public (HorneroOS org) — it must not be listed as a repo-less incubator.
+    expect(incubatingProjects.map((i) => i.id)).not.toContain('horneroos');
+    expect(communityProjects.some((p) => p.id === 'hornero-os' && p.worldPath === '/hornero-os')).toBe(true);
   });
 
   it('uses a verified Discord invite and multi-repo issue search', () => {

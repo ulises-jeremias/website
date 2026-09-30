@@ -28,10 +28,13 @@ const entry = getPortfolioEntryById(entryId);
 if (!entry) throw new Error(`FlagshipProvenance: unknown portfolio entry "${entryId}"`);
 
 const role = entry.roleLabel ?? entry.responsibility.replaceAll('-', ' ');
+const repository = `${entry.repositoryOwner}/${entry.repositorySlug}`;
 const ownership =
   entry.repositoryOwner === 'ulises-jeremias'
-    ? `owned and maintained at ${entry.repositoryOwner}/${entry.repositorySlug}`
-    : `${entry.repositoryOwner}/${entry.repositorySlug} — ${entry.roleLabel ? 'maintained by Ulises, owned by the organization' : 'external project'}`;
+    ? `owned and maintained at ${repository}`
+    : entry.responsibility === 'author-owner'
+      ? `${repository} — created and maintained by Ulises under the ${entry.repositoryOwner} organization`
+      : `${repository} — ${entry.roleLabel ? 'maintained by Ulises, owned by the organization' : 'external project'}`;
 ---
 
 <aside class="flagship-provenance" aria-label={`Role, ownership, and proof for ${entry.title}`}>

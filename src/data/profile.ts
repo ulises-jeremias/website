@@ -8,6 +8,8 @@ export const profileLinkSchema = z.object({
 
 export const profileRoleSchema = z.object({
   label: z.string().min(1),
+  /** Distinguishes employment from open-source and community roles (About page). */
+  kind: z.enum(['employment', 'open-source', 'community']).default('open-source'),
   organization: z.string().min(1).optional(),
   href: z.string().url().optional(),
   icon: z.string().optional(),
@@ -18,6 +20,8 @@ export const profileLinksSchema = z.object({
   linkedin: z.string().url(),
   email: z.string().email(),
   discord: z.string().url(),
+  /** Canonical individual-support link (ADR-004). */
+  sponsors: z.string().url().startsWith('https://github.com/sponsors/'),
   twitter: z.string().url().optional(),
 });
 
@@ -64,31 +68,41 @@ const _base = profileSchema.parse({
   pronouns: 'He/Him',
   title: 'Solutions Architect @ NaNLABS',
   location: 'La Plata, Buenos Aires, Argentina',
-  bio: 'Solutions Architect at NaNLABS, Core Team Member at V, and AUR Maintainer. I build developer tooling, AI-powered workflows, CLI apps, and infrastructure automation — mostly in TypeScript, Go, Shell, and Python.',
+  bio: 'Solutions Architect at NaNLABS and open-source builder. I create and maintain developer tooling — agent workflows, Linux desktops, scientific computing libraries for V, and app scaffolding — mostly in V, TypeScript, Python, Shell, and Go.',
   summary:
-    'I help teams ship reliable tooling: from workstation foundations (HorneroConfig) and AI workspaces to scientific libraries for the V language and community-driven CLIs.',
+    'I build developer systems that reduce friction and keep the developer in control: portable agent tooling, reproducible Linux desktops, V scientific computing, and scaffolding that starts projects in a working state.',
   roles: [
     {
       label: 'Solutions Architect',
+      kind: 'employment',
       organization: 'NaNLABS',
       href: 'https://github.com/nanlabs',
       icon: 'architecture',
     },
     {
-      label: 'Core Team Member',
-      organization: 'V Language',
+      label: 'V Ecosystem Maintainer',
+      organization: 'vlang — VSL, VTL, setup-v',
       href: 'https://github.com/vlang',
       icon: 'v-language',
     },
     {
       label: 'AUR Maintainer',
       organization: 'Arch User Repository',
-      href: 'https://aur.archlinux.org/account/ulises-jeremias',
+      href: 'https://aur.archlinux.org/packages?SeB=m&K=ulises-jeremias',
       icon: 'package',
     },
     {
-      label: 'Open Source Enthusiast',
+      label: 'Open-Source Maintainer',
+      organization: 'Digital Nest projects',
+      href: 'https://github.com/ulises-jeremias',
       icon: 'open-source',
+    },
+    {
+      label: 'Community Host',
+      kind: 'community',
+      organization: 'Digital Nest Discord',
+      href: 'https://discord.gg/bR5VyATgka',
+      icon: 'community',
     },
   ],
   links: {
@@ -96,25 +110,27 @@ const _base = profileSchema.parse({
     linkedin: 'https://www.linkedin.com/in/ulisesjcf/',
     email: 'ulisescf.24@gmail.com',
     discord: 'https://discord.gg/bR5VyATgka',
+    sponsors: 'https://github.com/sponsors/ulises-jeremias',
     twitter: 'https://twitter.com/ulisesjcf',
   },
   focusAreas: [
-    'Linux tooling & workstation automation',
-    'CLI apps & composable Node/Python/V tooling',
-    'AI agents, skills, and agentic workstations',
-    'Scientific computing (VSL, VTL)',
+    'Agentic developer tooling (Agent Toolkit, Workstation, Harness)',
+    'Linux desktops (HorneroConfig, Hornero OS)',
+    'Scientific computing for V (VSL, VTL)',
+    'Application scaffolding (Create Awesome)',
   ],
-  languages: ['TypeScript', 'Go', 'Shell', 'Python', 'V'],
+  languages: ['V', 'TypeScript', 'Python', 'Shell', 'Go'],
 });
 
 export const profile: Profile = {
   ..._base,
   tagline:
-    'Solutions Architect \u00b7 Core Team Member @ V \u00b7 AUR Maintainer \u2014 builder of AI workflows, CLI and infra automation',
-  focus: ['Linux tooling', 'CLI applications', 'AI agents', 'Scientific computing'],
+    'Solutions Architect \u00b7 V ecosystem maintainer \u00b7 open-source builder \u2014 agent tooling, Linux desktops, scientific computing',
+  focus: ['Agentic tooling', 'Linux desktops', 'Scientific computing', 'Scaffolding'],
   strengths: _base.languages,
   socials: [
     { label: 'GitHub', href: _base.links.github, icon: 'github' },
+    { label: 'GitHub Sponsors', href: _base.links.sponsors, icon: 'heart' },
     { label: 'LinkedIn', href: _base.links.linkedin, icon: 'linkedin' },
     { label: 'Discord', href: _base.links.discord, icon: 'discord' },
   ],

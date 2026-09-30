@@ -9,7 +9,9 @@
 
 **The Digital Nest** — Ulises Jeremias's personal portfolio and open-source engineering hub: [ulises-jeremias.dev](https://www.ulises-jeremias.dev).
 
-It presents four flagship bodies of work — the **Agentic Developer Stack** ([Agent Toolkit](https://github.com/ulises-jeremias/agent-toolkit), [Agentic Workstation](https://github.com/ulises-jeremias/agentic-workstation), [Agentic Harness](https://github.com/ulises-jeremias/agentic-harness)), **HorneroConfig** ([dotfiles](https://github.com/ulises-jeremias/dotfiles)), the **V Ecosystem**, and **Create Awesome** — alongside selected open-source work, with source-backed, dated evidence for every volatile claim.
+It presents four flagship bodies of work — the **Agentic Developer Stack** ([Agent Toolkit](https://github.com/ulises-jeremias/agent-toolkit), [Agentic Workstation](https://github.com/ulises-jeremias/agentic-workstation), [Agentic Harness](https://github.com/ulises-jeremias/agentic-harness)), the **Hornero Linux Desktop** ([HorneroConfig](https://github.com/ulises-jeremias/dotfiles) and the early-stage [Hornero OS](https://github.com/HorneroOS)), the **V Ecosystem**, and **Create Awesome** — alongside selected open-source work, with source-backed, dated evidence for every volatile claim.
+
+The `/sponsor` route explains how to support or partner with this work. Its content comes from one typed source (`src/data/sponsorship.ts`), its adoption signals from a dated, reviewed snapshot, and its disclosure rules are recorded in [ADR-004](./docs/adr/ADR-004-hornero-area-and-sponsorship.md).
 
 Built with **Astro 7**, content-first, feature-based architecture — scaffolded from [`create-awesome-node-app`](https://github.com/Create-Node-App/cna-templates) and hardened with tooling from [`nextjs-saas-ai-template`](https://github.com/Create-Node-App/nextjs-saas-ai-template).
 
@@ -48,11 +50,25 @@ pnpm test
 pnpm test:coverage
 ```
 
-Visit `/` and `/blog`.
+Visit `/`, `/projects`, and `/sponsor`.
+
+### Evidence snapshots
+
+Volatile facts come from committed snapshots, never from runtime API calls:
+
+```sh
+pnpm data:refresh                  # Open Source evidence (GitHub)
+pnpm data:agent-toolkit:check      # Agent Toolkit inventory drift
+pnpm data:create-awesome:refresh   # Create Awesome template catalogs
+pnpm data:sponsor:refresh          # /sponsor adoption signals (npm, PyPI, GitHub)
+pnpm data:sponsor:check            # validate the sponsor snapshot offline
+```
+
+Each refresh lands through a reviewed PR; see [`docs/DATA_PROVENANCE.md`](./docs/DATA_PROVENANCE.md).
 
 ## Project Structure
 
-```
+```text
 .
 ├── public/                 # static assets (favicon, logo)
 ├── src/
@@ -87,7 +103,7 @@ See [`docs/PROJECT_STRUCTURE.md`](./docs/PROJECT_STRUCTURE.md) for full conventi
 
 Each feature is self-contained:
 
-```
+```text
 src/features/<name>/
 ├── components/  # Astro / island UI
 ├── services/    # data fetching, business logic

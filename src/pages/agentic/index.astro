@@ -2,6 +2,7 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
 import { ADOPTION_PATHS, getStackProject, type StackProjectId } from '@/data/personal-dx-stack';
+import SupportNote from '@/shared/components/SupportNote.astro';
 
 const meta = getRouteMeta('/agentic')!;
 
@@ -24,7 +25,7 @@ const itemListJsonLd = {
 };
 
 const detailRoutes: Array<{ label: string; href: string; note: string }> = [
-  { label: 'Agent Toolkit', href: '/agent-toolkit', note: 'capabilities, swarms, loops, install' },
+  { label: 'Agent Toolkit', href: '/agent-toolkit', note: 'capabilities, CLI / API / desktop, swarms, install' },
   { label: 'Agentic Workstation', href: '/agentic-workstation', note: 'boot sequence, profiles, health' },
   { label: 'Agentic Harness', href: '/agentic-harness', note: 'workspace anatomy, packs, ownership' },
 ];
@@ -43,8 +44,9 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
         <p class="agentic-page__kicker">Agentic Developer Stack · overview</p>
         <h1 class="agentic-page__title">Stop rebuilding your AI workflow for every coding assistant.</h1>
         <p class="agentic-page__lead">
-          The Agentic Developer Stack is three composable projects with distinct responsibilities — not one monolith and
-          not a required sequence. Adopt what you need; each part works alone.
+          Skills, agents, and loops you write once should work in whichever coding assistant you open next. The Agentic
+          Developer Stack is three open-source projects with separate jobs — not one monolith and not a required
+          sequence. Adopt what you need; each part works alone.
         </p>
       </header>
 
@@ -95,7 +97,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           >
             agentic-workstation-demo <span aria-hidden="true">↗</span>
           </a>{' '}
-          is a supporting demo of the provisioning flow — a reference, not a fourth product.
+          is a small demo repository showing AGENTS.md routing work to skills and sub-agents — a reference, not a fourth product.
         </p>
       </section>
 
@@ -118,6 +120,8 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           <a href="/dotfiles">HorneroConfig</a> or the <a href="/projects">Work</a> overview for the full portfolio.
         </p>
       </section>
+
+      <SupportNote area="agentic" />
     </div>
   </div>
 </SectionLayout>

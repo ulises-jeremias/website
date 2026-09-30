@@ -382,7 +382,7 @@ test.describe('PR7A enhanced V station state', () => {
     await page.locator('[data-v-station="vsl"]').click();
 
     await expect(page.locator('[data-v-station-status]')).toHaveText(
-      'Station selected: VSL — Maintainer — scientific modules, compute dispatch, backend integration.',
+      'Station selected: VSL — Creator and lead maintainer — scientific modules, compute dispatch, backends.',
     );
     await expect(page.locator('[data-v-station="vsl"]')).toBeFocused();
   });

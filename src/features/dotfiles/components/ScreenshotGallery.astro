@@ -7,8 +7,12 @@ const rest = screenshotItems.slice(1);
 
 <section class="df-gallery" data-reveal aria-labelledby="df-gallery-title" data-df-gallery>
   <header class="df-gallery__header">
-    <p class="df-gallery__eyebrow">Gallery</p>
-    <h2 id="df-gallery-title">Desktop captures</h2>
+    <p class="df-gallery__eyebrow">Gallery · history</p>
+    <h2 id="df-gallery-title">Earlier desktops</h2>
+    <p class="df-gallery__note">
+      These captures show the X11 generation of HorneroConfig (2020–2021). The current Hyprland + Quickshell desktop is
+      documented in the repository; new captures will replace these once they exist.
+    </p>
   </header>
 
   <figure class="df-gallery__hero">
@@ -111,6 +115,14 @@ const rest = screenshotItems.slice(1);
 </script>
 
 <style>
+  .df-gallery__note {
+    max-inline-size: 62ch;
+    margin: 0.4rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
   .df-gallery {
     margin-top: 1.75rem;
   }

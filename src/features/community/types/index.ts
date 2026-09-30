@@ -20,14 +20,7 @@ export const communityInterestSchema = z.enum([
 ]);
 export type CommunityInterest = z.infer<typeof communityInterestSchema>;
 
-export const communityRoleSchema = z.enum([
-  'Creator',
-  'Maintainer',
-  'Core Team',
-  'Contributor',
-  'Curator',
-  'Coordinator',
-]);
+export const communityRoleSchema = z.enum(['Creator', 'Maintainer', 'Contributor', 'Curator', 'Coordinator']);
 export type CommunityRole = z.infer<typeof communityRoleSchema>;
 
 /** Active / experimental project surfaced on the Community workshop. */

@@ -1,5 +1,5 @@
 ---
-import { getFooterRoutes, getNavLabel } from '@/data/routes.js';
+import { getFooterRouteGroups, getNavLabel } from '@/data/routes.js';
 import { profile } from '@/data/profile.js';
 
 export interface Props {
@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const { id } = Astro.props as Props;
-const routes = getFooterRoutes();
+const routeGroups = getFooterRouteGroups();
 const year = new Date().getFullYear();
 const emailHref = `mailto:${profile.contact.email}`;
 const sourceHref = 'https://github.com/ulises-jeremias/website';
@@ -107,20 +107,39 @@ const socialLinks = [
     </ul>
   </div>
 
-  <nav class="site-footer__atlas" aria-label="Digital Nest worlds">
-    <p class="site-footer__label">Atlas index</p>
-    <ol>
+  <nav class="site-footer__atlas" aria-label="Site directory">
+    <div class="site-footer__groups">
       {
-        routes.map((route, index) => (
-          <li>
-            <a href={route.path}>
-              <span aria-hidden="true">{String(index).padStart(2, '0')}</span>
-              {getNavLabel(route)}
-            </a>
-          </li>
+        routeGroups.map((group) => (
+          <section class="site-footer__group" aria-labelledby={`footer-group-${group.id}`}>
+            <h2 id={`footer-group-${group.id}`} class="site-footer__label">
+              {group.label}
+            </h2>
+            <ul>
+              {group.routes.map((route) => (
+                <li>
+                  <a href={route.path}>{getNavLabel(route)}</a>
+                </li>
+              ))}
+              {group.id === 'support' && (
+                <li>
+                  <a href={profile.links.sponsors} target="_blank" rel="noopener noreferrer">
+                    GitHub Sponsors
+                    <span class="sr-only"> (opens in new tab)</span>
+                  </a>
+                </li>
+              )}
+            </ul>
+            {group.id === 'support' && (
+              <p class="site-footer__note">
+                Sponsorship is disclosed and never buys a technical recommendation.{' '}
+                <a href="/sponsor#principles">Principles</a>
+              </p>
+            )}
+          </section>
         ))
       }
-    </ol>
+    </div>
     <a class="site-footer__source" href={sourceHref} target="_blank" rel="noopener noreferrer">
       View source
       <span class="sr-only"> (opens in new tab)</span>
@@ -220,42 +239,67 @@ const socialLinks = [
     margin-inline: auto;
   }
 
+  .site-footer__groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: var(--space-6) var(--space-8);
+  }
+
+  .site-footer__group:first-child ul {
+    columns: 2;
+    column-gap: var(--space-6);
+  }
+
   .site-footer__label {
     margin: 0 0 var(--space-3);
     color: var(--nest-magenta);
     font-family: var(--font-display);
     font-size: 0.75rem;
-    letter-spacing: 0.28em;
+    font-weight: 400;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
   }
 
-  .site-footer__atlas ol {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-2) var(--space-4);
+  .site-footer__group ul {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .site-footer__atlas a {
+  .site-footer__group li {
+    break-inside: avoid;
+  }
+
+  .site-footer__group a {
     display: inline-flex;
-    gap: var(--space-2);
-    min-block-size: 2rem;
     align-items: center;
+    min-block-size: 2rem;
     color: var(--color-text-muted);
     font-size: var(--text-sm);
     text-decoration: none;
   }
 
-  .site-footer__atlas a span {
-    color: var(--nest-cyan);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+  .site-footer__group a:hover,
+  .site-footer__group a:focus-visible {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
-  .site-footer__atlas a:hover {
-    color: var(--color-text);
+  .site-footer__note {
+    max-inline-size: 30ch;
+    margin: var(--space-2) 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .site-footer__note a {
+    display: inline;
+    min-block-size: 0;
+    color: var(--nest-cyan);
+    font-size: inherit;
+    text-decoration: underline;
   }
 
   .site-footer__source {
@@ -286,8 +330,8 @@ const socialLinks = [
   }
 
   @media (width >= 900px) {
-    .site-footer__atlas ol {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .site-footer__groups {
+      grid-template-columns: 2fr 1fr 1fr;
     }
   }
 </style>

@@ -36,6 +36,8 @@
     "data:create-awesome:refresh": "node scripts/create-awesome-catalogs.mjs refresh",
     "data:create-awesome:check": "node scripts/create-awesome-catalogs.mjs check",
     "data:create-awesome:drift": "node scripts/create-awesome-catalogs.mjs drift",
+    "data:sponsor:refresh": "node scripts/refresh-sponsor-metrics.mjs && prettier --write --log-level warn src/data/generated/sponsor-metrics.json",
+    "data:sponsor:check": "node scripts/refresh-sponsor-metrics.mjs --check",
     "cspell": "cspell lint --no-progress .",
     "knip": "knip",
     "prepare": "husky"

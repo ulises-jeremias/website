@@ -1,4 +1,11 @@
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+// The skill count comes from the committed inventory snapshot, so this spec
+// follows `pnpm data:agent-toolkit:sync` instead of pinning a stale number.
+const { counts } = JSON.parse(
+  readFileSync(new URL('../../src/features/agent-toolkit/data/inventory.snapshot.json', import.meta.url), 'utf8'),
+) as { counts: { skills: number } };
 
 test.describe('agent-toolkit flagship', () => {
   test('desktop operations room + recipe selector', async ({ page }) => {
@@ -13,7 +20,7 @@ test.describe('agent-toolkit flagship', () => {
     await expect(page.locator('.atk-qvs')).toBeVisible();
     await expect(page.locator('.atk-swarm')).toBeVisible();
 
-    await expect(page.getByText('116', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText(String(counts.skills), { exact: true }).first()).toBeVisible();
     await expect(
       page
         .locator('.atk-qvs')

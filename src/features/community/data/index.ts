@@ -31,7 +31,7 @@ export const communityMeta: CommunityMeta = {
  * EDITORIAL: keep in sync with communityProjects[].repo / org fields.
  */
 export const COMMUNITY_ISSUE_SEARCH_BASE =
-  'repo:ulises-jeremias/dotfiles OR repo:ulises-jeremias/agentic-workstation OR repo:ulises-jeremias/agentic-harness OR repo:ulises-jeremias/agent-toolkit OR org:Create-Node-App OR org:Create-Python-App OR org:Create-Vlang-App';
+  'repo:ulises-jeremias/dotfiles OR repo:ulises-jeremias/agentic-workstation OR repo:ulises-jeremias/agentic-harness OR repo:ulises-jeremias/agent-toolkit OR org:Create-Node-App OR org:Create-Python-App OR org:Create-Vlang-App OR org:HorneroOS';
 
 export function communityIssueSearch(extraQuery: string): string {
   const q = `${COMMUNITY_ISSUE_SEARCH_BASE} ${extraQuery} is:open type:issue`;
@@ -43,8 +43,8 @@ export const workshopSections: WorkshopSection[] = [
     id: 'one-discord-many-projects',
     title: 'One Discord. Many projects.',
     paragraphs: [
-      "Digital Nest Community is the shared workshop behind Ulises' open-source work — Personal DX, agentic tooling, Create Awesome, V ecosystem contributions, and whatever ships next. Join for a rice, a skill, a template, a tensor bug, or just to follow experiments.",
-      'Create Awesome is one family inside the workshop. It does not define the community.',
+      "Digital Nest Community is the shared workshop behind Ulises' open-source work — agentic tooling, HorneroConfig and Hornero OS, Create Awesome, V ecosystem contributions, and whatever ships next. Join for a rice, a skill, a template, a tensor bug, or just to follow experiments.",
+      'The Discord server began around Create Awesome and still carries that name. Today it is one workshop for every project on this site, not a support desk for a single tool.',
     ],
   },
   {
@@ -81,6 +81,24 @@ const _projects: CommunityProject[] = [
     contributionAreas: ['rices/themes', 'Smart Colors', 'shell tooling', 'docs'],
     interests: ['linux-desktop', 'documentation', 'beginner'],
     beginnerFriendly: true,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
+    id: 'hornero-os',
+    name: 'Hornero OS',
+    summary:
+      'Early-stage Arch-based Wayland desktop OS — shell, config, horneroctl, and greeter repos. Development previews, not installable yet.',
+    ecosystem: 'personal-dx',
+    alsoIn: [],
+    repo: 'HorneroOS/hornero',
+    website: 'https://github.com/HorneroOS',
+    worldPath: '/hornero-os',
+    state: 'experimental',
+    communityEnabled: true,
+    contributionAreas: ['Quickshell/QML shell', 'desktop defaults', 'docs', 'hardware reports'],
+    interests: ['linux-desktop', 'design', 'documentation', 'testing'],
+    beginnerFriendly: false,
     role: 'Creator',
     source: 'github',
   },
@@ -263,14 +281,6 @@ export const incubatingProjects: IncubatingProject[] = [
     ecosystem: 'lab',
   }),
   incubatingProjectSchema.parse({
-    id: 'horneroos',
-    workingTitle: 'HorneroOS',
-    summary: 'Arch-based distribution concept — incubating. No public repository yet.',
-    themes: ['Arch Linux', 'distribution', 'installer'],
-    public: true,
-    ecosystem: 'lab',
-  }),
-  incubatingProjectSchema.parse({
     id: 'agent-workspace-experiment',
     workingTitle: 'New agent workspace',
     summary: 'Unnamed experiment exploring desktop / AI-agent tooling. No public name or repo yet.',
@@ -324,12 +334,12 @@ export const contributionOpportunities: ContributionOpportunity[] = [
   }),
   contributionOpportunitySchema.parse({
     id: 'personal-dx',
-    title: 'Personal DX',
-    description: 'HorneroConfig, workstation provisioning, and harness workspace issues.',
+    title: 'Linux desktop & workstation',
+    description: 'HorneroConfig, Hornero OS, workstation provisioning, and harness workspace issues.',
     interests: ['linux-desktop', 'devops-infra'],
     labels: [],
     href: communityIssueSearch(
-      '(repo:ulises-jeremias/dotfiles OR repo:ulises-jeremias/agentic-workstation OR repo:ulises-jeremias/agentic-harness)',
+      '(repo:ulises-jeremias/dotfiles OR org:HorneroOS OR repo:ulises-jeremias/agentic-workstation OR repo:ulises-jeremias/agentic-harness)',
     ),
   }),
   contributionOpportunitySchema.parse({
@@ -407,7 +417,7 @@ export const moderationItems: ModerationItem[] = [
 ];
 
 export const ecosystemLabels: Record<CommunityProject['ecosystem'], string> = {
-  'personal-dx': 'Personal DX',
+  'personal-dx': 'Linux desktop & workstation',
   agentic: 'Agentic tooling',
   'create-awesome': 'Create Awesome',
   'v-ecosystem': 'V ecosystem',

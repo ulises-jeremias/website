@@ -25,3 +25,13 @@ indent_style = unset
 indent_size = unset
 insert_final_newline = unset
 trim_trailing_whitespace = unset
+
+# Pinned catalog caches are byte-identical to upstream and SHA-256
+# drift-checked by data:create-awesome:check; never reformat them.
+[scripts/data/create-awesome/pinned/*/templates.json]
+charset = unset
+end_of_line = unset
+indent_style = unset
+indent_size = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset

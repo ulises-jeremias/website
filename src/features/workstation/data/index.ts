@@ -12,17 +12,7 @@ export const workstationProfiles: WorkstationProfile[] = [
   {
     id: 'technical',
     description: 'Full developer stack (node, python, docker, AI, productivity skills).',
-    groups: [
-      'core',
-      'node',
-      'python',
-      'docker',
-      'ai',
-      'skills_jira',
-      'skills_confluence',
-      'skills_productivity',
-      'swarm',
-    ],
+    groups: ['core', 'node', 'python', 'docker', 'ai', 'skills_productivity', 'swarm'],
   },
   {
     id: 'non-technical',
@@ -46,8 +36,8 @@ export const workstationProfiles: WorkstationProfile[] = [
   },
   {
     id: 'data',
-    description: 'Data engineering stack (python + AI + JIRA/Confluence skills).',
-    groups: ['core', 'python', 'ai', 'skills_jira', 'skills_confluence', 'skills_productivity', 'swarm'],
+    description: 'Data engineering stack (python + AI + productivity skills).',
+    groups: ['core', 'python', 'ai', 'skills_productivity', 'swarm'],
   },
   {
     id: 'infra',
@@ -85,8 +75,8 @@ export const workstationLayers: LayerMeta[] = [
     description:
       'Optional desktop surface in the Personal DX graph — not a required predecessor of the workstation. Transforms a Linux desktop into a functional workspace via Hyprland + Quickshell + smart-colors when you want the physical nest.',
     responsibilities: [
-      'Hyprland / Wayland compositor + Quickshell shell',
-      '12 themes, smart-colors (python-materialyoucolor → dots/smart-colors)',
+      'Hyprland / Wayland compositor + the Hornero Quickshell shell',
+      '14 themes, smart-colors (python-materialyoucolor → dots/smart-colors)',
       'chezmoi home/ source state (dotfiles)',
       'Theme-intelligence: light/dark, semantic mapping',
     ],
@@ -111,7 +101,7 @@ export const workstationLayers: LayerMeta[] = [
     ],
     delivers: [
       '~/.local/bin/dots-* (thin, delegate)',
-      '~/.local/share/agentic-workstation/runner',
+      '~/.local/share/agentic-workstation/dev-companion/runner',
       '~/.config/agentic-workstation (LLM policy)',
     ],
     repo: 'ulises-jeremias/agentic-workstation',
@@ -132,7 +122,7 @@ export const workstationLayers: LayerMeta[] = [
       'Symlink sync via dots-skills (delegated)',
     ],
     delivers: [
-      '~/.local/share/agentic-workstation/skills-external/agent-toolkit/',
+      'agent-toolkit install → deploys its embedded catalog per detected tool',
       '~/.claude/skills/, ~/.config/opencode/skills/ …',
       'Plugins: /plugin marketplace add agent-toolkit',
     ],
@@ -143,11 +133,11 @@ export const workstationLayers: LayerMeta[] = [
     index: 3,
     label: 'WORKSPACE · PERSISTENT CONTEXT',
     title: 'Agentic Harness',
-    subtitle: 'runtime · persistent workspace',
+    subtitle: 'workspace · persistent context',
     mapping: 'Harness / persistent workspace context',
     accent: '#22D3EE',
     description:
-      'Persistent AI workspace and runtime layer — memory, personas, packs, indexed repos, and autonomous loops. Consumes toolkit CLIs; it is not the Toolkit. Canonical repo: ulises-jeremias/agentic-harness.',
+      'Persistent AI workspace layer — memory, personas, packs, indexed repos, and loop history. It drives the Toolkit CLIs and is not a second runtime. Canonical repo: ulises-jeremias/agentic-harness.',
     responsibilities: [
       'knowledge/ — persistent memory across sessions',
       'personas/ + packs/ — scope + client context bundles',
@@ -184,7 +174,7 @@ export const provisioningSteps: ProvisioningStep[] = [
     step: 'Secrets & LLM policy',
     command: 'dots-devcompanion llm-status',
     description:
-      'Machine-level LLM policy lives only in workstation (env.d + dots-devcompanion). Toolkit has no provider awareness. Wire before queuing background jobs.',
+      'Host-level LLM policy enforcement lives in the workstation (env.d + dots-devcompanion) and fails closed per engagement. The Toolkit maps model profiles to providers; the workstation decides which providers a machine may use. Wire it before queuing background jobs.',
     note: 'Engagement policy: DOTS_AI_DEVCOMPANION_LLM_ALLOWLIST + DOTS_AI_DEVCOMPANION_LLM_STRICT=1',
   },
 ];

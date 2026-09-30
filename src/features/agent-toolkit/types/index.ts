@@ -66,6 +66,17 @@ export interface UiBackend {
   commands: string[];
 }
 
+/** A way to run Agent Toolkit, with an honest shipped/in-progress status. */
+export interface RuntimeSurface {
+  id: 'cli' | 'serve' | 'desktop';
+  title: string;
+  status: 'shipped' | 'in-progress';
+  statusNote: string;
+  summary: string;
+  command?: string;
+  docsHref: string;
+}
+
 export interface InstallSnippet {
   id: string;
   label: string;

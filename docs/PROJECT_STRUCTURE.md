@@ -54,7 +54,7 @@ Add new marketing pages as `pages/<slug>.astro`; tenant/slug logic belongs in fe
 
 Encapsulated domains under `src/features/<name>`:
 
-```
+```text
 <feature>/
 ├── components/  # Astro components (or React islands)
 ├── services/    # data fetching / business logic (e.g., blog.ts)
@@ -65,8 +65,10 @@ Encapsulated domains under `src/features/<name>`:
 ```
 
 Active features include `home`, `agent-toolkit`, `agentic-harness`,
-`workstation`, `dotfiles`, `v`, `create-awesome`, `community`, `blog`,
-`projects`, and `open-source`. The shared Personal DX ecosystem model
+`workstation`, `dotfiles`, `hornero-os`, `v`, `create-awesome`, `community`,
+`blog`, `projects`, `open-source`, and `sponsor`. Sponsorship copy lives in
+`src/data/sponsorship.ts` (ADR-004); project pages use the shared
+`SupportNote` component instead of retyping it. The shared Personal DX ecosystem model
 (responsibilities, adoption paths, ownership matrix) lives in
 `src/data/personal-dx-stack.ts` and renders through
 `src/features/personal-dx/`.

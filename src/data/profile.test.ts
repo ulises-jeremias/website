@@ -10,8 +10,15 @@ describe('profile', () => {
   it('has required verified roles', () => {
     const labels = profile.roles.map((r) => r.label);
     expect(labels).toContain('Solutions Architect');
-    expect(labels).toContain('Core Team Member');
+    expect(labels).toContain('V Ecosystem Maintainer');
     expect(labels).toContain('AUR Maintainer');
+    // ADR-004: no unverifiable "Core Team" title (no public roster exists).
+    expect(labels.join(' ')).not.toMatch(/core team/i);
+    expect(profile.bio).not.toMatch(/core team/i);
+  });
+
+  it('exposes the canonical GitHub Sponsors link', () => {
+    expect(profile.links.sponsors).toBe('https://github.com/sponsors/ulises-jeremias');
   });
 
   it('has verified links (GH, LinkedIn, email, Discord)', () => {

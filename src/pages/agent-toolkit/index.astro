@@ -7,8 +7,10 @@ import {
   InstallConsole,
   ProvenanceStrip,
   QueueVsSwarmVisual,
+  RuntimeSurfaces,
   SwarmControlRoom,
 } from '@/features/agent-toolkit';
+import SupportNote from '@/shared/components/SupportNote.astro';
 import { toolkitMeta } from '@/features/agent-toolkit/data/index.js';
 ---
 
@@ -22,9 +24,11 @@ import { toolkitMeta } from '@/features/agent-toolkit/data/index.js';
 >
   <CapabilityNexus />
   <ProvenanceStrip />
+  <RuntimeSurfaces />
   <EcosystemContext />
   <QueueVsSwarmVisual />
   <SwarmControlRoom />
   <InstallConsole />
   <CommunityWorkshopLink />
+  <SupportNote area="agentic" />
 </SectionLayout>

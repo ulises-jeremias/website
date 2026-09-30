@@ -84,6 +84,7 @@ const AGENT_ARCHETYPE: Record<string, PersonaArchetype> = {
   'security-reviewer': 'hardener',
   'e2e-runner': 'qa',
   'tdd-guide': 'implementer',
+  implementer: 'implementer',
   'refactor-cleaner': 'refactorer',
   assistant: 'assistant',
   'tech-assistant': 'assistant',

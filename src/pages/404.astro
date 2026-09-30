@@ -1,8 +1,11 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
-import { getFooterRoutes, getNavLabel } from '@/data/routes';
+import { getFooterRouteGroups, getNavLabel } from '@/data/routes';
 
-const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
+const atlasGroups = getFooterRouteGroups().map((group) => ({
+  ...group,
+  routes: group.routes.filter((route) => route.path !== '/'),
+}));
 ---
 
 <SectionLayout
@@ -33,7 +36,7 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
         </dl>
         <nav class="lost-world__actions" aria-label="Primary recovery">
           <a class="lost-world__cta lost-world__cta--primary" href="/">Return to Digital Nest</a>
-          <a class="lost-world__cta" href="/projects">Browse project worlds</a>
+          <a class="lost-world__cta" href="/projects">Browse the work</a>
         </nav>
       </aside>
     </header>
@@ -41,23 +44,28 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
     <nav class="lost-world__atlas" aria-labelledby="lost-atlas-title">
       <p class="lost-world__atlas-kicker">Verified destination index</p>
       <h2 id="lost-atlas-title" class="lost-world__atlas-title">Jump to a known route</h2>
-      <ul class="lost-world__atlas-list">
-        {
-          atlasRoutes.map((route) => (
-            <li>
-              <a class="lost-world__atlas-link" href={route.path}>
-                <span class="lost-world__atlas-index" aria-hidden="true">
-                  {String(route.navOrder).padStart(2, '0')}
-                </span>
-                <span>
-                  <strong>{getNavLabel(route)}</strong>
-                  <code>{route.path}</code>
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        atlasGroups.map((group) => (
+          <>
+            <h3 class="lost-world__atlas-group">{group.label}</h3>
+            <ul class="lost-world__atlas-list">
+              {group.routes.map((route, index) => (
+                <li>
+                  <a class="lost-world__atlas-link" href={route.path}>
+                    <span class="lost-world__atlas-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span>
+                      <strong>{getNavLabel(route)}</strong>
+                      <code>{route.path}</code>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        ))
+      }
     </nav>
   </section>
 </SectionLayout>
@@ -97,6 +105,16 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
   }
 
   .lost-world__console-kicker,
+  .lost-world__atlas-group {
+    margin: 1.25rem 0 0.6rem;
+    color: var(--nest-pink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   .lost-world__atlas-kicker {
     margin: 0 0 0.55rem;
     color: var(--nest-cyan);
@@ -199,6 +217,16 @@ const atlasRoutes = getFooterRoutes().filter((route) => route.path !== '/');
     margin-top: 1.5rem;
     padding: 1rem clamp(0.75rem, 3vw, 2rem) 0;
     border-top: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+  }
+
+  .lost-world__atlas-group {
+    margin: 1.25rem 0 0.6rem;
+    color: var(--nest-pink);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .lost-world__atlas-kicker {

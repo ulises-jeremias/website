@@ -29,7 +29,7 @@ describe('agent-toolkit inventory truth', () => {
   });
 
   it('matches verified HEAD inventory counts from a single snapshot', () => {
-    expect(inventoryCounts.skills).toBe(116);
+    expect(inventoryCounts.skills).toBe(103);
     expect(inventoryCounts.agents).toBe(18);
     expect(inventoryCounts.loops).toBe(10);
     expect(inventoryCounts.profiles).toBe(9);
@@ -77,7 +77,7 @@ describe('agent-toolkit inventory truth', () => {
     expect(queueVsSwarm[1]?.title.toLowerCase()).toContain('swarm');
   });
 
-  it('documents pair as implementer → reviewer → integrator from recipes.py', () => {
+  it('documents pair as implementer → reviewer → integrator from swarm_recipes.v', () => {
     const pair = swarmRecipes.find((r) => r.id === 'pair');
     expect(pair?.roles.map((r) => r.id)).toEqual(['implementer', 'reviewer', 'integrator']);
     expect(pair?.roles).toHaveLength(3);

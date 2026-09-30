@@ -12,9 +12,9 @@ const lastUpdated = getEvidenceLastUpdated();
 
 const kindLegend = [
   { kind: 'owned', label: 'Owned', detail: 'repositories I created and own' },
-  { kind: 'maintained', label: 'Maintained', detail: 'projects I maintain for their communities' },
-  { kind: 'org', label: 'Organization', detail: 'work inside organizations I belong to' },
-  { kind: 'external', label: 'External', detail: 'merged contributions to projects I do not run' },
+  { kind: 'maintained', label: 'Maintained', detail: 'projects I lead inside organizations I do not own (vlang)' },
+  { kind: 'org', label: 'Organization', detail: 'GitHub organizations I created for project families' },
+  { kind: 'external', label: 'Upstream', detail: 'merged pull requests to projects run by other people' },
 ] as const;
 
 const kindCounts = Object.fromEntries(
@@ -35,10 +35,15 @@ const positions = nodes.map((node, index) => {
   <header class="constellation__header">
     <div>
       <p class="constellation__eyebrow">Open Source · evidence archive</p>
-      <h1 id="constellation-title">Evidence archive</h1>
+      <h1 id="constellation-title">Open-source evidence</h1>
       <p class="constellation__lede">
-        Owned projects · maintained projects · organization work · external contributions. Verified subjects only, with
-        exact provenance in the ledger below.
+        Every claim on this site about what I built, maintain, or contributed to points back here. Each record says what
+        my relationship to the project actually is: a repository I own, a project I maintain for an organization I do
+        not own, an organization I created, or merged work in someone else's project.
+      </p>
+      <p class="constellation__lede constellation__lede--note">
+        Forks are working copies, not authorship — they only appear when there is merged upstream work to show. For what
+        each project does, see <a href="/projects">Work</a>.
       </p>
     </div>
     <aside class="constellation__brief" aria-label="Evidence archive readout">
@@ -202,9 +207,19 @@ const positions = nodes.map((node, index) => {
   }
 
   .constellation__lede {
-    margin: 0 0 1.35rem;
+    margin: 0 0 1rem;
     max-inline-size: 70ch;
     color: var(--color-text-muted);
+  }
+
+  .constellation__lede--note {
+    margin-block-end: 1.35rem;
+    color: var(--color-text-faint);
+    font-size: 0.92rem;
+  }
+
+  .constellation__lede a {
+    color: var(--nest-cyan);
   }
 
   .constellation__stage {

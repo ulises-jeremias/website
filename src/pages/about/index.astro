@@ -2,70 +2,76 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
 import { profile } from '@/data/profile';
+import { getHomepagePortfolioAreas } from '@/data/portfolio';
 
 const meta = getRouteMeta('/about')!;
 
+/**
+ * Trajectory — each stage names real, linked work. Dates come from the
+ * repositories (verified 2026-09-30); no stage invents an employer or title.
+ */
 const trajectory = [
   {
     period: 'Foundations',
-    heading: 'Developer and tooling engineer',
-    body: 'Started building CLIs, automation, and developer environments — the habit of treating developer experience as a product, not an afterthought.',
+    heading: 'CLIs, automation, and my own Linux setup',
+    body: 'I started where most tooling people start: scripts, command-line tools, and a desktop I kept rebuilding by hand. That is where the habit came from — treat developer experience as something to design.',
   },
   {
-    period: 'Open source',
-    heading: 'Scaffolding and community tooling',
-    body: 'Created the Create Awesome family (Node, Python, V) and maintained Recoil DevTools for the React community — years of composability-first developer tooling.',
+    period: 'Since 2019',
+    heading: 'V and scientific computing',
+    body: 'I started VSL, the V Scientific Library, in 2019 and still lead it. I became the main maintainer of VTL (tensors and autograd), wrote setup-v so V projects can run in CI, built RxV for reactive streams, and contribute to the V compiler.',
+    href: '/v',
   },
   {
-    period: 'Ecosystems',
-    heading: 'V language and scientific computing',
-    body: 'Contributing to the V ecosystem: maintainer work on VSL (scientific computing), VTL (tensors/autograd), and setup-v (CI), plus RxV for reactive streams.',
+    period: 'Since 2020',
+    heading: 'Scaffolding in the open',
+    body: 'Create Awesome Node App started in 2020 as a way to compose a template with extensions instead of copying starters. In 2026 it gained Python and V siblings that share the same model. Recoil DevTools stays maintained for apps that still use Recoil.',
+    href: '/create-awesome',
   },
   {
-    period: 'Environments',
-    heading: 'Reproducible Linux workstations',
-    body: 'HorneroConfig: a reproducible Linux desktop environment around Hyprland, Quickshell, Smart Colors, and chezmoi — developer-controlled systems by default.',
+    period: '2026',
+    heading: 'Reproducible Linux desktops',
+    body: 'HorneroConfig moved from its X11 years to Hyprland and Quickshell, managed with chezmoi. Its generic parts then became Hornero OS — an early-stage, Arch-based desktop OS that is not installable yet.',
+    href: '/hornero-os',
   },
   {
-    period: 'Agentic',
-    heading: 'AI-native developer workflows',
-    body: 'The Agentic Developer Stack: Agent Toolkit for portable capabilities, Agentic Workstation for machine provisioning, and Agentic Harness for persistent workspace context.',
+    period: 'Now',
+    heading: 'Agentic developer workflows',
+    body: 'Agent Toolkit packages skills, agents, and loops so they work across coding assistants, with a native CLI, local API, and desktop app. Agentic Workstation provisions the machine; Agentic Harness keeps workspace context between sessions.',
+    href: '/agentic',
   },
 ];
 
 const values = [
   {
-    title: 'Developer experience',
-    body: 'Tools should reduce friction for the person using them — measurable in time saved, not features shipped.',
+    title: 'Less friction',
+    body: 'A tool earns its place when it removes a step people repeat, not when it adds a feature.',
   },
   {
-    title: 'Composability',
-    body: 'Small pieces with clear boundaries. Capabilities that survive the next assistant, framework, or machine.',
+    title: 'Developer control',
+    body: 'Automation should serve the person using it. Provenance, configuration, and exits stay visible.',
   },
   {
-    title: 'Open source',
-    body: 'Work in public, document decisions, and keep the durable trail on GitHub where anyone can inspect it.',
+    title: 'Composable pieces',
+    body: 'Small parts with clear boundaries outlive the next assistant, framework, or machine.',
   },
   {
-    title: 'Automation',
-    body: 'If a step is repeated, script it. If a script is repeated, productize it.',
+    title: 'Reproducible by default',
+    body: 'Environments are declared, versioned, and rebuilt — never assembled by hand twice.',
   },
   {
-    title: 'Reproducibility',
-    body: 'Environments should be declared, versioned, and rebuilt — never hand-assembled.',
-  },
-  {
-    title: 'Developer-controlled systems',
-    body: 'Automation serves the developer; provenance and control stay explicit.',
+    title: 'Work in public',
+    body: 'Decisions, ADRs, and history live in the repositories, where anyone can check them.',
   },
 ];
 
-const currentFocus = [
-  { label: 'Agentic Developer Stack', href: '/agent-toolkit', note: 'Toolkit · Workstation · Harness' },
-  { label: 'HorneroConfig', href: '/dotfiles', note: 'Reproducible Linux environment' },
-  { label: 'V Ecosystem', href: '/v', note: 'VSL · VTL · RxV · setup-v' },
-  { label: 'Create Awesome', href: '/create-awesome', note: 'Node · Python · V scaffolding' },
-];
+const roleGroups = [
+  { kind: 'employment', title: 'Work', note: 'My job. Client work stays private and is not shown on this site.' },
+  { kind: 'open-source', title: 'Open source', note: 'Roles verified against public repositories.' },
+  { kind: 'community', title: 'Community', note: 'Open to anyone; separate from my employer.' },
+] as const;
+
+const focusAreas = getHomepagePortfolioAreas();
 
 const profilePageJsonLd = {
   '@context': 'https://schema.org',
@@ -75,7 +81,7 @@ const profilePageJsonLd = {
     name: profile.displayName,
     url: getCanonicalUrl('/'),
     jobTitle: profile.title,
-    sameAs: [profile.links.github, profile.links.linkedin],
+    sameAs: [profile.links.github, profile.links.linkedin, profile.links.sponsors],
   },
   url: getCanonicalUrl('/about'),
 };
@@ -92,12 +98,19 @@ const profilePageJsonLd = {
   <div class="about-page">
     <div class="about-page__inner">
       <header class="about-page__masthead">
-        <p class="about-page__kicker">Digital Nest · builder profile</p>
+        <p class="about-page__kicker">Digital Nest · about</p>
         <h1 class="about-page__title">{profile.displayName}</h1>
         <p class="about-page__lead">
-          Developer-tooling engineer and open-source builder — I build the layers developers work on: environments,
-          language ecosystems, and AI-native workflows.
+          I am a Solutions Architect at NaNLABS and, outside that job, an open-source builder. I work on the layers
+          developers stand on — their desktops, their languages, how projects start, and now how they work with coding
+          agents — and I try to make each one cause less friction while leaving the developer in charge.
         </p>
+        <nav class="about-page__jump" aria-label="On this page and related pages">
+          <a href="/projects">Work</a>
+          <a href="/open-source">Open Source</a>
+          <a href="/community">Community</a>
+          <a href="/sponsor">Sponsor</a>
+        </nav>
       </header>
 
       <section class="about-page__trajectory" aria-labelledby="about-trajectory-title">
@@ -107,12 +120,69 @@ const profilePageJsonLd = {
             trajectory.map((stage) => (
               <li class="about-page__stage">
                 <p class="about-page__stage-period">{stage.period}</p>
-                <h3 class="about-page__stage-heading">{stage.heading}</h3>
+                <h3 class="about-page__stage-heading">
+                  {stage.href ? <a href={stage.href}>{stage.heading}</a> : stage.heading}
+                </h3>
                 <p class="about-page__stage-body">{stage.body}</p>
               </li>
             ))
           }
         </ol>
+      </section>
+
+      <section class="about-page__roles" aria-labelledby="about-roles-title">
+        <h2 id="about-roles-title">Roles</h2>
+        <div class="about-page__role-groups">
+          {
+            roleGroups.map((group) => (
+              <div class="about-page__role-group">
+                <h3>{group.title}</h3>
+                <ul>
+                  {profile.roles
+                    .filter((role) => role.kind === group.kind)
+                    .map((role) => (
+                      <li>
+                        <strong>{role.label}</strong>
+                        {role.organization && (
+                          <span>
+                            {role.href ? (
+                              <a href={role.href} target="_blank" rel="noopener noreferrer">
+                                {role.organization}
+                                <span class="sr-only"> (opens in new tab)</span>
+                              </a>
+                            ) : (
+                              role.organization
+                            )}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                </ul>
+                <p class="about-page__role-note">{group.note}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="about-page__provenance">
+          Ownership is kept explicit throughout the site: projects I own, projects I maintain inside organizations like
+          vlang, and upstream contributions are labelled differently. <a href="/open-source">Open Source</a> has the evidence.
+        </p>
+      </section>
+
+      <section class="about-page__focus" aria-labelledby="about-focus-title">
+        <h2 id="about-focus-title">Current focus</h2>
+        <ul class="about-page__focus-list">
+          {
+            focusAreas.map((area) => (
+              <li>
+                <a href={area.path}>
+                  <strong>{area.title}</strong>
+                  <span>{area.memberLinks.map((member) => member.title).join(' · ')}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </section>
 
       <section class="about-page__values" aria-labelledby="about-values-title">
@@ -129,48 +199,33 @@ const profilePageJsonLd = {
         </ul>
       </section>
 
-      <section class="about-page__focus" aria-labelledby="about-focus-title">
-        <h2 id="about-focus-title">Current focus</h2>
-        <ul class="about-page__focus-list">
-          {
-            currentFocus.map((item) => (
-              <li>
-                <a href={item.href}>
-                  <strong>{item.label}</strong>
-                  <span>{item.note}</span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="about-page__roles" aria-labelledby="about-roles-title">
-        <h2 id="about-roles-title">Roles &amp; responsibility</h2>
-        <ul class="about-page__role-list">
-          {
-            profile.roles.map((role) => (
-              <li>
-                <strong>{role.label}</strong>
-                {role.organization && <span> · {role.organization}</span>}
-              </li>
-            ))
-          }
-        </ul>
-        <p class="about-page__provenance">
-          Repository ownership, maintainer roles, and organization contributions are distinguished throughout the site —
-          see <a href="/open-source">Open Source</a> for the evidence trail.
+      <section class="about-page__support" aria-labelledby="about-support-title">
+        <h2 id="about-support-title">Support or partner with the work</h2>
+        <p>
+          The projects are free and open source. If they help you or your company, you can sponsor them on GitHub or
+          talk to me about integrations, infrastructure credits, or Linux hardware for testing. Sponsorship is disclosed
+          and never buys a technical recommendation.
+        </p>
+        <p class="about-page__support-links">
+          <a class="about-page__support-cta" href="/sponsor">Sponsor &amp; partner</a>
+          <a href={profile.links.sponsors} target="_blank" rel="noopener noreferrer">
+            GitHub Sponsors ↗<span class="sr-only"> (opens in new tab)</span>
+          </a>
         </p>
       </section>
 
       <section class="about-page__contact" aria-labelledby="about-contact-title">
-        <h2 id="about-contact-title">Contact &amp; collaboration</h2>
+        <h2 id="about-contact-title">Contact</h2>
+        <p class="about-page__contact-lead">
+          Email is the best way to reach me: <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+        </p>
         <ul class="about-page__social">
           {
             profile.socials.map((social) => (
               <li>
                 <a href={social.href} target="_blank" rel="noopener noreferrer">
                   {social.label}
+                  <span class="sr-only"> (opens in new tab)</span>
                 </a>
               </li>
             ))
@@ -189,140 +244,258 @@ const profilePageJsonLd = {
 
   .about-page__inner {
     display: grid;
-    gap: 2rem;
-    max-inline-size: 72ch;
+    gap: 2.75rem;
+    max-inline-size: 64rem;
     margin-inline: auto;
-    padding: clamp(1.25rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+    padding: clamp(1.5rem, 5vw, 3.5rem) clamp(0.75rem, 3vw, 2rem);
   }
 
   .about-page__kicker {
-    margin: 0 0 0.3rem;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    margin: 0 0 0.4rem;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
   }
 
   .about-page__title {
-    margin: 0 0 0.5rem;
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 700;
   }
 
   .about-page__lead {
+    max-inline-size: 66ch;
     margin: 0;
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
     color: var(--color-text-muted);
   }
 
+  .about-page__jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    margin-block-start: 1rem;
+  }
+
+  .about-page__jump a {
+    color: var(--nest-cyan);
+    font-size: 0.9rem;
+  }
+
   .about-page h2 {
-    margin: 0 0 0.9rem;
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
     font-size: 1.1rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
   .about-page__timeline {
     display: grid;
-    gap: 1.1rem;
+    gap: 1.4rem;
+    max-inline-size: 70ch;
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 1.25rem;
     list-style: none;
+    border-inline-start: 2px solid transparent;
+    border-image: linear-gradient(180deg, var(--nest-cyan), var(--nest-magenta), var(--nest-violet)) 1;
   }
 
   .about-page__stage {
-    padding-inline-start: 0.9rem;
-    border-inline-start: 2px solid var(--color-border, currentColor);
+    position: relative;
+  }
+
+  .about-page__stage::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0.35rem;
+    inset-inline-start: calc(-1.25rem - 6px);
+    inline-size: 10px;
+    block-size: 10px;
+    border-radius: 50%;
+    background: var(--nest-midnight-950);
+    border: 2px solid var(--nest-magenta);
   }
 
   .about-page__stage-period {
     margin: 0;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-text-faint);
   }
 
   .about-page__stage-heading {
-    margin: 0.15rem 0 0.25rem;
-    font-size: 1rem;
+    margin: 0.2rem 0 0.3rem;
+    font-size: 1.05rem;
+  }
+
+  .about-page__stage-heading a {
+    color: var(--nest-paper);
+    text-underline-offset: 0.2em;
   }
 
   .about-page__stage-body {
     margin: 0;
-    font-size: 0.92rem;
-    line-height: 1.55;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--color-text-muted);
   }
 
-  .about-page__value-grid {
+  .about-page__role-groups {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 1rem;
+  }
+
+  .about-page__role-group {
+    padding: 1rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 32%, transparent);
+    background: color-mix(in srgb, var(--nest-violet) 5%, transparent);
+  }
+
+  .about-page__role-group h3 {
+    margin: 0 0 0.6rem;
+    color: var(--nest-pink);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .about-page__role-group ul {
+    display: grid;
+    gap: 0.55rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .about-page__value {
-    padding: 0.9rem;
-    border: 1px solid var(--color-border, currentColor);
-    border-radius: 8px;
-  }
-
-  .about-page__value-title {
-    margin: 0 0 0.3rem;
+  .about-page__role-group li {
+    display: grid;
+    gap: 0.1rem;
     font-size: 0.92rem;
   }
 
-  .about-page__value-body {
-    margin: 0;
-    font-size: 0.85rem;
-    line-height: 1.5;
+  .about-page__role-group li span,
+  .about-page__role-group li a {
     color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .about-page__role-note {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .about-page__provenance {
+    max-inline-size: 70ch;
+    margin: 1rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--color-text-faint);
   }
 
   .about-page__focus-list {
     display: grid;
-    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 0.6rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .about-page__focus-list a {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.5rem;
-    padding: 0.55rem 0.75rem;
-    border: 1px solid var(--color-border, currentColor);
-    border-radius: 8px;
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 26%, transparent);
+    color: var(--nest-paper);
+    text-decoration: none;
+  }
+
+  .about-page__focus-list a:hover,
+  .about-page__focus-list a:focus-visible {
+    border-color: var(--nest-cyan);
   }
 
   .about-page__focus-list span {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--color-text-faint);
   }
 
-  .about-page__role-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+  .about-page__value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1rem 1.5rem;
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 0.92rem;
   }
 
-  .about-page__provenance {
-    margin: 0.8rem 0 0;
-    font-size: 0.82rem;
-    line-height: 1.5;
-    color: var(--color-text-faint);
+  .about-page__value-title {
+    margin: 0 0 0.3rem;
+    font-size: 0.95rem;
+  }
+
+  .about-page__value-body {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .about-page__support {
+    padding: 1.25rem 1.4rem;
+    border: 1px dashed color-mix(in srgb, var(--nest-magenta) 45%, transparent);
+    background: color-mix(in srgb, var(--nest-magenta) 5%, transparent);
+  }
+
+  .about-page__support p {
+    max-inline-size: 68ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .about-page__support-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    margin-block-start: 1rem !important;
+  }
+
+  .about-page__support-links a {
+    color: var(--nest-cyan);
+  }
+
+  .about-page__support-links .about-page__support-cta {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--nest-magenta);
+    color: var(--nest-paper);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .about-page__contact-lead {
+    margin: 0 0 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .about-page__contact-lead a {
+    color: var(--nest-cyan);
   }
 
   .about-page__social {
@@ -335,9 +508,36 @@ const profilePageJsonLd = {
   }
 
   .about-page__social a {
-    display: inline-block;
-    padding: 0.45rem 0.85rem;
-    border: 1px solid var(--color-border, currentColor);
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.45rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--nest-paper) 22%, transparent);
+    color: var(--nest-paper);
+    text-decoration: none;
+  }
+
+  .about-page__social a:hover,
+  .about-page__social a:focus-visible {
+    border-color: var(--nest-cyan);
+    color: var(--nest-cyan);
+  }
+
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (forced-colors: active) {
+    .about-page__timeline {
+      border-image: none;
+      border-inline-start-color: CanvasText;
+    }
   }
 </style>

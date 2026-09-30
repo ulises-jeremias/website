@@ -24,6 +24,8 @@ const USER_AGENT = 'digital-nest-data-refresh/1.0 (+https://www.ulises-jeremias.
 /** Subjects the pipeline knows how to re-verify. Do not invent new evidence here. */
 const VERIFY_REPOS = [
   { id: 'rxv-owned', repo: 'ulises-jeremias/rxv' },
+  { id: 'dotfiles-owned', repo: 'ulises-jeremias/dotfiles' },
+  { id: 'recoil-devtools-owned', repo: 'ulises-jeremias/recoil-devtools' },
   { id: 'agent-toolkit-owned', repo: 'ulises-jeremias/agent-toolkit' },
   { id: 'agentic-workstation-owned', repo: 'ulises-jeremias/agentic-workstation' },
   { id: 'agentic-harness-owned', repo: 'ulises-jeremias/agentic-harness' },

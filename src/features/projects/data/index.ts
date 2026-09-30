@@ -13,7 +13,7 @@ const RAW_PROJECTS = [
   {
     slug: 'dotfiles',
     title: 'HorneroConfig',
-    summary: 'Reproducible operating layer — Hyprland, Quickshell, Smart Colors, chezmoi.',
+    summary: 'Personal Hyprland + Quickshell desktop managed with chezmoi — 14 themes and Smart Colors.',
     status: 'active',
     visibility: 'world',
     worldId: 'dotfiles',
@@ -23,7 +23,25 @@ const RAW_PROJECTS = [
     role: 'author',
     group: 'personal-dx',
     links: [{ label: 'World', href: '/dotfiles', kind: 'world' }],
-    lastVerified: '2026-08-07',
+    lastVerified: '2026-09-30',
+  },
+  {
+    slug: 'hornero-os',
+    title: 'Hornero OS',
+    summary:
+      'Early-stage Arch-based Wayland desktop OS — composition previews of the shell, config, and horneroctl. Not installable yet.',
+    status: 'experimental',
+    visibility: 'public',
+    featured: true,
+    tags: ['arch', 'wayland', 'quickshell'],
+    kind: 'app',
+    role: 'author',
+    group: 'personal-dx',
+    links: [
+      { label: 'Page', href: '/hornero-os', kind: 'world' },
+      { label: 'Repo', href: 'https://github.com/HorneroOS/hornero', kind: 'repo' },
+    ],
+    lastVerified: '2026-09-30',
   },
   {
     slug: 'agentic-workstation',
@@ -36,14 +54,14 @@ const RAW_PROJECTS = [
     tags: ['chezmoi', 'direnv', 'llm-policy'],
     kind: 'world',
     role: 'author',
-    group: 'personal-dx',
+    group: 'agentic',
     links: [{ label: 'World', href: '/agentic-workstation', kind: 'world' }],
-    lastVerified: '2026-08-07',
+    lastVerified: '2026-09-30',
   },
   {
     slug: 'agent-toolkit',
     title: 'Agent Toolkit',
-    summary: 'Skills, agents, loops, profiles, and MCP — one source of truth for assistants.',
+    summary: 'Portable skills, agents, loops, and MCP templates, plus a native CLI, local API, and desktop app.',
     status: 'active',
     visibility: 'world',
     worldId: 'toolkit',
@@ -53,7 +71,7 @@ const RAW_PROJECTS = [
     role: 'author',
     group: 'agentic',
     links: [{ label: 'World', href: '/agent-toolkit', kind: 'world' }],
-    lastVerified: '2026-08-07',
+    lastVerified: '2026-09-30',
   },
   {
     slug: 'agentic-harness',
@@ -68,12 +86,12 @@ const RAW_PROJECTS = [
     role: 'author',
     group: 'agentic',
     links: [{ label: 'World', href: '/agentic-harness', kind: 'world' }],
-    lastVerified: '2026-08-24',
+    lastVerified: '2026-09-30',
   },
   {
     slug: 'v-ecosystem',
     title: 'V Ecosystem',
-    summary: 'VSL, VTL, RxV, and setup-v across scientific and systems tooling.',
+    summary: 'VSL, VTL, RxV, and setup-v — scientific computing, tensors, reactive streams, and CI for V.',
     status: 'active',
     visibility: 'world',
     worldId: 'v',
@@ -83,7 +101,7 @@ const RAW_PROJECTS = [
     role: 'maintainer',
     group: 'v',
     links: [{ label: 'World', href: '/v', kind: 'world' }],
-    lastVerified: '2026-08-07',
+    lastVerified: '2026-09-30',
   },
   {
     slug: 'create-awesome',
@@ -98,7 +116,7 @@ const RAW_PROJECTS = [
     role: 'org-maintainer',
     group: 'create-awesome',
     links: [{ label: 'World', href: '/create-awesome', kind: 'world' }],
-    lastVerified: '2026-08-07',
+    lastVerified: '2026-09-30',
   },
 
   // --- Public ledger entries (additional / non-world detail) ---
@@ -118,7 +136,7 @@ const RAW_PROJECTS = [
       { label: 'Repo', href: 'https://github.com/vlang/setup-v', kind: 'repo' },
       { label: 'World', href: '/v#setup-v', kind: 'world' },
     ],
-    lastVerified: '2026-08-07',
+    lastVerified: '2026-09-30',
   },
   {
     slug: 'awesome-v',
@@ -205,7 +223,7 @@ const RAW_PROJECTS = [
       { label: 'Demo', href: 'https://ulises-jeremias.github.io/recoil-devtools/', kind: 'site' },
       { label: 'npm', href: 'https://www.npmjs.com/package/recoil-devtools', kind: 'site' },
     ],
-    lastVerified: '2026-08-31',
+    lastVerified: '2026-09-30',
     // stars omitted — only attach via GENERATED_GITHUB_SOURCE metrics with verifiedAt
   },
 ] as const;

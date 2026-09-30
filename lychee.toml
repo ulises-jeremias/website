@@ -1,0 +1,4 @@
+# Link checker configuration (used by MegaLinter's lychee).
+# LinkedIn rejects automated traffic with HTTP 999 even for valid
+# profile URLs, so it is excluded from link checking.
+exclude = ['https://(www\.)?linkedin\.com/']

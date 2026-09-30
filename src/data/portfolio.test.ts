@@ -13,9 +13,30 @@ import {
 } from '@/data/portfolio';
 
 describe('portfolio taxonomy', () => {
-  it('has exactly four flagship areas', () => {
+  it('has exactly four flagship areas (ADR-003, Hornero area per ADR-004)', () => {
     expect(portfolioAreas).toHaveLength(4);
-    expect(portfolioAreas.map((a) => a.id)).toEqual(['agentic', 'horneroconfig', 'v-ecosystem', 'create-awesome']);
+    expect(portfolioAreas.map((a) => a.id)).toEqual(['agentic', 'hornero', 'v-ecosystem', 'create-awesome']);
+  });
+
+  it('Hornero area holds HorneroConfig and Hornero OS without merging them', () => {
+    const hornero = getPortfolioAreaById('hornero')!;
+    expect(hornero.memberIds).toEqual(['horneroconfig', 'hornero-os']);
+    const os = portfolioEntries.find((e) => e.id === 'hornero-os')!;
+    expect(os.path).toBe('/hornero-os');
+    expect(os.repositoryOwner).toBe('HorneroOS');
+    expect(os.maturity).toBe('preview');
+    expect(os.homepageEligible).toBe(false);
+    // Must be honest about installability while installer/ISO are future slots.
+    expect(os.description.toLowerCase()).toContain('not installable');
+    const config = portfolioEntries.find((e) => e.id === 'horneroconfig')!;
+    expect(config.maturity).toBe('established');
+  });
+
+  it('no entry claims an unverifiable V "Core Team" title', () => {
+    for (const entry of portfolioEntries) {
+      expect(entry.roleLabel ?? '').not.toMatch(/core team/i);
+      expect(entry.description).not.toMatch(/core team/i);
+    }
   });
 
   it('passes full validation with no errors', () => {
@@ -220,8 +241,8 @@ describe('portfolio taxonomy', () => {
       const areas = getHomepagePortfolioAreas();
       const agentic = areas.find((a) => a.id === 'agentic')!;
       expect(agentic.lens).toBe('Building now'); // all members current
-      const hornero = areas.find((a) => a.id === 'horneroconfig')!;
-      expect(hornero.lens).toBe('Building now · Proven over time'); // current-and-proven
+      const hornero = areas.find((a) => a.id === 'hornero')!;
+      expect(hornero.lens).toBe('Building now · Proven over time'); // current-and-proven + current
       const vArea = areas.find((a) => a.id === 'v-ecosystem')!;
       expect(vArea.lens).toBe('Building now · Proven over time'); // mixed members
     });
@@ -231,18 +252,18 @@ describe('portfolio taxonomy', () => {
       expect(areas.find((a) => a.id === 'agentic')!.members).toBe(
         'Agent Toolkit · Agentic Workstation · Agentic Harness',
       );
-      expect(areas.find((a) => a.id === 'horneroconfig')!.members).toBeUndefined();
+      expect(areas.find((a) => a.id === 'hornero')!.members).toBe('HorneroConfig · Hornero OS');
     });
 
     it('agentic overview path is used as the area path', () => {
       const areas = getHomepagePortfolioAreas();
       expect(areas.find((a) => a.id === 'agentic')!.path).toBe('/agentic');
-      expect(areas.find((a) => a.id === 'horneroconfig')!.path).toBe('/dotfiles');
+      expect(areas.find((a) => a.id === 'hornero')!.path).toBe('/dotfiles');
     });
 
     it('surfaces contextual proof from member proofLines', () => {
       const areas = getHomepagePortfolioAreas();
-      expect(areas.find((a) => a.id === 'horneroconfig')!.proof).toContain('GitHub and AUR');
+      expect(areas.find((a) => a.id === 'hornero')!.proof).toContain('long-running personal dotfiles');
       expect(areas.find((a) => a.id === 'create-awesome')!.proof).toContain('mature family member');
     });
 
@@ -256,10 +277,10 @@ describe('portfolio taxonomy', () => {
       }
       const v = portfolioEntries.find((e) => e.id === 'v')!;
       // The precise public role label must not be collapsed into the enum value.
-      expect(v.roleLabel).toBe('Core Team Member');
+      expect(v.roleLabel).toBe('Organization member and compiler contributor');
       expect(v.responsibility).toBe('org-member-work');
       const vsl = portfolioEntries.find((e) => e.id === 'vsl')!;
-      expect(vsl.roleLabel).toBe('Maintainer');
+      expect(vsl.roleLabel).toBe('Creator and lead maintainer');
       expect(vsl.repositoryOwner).toBe('vlang');
     });
   });

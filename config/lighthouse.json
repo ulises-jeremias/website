@@ -11,20 +11,45 @@
     "/projects/",
     "/open-source/",
     "/agentic-harness/",
+    "/hornero-os/",
+    "/sponsor/",
     "/404.html"
   ],
   "categories": {
-    "accessibility": { "level": "error", "minScore": 0.9 },
-    "best-practices": { "level": "error", "minScore": 0.9 },
-    "seo": { "level": "error", "minScore": 0.9 },
-    "performance": { "level": "warning", "minScore": 0.8 }
+    "accessibility": {
+      "level": "error",
+      "minScore": 0.9
+    },
+    "best-practices": {
+      "level": "error",
+      "minScore": 0.9
+    },
+    "seo": {
+      "level": "error",
+      "minScore": 0.9
+    },
+    "performance": {
+      "level": "warning",
+      "minScore": 0.8
+    }
   },
   "routeOverrides": {
-    "/404.html": { "skipCategories": ["seo"] }
+    "/404.html": {
+      "skipCategories": ["seo"]
+    }
   },
   "audits": {
-    "cumulative-layout-shift": { "level": "warning", "maxNumericValue": 0.1 },
-    "largest-contentful-paint": { "level": "warning", "maxNumericValue": 2500 },
-    "total-blocking-time": { "level": "warning", "maxNumericValue": 300 }
+    "cumulative-layout-shift": {
+      "level": "warning",
+      "maxNumericValue": 0.1
+    },
+    "largest-contentful-paint": {
+      "level": "warning",
+      "maxNumericValue": 2500
+    },
+    "total-blocking-time": {
+      "level": "warning",
+      "maxNumericValue": 300
+    }
   }
 }

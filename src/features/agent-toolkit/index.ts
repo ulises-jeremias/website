@@ -5,6 +5,7 @@ export { default as QueueVsSwarmVisual } from './components/QueueVsSwarmVisual.a
 export { default as SwarmControlRoom } from './components/SwarmControlRoom.astro';
 export { default as InstallConsole } from './components/InstallConsole.astro';
 export { default as CommunityWorkshopLink } from './components/CommunityWorkshopLink.astro';
+export { default as RuntimeSurfaces } from './components/RuntimeSurfaces.astro';
 export {
   toolkitOverview,
   toolkitStats,
@@ -20,6 +21,7 @@ export {
   sharedRunStateFiles,
   uiBackends,
   installSnippets,
+  runtimeSurfaces,
   budgetItems,
   communityCrossLink,
   toolkitDocs,

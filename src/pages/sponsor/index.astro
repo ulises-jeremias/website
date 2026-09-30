@@ -1,0 +1,37 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { SponsorPage } from '@/features/sponsor';
+import { getCanonicalUrl, getRouteMeta } from '@/data/routes';
+import { SITE_NAME } from '@/data/site';
+import { profile } from '@/data/profile';
+
+const meta = getRouteMeta('/sponsor')!;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: meta.title,
+  description: meta.description,
+  url: getCanonicalUrl('/sponsor'),
+  isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: getCanonicalUrl('/') },
+  about: {
+    '@type': 'Person',
+    name: profile.displayName,
+    url: getCanonicalUrl('/'),
+    sameAs: [profile.links.github, profile.links.sponsors],
+  },
+};
+---
+
+<SectionLayout
+  currentPath="/sponsor"
+  world="Sponsor"
+  title={meta.title}
+  description={meta.description}
+  theme="sponsor"
+  ogImage={meta.ogImage}
+  ogImageAlt={meta.ogImageAlt}
+  jsonLd={jsonLd}
+>
+  <SponsorPage />
+</SectionLayout>

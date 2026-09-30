@@ -42,7 +42,7 @@ describe('global site shell', () => {
   it('sources footer routes and contact links from canonical data', async () => {
     const footer = await readSource('shared/components/SiteFooter.astro');
 
-    expect(footer).toContain('getFooterRoutes');
+    expect(footer).toContain('getFooterRouteGroups');
     expect(footer).toContain("from '@/data/profile");
     expect(footer).not.toMatch(/mailto:[\w.+-]+@[\w.-]+/);
     expect(footer).not.toContain('Astro 7');

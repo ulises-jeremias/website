@@ -13,6 +13,7 @@ This document defines how the website sources, refreshes, and displays evidence.
 | Agent Toolkit inventory | `src/features/agent-toolkit/data/inventory.snapshot.json`                      | `scripts/sync-agent-toolkit-inventory.py` (+ scheduled drift workflow)                                                          | `/agent-toolkit` nexus, provenance strip                                    |
 | Create Awesome catalogs | `src/features/create-awesome/data/generated/compatibility.json`                | `pnpm data:create-awesome:refresh` + scheduled drift workflow                                                                   | `/create-awesome` composer/variants                                         |
 | Portfolio proof lines   | `src/data/portfolio.ts` `proofLines` (editorial + repository-metadata sources) | Manual editorial review; volatile lines carry `verifiedAt` and are re-verified against the linked repository before any refresh | Flagship provenance blocks, ProofStrip, Work tiers, homepage featured areas |
+| Sponsor metrics         | `src/data/generated/sponsor-metrics.json`                                      | `pnpm data:sponsor:refresh` → `scripts/refresh-sponsor-metrics.mjs`; validate with `pnpm data:sponsor:check`                    | `/sponsor` signals section only                                             |
 
 ## Portfolio proof policy (#399)
 
@@ -34,6 +35,21 @@ This document defines how the website sources, refreshes, and displays evidence.
 ### No browser-time provider calls
 
 Client code must not call GitHub, npm, PyPI, AUR, Homebrew, or Docker APIs. All volatile values come from committed generated snapshots or dated editorial proof lines. Tests assert this.
+
+## Sponsor metrics policy (ADR-004)
+
+Sponsor-facing adoption signals are a **separate layer** from portfolio proof. Proof lines still never
+show downloads, stars, or user counts. `/sponsor` may show a small snapshot where every metric carries
+`value`, `unit`, `period`, `source`, `caveat`, and the snapshot's `generatedAt`:
+
+- Units never imply people (`users`, `installs`, `people` are rejected by the schema and the script).
+- Downloads are described as package downloads that include CI and mirrors — never as users.
+- A metric is collected only after a credibility review. Agent Toolkit package downloads are excluded
+  until the packages have roughly a quarter of history; at the 2026-09-30 review most downloads fell on
+  release days or came from the project's own CI.
+- Each source is fetched independently; a failed source keeps its last-known-good value and the
+  script exits 0. It exits 1 only when the committed snapshot is missing or invalid.
+- Builds read the committed JSON. No browser or build step calls npm, PyPI, or GitHub.
 
 ## Open Source pipeline behavior
 

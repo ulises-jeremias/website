@@ -7,7 +7,7 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
 
     const hero = page.locator('.df-world__hero-scene img');
     const galleryMain = page.locator('[data-gallery-main]');
-    await expect(hero).toHaveAttribute('srcset', /\.webp 320w.+\.webp 1440w/);
+    await expect(hero).toHaveAttribute('srcset', /\.webp 480w.+\.webp 1586w/);
     await expect(hero).toHaveAttribute('sizes');
     await expect(galleryMain).toHaveAttribute('srcset', /\.webp 320w.+\.webp 1440w/);
     await expect(galleryMain).toHaveAttribute('sizes');
@@ -20,7 +20,9 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     await page.locator('[data-gallery-id="spotlight-dark"]').click();
     await expect(galleryMain).toHaveAttribute('src', /screenshot-spotlight-dark-1440\.webp$/);
     await expect(galleryMain).toHaveAttribute('srcset', /screenshot-spotlight-dark-320\.webp 320w/);
-    await expect(page.locator('[data-gallery-caption]')).toHaveText('Spotlight — dark command palette');
+    await expect(page.locator('[data-gallery-caption]')).toHaveText(
+      'Earlier X11 generation — dark spotlight launcher (2021)',
+    );
   });
 
   test('reports successful install-command copy', async ({ page }) => {
@@ -101,9 +103,9 @@ test.describe('Create Awesome truthful composer', () => {
 
     const nodePanel = page.locator('[data-ca-panel="node"]');
     const addons = nodePanel.locator('[data-ca-addon]');
-    await expect(addons).toHaveCount(53);
+    await expect(addons).toHaveCount(56);
     await expect(nodePanel.locator('[data-ca-addon-row][title]')).toHaveCount(0);
-    await expect(nodePanel.locator('[data-ca-addon-row] small')).toHaveCount(53);
+    await expect(nodePanel.locator('[data-ca-addon-row] small')).toHaveCount(56);
 
     const search = nodePanel.locator('[data-ca-addon-search]');
     await search.fill('drizzle postgres');

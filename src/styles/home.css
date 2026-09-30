@@ -259,6 +259,22 @@
   color: var(--nest-cyan);
 }
 
+.hero__support {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.hero__support a {
+  color: var(--nest-pink);
+  text-underline-offset: 0.2em;
+}
+
+.hero__support a:hover,
+.hero__support a:focus-visible {
+  color: var(--nest-paper);
+}
+
 .hero__location {
   margin: 0;
   font-family: var(--font-mono);

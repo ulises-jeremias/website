@@ -6,24 +6,39 @@ import type {
   SmartColorStep,
 } from '../types/index.js';
 
-/** Verified against github.com/ulises-jeremias/dotfiles HEAD (main) on 2026-08-07. */
+/**
+ * Verified against github.com/ulises-jeremias/dotfiles main @8aae4f7 on 2026-09-30.
+ * Since #294–#305 and #317 the `dots-*` wrappers are deleted: system commands
+ * resolve to `horneroctl` (HorneroOS/hornero) and the Quickshell shell is
+ * consumed from HorneroOS/shell. Theme packs: home/dot_local/share/dots/themes/*.
+ */
+const themes = [
+  'catppuccin-latte',
+  'catppuccin-mocha',
+  'everforest',
+  'gruvbox',
+  'hornero-dark',
+  'hornero-light',
+  'landscape',
+  'monochrome',
+  'neon-city',
+  'nord-dreams',
+  'rose-pine',
+  'soft-morning',
+  'vapor-dreams',
+  'warm-sunset',
+] as const;
+
 export const verifiedFacts = {
-  themeCount: 12,
-  dotsScriptCount: 47,
-  themes: [
-    'catppuccin-latte',
-    'catppuccin-mocha',
-    'everforest',
-    'gruvbox',
-    'landscape',
-    'monochrome',
-    'neon-city',
-    'nord-dreams',
-    'rose-pine',
-    'soft-morning',
-    'vapor-dreams',
-    'warm-sunset',
-  ] as const,
+  verifiedAt: '2026-09-30',
+  sourceRevision: '8aae4f7',
+  themeCount: themes.length,
+  themes,
+  /** Hornero OS system CLI that replaced the dots-* wrappers. */
+  systemCli: 'horneroctl',
+  systemCliUrl: 'https://github.com/HorneroOS/hornero/tree/main/cli',
+  shellRepoUrl: 'https://github.com/HorneroOS/shell',
+  horneroctlDocUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/docs/Horneroctl.md',
   repoUrl: 'https://github.com/ulises-jeremias/dotfiles',
   wikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki',
   smartColorsWikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki/Smart-Colors-System',
@@ -46,12 +61,12 @@ export const dotfilesLayers: DotfilesLayer[] = [
   },
   {
     id: 'scripts',
-    label: 'scripts',
-    shortLabel: 'dots',
-    description: `Orchestration of ${verifiedFacts.dotsScriptCount} dots-* utilities`,
+    label: 'system CLI',
+    shortLabel: 'horneroctl',
+    description: 'System verbs from the Hornero OS CLI',
     details: [
-      'dots-* CLIs with EasyOptions and set -euo pipefail',
-      'dots appearance, dots-wallpaper-set, dots-smart-colors',
+      'horneroctl appearance, wallpaper, colors, capture, hardware verbs',
+      'Non-interactive by default: --json, --dry-run, --yes for mutations',
       'theme.json appearances + python-materialyoucolor M3 path',
     ],
     color: '#4a2d3a',
@@ -75,8 +90,8 @@ export const dotfilesLayers: DotfilesLayer[] = [
     description: 'Modern animated Wayland desktop',
     details: [
       'Hyprland + per-theme animation profiles',
-      'Quickshell: bar, launcher, dashboard, notifications, OSD',
-      'Hyprlock + dots-wallpaper-set flow',
+      'Quickshell shell from HorneroOS/shell: bar, launcher, dashboard, notifications',
+      'Hyprlock themed via horneroctl appearance hyprlock',
     ],
     color: '#7a4a5f',
   },
@@ -107,16 +122,16 @@ export const narrativeSections: NarrativeSection[] = [
     id: 'stack',
     title: 'Live stack, not a config collection',
     paragraphs: [
-      `The stack unites Hyprland/Wayland with Quickshell (QML + Hornero C++ plugin), GPU-accelerated Kitty, Zsh/Powerlevel10k, and ${verifiedFacts.dotsScriptCount} dots-* scripts. Each of the ${verifiedFacts.themeCount} appearance themes ships as a self-contained directory with theme.json, preview, and wallpaper directory — no apply.sh.`,
-      'Chezmoi orchestrates templates and idempotent hooks. Install with chezmoi init --apply ulises-jeremias, then manage appearance with dots appearance and Smart Colors.',
+      `The stack unites Hyprland/Wayland with the Hornero Quickshell shell, GPU-accelerated Kitty, and Zsh/Powerlevel10k. Each of the ${verifiedFacts.themeCount} appearance themes ships as a self-contained directory with theme.json, preview, and wallpaper directory — no apply.sh.`,
+      'Chezmoi orchestrates templates and idempotent hooks. Since 2026 the generic pieces live in Hornero OS: the shell comes from HorneroOS/shell and system commands from horneroctl, while this repository keeps the personal layer.',
     ],
   },
   {
     id: 'smart-colors',
     title: 'Color with purpose',
     paragraphs: [
-      'Smart Colors follows the maintained Hyprland + Quickshell path: dots-wallpaper-set (or Control Center) triggers pywal and generate-m3-colors.py via dots-m3-colors (python-materialyoucolor), writing scheme.json plus Kitty/GTK/Hyprlock exports under ~/.cache/dots/smart-colors/.',
-      'Quickshell’s Colours service reloads from scheme.json (file watch or dots-quickshell ipc colours reload). dots-gtk-theme keeps GTK/libadwaita in lockstep — one wallpaper change, one atomic palette.',
+      'Smart Colors follows the maintained Hyprland + Quickshell path: horneroctl wallpaper set (or the Control Center) triggers generate-m3-colors.py via horneroctl colors m3 (python-materialyoucolor), writing scheme.json plus Kitty/GTK/Hyprlock exports under ~/.cache/dots/smart-colors/.',
+      'The shell’s Colours service reloads from scheme.json, and horneroctl appearance gtk keeps GTK/libadwaita in lockstep — one wallpaper change, one atomic palette.',
     ],
   },
 ];
@@ -125,7 +140,7 @@ export const smartColorSteps: SmartColorStep[] = [
   {
     id: 'wallpaper',
     title: 'Wallpaper',
-    description: 'dots-wallpaper-set or Control Center Apply',
+    description: 'horneroctl wallpaper set or Control Center',
     icon: '01',
     detail:
       'Records the path under ~/.local/state/dots/wallpaper/ and starts the appearance pipeline (IPC when Quickshell is running).',
@@ -133,10 +148,10 @@ export const smartColorSteps: SmartColorStep[] = [
   {
     id: 'extraction',
     title: 'Material extraction',
-    description: 'pywal + generate-m3-colors.py',
+    description: 'generate-m3-colors.py',
     icon: '02',
     detail:
-      'dots-m3-colors prefers system python3 with materialyoucolor; luminance decides light/dark; semantics map error/success/warning.',
+      'horneroctl colors m3 runs python-materialyoucolor; luminance decides light/dark; semantics map error/success/warning.',
   },
   {
     id: 'palette',
@@ -159,12 +174,17 @@ export const smartColorSteps: SmartColorStep[] = [
 /**
  * First-party captures from ulises-jeremias/dotfiles/static (MIT).
  * Excludes anime.jpeg / anime-girl-screen.png and collage.png (embeds anime wallpaper).
+ *
+ * Honesty note (verified 2026-09-30): every capture here predates the 2026
+ * Hyprland + Quickshell stack — they show the earlier X11 generation
+ * (Xorg, picom, alacritty; committed 2020–2021). Captions say so. Replace
+ * them only with real captures of the current stack.
  */
 export const screenshotItems: ScreenshotItem[] = [
   {
     id: 'dark',
-    alt: 'HorneroConfig dark desktop with Quickshell bars, btop, and cava over a bridge wallpaper',
-    caption: 'Dark desktop — Quickshell bars + observability',
+    alt: 'Earlier X11-generation HorneroConfig desktop with a top status bar, btop, and a cava visualizer over a bridge wallpaper',
+    caption: 'Earlier X11 generation — status bar, btop, and cava',
     credit: 'dotfiles/static/screen.png · MIT',
     src: '/media/dotfiles/screen-1440.webp',
     srcSet:
@@ -174,8 +194,8 @@ export const screenshotItems: ScreenshotItem[] = [
   },
   {
     id: 'light',
-    alt: 'HorneroConfig desktop with landscape wallpaper and telemetry-rich Quickshell top bar',
-    caption: 'Appearance theme — landscape telemetry bar',
+    alt: 'Earlier X11-generation desktop with a landscape wallpaper and a telemetry-rich top bar',
+    caption: 'Earlier X11 generation — landscape telemetry bar (2021)',
     credit: 'dotfiles/static/screen-2.jpg · MIT',
     src: '/media/dotfiles/screen-2-1440.webp',
     srcSet:
@@ -186,7 +206,7 @@ export const screenshotItems: ScreenshotItem[] = [
   {
     id: 'launchpad',
     alt: 'Full-screen application launchpad with search and icon grid',
-    caption: 'Launchpad — searchable app grid',
+    caption: 'Earlier X11 generation — launchpad app grid (2021)',
     credit: 'dotfiles/static/screenshot-launchpad.png · MIT',
     src: '/media/dotfiles/screenshot-launchpad-1440.webp',
     srcSet:
@@ -197,7 +217,7 @@ export const screenshotItems: ScreenshotItem[] = [
   {
     id: 'spotlight-dark',
     alt: 'Dark spotlight launcher with fuzzy app list over abstract wallpaper',
-    caption: 'Spotlight — dark command palette',
+    caption: 'Earlier X11 generation — dark spotlight launcher (2021)',
     credit: 'dotfiles/static/screenshot-spotlight-dark.png · MIT',
     src: '/media/dotfiles/screenshot-spotlight-dark-1440.webp',
     srcSet:
@@ -208,7 +228,7 @@ export const screenshotItems: ScreenshotItem[] = [
   {
     id: 'spotlight-light',
     alt: 'Light spotlight launcher with frosted glass panel over colorful abstract wallpaper',
-    caption: 'Spotlight — light command palette',
+    caption: 'Earlier X11 generation — light spotlight launcher (2021)',
     credit: 'dotfiles/static/screenshot-spotlight-light.png · MIT',
     src: '/media/dotfiles/screenshot-spotlight-light-1440.webp',
     srcSet:
@@ -219,7 +239,7 @@ export const screenshotItems: ScreenshotItem[] = [
   {
     id: 'nord-bar',
     alt: 'Nord-style top bar listing open apps over an urban dusk wallpaper',
-    caption: 'Bar — nord one-line window list',
+    caption: 'Earlier X11 generation — nord one-line bar (2021)',
     credit: 'dotfiles/static/screenshot-nord-oneline.png · MIT',
     src: '/media/dotfiles/screenshot-nord-oneline-1440.webp',
     srcSet:
@@ -229,18 +249,34 @@ export const screenshotItems: ScreenshotItem[] = [
   },
 ];
 
+/**
+ * Hero art: the hornero-dark theme wallpaper that ships with HorneroConfig
+ * (home/dot_local/share/dots/themes/hornero-dark) and HorneroOS/config
+ * (assets/brand/wallpaper). A theme artifact, not a desktop screenshot — the
+ * caption says so. Current desktop captures replace it once they exist.
+ */
+export const heroArt = {
+  src: '/media/hornero-os/hornero-dark-960.webp',
+  srcSet:
+    '/media/hornero-os/hornero-dark-480.webp 480w, /media/hornero-os/hornero-dark-960.webp 960w, /media/hornero-os/hornero-dark-1586.webp 1586w',
+  width: 1586,
+  height: 992,
+  alt: 'The hornero-dark theme wallpaper: a rufous hornero on its mud nest above a Patagonian lake at dusk.',
+  caption: 'hornero-dark theme wallpaper — theme artwork, not a desktop screenshot · MIT',
+} as const;
+
 export const attributionEntries: AttributionEntry[] = [
   {
     component: 'HorneroConfig',
     license: 'MIT',
     source: 'ulises-jeremias/dotfiles',
-    notes: 'Framework sources, dots-* scripts, themes, and first-party static captures.',
+    notes: 'Framework sources, chezmoi templates, themes, and first-party static captures.',
   },
   {
-    component: 'Quickshell shell (adapted)',
-    license: 'GPL-3.0',
-    source: 'caelestia-dots/shell by soramanew',
-    notes: 'Desktop shell adapted with attribution; original LICENSE kept in-tree.',
+    component: 'Hornero shell (Quickshell)',
+    license: 'GPL-3.0-only',
+    source: 'HorneroOS/shell, adapted from caelestia-dots/shell by soramanew',
+    notes: 'The adapted shell now lives in HorneroOS/shell with its NOTICE and GPL license; HorneroConfig consumes it.',
   },
 ];
 
@@ -253,6 +289,6 @@ export const dotfilesMeta = {
   pinkSoft: '#e2bdc7',
   pinkMuted: '#d5c2c6',
   title: 'HorneroConfig — personal DX desktop',
-  description: `HorneroConfig: Hyprland + Quickshell + Kitty + Zsh, chezmoi, ${verifiedFacts.dotsScriptCount} dots-* scripts, ${verifiedFacts.themeCount} appearance themes, and Smart Colors (python-materialyoucolor).`,
+  description: `HorneroConfig: Hyprland + Quickshell + Kitty + Zsh, chezmoi, ${verifiedFacts.themeCount} appearance themes, and Smart Colors (python-materialyoucolor), with system commands from horneroctl.`,
   quote: 'Like the hornero, build your digital nest: robust, beautiful, and tailored to you.',
 };
