@@ -4351,6 +4351,724 @@
           }
         ]
       }
+    },
+    {
+      "id": "rust",
+      "adapter": "typed-intersection",
+      "templates": [
+        {
+          "id": "axum-starter",
+          "sourceId": "axum-starter",
+          "sourceOrder": 0,
+          "name": "Axum Starter",
+          "description": "Production-ready Axum HTTP API with feature-based modules, Tokio, tracing, and cargo fmt/clippy/test gates",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/axum-starter",
+          "category": "backend-applications",
+          "labels": [
+            "Rust",
+            "Axum",
+            "Tokio",
+            "API"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ]
+        },
+        {
+          "id": "cli-starter",
+          "sourceId": "cli-starter",
+          "sourceOrder": 1,
+          "name": "CLI Starter",
+          "description": "Production-ready clap CLI with feature-based subcommands, tracing, shell completions, and cargo fmt/clippy/test gates",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/cli-starter",
+          "category": "cli-applications",
+          "labels": [
+            "Rust",
+            "Clap",
+            "CLI"
+          ],
+          "typeIds": [
+            "cli"
+          ]
+        },
+        {
+          "id": "leptos-starter",
+          "sourceId": "leptos-starter",
+          "sourceOrder": 2,
+          "name": "Leptos Starter",
+          "description": "Leptos fullstack starter: SSR pages with htmx interactivity on Axum, tracing, and cargo fmt/clippy/test gates",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/leptos-starter",
+          "category": "fullstack-applications",
+          "labels": [
+            "Rust",
+            "Leptos",
+            "Axum",
+            "SSR",
+            "Fullstack"
+          ],
+          "typeIds": [
+            "leptos-fullstack"
+          ]
+        },
+        {
+          "id": "worker-starter",
+          "sourceId": "worker-starter",
+          "sourceOrder": 3,
+          "name": "Worker Starter",
+          "description": "Tokio background worker starter: typed job queue, worker pool, demo scheduler, graceful shutdown, and cargo fmt/clippy/test gates",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/worker-starter",
+          "category": "backend-applications",
+          "labels": [
+            "Rust",
+            "Tokio",
+            "Worker",
+            "Jobs"
+          ],
+          "typeIds": [
+            "worker"
+          ]
+        },
+        {
+          "id": "lib-starter",
+          "sourceId": "lib-starter",
+          "sourceOrder": 4,
+          "name": "Lib Starter",
+          "description": "Publishable Rust library starter: feature modules, doc examples, demo binary, and cargo fmt/clippy/test gates",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/lib-starter",
+          "category": "backend-applications",
+          "labels": [
+            "Rust",
+            "Library"
+          ],
+          "typeIds": [
+            "library"
+          ]
+        },
+        {
+          "id": "tonic-starter",
+          "sourceId": "tonic-starter",
+          "sourceOrder": 5,
+          "name": "Tonic Starter",
+          "description": "tonic gRPC microservice starter: Protobuf contract, checked-in bindings, reflection, graceful shutdown, and cargo fmt/clippy/test gates",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/tonic-starter",
+          "category": "backend-applications",
+          "labels": [
+            "Rust",
+            "Tonic",
+            "gRPC",
+            "Microservice"
+          ],
+          "typeIds": [
+            "tonic-grpc"
+          ]
+        }
+      ],
+      "addons": [
+        {
+          "id": "all-github-setup",
+          "sourceId": "all-github-setup",
+          "sourceOrder": 0,
+          "name": "GitHub Setup",
+          "description": "GitHub Actions CI (fmt, clippy, test) for the scaffolded project",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-github-setup",
+          "category": "ci",
+          "labels": [
+            "CI",
+            "GitHub",
+            "DevOps"
+          ],
+          "typeIds": [
+            "axum-backend",
+            "cli",
+            "leptos-fullstack",
+            "worker",
+            "library",
+            "tonic-grpc"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter",
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-docker",
+          "sourceId": "axum-docker",
+          "sourceOrder": 1,
+          "name": "Axum Docker",
+          "description": "Multi-stage Docker build and Compose stack for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-docker",
+          "category": "containers",
+          "labels": [
+            "Docker",
+            "Compose",
+            "DevOps"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-devcontainer",
+          "sourceId": "all-devcontainer",
+          "sourceOrder": 2,
+          "name": "Dev Container",
+          "description": "Reproducible VS Code dev container (Rust image, rust-analyzer) for any scaffolded project",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-devcontainer",
+          "category": "editor",
+          "labels": [
+            "DevContainer",
+            "DX"
+          ],
+          "typeIds": [
+            "axum-backend",
+            "cli",
+            "leptos-fullstack",
+            "worker",
+            "library",
+            "tonic-grpc"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter",
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-pre-commit",
+          "sourceId": "all-pre-commit",
+          "sourceOrder": 3,
+          "name": "Pre-commit",
+          "description": "Pre-commit hooks mirroring CI gates (cargo fmt, clippy -D warnings)",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-pre-commit",
+          "category": "ci",
+          "labels": [
+            "CI",
+            "Git",
+            "DX"
+          ],
+          "typeIds": [
+            "axum-backend",
+            "cli",
+            "leptos-fullstack",
+            "worker",
+            "library",
+            "tonic-grpc"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter",
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-cors",
+          "sourceId": "axum-cors",
+          "sourceOrder": 4,
+          "name": "Axum CORS",
+          "description": "Permissive CORS layer for the Axum service, registered without file forks",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-cors",
+          "category": "security",
+          "labels": [
+            "CORS",
+            "Middleware",
+            "HTTP"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-jwt",
+          "sourceId": "axum-jwt",
+          "sourceOrder": 5,
+          "name": "Axum JWT",
+          "description": "HS256 JWT authentication with a demo protected route for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-jwt",
+          "category": "security",
+          "labels": [
+            "JWT",
+            "Auth",
+            "Middleware"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-openapi",
+          "sourceId": "axum-openapi",
+          "sourceOrder": 6,
+          "name": "Axum OpenAPI",
+          "description": "Served OpenAPI 3.1 document plus Redoc UI for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-openapi",
+          "category": "backend-applications",
+          "labels": [
+            "OpenAPI",
+            "Docs",
+            "Redoc"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-sqlx",
+          "sourceId": "axum-sqlx",
+          "sourceOrder": 7,
+          "name": "Axum SQLx",
+          "description": "SQLite persistence with embedded migrations and a todo CRUD API for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-sqlx",
+          "category": "database",
+          "labels": [
+            "SQLite",
+            "SQLx",
+            "Migrations"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-compression",
+          "sourceId": "axum-compression",
+          "sourceOrder": 8,
+          "name": "Axum Compression",
+          "description": "Gzip response compression for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-compression",
+          "category": "backend-applications",
+          "labels": [
+            "Gzip",
+            "Middleware",
+            "HTTP"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-timeout",
+          "sourceId": "axum-timeout",
+          "sourceOrder": 9,
+          "name": "Axum Timeout",
+          "description": "Fail-fast 10s request timeouts for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-timeout",
+          "category": "observability",
+          "labels": [
+            "Timeout",
+            "Middleware",
+            "Resilience"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-request-id",
+          "sourceId": "axum-request-id",
+          "sourceOrder": 10,
+          "name": "Axum Request ID",
+          "description": "Unique x-request-id on every response for log correlation",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-request-id",
+          "category": "observability",
+          "labels": [
+            "Request-ID",
+            "Middleware",
+            "Tracing"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-ratelimit",
+          "sourceId": "axum-ratelimit",
+          "sourceOrder": 11,
+          "name": "Axum Rate Limit",
+          "description": "Per-key rate limiting with 429 responses for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-ratelimit",
+          "category": "security",
+          "labels": [
+            "Rate-Limit",
+            "Middleware",
+            "Quota"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-gitlab-setup",
+          "sourceId": "all-gitlab-setup",
+          "sourceOrder": 12,
+          "name": "GitLab Setup",
+          "description": "GitLab CI pipeline for any scaffolded project",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-gitlab-setup",
+          "category": "ci",
+          "labels": [
+            "GitLab",
+            "CI",
+            "DevOps"
+          ],
+          "typeIds": [
+            "axum-backend",
+            "cli",
+            "leptos-fullstack",
+            "library",
+            "tonic-grpc",
+            "worker"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter",
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-security-headers",
+          "sourceId": "axum-security-headers",
+          "sourceOrder": 13,
+          "name": "Axum Security Headers",
+          "description": "Baseline response hardening headers for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-security-headers",
+          "category": "security",
+          "labels": [
+            "Headers",
+            "Hardening",
+            "HTTP"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "lib-criterion",
+          "sourceId": "lib-criterion",
+          "sourceOrder": 14,
+          "name": "Lib Criterion",
+          "description": "Criterion throughput benchmarks for library starters",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/lib-criterion",
+          "category": "testing",
+          "labels": [
+            "Benchmarks",
+            "Criterion",
+            "Perf"
+          ],
+          "typeIds": [
+            "library"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "lib-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "axum-starter",
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "tonic-health",
+          "sourceId": "tonic-health",
+          "sourceOrder": 15,
+          "name": "Tonic Health",
+          "description": "Standard gRPC health probing with the Greeter marked SERVING",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/tonic-health",
+          "category": "observability",
+          "labels": [
+            "Health",
+            "Probe",
+            "gRPC"
+          ],
+          "typeIds": [
+            "tonic-grpc"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "tonic-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "axum-starter",
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "axum-otel",
+          "sourceId": "axum-otel",
+          "sourceOrder": 16,
+          "name": "Axum OpenTelemetry",
+          "description": "OTLP trace export with inert local default for the Axum service",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-otel",
+          "category": "observability",
+          "labels": [
+            "OpenTelemetry",
+            "Tracing",
+            "OTLP"
+          ],
+          "typeIds": [
+            "axum-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "axum-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "cli-manpage",
+          "sourceId": "cli-manpage",
+          "sourceOrder": 17,
+          "name": "CLI Manpage",
+          "description": "Generated man pages from the clap definition for CLI starters",
+          "sourceUrl": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/cli-manpage",
+          "category": "cli-applications",
+          "labels": [
+            "Manpage",
+            "Docs",
+            "Clap"
+          ],
+          "typeIds": [
+            "cli"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "cli-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "axum-starter",
+            "leptos-starter",
+            "worker-starter",
+            "lib-starter",
+            "tonic-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        }
+      ],
+      "counts": {
+        "templates": 6,
+        "addons": 18,
+        "compatibilityEdges": 38
+      },
+      "provenance": {
+        "repository": "Create-Rust-App/cra-templates",
+        "commit": "ea85d7f7fae12843c5828832080efc388ca2e6a4",
+        "commitDate": "2026-09-17T14:52:37Z",
+        "registry": {
+          "path": "templates.json",
+          "url": "https://raw.githubusercontent.com/Create-Rust-App/cra-templates/ea85d7f7fae12843c5828832080efc388ca2e6a4/templates.json",
+          "gitBlobSha": "404479087c78198ae3507e976241465d74c00a37",
+          "sha256": "17dca4da324d6f3d5657aa866c912c043211a274ecbe928e07024675025a288e"
+        },
+        "schema": {
+          "path": "templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Rust-App/cra-templates/ea85d7f7fae12843c5828832080efc388ca2e6a4/templates.schema.json",
+          "gitBlobSha": "e008a2ade9e7219d45db67eab2e28bf4f85faaac",
+          "sha256": "2e87b357089d2c697d3fe5d5ba711e10174882d3b48665e0a170534ea4b8f415"
+        },
+        "cliReference": {
+          "repository": "Create-Rust-App/create-rust-app",
+          "commit": "5d9236238b5d3117717c39c8f2673707a754db32",
+          "commitDate": "2026-09-17T13:55:29Z"
+        },
+        "semanticReferences": [
+          {
+            "role": "cli-catalog-reference",
+            "repository": "Create-Rust-App/create-rust-app",
+            "commit": "5d9236238b5d3117717c39c8f2673707a754db32",
+            "commitDate": "2026-09-17T13:55:29Z",
+            "path": "crates/create_rust_app_core/src/catalog.rs",
+            "url": "https://raw.githubusercontent.com/Create-Rust-App/create-rust-app/5d9236238b5d3117717c39c8f2673707a754db32/crates/create_rust_app_core/src/catalog.rs",
+            "gitBlobSha": "204db883602a235e51c5a81ee97de67b69a591e0",
+            "sha256": "3eaf00f9d5900ad7defa7a4ec6e13c376b14453eb6ceafc466a801a9b1c1e120"
+          },
+          {
+            "role": "catalog-compatibility-reference",
+            "repository": "Create-Rust-App/cra-templates",
+            "commit": "ea85d7f7fae12843c5828832080efc388ca2e6a4",
+            "commitDate": "2026-09-17T14:52:37Z",
+            "path": "scripts/ci/registry.py",
+            "url": "https://raw.githubusercontent.com/Create-Rust-App/cra-templates/ea85d7f7fae12843c5828832080efc388ca2e6a4/scripts/ci/registry.py",
+            "gitBlobSha": "e03e2d81c540cf96493ddb8317413ac44b16ce4b",
+            "sha256": "325ce94507640415e170acb35e18f97f6bf00e7b406506e1cc971fffc624ab44"
+          }
+        ]
+      }
     }
   ]
 }

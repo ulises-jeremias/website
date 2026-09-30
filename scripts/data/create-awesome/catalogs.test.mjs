@@ -126,6 +126,91 @@ describe('Create Awesome catalog generator', () => {
     expect(apiOnly.incompatibleAddonIds).toEqual(['all-projects']);
   });
 
+  it('normalizes Rust type intersection across string and multi-type extensions', () => {
+    const source = CREATE_AWESOME_SOURCES.find((candidate) => candidate.id === 'rust');
+    const registry = {
+      categories: [{ slug: 'apps', name: 'Apps', description: 'Apps', labels: [] }],
+      templates: [
+        {
+          slug: 'axum-starter',
+          name: 'Axum Starter',
+          description: 'Axum template',
+          url: 'https://example.com/axum',
+          type: 'axum-backend',
+          category: 'apps',
+          labels: [],
+        },
+        {
+          slug: 'cli-starter',
+          name: 'CLI Starter',
+          description: 'CLI template',
+          url: 'https://example.com/cli',
+          type: 'cli',
+          category: 'apps',
+          labels: [],
+        },
+      ],
+      extensions: [
+        {
+          slug: 'all-github-setup',
+          name: 'GitHub Setup',
+          description: 'CI for every stack',
+          url: 'https://example.com/ci',
+          type: ['axum-backend', 'cli'],
+          category: 'apps',
+          labels: [],
+        },
+        {
+          slug: 'axum-sqlx',
+          name: 'SQLx',
+          description: 'Axum-only database layer',
+          url: 'https://example.com/sqlx',
+          type: ['axum-backend'],
+          category: 'apps',
+          labels: [],
+        },
+      ],
+    };
+    const normalized = normalizeFamily(source, registry, syntheticLock('rust'));
+    const shared = normalized.addons.find((addon) => addon.id === 'all-github-setup');
+    const stackBound = normalized.addons.find((addon) => addon.id === 'axum-sqlx');
+    expect(shared.compatibleTemplateIds).toEqual(['axum-starter', 'cli-starter']);
+    expect(stackBound.compatibleTemplateIds).toEqual(['axum-starter']);
+    expect(stackBound.incompatibleTemplateIds).toEqual(['cli-starter']);
+
+    const unknownType = structuredClone(registry);
+    unknownType.extensions[0].type = ['axum-backend', 'invented-type'];
+    expect(() => validateRegistrySemantics(source, unknownType)).toThrow(
+      /type not understood by the pinned CLI semantics/,
+    );
+  });
+
+  it('rejects Rust semantic references that lose the pinned intersection contract', () => {
+    const source = CREATE_AWESOME_SOURCES.find((candidate) => candidate.id === 'rust');
+    const cli = [
+      'pub struct Catalog',
+      'pub struct TemplateEntry',
+      'pub struct AddonEntry',
+      '#[serde(default, alias = "extensions")]',
+    ].join('\n');
+    const helper = [
+      'def as_types(type_field):',
+      'def assert_profile_valid(name, profile, registry):',
+      'if template_type not in as_types(entry.get("type")):',
+    ].join('\n');
+    const references = (cliContent, helperContent) => [
+      { role: 'cli-catalog-reference', content: cliContent },
+      { role: 'catalog-compatibility-reference', content: helperContent },
+    ];
+    expect(() => verifySemanticReferences(source, references(cli, helper))).not.toThrow();
+    expect(() => verifySemanticReferences(source, references(cli, 'def as_types(type_field):'))).toThrow(
+      /UPSTREAM CONTRACT CONTRADICTION/,
+    );
+    expect(() => verifySemanticReferences(source, references(`${cli}\n// compatibility shim`, helper))).toThrow(
+      /UPSTREAM CONTRACT CONTRADICTION/,
+    );
+  });
+
   it('verifies every pinned semantic tripwire from the offline source cache', async () => {
     const { familyInputs } = await loadPinnedInputs();
     for (const source of CREATE_AWESOME_SOURCES) {

@@ -1,8 +1,8 @@
 # Create Awesome catalog snapshot
 
-The canonical `cna-templates`, `cpa-templates`, and `cva-templates` repositories
-own catalog inventory and declared metadata. Their corresponding CLI repositories
-are pinned semantic references for how that metadata is interpreted.
+The canonical `cna-templates`, `cpa-templates`, `cva-templates`, and `cra-templates`
+repositories own catalog inventory and declared metadata. Their corresponding CLI
+repositories are pinned semantic references for how that metadata is interpreted.
 
 The website consumes a committed normalized snapshot. Normal builds and tests do
 not fetch GitHub.

@@ -39,6 +39,17 @@ describe('buildCreateAwesomeCommand', () => {
     ).toBe('create-vlang-app my-vapp --template web-server --addons v-sqlite,v-docker');
   });
 
+  it('builds Rust commands with comma-separated --addons', () => {
+    expect(
+      buildCreateAwesomeCommand({
+        family: 'rust',
+        projectName: 'my-api',
+        template: 'axum-starter',
+        addons: ['all-github-setup', 'axum-sqlx'],
+      }),
+    ).toBe('create-rust-app my-api --template axum-starter --addons all-github-setup,axum-sqlx');
+  });
+
   it('omits addon flags when none selected', () => {
     expect(
       buildCreateAwesomeCommand({

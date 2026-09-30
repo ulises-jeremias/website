@@ -12,6 +12,7 @@ export const communityInterestSchema = z.enum([
   'node',
   'python',
   'v',
+  'rust',
   'devops-infra',
   'documentation',
   'design',

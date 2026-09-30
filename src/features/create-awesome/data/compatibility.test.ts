@@ -22,10 +22,11 @@ describe('pinned Create Awesome compatibility data', () => {
     }
   });
 
-  it('pins exactly the three supported families', () => {
+  it('pins exactly the four supported families', () => {
     expect(createAwesomeCompatibilitySnapshot.families.map((family) => family.id).sort()).toEqual([
       'node',
       'python',
+      'rust',
       'v',
     ]);
   });
@@ -81,6 +82,9 @@ describe('pinned Create Awesome compatibility data', () => {
       { familyId: 'node', sourceCategory: 'Deployment', presentationCategory: 'deploy' },
       { familyId: 'python', sourceCategory: 'database', presentationCategory: 'data' },
       { familyId: 'python', sourceCategory: 'containers', presentationCategory: 'deploy' },
+      { familyId: 'rust', sourceCategory: 'database', presentationCategory: 'data' },
+      { familyId: 'rust', sourceCategory: 'containers', presentationCategory: 'deploy' },
+      { familyId: 'rust', sourceCategory: 'ci', presentationCategory: 'deploy' },
     ] as const;
     for (const expected of categoryCases) {
       const sourceFamily = createAwesomeCompatibilitySnapshot.families.find(
@@ -148,6 +152,16 @@ describe('pinned Create Awesome compatibility data', () => {
     expect(isTemplateAddonCompatible('v', 'web-server', 'vsl-plotting')).toBe(false);
     expect(isTemplateAddonCompatible('v', 'web-server', 'github-setup')).toBe(true);
     expect(isTemplateAddonCompatible('v', 'rxv-starter', 'github-setup')).toBe(true);
+  });
+
+  it('uses Rust type intersection for the pinned catalog', () => {
+    expect(isTemplateAddonCompatible('rust', 'axum-starter', 'all-github-setup')).toBe(true);
+    expect(isTemplateAddonCompatible('rust', 'axum-starter', 'axum-sqlx')).toBe(true);
+    expect(isTemplateAddonCompatible('rust', 'cli-starter', 'axum-sqlx')).toBe(false);
+    expect(isTemplateAddonCompatible('rust', 'cli-starter', 'cli-manpage')).toBe(true);
+    expect(isTemplateAddonCompatible('rust', 'lib-starter', 'lib-criterion')).toBe(true);
+    expect(isTemplateAddonCompatible('rust', 'tonic-starter', 'tonic-health')).toBe(true);
+    expect(getCompatibleAddons('rust', 'axum-starter').map((addon) => addon.id)).toContain('axum-otel');
   });
 
   it('rejects invalid compositions with structured reasons below the UI', () => {

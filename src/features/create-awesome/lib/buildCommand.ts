@@ -13,10 +13,11 @@ export const DEFAULT_PROJECT_NAME = 'my-app';
 /**
  * Build a family-accurate Create Awesome CLI command.
  *
- * Shapes verified against upstream docs (2026-08-07):
+ * Shapes verified against upstream docs (2026-08-07; Rust 2026-09-30):
  * - Node: `npm create … -- --template <slug> --addons a b c`
  * - Python: `uvx … --template <slug> --addons a --addons b`
  * - V: `create-vlang-app … --template <slug> --addons a,b` (comma-separated)
+ * - Rust: `create-rust-app … --template <slug> --addons a,b` (comma-separated)
  */
 export function buildCreateAwesomeCommand({
   family,
@@ -40,6 +41,13 @@ export function buildCreateAwesomeCommand({
     for (const addon of cleanedAddons) {
       parts.push('--addons', addon);
     }
+    return parts.join(' ');
+  }
+
+  if (family === 'rust') {
+    const parts = ['create-rust-app', name];
+    if (template) parts.push('--template', template);
+    if (cleanedAddons.length) parts.push('--addons', cleanedAddons.join(','));
     return parts.join(' ');
   }
 

@@ -204,6 +204,24 @@ const _projects: CommunityProject[] = [
     source: 'github',
   },
   {
+    id: 'create-awesome-rust',
+    name: 'Create Awesome — Rust',
+    summary: 'Native Rust scaffolds — Axum, Tonic, CLI, Leptos starters.',
+    ecosystem: 'create-awesome',
+    alsoIn: [],
+    org: 'Create-Rust-App',
+    repo: 'Create-Rust-App/create-rust-app',
+    website: 'https://create-awesome-rust-app.vercel.app',
+    worldPath: '/create-awesome#rust',
+    state: 'experimental',
+    communityEnabled: true,
+    contributionAreas: ['CLI', 'templates', 'extensions', 'docs'],
+    interests: ['rust', 'documentation', 'testing'],
+    beginnerFriendly: false,
+    role: 'Creator',
+    source: 'github',
+  },
+  {
     id: 'vsl',
     name: 'VSL',
     summary: 'V Scientific Library — numerics and scientific tooling in V.',
@@ -297,6 +315,7 @@ export const interestFilters: InterestFilter[] = [
   interestFilterSchema.parse({ id: 'node', label: 'Node', hint: 'Create Awesome Node' }),
   interestFilterSchema.parse({ id: 'python', label: 'Python', hint: 'Create Awesome Python' }),
   interestFilterSchema.parse({ id: 'v', label: 'V / scientific', hint: 'VSL, VTL, RxV, CVA' }),
+  interestFilterSchema.parse({ id: 'rust', label: 'Rust', hint: 'Create Awesome Rust' }),
   interestFilterSchema.parse({
     id: 'devops-infra',
     label: 'DevOps / infra',
@@ -345,10 +364,12 @@ export const contributionOpportunities: ContributionOpportunity[] = [
   contributionOpportunitySchema.parse({
     id: 'create-awesome',
     title: 'Create Awesome family',
-    description: 'CLIs, templates, addons/extensions across Node, Python, and V.',
-    interests: ['node', 'python', 'v'],
+    description: 'CLIs, templates, addons/extensions across Node, Python, V, and Rust.',
+    interests: ['node', 'python', 'v', 'rust'],
     labels: ['templates', 'addons'],
-    href: communityIssueSearch('(org:Create-Node-App OR org:Create-Python-App OR org:Create-Vlang-App)'),
+    href: communityIssueSearch(
+      '(org:Create-Node-App OR org:Create-Python-App OR org:Create-Vlang-App OR org:Create-Rust-App)',
+    ),
   }),
   contributionOpportunitySchema.parse({
     id: 'v-ecosystem',

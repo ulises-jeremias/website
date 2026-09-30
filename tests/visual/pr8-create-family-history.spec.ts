@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const axePath = require.resolve('axe-core/axe.min.js');
 
-const familyIds = ['node', 'python', 'v'] as const;
+const familyIds = ['node', 'python', 'v', 'rust'] as const;
 type FamilyId = (typeof familyIds)[number];
 
 const familyFacts: Record<
@@ -31,6 +31,13 @@ const familyFacts: Record<
     catalog: 'https://create-awesome-vlang-app.vercel.app',
     repository: 'https://github.com/Create-Vlang-App/create-vlang-app',
     install: 'curl -fsSL https://create-awesome-vlang-app.vercel.app/install.sh | sh',
+  },
+  rust: {
+    title: 'create-awesome-rust-app',
+    command: /create-rust-app/,
+    catalog: 'https://create-awesome-rust-app.vercel.app',
+    repository: 'https://github.com/Create-Rust-App/create-rust-app',
+    install: 'curl -fsSL https://create-awesome-rust-app.vercel.app/install.sh | sh',
   },
 };
 

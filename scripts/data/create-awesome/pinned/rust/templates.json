@@ -1,0 +1,500 @@
+{
+  "$schema": "./templates.schema.json",
+  "categories": [
+    {
+      "slug": "backend-applications",
+      "name": "Backend Applications",
+      "description": "API and service starters for Axum and similar Rust backends.",
+      "details": "Use when the deliverable is an HTTP API or background worker — Axum for async APIs with Tokio.",
+      "labels": [
+        "Backend",
+        "API",
+        "Rust",
+        "Axum"
+      ]
+    },
+    {
+      "slug": "ci",
+      "name": "CI",
+      "description": "Continuous integration and repository automation.",
+      "details": "GitHub Actions, Dependabot, and related repository workflows.",
+      "labels": [
+        "CI",
+        "GitHub",
+        "DevOps"
+      ]
+    },
+    {
+      "slug": "containers",
+      "name": "Containers",
+      "description": "Docker and Compose packaging for the app.",
+      "details": "Add when you want container images and compose stacks for the API.",
+      "labels": [
+        "Docker",
+        "Compose",
+        "DevOps"
+      ]
+    },
+    {
+      "slug": "cli-applications",
+      "name": "CLI Applications",
+      "description": "Command-line tools and interactive CLIs.",
+      "details": "Use when the deliverable runs in a terminal — clap CLIs with subcommands.",
+      "labels": [
+        "CLI",
+        "Rust",
+        "Clap"
+      ]
+    },
+    {
+      "slug": "fullstack-applications",
+      "name": "Fullstack Applications",
+      "description": "Client plus server in one Rust workspace.",
+      "details": "Use when UI and API ship together — Leptos fullstack with Axum backend.",
+      "labels": [
+        "Fullstack",
+        "Rust",
+        "Leptos"
+      ]
+    },
+    {
+      "slug": "database",
+      "name": "Database",
+      "description": "Persistence layers and migrations.",
+      "details": "Add when the app stores state — SQLx with Postgres or SQLite.",
+      "labels": [
+        "Database",
+        "SQLx",
+        "Postgres"
+      ]
+    },
+    {
+      "slug": "observability",
+      "name": "Observability",
+      "description": "Metrics, traces, and error tracking.",
+      "details": "Add when the service needs production telemetry — OpenTelemetry or Sentry.",
+      "labels": [
+        "Observability",
+        "OTel",
+        "Tracing"
+      ]
+    },
+    {
+      "slug": "security",
+      "name": "Security",
+      "description": "Authentication and hardening.",
+      "details": "Add when users sign in or routes need protection — JWT auth, CORS, rate limits.",
+      "labels": [
+        "Security",
+        "Auth",
+        "JWT"
+      ]
+    },
+    {
+      "slug": "testing",
+      "name": "Testing",
+      "description": "Integration, load, and container testing.",
+      "details": "Add when tests need real dependencies — testcontainers, k6.",
+      "labels": [
+        "Testing",
+        "E2E"
+      ]
+    },
+    {
+      "slug": "ai-applications",
+      "name": "AI Applications",
+      "description": "LLM-powered services and agents.",
+      "details": "Use when the app calls models — chat, RAG, guardrails.",
+      "labels": [
+        "AI",
+        "LLM",
+        "Rust"
+      ]
+    },
+    {
+      "slug": "editor",
+      "name": "Editor",
+      "description": "Dev containers and editor automation.",
+      "details": "Add for reproducible dev environments — devcontainers, pre-commit.",
+      "labels": [
+        "DevContainer",
+        "DX"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "name": "Axum Starter",
+      "slug": "axum-starter",
+      "description": "Production-ready Axum HTTP API with feature-based modules, Tokio, tracing, and cargo fmt/clippy/test gates",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/axum-starter",
+      "type": "axum-backend",
+      "category": "backend-applications",
+      "labels": [
+        "Rust",
+        "Axum",
+        "Tokio",
+        "API"
+      ]
+    },
+    {
+      "name": "CLI Starter",
+      "slug": "cli-starter",
+      "description": "Production-ready clap CLI with feature-based subcommands, tracing, shell completions, and cargo fmt/clippy/test gates",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/cli-starter",
+      "type": "cli",
+      "category": "cli-applications",
+      "labels": [
+        "Rust",
+        "Clap",
+        "CLI"
+      ]
+    },
+    {
+      "name": "Leptos Starter",
+      "slug": "leptos-starter",
+      "description": "Leptos fullstack starter: SSR pages with htmx interactivity on Axum, tracing, and cargo fmt/clippy/test gates",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/leptos-starter",
+      "type": "leptos-fullstack",
+      "category": "fullstack-applications",
+      "labels": [
+        "Rust",
+        "Leptos",
+        "Axum",
+        "SSR",
+        "Fullstack"
+      ]
+    },
+    {
+      "name": "Worker Starter",
+      "slug": "worker-starter",
+      "description": "Tokio background worker starter: typed job queue, worker pool, demo scheduler, graceful shutdown, and cargo fmt/clippy/test gates",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/worker-starter",
+      "type": "worker",
+      "category": "backend-applications",
+      "labels": [
+        "Rust",
+        "Tokio",
+        "Worker",
+        "Jobs"
+      ]
+    },
+    {
+      "name": "Lib Starter",
+      "slug": "lib-starter",
+      "description": "Publishable Rust library starter: feature modules, doc examples, demo binary, and cargo fmt/clippy/test gates",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/lib-starter",
+      "type": "library",
+      "category": "backend-applications",
+      "labels": [
+        "Rust",
+        "Library"
+      ]
+    },
+    {
+      "name": "Tonic Starter",
+      "slug": "tonic-starter",
+      "description": "tonic gRPC microservice starter: Protobuf contract, checked-in bindings, reflection, graceful shutdown, and cargo fmt/clippy/test gates",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=templates/tonic-starter",
+      "type": "tonic-grpc",
+      "category": "backend-applications",
+      "labels": [
+        "Rust",
+        "Tonic",
+        "gRPC",
+        "Microservice"
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "name": "GitHub Setup",
+      "slug": "all-github-setup",
+      "description": "GitHub Actions CI (fmt, clippy, test) for the scaffolded project",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-github-setup",
+      "type": [
+        "axum-backend",
+        "cli",
+        "leptos-fullstack",
+        "worker",
+        "library",
+        "tonic-grpc"
+      ],
+      "category": "ci",
+      "labels": [
+        "CI",
+        "GitHub",
+        "DevOps"
+      ]
+    },
+    {
+      "name": "Axum Docker",
+      "slug": "axum-docker",
+      "description": "Multi-stage Docker build and Compose stack for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-docker",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "containers",
+      "labels": [
+        "Docker",
+        "Compose",
+        "DevOps"
+      ]
+    },
+    {
+      "name": "Dev Container",
+      "slug": "all-devcontainer",
+      "description": "Reproducible VS Code dev container (Rust image, rust-analyzer) for any scaffolded project",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-devcontainer",
+      "type": [
+        "axum-backend",
+        "cli",
+        "leptos-fullstack",
+        "worker",
+        "library",
+        "tonic-grpc"
+      ],
+      "category": "editor",
+      "labels": [
+        "DevContainer",
+        "DX"
+      ]
+    },
+    {
+      "name": "Pre-commit",
+      "slug": "all-pre-commit",
+      "description": "Pre-commit hooks mirroring CI gates (cargo fmt, clippy -D warnings)",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-pre-commit",
+      "type": [
+        "axum-backend",
+        "cli",
+        "leptos-fullstack",
+        "worker",
+        "library",
+        "tonic-grpc"
+      ],
+      "category": "ci",
+      "labels": [
+        "CI",
+        "Git",
+        "DX"
+      ]
+    },
+    {
+      "name": "Axum CORS",
+      "slug": "axum-cors",
+      "description": "Permissive CORS layer for the Axum service, registered without file forks",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-cors",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "security",
+      "labels": [
+        "CORS",
+        "Middleware",
+        "HTTP"
+      ]
+    },
+    {
+      "name": "Axum JWT",
+      "slug": "axum-jwt",
+      "description": "HS256 JWT authentication with a demo protected route for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-jwt",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "security",
+      "labels": [
+        "JWT",
+        "Auth",
+        "Middleware"
+      ]
+    },
+    {
+      "name": "Axum OpenAPI",
+      "slug": "axum-openapi",
+      "description": "Served OpenAPI 3.1 document plus Redoc UI for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-openapi",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "backend-applications",
+      "labels": [
+        "OpenAPI",
+        "Docs",
+        "Redoc"
+      ]
+    },
+    {
+      "name": "Axum SQLx",
+      "slug": "axum-sqlx",
+      "description": "SQLite persistence with embedded migrations and a todo CRUD API for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-sqlx",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "database",
+      "labels": [
+        "SQLite",
+        "SQLx",
+        "Migrations"
+      ]
+    },
+    {
+      "name": "Axum Compression",
+      "slug": "axum-compression",
+      "description": "Gzip response compression for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-compression",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "backend-applications",
+      "labels": [
+        "Gzip",
+        "Middleware",
+        "HTTP"
+      ]
+    },
+    {
+      "name": "Axum Timeout",
+      "slug": "axum-timeout",
+      "description": "Fail-fast 10s request timeouts for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-timeout",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "observability",
+      "labels": [
+        "Timeout",
+        "Middleware",
+        "Resilience"
+      ]
+    },
+    {
+      "name": "Axum Request ID",
+      "slug": "axum-request-id",
+      "description": "Unique x-request-id on every response for log correlation",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-request-id",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "observability",
+      "labels": [
+        "Request-ID",
+        "Middleware",
+        "Tracing"
+      ]
+    },
+    {
+      "name": "Axum Rate Limit",
+      "slug": "axum-ratelimit",
+      "description": "Per-key rate limiting with 429 responses for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-ratelimit",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "security",
+      "labels": [
+        "Rate-Limit",
+        "Middleware",
+        "Quota"
+      ]
+    },
+    {
+      "name": "GitLab Setup",
+      "slug": "all-gitlab-setup",
+      "description": "GitLab CI pipeline for any scaffolded project",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/all-gitlab-setup",
+      "type": [
+        "axum-backend",
+        "cli",
+        "leptos-fullstack",
+        "library",
+        "tonic-grpc",
+        "worker"
+      ],
+      "category": "ci",
+      "labels": [
+        "GitLab",
+        "CI",
+        "DevOps"
+      ]
+    },
+    {
+      "name": "Axum Security Headers",
+      "slug": "axum-security-headers",
+      "description": "Baseline response hardening headers for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-security-headers",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "security",
+      "labels": [
+        "Headers",
+        "Hardening",
+        "HTTP"
+      ]
+    },
+    {
+      "name": "Lib Criterion",
+      "slug": "lib-criterion",
+      "description": "Criterion throughput benchmarks for library starters",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/lib-criterion",
+      "type": [
+        "library"
+      ],
+      "category": "testing",
+      "labels": [
+        "Benchmarks",
+        "Criterion",
+        "Perf"
+      ]
+    },
+    {
+      "name": "Tonic Health",
+      "slug": "tonic-health",
+      "description": "Standard gRPC health probing with the Greeter marked SERVING",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/tonic-health",
+      "type": [
+        "tonic-grpc"
+      ],
+      "category": "observability",
+      "labels": [
+        "Health",
+        "Probe",
+        "gRPC"
+      ]
+    },
+    {
+      "name": "Axum OpenTelemetry",
+      "slug": "axum-otel",
+      "description": "OTLP trace export with inert local default for the Axum service",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/axum-otel",
+      "type": [
+        "axum-backend"
+      ],
+      "category": "observability",
+      "labels": [
+        "OpenTelemetry",
+        "Tracing",
+        "OTLP"
+      ]
+    },
+    {
+      "name": "CLI Manpage",
+      "slug": "cli-manpage",
+      "description": "Generated man pages from the clap definition for CLI starters",
+      "url": "https://github.com/Create-Rust-App/cra-templates?subdir=extensions/cli-manpage",
+      "type": [
+        "cli"
+      ],
+      "category": "cli-applications",
+      "labels": [
+        "Manpage",
+        "Docs",
+        "Clap"
+      ]
+    }
+  ]
+}

@@ -180,24 +180,24 @@
     },
     "/create-awesome/": {
       "mobile": {
-        "total": 107193,
-        "document": 25320,
+        "total": 111834,
+        "document": 27810,
         "script": 0,
-        "style": 15407,
-        "image": 3802,
+        "style": 15433,
+        "image": 5927,
         "font": 62664,
         "other": 0,
-        "requests": 10
+        "requests": 11
       },
       "desktop": {
-        "total": 111316,
-        "document": 25320,
+        "total": 115773,
+        "document": 27810,
         "script": 0,
-        "style": 15421,
-        "image": 7911,
+        "style": 15433,
+        "image": 9866,
         "font": 62664,
         "other": 0,
-        "requests": 13
+        "requests": 14
       }
     },
     "/community/": {

@@ -146,6 +146,36 @@ export const verifySemanticReferences = (source, referenceContents) => {
     return;
   }
 
+  if (source.id === 'rust') {
+    const cli = byRole.get('cli-catalog-reference') ?? '';
+    const registryHelper = byRole.get('catalog-compatibility-reference') ?? '';
+    if (
+      !cli.includes('pub struct Catalog') ||
+      !cli.includes('pub struct TemplateEntry') ||
+      !cli.includes('pub struct AddonEntry') ||
+      !cli.includes('alias = "extensions"')
+    ) {
+      throw contractError('rust', 'the CRA CLI catalog reference changed its slug-based shape unexpectedly');
+    }
+    if (cli.toLowerCase().includes('compat')) {
+      throw contractError(
+        'rust',
+        'the CRA CLI now defines compatibility semantics; its behavior must be reconciled before refresh',
+      );
+    }
+    if (
+      !registryHelper.includes('def as_types') ||
+      !registryHelper.includes('def assert_profile_valid') ||
+      !registryHelper.includes('template_type not in as_types(entry.get("type"))')
+    ) {
+      throw contractError(
+        'rust',
+        'the cra-templates compatibility helper no longer exposes the verified type-intersection contract',
+      );
+    }
+    return;
+  }
+
   const cli = byRole.get('cli-catalog-reference') ?? '';
   const registryHelper = byRole.get('catalog-compatibility-reference') ?? '';
   if (!cli.includes('resolve_slug') || !cli.includes('CatalogEntry')) {

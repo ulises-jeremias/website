@@ -18,6 +18,7 @@ const sourceById = {
   node: 'cna-templates',
   python: 'cpa-templates',
   v: 'cva-templates',
+  rust: 'cra-templates',
 } as const;
 
 const stations = variants.map((v) => ({
@@ -39,7 +40,7 @@ const stationsJson = JSON.stringify(stations);
 const defaultStation = stations[0]!;
 
 const lineModules = [
-  { id: 'runtime', label: 'Runtime', hint: 'Node · Python · V' },
+  { id: 'runtime', label: 'Runtime', hint: 'Node · Python · V · Rust' },
   { id: 'template', label: 'Template', hint: 'starter shape' },
   { id: 'addons', label: 'Addons', hint: 'optional slices' },
   { id: 'app', label: 'App', hint: 'real files you own' },
@@ -64,7 +65,7 @@ const lineModules = [
       <p class="ca-world__lede">{familyIntro.principle}</p>
       <FlagshipProvenance
         entryId="create-node-app"
-        note="One composable scaffolding family across Node.js, Python, and V — created and maintained by Ulises across the three Create Awesome organizations."
+        note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
       />
     </div>
     <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
@@ -73,6 +74,7 @@ const lineModules = [
         <li><strong>Node</strong><span>{catalogTotals.node.templates} + {catalogTotals.node.addons}</span></li>
         <li><strong>Python</strong><span>{catalogTotals.python.templates} + {catalogTotals.python.addons}</span></li>
         <li><strong>V</strong><span>{catalogTotals.v.templates} + {catalogTotals.v.addons}</span></li>
+        <li><strong>Rust</strong><span>{catalogTotals.rust.templates} + {catalogTotals.rust.addons}</span></li>
       </ul>
       <small>templates + addons · sourced totals</small>
     </aside>
@@ -214,6 +216,7 @@ const lineModules = [
             <th>Node</th>
             <th>Python</th>
             <th>V</th>
+            <th>Rust</th>
           </tr>
         </thead>
         <tbody>
@@ -224,6 +227,7 @@ const lineModules = [
                 <td>{row.node}</td>
                 <td>{row.python}</td>
                 <td>{row.v}</td>
+                <td>{row.rust}</td>
               </tr>
             ))
           }
