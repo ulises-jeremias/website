@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateSnapshot } from './refresh-sponsor-metrics.mjs';
+import { externalLogins, validateSnapshot } from './refresh-sponsor-metrics.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const snapshotPath = resolve(ROOT, 'src', 'data', 'generated', 'sponsor-metrics.json');
@@ -51,5 +51,19 @@ describe('refresh-sponsor-metrics validateSnapshot', () => {
   it('rejects duplicate metric ids and a missing generator', () => {
     expect(validateSnapshot(snapshot([validMetric, validMetric]))).toContain('npm-example-12m: duplicate id');
     expect(validateSnapshot({ ...snapshot([validMetric]), generator: '' })).toContain('generator is required');
+  });
+});
+
+describe('refresh-sponsor-metrics externalLogins', () => {
+  it('dedupes logins and excludes the owner, bots, and non-users', () => {
+    const batch = [
+      { login: 'ulises-jeremias', type: 'User' },
+      { login: 'contributor', type: 'User' },
+      { login: 'contributor', type: 'User' },
+      { login: 'dependabot[bot]', type: 'User' },
+      { login: 'some-org', type: 'Organization' },
+      { login: 'github-actions[bot]', type: 'Bot' },
+    ];
+    expect([...externalLogins(batch)]).toEqual(['contributor']);
   });
 });

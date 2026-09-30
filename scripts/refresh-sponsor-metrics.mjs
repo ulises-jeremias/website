@@ -14,7 +14,9 @@
  * - create-awesome-node-app npm downloads, trailing 12 months (mature package;
  *   release-day and CI spikes are a small share of a year)
  * - create-awesome-python-app PyPI downloads, trailing 30 days, mirrors excluded
- * - external contributor counts (default-branch authors minus the owner and bots)
+ * - external contributor counts (default-branch authors minus the owner and bots;
+ *   Create Awesome families count the union of their CLI and *-templates repos,
+ *   since contributors often land only in templates)
  *
  * Agent Toolkit package downloads are intentionally NOT collected yet: the
  * packages are weeks old and most downloads fall on release days or come from
@@ -129,29 +131,76 @@ async function pypiMonth(pkg) {
   };
 }
 
-async function externalContributors(owner, repo, project) {
-  const info = await getJson(`https://api.github.com/repos/${owner}/${repo}`, githubHeaders());
+/** Logins that count as external contributors, after owner/bot exclusion. Pure for testing. */
+export function externalLogins(contributors) {
+  const people = new Set();
+  for (const person of contributors) {
+    if (person?.type !== 'User' || BOT_PATTERN.test(person.login ?? '') || person.login === OWNER) continue;
+    people.add(person.login);
+  }
+  return people;
+}
+
+async function repoContributorLogins(owner, repo) {
   const people = new Set();
   for (let page = 1; page <= 10; page += 1) {
     const batch = await getJson(
       `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100&page=${page}`,
       githubHeaders(),
     );
-    for (const person of batch) {
-      if (person.type !== 'User' || BOT_PATTERN.test(person.login) || person.login === OWNER) continue;
-      people.add(person.login);
-    }
+    for (const login of externalLogins(batch)) people.add(login);
     if (batch.length < 100) break;
   }
+  return people;
+}
+
+async function repoCreatedOn(owner, repo) {
+  const info = await getJson(`https://api.github.com/repos/${owner}/${repo}`, githubHeaders());
+  return info.created_at.slice(0, 10);
+}
+
+async function externalContributors(owner, repo, project) {
+  const people = await repoContributorLogins(owner, repo);
   return {
     project,
     label: 'Contributors besides the author',
     value: people.size,
     unit: 'contributors with commits on the default branch',
-    period: { start: info.created_at.slice(0, 10), end: today() },
+    period: { start: await repoCreatedOn(owner, repo), end: today() },
     source: { name: 'GitHub contributors API', url: `https://github.com/${owner}/${repo}/graphs/contributors` },
     caveat:
       'Counts accounts that authored at least one commit on the default branch, excluding the author and bots. Size of contribution varies.',
+  };
+}
+
+/**
+ * Union of external contributors across the CLI and templates repos of one
+ * Create Awesome family. Contributors often land only in *-templates, so a
+ * single-repo count under-reports the project.
+ */
+async function familyContributors(owner, repos, project) {
+  const people = new Set();
+  const created = [];
+  for (const repo of repos) {
+    for (const login of await repoContributorLogins(owner, repo)) people.add(login);
+    created.push(await repoCreatedOn(owner, repo));
+  }
+  const [primary, ...rest] = repos;
+  const restGraphs = rest.map((repo) => `https://github.com/${owner}/${repo}/graphs/contributors`).join(', ');
+  return {
+    project,
+    label: 'Contributors besides the author',
+    value: people.size,
+    unit: 'contributors with commits on either default branch',
+    period: { start: created.sort()[0], end: today() },
+    source: {
+      name: 'GitHub contributors API',
+      url: `https://github.com/${owner}/${primary}/graphs/contributors`,
+    },
+    caveat:
+      `Union across ${repos.map((repo) => `${owner}/${repo}`).join(' and ')} ` +
+      `(also: ${restGraphs}). Counts accounts that authored at least one commit on the default branch of ` +
+      'either repo, excluding the author and bots. Size of contribution varies.',
   };
 }
 
@@ -164,8 +213,9 @@ const COLLECTORS = [
     collect: () => externalContributors('ulises-jeremias', 'dotfiles', 'HorneroConfig'),
   },
   {
-    id: 'contributors-create-node-app-create-node-app',
-    collect: () => externalContributors('Create-Node-App', 'create-node-app', 'Create Awesome Node App'),
+    id: 'contributors-create-node-app-cli-and-templates',
+    collect: () =>
+      familyContributors('Create-Node-App', ['create-node-app', 'cna-templates'], 'Create Awesome Node App'),
   },
 ];
 

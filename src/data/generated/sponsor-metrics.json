@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-30T12:54:52.676Z",
+  "generatedAt": "2026-09-30T16:56:03.786Z",
   "generator": "scripts/refresh-sponsor-metrics.mjs",
   "metrics": [
     {
-      "id": "contributors-create-node-app-create-node-app",
+      "id": "contributors-create-node-app-cli-and-templates",
       "project": "Create Awesome Node App",
       "label": "Contributors besides the author",
-      "value": 4,
-      "unit": "contributors with commits on the default branch",
+      "value": 18,
+      "unit": "contributors with commits on either default branch",
       "period": {
-        "start": "2020-10-07",
+        "start": "2020-09-27",
         "end": "2026-09-30"
       },
       "source": {
         "name": "GitHub contributors API",
         "url": "https://github.com/Create-Node-App/create-node-app/graphs/contributors"
       },
-      "caveat": "Counts accounts that authored at least one commit on the default branch, excluding the author and bots. Size of contribution varies.",
+      "caveat": "Union across Create-Node-App/create-node-app and Create-Node-App/cna-templates (also: https://github.com/Create-Node-App/cna-templates/graphs/contributors). Counts accounts that authored at least one commit on the default branch of either repo, excluding the author and bots. Size of contribution varies.",
       "retrievedAt": "2026-09-30"
     },
     {
