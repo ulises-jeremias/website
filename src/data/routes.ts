@@ -234,9 +234,9 @@ export const routes: RouteMeta[] = [
     path: '/create-awesome',
     title: 'Create Awesome — App Scaffolding for Node, Python & V',
     description:
-      'Choose a template and add-ons to scaffold an application in Node.js, Python, or V — one composition model across three CLIs.',
+      'Choose a template and add-ons to scaffold an application in Node.js, Python, V, or Rust — one composition model across four CLIs.',
     ogImage: '/social/create-awesome.jpg',
-    ogImageAlt: 'Create Awesome application scaffolding for Node, Python, and V',
+    ogImageAlt: 'Create Awesome application scaffolding for Node, Python, V, and Rust',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'create-awesome',

@@ -25,8 +25,10 @@ const staticFamilies = variants.map((variant) => ({
   description: variant.description,
   catalog: variant.href,
   repository: `https://github.com/${variant.repo}`,
-  baseExample: variant.id === 'v' ? 'create-vlang-app my-app' : variant.install,
-  exampleNote: variant.id === 'v' ? 'after installing the CLI' : 'no template or addons selected',
+  baseExample:
+    variant.id === 'v' ? 'create-vlang-app my-app' : variant.id === 'rust' ? 'create-rust-app my-app' : variant.install,
+  exampleNote:
+    variant.id === 'v' || variant.id === 'rust' ? 'after installing the CLI' : 'no template or addons selected',
 }));
 
 const addonCategories = [
@@ -64,7 +66,8 @@ const composerBootstrap = {
         <p>
           Native controls. Catalogs: CNA {catalogTotals.node.templates}+{catalogTotals.node.addons}, CPA{' '}
           {catalogTotals.python.templates}+{catalogTotals.python.addons}, CVA {catalogTotals.v.templates}+
-          {catalogTotals.v.addons}. Commands follow each family’s CLI shape.
+          {catalogTotals.v.addons}, CRA {catalogTotals.rust.templates}+{catalogTotals.rust.addons}. Commands follow each
+          family’s CLI shape.
         </p>
       )
     }
@@ -251,7 +254,7 @@ const composerBootstrap = {
     let composerBootstrap;
     try {
       composerBootstrap = JSON.parse(form.getAttribute('data-ca-bootstrap') || '{}');
-      const requiredFamilies = ['node', 'python', 'v'];
+      const requiredFamilies = ['node', 'python', 'v', 'rust'];
       const validBootstrap =
         composerBootstrap &&
         typeof composerBootstrap === 'object' &&
@@ -435,6 +438,13 @@ const composerBootstrap = {
           py.push('--addons', cleaned[j]);
         }
         return py.join(' ');
+      }
+
+      if (family === 'rust') {
+        const rustCmd = ['create-rust-app', name];
+        if (template) rustCmd.push('--template', template);
+        if (cleaned.length) rustCmd.push('--addons', cleaned.join(','));
+        return rustCmd.join(' ');
       }
 
       const vcmd = ['create-vlang-app', name];

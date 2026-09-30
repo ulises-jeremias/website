@@ -131,6 +131,56 @@
           "cachePath": "v/semantic/catalog-compatibility-reference.source"
         }
       ]
+    },
+    {
+      "id": "rust",
+      "adapter": "typed-intersection",
+      "repository": "Create-Rust-App/cra-templates",
+      "commit": "ea85d7f7fae12843c5828832080efc388ca2e6a4",
+      "commitDate": "2026-09-17T14:52:37Z",
+      "registry": {
+        "path": "templates.json",
+        "url": "https://raw.githubusercontent.com/Create-Rust-App/cra-templates/ea85d7f7fae12843c5828832080efc388ca2e6a4/templates.json",
+        "gitBlobSha": "404479087c78198ae3507e976241465d74c00a37",
+        "sha256": "17dca4da324d6f3d5657aa866c912c043211a274ecbe928e07024675025a288e",
+        "cachePath": "rust/templates.json"
+      },
+      "schema": {
+        "path": "templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Rust-App/cra-templates/ea85d7f7fae12843c5828832080efc388ca2e6a4/templates.schema.json",
+        "gitBlobSha": "e008a2ade9e7219d45db67eab2e28bf4f85faaac",
+        "sha256": "2e87b357089d2c697d3fe5d5ba711e10174882d3b48665e0a170534ea4b8f415",
+        "cachePath": "rust/templates.schema.json"
+      },
+      "cliReference": {
+        "repository": "Create-Rust-App/create-rust-app",
+        "commit": "5d9236238b5d3117717c39c8f2673707a754db32",
+        "commitDate": "2026-09-17T13:55:29Z"
+      },
+      "semanticReferences": [
+        {
+          "role": "cli-catalog-reference",
+          "repository": "Create-Rust-App/create-rust-app",
+          "commit": "5d9236238b5d3117717c39c8f2673707a754db32",
+          "commitDate": "2026-09-17T13:55:29Z",
+          "path": "crates/create_rust_app_core/src/catalog.rs",
+          "url": "https://raw.githubusercontent.com/Create-Rust-App/create-rust-app/5d9236238b5d3117717c39c8f2673707a754db32/crates/create_rust_app_core/src/catalog.rs",
+          "gitBlobSha": "204db883602a235e51c5a81ee97de67b69a591e0",
+          "sha256": "3eaf00f9d5900ad7defa7a4ec6e13c376b14453eb6ceafc466a801a9b1c1e120",
+          "cachePath": "rust/semantic/cli-catalog-reference.source"
+        },
+        {
+          "role": "catalog-compatibility-reference",
+          "repository": "Create-Rust-App/cra-templates",
+          "commit": "ea85d7f7fae12843c5828832080efc388ca2e6a4",
+          "commitDate": "2026-09-17T14:52:37Z",
+          "path": "scripts/ci/registry.py",
+          "url": "https://raw.githubusercontent.com/Create-Rust-App/cra-templates/ea85d7f7fae12843c5828832080efc388ca2e6a4/scripts/ci/registry.py",
+          "gitBlobSha": "e03e2d81c540cf96493ddb8317413ac44b16ce4b",
+          "sha256": "325ce94507640415e170acb35e18f97f6bf00e7b406506e1cc971fffc624ab44",
+          "cachePath": "rust/semantic/catalog-compatibility-reference.source"
+        }
+      ]
     }
   ]
 }

@@ -171,7 +171,7 @@ export const projectWorlds: ProjectWorld[] = [
     id: 'create-awesome',
     slug: 'create-awesome',
     title: 'Create Awesome',
-    description: 'Create Awesome — Node / Python / V templates + catalog',
+    description: 'Create Awesome — Node / Python / V / Rust templates + catalog',
     path: '/create-awesome',
     theme: 'create-awesome',
     accent: 'orange',
@@ -189,6 +189,7 @@ export const projectWorlds: ProjectWorld[] = [
         description: 'Python templates',
       },
       { id: 'create-v', title: 'create-vlang-app', path: '/create-awesome#v', description: 'V templates' },
+      { id: 'create-rust', title: 'create-rust-app', path: '/create-awesome#rust', description: 'Rust templates' },
     ],
   },
   {

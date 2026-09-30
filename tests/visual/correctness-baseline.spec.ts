@@ -21,7 +21,7 @@ const workstationProfiles = [
   'custom',
 ] as const;
 
-const createFamilies = ['node', 'python', 'v'] as const;
+const createFamilies = ['node', 'python', 'v', 'rust'] as const;
 
 async function selectRadio(page: Page, selector: string) {
   await page.locator(selector).evaluate((element: HTMLInputElement) => {
@@ -228,8 +228,8 @@ test.describe('PR 1 no-JavaScript baseline', () => {
 
       const fallback = page.locator('[data-ca-static-fallback]');
       await expect(fallback).toBeVisible();
-      await expect(fallback.locator('[data-ca-static-family]')).toHaveCount(3);
-      await expect(fallback.locator('a')).toHaveCount(6);
+      await expect(fallback.locator('[data-ca-static-family]')).toHaveCount(4);
+      await expect(fallback.locator('a')).toHaveCount(8);
       await expect(page.locator('[data-ca-composer]')).toBeHidden();
       await expect(page.locator('.ca-world__stations')).toBeHidden();
       await expect(page.locator('[data-ca-command]:visible')).toHaveCount(0);
@@ -243,6 +243,8 @@ test.describe('PR 1 no-JavaScript baseline', () => {
         'https://github.com/Create-Python-App/create-python-app',
         'https://create-awesome-vlang-app.vercel.app',
         'https://github.com/Create-Vlang-App/create-vlang-app',
+        'https://create-awesome-rust-app.vercel.app',
+        'https://github.com/Create-Rust-App/create-rust-app',
       ]);
       await expectPageAndElementsToFit(page, [
         '[data-ca-world]',

@@ -1,4 +1,4 @@
-export type VariantId = 'node' | 'python' | 'v';
+export type VariantId = 'node' | 'python' | 'v' | 'rust';
 
 export interface TemplateSummary {
   id: string;
@@ -19,7 +19,7 @@ export interface AddonSummary {
 }
 
 export interface DistributionChannel {
-  id: 'npm' | 'aur' | 'brew' | 'docker' | 'pipx' | 'uvx' | 'cva-release';
+  id: 'npm' | 'aur' | 'brew' | 'docker' | 'pipx' | 'uvx' | 'cva-release' | 'cra-release' | 'cargo';
   label: string;
   command: string;
   note: string;
@@ -46,6 +46,7 @@ export interface ComparisonRow {
   node: string;
   python: string;
   v: string;
+  rust: string;
 }
 
 export interface FamilyIntro {

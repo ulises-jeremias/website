@@ -39,10 +39,12 @@ export const catalogTotals = {
   node: { templates: familyCatalogs.node.templateCount, addons: familyCatalogs.node.addonCount },
   python: { templates: familyCatalogs.python.templateCount, addons: familyCatalogs.python.addonCount },
   v: { templates: familyCatalogs.v.templateCount, addons: familyCatalogs.v.addonCount },
+  rust: { templates: familyCatalogs.rust.templateCount, addons: familyCatalogs.rust.addonCount },
   sources: {
     node: familyCatalogs.node.source,
     python: familyCatalogs.python.source,
     v: familyCatalogs.v.source,
+    rust: familyCatalogs.rust.source,
   },
 } as const;
 
@@ -82,6 +84,30 @@ export const distributionChannels: DistributionChannel[] = [
     label: 'Homebrew',
     command: 'brew tap Create-Vlang-App/tap && brew install create-vlang-app',
     note: 'V — macOS/Linux tap',
+  },
+  {
+    id: 'cra-release',
+    label: 'create-rust-app',
+    command: 'curl -fsSL https://create-awesome-rust-app.vercel.app/install.sh | sh',
+    note: 'Rust — release binary (primary today)',
+  },
+  {
+    id: 'cargo',
+    label: 'cargo install',
+    command: 'cargo install create-awesome-rust-app',
+    note: 'Rust — crates.io',
+  },
+  {
+    id: 'aur',
+    label: 'AUR',
+    command: 'yay -S create-awesome-rust-app',
+    note: 'Rust — Arch package name',
+  },
+  {
+    id: 'brew',
+    label: 'Homebrew',
+    command: 'brew tap Create-Rust-App/tap && brew install create-awesome-rust-app',
+    note: 'Rust — macOS/Linux tap',
   },
 ];
 
@@ -131,6 +157,21 @@ export const variants: CreateAwesomeVariant[] = [
     templates: familyCatalogs.v.templates,
     addons: familyCatalogs.v.addons,
   },
+  {
+    id: 'rust',
+    label: 'Rust',
+    title: 'create-awesome-rust-app',
+    description: 'Axum, Tonic, CLI, Leptos — native binaries for APIs and tools. Binary: create-rust-app.',
+    status: 'beta',
+    accent: '#b7410e',
+    accentLight: '#fb923c',
+    bg: '#FFF7ED',
+    install: 'curl -fsSL https://create-awesome-rust-app.vercel.app/install.sh | sh',
+    href: 'https://create-awesome-rust-app.vercel.app',
+    repo: 'Create-Rust-App/create-rust-app',
+    templates: familyCatalogs.rust.templates,
+    addons: familyCatalogs.rust.addons,
+  },
 ];
 
 export const compositionExamples: CompositionExample[] = [
@@ -173,10 +214,27 @@ export const compositionExamples: CompositionExample[] = [
       addons: ['v-sqlite', 'v-docker'],
     }),
   },
+  {
+    id: 'rust-api',
+    title: 'Rust API',
+    variant: 'rust',
+    template: 'axum-starter',
+    addons: ['all-github-setup', 'axum-sqlx'],
+    command: buildCreateAwesomeCommand({
+      family: 'rust',
+      projectName: 'my-api',
+      template: 'axum-starter',
+      addons: ['all-github-setup', 'axum-sqlx'],
+    }),
+  },
 ];
 
 export const contributionSteps: ContributionStep[] = [
-  { step: 1, title: 'Pick a family', description: 'Node, Python, or V — each lives in its own c*-templates repo.' },
+  {
+    step: 1,
+    title: 'Pick a family',
+    description: 'Node, Python, V, or Rust — each lives in its own c*-templates repo.',
+  },
   {
     step: 2,
     title: 'Add template or addon',
@@ -191,30 +249,39 @@ export const contributionSteps: ContributionStep[] = [
   {
     step: 4,
     title: 'Ship',
-    description: 'Reviewed PR → new version → npm/uvx/AUR/release binary.',
+    description: 'Reviewed PR → new version → npm/uvx/cargo/AUR/release binary.',
     href: 'https://github.com/ulises-jeremias/website',
   },
 ];
 
 export const comparisonRows: ComparisonRow[] = [
-  { feature: 'Install', node: 'npm create', python: 'uvx / pipx', v: 'release binary / AUR / brew' },
+  {
+    feature: 'Install',
+    node: 'npm create',
+    python: 'uvx / pipx',
+    v: 'release binary / AUR / brew',
+    rust: 'release binary / cargo / AUR / brew',
+  },
   {
     feature: 'Templates',
     node: String(catalogTotals.node.templates),
     python: String(catalogTotals.python.templates),
     v: `${catalogTotals.v.templates} (beta)`,
+    rust: `${catalogTotals.rust.templates} (beta)`,
   },
   {
     feature: 'Addons',
     node: `${catalogTotals.node.addons} extensions`,
     python: String(catalogTotals.python.addons),
     v: String(catalogTotals.v.addons),
+    rust: `${catalogTotals.rust.addons} extensions`,
   },
-  { feature: 'Status', node: 'stable', python: 'beta', v: 'beta' },
+  { feature: 'Status', node: 'stable', python: 'beta', v: 'beta', rust: 'beta' },
   {
     feature: 'Catalog source',
     node: 'cna-templates',
     python: 'cpa-templates',
     v: 'cva-templates',
+    rust: 'cra-templates',
   },
 ];

@@ -274,8 +274,8 @@ export const portfolioAreas: PortfolioAreaMeta[] = [
     title: 'Create Awesome',
     path: '/create-awesome',
     proposition:
-      'Application scaffolding for Node.js, Python, and V: pick a template, add extensions, and start from a project that already builds, lints, and tests.',
-    memberIds: ['create-node-app', 'create-python-app', 'create-vlang-app'],
+      'Application scaffolding for Node.js, Python, V, and Rust: pick a template, add extensions, and start from a project that already builds, lints, and tests.',
+    memberIds: ['create-node-app', 'create-python-app', 'create-vlang-app', 'create-rust-app'],
   },
 ];
 
@@ -706,6 +706,33 @@ const rawPortfolioEntries = [
     ],
     evidence: {
       sourceUrl: 'https://github.com/Create-Vlang-App/create-vlang-app',
+      sourceType: 'editorial',
+    },
+    homepageEligible: false,
+  },
+  {
+    id: 'create-rust-app',
+    title: 'Create Awesome Rust App',
+    path: '/create-awesome#rust',
+    area: 'create-awesome',
+    tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
+    responsibility: 'author-owner',
+    repositoryOwner: 'Create-Rust-App',
+    repositorySlug: 'create-rust-app',
+    timeLens: 'current',
+    relationship: 'component-product',
+    description: 'Rust scaffolding — 6 templates and 18 extensions, shipped as native binaries (0.4.0).',
+    channels: ['GitHub Releases', 'install.sh', 'crates.io', 'AUR', 'Homebrew'],
+    maturity: 'early',
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'Newest family expansion — early shipped release.',
+      },
+    ],
+    evidence: {
+      sourceUrl: 'https://github.com/Create-Rust-App/create-rust-app',
       sourceType: 'editorial',
     },
     homepageEligible: false,

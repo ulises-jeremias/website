@@ -55,6 +55,27 @@ export const CREATE_AWESOME_SOURCES = [
       },
     ],
   },
+  {
+    id: 'rust',
+    catalogRepository: 'Create-Rust-App/cra-templates',
+    registryPath: 'templates.json',
+    schemaPath: 'templates.schema.json',
+    schemaDraft: 'draft-04',
+    adapter: 'typed-intersection',
+    cliRepository: 'Create-Rust-App/create-rust-app',
+    semanticReferences: [
+      {
+        role: 'cli-catalog-reference',
+        repository: 'Create-Rust-App/create-rust-app',
+        path: 'crates/create_rust_app_core/src/catalog.rs',
+      },
+      {
+        role: 'catalog-compatibility-reference',
+        repository: 'Create-Rust-App/cra-templates',
+        path: 'scripts/ci/registry.py',
+      },
+    ],
+  },
 ];
 
 export const SOURCE_REF = 'main';

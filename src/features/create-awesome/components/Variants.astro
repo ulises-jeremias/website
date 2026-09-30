@@ -3,17 +3,20 @@ import { catalogTotals, variants } from '../data/index.js';
 
 const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
   templates.filter((t) => t.featured).concat(templates.filter((t) => !t.featured).slice(0, 4));
+
+const catalogPrefix = { node: 'cna', python: 'cpa', v: 'cva', rust: 'cra' } as const;
 ---
 
 <section aria-labelledby="ca-variants-title" class="ca-variants" data-testid="ca-variants">
-  <h2 id="ca-variants-title">Family — three runtimes, one composition model</h2>
+  <h2 id="ca-variants-title">Family — four runtimes, one composition model</h2>
   <p class="ca-variants__intro">
-    Same mental model across Node, Python, and V: pick a <code>template</code>, add <code>addons</code>. Real files, no
-    hidden runtime. Totals from sourced catalogs (not sample arrays): CNA {catalogTotals.node.templates}+{
+    Same mental model across Node, Python, V, and Rust: pick a <code>template</code>, add <code>addons</code>. Real
+    files, no hidden runtime. Totals from sourced catalogs (not sample arrays): CNA {catalogTotals.node.templates}+{
       catalogTotals.node.addons
     }, CPA {catalogTotals.python.templates}+{catalogTotals.python.addons}, CVA {catalogTotals.v.templates}+{
       catalogTotals.v.addons
-    }. Cards below highlight featured + a few starters; the composer exposes the full catalogs.
+    }, CRA {catalogTotals.rust.templates}+{catalogTotals.rust.addons}. Cards below highlight featured + a few starters;
+    the composer exposes the full catalogs.
   </p>
   <div class="ca-variants__grid">
     {
@@ -29,7 +32,7 @@ const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
             </header>
             <img
               class="ca-variant__hero"
-              src={`/media/create-awesome/${v.id === 'node' ? 'cna' : v.id === 'python' ? 'cpa' : 'cva'}-hero.svg`}
+              src={`/media/create-awesome/${catalogPrefix[v.id]}-hero.svg`}
               alt=""
               loading="lazy"
               decoding="async"
@@ -39,7 +42,7 @@ const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
               <strong>
                 {totals.templates} templates · {totals.addons} addons
               </strong>{' '}
-              <span class="ca-muted">from {v.id === 'node' ? 'cna' : v.id === 'python' ? 'cpa' : 'cva'}-templates</span>
+              <span class="ca-muted">from {catalogPrefix[v.id]}-templates</span>
             </p>
             <div class="ca-variant__templates">
               <strong>Featured / starters</strong>
@@ -90,9 +93,14 @@ const featuredOnly = (templates: (typeof variants)[number]['templates']) =>
     width: 100%;
     max-width: 100%;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 700px) {
     .ca-variants__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1200px) {
+    .ca-variants__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
   .ca-variant {

@@ -20,6 +20,7 @@ const featuredTemplates: Record<VariantId, string> = {
   node: 'react-vite-boilerplate',
   python: 'fastapi-starter',
   v: 'web-server',
+  rust: 'axum-starter',
 };
 
 const conciseDescription = (description: string): string => {
@@ -48,6 +49,11 @@ const presentationCategory = (
   if (family === 'python') {
     if (category === 'database') return 'data';
     if (category === 'containers') return 'deploy';
+    return 'tooling';
+  }
+  if (family === 'rust') {
+    if (category === 'database') return 'data';
+    if (category === 'containers' || category === 'ci') return 'deploy';
     return 'tooling';
   }
   if (labels.includes('database')) return 'data';
@@ -105,4 +111,5 @@ export const familyCatalogs: Record<VariantId, FamilyCatalog> = {
   node: requireFamilyCatalog('node'),
   python: requireFamilyCatalog('python'),
   v: requireFamilyCatalog('v'),
+  rust: requireFamilyCatalog('rust'),
 };

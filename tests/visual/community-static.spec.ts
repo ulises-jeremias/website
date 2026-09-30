@@ -13,11 +13,11 @@ test.describe('Community no-JavaScript fallback', () => {
     const filters = root.locator('[data-cm-filter]');
 
     await expect(index).toBeVisible();
-    // 13 stations since Hornero OS became public (ADR-004).
-    await expect(index.locator('li')).toHaveCount(13);
+    // 14 stations since the Create Awesome Rust family joined.
+    await expect(index.locator('li')).toHaveCount(14);
     await expect(index).toContainText('Agent Toolkit');
     await expect(index).toContainText('Join the Discord');
-    await expect(controls).toHaveCount(13);
+    await expect(controls).toHaveCount(14);
     for (const control of await controls.all()) await expect(control).toBeDisabled();
     for (const filter of await filters.all()) await expect(filter).toBeDisabled();
     await expect(root.locator('[data-cm-status]')).toHaveText('');

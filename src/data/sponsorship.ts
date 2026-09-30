@@ -311,8 +311,13 @@ const rawAreas: SponsorshipArea[] = [
     id: 'create-awesome',
     title: 'Create Awesome',
     summary:
-      'Scaffolding CLIs for Node.js, Python, and V that compose a template with extensions into a project that already builds, lints, and tests.',
-    projects: ['Create Awesome Node App', 'Create Awesome Python App', 'Create Awesome V App'],
+      'Scaffolding CLIs for Node.js, Python, V, and Rust that compose a template with extensions into a project that already builds, lints, and tests.',
+    projects: [
+      'Create Awesome Node App',
+      'Create Awesome Python App',
+      'Create Awesome V App',
+      'Create Awesome Rust App',
+    ],
     focus: ['platform templates', 'template CI', 'examples'],
     supportEnables: [
       'First-class templates and extensions for real platforms',
