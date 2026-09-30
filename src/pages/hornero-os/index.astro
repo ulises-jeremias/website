@@ -1,0 +1,38 @@
+---
+import SectionLayout from '@/layouts/SectionLayout.astro';
+import { HorneroOsPage, horneroFacts } from '@/features/hornero-os';
+import { getCanonicalUrl, getRouteMeta } from '@/data/routes';
+import { SITE_NAME } from '@/data/site';
+import { profile } from '@/data/profile';
+
+const meta = getRouteMeta('/hornero-os')!;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: meta.title,
+  description: meta.description,
+  url: getCanonicalUrl('/hornero-os'),
+  isPartOf: { '@type': 'WebSite', name: SITE_NAME, url: getCanonicalUrl('/') },
+  about: {
+    '@type': 'SoftwareSourceCode',
+    name: 'Hornero OS',
+    codeRepository: horneroFacts.compositionRepoUrl,
+    programmingLanguage: ['QML', 'C++', 'V', 'Shell'],
+    author: { '@type': 'Person', name: profile.displayName, url: getCanonicalUrl('/') },
+  },
+};
+---
+
+<SectionLayout
+  currentPath="/hornero-os"
+  world="Hornero OS"
+  title={meta.title}
+  description={meta.description}
+  theme="hornero-os"
+  ogImage={meta.ogImage}
+  ogImageAlt={meta.ogImageAlt}
+  jsonLd={jsonLd}
+>
+  <HorneroOsPage />
+</SectionLayout>

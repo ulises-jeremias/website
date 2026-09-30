@@ -1,6 +1,7 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import CreateAwesomeWorld from '@/features/create-awesome/components/CreateAwesomeWorld.astro';
+import SupportNote from '@/shared/components/SupportNote.astro';
 import { getRouteMeta } from '@/data/routes';
 
 const meta = getRouteMeta('/create-awesome')!;
@@ -15,4 +16,5 @@ const meta = getRouteMeta('/create-awesome')!;
   immersive
 >
   <CreateAwesomeWorld />
+  <SupportNote area="create-awesome" />
 </SectionLayout>

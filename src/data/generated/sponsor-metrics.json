@@ -1,0 +1,74 @@
+{
+  "generatedAt": "2026-09-30T12:54:52.676Z",
+  "generator": "scripts/refresh-sponsor-metrics.mjs",
+  "metrics": [
+    {
+      "id": "contributors-create-node-app-create-node-app",
+      "project": "Create Awesome Node App",
+      "label": "Contributors besides the author",
+      "value": 4,
+      "unit": "contributors with commits on the default branch",
+      "period": {
+        "start": "2020-10-07",
+        "end": "2026-09-30"
+      },
+      "source": {
+        "name": "GitHub contributors API",
+        "url": "https://github.com/Create-Node-App/create-node-app/graphs/contributors"
+      },
+      "caveat": "Counts accounts that authored at least one commit on the default branch, excluding the author and bots. Size of contribution varies.",
+      "retrievedAt": "2026-09-30"
+    },
+    {
+      "id": "contributors-ulises-jeremias-dotfiles",
+      "project": "HorneroConfig",
+      "label": "Contributors besides the author",
+      "value": 10,
+      "unit": "contributors with commits on the default branch",
+      "period": {
+        "start": "2019-11-02",
+        "end": "2026-09-30"
+      },
+      "source": {
+        "name": "GitHub contributors API",
+        "url": "https://github.com/ulises-jeremias/dotfiles/graphs/contributors"
+      },
+      "caveat": "Counts accounts that authored at least one commit on the default branch, excluding the author and bots. Size of contribution varies.",
+      "retrievedAt": "2026-09-30"
+    },
+    {
+      "id": "npm-create-awesome-node-app-12m",
+      "project": "Create Awesome Node App",
+      "label": "npm downloads, trailing 12 months",
+      "value": 21722,
+      "unit": "package downloads",
+      "period": {
+        "start": "2025-09-29",
+        "end": "2026-09-28"
+      },
+      "source": {
+        "name": "npm downloads API",
+        "url": "https://api.npmjs.org/downloads/range/last-year/create-awesome-node-app"
+      },
+      "caveat": "Counts every download, including CI pipelines, mirrors, and the project’s own smoke tests. Downloads are not users.",
+      "retrievedAt": "2026-09-30"
+    },
+    {
+      "id": "pypi-create-awesome-python-app-30d",
+      "project": "Create Awesome Python App",
+      "label": "PyPI downloads, trailing 30 days (mirrors excluded)",
+      "value": 1382,
+      "unit": "package downloads",
+      "period": {
+        "start": "2026-08-31",
+        "end": "2026-09-29"
+      },
+      "source": {
+        "name": "PyPI Stats",
+        "url": "https://pypistats.org/packages/create-awesome-python-app"
+      },
+      "caveat": "Includes CI and automated installs; about half fall on release days. Downloads are not users.",
+      "retrievedAt": "2026-09-30"
+    }
+  ]
+}

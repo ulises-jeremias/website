@@ -10,12 +10,12 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "f6ada2e",
-  "commitFull": "f6ada2e6edcdcfc261c71f7b2ce28e96fca4911d",
-  "verifiedAt": "2026-09-01",
-  "version": "1.28.0",
+  "commit": "96739fe",
+  "commitFull": "96739fe58e48343c69831c4803c270ebba319559",
+  "verifiedAt": "2026-09-30",
+  "version": "1.35.0",
   "counts": {
-    "skills": 116,
+    "skills": 103,
     "agents": 18,
     "loops": 10,
     "profiles": 9,
@@ -63,7 +63,7 @@
     },
     {
       "id": "integrations",
-      "count": 36
+      "count": 23
     },
     {
       "id": "loops",

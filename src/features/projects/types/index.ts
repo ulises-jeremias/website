@@ -113,7 +113,7 @@ export const roleLabels: Record<ProjectRole, string> = {
 };
 
 export const groupLabels: Record<ProjectGroup, string> = {
-  'personal-dx': 'Personal DX',
+  'personal-dx': 'Hornero Linux Desktop',
   agentic: 'Agentic',
   v: 'V',
   'create-awesome': 'Create Awesome',
@@ -122,4 +122,4 @@ export const groupLabels: Record<ProjectGroup, string> = {
 };
 
 /** Stable display order for ledger groups. */
-export const groupOrder: ProjectGroup[] = ['personal-dx', 'agentic', 'v', 'create-awesome', 'dev-tools', 'experiments'];
+export const groupOrder: ProjectGroup[] = ['agentic', 'personal-dx', 'v', 'create-awesome', 'dev-tools', 'experiments'];

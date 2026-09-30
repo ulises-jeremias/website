@@ -1,0 +1,1077 @@
+---
+/**
+ * SponsorPage — /sponsor (ADR-004).
+ *
+ * Composes `src/data/sponsorship.ts` only; no commercial wording is retyped
+ * here. Structure: hero with the support routing table (signature element) →
+ * what support pays for → areas (anchored #area-<id>) → ways to work together
+ * → dated signals → principles (#principles) → sponsors (honest empty state)
+ * → closing call to action.
+ */
+import {
+  GITHUB_SPONSORS_URL,
+  getActiveSponsors,
+  getMetricsAsOf,
+  getPartnershipMailto,
+  getPastSponsors,
+  getSponsorLinkRel,
+  sponsorMetrics,
+  sponsorshipAreas,
+  sponsorshipModes,
+  sponsorshipPrinciples,
+  supportUses,
+  type SponsorshipArea,
+} from '@/data/sponsorship.js';
+import { getPortfolioAreaById } from '@/data/portfolio.js';
+import { profile } from '@/data/profile.js';
+
+const areaAccent: Record<SponsorshipArea['id'], string> = {
+  agentic: 'var(--nest-violet)',
+  hornero: 'var(--nest-magenta)',
+  'create-awesome': 'var(--nest-sunset-orange)',
+  'v-ecosystem': 'var(--nest-blue)',
+};
+
+const directMode = sponsorshipModes.find((mode) => mode.path === 'github-sponsors');
+const partnerModes = sponsorshipModes.filter((mode) => mode.path === 'conversation');
+const activeSponsors = getActiveSponsors();
+const pastSponsors = getPastSponsors();
+const rosterGroups = [
+  { id: 'current', title: 'Current', list: activeSponsors },
+  { id: 'past', title: 'Past', list: pastSponsors },
+].filter((group) => group.list.length > 0);
+const areaTitle = (id: SponsorshipArea['id']) => getPortfolioAreaById(id)?.title ?? id;
+const partnershipHref = getPartnershipMailto();
+
+const numberFormat = new Intl.NumberFormat('en-US');
+const dateFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' });
+const formatDate = (value: string) => dateFormat.format(new Date(`${value}T00:00:00Z`));
+const metricsAsOf = getMetricsAsOf();
+// Downloads first, then contributor counts — order carries no ranking beyond that.
+const orderedMetrics = [...sponsorMetrics.metrics].sort(
+  (a, b) => Number(a.id.startsWith('contributors')) - Number(b.id.startsWith('contributors')),
+);
+---
+
+<div class="sp">
+  <section class="sp-hero" aria-labelledby="sp-title">
+    <div class="sp-hero__copy">
+      <p class="sp-kicker">Digital Nest · sponsor &amp; partner</p>
+      <h1 id="sp-title" class="sp-hero__title">Support the work behind Digital Nest</h1>
+      <p class="sp-hero__lead">
+        I maintain open-source developer tooling across four areas: agent tooling for coding assistants, a Linux
+        desktop, scientific computing for V, and app scaffolding. Sponsorship buys time for maintenance, testing, and
+        integrations — it never buys a recommendation.
+      </p>
+      <div class="sp-actions">
+        <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+          <svg class="sp-cta__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20.4s-7.6-4.6-7.6-9.6a4.2 4.2 0 0 1 7.6-2.5A4.2 4.2 0 0 1 19.6 10.8c0 5-7.6 9.6-7.6 9.6Z"
+            ></path>
+          </svg>
+          Sponsor on GitHub
+          <span class="sr-only"> (opens in new tab)</span>
+        </a>
+        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>Discuss a partnership</a>
+        <a class="sp-cta sp-cta--quiet" href="/projects">Explore the work <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="sp-hero__note">
+        Partnerships start with an email to <span class="sp-mono">{profile.contact.email}</span>. There are no fixed
+        packages; GitHub Sponsors handles individual support.
+      </p>
+    </div>
+
+    <figure class="sp-route neon-frame clip-corner" aria-labelledby="sp-route-caption">
+      <figcaption id="sp-route-caption" class="sp-route__head">
+        <span class="sp-route__prompt" aria-hidden="true">&gt;</span> where support goes
+      </figcaption>
+      <!-- Explicit roles keep table semantics when rows stack on narrow screens (display: block). -->
+      <table class="sp-route__table" role="table">
+        <caption class="sr-only">Project areas and the work that support funds in each</caption>
+        <thead role="rowgroup">
+          <tr role="row">
+            <th scope="col" role="columnheader">Area</th>
+            <th scope="col" role="columnheader">Funds</th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {
+            sponsorshipAreas.map((area) => (
+              <tr role="row" style={`--area-accent: ${areaAccent[area.id]}`}>
+                <th scope="row" role="rowheader">
+                  <a href={`#area-${area.id}`}>{area.title}</a>
+                </th>
+                <td role="cell">{area.focus.join(' · ')}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p class="sp-route__foot">
+        <span aria-hidden="true">#</span> the projects exist without sponsorship; support decides how much time and hardware
+        they get
+      </p>
+    </figure>
+  </section>
+
+  <section class="sp-section" aria-labelledby="sp-uses-title">
+    <header class="sp-section__head">
+      <p class="sp-kicker">Why sponsor</p>
+      <h2 id="sp-uses-title">What support pays for</h2>
+    </header>
+    <ul class="sp-uses">
+      {
+        supportUses.map((use) => (
+          <li>
+            <h3>{use.title}</h3>
+            <p>{use.detail}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="sp-section" aria-labelledby="sp-areas-title">
+    <header class="sp-section__head">
+      <p class="sp-kicker">Areas you can support</p>
+      <h2 id="sp-areas-title">Four bodies of work</h2>
+      <p class="sp-section__lead">
+        Support can go to the work in general or to one area. Each area lists what support enables and the kinds of
+        organizations that tend to be a good fit — categories, not a list of sponsors.
+      </p>
+    </header>
+    <div class="sp-areas">
+      {
+        sponsorshipAreas.map((area) => (
+          <article
+            id={`area-${area.id}`}
+            class="sp-area"
+            style={`--area-accent: ${areaAccent[area.id]}`}
+            aria-labelledby={`area-${area.id}-title`}
+          >
+            <header class="sp-area__head">
+              <h3 id={`area-${area.id}-title`}>{area.title}</h3>
+              <p class="sp-area__projects">{area.projects.join(' · ')}</p>
+            </header>
+            <p class="sp-area__summary">{area.summary}</p>
+            {area.scope && (
+              <p class="sp-area__scope">
+                <strong>Scope:</strong> {area.scope}
+              </p>
+            )}
+            <div class="sp-area__cols">
+              <div>
+                <h4>Support enables</h4>
+                <ul class="sp-list">
+                  {area.supportEnables.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4>Good fit for</h4>
+                <ul class="sp-tags">
+                  {area.partnerFit.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <a class="sp-area__link" href={area.href}>
+              Read about {area.title} <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="sp-section" aria-labelledby="sp-modes-title">
+    <header class="sp-section__head">
+      <p class="sp-kicker">Ways to support</p>
+      <h2 id="sp-modes-title">Two ways in</h2>
+    </header>
+    <div class="sp-modes">
+      {
+        directMode && (
+          <div class="sp-direct neon-frame-accent clip-corner">
+            <p class="sp-kicker">Direct support</p>
+            <h3>{directMode.title}</h3>
+            <p>{directMode.description}</p>
+            <ul class="sp-list">
+              {directMode.examples.map((example) => (
+                <li>{example}</li>
+              ))}
+            </ul>
+            <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+              Sponsor on GitHub
+              <span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </div>
+        )
+      }
+      <div class="sp-partners">
+        <p class="sp-kicker">Partnerships · start with a conversation</p>
+        <ul class="sp-partners__list">
+          {
+            partnerModes.map((mode) => (
+              <li class="sp-partner">
+                <h3>{mode.title}</h3>
+                <p>{mode.description}</p>
+                <p class="sp-partner__examples">{mode.examples.join(' · ')}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>Discuss a partnership</a>
+        <p class="sp-partners__note">
+          Community partnerships run through the <a href="/community">Digital Nest community</a> — contributor events, workshops,
+          and the shared Discord.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {
+    sponsorMetrics.metrics.length > 0 && (
+      <section class="sp-section" aria-labelledby="sp-signals-title">
+        <header class="sp-section__head">
+          <p class="sp-kicker">Signals, with caveats</p>
+          <h2 id="sp-signals-title">A few measurable signals</h2>
+          <p class="sp-section__lead">
+            Each figure comes from a public source for a stated period. Downloads count package fetches — including CI
+            and mirrors — not people. Agent Toolkit download counts are left out until its packages have a longer
+            history.
+          </p>
+        </header>
+        <dl class="sp-signals">
+          {orderedMetrics.map((metric) => (
+            <div class="sp-signal">
+              <dt>
+                <span class="sp-signal__project">{metric.project}</span>{' '}
+                <span class="sp-signal__label">{metric.label}</span>
+              </dt>
+              <dd class="sp-signal__value">
+                {numberFormat.format(metric.value)} <span class="sp-signal__unit">{metric.unit}</span>
+              </dd>
+              <dd class="sp-signal__meta">
+                <time datetime={metric.period.start}>{formatDate(metric.period.start)}</time> –{' '}
+                <time datetime={metric.period.end}>{formatDate(metric.period.end)}</time> ·{' '}
+                <a href={metric.source.url} target="_blank" rel="noopener noreferrer">
+                  {metric.source.name}
+                  <span class="sr-only"> (opens in new tab)</span>
+                </a>{' '}
+                · retrieved <time datetime={metric.retrievedAt}>{formatDate(metric.retrievedAt)}</time>
+              </dd>
+              <dd class="sp-signal__caveat">{metric.caveat}</dd>
+            </div>
+          ))}
+        </dl>
+        {metricsAsOf && (
+          <p class="sp-signals__stamp">
+            Figures as of <time datetime={metricsAsOf}>{formatDate(metricsAsOf)}</time> or later · refreshed by a
+            reviewed script, never fetched live.
+          </p>
+        )}
+      </section>
+    )
+  }
+
+  <section id="principles" class="sp-section sp-principles" aria-labelledby="sp-principles-title">
+    <header class="sp-section__head">
+      <p class="sp-kicker">Sponsorship principles</p>
+      <h2 id="sp-principles-title">What sponsorship does not buy</h2>
+      <p class="sp-section__lead">
+        People adopt these tools because they trust the recommendations in them. These rules protect that.
+      </p>
+    </header>
+    <ul class="sp-principles__list">
+      {
+        sponsorshipPrinciples.map((principle) => (
+          <li>
+            <h3>{principle.title}</h3>
+            <p>{principle.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="sp-section" aria-labelledby="sp-sponsors-title">
+    <header class="sp-section__head">
+      <p class="sp-kicker">Sponsors &amp; partners</p>
+      <h2 id="sp-sponsors-title">Supporters and partners</h2>
+    </header>
+    {
+      rosterGroups.length > 0 ? (
+        rosterGroups.map((group) => (
+          <div class="sp-roster-group">
+            <h3 class="sp-roster-group__title">{group.title}</h3>
+            <ul class="sp-roster">
+              {group.list.map((sponsor) => (
+                <li class="sp-roster__item">
+                  <a href={sponsor.url} target="_blank" rel={getSponsorLinkRel(sponsor)}>
+                    {sponsor.logo ? (
+                      <img src={sponsor.logo} alt={sponsor.logoAlt} width="160" height="48" loading="lazy" />
+                    ) : (
+                      <strong>{sponsor.name}</strong>
+                    )}
+                    <span class="sr-only"> (opens in new tab)</span>
+                  </a>
+                  <p class="sp-roster__meta">
+                    {sponsor.compensated && <span class="sp-roster__paid">Paid relationship</span>}{' '}
+                    {sponsor.relationship.replaceAll('-', ' ')} · {sponsor.areas.map(areaTitle).join(', ')} ·{' '}
+                    <time datetime={sponsor.startDate}>{sponsor.startDate}</time>
+                    {sponsor.endDate ? (
+                      <>
+                        {' '}
+                        – <time datetime={sponsor.endDate}>{sponsor.endDate}</time>
+                      </>
+                    ) : (
+                      ' – present'
+                    )}
+                  </p>
+                  <p class="sp-roster__disclosure">{sponsor.disclosure}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      ) : (
+        <div class="sp-empty">
+          <p>
+            There are no sponsors or partners yet. Early supporters will be listed here with what they support, since
+            when, and whether the relationship is paid.
+          </p>
+          <a class="sp-cta sp-cta--secondary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+            Become an early supporter
+            <span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="sp-close neon-frame clip-corner" aria-labelledby="sp-close-title">
+    <h2 id="sp-close-title">Start with whichever fits</h2>
+    <p>
+      Individual support takes a minute on GitHub Sponsors. For a company, send a short note about what you have in mind
+      — an integration, credits, hardware, or project support — and I will reply with what is realistic.
+    </p>
+    <div class="sp-actions">
+      <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+        Sponsor on GitHub
+        <span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a class="sp-cta sp-cta--secondary" href={partnershipHref}>Discuss a partnership</a>
+    </div>
+  </section>
+</div>
+
+<style>
+  .sp {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5.5rem);
+    inline-size: min(100% - 2 * var(--gutter, 1rem), 74rem);
+    margin-inline: auto;
+    padding-block: clamp(2rem, 6vw, 4.5rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  .sp-kicker {
+    margin: 0;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .sp-mono {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--nest-paper);
+  }
+
+  /* ---------- hero ---------- */
+
+  .sp-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+  }
+
+  .sp-hero__title {
+    margin: 0.6rem 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .sp-hero__lead {
+    max-inline-size: 58ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    line-height: 1.65;
+  }
+
+  .sp-hero__note {
+    max-inline-size: 58ch;
+    margin: 1rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .sp-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block-start: 1.5rem;
+  }
+
+  .sp-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.7rem 1.1rem;
+    border: 1px solid transparent;
+    clip-path: var(--clip-corner-sm);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background var(--motion-duration-fast, 140ms) ease,
+      color var(--motion-duration-fast, 140ms) ease,
+      border-color var(--motion-duration-fast, 140ms) ease;
+  }
+
+  .sp-cta__icon {
+    inline-size: 1rem;
+    block-size: 1rem;
+    fill: currentColor;
+  }
+
+  .sp-cta--primary {
+    color: var(--nest-midnight-950);
+    background: var(--nest-magenta);
+    border-color: var(--nest-magenta);
+  }
+
+  .sp-cta--primary:hover,
+  .sp-cta--primary:focus-visible {
+    background: var(--nest-pink);
+    border-color: var(--nest-pink);
+  }
+
+  .sp-cta--secondary {
+    color: var(--nest-paper);
+    border-color: color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 55%, transparent);
+  }
+
+  .sp-cta--secondary:hover,
+  .sp-cta--secondary:focus-visible {
+    color: var(--nest-cyan);
+    border-color: var(--nest-cyan);
+  }
+
+  .sp-cta--quiet {
+    padding-inline: 0.4rem;
+    color: var(--color-text-muted);
+    clip-path: none;
+  }
+
+  .sp-cta--quiet:hover,
+  .sp-cta--quiet:focus-visible {
+    color: var(--nest-paper);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .sp-cta:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 3px;
+    clip-path: none;
+  }
+
+  /* Signature: support routing table */
+  .sp-route {
+    margin: 0;
+    padding: 1.1rem 1.25rem 1rem;
+    font-family: var(--font-mono);
+  }
+
+  .sp-route__head {
+    margin-block-end: 0.75rem;
+    color: var(--nest-cyan);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .sp-route__prompt {
+    color: var(--nest-magenta);
+  }
+
+  .sp-route__table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  .sp-route__table thead th {
+    padding: 0 0 0.45rem;
+    color: var(--color-text-faint);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-align: start;
+    text-transform: uppercase;
+  }
+
+  .sp-route__table tbody tr {
+    border-block-start: 1px dashed color-mix(in srgb, var(--nest-paper) 16%, transparent);
+  }
+
+  .sp-route__table tbody th,
+  .sp-route__table td {
+    padding: 0.6rem 0;
+    vertical-align: top;
+    text-align: start;
+  }
+
+  .sp-route__table tbody th {
+    padding-inline-end: 1rem;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .sp-route__table tbody th a {
+    color: var(--area-accent);
+    text-decoration: none;
+  }
+
+  .sp-route__table tbody th a::before {
+    content: '▸ ';
+  }
+
+  .sp-route__table tbody th a:hover,
+  .sp-route__table tbody th a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .sp-route__table td {
+    color: var(--color-text-muted);
+  }
+
+  .sp-route__foot {
+    margin: 0.8rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+
+  /* ---------- sections ---------- */
+
+  .sp-section {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .sp-section__head h2 {
+    margin: 0.4rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 700;
+  }
+
+  .sp-section__lead {
+    max-inline-size: 64ch;
+    margin: 0.6rem 0 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .sp-uses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: color-mix(in srgb, var(--nest-violet) 26%, transparent);
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 26%, transparent);
+  }
+
+  .sp-uses li {
+    padding: 1.1rem 1.2rem;
+    background: var(--nest-midnight-950);
+  }
+
+  .sp-uses h3,
+  .sp-partner h3,
+  .sp-principles__list h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1rem;
+  }
+
+  .sp-uses p,
+  .sp-partner p,
+  .sp-principles__list p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  /* ---------- areas ---------- */
+
+  .sp-areas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+  }
+
+  .sp-area {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
+    padding: 1.3rem 1.35rem;
+    border: 1px solid color-mix(in srgb, var(--area-accent) 38%, transparent);
+    border-block-start: 3px solid var(--area-accent);
+    background: color-mix(in srgb, var(--area-accent) 6%, var(--nest-midnight-950));
+    scroll-margin-block-start: 6rem;
+  }
+
+  .sp-area:target {
+    box-shadow: 0 0 0 2px var(--area-accent);
+  }
+
+  .sp-area__head h3 {
+    margin: 0;
+    color: var(--nest-paper);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+
+  .sp-area__projects {
+    margin: 0.3rem 0 0;
+    color: var(--area-accent);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .sp-area__summary {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .sp-area__scope {
+    margin: 0;
+    padding: 0.6rem 0.75rem;
+    border-inline-start: 2px solid var(--area-accent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 60%, transparent);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .sp-area__scope strong {
+    color: var(--nest-paper);
+  }
+
+  .sp-area__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .sp-area h4 {
+    margin: 0 0 0.45rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sp-list {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .sp-list li {
+    position: relative;
+    padding-inline-start: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .sp-list li::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0.55em;
+    inset-inline-start: 0;
+    inline-size: 0.4rem;
+    block-size: 1px;
+    background: currentColor;
+  }
+
+  .sp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sp-tags li {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--nest-paper) 18%, transparent);
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .sp-area__link {
+    justify-self: start;
+    color: var(--area-accent);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+  }
+
+  /* ---------- modes ---------- */
+
+  .sp-modes {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .sp-direct {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1.4rem;
+  }
+
+  .sp-direct h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+  }
+
+  .sp-direct > p:not(.sp-kicker) {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .sp-direct .sp-cta {
+    justify-self: start;
+  }
+
+  .sp-partners {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .sp-partners__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 0.9rem 1.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sp-partner {
+    padding-block-start: 0.75rem;
+    border-block-start: 1px solid color-mix(in srgb, var(--nest-cyan) 30%, transparent);
+  }
+
+  .sp-partner .sp-partner__examples {
+    margin-block-start: 0.4rem;
+    color: var(--color-text-faint);
+    font-size: 0.8rem;
+  }
+
+  .sp-partners .sp-cta {
+    justify-self: start;
+  }
+
+  .sp-partners__note {
+    margin: 0;
+    color: var(--color-text-faint);
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .sp-partners__note a,
+  .sp-signal__meta a {
+    color: var(--nest-cyan);
+  }
+
+  /* ---------- signals ---------- */
+
+  .sp-signals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .sp-signal {
+    display: grid;
+    align-content: start;
+    gap: 0.45rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-paper) 14%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900) 80%, transparent);
+  }
+
+  .sp-signal dt {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .sp-signal dd {
+    margin: 0;
+  }
+
+  .sp-signal__project {
+    color: var(--nest-paper);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .sp-signal__label {
+    color: var(--color-text-faint);
+    font-size: 0.78rem;
+  }
+
+  .sp-signal__value {
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .sp-signal__unit {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+  }
+
+  .sp-signal__meta,
+  .sp-signal__caveat,
+  .sp-signals__stamp {
+    color: var(--color-text-faint);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .sp-signals__stamp {
+    margin: 0;
+    font-family: var(--font-mono);
+  }
+
+  /* ---------- principles ---------- */
+
+  .sp-principles {
+    scroll-margin-block-start: 6rem;
+  }
+
+  .sp-principles__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.1rem 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sp-principles__list li {
+    padding-inline-start: 1rem;
+    border-inline-start: 2px solid var(--nest-magenta);
+  }
+
+  /* ---------- sponsors ---------- */
+
+  .sp-empty {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    padding: 1.3rem;
+    border: 1px dashed color-mix(in srgb, var(--nest-paper) 28%, transparent);
+  }
+
+  .sp-empty p {
+    max-inline-size: 60ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .sp-roster {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sp-roster__item {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-paper) 16%, transparent);
+  }
+
+  .sp-roster-group__title {
+    margin: 0 0 0.6rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sp-roster__paid {
+    padding: 0 0.35rem;
+    border: 1px solid currentColor;
+    color: var(--nest-pink);
+    font-size: 0.72rem;
+  }
+
+  .sp-roster__item img {
+    object-fit: contain;
+    max-inline-size: 10rem;
+    block-size: auto;
+  }
+
+  .sp-roster__meta,
+  .sp-roster__disclosure {
+    margin: 0.5rem 0 0;
+    color: var(--color-text-faint);
+    font-size: 0.8rem;
+  }
+
+  /* ---------- close ---------- */
+
+  .sp-close {
+    display: grid;
+    gap: 0.8rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    text-align: center;
+    justify-items: center;
+  }
+
+  .sp-close h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+  }
+
+  .sp-close p {
+    max-inline-size: 60ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .sp-close .sp-actions {
+    justify-content: center;
+    margin-block-start: 0.5rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (width < 900px) {
+    .sp-hero,
+    .sp-modes {
+      grid-template-columns: 1fr;
+    }
+
+    .sp-areas {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (width < 560px) {
+    .sp-area__cols {
+      grid-template-columns: 1fr;
+    }
+
+    .sp-route__table thead {
+      display: none;
+    }
+
+    .sp-route__table tbody tr,
+    .sp-route__table tbody th,
+    .sp-route__table tbody td {
+      display: block;
+    }
+
+    .sp-route__table tbody th {
+      padding-block-end: 0.15rem;
+      white-space: normal;
+    }
+
+    .sp-route__table tbody td {
+      padding-block-start: 0;
+      padding-inline-start: 0.9rem;
+    }
+
+    .sp-actions .sp-cta:not(.sp-cta--quiet) {
+      inline-size: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sp-cta {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .sp-cta,
+    .sp-area,
+    .sp-signal {
+      border-color: CanvasText;
+    }
+
+    .sp-cta--primary {
+      color: ButtonText;
+      background: ButtonFace;
+    }
+  }
+</style>

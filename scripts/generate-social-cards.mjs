@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, mkdtempSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 
@@ -7,14 +8,14 @@ const cards = [
   {
     id: 'home',
     title: 'DIGITAL NEST',
-    subtitle: 'Developer tooling · AI workflows · open source',
+    subtitle: 'Agent tooling · Linux desktops · V · scaffolding',
     accent: '#ff4fd8',
     art: 'logo-nest.webp',
   },
   {
     id: 'dotfiles',
     title: 'HORNERO\nCONFIG',
-    subtitle: 'Dotfiles · workstation OS · Smart Colors',
+    subtitle: 'Hyprland · Quickshell · chezmoi · Smart Colors',
     accent: '#ffb0ca',
     art: 'island-dotfiles.webp',
   },
@@ -28,7 +29,7 @@ const cards = [
   {
     id: 'agent-toolkit',
     title: 'AGENT\nTOOLKIT',
-    subtitle: 'Skills · agents · loops · swarms',
+    subtitle: 'Skills · agents · loops · CLI, API, desktop',
     accent: '#ff4fd8',
     art: 'island-agent.webp',
   },
@@ -69,8 +70,8 @@ const cards = [
   },
   {
     id: 'projects',
-    title: 'PROJECTS',
-    subtitle: 'Project worlds · additional work · archive',
+    title: 'WORK',
+    subtitle: 'Four areas of open-source developer tooling',
     accent: '#1cefff',
     art: 'island-projects.webp',
   },
@@ -95,6 +96,21 @@ const cards = [
     accent: '#ff4fd8',
     art: 'island-agent.webp',
   },
+  {
+    id: 'hornero-os',
+    title: 'HORNERO OS',
+    subtitle: 'Arch-based Wayland desktop · development preview',
+    accent: '#f2b749',
+    // Project-owned MIT brand mark (HorneroOS/config assets/brand/logo.svg).
+    artPath: path.join('public', 'media', 'hornero-os', 'hornero-logo.svg'),
+  },
+  {
+    id: 'sponsor',
+    title: 'SPONSOR\nTHE WORK',
+    subtitle: 'GitHub Sponsors · integrations · hardware · infra',
+    accent: '#ff42d0',
+    art: 'logo-nest.webp',
+  },
 ];
 
 const root = process.cwd();
@@ -114,6 +130,20 @@ function resolveFont(query) {
 const boldFont = resolveFont('Noto Sans:style=Bold');
 const regularFont = resolveFont('Noto Sans:style=Regular');
 
+const scratch = mkdtempSync(path.join(os.tmpdir(), 'social-cards-'));
+
+/** Rasterize an SVG art source once, so density never leaks into text rendering. */
+function rasterize(relativePath) {
+  const output = path.join(scratch, `${path.basename(relativePath, path.extname(relativePath))}.png`);
+  const result = spawnSync(
+    process.env.MAGICK ?? 'magick',
+    ['-background', 'none', '-density', '384', path.join(root, relativePath), '-resize', '760x760', output],
+    { encoding: 'utf8' },
+  );
+  if (result.status !== 0) throw new Error(result.stderr || `ImageMagick failed to rasterize ${relativePath}`);
+  return output;
+}
+
 for (const card of cards) {
   const output = path.join(outputRoot, `${card.id}.jpg`);
   const result = spawnSync(
@@ -131,14 +161,14 @@ for (const card of cards) {
       '-draw',
       'rectangle 0,0 1200,630',
       '(',
-      path.join(assetRoot, card.art),
+      card.artPath ? rasterize(card.artPath) : path.join(assetRoot, card.art),
       '-resize',
-      '520x520',
+      card.artPath ? '380x380' : '520x520',
       ')',
       '-gravity',
       'east',
       '-geometry',
-      '+18+0',
+      card.artPath ? '+90+0' : '+18+0',
       '-composite',
       '-fill',
       'rgba(4,2,18,0.84)',

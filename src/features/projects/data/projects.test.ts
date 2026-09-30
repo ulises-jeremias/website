@@ -45,7 +45,7 @@ describe('projects ledger', () => {
     // Upstream archive context must be explicit — Recoil DevTools itself is NOT archived.
     expect(recoil?.summary.toLowerCase()).toContain('maintained');
     expect(recoil?.summary.toLowerCase()).toContain('upstream recoil is archived');
-    expect(recoil?.lastVerified).toBe('2026-08-31');
+    expect(recoil?.lastVerified).toBe('2026-09-30');
     expect(recoil?.metrics).toBeUndefined();
     expect(mascot).toMatchObject({
       featured: false,

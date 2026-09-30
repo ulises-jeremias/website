@@ -1,6 +1,7 @@
 ---
 import { ledgerProjects, worldPointerProjects } from '../data/index.js';
 import { groupLabels } from '../types/index.js';
+import { portfolioAreas } from '@/data/portfolio.js';
 
 const islandByWorld: Record<string, string> = {
   dotfiles: 'island-dotfiles',
@@ -16,8 +17,6 @@ const islands = worldPointerProjects.map((project, index) => ({
   number: String(index + 1).padStart(2, '0'),
   href: project.links.find((l) => l.kind === 'world')?.href ?? project.links[0]?.href ?? '/projects',
 }));
-
-const groupCount = new Set(ledgerProjects.map((project) => project.group)).size;
 ---
 
 <section class="archipelago" aria-labelledby="archipelago-title" data-testid="projects-archipelago">
@@ -26,17 +25,18 @@ const groupCount = new Set(ledgerProjects.map((project) => project.group)).size;
       <p class="archipelago__eyebrow">Work · portfolio</p>
       <h1 id="archipelago-title">What I build</h1>
       <p class="archipelago__lede">
-        A curated portfolio across developer tooling, language ecosystems, and developer environments. Work answers what
-        I build; <a href="/open-source">Open Source</a> answers what I own, maintain, and contribute to. Links are the source
-        of truth; no popularity ranking is implied.
+        Four related areas of open-source developer tooling: agent tooling for coding assistants, a Linux desktop,
+        scientific computing for V, and app scaffolding. Every project states my role and how mature it is. This page
+        answers what I build; <a href="/open-source">Open Source</a> holds the evidence for what I own, maintain, and contribute
+        to. Nothing here is ranked by popularity.
       </p>
     </div>
     <aside class="archipelago__readout" aria-label="Work portfolio readout">
       <p class="archipelago__readout-kicker">Portfolio readout</p>
       <dl>
-        <div><dt>World pointers</dt><dd>{islands.length}</dd></div>
-        <div><dt>Groups represented</dt><dd>{groupCount}</dd></div>
-        <div><dt>Next record</dt><dd>Grouped ledger</dd></div>
+        <div><dt>Flagship areas</dt><dd>{portfolioAreas.length}</dd></div>
+        <div><dt>Ledger records</dt><dd>{ledgerProjects.length}</dd></div>
+        <div><dt>Building now</dt><dd>Agentic stack · Hornero OS</dd></div>
       </dl>
     </aside>
   </header>

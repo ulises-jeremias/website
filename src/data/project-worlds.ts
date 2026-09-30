@@ -294,7 +294,7 @@ export const crossLinks: CrossLink[] = [
   { from: 'workstation', to: 'harness', label: 'Can provision the host this workspace runs on' },
   { from: 'dotfiles', to: 'workstation', label: 'Optionally coexists with Workstation' },
   { from: 'workstation', to: 'dotfiles', label: 'Links to optional desktop configuration' },
-  { from: 'v', to: 'open-source', label: 'V core contributions' },
+  { from: 'v', to: 'open-source', label: 'V compiler contributions' },
   { from: 'create-awesome', to: 'community', label: 'Join the shared community' },
   { from: 'blog', to: 'community', label: 'Continue in Discord' },
   { from: 'toolkit', to: 'community', label: 'Discuss or contribute' },

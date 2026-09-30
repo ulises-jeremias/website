@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T13:54:12.261Z",
+  "generatedAt": "2026-09-30T13:19:58.504Z",
   "generator": "scripts/refresh-github-data.mjs",
   "mode": "refresh",
   "evidence": [
@@ -13,7 +13,19 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
+      "provenance": "GENERATED_GITHUB_SOURCE"
+    },
+    {
+      "id": "dotfiles-owned",
+      "kind": "owned",
+      "subject": "ulises-jeremias/dotfiles",
+      "evidence": "Repository ownership — HorneroConfig",
+      "href": "https://github.com/ulises-jeremias/dotfiles",
+      "role": "owner",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -25,7 +37,7 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -37,7 +49,7 @@
       "role": "owner",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -49,7 +61,19 @@
       "role": "owner",
       "featured": false,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
+      "provenance": "GENERATED_GITHUB_SOURCE"
+    },
+    {
+      "id": "recoil-devtools-owned",
+      "kind": "owned",
+      "subject": "ulises-jeremias/recoil-devtools",
+      "evidence": "Repository ownership — maintained DevTools for Recoil apps",
+      "href": "https://github.com/ulises-jeremias/recoil-devtools",
+      "role": "owner",
+      "featured": false,
+      "hidden": false,
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -61,7 +85,7 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -73,7 +97,7 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
@@ -85,20 +109,21 @@
       "role": "maintainer",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-09-01",
+      "verifiedAt": "2026-09-30",
       "provenance": "GENERATED_GITHUB_SOURCE"
     },
     {
       "id": "v-external-prs",
       "kind": "external",
       "subject": "vlang/v",
-      "evidence": "Merged authored PRs (search link — no invented count)",
+      "evidence": "34 merged authored pull requests (2019–2026), counted via GitHub search",
       "href": "https://github.com/vlang/v/pulls?q=author:ulises-jeremias+is:merged",
       "role": "merged-author",
       "featured": true,
       "hidden": false,
-      "verifiedAt": "2026-08-07",
-      "provenance": "EDITORIAL_USER_APPROVED"
+      "verifiedAt": "2026-09-30",
+      "provenance": "EDITORIAL_USER_APPROVED",
+      "summary": "Compiler, standard library, tooling, and docs contributions as a vlang organization member."
     },
     {
       "id": "create-awesome-orgs",
@@ -111,11 +136,35 @@
       "hidden": false,
       "verifiedAt": "2026-08-07",
       "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "hornero-os-org",
+      "kind": "org",
+      "subject": "HorneroOS",
+      "evidence": "Organization creator — composition, shell, config, CLI, greeter, installer, docs, website",
+      "href": "https://github.com/HorneroOS",
+      "role": "org-maintainer",
+      "featured": true,
+      "hidden": false,
+      "verifiedAt": "2026-09-30",
+      "provenance": "EDITORIAL_USER_APPROVED"
+    },
+    {
+      "id": "readme2demo-external",
+      "kind": "external",
+      "subject": "alphacrack/readme2demo",
+      "evidence": "10 merged authored pull requests to an upstream project (the ulises-jeremias fork is a working copy, not authored work)",
+      "href": "https://github.com/alphacrack/readme2demo/pulls?q=author:ulises-jeremias+is:merged",
+      "role": "merged-author",
+      "featured": false,
+      "hidden": false,
+      "verifiedAt": "2026-09-30",
+      "provenance": "EDITORIAL_USER_APPROVED"
     }
   ],
   "volatile": {},
   "notes": [
     "Committed cache from verified editorial evidence. Run `pnpm data:refresh` with GITHUB_TOKEN (optional) to re-verify public repo existence. Volatile counts omitted until refresh succeeds.",
-    "[refresh] verified 7/7 public repos on 2026-09-01"
+    "[refresh] verified 9/9 public repos on 2026-09-30"
   ]
 }

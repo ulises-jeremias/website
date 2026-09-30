@@ -23,8 +23,10 @@ dotfiles/
 
 Audit against `ulises-jeremias/dotfiles` `main` before changing counts:
 
-- **12** appearance themes under `home/dot_local/share/dots/themes/*/theme.json`
-- **47** `dots-*` CLIs under `home/dot_local/bin/executable_dots-*`
+- **14** appearance themes under `home/dot_local/share/dots/themes/*/theme.json` (verified @8aae4f7, 2026-09-30)
+- **0** `dots-*` CLIs remain: since dotfiles #294–#305 the wrappers resolve to `horneroctl` verbs
+  (HorneroOS/hornero), and since #317 the Quickshell shell is consumed from HorneroOS/shell
+- Gallery captures under `static/` are the X11 generation (2020–2021) and are captioned as such
 - Smart Colors contract: wiki `Smart-Colors-System.md` (wallpaper → M3 → Quickshell/Kitty/GTK)
 
 ## Design decisions

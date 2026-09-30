@@ -1,17 +1,20 @@
 import { z } from 'astro/zod';
-import { getWorldById, getWorldBySlug } from './project-worlds.js';
+import { getRouteByPath } from './routes.js';
 
 // ---------------------------------------------------------------------------
-// Portfolio taxonomy — ADR-003
+// Portfolio taxonomy — ADR-003, amended by ADR-004
 //
 // A typed layer above `projectWorlds` and `Project` that classifies work into
 // four flagship areas with tier, responsibility, maturity, and time-lens
 // metadata. It references existing project IDs and world IDs rather than
 // duplicating their data.
 //
-// Design rules (from issue #393):
+// Design rules (from issue #393, amended by ADR-004):
 // - Exactly four flagship areas.
 // - Agentic area contains Toolkit, Workstation, and Harness as children.
+// - Hornero area contains HorneroConfig (established, `/dotfiles`) and
+//   Hornero OS (development preview, `/hornero-os`). Hornero OS must never be
+//   described as installable while its installer/ISO slots are future.
 // - HorneroConfig is the display name for `/dotfiles`.
 // - V organization projects distinguish external ownership from verified role.
 // - `agentic-workstation-demo` and `hello-vsl` are supporting/lab tier.
@@ -23,7 +26,7 @@ import { getWorldById, getWorldBySlug } from './project-worlds.js';
 // Enums
 // ---------------------------------------------------------------------------
 
-export const portfolioAreaSchema = z.enum(['agentic', 'horneroconfig', 'v-ecosystem', 'create-awesome']);
+export const portfolioAreaSchema = z.enum(['agentic', 'hornero', 'v-ecosystem', 'create-awesome']);
 export type PortfolioArea = z.infer<typeof portfolioAreaSchema>;
 
 export const portfolioTierSchema = z.enum([
@@ -51,6 +54,15 @@ export const portfolioResponsibilitySchema = z.enum([
 export type PortfolioResponsibility = z.infer<typeof portfolioResponsibilitySchema>;
 
 export const portfolioTimeLensSchema = z.enum(['current', 'proven', 'current-and-proven']);
+
+/**
+ * Maturity vocabulary (ADR-004). Answers "can I rely on this today?" without
+ * implying popularity: `established` (long-running, used by its author daily),
+ * `active` (released and evolving), `early` (released, young),
+ * `preview` (public previews, not a finished product).
+ */
+export const portfolioMaturitySchema = z.enum(['established', 'active', 'early', 'preview']);
+export type PortfolioMaturity = z.infer<typeof portfolioMaturitySchema>;
 export type PortfolioTimeLens = z.infer<typeof portfolioTimeLensSchema>;
 
 export const portfolioRelationshipSchema = z.enum([
@@ -116,7 +128,7 @@ export const portfolioEntrySchema = z
     evidence: portfolioEvidenceSchema,
     /**
      * Verified public role title — the human-facing wording (e.g.
-     * "Core Team Member", "Maintainer") distinct from the generic
+     * "Creator and lead maintainer") distinct from the generic
      * `responsibility` classification enum. Use this for display; use
      * `responsibility` for classification and validation.
      */
@@ -150,6 +162,8 @@ export const portfolioEntrySchema = z
       .default([]),
     /** Whether this may appear as a homepage flagship. */
     homepageEligible: z.boolean().default(false),
+    /** Honest maturity label (ADR-004). */
+    maturity: portfolioMaturitySchema.optional(),
   })
   .superRefine((value, ctx) => {
     // Archive tier must never be homepage-eligible.
@@ -236,22 +250,23 @@ export const portfolioAreas: PortfolioAreaMeta[] = [
     path: '/agent-toolkit',
     overviewPath: '/agentic',
     proposition:
-      'Portable agentic capabilities, machine provisioning, and persistent workspace context — three composable responsibilities, not one monolith.',
+      'Portable skills, agents, loops, and runtime tooling that work across coding assistants — plus machine provisioning and a persistent workspace, as three separate projects.',
     memberIds: ['agent-toolkit', 'agentic-workstation', 'agentic-harness'],
   },
   {
-    id: 'horneroconfig',
-    title: 'HorneroConfig',
+    id: 'hornero',
+    title: 'Hornero Linux Desktop',
     path: '/dotfiles',
-    proposition: 'A reproducible Linux developer environment built on Hyprland, Quickshell, Smart Colors, and chezmoi.',
-    memberIds: ['horneroconfig'],
+    proposition:
+      'A Wayland desktop built around Hyprland and Quickshell — HorneroConfig, the long-running personal configuration, and Hornero OS, the early Arch-based OS extracted from it.',
+    memberIds: ['horneroconfig', 'hornero-os'],
   },
   {
     id: 'v-ecosystem',
     title: 'V Ecosystem',
     path: '/v',
     proposition:
-      'Contributions to the V programming language and its scientific computing, tensor/ML, reactive, and CI tooling ecosystems.',
+      'Scientific computing, tensors and autograd, reactive streams, and CI tooling for the V programming language — plus contributions to the compiler itself.',
     memberIds: ['v', 'vsl', 'vtl', 'rxv', 'setup-v', 'awesome-v'],
   },
   {
@@ -259,7 +274,7 @@ export const portfolioAreas: PortfolioAreaMeta[] = [
     title: 'Create Awesome',
     path: '/create-awesome',
     proposition:
-      'Composable application scaffolding across Node.js, Python, and V — one composition model, three runtimes.',
+      'Application scaffolding for Node.js, Python, and V: pick a template, add extensions, and start from a project that already builds, lints, and tests.',
     memberIds: ['create-node-app', 'create-python-app', 'create-vlang-app'],
   },
 ];
@@ -282,17 +297,19 @@ const rawPortfolioEntries = [
     repositorySlug: 'agent-toolkit',
     timeLens: 'current',
     relationship: 'component-product',
-    description: 'Portable agentic capabilities and execution runtime across major coding assistants.',
-    channels: ['GitHub Releases', 'npm', 'PyPI', 'AUR', 'Homebrew tap'],
+    description:
+      'Portable skills, agents, loops, and MCP templates for many coding assistants, plus the native CLI, local API, and desktop app that run them.',
+    channels: ['GitHub Releases', 'npm', 'PyPI', 'AUR', 'Homebrew tap', 'Plugin marketplaces'],
+    maturity: 'active',
     proofLines: [
       {
         kind: 'distribution',
-        text: 'Distributed through GitHub Releases, npm, PyPI, AUR, and a custom Homebrew tap.',
+        text: 'Distributed through GitHub Releases, npm, PyPI, AUR, a Homebrew tap, and Claude Code / Cursor plugin marketplaces.',
       },
       {
         kind: 'channel-freshness',
-        text: 'GitHub, npm, PyPI, and AUR binary channel aligned at the current release.',
-        verifiedAt: '2026-08-31',
+        text: 'GitHub Releases, npm, PyPI, and AUR ship v1.35.0; the Homebrew tap trails behind.',
+        verifiedAt: '2026-09-30',
       },
     ],
     evidence: {
@@ -313,8 +330,9 @@ const rawPortfolioEntries = [
     repositorySlug: 'agentic-workstation',
     timeLens: 'current',
     relationship: 'component-product',
-    description: 'Thin machine provisioning and host policy for an AI-native developer workstation.',
-    channels: ['GitHub Releases'],
+    description: 'Thin machine provisioning and host LLM policy for an AI-native developer workstation.',
+    channels: ['chezmoi', 'GitHub Releases'],
+    maturity: 'active',
     evidence: {
       sourceUrl: 'https://github.com/ulises-jeremias/agentic-workstation',
       sourceType: 'editorial',
@@ -335,7 +353,8 @@ const rawPortfolioEntries = [
     relationship: 'component-product',
     description:
       'Persistent workspace scaffold for knowledge, personas, packs, and run history, powered by Agent Toolkit.',
-    channels: ['GitHub Releases'],
+    channels: ['GitHub'],
+    maturity: 'early',
     evidence: {
       sourceUrl: 'https://github.com/ulises-jeremias/agentic-harness',
       sourceType: 'editorial',
@@ -354,7 +373,8 @@ const rawPortfolioEntries = [
     repositorySlug: 'agentic-workstation-demo',
     timeLens: 'current',
     relationship: 'supporting-demo',
-    description: 'See-it-in-action demo of the Agentic Workstation provisioning flow.',
+    description:
+      'Small demo repository showing AGENTS.md routing work to skills and sub-agents (plan, implement, review).',
     channels: [],
     evidence: {
       sourceUrl: 'https://github.com/ulises-jeremias/agentic-workstation-demo',
@@ -368,7 +388,7 @@ const rawPortfolioEntries = [
     id: 'horneroconfig',
     title: 'HorneroConfig',
     path: '/dotfiles',
-    area: 'horneroconfig',
+    area: 'hornero',
     tier: 'flagship-component',
     roleLabel: 'Creator and maintainer',
     responsibility: 'author-owner',
@@ -376,17 +396,19 @@ const rawPortfolioEntries = [
     repositorySlug: 'dotfiles',
     timeLens: 'current-and-proven',
     relationship: 'parent-family',
-    description: 'Reproducible Linux desktop environment — Hyprland, Quickshell, Smart Colors, chezmoi.',
-    channels: ['GitHub', 'AUR'],
+    description:
+      'A chezmoi-managed Hyprland desktop with 14 appearance themes and a wallpaper-driven Smart Colors pipeline — the personal layer on top of Hornero components.',
+    channels: ['GitHub', 'chezmoi'],
+    maturity: 'established',
     proofLines: [
       {
         kind: 'history',
-        text: 'Maintained as an established personal dotfiles framework distributed through GitHub and AUR.',
+        text: 'A long-running personal dotfiles framework, reworked from X11 to Hyprland and Quickshell in 2026.',
       },
       {
         kind: 'maintenance',
-        text: 'Default-branch activity continues alongside published documentation.',
-        verifiedAt: '2026-08-31',
+        text: 'Shell and system commands now come from Hornero OS components (horneroctl); the repository keeps personal overrides.',
+        verifiedAt: '2026-09-30',
       },
     ],
     evidence: {
@@ -396,6 +418,42 @@ const rawPortfolioEntries = [
     homepageEligible: true,
   },
 
+  {
+    id: 'hornero-os',
+    title: 'Hornero OS',
+    path: '/hornero-os',
+    area: 'hornero',
+    tier: 'flagship-component',
+    roleLabel: 'Creator and maintainer',
+    responsibility: 'author-owner',
+    repositoryOwner: 'HorneroOS',
+    repositorySlug: 'hornero',
+    timeLens: 'current',
+    relationship: 'component-product',
+    description:
+      'An early-stage Arch-based Wayland desktop OS composed from separate shell, config, CLI, and greeter repositories. Development previews only — not installable yet.',
+    channels: ['GitHub pre-releases', 'AUR (components)'],
+    maturity: 'preview',
+    proofLines: [
+      {
+        kind: 'release',
+        text: 'Composition preview v0.2.0-preview12 pins the shell and config and passes a VM smoke test; it ships no installable image.',
+        verifiedAt: '2026-09-30',
+      },
+      {
+        kind: 'history',
+        text: 'Extracted from HorneroConfig in 2026 and developed in the open across eight repositories.',
+      },
+    ],
+    evidence: {
+      sourceUrl: 'https://github.com/HorneroOS/hornero',
+      sourceType: 'repository-metadata',
+      sourceRevision: '36c2c4b',
+      verifiedAt: '2026-09-30',
+    },
+    homepageEligible: false,
+  },
+
   // --- V Ecosystem ---
   {
     id: 'v',
@@ -403,13 +461,14 @@ const rawPortfolioEntries = [
     path: '/v#v',
     area: 'v-ecosystem',
     tier: 'flagship-component',
-    roleLabel: 'Core Team Member',
+    roleLabel: 'Organization member and compiler contributor',
     responsibility: 'org-member-work',
     repositoryOwner: 'vlang',
     repositorySlug: 'v',
     timeLens: 'proven',
     relationship: 'external-ecosystem',
-    description: 'Simple, fast, safe compiled language. Core Team contributions to compiler, tooling, and docs.',
+    description:
+      'Simple, fast, compiled language. Contributions to the compiler, standard library, tooling, and docs since 2019.',
     channels: [],
     externalContext: 'vlang organization project — external scale is context, not personal ownership',
     proofLines: [
@@ -419,8 +478,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'role',
-        text: 'Contributor and organization member with verified default-branch commits.',
-        verifiedAt: '2026-08-31',
+        text: 'Public vlang organization member with 34 merged pull requests to the compiler repository (2019–2026).',
+        verifiedAt: '2026-09-30',
       },
     ],
     evidence: {
@@ -435,14 +494,21 @@ const rawPortfolioEntries = [
     path: '/v#vsl',
     area: 'v-ecosystem',
     tier: 'flagship-component',
-    roleLabel: 'Maintainer',
+    roleLabel: 'Creator and lead maintainer',
     responsibility: 'primary-maintainer',
     repositoryOwner: 'vlang',
     repositorySlug: 'vsl',
     timeLens: 'current-and-proven',
     relationship: 'component-product',
-    description: 'V Scientific Library — HPC primitives, linear algebra, numerical methods, optional compute backends.',
+    description:
+      'V Scientific Library — linear algebra, BLAS/LAPACK bindings, FFT, ML primitives, plotting, and MPI, with optional OpenCL, CUDA, and Vulkan backends.',
     channels: ['VPM'],
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'Started by Ulises in 2019 and led by him since; hosted by the vlang organization.',
+      },
+    ],
     evidence: {
       sourceUrl: 'https://github.com/vlang/vsl',
       sourceType: 'repository-metadata',
@@ -455,13 +521,20 @@ const rawPortfolioEntries = [
     path: '/v#vtl',
     area: 'v-ecosystem',
     tier: 'flagship-component',
-    roleLabel: 'Maintainer',
+    roleLabel: 'Lead maintainer',
     responsibility: 'primary-maintainer',
     repositoryOwner: 'vlang',
     repositorySlug: 'vtl',
     timeLens: 'current',
     relationship: 'component-product',
-    description: 'V Tensor Library — tensors, autograd, and neural-network APIs built on VSL.',
+    description:
+      'V Tensor Library — tensors, reverse-mode autograd, and neural-network modules built on VSL. Beta releases.',
+    proofLines: [
+      {
+        kind: 'history',
+        text: 'Primary author since the repository was created under the vlang organization in 2020.',
+      },
+    ],
     channels: ['VPM'],
     evidence: {
       sourceUrl: 'https://github.com/vlang/vtl',
@@ -495,13 +568,13 @@ const rawPortfolioEntries = [
     path: '/v#setup-v',
     area: 'v-ecosystem',
     tier: 'flagship-component',
-    roleLabel: 'Maintainer',
+    roleLabel: 'Creator and code owner',
     responsibility: 'primary-maintainer',
     repositoryOwner: 'vlang',
     repositorySlug: 'setup-v',
     timeLens: 'proven',
     relationship: 'component-product',
-    description: 'GitHub Action to install V in CI workflows.',
+    description: 'GitHub Action that installs V in CI, with version pinning, caching, and architecture detection.',
     channels: ['GitHub Actions'],
     evidence: {
       sourceUrl: 'https://github.com/vlang/setup-v',
@@ -563,8 +636,9 @@ const rawPortfolioEntries = [
     repositorySlug: 'create-node-app',
     timeLens: 'current-and-proven',
     relationship: 'component-product',
-    description: 'Mature Node.js scaffolding — 10 templates, 53 extensions, npm distribution.',
-    channels: ['npm'],
+    maturity: 'established',
+    description: 'Mature Node.js scaffolding — 10 templates and 56 extensions from a community template bank.',
+    channels: ['npm', 'AUR', 'Homebrew', 'Docker Hub'],
     proofLines: [
       {
         kind: 'history',
@@ -572,8 +646,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'channel-freshness',
-        text: 'npm channel runs ahead of secondary Homebrew/Docker/AUR package tags.',
-        verifiedAt: '2026-08-31',
+        text: 'npm, AUR, Homebrew, and Docker Hub all ship v0.17.2.',
+        verifiedAt: '2026-09-30',
       },
     ],
     evidence: {
@@ -594,12 +668,13 @@ const rawPortfolioEntries = [
     repositorySlug: 'create-python-app',
     timeLens: 'current',
     relationship: 'component-product',
-    description: 'Python scaffolding — 6 templates, 19 extensions, synchronized beta channels.',
+    description: 'Python scaffolding — 9 templates and 29 extensions, released on PyPI (0.3.x).',
     channels: ['PyPI', 'Homebrew', 'AUR', 'Docker Hub'],
+    maturity: 'early',
     proofLines: [
       {
         kind: 'history',
-        text: 'Newer family expansion with synchronized beta distribution channels.',
+        text: 'Newer family member with PyPI, Homebrew, AUR, and Docker Hub channels released together.',
       },
     ],
     evidence: {
@@ -620,8 +695,9 @@ const rawPortfolioEntries = [
     repositorySlug: 'create-vlang-app',
     timeLens: 'current',
     relationship: 'component-product',
-    description: 'V scaffolding — 7 templates, 11 extensions, early release.',
-    channels: ['GitHub Releases', 'Homebrew'],
+    description: 'V scaffolding — 7 templates and 14 add-ons, shipped as native binaries (0.2.x).',
+    channels: ['GitHub Releases', 'install.sh', 'AUR', 'Homebrew', 'Docker Hub'],
+    maturity: 'early',
     proofLines: [
       {
         kind: 'history',
@@ -655,12 +731,12 @@ const rawPortfolioEntries = [
       {
         kind: 'release',
         text: 'Published v1.2.3 with current npm packages and a live demo.',
-        verifiedAt: '2026-08-31',
+        verifiedAt: '2026-09-30',
       },
       {
         kind: 'maintenance',
         text: 'Independently maintained for existing Recoil applications while upstream Recoil is archived.',
-        verifiedAt: '2026-08-31',
+        verifiedAt: '2026-09-30',
       },
     ],
     evidence: {
@@ -714,6 +790,8 @@ export interface HomepagePortfolioArea {
   lens: 'Building now' | 'Proven over time' | 'Building now · Proven over time';
   /** Member titles when the area has more than one flagship component. */
   members?: string;
+  /** Flagship-component members with their routes (always present). */
+  memberLinks: Array<{ title: string; path: string; maturity?: PortfolioMaturity }>;
   /** Contextual proof summary from member proofLines (non-volatile kinds). */
   proof?: string;
 }
@@ -735,7 +813,13 @@ export function getHomepagePortfolioAreas(): HomepagePortfolioArea[] {
     const lens: HomepagePortfolioArea['lens'] =
       hasCurrent && hasProven ? 'Building now · Proven over time' : hasCurrent ? 'Building now' : 'Proven over time';
 
-    const componentTitles = members.filter((entry) => entry.tier === 'flagship-component').map((entry) => entry.title);
+    const components = members.filter((entry) => entry.tier === 'flagship-component');
+    const componentTitles = components.map((entry) => entry.title);
+    const memberLinks = components.map((entry) => ({
+      title: entry.title,
+      path: entry.path,
+      ...(entry.maturity ? { maturity: entry.maturity } : {}),
+    }));
     const membersLabel = componentTitles.length > 1 ? componentTitles.join(' · ') : undefined;
 
     const proof = members.flatMap((entry) => entry.proofLines).find((line) => SUMMARY_PROOF_KINDS.has(line.kind))?.text;
@@ -747,6 +831,7 @@ export function getHomepagePortfolioAreas(): HomepagePortfolioArea[] {
       proposition: area.proposition,
       lens,
       members: membersLabel,
+      memberLinks,
       proof,
     };
   });
@@ -819,13 +904,29 @@ export function validatePortfolio(): string[] {
     }
   }
 
-  // Verify world-path references resolve.
+  // Verify internal paths resolve to a registered route (ADR-004: the route
+  // registry, not the exploration-layer worlds, is the source of truth).
   for (const entry of portfolioEntries) {
-    if (entry.path.startsWith('/') && !getWorldById(entry.path.replace(/^\//, '').split(/[#/]/)[0] ?? '')) {
-      // path is internal — the first segment should match a known world slug or be `/agentic`/`/about`
-      const firstSegment = entry.path.replace(/^\//, '').split(/[#/]/)[0] ?? '';
-      if (!['agentic', 'about'].includes(firstSegment) && !getWorldBySlug(firstSegment)) {
-        errors.push(`[${entry.id}] internal path ${entry.path} does not resolve to a known route`);
+    if (!entry.path.startsWith('/')) continue;
+    const routePath = entry.path.split('#')[0] || '/';
+    if (!getRouteByPath(routePath)) {
+      errors.push(`[${entry.id}] internal path ${entry.path} does not resolve to a known route`);
+    }
+  }
+  for (const area of portfolioAreas) {
+    for (const path of [area.path, area.overviewPath].filter((value): value is string => Boolean(value))) {
+      if (!getRouteByPath(path)) errors.push(`[${area.id}] area path ${path} is not a registered route`);
+    }
+  }
+
+  // Hornero OS maturity guard: a preview must never be homepage-eligible or
+  // described as installable/downloadable.
+  for (const entry of portfolioEntries) {
+    if (entry.maturity === 'preview') {
+      if (entry.homepageEligible) errors.push(`[${entry.id}] preview entries cannot be homepage-eligible`);
+      const text = [entry.description, ...entry.proofLines.map((line) => line.text)].join(' ');
+      if (/\b(download the iso|install hornero os|installable today|production[- ]ready)\b/i.test(text)) {
+        errors.push(`[${entry.id}] preview copy must not claim installability`);
       }
     }
   }

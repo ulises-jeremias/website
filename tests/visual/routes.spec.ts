@@ -14,6 +14,8 @@ const routes = [
   '/projects',
   '/open-source',
   '/agentic-harness',
+  '/hornero-os',
+  '/sponsor',
 ] as const;
 
 test.describe('route smoke', () => {
@@ -51,6 +53,8 @@ test.describe('flagship route visuals', () => {
     { path: '/blog', name: 'blog' },
     { path: '/projects', name: 'projects' },
     { path: '/open-source', name: 'open-source' },
+    { path: '/hornero-os', name: 'hornero-os' },
+    { path: '/sponsor', name: 'sponsor' },
     { path: '/404.html', name: 'not-found' },
   ] as const;
 

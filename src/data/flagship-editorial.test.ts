@@ -100,7 +100,9 @@ describe('flagship editorial contract — route implementation (#394)', () => {
     const v = getPortfolioEntryById('v')!;
     expect(v.repositoryOwner).toBe('vlang');
     expect(v.responsibility).toBe('org-member-work');
-    expect(v.roleLabel).toBe('Core Team Member');
+    // ADR-004: only publicly verifiable role wording — no unverifiable titles.
+    expect(v.roleLabel).toBe('Organization member and compiler contributor');
+    expect(v.roleLabel).not.toMatch(/core team/i);
     // V page provenance note explicitly distinguishes ownership.
     const lab = readSource('src/features/v/components/VComputationalLab.astro');
     expect(lab).toContain('maintained by Ulises, not owned');

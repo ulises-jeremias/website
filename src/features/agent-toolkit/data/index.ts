@@ -14,6 +14,7 @@ import type {
   DistributionTarget,
   InstallSnippet,
   QueueVsSwarmItem,
+  RuntimeSurface,
   SkillDomain,
   SwarmRecipe,
   SwarmStage,
@@ -259,8 +260,9 @@ export const swarmStages: SwarmStage[] = [
 ];
 
 /**
- * Built-in recipes from agent-toolkit swarm/recipes.py at inventory commit.
- * pair = implementer → reviewer → integrator (verified).
+ * Built-in recipes from agent-toolkit `modules/agent_toolkit_core/swarm_recipes.v`
+ * (verified 2026-09-30 at the inventory commit).
+ * pair = implementer → reviewer → integrator.
  */
 export const swarmRecipes: SwarmRecipe[] = [
   {
@@ -268,7 +270,7 @@ export const swarmRecipes: SwarmRecipe[] = [
     label: 'pair',
     useWhen: 'Bugs, features, refactors — default risk.',
     roles: [
-      { id: 'implementer', policy: 'writer', persona: 'tdd-guide' },
+      { id: 'implementer', policy: 'writer', persona: 'implementer' },
       { id: 'reviewer', policy: 'reviewer-writer', persona: 'code-reviewer' },
       { id: 'integrator', policy: 'integrator', persona: 'architect' },
     ],
@@ -279,7 +281,7 @@ export const swarmRecipes: SwarmRecipe[] = [
     useWhen: 'Medium features, schema or API changes — plan approval required.',
     roles: [
       { id: 'planner', policy: 'read-only', persona: 'planner' },
-      { id: 'implementer', policy: 'writer', persona: 'tdd-guide' },
+      { id: 'implementer', policy: 'writer', persona: 'implementer' },
       { id: 'reviewer', policy: 'reviewer-writer', persona: 'code-reviewer' },
       { id: 'architect', policy: 'integrator', persona: 'architect' },
     ],
@@ -290,7 +292,7 @@ export const swarmRecipes: SwarmRecipe[] = [
     useWhen: 'Security-sensitive work, releases, migrations.',
     roles: [
       { id: 'planner', policy: 'read-only', persona: 'planner' },
-      { id: 'implementer', policy: 'writer', persona: 'tdd-guide' },
+      { id: 'implementer', policy: 'writer', persona: 'implementer' },
       { id: 'refactorer', policy: 'writer', persona: 'refactor-cleaner' },
       { id: 'architect', policy: 'integrator', persona: 'architect' },
       { id: 'hardener', policy: 'reviewer-writer', persona: 'security-reviewer' },
@@ -339,7 +341,7 @@ export const installSnippets: InstallSnippet[] = [
     label: 'GitHub Release',
     command:
       '# Native V binary + SHA256SUMS — https://github.com/ulises-jeremias/agent-toolkit/releases/latest\nagent-toolkit install && agent-toolkit doctor',
-    note: 'Primary channel: the product CLI is a native V binary (v1.11.0+).',
+    note: 'Primary channel: the product CLI is a native V binary with SHA256SUMS and a CycloneDX SBOM (v1.30.1+).',
   },
   {
     id: 'brew',
@@ -356,7 +358,7 @@ export const installSnippets: InstallSnippet[] = [
   {
     id: 'uvx',
     label: 'uv / PyPI launcher',
-    command: "uv tool install 'agent-toolkit-cli>=1.11.0'\nagent-toolkit install",
+    command: "uv tool install 'agent-toolkit-cli>=1.30.1'\nagent-toolkit install",
     note: 'Thin launcher that execs the bundled V binary (ADR-021) — not the implementation.',
   },
   {
@@ -366,10 +368,54 @@ export const installSnippets: InstallSnippet[] = [
     note: 'Installs platform packages via optionalDependencies.',
   },
   {
+    id: 'skills',
+    label: 'Agent Skills',
+    command: 'npx skills add ulises-jeremias/agent-toolkit -g',
+    note: 'Skills only, through the open Agent Skills installer — no toolkit binary required.',
+  },
+  {
     id: 'marketplace',
     label: 'Plugin marketplaces',
     command: '/plugin marketplace add ulises-jeremias/agent-toolkit\n/plugin install agent-toolkit-core@agent-toolkit',
     note: 'Claude Code marketplace; Cursor ships the same plugins natively.',
+  },
+];
+
+/**
+ * Ways to run the toolkit (verified 2026-09-30 against CHANGELOG, ADR-032,
+ * ADR-033, docs/SERVE_API.md). Unreleased work on `main` is labelled
+ * in progress — never presented as shipped.
+ */
+export const runtimeSurfaces: RuntimeSurface[] = [
+  {
+    id: 'cli',
+    title: 'CLI',
+    status: 'shipped',
+    statusNote: `Released · ${inventoryVersionLabel}`,
+    summary:
+      'A native V binary that installs the catalog into each detected assistant and runs loops, swarms, workspace, and memory commands.',
+    command: 'agent-toolkit install && agent-toolkit doctor',
+    docsHref: `${GH}/blob/main/docs/INSTALLATION.md`,
+  },
+  {
+    id: 'serve',
+    title: 'Local API',
+    status: 'shipped',
+    statusNote: 'Released · job events and typed provider routes are on main, not yet released',
+    summary:
+      'agent-toolkit serve exposes the same capabilities over a localhost HTTP API with an OpenAPI 3.1 contract, for editors and dashboards.',
+    command: 'agent-toolkit serve',
+    docsHref: `${GH}/blob/main/docs/SERVE_API.md`,
+  },
+  {
+    id: 'desktop',
+    title: 'Desktop',
+    status: 'shipped',
+    statusNote: 'Native app released for Linux, macOS, and Windows · Electron successor in progress',
+    summary:
+      'A desktop app for the catalog, operations (jobs, loops, swarms, doctor), and a real terminal. An Electron + React successor over the same backend is being built on main.',
+    command: 'agent-toolkit gui --install && agent-toolkit gui',
+    docsHref: `${GH}/tree/main/docs/desktop`,
   },
 ];
 
@@ -429,8 +475,8 @@ export const personaVisuals: Record<
 };
 
 export const toolkitMeta = {
-  title: 'Agent Toolkit — Capabilities & Runtime',
-  description: `Portable capabilities plus the runtime that executes them: ${inventoryStrip()} — deployed to every major coding assistant.`,
+  title: 'Agent Toolkit — Portable Agent Capabilities & Runtime',
+  description: `Portable skills, agents, loops, and MCP templates (${inventoryStrip()}) that install into many coding assistants, plus the native CLI, local API, and desktop app that run them.`,
   accent: '#a05cff',
   accentStrong: '#7358ff',
   violet: '#a05cff',

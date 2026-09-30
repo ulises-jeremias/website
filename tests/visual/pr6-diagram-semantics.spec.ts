@@ -51,7 +51,7 @@ const diagrams = [
     pointerRadio: '#ws-layer-harness',
     pointerVisual: '[data-node="harness"]',
     pointerTitle: 'Agentic Harness',
-    pointerStatus: 'Responsibility selected: Agentic Harness — runtime · persistent workspace.',
+    pointerStatus: 'Responsibility selected: Agentic Harness — workspace · persistent context.',
     fallback: '[data-ws-layer-fallback]',
     fallbackItems: '[data-ws-layer-fallback] li',
   },

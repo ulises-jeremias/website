@@ -2,6 +2,7 @@
 import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getRouteMeta } from '@/data/routes';
 import VComputationalLab from '@/features/v/components/VComputationalLab.astro';
+import SupportNote from '@/shared/components/SupportNote.astro';
 
 const meta = getRouteMeta('/v')!;
 ---
@@ -15,4 +16,5 @@ const meta = getRouteMeta('/v')!;
   immersive
 >
   <VComputationalLab />
+  <SupportNote area="v-ecosystem" />
 </SectionLayout>

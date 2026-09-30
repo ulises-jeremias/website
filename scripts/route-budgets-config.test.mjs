@@ -29,6 +29,8 @@ const EXPECTED_ROUTES = [
   '/blog/',
   '/projects/',
   '/open-source/',
+  '/hornero-os/',
+  '/sponsor/',
   '/404.html',
 ];
 

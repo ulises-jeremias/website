@@ -13,6 +13,9 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 - [Current design state](./design/current/README.md) — accepted identity, maintained goldens, historical specs, and open gates
 - [Launch readiness records](./launch/2026-08-24-launch-checklist.md) — launch gates, asset and content audits, and post-launch operations
 - [v1.1 and subdomain boundary](./adr/ADR-002-v1-1-and-subdomain-boundary.md) — accepted launch architecture boundary
+- [Portfolio-first IA](./adr/ADR-003-portfolio-first-ia.md) and its amendment
+  [ADR-004 — Hornero area, sponsorship, and sponsor evidence](./adr/ADR-004-hornero-area-and-sponsorship.md)
+- [Data provenance](./DATA_PROVENANCE.md) and [profile ownership](./PROFILE_OWNERSHIP.md) — evidence layers and role-claim policy
 - [Personal DX stack model](../src/data/personal-dx-stack.ts) — canonical ecosystem responsibilities and adoption paths
 - [Interactive diagram semantics](./INTERACTIVE_DIAGRAM_SEMANTICS.md) — static visual figures, native selectors,
   inspectors, status summaries, and pointer delegation
@@ -20,8 +23,8 @@ Source of truth for architecture, patterns, tooling, and CI. Update here when yo
 ## Quick links in the app
 
 - Landing: `/`
-- Blog index: `/blog`
-- Sample post: `/blog/welcome-to-your-blog`
+- Work: `/projects` · Open Source: `/open-source` · About: `/about` · Sponsor: `/sponsor`
+- Writing index: `/blog` (noindexed while empty)
 - Feature template: `src/features/_feature-template_/`
 
 ## Conventions

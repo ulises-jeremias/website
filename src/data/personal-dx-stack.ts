@@ -9,10 +9,11 @@ import { z } from 'astro/zod';
  * workstation, toolkit, harness) render from this registry instead of
  * re-describing relationships in prose.
  *
- * Sources (verified 2026-08-25):
- * - agent-toolkit@b3ea86a README + docs/CONCEPTS.md + docs/ARCHITECTURE.md (two-plane model)
- * - agentic-workstation@0f6ff93 README ("thin workstation" delegation note)
- * - agentic-harness@086c2bf README + AGENTS.md (persistent workspace layer)
+ * Sources (re-verified 2026-09-30):
+ * - agent-toolkit@4ea5878 README + docs/ARCHITECTURE.md + docs/SERVE_API.md + ADR-032/033
+ *   (Capability + Runtime layer; native V core, CLI, serve API, and desktop app)
+ * - agentic-workstation@1bbeb07 README + docs/ARCHITECTURE.md ("thin host" delegation)
+ * - agentic-harness@a3f8822 README + docs/ARCHITECTURE.md ("Workspace Layer … not a second runtime")
  */
 
 export const stackRoleSchema = z.enum(['environment', 'machine', 'platform', 'workspace']);
@@ -47,9 +48,9 @@ export const STACK_PROJECTS: StackProject[] = [
     repo: 'ulises-jeremias/dotfiles',
     role: 'environment',
     responsibility: 'Makes the desktop feel mine — Hyprland, Quickshell, Smart Colors.',
-    owns: ['Desktop compositor and shell configuration', 'Theme and wallpaper pipeline'],
-    doesNotOwn: ['AI capabilities', 'Workspace state'],
-    verifiedAt: '2026-08-07',
+    owns: ['Personal desktop overrides and chezmoi setup', 'Theme and wallpaper pipeline'],
+    doesNotOwn: ['AI capabilities', 'Workspace state', 'The shell and system CLI (Hornero OS components)'],
+    verifiedAt: '2026-09-30',
   },
   {
     id: 'agentic-workstation',
@@ -66,7 +67,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Host validation via dots-doctor',
     ],
     doesNotOwn: ['Skills, agents, loops, or MCP templates', 'Swarm orchestration', 'Workspace or engagement state'],
-    verifiedAt: '2026-08-25',
+    verifiedAt: '2026-09-30',
   },
   {
     id: 'agent-toolkit',
@@ -76,14 +77,14 @@ export const STACK_PROJECTS: StackProject[] = [
     role: 'platform',
     responsibility: 'Portable agentic capabilities plus the runtime that executes them on any tool.',
     owns: [
-      'Skills, agents, MCP, plugins, products',
+      'Skills, agents, MCP templates, and Agent Plugins bundles',
       'Loop definitions and loop execution',
-      'Workspace, memory, and project CLIs',
-      'DevCompanion queue runtime',
-      'Swarm engine, recipes, budgets, gates',
+      'Swarm engine, recipes, budgets, approvals',
+      'Workspace, memory, project, and DevCompanion CLIs',
+      'Local serve API and the desktop app',
     ],
-    doesNotOwn: ['Machine provisioning', 'Your persistent engagement state'],
-    verifiedAt: '2026-08-25',
+    doesNotOwn: ['Machine provisioning and host LLM policy', 'Your persistent engagement state'],
+    verifiedAt: '2026-09-30',
   },
   {
     id: 'agentic-harness',
@@ -100,7 +101,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Loop instances, job queues, run history',
     ],
     doesNotOwn: ['Capability definitions', 'Execution engines — it calls the Toolkit'],
-    verifiedAt: '2026-08-25',
+    verifiedAt: '2026-09-30',
   },
 ];
 
@@ -134,7 +135,7 @@ export const ADOPTION_PATHS: AdoptionPath[] = [
     need: 'I want portable AI capabilities without touching my machine setup',
     projectId: 'agent-toolkit',
     detail:
-      'One binary, one install command. Deploys to Claude Code, Cursor, OpenCode, Copilot, Windsurf, Pi, Codex, and Gemini CLI.',
+      'One native binary, one install command. Deploys to Claude Code, Cursor, OpenCode, Copilot, Codex, Gemini CLI, Windsurf, Pi, and Muse Code — or as portable Agent Plugins bundles.',
   },
   {
     id: 'reproducible-machine',

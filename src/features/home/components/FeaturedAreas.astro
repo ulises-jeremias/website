@@ -25,15 +25,14 @@ const accentTokens = {
       <span aria-hidden="true">/</span> Featured Work
     </h2>
     <p class="featured-areas__lead">
-      Four bodies of work — current direction and long-running open-source credibility.
+      Four related bodies of work — what I am building now, and what I have maintained for years.
     </p>
   </header>
-
   <ol class="featured-areas__grid">
     {
       featuredAreas.map((area, index) => (
         <li class="featured-areas__item" style={`--world-color: ${accentTokens[area.accent]}`}>
-          <a class="featured-areas__link" href={area.path}>
+          <article class="featured-areas__card" aria-labelledby={`featured-${area.id}-title`}>
             <span class="featured-areas__art clip-corner-sm" aria-hidden="true">
               <img
                 class="art-fade"
@@ -47,22 +46,25 @@ const accentTokens = {
                 decoding="async"
               />
             </span>
-            <span class="featured-areas__body">
+            <div class="featured-areas__body">
               <span class="featured-areas__lens">{area.lens}</span>
-              <strong class="featured-areas__title">
-                <span class="featured-areas__index" aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                {area.title}
-              </strong>
-              <span class="featured-areas__proposition">{area.proposition}</span>
-              {area.members && <span class="featured-areas__members">{area.members}</span>}
-              {area.proof && <span class="featured-areas__proof">{area.proof}</span>}
-            </span>
-            <span class="featured-areas__enter" aria-hidden="true">
-              Explore →
-            </span>
-          </a>
+              <h3 id={`featured-${area.id}-title`} class="featured-areas__title">
+                <a href={area.path}>{area.title}</a>
+              </h3>
+              <p class="featured-areas__proposition">{area.proposition}</p>
+              {area.memberLinks.length > 1 && (
+                <ul class="featured-areas__members" aria-label={`${area.title} projects`}>
+                  {area.memberLinks.map((member) => (
+                    <li>
+                      <a href={member.path}>{member.title}</a>
+                      {member.maturity === 'preview' && <span class="featured-areas__badge">preview</span>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {area.proof && <p class="featured-areas__proof">{area.proof}</p>}
+            </div>
+          </article>
         </li>
       ))
     }
@@ -97,33 +99,32 @@ const accentTokens = {
 
   .featured-areas__grid {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.9rem;
     margin: 0;
     padding: 0;
     list-style: none;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
   }
 
-  .featured-areas__link {
+  .featured-areas__card {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0.9rem;
     align-items: start;
     block-size: 100%;
-    padding: 1rem;
+    padding: 1rem 1.1rem;
     border: 1px solid color-mix(in srgb, var(--world-color) 32%, transparent);
     border-radius: 10px;
     background: color-mix(in srgb, var(--world-color) 6%, transparent);
-    text-decoration: none;
     transition:
       border-color 160ms ease,
       background 160ms ease;
   }
 
-  .featured-areas__link:hover,
-  .featured-areas__link:focus-visible {
+  .featured-areas__card:hover,
+  .featured-areas__card:focus-within {
     border-color: var(--world-color);
-    background: color-mix(in srgb, var(--world-color) 12%, transparent);
+    background: color-mix(in srgb, var(--world-color) 11%, transparent);
   }
 
   .featured-areas__art img {
@@ -133,7 +134,7 @@ const accentTokens = {
 
   .featured-areas__body {
     display: grid;
-    gap: 0.3rem;
+    gap: 0.35rem;
   }
 
   .featured-areas__lens {
@@ -145,41 +146,77 @@ const accentTokens = {
   }
 
   .featured-areas__title {
-    display: flex;
-    align-items: baseline;
-    gap: 0.45rem;
-    font-size: 1.05rem;
-    color: var(--color-text, var(--nest-paper));
+    margin: 0;
+    font-size: 1.1rem;
   }
 
-  .featured-areas__index {
-    font-family: var(--font-mono, monospace);
-    font-size: 0.72rem;
+  .featured-areas__title a {
+    color: var(--color-text, var(--nest-paper));
+    text-decoration: none;
+  }
+
+  .featured-areas__title a::after {
+    content: ' →';
     color: var(--world-color);
   }
 
+  .featured-areas__title a:hover,
+  .featured-areas__title a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
   .featured-areas__proposition {
+    margin: 0;
     font-size: 0.86rem;
     line-height: 1.5;
     color: var(--color-text-muted, var(--nest-text-muted));
   }
 
-  .featured-areas__members,
+  .featured-areas__members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+    margin: 0.2rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+  }
+
+  .featured-areas__members a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.75rem;
+    color: var(--world-color);
+    text-underline-offset: 0.2em;
+  }
+
+  .featured-areas__badge {
+    margin-inline-start: 0.35rem;
+    padding: 0 0.3rem;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    color: var(--color-text-faint, var(--nest-text-faint));
+    font-family: var(--font-mono, monospace);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+  }
+
   .featured-areas__proof {
+    margin: 0;
     font-size: 0.74rem;
     line-height: 1.45;
     color: var(--color-text-faint, var(--nest-text-faint));
   }
 
-  .featured-areas__enter {
-    grid-column: 1 / -1;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--world-color);
+  @media (max-width: 900px) {
+    .featured-areas__grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 480px) {
-    .featured-areas__link {
+    .featured-areas__card {
       grid-template-columns: 1fr;
     }
 

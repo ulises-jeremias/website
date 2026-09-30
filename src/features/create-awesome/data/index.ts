@@ -74,7 +74,7 @@ export const distributionChannels: DistributionChannel[] = [
   {
     id: 'aur',
     label: 'AUR',
-    command: 'yay -S create-vlang-app',
+    command: 'yay -S create-awesome-vlang-app',
     note: 'V — Arch package name',
   },
   {
@@ -105,8 +105,8 @@ export const variants: CreateAwesomeVariant[] = [
     id: 'python',
     label: 'Python',
     title: 'create-awesome-python-app',
-    description: 'FastAPI, Django, CLI, Celery — batteries for API and workers.',
-    status: 'stable',
+    description: 'FastAPI, Django, CLI, Celery — batteries for API and workers. Beta on PyPI.',
+    status: 'beta',
     accent: '#1e5a8a',
     accentLight: '#3b82f6',
     bg: '#EFF6FF',
@@ -210,7 +210,7 @@ export const comparisonRows: ComparisonRow[] = [
     python: String(catalogTotals.python.addons),
     v: String(catalogTotals.v.addons),
   },
-  { feature: 'Status', node: 'stable', python: 'stable', v: 'beta' },
+  { feature: 'Status', node: 'stable', python: 'beta', v: 'beta' },
   {
     feature: 'Catalog source',
     node: 'cna-templates',

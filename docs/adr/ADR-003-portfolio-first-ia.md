@@ -7,6 +7,7 @@
 - **Related**: Issue #392, #393, #394, #395, #396, #397, #398, #399, #400, #401, #402, #403, #404, #405
 - **Supersedes**: ADR-001 route priority ordering (the route paths remain canonical); the flat `projectWorlds` classification as the sole portfolio taxonomy
 - **Extends**: ADR-002 subdomain boundary (still in force; no subdomain split)
+- **Amended by**: [ADR-004](./ADR-004-hornero-area-and-sponsorship.md) — area 2 becomes "Hornero Linux Desktop" (HorneroConfig + Hornero OS), header adds Sponsor, footer is grouped
 
 ## Context
 

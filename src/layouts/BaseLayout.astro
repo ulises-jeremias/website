@@ -48,7 +48,11 @@ const seo = buildPageSeo({
   type: type ?? (ogType === 'article' || ogType === 'profile' ? ogType : 'website'),
 });
 
-const mergedJsonLd = [...seo.jsonLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+const pageJsonLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+// A page-provided node replaces the generic route node of the same @type, so
+// crawlers never see two competing WebPage/ItemList/ProfilePage descriptions.
+const pageTypes = new Set(pageJsonLd.map((node) => node['@type']));
+const mergedJsonLd = [...seo.jsonLd.filter((node) => !pageTypes.has(node['@type'])), ...pageJsonLd];
 ---
 
 <!doctype html>

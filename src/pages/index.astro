@@ -6,6 +6,7 @@ import FeaturedAreas from '../features/home/components/FeaturedAreas.astro';
 import NestStatus from '../features/home/components/NestStatus.astro';
 import AboutPanel from '../features/home/components/AboutPanel.astro';
 import NestExplore from '../features/home/components/NestExplore.astro';
+import SupportBand from '../features/home/components/SupportBand.astro';
 import '../styles/home.css';
 
 const route = getRouteById('home');
@@ -29,6 +30,8 @@ if (!route) throw new Error('Home route metadata is required');
       <NestStatus />
       <AboutPanel />
     </div>
+
+    <SupportBand />
 
     <NestExplore />
   </div>

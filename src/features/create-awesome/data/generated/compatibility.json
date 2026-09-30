@@ -671,8 +671,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ]
         },
         {
           "id": "recoil-js",
@@ -705,8 +725,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ]
         },
         {
           "id": "hookstate",
@@ -741,8 +781,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ]
         },
         {
           "id": "mobx",
@@ -775,8 +835,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
+          ]
         },
         {
           "id": "teaful",
@@ -811,8 +891,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "valtio",
+            "xstate",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "valtio",
+            "xstate",
+            "zustand"
+          ]
         },
         {
           "id": "valtio",
@@ -845,8 +945,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "xstate",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "xstate",
+            "zustand"
+          ]
         },
         {
           "id": "xstate",
@@ -881,8 +1001,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "zustand"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "zustand"
+          ]
         },
         {
           "id": "zustand",
@@ -917,8 +1057,28 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate"
+          ],
+          "incompatibleAddonIds": [
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate"
+          ]
         },
         {
           "id": "react-redux-saga",
@@ -955,10 +1115,26 @@
             "hono-starter"
           ],
           "declaredIncompatibleAddonIds": [
-            "react-redux-thunk"
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
           ],
           "incompatibleAddonIds": [
-            "react-redux-thunk"
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-thunk",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
           ]
         },
         {
@@ -996,10 +1172,26 @@
             "hono-starter"
           ],
           "declaredIncompatibleAddonIds": [
-            "react-redux-saga"
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
           ],
           "incompatibleAddonIds": [
-            "react-redux-saga"
+            "hookstate",
+            "jotai",
+            "mobx",
+            "react-redux-saga",
+            "recoil-js",
+            "teaful",
+            "valtio",
+            "xstate",
+            "zustand"
           ]
         },
         {
@@ -1142,8 +1334,12 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "semantic-ui-react-theme"
+          ],
+          "incompatibleAddonIds": [
+            "semantic-ui-react-theme"
+          ]
         },
         {
           "id": "semantic-ui-react-theme",
@@ -1178,8 +1374,12 @@
             "astro-starter",
             "hono-starter"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "semantic-ui-react"
+          ],
+          "incompatibleAddonIds": [
+            "semantic-ui-react"
+          ]
         },
         {
           "id": "material-ui",
@@ -1220,9 +1420,47 @@
           "incompatibleAddonIds": []
         },
         {
+          "id": "chakra-ui",
+          "sourceId": "chakra-ui",
+          "sourceOrder": 27,
+          "name": "Chakra UI",
+          "description": "Add Chakra UI components and theming capabilities to your React application with TypeScript support and best practices.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-chakra-ui",
+          "category": "UI",
+          "labels": [
+            "React",
+            "Chakra UI",
+            "Components",
+            "Theming",
+            "UI Library",
+            "TypeScript",
+            "Cursor Rules"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
           "id": "ant-design-react",
           "sourceId": "ant-design-react",
-          "sourceOrder": 27,
+          "sourceOrder": 28,
           "name": "Ant Design for React",
           "description": "Add Ant Design React components with TypeScript support, theming capabilities and enterprise-grade UI patterns.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-ant-design",
@@ -1259,7 +1497,7 @@
         {
           "id": "bootstrap-react",
           "sourceId": "bootstrap-react",
-          "sourceOrder": 28,
+          "sourceOrder": 29,
           "name": "Bootstrap React",
           "description": "Add Bootstrap React components with TypeScript support and responsive design patterns.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-bootstrap",
@@ -1296,7 +1534,7 @@
         {
           "id": "drizzle-orm-sqlite",
           "sourceId": "drizzle-orm-sqlite",
-          "sourceOrder": 29,
+          "sourceOrder": 30,
           "name": "Drizzle ORM SQLite",
           "description": "Add Drizzle ORM with SQLite to your NestJS API with TypeScript support and best practices for database operations.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-drizzle-sqlite",
@@ -1333,7 +1571,7 @@
         {
           "id": "drizzle-orm-postgresql",
           "sourceId": "drizzle-orm-postgresql",
-          "sourceOrder": 30,
+          "sourceOrder": 31,
           "name": "Drizzle ORM PostgreSQL",
           "description": "Add Drizzle ORM with PostgreSQL to your NestJS API with TypeScript support and best practices for database operations.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-drizzle-postgres",
@@ -1370,7 +1608,7 @@
         {
           "id": "mongoose-orm-mongodb",
           "sourceId": "mongoose-orm-mongodb",
-          "sourceOrder": 31,
+          "sourceOrder": 32,
           "name": "Mongoose ORM MongoDB",
           "description": "Add Mongoose ORM with MongoDB to your NestJS API with TypeScript support and best practices for NoSQL database operations.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-mongoose",
@@ -1407,7 +1645,7 @@
         {
           "id": "serverless-framework",
           "sourceId": "serverless-framework",
-          "sourceOrder": 32,
+          "sourceOrder": 33,
           "name": "Serverless Framework",
           "description": "Add Serverless Framework packaging to deploy your NestJS API to AWS Lambda with TypeScript support and best practices for serverless architecture.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-serverless",
@@ -1445,7 +1683,7 @@
         {
           "id": "react-million-dom-optimization",
           "sourceId": "react-million-dom-optimization",
-          "sourceOrder": 33,
+          "sourceOrder": 34,
           "name": "React Million DOM Optimization",
           "description": "Extension to add Million DOM Optimization to your React app",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-million",
@@ -1479,7 +1717,7 @@
         {
           "id": "openapi",
           "sourceId": "openapi",
-          "sourceOrder": 34,
+          "sourceOrder": 35,
           "name": "OpenAPI",
           "description": "Extension to add OpenAPI documentation to your NestJS API",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nestjs-openapi",
@@ -1513,7 +1751,7 @@
         {
           "id": "react-electron-vite",
           "sourceId": "react-electron-vite",
-          "sourceOrder": 35,
+          "sourceOrder": 36,
           "name": "React Electron Vite",
           "description": "Add Electron to your cross platform React Vite app",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-electron-vite",
@@ -1548,7 +1786,7 @@
         {
           "id": "tailwind-css",
           "sourceId": "tailwind-css",
-          "sourceOrder": 36,
+          "sourceOrder": 37,
           "name": "Tailwind CSS",
           "description": "Add Tailwind CSS utility-first styling with PostCSS and dark mode class strategy.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-tailwindcss",
@@ -1583,9 +1821,45 @@
           "incompatibleAddonIds": []
         },
         {
+          "id": "react-stylex",
+          "sourceId": "react-stylex",
+          "sourceOrder": 38,
+          "name": "StyleX",
+          "description": "Add StyleX for zero-runtime, type-safe, atomic CSS-in-JS.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-stylex",
+          "category": "UI",
+          "labels": [
+            "React",
+            "StyleX",
+            "CSS-in-JS",
+            "Styling",
+            "Atomic"
+          ],
+          "typeIds": [
+            "react"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "react-vite-boilerplate"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "nextjs-starter",
+            "turborepo-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
           "id": "shadcn-ui",
           "sourceId": "shadcn-ui",
-          "sourceOrder": 37,
+          "sourceOrder": 39,
           "name": "shadcn/ui",
           "description": "Add shadcn/ui component primitives (Radix UI + Tailwind CSS) with variant-based theming utilities.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-shadcn",
@@ -1623,7 +1897,7 @@
         {
           "id": "nextjs-tailwindcss",
           "sourceId": "nextjs-tailwindcss",
-          "sourceOrder": 38,
+          "sourceOrder": 40,
           "name": "Tailwind CSS for Next.js",
           "description": "Add Tailwind CSS v4 to your Next.js project with PostCSS configuration and utility-first CSS setup.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-tailwindcss",
@@ -1658,7 +1932,7 @@
         {
           "id": "nextjs-shadcn",
           "sourceId": "nextjs-shadcn",
-          "sourceOrder": 39,
+          "sourceOrder": 41,
           "name": "shadcn/ui for Next.js",
           "description": "Add shadcn/ui component library to your Next.js project with Radix UI primitives, class-variance-authority, and a cn() utility.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-shadcn",
@@ -1693,7 +1967,7 @@
         {
           "id": "nextjs-drizzle-postgres",
           "sourceId": "nextjs-drizzle-postgres",
-          "sourceOrder": 40,
+          "sourceOrder": 42,
           "name": "Drizzle ORM + PostgreSQL for Next.js",
           "description": "Add Drizzle ORM with PostgreSQL to your Next.js project. Includes schema setup, migrations, Docker Compose for local development, and db:* scripts.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-drizzle-postgres",
@@ -1729,7 +2003,7 @@
         {
           "id": "nextjs-auth",
           "sourceId": "nextjs-auth",
-          "sourceOrder": 41,
+          "sourceOrder": 43,
           "name": "Auth.js v5 for Next.js",
           "description": "Add Auth.js v5 (next-auth@beta, latest: 5.0.0-beta.31) to your Next.js project with OAuth providers support, database sessions, and TypeScript-typed session. Note: v5 remains in beta as of 2026 — see https://authjs.dev for updates.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-auth",
@@ -1769,7 +2043,7 @@
         {
           "id": "nextjs-authkit",
           "sourceId": "nextjs-authkit",
-          "sourceOrder": 42,
+          "sourceOrder": 44,
           "name": "WorkOS AuthKit",
           "description": "Hosted authentication platform with pre-built UI, SSO, MFA, and password reset via WorkOS AuthKit.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-authkit",
@@ -1800,16 +2074,57 @@
             "hono-starter"
           ],
           "declaredIncompatibleAddonIds": [
-            "nextjs-auth"
+            "nextjs-auth",
+            "nextjs-workos"
           ],
           "incompatibleAddonIds": [
-            "nextjs-auth"
+            "nextjs-auth",
+            "nextjs-workos"
+          ]
+        },
+        {
+          "id": "nextjs-workos",
+          "sourceId": "nextjs-workos",
+          "sourceOrder": 45,
+          "name": "WorkOS SSO",
+          "description": "Enterprise SSO via WorkOS — SAML, OIDC, and social login with connection support.",
+          "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-workos",
+          "category": "Auth",
+          "labels": [
+            "sso",
+            "workos",
+            "enterprise",
+            "auth"
+          ],
+          "typeIds": [
+            "nextjs"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "nextjs-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "nestjs-boilerplate",
+            "turborepo-boilerplate",
+            "react-vite-boilerplate",
+            "web-extension-react-boilerplate",
+            "webdriverio-boilerplate",
+            "nextjs-saas-ai-starter",
+            "remix-starter",
+            "astro-starter",
+            "hono-starter"
+          ],
+          "declaredIncompatibleAddonIds": [
+            "nextjs-authkit"
+          ],
+          "incompatibleAddonIds": [
+            "nextjs-authkit"
           ]
         },
         {
           "id": "nextjs-t3-env",
           "sourceId": "nextjs-t3-env",
-          "sourceOrder": 43,
+          "sourceOrder": 46,
           "name": "t3-env for Next.js",
           "description": "Add type-safe environment variable validation with @t3-oss/env-nextjs and Zod, including server/client split and SKIP_ENV_VALIDATION for CI.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-t3-env",
@@ -1845,7 +2160,7 @@
         {
           "id": "nextjs-trpc",
           "sourceId": "nextjs-trpc",
-          "sourceOrder": 44,
+          "sourceOrder": 47,
           "name": "tRPC for Next.js",
           "description": "Add tRPC v11 with TanStack Query and App Router fetch adapter for end-to-end type-safe APIs without code generation.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-trpc",
@@ -1881,7 +2196,7 @@
         {
           "id": "nextjs-i18n",
           "sourceId": "nextjs-i18n",
-          "sourceOrder": 45,
+          "sourceOrder": 48,
           "name": "next-intl (i18n) for Next.js",
           "description": "Add internationalization to your Next.js project using next-intl with English and Spanish translations, middleware routing, and type-safe message access.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-i18n",
@@ -1916,7 +2231,7 @@
         {
           "id": "sentry",
           "sourceId": "sentry",
-          "sourceOrder": 46,
+          "sourceOrder": 49,
           "name": "Sentry for Next.js",
           "description": "Add Sentry error tracking and performance monitoring to your Next.js project with client/server configuration and source map upload support.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/sentry",
@@ -1951,7 +2266,7 @@
         {
           "id": "apollo-client",
           "sourceId": "apollo-client",
-          "sourceOrder": 47,
+          "sourceOrder": 50,
           "name": "Apollo Client for React",
           "description": "Add Apollo Client for GraphQL data fetching, caching, and state management in React applications.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-apollo",
@@ -1987,7 +2302,7 @@
         {
           "id": "storybook",
           "sourceId": "storybook",
-          "sourceOrder": 48,
+          "sourceOrder": 51,
           "name": "Storybook",
           "description": "Add Storybook for isolated component development, visual testing, and interactive documentation.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/storybook",
@@ -2023,7 +2338,7 @@
         {
           "id": "nextjs-react-query",
           "sourceId": "nextjs-react-query",
-          "sourceOrder": 49,
+          "sourceOrder": 52,
           "name": "React Query for Next.js",
           "description": "Add TanStack React Query with SSR-compatible setup for Next.js App Router, including hydration support and query client factory.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-react-query",
@@ -2059,7 +2374,7 @@
         {
           "id": "nextjs-prisma",
           "sourceId": "nextjs-prisma",
-          "sourceOrder": 50,
+          "sourceOrder": 53,
           "name": "Prisma for Next.js",
           "description": "Add Prisma ORM with PostgreSQL for type-safe database access, schema management, and migrations in Next.js.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-prisma",
@@ -2095,7 +2410,7 @@
         {
           "id": "nextjs-turso",
           "sourceId": "nextjs-turso",
-          "sourceOrder": 51,
+          "sourceOrder": 54,
           "name": "Turso/libSQL for Next.js",
           "description": "Add Turso (libSQL) database client with Drizzle ORM for edge-ready SQLite database access in Next.js.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/nextjs-turso",
@@ -2132,7 +2447,7 @@
         {
           "id": "react-react-router",
           "sourceId": "react-react-router",
-          "sourceOrder": 52,
+          "sourceOrder": 55,
           "name": "React Router v7",
           "description": "Adds React Router v7 with BrowserRouter setup and sample pages.",
           "sourceUrl": "https://github.com/Create-Node-App/cna-templates/tree/main/extensions/react-react-router",
@@ -2168,38 +2483,38 @@
       ],
       "counts": {
         "templates": 10,
-        "addons": 53,
-        "compatibilityEdges": 74
+        "addons": 56,
+        "compatibilityEdges": 77
       },
       "provenance": {
         "repository": "Create-Node-App/cna-templates",
-        "commit": "435b67dbbad8efda64912d2af60e8c15c97859f1",
-        "commitDate": "2026-08-24T04:12:41Z",
+        "commit": "30f7a1127c0abb3f81d841462068f7650c666a61",
+        "commitDate": "2026-09-20T04:33:01Z",
         "registry": {
           "path": "templates.json",
-          "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/435b67dbbad8efda64912d2af60e8c15c97859f1/templates.json",
-          "gitBlobSha": "0d3f7cb5639a0594be8fbf403ea7b22b0c6b4ff6",
-          "sha256": "9389c8a99612f5cf38b052fcd07735fd1cc9a372da86486456bc84c6c6b8c0f2"
+          "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/30f7a1127c0abb3f81d841462068f7650c666a61/templates.json",
+          "gitBlobSha": "a24038db2d11d8d8ea13d595ef5c5c3bff044400",
+          "sha256": "f2d347920d3444b660e0db0ae7462dcc6db0fdaa47cb47100a3010a340a92132"
         },
         "schema": {
           "path": "templates.schema.json",
-          "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/435b67dbbad8efda64912d2af60e8c15c97859f1/templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/30f7a1127c0abb3f81d841462068f7650c666a61/templates.schema.json",
           "gitBlobSha": "e1d66ac8691fffbe420ad04dbfcd0e0b9a52a7c7",
           "sha256": "1a30f2205cd33cd9314688df9bc323bcc386e053d989cbbb0b5ac4dc2555703c"
         },
         "cliReference": {
           "repository": "Create-Node-App/create-node-app",
-          "commit": "dd728c40bf07b93fc283b0619fc4d09893d7ce38",
-          "commitDate": "2026-08-23T06:23:45Z"
+          "commit": "416235fc32fb7e91464a2b903d09e52a66822569",
+          "commitDate": "2026-09-17T20:50:32Z"
         },
         "semanticReferences": [
           {
             "role": "cli-compatibility-reference",
             "repository": "Create-Node-App/create-node-app",
-            "commit": "dd728c40bf07b93fc283b0619fc4d09893d7ce38",
-            "commitDate": "2026-08-23T06:23:45Z",
+            "commit": "416235fc32fb7e91464a2b903d09e52a66822569",
+            "commitDate": "2026-09-17T20:50:32Z",
             "path": "packages/create-awesome-node-app/src/templates.ts",
-            "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/dd728c40bf07b93fc283b0619fc4d09893d7ce38/packages/create-awesome-node-app/src/templates.ts",
+            "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/416235fc32fb7e91464a2b903d09e52a66822569/packages/create-awesome-node-app/src/templates.ts",
             "gitBlobSha": "f13173ff6df21020fa4332fba02e1bb6d09a38a7",
             "sha256": "7f4403b0d3455c0c1cc12d753805fc7f81477a5830fa29e515fdee55d5acb419"
           }
@@ -2325,6 +2640,64 @@
           "typeIds": [
             "mlops-sklearn"
           ]
+        },
+        {
+          "id": "mlops-pytorch-starter",
+          "sourceId": "mlops-pytorch-starter",
+          "sourceOrder": 6,
+          "name": "MLOps PyTorch Starter",
+          "description": "CPU-first PyTorch MLOps pipeline with YAML configs, step architecture, local MLflow, TorchScript export, and batch/FastAPI serving.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/mlops-pytorch-starter",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "PyTorch",
+            "MLflow",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "mlops-pytorch"
+          ]
+        },
+        {
+          "id": "mlops-tensorflow-starter",
+          "sourceId": "mlops-tensorflow-starter",
+          "sourceOrder": 7,
+          "name": "MLOps TensorFlow Starter",
+          "description": "CPU-first TensorFlow MLOps pipeline with YAML configs, step architecture, local MLflow, SavedModel export, and batch/FastAPI serving.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/mlops-tensorflow-starter",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "TensorFlow",
+            "MLflow",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "mlops-tensorflow"
+          ]
+        },
+        {
+          "id": "glue-etl-job",
+          "sourceId": "glue-etl-job",
+          "sourceOrder": 8,
+          "name": "Glue ETL Job",
+          "description": "Batch ETL on AWS Glue with PySpark, job bookmarks, and Data Catalog. Terraform deploy ships in the base template.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=templates/glue-etl-job",
+          "category": "data-engineering",
+          "labels": [
+            "AWS Glue",
+            "ETL",
+            "PySpark",
+            "Terraform",
+            "Python",
+            "uv"
+          ],
+          "typeIds": [
+            "glue-etl"
+          ]
         }
       ],
       "addons": [
@@ -2349,6 +2722,8 @@
             "django-backend",
             "fastapi-backend",
             "mlops-sklearn",
+            "mlops-pytorch",
+            "mlops-tensorflow",
             "uv-workspace"
           ],
           "declaredCompatibleTemplateIds": [],
@@ -2358,9 +2733,13 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter"
           ],
-          "incompatibleTemplateIds": [],
+          "incompatibleTemplateIds": [
+            "glue-etl-job"
+          ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
         },
@@ -2393,7 +2772,10 @@
             "uv-workspace-starter"
           ],
           "incompatibleTemplateIds": [
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2425,7 +2807,10 @@
           "incompatibleTemplateIds": [
             "cli-starter",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2456,7 +2841,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2486,7 +2874,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2516,7 +2907,10 @@
             "cli-starter",
             "celery-worker",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2546,7 +2940,10 @@
             "cli-starter",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [
             "flower-docker"
@@ -2581,7 +2978,10 @@
             "cli-starter",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [
             "celery-docker"
@@ -2616,7 +3016,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2646,7 +3049,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2676,7 +3082,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2707,7 +3116,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2741,7 +3153,10 @@
             "uv-workspace-starter"
           ],
           "incompatibleTemplateIds": [
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2771,10 +3186,17 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "fastapi-mlflow-tracing"
+          ],
+          "incompatibleAddonIds": [
+            "fastapi-mlflow-tracing"
+          ]
         },
         {
           "id": "fastapi-rate-limit",
@@ -2801,7 +3223,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2832,10 +3257,17 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
+          "declaredIncompatibleAddonIds": [
+            "fastapi-opentelemetry"
+          ],
+          "incompatibleAddonIds": [
+            "fastapi-opentelemetry"
+          ]
         },
         {
           "id": "fastapi-rag-pgvector",
@@ -2864,7 +3296,10 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2895,7 +3330,356 @@
             "celery-worker",
             "django-api",
             "uv-workspace-starter",
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-mcp-client",
+          "sourceId": "fastapi-mcp-client",
+          "sourceOrder": 18,
+          "name": "FastAPI MCP Client",
+          "description": "Model Context Protocol client for FastAPI AI apps. Typed tool registry with env-driven MCP server configuration.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-mcp-client",
+          "category": "ai-ml-applications",
+          "labels": [
+            "MCP",
+            "AI",
+            "Tools",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-ai-guardrails",
+          "sourceId": "fastapi-ai-guardrails",
+          "sourceOrder": 19,
+          "name": "FastAPI AI Guardrails",
+          "description": "Typed input/output guardrail hooks for FastAPI AI apps. Required-field, length, and blocked-pattern validation with extensible rules.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-ai-guardrails",
+          "category": "ai-ml-applications",
+          "labels": [
+            "AI",
+            "Guardrails",
+            "Safety",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-mlops-github-actions",
+          "sourceId": "all-mlops-github-actions",
+          "sourceOrder": 20,
+          "name": "All MLOps GitHub Actions",
+          "description": "MLOps CI for MLOps starters: lint, unit tests, and a pipeline train smoke on push and pull requests.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-mlops-github-actions",
+          "category": "ci",
+          "labels": [
+            "MLOps",
+            "CI",
+            "GitHub Actions"
+          ],
+          "typeIds": [
+            "mlops-sklearn",
+            "mlops-pytorch",
+            "mlops-tensorflow"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-mlops-tabular-data",
+          "sourceId": "all-mlops-tabular-data",
+          "sourceOrder": 21,
+          "name": "All MLOps Tabular Data",
+          "description": "Tabular data pack for MLOps starters: synthetic generation, disjoint splitting, train-only standardization, and schema validation (NumPy-only).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-mlops-tabular-data",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "Data",
+            "Tabular",
+            "NumPy"
+          ],
+          "typeIds": [
+            "mlops-sklearn",
+            "mlops-pytorch",
+            "mlops-tensorflow"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-mlops-sequence-data",
+          "sourceId": "all-mlops-sequence-data",
+          "sourceOrder": 22,
+          "name": "All MLOps Sequence Data",
+          "description": "Sequence data pack for MLOps starters: synthetic series, sliding windows, temporal splitting, and schema validation (NumPy-only).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-mlops-sequence-data",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "Data",
+            "Sequence",
+            "NumPy"
+          ],
+          "typeIds": [
+            "mlops-sklearn",
+            "mlops-pytorch",
+            "mlops-tensorflow"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "all-mlops-image-data",
+          "sourceId": "all-mlops-image-data",
+          "sourceOrder": 23,
+          "name": "All MLOps Image Data",
+          "description": "Image data pack for MLOps starters: synthetic uint8 images, unit-range normalization, and schema validation (NumPy-only).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/all-mlops-image-data",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "Data",
+            "Image",
+            "NumPy"
+          ],
+          "typeIds": [
+            "mlops-sklearn",
+            "mlops-pytorch",
+            "mlops-tensorflow"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "mlops-sklearn-distributed",
+          "sourceId": "mlops-sklearn-distributed",
+          "sourceOrder": 24,
+          "name": "MLOps sklearn Distributed",
+          "description": "Parallel grid search for sklearn starters: sequential/threads/processes backends with deterministic fallback (joblib-only).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/mlops-sklearn-distributed",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "Distributed",
+            "sklearn",
+            "joblib"
+          ],
+          "typeIds": [
+            "mlops-sklearn"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
             "mlops-sklearn-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "mlops-pytorch-distributed",
+          "sourceId": "mlops-pytorch-distributed",
+          "sourceOrder": 25,
+          "name": "MLOps PyTorch Distributed",
+          "description": "DDP/torchrun launch for PyTorch starters with single-process fallback (torch.distributed-only).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/mlops-pytorch-distributed",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "Distributed",
+            "PyTorch",
+            "DDP"
+          ],
+          "typeIds": [
+            "mlops-pytorch"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "mlops-pytorch-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "mlops-tensorflow-distributed",
+          "sourceId": "mlops-tensorflow-distributed",
+          "sourceOrder": 26,
+          "name": "MLOps TensorFlow Distributed",
+          "description": "tf.distribute strategies for TensorFlow starters with CPU-single fallback (no new deps).",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/mlops-tensorflow-distributed",
+          "category": "mlops",
+          "labels": [
+            "MLOps",
+            "Distributed",
+            "TensorFlow"
+          ],
+          "typeIds": [
+            "mlops-tensorflow"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "mlops-tensorflow-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "fastapi-starter",
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "glue-etl-job"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "fastapi-langgraph-chat",
+          "sourceId": "fastapi-langgraph-chat",
+          "sourceOrder": 27,
+          "name": "FastAPI LangGraph Chat",
+          "description": "Multi-step agent chat via a small LangGraph state graph (router, tool executor, responder) with offline mock tools.",
+          "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/fastapi-langgraph-chat",
+          "category": "ai-ml-applications",
+          "labels": [
+            "LangGraph",
+            "AI",
+            "Agents",
+            "FastAPI"
+          ],
+          "typeIds": [
+            "fastapi-backend"
+          ],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "fastapi-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "cli-starter",
+            "celery-worker",
+            "django-api",
+            "uv-workspace-starter",
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
@@ -2903,7 +3687,7 @@
         {
           "id": "django-spectacular",
           "sourceId": "django-spectacular",
-          "sourceOrder": 18,
+          "sourceOrder": 28,
           "name": "Django Spectacular",
           "description": "OpenAPI 3 schema generation and Swagger UI for Django REST Framework.",
           "sourceUrl": "https://github.com/Create-Python-App/cpa-templates?subdir=extensions/django-spectacular",
@@ -2926,48 +3710,51 @@
             "cli-starter",
             "celery-worker",
             "uv-workspace-starter",
-            "mlops-sklearn-starter"
+            "mlops-sklearn-starter",
+            "mlops-pytorch-starter",
+            "mlops-tensorflow-starter",
+            "glue-etl-job"
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
         }
       ],
       "counts": {
-        "templates": 6,
-        "addons": 19,
-        "compatibilityEdges": 34
+        "templates": 9,
+        "addons": 29,
+        "compatibilityEdges": 54
       },
       "provenance": {
         "repository": "Create-Python-App/cpa-templates",
-        "commit": "f575ee4bd15e7036da48a5ab71bdf5ed38372e4b",
-        "commitDate": "2026-08-24T05:07:21Z",
+        "commit": "83d532c6c8eede9649a1fc7461195bdd453f5bc6",
+        "commitDate": "2026-09-16T05:13:07Z",
         "registry": {
           "path": "templates.json",
-          "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/f575ee4bd15e7036da48a5ab71bdf5ed38372e4b/templates.json",
-          "gitBlobSha": "24b83928686650c38798fe3337cb8cb635789721",
-          "sha256": "a8ccecf9b55ea9c81dbf5d821385e9762b8f6e1e71e543d5cf5314df4f96763c"
+          "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/83d532c6c8eede9649a1fc7461195bdd453f5bc6/templates.json",
+          "gitBlobSha": "53154f2a3ec5421a8c70ea26a4354506fa8cb365",
+          "sha256": "44fe78cae8e59982f1de1c7f2dcf42498107d34f3a9b98ff289e23a4ccc5a311"
         },
         "schema": {
           "path": "templates.schema.json",
-          "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/f575ee4bd15e7036da48a5ab71bdf5ed38372e4b/templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/83d532c6c8eede9649a1fc7461195bdd453f5bc6/templates.schema.json",
           "gitBlobSha": "43d2dc603d3786a909151785a35221f7495c0ed3",
           "sha256": "b8eb428fb573a468270ed09036e319dd179b405df8231f0b862ae2e948ff90fd"
         },
         "cliReference": {
           "repository": "Create-Python-App/create-python-app",
-          "commit": "36cf5ffc14cac59f6b1099f2b43a5cbf826580a9",
-          "commitDate": "2026-08-24T05:02:23Z"
+          "commit": "5fb4bcbc3c7fd49c2ea5990eb2527a58b27b8789",
+          "commitDate": "2026-09-17T20:50:39Z"
         },
         "semanticReferences": [
           {
             "role": "cli-compatibility-reference",
             "repository": "Create-Python-App/create-python-app",
-            "commit": "36cf5ffc14cac59f6b1099f2b43a5cbf826580a9",
-            "commitDate": "2026-08-24T05:02:23Z",
+            "commit": "5fb4bcbc3c7fd49c2ea5990eb2527a58b27b8789",
+            "commitDate": "2026-09-17T20:50:39Z",
             "path": "packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
-            "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/36cf5ffc14cac59f6b1099f2b43a5cbf826580a9/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
-            "gitBlobSha": "30abd65b9d6dd2ef19c2e80392d0446a7cfa1f3d",
-            "sha256": "641fa27b2127fd306a5416c26c590af61dd526862d89fbef3b1b3f04cdad0c4c"
+            "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/5fb4bcbc3c7fd49c2ea5990eb2527a58b27b8789/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
+            "gitBlobSha": "80db60377a4d43dace87f43bde6835d5b9444917",
+            "sha256": "850e240706e4b42c00a71d32df49bffd772ea8df0f54b2b3eab1f0d4f870bf14"
           }
         ]
       }
@@ -3085,9 +3872,36 @@
       ],
       "addons": [
         {
+          "id": "development-container",
+          "sourceId": "development-container",
+          "sourceOrder": 0,
+          "name": "development-container",
+          "description": "Devcontainer with V toolchain via setup-v patterns",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/development-container",
+          "category": null,
+          "labels": [
+            "devcontainer",
+            "wave-1"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
           "id": "github-setup",
           "sourceId": "github-setup",
-          "sourceOrder": 0,
+          "sourceOrder": 1,
           "name": "github-setup",
           "description": "GitHub Actions CI using vlang/setup-v",
           "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/github-setup",
@@ -3113,9 +3927,40 @@
           "incompatibleAddonIds": []
         },
         {
+          "id": "rxv-operators",
+          "sourceId": "rxv-operators",
+          "sourceOrder": 2,
+          "name": "rxv-operators",
+          "description": "Reactive operator chain (filter/map/reduce) beyond hello-world rxv",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/rxv-operators",
+          "category": null,
+          "labels": [
+            "reactive",
+            "rxv",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "rxv-starter"
+          ],
+          "compatibleTemplateIds": [
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
           "id": "v-docker",
           "sourceId": "v-docker",
-          "sourceOrder": 1,
+          "sourceOrder": 3,
           "name": "v-docker",
           "description": "Dockerfile and docker-compose for V apps",
           "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-docker",
@@ -3141,9 +3986,132 @@
           "incompatibleAddonIds": []
         },
         {
+          "id": "v-env-example",
+          "sourceId": "v-env-example",
+          "sourceOrder": 4,
+          "name": "v-env-example",
+          "description": "Cross-cutting .env.example standardization and docs snippet",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-env-example",
+          "category": null,
+          "labels": [
+            "env",
+            "docs",
+            "config"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-fmt-vet",
+          "sourceId": "v-fmt-vet",
+          "sourceOrder": 5,
+          "name": "v-fmt-vet",
+          "description": "Format and vet hooks (pre-commit + Makefile targets)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-fmt-vet",
+          "category": null,
+          "labels": [
+            "tooling",
+            "wave-1",
+            "fmt",
+            "vet"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "incompatibleTemplateIds": [],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-postgres",
+          "sourceId": "v-postgres",
+          "sourceOrder": 6,
+          "name": "v-postgres",
+          "description": "Postgres compose overlay and environment sample",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-postgres",
+          "category": null,
+          "labels": [
+            "database",
+            "wave-1",
+            "postgres"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "incompatibleTemplateIds": [
+            "library-starter",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
+          "id": "v-redis",
+          "sourceId": "v-redis",
+          "sourceOrder": 7,
+          "name": "v-redis",
+          "description": "Redis client stub and compose sample for web-server/systems apps",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-redis",
+          "category": null,
+          "labels": [
+            "database",
+            "redis",
+            "cache"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "compatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "systems-app"
+          ],
+          "incompatibleTemplateIds": [
+            "library-starter",
+            "vsl-starter",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
           "id": "v-sqlite",
           "sourceId": "v-sqlite",
-          "sourceOrder": 2,
+          "sourceOrder": 8,
           "name": "v-sqlite",
           "description": "SQLite environment and sample wiring",
           "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-sqlite",
@@ -3175,120 +4143,30 @@
           "incompatibleAddonIds": []
         },
         {
-          "id": "v-postgres",
-          "sourceId": "v-postgres",
-          "sourceOrder": 3,
-          "name": "v-postgres",
-          "description": "Postgres compose overlay and environment sample",
-          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-postgres",
+          "id": "veb-static-files",
+          "sourceId": "veb-static-files",
+          "sourceOrder": 9,
+          "name": "veb-static-files",
+          "description": "Static dir convention and helper for web-server (veb)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/veb-static-files",
           "category": null,
           "labels": [
-            "database",
-            "wave-1",
-            "postgres"
+            "web",
+            "veb",
+            "static"
           ],
           "typeIds": [],
           "declaredCompatibleTemplateIds": [
-            "web-server",
-            "cli-app",
-            "systems-app"
+            "web-server"
           ],
           "compatibleTemplateIds": [
-            "web-server",
-            "cli-app",
-            "systems-app"
+            "web-server"
           ],
           "incompatibleTemplateIds": [
-            "library-starter",
-            "vsl-starter",
-            "vtl-starter",
-            "rxv-starter"
-          ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
-        },
-        {
-          "id": "v-fmt-vet",
-          "sourceId": "v-fmt-vet",
-          "sourceOrder": 4,
-          "name": "v-fmt-vet",
-          "description": "Format and vet hooks (pre-commit + Makefile targets)",
-          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/v-fmt-vet",
-          "category": null,
-          "labels": [
-            "tooling",
-            "wave-1",
-            "fmt",
-            "vet"
-          ],
-          "typeIds": [],
-          "declaredCompatibleTemplateIds": [],
-          "compatibleTemplateIds": [
-            "web-server",
             "cli-app",
             "library-starter",
             "systems-app",
             "vsl-starter",
-            "vtl-starter",
-            "rxv-starter"
-          ],
-          "incompatibleTemplateIds": [],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
-        },
-        {
-          "id": "development-container",
-          "sourceId": "development-container",
-          "sourceOrder": 5,
-          "name": "development-container",
-          "description": "Devcontainer with V toolchain via setup-v patterns",
-          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/development-container",
-          "category": null,
-          "labels": [
-            "devcontainer",
-            "wave-1"
-          ],
-          "typeIds": [],
-          "declaredCompatibleTemplateIds": [],
-          "compatibleTemplateIds": [
-            "web-server",
-            "cli-app",
-            "library-starter",
-            "systems-app",
-            "vsl-starter",
-            "vtl-starter",
-            "rxv-starter"
-          ],
-          "incompatibleTemplateIds": [],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
-        },
-        {
-          "id": "vsl-plotting",
-          "sourceId": "vsl-plotting",
-          "sourceOrder": 6,
-          "name": "vsl-plotting",
-          "description": "vsl.plot wiring and scatter helper for scientific starters (no GUI in unit tests)",
-          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vsl-plotting",
-          "category": null,
-          "labels": [
-            "scientific",
-            "plot",
-            "vsl",
-            "domain"
-          ],
-          "typeIds": [],
-          "declaredCompatibleTemplateIds": [
-            "vsl-starter"
-          ],
-          "compatibleTemplateIds": [
-            "vsl-starter"
-          ],
-          "incompatibleTemplateIds": [
-            "web-server",
-            "cli-app",
-            "library-starter",
-            "systems-app",
             "vtl-starter",
             "rxv-starter"
           ],
@@ -3298,7 +4176,7 @@
         {
           "id": "vsl-classical-ml",
           "sourceId": "vsl-classical-ml",
-          "sourceOrder": 7,
+          "sourceOrder": 10,
           "name": "vsl-classical-ml",
           "description": "Classical ML smoke (linear regression style) on vsl-starter",
           "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vsl-classical-ml",
@@ -3328,9 +4206,41 @@
           "incompatibleAddonIds": []
         },
         {
+          "id": "vsl-plotting",
+          "sourceId": "vsl-plotting",
+          "sourceOrder": 11,
+          "name": "vsl-plotting",
+          "description": "vsl.plot wiring and scatter helper for scientific starters (no GUI in unit tests)",
+          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vsl-plotting",
+          "category": null,
+          "labels": [
+            "scientific",
+            "plot",
+            "vsl",
+            "domain"
+          ],
+          "typeIds": [],
+          "declaredCompatibleTemplateIds": [
+            "vsl-starter"
+          ],
+          "compatibleTemplateIds": [
+            "vsl-starter"
+          ],
+          "incompatibleTemplateIds": [
+            "web-server",
+            "cli-app",
+            "library-starter",
+            "systems-app",
+            "vtl-starter",
+            "rxv-starter"
+          ],
+          "declaredIncompatibleAddonIds": [],
+          "incompatibleAddonIds": []
+        },
+        {
           "id": "vtl-nn-cpu",
           "sourceId": "vtl-nn-cpu",
-          "sourceOrder": 8,
+          "sourceOrder": 12,
           "name": "vtl-nn-cpu",
           "description": "Tiny CPU neural-net training loop for vtl-starter (CI-safe)",
           "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vtl-nn-cpu",
@@ -3362,7 +4272,7 @@
         {
           "id": "vtl-vsl-bridge",
           "sourceId": "vtl-vsl-bridge",
-          "sourceOrder": 9,
+          "sourceOrder": 13,
           "name": "vtl-vsl-bridge",
           "description": "Bridge VTL tensors to vsl.plot (compose vsl+vtl without a combined base)",
           "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/vtl-vsl-bridge",
@@ -3390,83 +4300,52 @@
           ],
           "declaredIncompatibleAddonIds": [],
           "incompatibleAddonIds": []
-        },
-        {
-          "id": "rxv-operators",
-          "sourceId": "rxv-operators",
-          "sourceOrder": 10,
-          "name": "rxv-operators",
-          "description": "Reactive operator chain (filter/map/reduce) beyond hello-world rxv",
-          "sourceUrl": "https://github.com/Create-Vlang-App/cva-templates?subdir=extensions/rxv-operators",
-          "category": null,
-          "labels": [
-            "reactive",
-            "rxv",
-            "domain"
-          ],
-          "typeIds": [],
-          "declaredCompatibleTemplateIds": [
-            "rxv-starter"
-          ],
-          "compatibleTemplateIds": [
-            "rxv-starter"
-          ],
-          "incompatibleTemplateIds": [
-            "web-server",
-            "cli-app",
-            "library-starter",
-            "systems-app",
-            "vsl-starter",
-            "vtl-starter"
-          ],
-          "declaredIncompatibleAddonIds": [],
-          "incompatibleAddonIds": []
         }
       ],
       "counts": {
         "templates": 7,
-        "addons": 11,
-        "compatibilityEdges": 40
+        "addons": 14,
+        "compatibilityEdges": 51
       },
       "provenance": {
         "repository": "Create-Vlang-App/cva-templates",
-        "commit": "e7addfe4061b4963c1d9532a14f68e763c961408",
-        "commitDate": "2026-08-24T04:57:58Z",
+        "commit": "ac4a3a0e48514f4018abd794cf3eb2f3faa3480e",
+        "commitDate": "2026-09-15T13:32:22Z",
         "registry": {
           "path": "templates.json",
-          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e7addfe4061b4963c1d9532a14f68e763c961408/templates.json",
-          "gitBlobSha": "3278c810fc80eedf4b1cf8569fa807ad4f71327a",
-          "sha256": "ec739daa524e3fddfbb4483d71e2dbace6108e74eb28047086899fae1d4001b8"
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/ac4a3a0e48514f4018abd794cf3eb2f3faa3480e/templates.json",
+          "gitBlobSha": "55c06bfeb130d023e54495e1add937df0deeaa94",
+          "sha256": "9888c428b17b7237e04b842cbafef1e535a96106f311fc43188fb2c91ee97891"
         },
         "schema": {
           "path": "templates.schema.json",
-          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e7addfe4061b4963c1d9532a14f68e763c961408/templates.schema.json",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/ac4a3a0e48514f4018abd794cf3eb2f3faa3480e/templates.schema.json",
           "gitBlobSha": "6198718bccb7349b69a01a53e2e6e0d8c498c89e",
           "sha256": "bf5dd490d8f34d85ab8465f129f4d11f019159fb983442772e0547cc804234af"
         },
         "cliReference": {
           "repository": "Create-Vlang-App/create-vlang-app",
-          "commit": "41b7cce114347fe6e81c622a1a62a410e0eedfa2",
-          "commitDate": "2026-08-23T06:24:56Z"
+          "commit": "e4e2e0e3832b378462ecd2a50cd025b6aaa3138a",
+          "commitDate": "2026-09-17T20:50:43Z"
         },
         "semanticReferences": [
           {
             "role": "cli-catalog-reference",
             "repository": "Create-Vlang-App/create-vlang-app",
-            "commit": "41b7cce114347fe6e81c622a1a62a410e0eedfa2",
-            "commitDate": "2026-08-23T06:24:56Z",
+            "commit": "e4e2e0e3832b378462ecd2a50cd025b6aaa3138a",
+            "commitDate": "2026-09-17T20:50:43Z",
             "path": "modules/create_vlang_app_core/catalog.v",
-            "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/41b7cce114347fe6e81c622a1a62a410e0eedfa2/modules/create_vlang_app_core/catalog.v",
-            "gitBlobSha": "7c4e1c590c408685e402394658370f09da13d776",
-            "sha256": "f1264400f62a0d5ecfabebc332bb71a4c155c312f93186a03a5ea7a891bc72a5"
+            "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/e4e2e0e3832b378462ecd2a50cd025b6aaa3138a/modules/create_vlang_app_core/catalog.v",
+            "gitBlobSha": "9b0fef95c3a8466b37cf1395b9cdc5264d14d2b7",
+            "sha256": "d51606163e38b5e9b71e5c7baccd7da5b14e509a0deb37c4d4397534c9ba3412"
           },
           {
             "role": "catalog-compatibility-reference",
             "repository": "Create-Vlang-App/cva-templates",
-            "commit": "e7addfe4061b4963c1d9532a14f68e763c961408",
-            "commitDate": "2026-08-24T04:57:58Z",
+            "commit": "ac4a3a0e48514f4018abd794cf3eb2f3faa3480e",
+            "commitDate": "2026-09-15T13:32:22Z",
             "path": "scripts/ci/registry.py",
-            "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e7addfe4061b4963c1d9532a14f68e763c961408/scripts/ci/registry.py",
+            "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/ac4a3a0e48514f4018abd794cf3eb2f3faa3480e/scripts/ci/registry.py",
             "gitBlobSha": "bb19f1793cae3cac883b92f5251b5d87173822a9",
             "sha256": "f713740afa6961b8aa102d9889d5aa05659d00af1f0656cc162f631eb72dece8"
           }

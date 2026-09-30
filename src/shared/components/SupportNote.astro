@@ -1,0 +1,74 @@
+---
+/**
+ * SupportNote — the one quiet, contextual sponsorship line a project page may
+ * carry (ADR-004). Copy comes from `src/data/sponsorship.ts`; pages never
+ * retype commercial wording. Deliberately small: portfolio first, support second.
+ */
+import { getSponsorshipAreaById, type SponsorshipArea } from '@/data/sponsorship.js';
+
+export interface Props {
+  area: SponsorshipArea['id'];
+}
+
+const { area } = Astro.props as Props;
+const entry = getSponsorshipAreaById(area);
+if (!entry) throw new Error(`SupportNote: unknown sponsorship area "${area}"`);
+const anchor = `/sponsor#area-${entry.id}`;
+---
+
+<aside class="support-note" aria-label={`Support ${entry.title}`} data-testid="support-note">
+  <svg class="support-note__icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 20.4s-7.6-4.6-7.6-9.6a4.2 4.2 0 0 1 7.6-2.5A4.2 4.2 0 0 1 19.6 10.8c0 5-7.6 9.6-7.6 9.6Z"></path>
+  </svg>
+  <p>
+    {entry.invitation}{' '}
+    <a href={anchor}>Sponsor or partner <span aria-hidden="true">→</span></a>
+  </p>
+</aside>
+
+<style>
+  .support-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    inline-size: min(100% - 2 * var(--gutter, 1rem), 72rem);
+    margin: var(--space-8, 2rem) auto var(--space-6, 1.5rem);
+    padding: 0.85rem 1rem;
+    color: var(--color-text-muted);
+    border: 1px dashed color-mix(in srgb, var(--nest-magenta) 38%, transparent);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--nest-midnight-950) 70%, transparent);
+  }
+
+  .support-note__icon {
+    flex: none;
+    inline-size: 1rem;
+    block-size: 1rem;
+    margin-block-start: 0.2rem;
+    fill: var(--nest-magenta);
+  }
+
+  .support-note p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .support-note a {
+    display: inline-block;
+    margin-inline-start: 0.35rem;
+    color: var(--nest-cyan);
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (forced-colors: active) {
+    .support-note {
+      border-color: CanvasText;
+    }
+
+    .support-note__icon {
+      fill: CanvasText;
+    }
+  }
+</style>

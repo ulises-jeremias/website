@@ -53,9 +53,17 @@ const emailHref = `mailto:${profile.contact.email}`;
             <li>
               <a
                 href={item.path}
-                class:list={['site-header__link', { 'is-active': item.isActive }]}
+                class:list={[
+                  'site-header__link',
+                  { 'is-active': item.isActive, 'site-header__link--cta': item.variant === 'cta' },
+                ]}
                 aria-current={item.isActive ? 'page' : undefined}
               >
+                {item.variant === 'cta' && (
+                  <svg class="site-header__cta-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 20.4s-7.6-4.6-7.6-9.6a4.2 4.2 0 0 1 7.6-2.5A4.2 4.2 0 0 1 19.6 10.8c0 5-7.6 9.6-7.6 9.6Z" />
+                  </svg>
+                )}
                 {item.label}
               </a>
             </li>
@@ -90,7 +98,7 @@ const emailHref = `mailto:${profile.contact.email}`;
           <li>
             <a
               href={item.path}
-              class:list={[{ 'is-active': item.isActive }]}
+              class:list={[{ 'is-active': item.isActive, 'is-cta': item.variant === 'cta' }]}
               aria-current={item.isActive ? 'page' : undefined}
             >
               {item.label}
@@ -301,6 +309,48 @@ const emailHref = `mailto:${profile.contact.email}`;
     box-shadow: 0 0 10px 2px var(--nest-magenta);
   }
 
+  .site-header__link--cta {
+    gap: 0.4rem;
+    margin-inline-start: var(--space-2);
+    padding-inline: 0.8rem;
+    color: var(--nest-paper);
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 45%, transparent);
+    border-radius: 0.15rem;
+    background: color-mix(in srgb, var(--nest-magenta) 8%, transparent);
+  }
+
+  .site-header__link--cta::after {
+    display: none;
+  }
+
+  .site-header__link--cta:hover,
+  .site-header__link--cta:focus-visible {
+    color: var(--nest-paper);
+    border-color: var(--nest-magenta);
+    background: color-mix(in srgb, var(--nest-magenta) 16%, transparent);
+  }
+
+  .site-header__link--cta.is-active {
+    color: var(--nest-paper);
+    border-color: var(--nest-magenta);
+    text-shadow: none;
+  }
+
+  .site-header__cta-icon {
+    inline-size: 0.95rem;
+    block-size: 0.95rem;
+    fill: var(--nest-magenta);
+  }
+
+  .site-header__compact-nav a.is-cta {
+    margin-inline-start: auto;
+  }
+
+  /* Only the resting CTA is pink; hover and active keep the shared nav states. */
+  .site-header__compact-nav a.is-cta:not(.is-active):not(:hover) {
+    color: var(--nest-pink);
+  }
+
   .site-header__utilities {
     display: flex;
     align-items: center;
@@ -366,6 +416,14 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   @media (forced-colors: active) {
+    .site-header__link--cta {
+      border-color: ButtonText;
+    }
+
+    .site-header__cta-icon {
+      fill: currentColor;
+    }
+
     .site-header__link::after {
       background: Highlight;
       box-shadow: none;

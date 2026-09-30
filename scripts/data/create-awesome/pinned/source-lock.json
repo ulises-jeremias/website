@@ -8,35 +8,35 @@
       "id": "node",
       "adapter": "typed-intersection",
       "repository": "Create-Node-App/cna-templates",
-      "commit": "435b67dbbad8efda64912d2af60e8c15c97859f1",
-      "commitDate": "2026-08-24T04:12:41Z",
+      "commit": "30f7a1127c0abb3f81d841462068f7650c666a61",
+      "commitDate": "2026-09-20T04:33:01Z",
       "registry": {
         "path": "templates.json",
-        "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/435b67dbbad8efda64912d2af60e8c15c97859f1/templates.json",
-        "gitBlobSha": "0d3f7cb5639a0594be8fbf403ea7b22b0c6b4ff6",
-        "sha256": "9389c8a99612f5cf38b052fcd07735fd1cc9a372da86486456bc84c6c6b8c0f2",
+        "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/30f7a1127c0abb3f81d841462068f7650c666a61/templates.json",
+        "gitBlobSha": "a24038db2d11d8d8ea13d595ef5c5c3bff044400",
+        "sha256": "f2d347920d3444b660e0db0ae7462dcc6db0fdaa47cb47100a3010a340a92132",
         "cachePath": "node/templates.json"
       },
       "schema": {
         "path": "templates.schema.json",
-        "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/435b67dbbad8efda64912d2af60e8c15c97859f1/templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Node-App/cna-templates/30f7a1127c0abb3f81d841462068f7650c666a61/templates.schema.json",
         "gitBlobSha": "e1d66ac8691fffbe420ad04dbfcd0e0b9a52a7c7",
         "sha256": "1a30f2205cd33cd9314688df9bc323bcc386e053d989cbbb0b5ac4dc2555703c",
         "cachePath": "node/templates.schema.json"
       },
       "cliReference": {
         "repository": "Create-Node-App/create-node-app",
-        "commit": "dd728c40bf07b93fc283b0619fc4d09893d7ce38",
-        "commitDate": "2026-08-23T06:23:45Z"
+        "commit": "416235fc32fb7e91464a2b903d09e52a66822569",
+        "commitDate": "2026-09-17T20:50:32Z"
       },
       "semanticReferences": [
         {
           "role": "cli-compatibility-reference",
           "repository": "Create-Node-App/create-node-app",
-          "commit": "dd728c40bf07b93fc283b0619fc4d09893d7ce38",
-          "commitDate": "2026-08-23T06:23:45Z",
+          "commit": "416235fc32fb7e91464a2b903d09e52a66822569",
+          "commitDate": "2026-09-17T20:50:32Z",
           "path": "packages/create-awesome-node-app/src/templates.ts",
-          "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/dd728c40bf07b93fc283b0619fc4d09893d7ce38/packages/create-awesome-node-app/src/templates.ts",
+          "url": "https://raw.githubusercontent.com/Create-Node-App/create-node-app/416235fc32fb7e91464a2b903d09e52a66822569/packages/create-awesome-node-app/src/templates.ts",
           "gitBlobSha": "f13173ff6df21020fa4332fba02e1bb6d09a38a7",
           "sha256": "7f4403b0d3455c0c1cc12d753805fc7f81477a5830fa29e515fdee55d5acb419",
           "cachePath": "node/semantic/cli-compatibility-reference.source"
@@ -47,37 +47,37 @@
       "id": "python",
       "adapter": "typed-intersection-with-all",
       "repository": "Create-Python-App/cpa-templates",
-      "commit": "f575ee4bd15e7036da48a5ab71bdf5ed38372e4b",
-      "commitDate": "2026-08-24T05:07:21Z",
+      "commit": "83d532c6c8eede9649a1fc7461195bdd453f5bc6",
+      "commitDate": "2026-09-16T05:13:07Z",
       "registry": {
         "path": "templates.json",
-        "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/f575ee4bd15e7036da48a5ab71bdf5ed38372e4b/templates.json",
-        "gitBlobSha": "24b83928686650c38798fe3337cb8cb635789721",
-        "sha256": "a8ccecf9b55ea9c81dbf5d821385e9762b8f6e1e71e543d5cf5314df4f96763c",
+        "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/83d532c6c8eede9649a1fc7461195bdd453f5bc6/templates.json",
+        "gitBlobSha": "53154f2a3ec5421a8c70ea26a4354506fa8cb365",
+        "sha256": "44fe78cae8e59982f1de1c7f2dcf42498107d34f3a9b98ff289e23a4ccc5a311",
         "cachePath": "python/templates.json"
       },
       "schema": {
         "path": "templates.schema.json",
-        "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/f575ee4bd15e7036da48a5ab71bdf5ed38372e4b/templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Python-App/cpa-templates/83d532c6c8eede9649a1fc7461195bdd453f5bc6/templates.schema.json",
         "gitBlobSha": "43d2dc603d3786a909151785a35221f7495c0ed3",
         "sha256": "b8eb428fb573a468270ed09036e319dd179b405df8231f0b862ae2e948ff90fd",
         "cachePath": "python/templates.schema.json"
       },
       "cliReference": {
         "repository": "Create-Python-App/create-python-app",
-        "commit": "36cf5ffc14cac59f6b1099f2b43a5cbf826580a9",
-        "commitDate": "2026-08-24T05:02:23Z"
+        "commit": "5fb4bcbc3c7fd49c2ea5990eb2527a58b27b8789",
+        "commitDate": "2026-09-17T20:50:39Z"
       },
       "semanticReferences": [
         {
           "role": "cli-compatibility-reference",
           "repository": "Create-Python-App/create-python-app",
-          "commit": "36cf5ffc14cac59f6b1099f2b43a5cbf826580a9",
-          "commitDate": "2026-08-24T05:02:23Z",
+          "commit": "5fb4bcbc3c7fd49c2ea5990eb2527a58b27b8789",
+          "commitDate": "2026-09-17T20:50:39Z",
           "path": "packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
-          "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/36cf5ffc14cac59f6b1099f2b43a5cbf826580a9/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
-          "gitBlobSha": "30abd65b9d6dd2ef19c2e80392d0446a7cfa1f3d",
-          "sha256": "641fa27b2127fd306a5416c26c590af61dd526862d89fbef3b1b3f04cdad0c4c",
+          "url": "https://raw.githubusercontent.com/Create-Python-App/create-python-app/5fb4bcbc3c7fd49c2ea5990eb2527a58b27b8789/packages/create-awesome-python-app/src/create_awesome_python_app/catalog.py",
+          "gitBlobSha": "80db60377a4d43dace87f43bde6835d5b9444917",
+          "sha256": "850e240706e4b42c00a71d32df49bffd772ea8df0f54b2b3eab1f0d4f870bf14",
           "cachePath": "python/semantic/cli-compatibility-reference.source"
         }
       ]
@@ -86,46 +86,46 @@
       "id": "v",
       "adapter": "explicit-compatible-with-or-all",
       "repository": "Create-Vlang-App/cva-templates",
-      "commit": "e7addfe4061b4963c1d9532a14f68e763c961408",
-      "commitDate": "2026-08-24T04:57:58Z",
+      "commit": "ac4a3a0e48514f4018abd794cf3eb2f3faa3480e",
+      "commitDate": "2026-09-15T13:32:22Z",
       "registry": {
         "path": "templates.json",
-        "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e7addfe4061b4963c1d9532a14f68e763c961408/templates.json",
-        "gitBlobSha": "3278c810fc80eedf4b1cf8569fa807ad4f71327a",
-        "sha256": "ec739daa524e3fddfbb4483d71e2dbace6108e74eb28047086899fae1d4001b8",
+        "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/ac4a3a0e48514f4018abd794cf3eb2f3faa3480e/templates.json",
+        "gitBlobSha": "55c06bfeb130d023e54495e1add937df0deeaa94",
+        "sha256": "9888c428b17b7237e04b842cbafef1e535a96106f311fc43188fb2c91ee97891",
         "cachePath": "v/templates.json"
       },
       "schema": {
         "path": "templates.schema.json",
-        "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e7addfe4061b4963c1d9532a14f68e763c961408/templates.schema.json",
+        "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/ac4a3a0e48514f4018abd794cf3eb2f3faa3480e/templates.schema.json",
         "gitBlobSha": "6198718bccb7349b69a01a53e2e6e0d8c498c89e",
         "sha256": "bf5dd490d8f34d85ab8465f129f4d11f019159fb983442772e0547cc804234af",
         "cachePath": "v/templates.schema.json"
       },
       "cliReference": {
         "repository": "Create-Vlang-App/create-vlang-app",
-        "commit": "41b7cce114347fe6e81c622a1a62a410e0eedfa2",
-        "commitDate": "2026-08-23T06:24:56Z"
+        "commit": "e4e2e0e3832b378462ecd2a50cd025b6aaa3138a",
+        "commitDate": "2026-09-17T20:50:43Z"
       },
       "semanticReferences": [
         {
           "role": "cli-catalog-reference",
           "repository": "Create-Vlang-App/create-vlang-app",
-          "commit": "41b7cce114347fe6e81c622a1a62a410e0eedfa2",
-          "commitDate": "2026-08-23T06:24:56Z",
+          "commit": "e4e2e0e3832b378462ecd2a50cd025b6aaa3138a",
+          "commitDate": "2026-09-17T20:50:43Z",
           "path": "modules/create_vlang_app_core/catalog.v",
-          "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/41b7cce114347fe6e81c622a1a62a410e0eedfa2/modules/create_vlang_app_core/catalog.v",
-          "gitBlobSha": "7c4e1c590c408685e402394658370f09da13d776",
-          "sha256": "f1264400f62a0d5ecfabebc332bb71a4c155c312f93186a03a5ea7a891bc72a5",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/create-vlang-app/e4e2e0e3832b378462ecd2a50cd025b6aaa3138a/modules/create_vlang_app_core/catalog.v",
+          "gitBlobSha": "9b0fef95c3a8466b37cf1395b9cdc5264d14d2b7",
+          "sha256": "d51606163e38b5e9b71e5c7baccd7da5b14e509a0deb37c4d4397534c9ba3412",
           "cachePath": "v/semantic/cli-catalog-reference.source"
         },
         {
           "role": "catalog-compatibility-reference",
           "repository": "Create-Vlang-App/cva-templates",
-          "commit": "e7addfe4061b4963c1d9532a14f68e763c961408",
-          "commitDate": "2026-08-24T04:57:58Z",
+          "commit": "ac4a3a0e48514f4018abd794cf3eb2f3faa3480e",
+          "commitDate": "2026-09-15T13:32:22Z",
           "path": "scripts/ci/registry.py",
-          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/e7addfe4061b4963c1d9532a14f68e763c961408/scripts/ci/registry.py",
+          "url": "https://raw.githubusercontent.com/Create-Vlang-App/cva-templates/ac4a3a0e48514f4018abd794cf3eb2f3faa3480e/scripts/ci/registry.py",
           "gitBlobSha": "bb19f1793cae3cac883b92f5251b5d87173822a9",
           "sha256": "f713740afa6961b8aa102d9889d5aa05659d00af1f0656cc162f631eb72dece8",
           "cachePath": "v/semantic/catalog-compatibility-reference.source"

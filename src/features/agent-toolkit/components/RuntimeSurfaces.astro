@@ -1,0 +1,159 @@
+---
+/**
+ * RuntimeSurfaces — the three ways to run Agent Toolkit (CLI, local API,
+ * desktop) with an explicit shipped / in-progress status line for each.
+ * Data: `runtimeSurfaces` in ../data/index.ts (verified against upstream).
+ */
+import { runtimeSurfaces } from '../data/index.js';
+---
+
+<section class="atk-surfaces" data-reveal aria-labelledby="atk-surfaces-title">
+  <header class="atk-surfaces__header">
+    <p class="atk-surfaces__eyebrow">One core · three surfaces</p>
+    <h2 id="atk-surfaces-title">Run it where you work</h2>
+    <p class="atk-surfaces__lede">
+      The domain logic lives once, in a native V core. The CLI, the local API, and the desktop app are thin surfaces
+      over it — none of them keeps its own copy of the truth.
+    </p>
+  </header>
+  <ul class="atk-surfaces__list">
+    {
+      runtimeSurfaces.map((surface) => (
+        <li class="atk-surfaces__item" data-surface={surface.id}>
+          <h3>{surface.title}</h3>
+          <p class="atk-surfaces__status">
+            <span class={`atk-surfaces__badge atk-surfaces__badge--${surface.status}`}>
+              {surface.status === 'shipped' ? 'Released' : 'In progress'}
+            </span>
+            <span>{surface.statusNote}</span>
+          </p>
+          <p class="atk-surfaces__summary">{surface.summary}</p>
+          {surface.command && (
+            <code class="atk-surfaces__cmd" tabindex="0">
+              {surface.command}
+            </code>
+          )}
+          <a href={surface.docsHref} target="_blank" rel="noopener noreferrer">
+            {surface.title} docs <span aria-hidden="true">↗</span>
+            <span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .atk-surfaces {
+    inline-size: min(100% - 3rem, 74rem);
+    margin: 2.5rem auto;
+  }
+
+  .atk-surfaces__eyebrow {
+    margin: 0;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .atk-surfaces__header h2 {
+    margin: 0.35rem 0 0.5rem;
+    font-size: clamp(1.35rem, 3vw, 1.9rem);
+  }
+
+  .atk-surfaces__lede {
+    max-inline-size: 64ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .atk-surfaces__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .atk-surfaces__item {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 38%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--nest-midnight-950) 72%, transparent);
+  }
+
+  .atk-surfaces__item h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .atk-surfaces__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 0.6rem;
+    margin: 0;
+    color: var(--color-text-faint);
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .atk-surfaces__badge {
+    padding: 0.1rem 0.45rem;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .atk-surfaces__badge--shipped {
+    color: var(--nest-cyan);
+  }
+
+  .atk-surfaces__badge--in-progress {
+    color: var(--nest-sunset-orange);
+  }
+
+  .atk-surfaces__summary {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .atk-surfaces__cmd {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5rem 0.65rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, black 45%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .atk-surfaces__item a {
+    color: var(--nest-cyan);
+    font-size: 0.85rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

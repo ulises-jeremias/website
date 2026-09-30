@@ -1,7 +1,7 @@
 /**
  * Agentic Harness — persistent workspace layer powered by Agent Toolkit.
  *
- * Sources (verified 2026-08-25, agentic-harness@086c2bf):
+ * Sources (re-verified 2026-09-30, agentic-harness@a3f8822; first verified 2026-08-25 @086c2bf):
  * - README.md (structure, quick start, key concepts)
  * - AGENTS.md (work context, persona enforcement, devcompanion routing)
  */

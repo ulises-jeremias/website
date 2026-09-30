@@ -24,3 +24,10 @@ all ten outputs before committing regenerated cards.
 PNG and ICO derivatives are generated from `public/favicon.svg` and the
 first-party Digital Nest logo. Maskable icons use the approved midnight
 background with a safe inset around the logo.
+
+## 2026-09-30 update (ADR-004)
+
+- Added `sponsor.jpg` (Digital Nest mark) and `hornero-os.jpg` (Hornero OS MIT mark, rasterized from
+  `public/media/hornero-os/hornero-logo.svg` in a separate step so SVG density never scales card text).
+- Refreshed subtitles for `home`, `dotfiles`, `agent-toolkit`, and `projects` (now titled WORK).
+- The generator is deterministic: untouched cards regenerate byte-identical.

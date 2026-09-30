@@ -23,5 +23,5 @@ AGENT_TOOLKIT_ROOT=/path/to/agent-toolkit python3 scripts/sync-agent-toolkit-inv
 - Capability anatomy (selectable families + catalog examples; CSS `:has`, no JS required)
 - Distribution map (profiles from snapshot)
 - DevCompanion KEEP queue ≠ Swarm
-- Swarm story (pair/team/full from `swarm/recipes.py`) + Herdr/tmux commands
+- Swarm story (pair/team/full from `modules/agent_toolkit_core/swarm_recipes.v`) + Herdr/tmux commands
 - Community cross-link → `/community` Digital Nest workshop

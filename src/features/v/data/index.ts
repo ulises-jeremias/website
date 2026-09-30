@@ -9,12 +9,13 @@ import type {
 } from '../types/index.js';
 
 /**
- * Ownership / roles (reverified against repository permissions and current contributions, 2026-08-10):
- * - vlang/v — public organization member and repository contributor; the existing Core Team title is human-gated
- * - vlang/vsl — maintainer
- * - vlang/vtl — maintainer
+ * Ownership / roles (re-verified against public repository evidence, 2026-09-30):
+ * - vlang/v — public organization member; 34 merged PRs (2019–2026). No public roster
+ *   confirms a "Core Team" title, so the site does not claim one (ADR-004).
+ * - vlang/vsl — creator (initial commit 2019-12-03) and lead maintainer (~88% of commits)
+ * - vlang/vtl — lead maintainer / primary author (repo created by the vlang org in 2020)
  * - ulises-jeremias/rxv — author
- * - vlang/setup-v — maintainer
+ * - vlang/setup-v — creator and CODEOWNER
  * - vlang/awesome-v — contributor (scientific / template listings); community-curated list
  *
  * setup-v pin: the current upstream README recommends `uses: vlang/setup-v@v1.7`.
@@ -104,7 +105,7 @@ export const vProjects: VProject[] = [
     href: 'https://github.com/vlang/v',
     repo: 'vlang/v',
     icon: 'v',
-    role: 'Core Team — compiler, tooling, docs, ecosystem',
+    role: 'Org member — compiler, tooling, and docs contributions (34 merged PRs)',
     highlights: [
       'Self-hosted compiler · primary C backend',
       'Immutable bindings by default',
@@ -120,7 +121,7 @@ export const vProjects: VProject[] = [
     href: 'https://github.com/vlang/vsl',
     repo: 'vlang/vsl',
     icon: 'vsl',
-    role: 'Maintainer — scientific modules, compute dispatch, backend integration',
+    role: 'Creator and lead maintainer — scientific modules, compute dispatch, backends',
     highlights: [
       'Pure-V default · QR caveat documented',
       'Optional CBLAS / LAPACKE',
@@ -136,7 +137,7 @@ export const vProjects: VProject[] = [
     href: 'https://github.com/vlang/vtl',
     repo: 'vlang/vtl',
     icon: 'vtl',
-    role: 'Maintainer — Tensor core, autograd graph, Sequential API',
+    role: 'Lead maintainer — tensor core, autograd graph, Sequential API',
     highlights: [
       `${vSourceFacts.releases.vtl} · CPU default`,
       'Reverse-mode autograd · NN modules',
@@ -166,7 +167,7 @@ export const vProjects: VProject[] = [
     href: 'https://github.com/vlang/setup-v',
     repo: 'vlang/setup-v',
     icon: 'ci',
-    role: 'Maintainer — install flow, caching, arch detection',
+    role: 'Creator and code owner — install flow, caching, arch detection',
     highlights: [SETUP_V_PIN, 'Version file · explicit-version cache', 'Mapped prebuilt · source fallback'],
     license: vSourceFacts.licenses.setupV,
   },
@@ -420,7 +421,7 @@ export const licenseEntries: VLicenseEntry[] = [
 export const vMeta = {
   title: 'V Ecosystem — Fast, clear, scientific',
   description:
-    'V, VSL, VTL (V Tensor Library), RxV, setup-v@v1.7 — computational lab. Core Team @ V; verified contributions only.',
+    'V, VSL, VTL (V Tensor Library), RxV, setup-v@v1.7 — computational lab. Verified roles and contributions only.',
   accent: '#1e5a8a',
   accentStrong: '#16446a',
   accentLight: '#5b9bd5',

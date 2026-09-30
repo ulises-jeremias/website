@@ -1,0 +1,97 @@
+---
+/**
+ * SupportBand — one quiet homepage entry point to /sponsor (ADR-004).
+ * Portfolio first: this sits after the work and evidence, never in the hero.
+ */
+import { profile } from '@/data/profile.js';
+---
+
+<aside class="support-band" aria-labelledby="support-band-title">
+  <div class="support-band__copy">
+    <h2 id="support-band-title" class="support-band__title">Support the work</h2>
+    <p>
+      Everything here is open source and maintained in public. Sponsor it on GitHub, or partner on integrations,
+      infrastructure, or Linux hardware testing — disclosed, and never in exchange for a recommendation.
+    </p>
+  </div>
+  <div class="support-band__actions">
+    <a class="support-band__cta" href="/sponsor">Sponsor &amp; partner</a>
+    <a class="support-band__link" href={profile.links.sponsors} target="_blank" rel="noopener noreferrer">
+      GitHub Sponsors ↗<span class="sr-only"> (opens in new tab)</span>
+    </a>
+  </div>
+</aside>
+
+<style>
+  .support-band {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin: clamp(1.5rem, 4vw, 2.5rem) clamp(0.75rem, 3vw, 2rem);
+    padding: 1.1rem 1.3rem;
+    border: 1px dashed color-mix(in srgb, var(--nest-magenta) 45%, transparent);
+    background: color-mix(in srgb, var(--nest-magenta) 5%, var(--nest-midnight-950));
+  }
+
+  .support-band__copy {
+    flex: 1 1 32rem;
+  }
+
+  .support-band__title {
+    margin: 0 0 0.3rem;
+    color: var(--nest-pink);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .support-band__copy p {
+    max-inline-size: 70ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .support-band__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.1rem;
+  }
+
+  .support-band__cta {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--nest-magenta);
+    color: var(--nest-paper);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .support-band__cta:hover,
+  .support-band__cta:focus-visible {
+    background: color-mix(in srgb, var(--nest-magenta) 18%, transparent);
+  }
+
+  .support-band__link {
+    color: var(--nest-cyan);
+    font-size: 0.9rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

@@ -1,0 +1,659 @@
+---
+/**
+ * HorneroOsPage — /hornero-os (ADR-004).
+ *
+ * Editorial order follows the flagship contract: problem → definition →
+ * honest status → how it is composed (the release manifest, the page's
+ * signature) → what you can try today → how it differs from HorneroConfig →
+ * contribution → related work. No fake screenshots: the only imagery is the
+ * project's own MIT brand wallpaper and mark, credited.
+ */
+import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
+import SupportNote from '@/shared/components/SupportNote.astro';
+import {
+  componentStateLabels,
+  familyComparison,
+  horneroAssets,
+  horneroComponents,
+  horneroFacts,
+  manifestSlots,
+} from '../data/index.js';
+
+const statusLabel: Record<string, string> = {
+  pinned: 'pinned',
+  local: 'built from source',
+  future: 'future slot',
+};
+---
+
+<div class="hos">
+  <section class="hos-hero" aria-labelledby="hos-title">
+    <div class="hos-hero__copy">
+      <p class="hos-kicker">Hornero Linux Desktop · operating system</p>
+      <h1 id="hos-title" class="hos-hero__title">
+        <img src={horneroAssets.logo} alt="" width="56" height="56" class="hos-hero__mark" />
+        Hornero OS
+      </h1>
+      <p class="hos-status" role="note">
+        <span class="hos-status__dot" aria-hidden="true"></span>
+        Development preview · not installable yet
+      </p>
+      <p class="hos-hero__problem">
+        A good Hyprland desktop on Arch still means assembling a shell, themes, a greeter, and system scripts by hand —
+        and keeping them in sync afterwards.
+      </p>
+      <p class="hos-hero__lede">
+        Hornero OS is an Arch-based Wayland desktop built around Hyprland and Quickshell, with an Argentine identity. It
+        is composed from separate repositories — shell, desktop defaults, a system CLI, and a login screen — that a
+        versioned manifest pins together. The long-term direction is a desktop with an integrated assistant; none of
+        that ships today.
+      </p>
+      <FlagshipProvenance entryId="hornero-os" />
+      <div class="hos-actions">
+        <a
+          class="hos-cta hos-cta--primary"
+          href={horneroFacts.compositionRepoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Follow the composition
+          <span class="sr-only"> on GitHub (opens in new tab)</span>
+        </a>
+        <a class="hos-cta" href="#try">Try the components</a>
+        <a class="hos-cta hos-cta--quiet" href={horneroFacts.websiteUrl} target="_blank" rel="noopener noreferrer">
+          Project site ↗<span class="sr-only"> (opens in new tab)</span>
+        </a>
+      </div>
+    </div>
+    <figure class="hos-hero__art">
+      <img
+        src={horneroAssets.wallpaper.src}
+        srcset={horneroAssets.wallpaper.srcSet}
+        sizes="(min-width: 960px) 36rem, calc(100vw - 2rem)"
+        width={horneroAssets.wallpaper.width}
+        height={horneroAssets.wallpaper.height}
+        alt={horneroAssets.wallpaper.alt}
+        decoding="async"
+        fetchpriority="high"
+      />
+      <figcaption>Brand wallpaper, not a screenshot · {horneroAssets.wallpaper.credit}</figcaption>
+    </figure>
+  </section>
+
+  <section class="hos-section hos-manifest" aria-labelledby="hos-manifest-title">
+    <div class="hos-manifest__copy">
+      <p class="hos-kicker">How it is composed</p>
+      <h2 id="hos-manifest-title">A preview is a manifest, not an image</h2>
+      <p>
+        Each development preview is a YAML manifest in <code>HorneroOS/hornero</code> that pins the shell and config to exact
+        commits and builds <code>horneroctl</code> from source. A virtual-machine smoke test checks that the pinned composition
+        materializes and applies its theme.
+      </p>
+      <p>
+        The installer and ISO are named in the manifest as future slots. Until they exist, a preview is something you
+        inspect and test piece by piece, not something you install.
+      </p>
+      <p class="hos-manifest__links">
+        <a href={horneroFacts.releasesUrl} target="_blank" rel="noopener noreferrer">
+          All previews ↗<span class="sr-only"> (opens in new tab)</span>
+        </a>
+      </p>
+    </div>
+    <figure class="hos-yaml" aria-labelledby="hos-yaml-caption">
+      <figcaption id="hos-yaml-caption" class="hos-yaml__file">
+        manifests/{horneroFacts.latestPreview}.yaml{' '}
+        <span class="hos-yaml__date">
+          released <time datetime={horneroFacts.latestPreviewDate}>{horneroFacts.latestPreviewDate}</time>
+        </span>
+      </figcaption>
+      <p class="hos-yaml__line" aria-hidden="true"><span class="hos-yaml__key">kind:</span> CompositionManifest</p>
+      <p class="hos-yaml__line" aria-hidden="true"><span class="hos-yaml__key">components:</span></p>
+      <ul class="hos-yaml__slots">
+        {
+          manifestSlots.map((slot) => (
+            <li class={`hos-yaml__slot hos-yaml__slot--${slot.status}`}>
+              <a href={slot.href} target="_blank" rel="noopener noreferrer">
+                <span class="hos-yaml__key">{slot.id}:</span>{' '}
+                <span class="hos-yaml__status">{statusLabel[slot.status]}</span>{' '}
+                <span class="hos-yaml__value">{slot.value}</span> <span class="hos-yaml__note"># {slot.note}</span>
+                <span class="sr-only"> (opens in new tab)</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </figure>
+  </section>
+
+  <section id="try" class="hos-section" aria-labelledby="hos-try-title">
+    <header class="hos-section__head">
+      <p class="hos-kicker">Status, component by component</p>
+      <h2 id="hos-try-title">What you can use today</h2>
+      <p class="hos-section__lead">
+        On an existing Arch Linux machine with Hyprland, the finished components already work on their own. The pieces
+        that would make Hornero OS installable do not exist yet.
+      </p>
+    </header>
+    <ul class="hos-components">
+      {
+        horneroComponents.map((component) => (
+          <li class={`hos-component hos-component--${component.state}`}>
+            <p class="hos-component__state">{componentStateLabels[component.state]}</p>
+            <h3>
+              <a href={component.href} target="_blank" rel="noopener noreferrer">
+                {component.name}
+                <span class="sr-only"> (opens in new tab)</span>
+              </a>
+            </h3>
+            <p>{component.summary}</p>
+            {component.tryIt && (
+              <code class="hos-component__cmd" tabindex="0">
+                {component.tryIt}
+              </code>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="hos-section" aria-labelledby="hos-family-title">
+    <header class="hos-section__head">
+      <p class="hos-kicker">Same family, different jobs</p>
+      <h2 id="hos-family-title">Hornero OS and HorneroConfig</h2>
+      <p class="hos-section__lead">
+        Hornero OS grew out of <a href="/dotfiles">HorneroConfig</a>. The generic parts moved into the OS repositories;
+        HorneroConfig now installs them and keeps what is personal.
+      </p>
+    </header>
+    <div class="hos-table-wrap" tabindex="0" role="region" aria-label="HorneroConfig and Hornero OS comparison table">
+      <table class="hos-table">
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr-only">Aspect</span></th>
+            <th scope="col"><a href="/dotfiles">HorneroConfig</a></th>
+            <th scope="col">Hornero OS</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            familyComparison.map((row) => (
+              <tr>
+                <th scope="row">{row.aspect}</th>
+                <td>{row.config}</td>
+                <td>{row.os}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="hos-section hos-contribute" aria-labelledby="hos-contribute-title">
+    <header class="hos-section__head">
+      <p class="hos-kicker">Contribute</p>
+      <h2 id="hos-contribute-title">Where help is useful now</h2>
+    </header>
+    <ul class="hos-contribute__list">
+      <li>
+        <strong>Hardware reports.</strong> Run the shell and defaults on your machine and report what breaks — there is no
+        compatibility record yet, and every laptop helps start one.
+      </li>
+      <li>
+        <strong>Shell and QML work.</strong> Open issues cover the plugin contract, performance baselines, and lock-screen
+        behavior.
+      </li>
+      <li>
+        <strong>Docs.</strong> The documentation is nine pages and growing; install and architecture guides need writers.
+      </li>
+    </ul>
+    <p class="hos-contribute__links">
+      <a href={horneroFacts.contributingUrl} target="_blank" rel="noopener noreferrer">
+        Contributing guide ↗<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a href={horneroFacts.discussionsUrl} target="_blank" rel="noopener noreferrer">
+        Discussions ↗<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a href={horneroFacts.orgUrl} target="_blank" rel="noopener noreferrer">
+        All {horneroFacts.repositoryCount} repositories ↗<span class="sr-only"> (opens in new tab)</span>
+      </a>
+      <a href="/community">Community</a>
+    </p>
+  </section>
+
+  <SupportNote area="hornero" />
+
+  <nav class="hos-related" aria-label="Related work">
+    <a href="/dotfiles">HorneroConfig</a>
+    <a href="/agentic-workstation">Agentic Workstation</a>
+    <a href="/projects">All work</a>
+  </nav>
+</div>
+
+<style>
+  .hos {
+    --hos-clay: #e07856;
+    --hos-amber: #f2b749;
+    --hos-adobe: #1d1410;
+
+    display: grid;
+    gap: clamp(2.75rem, 6vw, 4.5rem);
+    inline-size: min(100% - 2 * var(--gutter, 1rem), 74rem);
+    margin-inline: auto;
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .hos-kicker {
+    margin: 0;
+    color: var(--hos-amber);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .hos code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+
+  /* hero */
+  .hos-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  .hos-hero__title {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0.6rem 0 0.8rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.3rem);
+    line-height: 1.05;
+  }
+
+  .hos-hero__mark {
+    flex: none;
+    inline-size: clamp(2.5rem, 5vw, 3.5rem);
+    block-size: auto;
+  }
+
+  .hos-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 1rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--hos-amber) 55%, transparent);
+    color: var(--hos-amber);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+
+  .hos-status__dot {
+    inline-size: 0.55rem;
+    block-size: 0.55rem;
+    border-radius: 50%;
+    background: var(--hos-amber);
+  }
+
+  .hos-hero__problem {
+    max-inline-size: 58ch;
+    margin: 0 0 0.75rem;
+    color: var(--nest-paper);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .hos-hero__lede,
+  .hos-manifest__copy p,
+  .hos-section__lead {
+    max-inline-size: 62ch;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .hos-hero__art {
+    margin: 0;
+  }
+
+  .hos-hero__art img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    border: 1px solid color-mix(in srgb, var(--hos-clay) 40%, transparent);
+    box-shadow: 0 24px 60px -30px color-mix(in srgb, var(--hos-clay) 70%, transparent);
+  }
+
+  .hos-hero__art figcaption {
+    margin-block-start: 0.5rem;
+    color: var(--color-text-faint);
+    font-size: 0.75rem;
+  }
+
+  .hos-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-block-start: 1.3rem;
+  }
+
+  .hos-cta {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.65rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--hos-amber) 45%, transparent);
+    color: var(--nest-paper);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .hos-cta:hover,
+  .hos-cta:focus-visible {
+    border-color: var(--hos-amber);
+    color: var(--hos-amber);
+  }
+
+  .hos-cta--primary {
+    background: var(--hos-clay);
+    border-color: var(--hos-clay);
+    color: var(--hos-adobe);
+  }
+
+  .hos-cta--primary:hover,
+  .hos-cta--primary:focus-visible {
+    background: var(--hos-amber);
+    border-color: var(--hos-amber);
+    color: var(--hos-adobe);
+  }
+
+  .hos-cta--quiet {
+    border-color: transparent;
+    color: var(--color-text-muted);
+  }
+
+  /* sections */
+  .hos-section {
+    display: grid;
+    gap: 1.25rem;
+    /* In-page anchors (#try) land below the sticky header. */
+    scroll-margin-block-start: 6rem;
+  }
+
+  .hos h2 {
+    margin: 0.4rem 0 0.6rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+  }
+
+  .hos-section__lead a,
+  .hos-manifest__links a,
+  .hos-contribute__links a,
+  .hos-table a {
+    color: var(--hos-amber);
+  }
+
+  /* signature: manifest */
+  .hos-manifest {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  .hos-manifest__copy {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .hos-manifest__links {
+    margin: 0;
+  }
+
+  .hos-yaml {
+    margin: 0;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--hos-clay) 45%, transparent);
+    border-inline-start: 3px solid var(--hos-clay);
+    background: color-mix(in srgb, var(--hos-adobe) 80%, var(--nest-midnight-950));
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .hos-yaml__file {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    margin-block-end: 0.7rem;
+    padding-block-end: 0.6rem;
+    border-block-end: 1px dashed color-mix(in srgb, var(--hos-amber) 30%, transparent);
+    color: var(--nest-paper);
+  }
+
+  .hos-yaml__date {
+    color: var(--color-text-faint);
+  }
+
+  .hos-yaml__line {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .hos-yaml__key {
+    color: var(--hos-amber);
+  }
+
+  .hos-yaml__slots {
+    margin: 0;
+    padding: 0 0 0 1.25rem;
+    list-style: none;
+  }
+
+  .hos-yaml__slot a {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.6rem;
+    padding-block: 0.2rem;
+    color: var(--nest-paper);
+    text-decoration: none;
+  }
+
+  .hos-yaml__slot a:hover .hos-yaml__key,
+  .hos-yaml__slot a:focus-visible .hos-yaml__key {
+    text-decoration: underline;
+  }
+
+  .hos-yaml__status {
+    color: var(--nest-cyan);
+  }
+
+  .hos-yaml__slot--future .hos-yaml__status,
+  .hos-yaml__slot--future .hos-yaml__value {
+    color: var(--color-text-faint);
+  }
+
+  /* Future slots read as muted, not faded: status text carries the meaning, contrast stays AA. */
+  .hos-yaml__slot--future .hos-yaml__key {
+    color: var(--color-text-muted);
+  }
+
+  .hos-yaml__note {
+    flex-basis: 100%;
+    color: var(--color-text-faint);
+  }
+
+  /* components */
+  .hos-components {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hos-component {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--nest-paper) 14%, transparent);
+    background: color-mix(in srgb, var(--hos-adobe) 45%, var(--nest-midnight-950));
+  }
+
+  .hos-component--try-today {
+    border-block-start: 3px solid var(--nest-cyan);
+  }
+
+  .hos-component--not-yet {
+    border-block-start: 3px dashed var(--color-text-faint);
+  }
+
+  .hos-component--direction {
+    border-block-start: 3px dotted var(--hos-amber);
+  }
+
+  .hos-component__state {
+    margin: 0;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hos-component--try-today .hos-component__state {
+    color: var(--nest-cyan);
+  }
+
+  .hos-component h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .hos-component h3 a {
+    color: var(--nest-paper);
+    text-underline-offset: 0.2em;
+  }
+
+  .hos-component > p:not(.hos-component__state) {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .hos-component__cmd {
+    display: block;
+    overflow-x: auto;
+    padding: 0.45rem 0.6rem;
+    background: color-mix(in srgb, black 45%, transparent);
+    color: var(--nest-paper);
+    white-space: nowrap;
+  }
+
+  /* table */
+  .hos-table-wrap {
+    overflow-x: auto;
+  }
+
+  .hos-table {
+    inline-size: 100%;
+    min-inline-size: 36rem;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .hos-table th,
+  .hos-table td {
+    padding: 0.75rem 0.9rem;
+    border-block-end: 1px solid color-mix(in srgb, var(--nest-paper) 12%, transparent);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .hos-table thead th {
+    color: var(--nest-paper);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+  }
+
+  .hos-table tbody th {
+    color: var(--color-text-faint);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .hos-table td {
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  /* contribute */
+  .hos-contribute__list {
+    display: grid;
+    gap: 0.6rem;
+    max-inline-size: 70ch;
+    margin: 0;
+    padding-inline-start: 1.1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .hos-contribute__list strong {
+    color: var(--nest-paper);
+  }
+
+  .hos-contribute__links,
+  .hos-related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    margin: 0;
+  }
+
+  .hos-related a {
+    color: var(--nest-cyan);
+  }
+
+  .hos :global(.support-note) {
+    inline-size: 100%;
+    margin: 0;
+  }
+
+  .sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (width < 900px) {
+    .hos-hero,
+    .hos-manifest {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .hos-cta,
+    .hos-status,
+    .hos-yaml,
+    .hos-component {
+      border-color: CanvasText;
+    }
+  }
+</style>

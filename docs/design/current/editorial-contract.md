@@ -1,7 +1,7 @@
 # Flagship project editorial contract
 
 **Date:** 2026-08-31
-**Related:** ADR-003, issue #394, #393
+**Related:** ADR-003, ADR-004, issue #394, #393
 **Scope:** Narrative consistency for flagship project pages
 
 ## Purpose
@@ -25,6 +25,7 @@ Flagship pages answer these questions in approximately this order:
 | 7   | What is Ulises's role and who owns the repository?     | Role + provenance (from portfolio taxonomy)   |
 | 8   | How does someone get started or contribute?            | Install command, docs link, contribution path |
 | 9   | What related work should they inspect next?            | Cross-links to related areas/projects         |
+| 10  | Is there a relevant way to support or partner?         | One quiet `SupportNote` (ADR-004), never more |
 
 The first viewport must not require visitors to interpret raw inventory totals, topology graphs, or catalog counts before understanding the proposition (questions 1–3).
 
@@ -36,6 +37,7 @@ The first viewport must not require visitors to interpret raw inventory totals, 
 | `/agentic-workstation` | Turn a clean machine into a reproducible AI-native workstation           | Boot sequence, profile readout, health console                         |
 | `/agentic-harness`     | Your coding agent sessions are temporary; your workspace should not be   | Workspace anatomy, pack guide, ownership model _(already conformant)_  |
 | `/dotfiles`            | A reproducible Linux desktop that feels yours, reproducibly              | Smart Colors pipeline, theme explorer, screenshot gallery, layer stack |
+| `/hornero-os`          | A finished Hyprland desktop without hand-assembling it — once it ships   | Composition manifest, component status board, HorneroConfig comparison |
 | `/v`                   | My contribution span across the V language and its ecosystem             | Six lab stations, per-project diagrams and evidence                    |
 | `/create-awesome`      | Composable app scaffolding across three languages, one composition model | Composer, per-runtime catalogs, distribution matrix                    |
 
@@ -50,6 +52,13 @@ To avoid retyping facts across pages, these fields come from the portfolio taxon
 - Evidence reference (`evidence`)
 
 Feature-specific technical inventories (Toolkit skills, V stations, Create Awesome catalogs, Smart Colors themes) remain in their existing feature data modules.
+
+## Maturity and support
+
+- Every flagship entry may carry a `maturity` label (`established`, `active`, `early`, `preview`).
+  A `preview` entry must say what is not usable yet (Hornero OS: no installer, no ISO).
+- Question 10 is answered by at most one `SupportNote` per page, sourced from
+  `src/data/sponsorship.ts`. Sponsorship never appears inside inventory, diagrams, or proof.
 
 ## Content governance
 

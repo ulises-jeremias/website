@@ -8,14 +8,14 @@ test.describe('Archive and recovery routes', () => {
 
       await page.goto('/projects/');
       await expect(page.locator('#archipelago-title')).toHaveText('What I build');
-      await expect(page.locator('.archipelago__readout')).toContainText('World pointers');
+      await expect(page.locator('.archipelago__readout')).toContainText('Flagship areas');
       await expect(page.locator('[data-projects-row]')).not.toHaveCount(0);
       // Work tiers (#404): featured → maintained → selected → labs precede the ledger.
       await expect(page.locator('[data-testid="work-tiers"]')).toContainText('Featured work');
       await expect(page.locator('[data-testid="work-tiers"]')).toContainText('Recoil DevTools');
 
       await page.goto('/open-source/');
-      await expect(page.locator('#constellation-title')).toHaveText('Evidence archive');
+      await expect(page.locator('#constellation-title')).toHaveText('Open-source evidence');
       await expect(page.locator('[data-testid="oss-ledger"]')).toContainText('Primary record');
       await expect(page.locator('[data-testid="oss-row"]')).not.toHaveCount(0);
 

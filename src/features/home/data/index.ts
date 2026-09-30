@@ -34,15 +34,19 @@ export const atlasWorlds: AtlasWorld[] = worldsByPriority.map((world, index) => 
 
 /** Verified focus keywords derived from profile.focusAreas — not generated copy. */
 export const heroKeywords = [
-  'Developer Tooling',
-  'AI Workflows',
-  'CLI Apps',
-  'Linux Tooling',
+  'Agent Tooling',
+  'Linux Desktops',
   'Scientific Computing',
+  'App Scaffolding',
+  'Open Source',
 ] as const;
 
-/** ZIP terminal quote — positioning statement, not invented telemetry. */
-export const terminalQuote = "Building tools that empower developers and expand what's possible.";
+/**
+ * Terminal line in the hero: what is being built right now (verified against
+ * the repositories on 2026-09-30) — not invented telemetry.
+ */
+export const terminalQuote =
+  'now building: the Agent Toolkit desktop app and local API, and Hornero OS development previews.';
 
 export const nestStatus: NestStatusItem[] = [
   {
@@ -52,7 +56,7 @@ export const nestStatus: NestStatusItem[] = [
   },
   {
     label: 'primary_focus',
-    value: 'Developer tooling & AI workflows',
+    value: 'Agent tooling & Linux desktops',
     tone: 'cyan',
   },
   {
@@ -96,6 +100,8 @@ export interface FeaturedArea {
   lens: 'Building now' | 'Proven over time' | 'Building now · Proven over time';
   /** Member summary when the area has more than one flagship component. */
   members?: string;
+  /** Member routes, rendered as separate links inside the card. */
+  memberLinks: Array<{ title: string; path: string; maturity?: string }>;
   /** Contextual proof summary from member proofLines via the selector. */
   proof?: string;
 }
@@ -103,7 +109,7 @@ export interface FeaturedArea {
 /** Visual-only mapping per portfolio area id (presentation, not editorial facts). */
 const featuredAreaVisuals: Record<string, { accent: FeaturedArea['accent']; island: string }> = {
   agentic: { accent: 'violet', island: 'island-agent' },
-  horneroconfig: { accent: 'magenta', island: 'island-dotfiles' },
+  hornero: { accent: 'magenta', island: 'island-dotfiles' },
   'v-ecosystem': { accent: 'blue', island: 'island-v' },
   'create-awesome': { accent: 'orange', island: 'island-scaffold' },
 };
