@@ -54,7 +54,7 @@ Add new marketing pages as `pages/<slug>.astro`; tenant/slug logic belongs in fe
 
 Encapsulated domains under `src/features/<name>`:
 
-```
+```text
 <feature>/
 ├── components/  # Astro components (or React islands)
 ├── services/    # data fetching / business logic (e.g., blog.ts)

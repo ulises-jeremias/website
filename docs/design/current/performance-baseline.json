@@ -190,14 +190,14 @@
         "requests": 10
       },
       "desktop": {
-        "total": 107193,
+        "total": 111316,
         "document": 25320,
         "script": 0,
-        "style": 15407,
-        "image": 3802,
+        "style": 15421,
+        "image": 7911,
         "font": 62664,
         "other": 0,
-        "requests": 10
+        "requests": 13
       }
     },
     "/community/": {

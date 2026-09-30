@@ -155,13 +155,13 @@
         "requests": 12
       },
       "desktop": {
-        "total": 109568,
+        "total": 122880,
         "document": 28672,
         "script": 0,
         "style": 17408,
-        "image": 8192,
+        "image": 9216,
         "font": 69632,
-        "requests": 14
+        "requests": 15
       }
     },
     "/community/": {

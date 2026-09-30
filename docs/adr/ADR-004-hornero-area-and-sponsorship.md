@@ -11,17 +11,17 @@
 
 Three things changed after ADR-003:
 
-1. **Hornero OS became public.** The `HorneroOS` organization (8 repositories, created 2026-07-28) ships
-   development-preview compositions (`v0.2.0-preview12`, 2026-09-30). Its shell, desktop defaults, and
-   `horneroctl` CLI were extracted from `ulises-jeremias/dotfiles`, and HorneroConfig now depends on them
-   (dotfiles #294–#305, #317). The installer and ISO are named future slots: nothing is installable.
-   The site still listed Hornero OS as "incubating, no public repository yet".
-2. **The site needed a credible destination for sponsors and partners** — one URL that explains the
-   work, what support pays for, how to engage, and the rules that protect users' trust.
-3. **Role wording needed re-scoping.** No public roster confirms the "Core Team Member" title for V
-   (vlang team membership is private; the only public source was the owner's own profile README).
-   Public evidence supports stronger, specific roles: creator and lead maintainer of VSL, lead
-   maintainer of VTL, creator and code owner of setup-v, and 34 merged pull requests to `vlang/v`.
+- **Hornero OS became public.** The `HorneroOS` organization (8 repositories, created 2026-07-28) ships
+  development-preview compositions (`v0.2.0-preview12`, 2026-09-30). Its shell, desktop defaults, and
+  `horneroctl` CLI were extracted from `ulises-jeremias/dotfiles`, and HorneroConfig now depends on them
+  (dotfiles #294–#305, #317). The installer and ISO are named future slots: nothing is installable.
+  The site still listed Hornero OS as "incubating, no public repository yet".
+- **The site needed a credible destination for sponsors and partners** — one URL that explains the
+  work, what support pays for, how to engage, and the rules that protect users' trust.
+- **Role wording needed re-scoping.** No public roster confirms the "Core Team Member" title for V
+  (vlang team membership is private; the only public source was the owner's own profile README).
+  Public evidence supports stronger, specific roles: creator and lead maintainer of VSL, lead
+  maintainer of VTL, creator and code owner of setup-v, and 34 merged pull requests to `vlang/v`.
 
 ## Decision
 

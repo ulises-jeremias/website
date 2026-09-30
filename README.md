@@ -68,7 +68,7 @@ Each refresh lands through a reviewed PR; see [`docs/DATA_PROVENANCE.md`](./docs
 
 ## Project Structure
 
-```
+```text
 .
 ├── public/                 # static assets (favicon, logo)
 ├── src/
@@ -103,7 +103,7 @@ See [`docs/PROJECT_STRUCTURE.md`](./docs/PROJECT_STRUCTURE.md) for full conventi
 
 Each feature is self-contained:
 
-```
+```text
 src/features/<name>/
 ├── components/  # Astro / island UI
 ├── services/    # data fetching, business logic
