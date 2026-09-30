@@ -57,7 +57,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
       '.chezmoi.toml.tmpl + run_onchange_* hooks',
       'State in ~/.local/state/dots/ and ~/.cache/dots/',
     ],
-    color: '#3a232e',
+    color: '#211218',
   },
   {
     id: 'scripts',
@@ -69,7 +69,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
       'Non-interactive by default: --json, --dry-run, --yes for mutations',
       'theme.json appearances + python-materialyoucolor M3 path',
     ],
-    color: '#4a2d3a',
+    color: '#2a1620',
   },
   {
     id: 'terminal',
@@ -81,7 +81,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
       'btop, cava, fastfetch, yazi, tmux',
       'M3 palette via ~/.cache/dots/smart-colors/colors-kitty.conf',
     ],
-    color: '#5e384a',
+    color: '#341b27',
   },
   {
     id: 'compositor',
@@ -93,7 +93,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
       'Quickshell shell from HorneroOS/shell: bar, launcher, dashboard, notifications',
       'Hyprlock themed via horneroctl appearance hyprlock',
     ],
-    color: '#7a4a5f',
+    color: '#3f202d',
   },
   {
     id: 'shell',
@@ -105,7 +105,7 @@ export const dotfilesLayers: DotfilesLayer[] = [
       'config.d/plugins, keybindings, paths',
       'handlr, git, ssh, modular .zshrc',
     ],
-    color: '#8f5a72',
+    color: '#4a2534',
   },
 ];
 

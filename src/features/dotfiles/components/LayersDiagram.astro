@@ -34,7 +34,7 @@ const ordered = [...dotfilesLayers].reverse();
               height="80"
               rx="14"
               fill={layer.color}
-              stroke="rgba(255,176,202,0.28)"
+              stroke="rgba(255,176,202,0.38)"
               stroke-width="1.2"
             />
             <rect
@@ -77,15 +77,15 @@ const ordered = [...dotfilesLayers].reverse();
               <g aria-hidden="true">
                 <line
                   x1="340"
-                  y1={String(y + 80)}
+                  y1={String(y + 82)}
                   x2="340"
-                  y2={String(y + 100)}
+                  y2={String(y + 92)}
                   stroke="rgba(255,176,202,0.55)"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-dasharray="6 6"
+                  stroke-dasharray="3 3"
                 />
-                <polygon points={`${340},${y + 100} ${334},${y + 92} ${346},${y + 92}`} fill="#FFB0CA" />
+                <polygon points={`${340},${y + 97} ${335},${y + 90} ${345},${y + 90}`} fill="#FFB0CA" />
               </g>
             )}
             <rect
