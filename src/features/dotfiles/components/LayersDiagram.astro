@@ -9,108 +9,177 @@ interface Props {
 const { compact = true } = Astro.props;
 
 const ordered = [...dotfilesLayers].reverse();
+
+/**
+ * Isometric slab palette, lit from the surface down: each deeper slab sits in
+ * the shadow of the one above, so the value progression encodes stack depth.
+ * Keyed by layer id; unknown ids fall back to the data color as a flat slab.
+ */
+const slabPalette: Record<string, { front: string; top: string; side: string }> = {
+  shell: { front: '#552b3d', top: '#7d4258', side: '#3a1e2a' },
+  compositor: { front: '#4a2534', top: '#6f3a4e', side: '#321a24' },
+  terminal: { front: '#3f202d', top: '#613247', side: '#2b161e' },
+  scripts: { front: '#341b27', top: '#522a3c', side: '#241219' },
+  chezmoi: { front: '#2a1620', top: '#432336', side: '#1d0f14' },
+};
+
+const FACE = { x: 118, w: 430, h: 70, dx: 34, dy: 24, pitch: 98, top: 52 };
+const RAIL_X = 64;
+
+const slabFor = (index: number) => {
+  const y = FACE.top + index * FACE.pitch;
+  const x0 = FACE.x;
+  const x1 = FACE.x + FACE.w;
+  return {
+    y,
+    cy: y + FACE.h / 2,
+    front: { x: x0, y, w: FACE.w, h: FACE.h },
+    top: `${x0},${y} ${x0 + FACE.dx},${y - FACE.dy} ${x1 + FACE.dx},${y - FACE.dy} ${x1},${y}`,
+    side: `${x1},${y} ${x1 + FACE.dx},${y - FACE.dy} ${x1 + FACE.dx},${y + FACE.h - FACE.dy} ${x1},${y + FACE.h}`,
+  };
+};
+
+const paletteFor = (id: string, fallback: string) =>
+  slabPalette[id] ?? { front: fallback, top: fallback, side: fallback };
 ---
 
 <div class:list={['df-layers', { 'df-layers--compact': compact }]} data-df-layers>
   <svg
     class="df-layers__svg"
-    viewBox="0 0 680 540"
+    viewBox="0 0 640 580"
     aria-hidden="true"
     focusable="false"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="324" y="20" width="12" height="470" rx="6" fill="rgba(255,176,202,0.12)" aria-hidden="true"></rect>
+    <text
+      x={RAIL_X}
+      y="20"
+      text-anchor="middle"
+      font-size="9"
+      font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+      letter-spacing="0.22em"
+      fill="#8a6a76"
+      aria-hidden="true"
+    >
+      SURFACE
+    </text>
+    <line x1={RAIL_X} y1="30" x2={RAIL_X} y2="556" stroke="rgba(255,176,202,0.25)" stroke-width="2" aria-hidden="true"
+    ></line>
     {
       ordered.map((layer, index) => {
-        const y = 20 + index * 100;
-        const isTop = index === 0;
-        const isBottom = index === ordered.length - 1;
+        const slab = slabFor(index);
+        const palette = paletteFor(layer.id, layer.color);
+        const numeral = String(index + 1).padStart(2, '0');
         return (
           <g class:list={['df-layers__layer', { 'is-selected': layer.id === 'chezmoi' }]} data-layer-visual={layer.id}>
-            <rect
-              x="56"
-              y={String(y)}
-              width="568"
-              height="80"
-              rx="14"
-              fill={layer.color}
-              stroke="rgba(255,176,202,0.38)"
-              stroke-width="1.2"
-            />
-            <rect
-              x="56"
-              y={String(y)}
-              width="568"
-              height="4"
-              rx="2"
-              fill={isTop ? '#FFB0CA' : isBottom ? '#e2bdc7' : 'rgba(255,176,202,0.85)'}
-            />
-            <rect
-              x="70"
-              y={String(y + 16)}
-              width="48"
-              height="48"
-              rx="10"
-              fill="rgba(25,17,20,0.72)"
-              stroke="rgba(255,176,202,0.18)"
-            />
             <text
-              x="94"
-              y={String(y + 46)}
+              class="df-layers__num"
+              x="34"
+              y={slab.cy + 4}
               text-anchor="middle"
-              dominant-baseline="middle"
               font-size="11"
               font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
               letter-spacing="0.08em"
-              fill="#FFB0CA"
               aria-hidden="true"
             >
-              {layer.shortLabel.slice(0, 4).toUpperCase()}
+              {numeral}
             </text>
-            <text x="132" y={String(y + 34)} font-size="15" font-weight="800" letter-spacing="-0.02em" fill="#fbe7ec">
+            <line
+              x1={RAIL_X + 6}
+              y1={slab.cy}
+              x2={FACE.x - 6}
+              y2={slab.cy}
+              stroke="rgba(255,176,202,0.22)"
+              stroke-width="1.5"
+              aria-hidden="true"
+            />
+            <circle class="df-layers__node" cx={RAIL_X} cy={slab.cy} r="5" stroke-width="1.5" aria-hidden="true" />
+            <polygon
+              points={slab.top}
+              fill={palette.top}
+              stroke="rgba(255,176,202,0.18)"
+              stroke-width="1"
+              aria-hidden="true"
+            />
+            <polygon
+              points={slab.side}
+              fill={palette.side}
+              stroke="rgba(255,176,202,0.14)"
+              stroke-width="1"
+              aria-hidden="true"
+            />
+            <rect
+              class="df-layers__front"
+              x={slab.front.x}
+              y={slab.front.y}
+              width={slab.front.w}
+              height={slab.front.h}
+              rx="10"
+              fill={palette.front}
+            />
+            <rect
+              class="df-layers__accent"
+              x={slab.front.x + 8}
+              y={slab.front.y + 12}
+              width="3"
+              height="46"
+              rx="1.5"
+              aria-hidden="true"
+            />
+            <text
+              x={slab.front.x + 24}
+              y={slab.front.y + 31}
+              font-size="17"
+              font-weight="800"
+              letter-spacing="-0.02em"
+              fill="#fbe7ec"
+            >
               {layer.label}
             </text>
-            <text x="132" y={String(y + 56)} font-size="12" fill="#d5c2c6">
+            <text x={slab.front.x + 24} y={slab.front.y + 53} font-size="12.5" fill="#d5c2c6">
               {layer.description}
             </text>
-            {index < ordered.length - 1 && (
-              <g aria-hidden="true">
-                <line
-                  x1="340"
-                  y1={String(y + 82)}
-                  x2="340"
-                  y2={String(y + 92)}
-                  stroke="rgba(255,176,202,0.55)"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-dasharray="3 3"
-                />
-                <polygon points={`${340},${y + 97} ${335},${y + 90} ${345},${y + 90}`} fill="#FFB0CA" />
-              </g>
-            )}
-            <rect
-              class="df-layers__focus"
-              x="54"
-              y={String(y - 2)}
-              width="572"
-              height="84"
-              rx="16"
-              fill="none"
-              stroke="transparent"
-              stroke-width="2"
+            <circle
+              cx={slab.front.x + slab.front.w - 9}
+              cy={slab.front.y + 27}
+              r="2.5"
+              fill="#FFB0CA"
+              opacity="0.85"
+              aria-hidden="true"
             />
+            <text
+              x={slab.front.x + slab.front.w - 18}
+              y={slab.front.y + 31}
+              text-anchor="end"
+              font-size="11"
+              font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+              letter-spacing="0.04em"
+              fill="#FFB0CA"
+            >
+              {layer.shortLabel}
+            </text>
           </g>
         );
       })
     }
-    <text
-      x="340"
+    <rect
+      x="109"
       y="528"
+      width="448"
+      height="30"
+      rx="6"
+      fill="#1a1015"
+      stroke="rgba(255,176,202,0.22)"
+      stroke-width="1"
+      aria-hidden="true"></rect>
+    <text
+      x="333"
+      y="547"
       text-anchor="middle"
       font-size="11"
-      font-weight="600"
-      letter-spacing="0.06em"
-      fill="#FFB0CA"
+      font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+      letter-spacing="0.04em"
+      fill="#c9a8b2"
       aria-hidden="true"
     >
       .chezmoiroot → home/ · atomic apply
@@ -129,18 +198,49 @@ const ordered = [...dotfilesLayers].reverse();
     height: auto;
   }
 
+  .df-layers__front {
+    stroke: rgba(255, 176, 202, 0.28);
+    stroke-width: 1.2;
+  }
+
+  .df-layers__accent {
+    fill: rgba(255, 176, 202, 0.35);
+  }
+
+  .df-layers__node {
+    fill: #3a232e;
+    stroke: rgba(255, 176, 202, 0.4);
+  }
+
+  .df-layers__num {
+    fill: #8a6a76;
+  }
+
   .df-layers__layer.is-pointer-ready {
     cursor: pointer;
   }
 
-  .df-layers__layer.is-selected .df-layers__focus,
-  .df-layers__layer.is-pointer-ready:hover .df-layers__focus {
+  .df-layers__layer.is-selected {
+    filter: drop-shadow(0 0 12px rgba(255, 176, 202, 0.3));
+  }
+
+  .df-layers__layer.is-selected .df-layers__front {
+    stroke: #ffb0ca;
+    stroke-width: 2;
+  }
+
+  .df-layers__layer.is-selected .df-layers__accent {
+    fill: #ffb0ca;
+  }
+
+  .df-layers__layer.is-selected .df-layers__node {
+    fill: #ffb0ca;
     stroke: #ffb0ca;
   }
 
-  .df-layers__layer.is-selected rect[rx='14'] {
-    stroke: #ffb0ca;
-    stroke-width: 1.8;
+  .df-layers__layer.is-selected .df-layers__num {
+    fill: #ffb0ca;
+    font-weight: 700;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -148,12 +248,19 @@ const ordered = [...dotfilesLayers].reverse();
       transition: transform 0.18s ease;
     }
     .df-layers__layer.is-pointer-ready:hover {
-      transform: translateX(2px);
+      transform: translateY(-3px);
     }
   }
 
   @media (forced-colors: active) {
-    .df-layers__layer.is-selected .df-layers__focus {
+    .df-layers__layer.is-selected {
+      filter: none;
+    }
+    .df-layers__layer.is-selected .df-layers__front {
+      stroke: Highlight;
+    }
+    .df-layers__layer.is-selected .df-layers__node {
+      fill: Highlight;
       stroke: Highlight;
     }
   }
