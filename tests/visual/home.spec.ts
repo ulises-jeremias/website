@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
 
 test.describe('homepage visual coverage', () => {
   test('desktop atlas composition', async ({ page }) => {
@@ -14,6 +15,12 @@ test.describe('homepage visual coverage', () => {
     await expect(page.locator('.about-panel')).toBeVisible();
     // The four-area Featured Work section replaced the legacy ledger (#402).
     await expect(page.locator('.featured-areas')).toBeVisible();
+
+    const featuredWork = page.getByRole('navigation', { name: 'Featured work' });
+    await expect(featuredWork.getByRole('listitem')).toHaveCount(4);
+    for (const area of getHomepagePortfolioAreas()) {
+      await expect(featuredWork.getByRole('link', { name: area.title })).toHaveAttribute('href', area.path);
+    }
 
     const overflow = await page.evaluate(() => {
       const doc = document.documentElement;
@@ -34,6 +41,8 @@ test.describe('homepage visual coverage', () => {
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('.atlas-world')).toHaveCount(10);
     await expect(page.locator('#project-atlas-guide')).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Featured work' })).toBeHidden();
+    await expect(page.locator('.featured-areas')).toBeVisible();
 
     const overflow = await page.evaluate(() => {
       const doc = document.documentElement;
@@ -46,6 +55,24 @@ test.describe('homepage visual coverage', () => {
       fullPage: false,
       maxDiffPixelRatio: 0.07,
     });
+  });
+
+  test('tablet breakpoint keeps featured destinations available before the mobile reflow', async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 900 });
+    await page.goto('/');
+
+    const featuredWork = page.getByRole('navigation', { name: 'Featured work' });
+    await expect(featuredWork).toBeVisible();
+    await expect(featuredWork.getByRole('link')).toHaveCount(4);
+
+    await page.setViewportSize({ width: 1023, height: 900 });
+    await expect(featuredWork).toBeHidden();
+    await expect(page.locator('.featured-areas')).toBeVisible();
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+    );
+    expect(overflow).toBe(false);
   });
 
   test('mobile navigation opens without trapping focus', async ({ page }) => {

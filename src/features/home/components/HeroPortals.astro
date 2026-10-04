@@ -1,0 +1,166 @@
+---
+import { featuredAreas } from '../data/index.js';
+
+const accentTokens = {
+  magenta: 'var(--nest-magenta)',
+  pink: 'var(--nest-pink)',
+  violet: 'var(--nest-violet)',
+  blue: 'var(--nest-blue)',
+  cyan: 'var(--nest-cyan)',
+  orange: 'var(--nest-sunset-orange)',
+} as const;
+---
+
+<nav class="hero-portals" aria-label="Featured work">
+  <p class="hero-portals__heading">
+    <span>Portfolio destinations</span>
+    <span class="hero-portals__count">{String(featuredAreas.length).padStart(2, '0')} areas</span>
+  </p>
+  <ol class="hero-portals__list">
+    {
+      featuredAreas.map((area, index) => (
+        <li class="hero-portals__item" style={`--portal-accent: ${accentTokens[area.accent]}`}>
+          <a class="hero-portals__link" href={area.path}>
+            <span class="hero-portals__index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span class="hero-portals__copy">
+              <span class="hero-portals__lens">{area.lens}</span>
+              <span class="hero-portals__title">{area.title}</span>
+            </span>
+            <span class="hero-portals__arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .hero-portals {
+    --portal-text: var(--nest-paper);
+    width: min(100%, 24rem);
+    margin-inline-start: auto;
+    padding: 1rem 1.1rem 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 42%, transparent);
+    background: linear-gradient(132deg, rgb(4 2 18 / 0.98), rgb(9 4 40 / 0.94)), var(--nest-midnight-950);
+    box-shadow: 0 1.25rem 3rem rgb(4 2 18 / 0.3);
+    clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 0 100%);
+  }
+
+  .hero-portals__heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.45rem;
+    color: var(--nest-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .hero-portals__count {
+    color: var(--nest-cyan);
+    white-space: nowrap;
+  }
+
+  .hero-portals__list {
+    position: relative;
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero-portals__list::before {
+    position: absolute;
+    inset-block: 1.6rem;
+    inset-inline-start: 1.07rem;
+    border-inline-start: 1px solid color-mix(in srgb, var(--nest-cyan) 35%, transparent);
+    content: '';
+  }
+
+  .hero-portals__link {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.15rem minmax(0, 1fr) 1rem;
+    gap: 0.55rem;
+    align-items: center;
+    min-block-size: 3.35rem;
+    padding: 0.35rem 0.45rem;
+    color: var(--portal-text);
+    text-decoration: none;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .hero-portals__link:hover,
+  .hero-portals__link:focus-visible {
+    color: var(--nest-paper);
+    background: color-mix(in srgb, var(--portal-accent) 12%, transparent);
+  }
+
+  .hero-portals__link:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .hero-portals__index {
+    z-index: 1;
+    display: grid;
+    inline-size: 2.15rem;
+    block-size: 2rem;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--portal-accent) 62%, transparent);
+    background: var(--nest-midnight-900);
+    color: var(--portal-accent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .hero-portals__copy {
+    display: grid;
+    gap: 0.1rem;
+    min-inline-size: 0;
+  }
+
+  .hero-portals__lens {
+    color: var(--portal-accent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .hero-portals__title {
+    overflow-wrap: anywhere;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .hero-portals__arrow {
+    color: var(--portal-accent);
+    font-size: 1rem;
+    transition: transform 160ms ease;
+  }
+
+  .hero-portals__link:hover .hero-portals__arrow,
+  .hero-portals__link:focus-visible .hero-portals__arrow {
+    transform: translate(2px, -2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-portals__link,
+    .hero-portals__arrow {
+      transition: none;
+    }
+  }
+</style>
