@@ -18,7 +18,7 @@ export const horneroFacts = {
   discussionsUrl: 'https://github.com/HorneroOS/hornero/discussions',
   contributingUrl: 'https://github.com/HorneroOS/.github/blob/main/CONTRIBUTING.md',
   docsUrl: 'https://github.com/HorneroOS/docs',
-  websiteUrl: 'https://website-zcra.vercel.app',
+  websiteUrl: 'https://horneroos.com',
   latestPreview: 'v0.2.0-preview12',
   latestPreviewDate: '2026-09-30',
   repositoryCount: 8,

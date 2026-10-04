@@ -23,6 +23,10 @@ describe('Hornero OS facts (ADR-004 maturity rule)', () => {
     expect(horneroComponents.find((component) => component.id === 'assistant')!.state).toBe('direction');
   });
 
+  it('uses the official Hornero OS project website', () => {
+    expect(horneroFacts.websiteUrl).toBe('https://horneroos.com');
+  });
+
   it('states the preview status in the hero and credits the brand imagery', () => {
     expect(page).toContain('not installable yet');
     expect(page).toContain('Brand wallpaper, not a screenshot');
