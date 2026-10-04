@@ -31,19 +31,6 @@ test.describe('PR 2 value and group semantics', () => {
     });
   }
 
-  test('keeps the Dotfiles meter synchronized after selecting a later Smart Colors stage', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/dotfiles');
-
-    const meter = page.locator('[data-df-colors] .vf-meter');
-    await page.locator('[data-df-colors] [data-stage-index="2"]').click();
-
-    await expect(meter).toHaveAttribute('aria-value' + 'now', '75');
-    await expect(meter).toHaveAttribute('aria-value' + 'text', 'Step 3/4');
-    await expect(meter.locator('[data-vf-meter-value]')).toHaveText('Step 3/4');
-  });
-
   test('keeps the Workstation meter synchronized after selecting a later boot stage', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.emulateMedia({ reducedMotion: 'reduce' });

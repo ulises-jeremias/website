@@ -3,31 +3,10 @@ import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import SupportNote from '@/shared/components/SupportNote.astro';
 import { SceneInspector, WorldDock } from '@/shared/components/visual';
 import '@/shared/components/visual/visual.css';
+import DotfilesNarrative from './DotfilesNarrative.astro';
 import LayersDiagram from './LayersDiagram.astro';
-import SmartColorsAnimation from './SmartColorsAnimation.astro';
 import ScreenshotGallery from './ScreenshotGallery.astro';
 import { attributionEntries, dotfilesLayers, heroArt, verifiedFacts } from '../data/index.js';
-
-const principles = [
-  {
-    id: 'nest',
-    label: 'Nest',
-    title: 'Modular nest',
-    body: 'Layers isolatable in development, atomic when applied.',
-  },
-  {
-    id: 'colors',
-    label: 'Colors',
-    title: 'One palette path',
-    body: 'Wallpaper → Material → scheme.json → consumers.',
-  },
-  {
-    id: 'themes',
-    label: 'Themes',
-    title: `${verifiedFacts.themeCount} appearances`,
-    body: 'theme.json + wallpaper — no apply.sh.',
-  },
-];
 
 const layersJson = JSON.stringify(
   dotfilesLayers.map((l) => ({
@@ -47,30 +26,28 @@ const heroShot = heroArt;
   <header class="df-world__hero">
     <div class="df-world__hero-copy">
       <p class="df-world__eyebrow">HorneroConfig · desktop</p>
-      <div class="df-world__hero-rail" aria-label="Smart Colors pipeline">
-        <span>WALLPAPER</span>
+      <div class="df-world__hero-rail" aria-label="Configuration review flow">
+        <span>CHEZMOI SOURCE</span>
         <span aria-hidden="true">→</span>
-        <span>PALETTE</span>
+        <span>REVIEW DIFF</span>
         <span aria-hidden="true">→</span>
-        <span>SCHEME.JSON</span>
-        <span aria-hidden="true">→</span>
-        <span>CONSUMERS</span>
+        <span>APPLY BY CHOICE</span>
       </div>
       <h1 id="df-world-title">HorneroConfig</h1>
       <p class="df-world__problem">
-        Hand-assembled Linux setups drift: themes, shells, and tools get configured once and cannot be reproduced.
+        Personal Linux configuration drifts when it is hard to inspect, repeat, or keep separate from system defaults.
       </p>
       <p class="df-world__lede">
-        HorneroConfig is a reproducible Linux developer environment — Hyprland + Quickshell, with Smart Colors turning
-        your wallpaper into a live system palette and chezmoi keeping it declarative. Its generic pieces grew into{' '}
-        <a href="/hornero-os">Hornero OS</a>; this repository stays the personal layer on top.
+        HorneroConfig is the personal chezmoi source for an Arch Linux workstation. It manages user-level applications,
+        preferences, and optional wallpaper media. Product defaults, appearance packs, the Quickshell shell, and stable
+        system operations live in <a href="/hornero-os">Hornero OS</a> repositories.
       </p>
       <FlagshipProvenance
         entryId="horneroconfig"
-        note="More than a dotfiles backup: a configurable desktop framework with themes, Smart Colors, and one-command setup."
+        note="A personal chezmoi configuration layer with explicit review, privacy, and ownership boundaries."
       />
       <p class="df-world__fact-line">
-        <span>{verifiedFacts.themeCount} themes</span>
+        <span>personal config</span>
         <span aria-hidden="true">·</span>
         <span>{verifiedFacts.systemCli}</span>
         <span aria-hidden="true">·</span>
@@ -92,53 +69,39 @@ const heroShot = heroArt;
     </figure>
   </header>
 
-  <WorldDock label="Install">
+  <DotfilesNarrative />
+
+  <WorldDock label="Review configuration">
     <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer"> GitHub </a>
-    <a href={verifiedFacts.wikiUrl} target="_blank" rel="noopener noreferrer">Wiki ↗</a>
-    <button type="button" data-df-copy aria-label="Copy install command" hidden>Copy install</button>
+    <a href={verifiedFacts.readmeUrl} target="_blank" rel="noopener noreferrer">README ↗</a>
+    <a href={verifiedFacts.contributingUrl} target="_blank" rel="noopener noreferrer">Contribution policy ↗</a>
+    <button type="button" data-df-copy aria-label="Copy review command" hidden>Copy review command</button>
     <code
       class="vf-dock__code"
-      data-df-install
+      data-df-review-command
       tabindex="0"
       role="region"
-      aria-label="HorneroConfig install command"
-      aria-describedby="df-install-hint">{verifiedFacts.installCurl}</code
+      aria-label="HorneroConfig review command"
+      aria-describedby="df-review-command-hint">{verifiedFacts.reviewCommand}</code
     >
-    <span class="df-world__install-hint" id="df-install-hint">Scroll horizontally to inspect the full command.</span>
+    <span class="df-world__review-command-hint" id="df-review-command-hint"
+      >Review the proposed changes before applying this source.</span
+    >
   </WorldDock>
   <p class="df-world__copy-status" role="status" aria-atomic="true" data-df-copy-status></p>
 
   <section class="df-world__methods">
     <h2 class="df-world__label">Other methods &amp; docs</h2>
     <ul>
-      <li><code>chezmoi init --apply ulises-jeremias</code></li>
+      <li><code>{verifiedFacts.applyCommand}</code> — apply only after reviewing the diff</li>
       <li>
-        <code>horneroctl appearance theme list</code> — system verbs come from{' '}
-        <a href={verifiedFacts.systemCliUrl} target="_blank" rel="noopener noreferrer">horneroctl ↗</a>, a required
-        dependency (<a href={verifiedFacts.horneroctlDocUrl} target="_blank" rel="noopener noreferrer">setup ↗</a>)
+        <code>horneroctl --help</code> — product operations come from{' '}
+        <a href={verifiedFacts.systemCliUrl} target="_blank" rel="noopener noreferrer">HorneroOS/hornero ↗</a>; inspect
+        the <a href={verifiedFacts.horneroctlDocUrl} target="_blank" rel="noopener noreferrer">current CLI guide ↗</a>
       </li>
-      <li>
-        The AUR <code>dots-stable</code> package still installs the 2023 X11-era release; use the installer above for the
-        current stack.
-      </li>
-      <li>
-        Smart Colors:{' '}
-        <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noopener noreferrer">wiki ↗</a>
-      </li>
+      <li>Package installation does not run <code>chezmoi apply</code> automatically.</li>
     </ul>
   </section>
-
-  <div class="df-world__principles" role="list" aria-label="Visual principles">
-    {
-      principles.map((p) => (
-        <div class="df-world__principle" role="listitem">
-          <p class="df-world__principle-k">{p.label}</p>
-          <h2>{p.title}</h2>
-          <p>{p.body}</p>
-        </div>
-      ))
-    }
-  </div>
 
   <div class="df-world__layers-block">
     <header class="df-world__layers-head">
@@ -199,12 +162,11 @@ const heroShot = heroArt;
     <p class="df-world__layer-status" role="status" aria-atomic="true" data-df-layer-status></p>
   </div>
 
-  <SmartColorsAnimation />
   <ScreenshotGallery />
 
   <aside class="df-world__prov" aria-label="Provenance">
     <p>
-      <span>{verifiedFacts.themeCount} themes</span>
+      <span>personal source</span>
       <span aria-hidden="true">·</span>
       <span>{verifiedFacts.systemCli}</span>
       <span aria-hidden="true">·</span>
@@ -286,30 +248,30 @@ const heroShot = heroArt;
       });
     });
 
-    const install = root.querySelector<HTMLElement>('[data-df-install]');
+    const reviewCommand = root.querySelector<HTMLElement>('[data-df-review-command]');
     const copyButton = root.querySelector<HTMLButtonElement>('[data-df-copy]');
     const copyStatus = root.querySelector<HTMLElement>('[data-df-copy-status]');
-    install?.addEventListener('keydown', (event) => {
+    reviewCommand?.addEventListener('keydown', (event) => {
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) return;
       event.preventDefault();
       if (event.key === 'Home') {
-        install.scrollLeft = 0;
+        reviewCommand.scrollLeft = 0;
         return;
       }
       if (event.key === 'End') {
-        install.scrollLeft = install.scrollWidth;
+        reviewCommand.scrollLeft = reviewCommand.scrollWidth;
         return;
       }
       const amount = 120;
       const direction = event.key === 'ArrowLeft' || event.key === 'PageUp' ? -1 : 1;
-      install.scrollBy({ left: amount * direction, behavior: 'auto' });
+      reviewCommand.scrollBy({ left: amount * direction, behavior: 'auto' });
     });
     if (copyButton) {
       copyButton.addEventListener('click', async () => {
-        const text = install?.textContent || '';
+        const text = reviewCommand?.textContent || '';
         try {
           await navigator.clipboard.writeText(text);
-          if (copyStatus) copyStatus.textContent = 'Install command copied.';
+          if (copyStatus) copyStatus.textContent = 'Review command copied.';
         } catch {
           if (copyStatus) copyStatus.textContent = 'Copy failed. Select and copy the command manually.';
         }
@@ -453,7 +415,7 @@ const heroShot = heroArt;
     outline-offset: 3px;
   }
 
-  .df-world__install-hint {
+  .df-world__review-command-hint {
     flex: 1 1 100%;
     color: var(--dotfiles-pink-soft);
     font-family: var(--font-mono);
@@ -519,49 +481,6 @@ const heroShot = heroArt;
   .df-world__methods code {
     color: #ffb0ca;
     font-size: 0.82rem;
-  }
-
-  .df-world__principles {
-    display: grid;
-    gap: 0.75rem;
-    margin: 1.35rem 0 1.5rem;
-    padding-block: 1.25rem;
-    border-block: 1px solid color-mix(in srgb, var(--dotfiles-pink) 18%, transparent);
-  }
-
-  @media (min-width: 760px) {
-    .df-world__principles {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .df-world__principle-k {
-    margin: 0;
-    display: inline-flex;
-    min-height: 2rem;
-    align-items: center;
-    padding: 0.25rem 0.65rem;
-    border: 1px solid color-mix(in srgb, #ffb0ca 45%, transparent);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #ffb0ca;
-  }
-
-  .df-world__principle h2 {
-    margin: 0.55rem 0 0;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .df-world__principle p {
-    margin: 0.35rem 0 0;
-    color: var(--color-text-muted, #d5c2c6);
-    font-size: 0.86rem;
-    line-height: 1.4;
-    max-inline-size: 28ch;
   }
 
   .df-world__layers-head {

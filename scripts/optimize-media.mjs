@@ -9,12 +9,12 @@
  * it and printing the result. Idempotent: skips already-optimized pairs.
  */
 
-import { readdir, stat, writeFile } from 'node:fs/promises';
+import { chromium } from '@playwright/test';
+import { execFileSync } from 'node:child_process';
 import { constants } from 'node:fs';
+import { readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { execFileSync } from 'node:child_process';
-import { chromium } from '@playwright/test';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');

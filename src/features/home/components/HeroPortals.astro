@@ -1,5 +1,8 @@
 ---
 import { featuredAreas } from '../data/index.js';
+import Icon from '@/shared/components/Icon.astro';
+import type { PortfolioArea } from '@/data/portfolio.js';
+import type { IconName } from '@/shared/components/Icon.astro';
 
 const accentTokens = {
   magenta: 'var(--nest-magenta)',
@@ -9,6 +12,13 @@ const accentTokens = {
   cyan: 'var(--nest-cyan)',
   orange: 'var(--nest-sunset-orange)',
 } as const;
+
+const portalIcons = {
+  agentic: 'agent-network',
+  hornero: 'stack',
+  'v-ecosystem': 'lattice',
+  'create-awesome': 'modules',
+} satisfies Record<PortfolioArea, IconName>;
 ---
 
 <nav class="hero-portals" aria-label="Featured work">
@@ -18,11 +28,11 @@ const accentTokens = {
   </p>
   <ol class="hero-portals__list">
     {
-      featuredAreas.map((area, index) => (
+      featuredAreas.map((area) => (
         <li class="hero-portals__item" style={`--portal-accent: ${accentTokens[area.accent]}`}>
           <a class="hero-portals__link" href={area.path}>
-            <span class="hero-portals__index" aria-hidden="true">
-              {String(index + 1).padStart(2, '0')}
+            <span class="hero-portals__icon" aria-hidden="true">
+              <Icon name={portalIcons[area.id]} size={20} />
             </span>
             <span class="hero-portals__copy">
               <span class="hero-portals__lens">{area.lens}</span>
@@ -110,7 +120,7 @@ const accentTokens = {
     outline-offset: 2px;
   }
 
-  .hero-portals__index {
+  .hero-portals__icon {
     z-index: 1;
     display: grid;
     inline-size: 2.15rem;
@@ -119,8 +129,6 @@ const accentTokens = {
     border: 1px solid color-mix(in srgb, var(--portal-accent) 62%, transparent);
     background: var(--nest-midnight-900);
     color: var(--portal-accent);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
   }
 
   .hero-portals__copy {

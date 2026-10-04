@@ -37,13 +37,12 @@ const positions = nodes.map((node, index) => {
       <p class="constellation__eyebrow">Open Source · evidence archive</p>
       <h1 id="constellation-title">Open-source evidence</h1>
       <p class="constellation__lede">
-        Every claim on this site about what I built, maintain, or contributed to points back here. Each record says what
-        my relationship to the project actually is: a repository I own, a project I maintain for an organization I do
-        not own, an organization I created, or merged work in someone else's project.
+        Source-linked records distinguish repositories I own, projects I maintain for others, organizations I created,
+        and merged work in upstream projects.
       </p>
       <p class="constellation__lede constellation__lede--note">
-        Forks are working copies, not authorship — they only appear when there is merged upstream work to show. For what
-        each project does, see <a href="/projects">Work</a>.
+        Forks are working copies, not authorship. They appear only when merged upstream work is documented. See{' '}
+        <a href="/projects">Work</a> for project descriptions.
       </p>
     </div>
     <aside class="constellation__brief" aria-label="Evidence archive readout">
@@ -191,6 +190,28 @@ const positions = nodes.map((node, index) => {
     text-align: right;
   }
 
+  @media (width < 600px) {
+    .constellation__brief dl {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .constellation__brief dl div {
+      display: grid;
+      gap: 0.25rem;
+    }
+
+    .constellation__brief dt {
+      font-size: 0.56rem;
+      letter-spacing: 0.04em;
+    }
+
+    .constellation__brief dd {
+      font-size: 0.62rem;
+      text-align: start;
+    }
+  }
+
   .constellation__eyebrow {
     margin: 0 0 var(--space-2);
     font-family: var(--font-mono);
@@ -241,6 +262,17 @@ const positions = nodes.map((node, index) => {
     padding: 0;
     display: grid;
     gap: 0.75rem;
+  }
+
+  @media (width < 860px) {
+    .constellation__map {
+      order: -1;
+    }
+
+    .constellation__legend {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem 1rem;
+    }
   }
 
   .constellation__legend-panel,
@@ -302,6 +334,13 @@ const positions = nodes.map((node, index) => {
     grid-column: 2;
     font-size: 0.88rem;
     color: var(--color-text-muted);
+  }
+
+  @media (width < 860px) {
+    .constellation__legend-detail {
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
   }
 
   .constellation__svg {

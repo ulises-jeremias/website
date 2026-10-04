@@ -13,14 +13,6 @@ export interface NarrativeSection {
   paragraphs: string[];
 }
 
-export interface SmartColorStep {
-  id: 'wallpaper' | 'extraction' | 'palette' | 'apps';
-  title: string;
-  description: string;
-  icon: string;
-  detail: string;
-}
-
 export interface ScreenshotItem {
   id: string;
   alt: string;

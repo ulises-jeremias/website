@@ -93,7 +93,7 @@ export const projectWorlds: ProjectWorld[] = [
     id: 'dotfiles',
     slug: 'dotfiles',
     title: 'Dotfiles',
-    description: 'HorneroConfig — Hyprland, Quickshell, Smart Colors',
+    description: 'HorneroConfig — personal Linux configuration',
     path: '/dotfiles',
     theme: 'dotfiles',
     accent: 'magenta',

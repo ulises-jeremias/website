@@ -34,17 +34,22 @@ const accentTokens = {
         <li class="featured-areas__item" style={`--world-color: ${accentTokens[area.accent]}`}>
           <article class="featured-areas__card" aria-labelledby={`featured-${area.id}-title`}>
             <span class="featured-areas__art clip-corner-sm" aria-hidden="true">
-              <img
-                class="art-fade"
-                src={`/assets/${area.island}.png`}
-                srcset={`/assets/nest/${area.island}-sm.webp 320w, /assets/nest/${area.island}.webp 640w`}
-                sizes="(max-width: 768px) 72px, 96px"
-                width="96"
-                height="96"
-                alt=""
-                loading={index === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset={`/assets/nest/${area.island}-192.webp 192w, /assets/nest/${area.island}.webp 640w`}
+                  sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
+                />
+                <img
+                  class="art-fade"
+                  src={`/assets/${area.island}.png`}
+                  width="96"
+                  height="96"
+                  alt=""
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </picture>
             </span>
             <div class="featured-areas__body">
               <span class="featured-areas__lens">{area.lens}</span>
@@ -130,6 +135,10 @@ const accentTokens = {
   .featured-areas__art img {
     inline-size: clamp(64px, 9vw, 96px);
     block-size: auto;
+  }
+
+  .featured-areas__art picture {
+    display: block;
   }
 
   .featured-areas__body {

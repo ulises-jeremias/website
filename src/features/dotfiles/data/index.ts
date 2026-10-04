@@ -1,49 +1,25 @@
-import type {
-  AttributionEntry,
-  DotfilesLayer,
-  NarrativeSection,
-  ScreenshotItem,
-  SmartColorStep,
-} from '../types/index.js';
+import type { AttributionEntry, DotfilesLayer, NarrativeSection, ScreenshotItem } from '../types/index.js';
 
 /**
- * Verified against github.com/ulises-jeremias/dotfiles main @8aae4f7 on 2026-09-30.
- * Since #294–#305 and #317 the `dots-*` wrappers are deleted: system commands
- * resolve to `horneroctl` (HorneroOS/hornero) and the Quickshell shell is
- * consumed from HorneroOS/shell. Theme packs: home/dot_local/share/dots/themes/*.
+ * Verified against github.com/ulises-jeremias/dotfiles main @bf4b235 on 2026-10-04.
+ * This is a personal chezmoi source; product defaults, themes, shell surfaces,
+ * and system operations belong to HorneroOS repositories.
  */
-const themes = [
-  'catppuccin-latte',
-  'catppuccin-mocha',
-  'everforest',
-  'gruvbox',
-  'hornero-dark',
-  'hornero-light',
-  'landscape',
-  'monochrome',
-  'neon-city',
-  'nord-dreams',
-  'rose-pine',
-  'soft-morning',
-  'vapor-dreams',
-  'warm-sunset',
-] as const;
-
 export const verifiedFacts = {
-  verifiedAt: '2026-09-30',
-  sourceRevision: '8aae4f7',
-  themeCount: themes.length,
-  themes,
+  verifiedAt: '2026-10-04',
+  sourceRevision: 'bf4b235',
   /** Hornero OS system CLI that replaced the dots-* wrappers. */
   systemCli: 'horneroctl',
   systemCliUrl: 'https://github.com/HorneroOS/hornero/tree/main/cli',
   shellRepoUrl: 'https://github.com/HorneroOS/shell',
   horneroctlDocUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/docs/Horneroctl.md',
   repoUrl: 'https://github.com/ulises-jeremias/dotfiles',
+  readmeUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/README.md',
+  contributingUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/CONTRIBUTING.md',
+  reviewCommand: 'chezmoi diff --source=/path/to/dotfiles --config ~/.config/chezmoi/dotfiles.toml',
+  applyCommand: 'chezmoi apply --source=/path/to/dotfiles --config ~/.config/chezmoi/dotfiles.toml',
   wikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki',
   smartColorsWikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki/Smart-Colors-System',
-  installCurl:
-    'sh -c "$(curl -fsSL https://github.com/ulises-jeremias/dotfiles/blob/main/scripts/install_dotfiles.sh?raw=true)"',
 } as const;
 
 export const dotfilesLayers: DotfilesLayer[] = [
@@ -51,23 +27,23 @@ export const dotfilesLayers: DotfilesLayer[] = [
     id: 'chezmoi',
     label: 'chezmoi',
     shortLabel: 'chezmoi',
-    description: 'Declarative, idempotent foundation',
+    description: 'Personal configuration source',
     details: [
-      '.chezmoiroot → home/',
-      '.chezmoi.toml.tmpl + run_onchange_* hooks',
-      'State in ~/.local/state/dots/ and ~/.cache/dots/',
+      'Review source diffs before apply',
+      'Host choices use documented chezmoi data',
+      'Managed files are user-level configuration',
     ],
     color: '#211218',
   },
   {
     id: 'scripts',
-    label: 'system CLI',
+    label: 'Hornero OS CLI',
     shortLabel: 'horneroctl',
     description: 'System verbs from the Hornero OS CLI',
     details: [
-      'horneroctl appearance, wallpaper, colors, capture, hardware verbs',
-      'Non-interactive by default: --json, --dry-run, --yes for mutations',
-      'theme.json appearances + python-materialyoucolor M3 path',
+      'Product operations live in HorneroOS/hornero',
+      'Dotfiles calls the installed horneroctl interface',
+      'No private command shim in this repository',
     ],
     color: '#2a1620',
   },
@@ -77,9 +53,9 @@ export const dotfilesLayers: DotfilesLayer[] = [
     shortLabel: 'kitty',
     description: 'GPU rendering and observability',
     details: [
-      'Kitty + fontconfig + ligatures',
-      'btop, cava, fastfetch, yazi, tmux',
-      'M3 palette via ~/.cache/dots/smart-colors/colors-kitty.conf',
+      'Personal app preferences and user configuration',
+      'Application packages come from HorneroOS/AUR',
+      'No duplicated product binaries or runtime files',
     ],
     color: '#341b27',
   },
@@ -89,9 +65,9 @@ export const dotfilesLayers: DotfilesLayer[] = [
     shortLabel: 'hyprland',
     description: 'Modern animated Wayland desktop',
     details: [
-      'Hyprland + per-theme animation profiles',
-      'Quickshell shell from HorneroOS/shell: bar, launcher, dashboard, notifications',
-      'Hyprlock themed via horneroctl appearance hyprlock',
+      'Personal Hyprland configuration',
+      'Quickshell UI lives in HorneroOS/shell',
+      'System defaults and appearance packs live in HorneroOS/config',
     ],
     color: '#3f202d',
   },
@@ -101,9 +77,9 @@ export const dotfilesLayers: DotfilesLayer[] = [
     shortLabel: 'zsh',
     description: 'Fluid daily interaction',
     details: [
-      'Zsh + Powerlevel10k instant prompt',
-      'config.d/plugins, keybindings, paths',
-      'handlr, git, ssh, modular .zshrc',
+      'Optional user applications and preferences',
+      'Wallpaper media is optional user data',
+      'Managed with declarative chezmoi source files',
     ],
     color: '#4a2534',
   },
@@ -115,59 +91,24 @@ export const narrativeSections: NarrativeSection[] = [
     title: 'The hornero nest',
     paragraphs: [
       'HorneroConfig is named after the hornero, the bird that builds robust nests adapted to its environment. Each layer — from chezmoi to shell — plays a structural role: isolated in development, integrated in use.',
-      'The philosophy is modular and resilient: graceful degradation without optional dependencies, a single source of truth in ~/.cache/dots/ and ~/.local/state/dots/, and automation that turns an empty system into a productive desktop.',
+      'The repository keeps account-level configuration and optional wallpaper media. HorneroOS owns the product defaults, shell, packages, and stable desktop operations, so each repository has one clear source of truth.',
     ],
   },
   {
     id: 'stack',
-    title: 'Live stack, not a config collection',
+    title: 'A personal layer with clear boundaries',
     paragraphs: [
-      `The stack unites Hyprland/Wayland with the Hornero Quickshell shell, GPU-accelerated Kitty, and Zsh/Powerlevel10k. Each of the ${verifiedFacts.themeCount} appearance themes ships as a self-contained directory with theme.json, preview, and wallpaper directory — no apply.sh.`,
-      'Chezmoi orchestrates templates and idempotent hooks. Since 2026 the generic pieces live in Hornero OS: the shell comes from HorneroOS/shell and system commands from horneroctl, while this repository keeps the personal layer.',
+      'This is the personal chezmoi source for an Arch Linux workstation. It manages user-level applications, preferences, and optional wallpaper media; it is not the HorneroOS release repository or package catalogue.',
+      'The HorneroOS organization owns system defaults, appearance packs, the Quickshell interface, and stable system operations. HorneroConfig consumes those product components without vendoring a second copy.',
     ],
   },
   {
-    id: 'smart-colors',
-    title: 'Color with purpose',
+    id: 'maintenance',
+    title: 'Review before applying',
     paragraphs: [
-      'Smart Colors follows the maintained Hyprland + Quickshell path: horneroctl wallpaper set (or the Control Center) triggers generate-m3-colors.py via horneroctl colors m3 (python-materialyoucolor), writing scheme.json plus Kitty/GTK/Hyprlock exports under ~/.cache/dots/smart-colors/.',
-      'The shell’s Colours service reloads from scheme.json, and horneroctl appearance gtk keeps GTK/libadwaita in lockstep — one wallpaper change, one atomic palette.',
+      'You can inspect changes with chezmoi diff before chezmoi apply. Package installation does not apply this source automatically, and --force is only for a deliberate replacement after reviewing the diff.',
+      'Contributions use temporary HOME and isolated XDG directories. Shared source avoids secrets, personal credentials, generated caches, and host-specific values; tests must not apply to a live account.',
     ],
-  },
-];
-
-export const smartColorSteps: SmartColorStep[] = [
-  {
-    id: 'wallpaper',
-    title: 'Wallpaper',
-    description: 'horneroctl wallpaper set or Control Center',
-    icon: '01',
-    detail:
-      'Records the path under ~/.local/state/dots/wallpaper/ and starts the appearance pipeline (IPC when Quickshell is running).',
-  },
-  {
-    id: 'extraction',
-    title: 'Material extraction',
-    description: 'generate-m3-colors.py',
-    icon: '02',
-    detail:
-      'horneroctl colors m3 runs python-materialyoucolor; luminance decides light/dark; semantics map error/success/warning.',
-  },
-  {
-    id: 'palette',
-    title: 'Scheme cache',
-    description: 'scheme.json + consumer exports',
-    icon: '03',
-    detail:
-      'Writes ~/.cache/dots/smart-colors/scheme.json, colors-kitty.conf, colors-hyprlock.env, colors.css, and shell/env helpers.',
-  },
-  {
-    id: 'apps',
-    title: 'Desktop consumers',
-    description: 'Quickshell · Hyprland · Kitty · GTK',
-    icon: '04',
-    detail:
-      'Colours.qml reloads the M3 scheme; borders, terminal, lock, and GTK sync from the same cache — no hardcoded theme values.',
   },
 ];
 
@@ -250,10 +191,9 @@ export const screenshotItems: ScreenshotItem[] = [
 ];
 
 /**
- * Hero art: the hornero-dark theme wallpaper that ships with HorneroConfig
- * (home/dot_local/share/dots/themes/hornero-dark) and HorneroOS/config
- * (assets/brand/wallpaper). A theme artifact, not a desktop screenshot — the
- * caption says so. Current desktop captures replace it once they exist.
+ * Hero art: the hornero-dark theme wallpaper from HorneroOS/config
+ * (assets/brand/wallpaper). It is a theme artifact, not a desktop screenshot;
+ * the caption says so. Current desktop captures replace it once they exist.
  */
 export const heroArt = {
   src: '/media/hornero-os/hornero-dark-960.webp',
@@ -270,7 +210,7 @@ export const attributionEntries: AttributionEntry[] = [
     component: 'HorneroConfig',
     license: 'MIT',
     source: 'ulises-jeremias/dotfiles',
-    notes: 'Framework sources, chezmoi templates, themes, and first-party static captures.',
+    notes: 'Personal chezmoi source, user configuration, optional media, and first-party historical static captures.',
   },
   {
     component: 'Hornero shell (Quickshell)',
@@ -289,6 +229,7 @@ export const dotfilesMeta = {
   pinkSoft: '#e2bdc7',
   pinkMuted: '#d5c2c6',
   title: 'HorneroConfig — personal DX desktop',
-  description: `HorneroConfig: Hyprland + Quickshell + Kitty + Zsh, chezmoi, ${verifiedFacts.themeCount} appearance themes, and Smart Colors (python-materialyoucolor), with system commands from horneroctl.`,
+  description:
+    'HorneroConfig: a personal Arch Linux chezmoi source for user-level configuration and optional wallpaper media, integrated with HorneroOS components.',
   quote: 'Like the hornero, build your digital nest: robust, beautiful, and tailored to you.',
 };

@@ -1,0 +1,65 @@
+/* Original static surfaces. Overlay colors stay at or below 6% opacity. */
+.texture-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--nest-violet) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--nest-violet) 3%, transparent) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+}
+
+.texture-topographic {
+  background-image: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 56%,
+    color-mix(in srgb, var(--nest-cyan) 3%, transparent) 57% 58%,
+    transparent 59% 70%,
+    color-mix(in srgb, var(--nest-cyan) 3%, transparent) 71% 72%,
+    transparent 73%
+  );
+  background-size: 9rem 6rem;
+}
+
+.texture-woven {
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--nest-magenta) 3%, transparent) 0 1px,
+      transparent 1px 8px
+    ),
+    repeating-linear-gradient(-45deg, color-mix(in srgb, var(--nest-cyan) 3%, transparent) 0 1px, transparent 1px 8px);
+}
+
+.texture-scanline {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--nest-cyan) 6%, transparent) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+.scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--nest-cyan) 3%, transparent) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+@media (forced-colors: active) {
+  .texture-grid,
+  .texture-topographic,
+  .texture-woven,
+  .texture-scanline,
+  .scanlines {
+    background-image: none;
+  }
+}
+
+@media (prefers-reduced-data: reduce) {
+  .texture-grid,
+  .texture-topographic,
+  .texture-woven,
+  .texture-scanline,
+  .scanlines {
+    background-image: none;
+  }
+}

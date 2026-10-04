@@ -13,7 +13,7 @@ const RAW_PROJECTS = [
   {
     slug: 'dotfiles',
     title: 'HorneroConfig',
-    summary: 'Personal Hyprland + Quickshell desktop managed with chezmoi — 14 themes and Smart Colors.',
+    summary: 'Personal Arch Linux configuration managed with chezmoi and integrated with HorneroOS components.',
     status: 'active',
     visibility: 'world',
     worldId: 'dotfiles',
@@ -23,7 +23,7 @@ const RAW_PROJECTS = [
     role: 'author',
     group: 'personal-dx',
     links: [{ label: 'World', href: '/dotfiles', kind: 'world' }],
-    lastVerified: '2026-09-30',
+    lastVerified: '2026-10-04',
   },
   {
     slug: 'hornero-os',

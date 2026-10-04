@@ -28,6 +28,8 @@ const stations = vProjects.map((project) => ({
   role: project.role,
   repo: project.repo,
   href: project.href,
+  contributingHref: project.contributingHref,
+  issuesHref: project.issuesHref,
   license: project.license,
   chips: project.highlights.slice(0, 3),
 }));
@@ -134,6 +136,14 @@ const stationsJson = JSON.stringify(stations);
               <a data-v-station-repo href={station.href} target="_blank" rel="noopener noreferrer">
                 Open {station.repo} ↗
               </a>
+              <div class="v-lab__contribution-links" role="group" aria-label={`${station.title} contribution paths`}>
+                <a href={station.contributingHref} target="_blank" rel="noopener noreferrer">
+                  Contribution guide ↗
+                </a>
+                <a href={station.issuesHref} target="_blank" rel="noopener noreferrer">
+                  Open issues ↗
+                </a>
+              </div>
             </div>
           </section>
         ))
@@ -161,6 +171,17 @@ const stationsJson = JSON.stringify(stations);
           <a data-v-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer">
             Open {defaultStation.repo} ↗
           </a>
+          <div class="v-lab__contribution-links" role="group" aria-label="Contribution paths">
+            <a
+              data-v-inspector-contributing
+              href={defaultStation.contributingHref}
+              target="_blank"
+              rel="noopener noreferrer">Contribution guide ↗</a
+            >
+            <a data-v-inspector-issues href={defaultStation.issuesHref} target="_blank" rel="noopener noreferrer"
+              >Open issues ↗</a
+            >
+          </div>
         </div>
       </Fragment>
     </SceneInspector>
@@ -497,6 +518,25 @@ const stationsJson = JSON.stringify(stations);
     text-underline-offset: 3px;
   }
 
+  .v-lab__contribution-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .v-lab__contribution-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-text-muted);
+    text-underline-offset: 3px;
+  }
+
+  .v-lab__contribution-links a:hover,
+  .v-lab__contribution-links a:focus-visible {
+    color: var(--world-accent, #5b9bd5);
+  }
+
   .v-lab__panel :global(.eco__wrap),
   .v-lab__panel :global(.vsl__diagram),
   .v-lab__panel :global(.vtl__diagram),
@@ -611,6 +651,8 @@ const stationsJson = JSON.stringify(stations);
     role: string;
     repo: string;
     href: string;
+    contributingHref: string;
+    issuesHref: string;
     license: string;
     chips: string[];
   };
@@ -642,6 +684,8 @@ const stationsJson = JSON.stringify(stations);
     const licenseEl = root.querySelector<HTMLElement>('[data-v-inspector-license]');
     const chipsEl = root.querySelector<HTMLElement>('[data-v-inspector-chips]');
     const linkEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-link]');
+    const contributingEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-contributing]');
+    const issuesEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-issues]');
     const statusEl = root.querySelector<HTMLElement>('[data-v-station-status]');
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-v-station]')];
     const panels = [...root.querySelectorAll<HTMLElement>('[data-v-panel]')];
@@ -652,7 +696,18 @@ const stationsJson = JSON.stringify(stations);
       stations.length === tabs.length &&
       stations.length === panels.length &&
       stationIds.size === stations.length &&
-      Boolean(selector && titleEl && bodyEl && roleEl && repoEl && licenseEl && chipsEl && linkEl) &&
+      Boolean(
+        selector &&
+        titleEl &&
+        bodyEl &&
+        roleEl &&
+        repoEl &&
+        licenseEl &&
+        chipsEl &&
+        linkEl &&
+        contributingEl &&
+        issuesEl,
+      ) &&
       stations.every(
         (station) =>
           tabs.some((tab) => tab.dataset.vStation === station.id) &&
@@ -668,7 +723,9 @@ const stationsJson = JSON.stringify(stations);
       !repoEl ||
       !licenseEl ||
       !chipsEl ||
-      !linkEl
+      !linkEl ||
+      !contributingEl ||
+      !issuesEl
     ) {
       return;
     }
@@ -711,6 +768,8 @@ const stationsJson = JSON.stringify(stations);
         linkEl.href = station.href;
         linkEl.textContent = `Open ${station.repo} ↗`;
       }
+      if (contributingEl) contributingEl.href = station.contributingHref;
+      if (issuesEl) issuesEl.href = station.issuesHref;
       if (announce && statusEl) statusEl.textContent = `Station selected: ${station.title} — ${station.role}.`;
       selectedStationId = id;
       return true;

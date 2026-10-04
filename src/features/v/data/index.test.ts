@@ -21,6 +21,13 @@ describe('V source-fidelity data', () => {
     expect(vProjects.map((project) => project.id)).toEqual(['v', 'vsl', 'vtl', 'rxv', 'setup-v', 'awesome-v']);
   });
 
+  it('links every project to its verified contribution guide and issue tracker', () => {
+    for (const project of vProjects) {
+      expect(project.contributingHref).toMatch(/^https:\/\/github\.com\/.+\/blob\/(main|master)\/CONTRIBUTING\.md$/);
+      expect(project.issuesHref).toBe(`${project.href}/issues`);
+    }
+  });
+
   it('uses the README-recommended setup-v pin and documented action outputs', () => {
     expect(SETUP_V_PIN).toBe('vlang/setup-v@v1.7');
     expect(vSourceFacts.setupV.outputs).toEqual(['bin-path', 'v-bin-path', 'version', 'architecture']);

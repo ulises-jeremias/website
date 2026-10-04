@@ -211,7 +211,7 @@ complete.
 ## World adaptations
 
 - **Dotfiles:** plum/pink/peach desktop environment; real screenshots and a
-  wallpaper → palette → scheme → app Smart Colors pipeline.
+  personal configuration → reviewed changes → deliberate apply flow.
 - **Agentic Workstation:** midnight/cyan/violet/lime provisioning sequence and
   a technically accurate Personal DX relationship graph.
 - **Agent Toolkit:** capability/distribution graph and complete swarm story;
@@ -281,12 +281,17 @@ Do not ship:
 
 - generic Tailwind/shadcn landing grammar;
 - repeated rounded glowing cards or pills;
-- decorative blobs, stock robots, Matrix rain, CRT scanlines, or RGB gamer UI;
+- decorative blobs, stock robots, Matrix rain, full-screen CRT scanlines, or RGB gamer UI;
 - fake terminal output, metrics, stars, testimonials, or contribution counts;
 - inaccessible neon body text;
 - video backgrounds or ornamental WebGL;
 - one layout repeated across all worlds;
 - issue IDs, implementation notes, or debug copy in public content.
+
+The homepage environment may use the restrained, static 1px cyan plate
+overlay defined by `.scanlines` in `src/styles/effects.css`. It is limited to
+the illustration layer behind content; it is not applied to text, controls, or
+the site shell. See [`current/textures.md`](current/textures.md).
 
 ## Implementation order
 

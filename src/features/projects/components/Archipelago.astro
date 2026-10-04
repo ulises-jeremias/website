@@ -25,10 +25,8 @@ const islands = worldPointerProjects.map((project, index) => ({
       <p class="archipelago__eyebrow">Work · portfolio</p>
       <h1 id="archipelago-title">What I build</h1>
       <p class="archipelago__lede">
-        Four related areas of open-source developer tooling: agent tooling for coding assistants, a Linux desktop,
-        scientific computing for V, and app scaffolding. Every project states my role and how mature it is. This page
-        answers what I build; <a href="/open-source">Open Source</a> holds the evidence for what I own, maintain, and contribute
-        to. Nothing here is ranked by popularity.
+        My work spans agent tooling, Hornero OS, scientific computing for V, and app scaffolding. Each entry states my
+        role and maturity. <a href="/open-source">Open Source</a> documents ownership, maintenance, and merged contributions.
       </p>
     </div>
     <aside class="archipelago__readout" aria-label="Work portfolio readout">
@@ -55,8 +53,8 @@ const islands = worldPointerProjects.map((project, index) => ({
               class="archipelago__art"
               src={`/assets/nest/${island.island}-sm.webp`}
               alt=""
-              width="160"
-              height="120"
+              width="440"
+              height="440"
               loading="lazy"
               decoding="async"
             />
@@ -154,6 +152,25 @@ const islands = worldPointerProjects.map((project, index) => ({
   .archipelago__readout dd {
     color: var(--color-text);
     text-align: right;
+  }
+
+  @media (width < 600px) {
+    .archipelago__readout dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem 0.9rem;
+    }
+
+    .archipelago__readout dl div {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+    }
+
+    .archipelago__readout dl div:last-child {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: baseline;
+    }
   }
 
   .archipelago__index-note {

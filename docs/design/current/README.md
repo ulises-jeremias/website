@@ -8,14 +8,15 @@ exploration.
 
 1. `docs/adr/ADR-003-portfolio-first-ia.md` defines the portfolio-first information architecture: four flagship areas, public labels, and route responsibilities. It supersedes the flat world ordering as the visitor hierarchy while preserving all canonical URLs.
 2. `docs/design/synthwave-systems-atlas.md` is the approved visual identity.
-3. `src/styles/` contains the maintained production tokens and type roles.
-4. `src/data/routes.ts` defines canonical routes and the compact navigation projection; its unit tests lock labels and active-item behavior.
-5. `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md` defines the native-control contract for interactive diagrams.
-6. `tests/visual/*-snapshots/` contains maintained Chromium visual goldens.
-7. `performance-baseline.json` records the measured route delivery baseline.
-8. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
-9. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
-10. `route-redesign-plan-2026-08.md` records the completed substantial route redesign waves and evidence contract; the portfolio-first IA (ADR-003) amends the route set with `/agentic` and `/about`.
+3. `iconography.md` and `textures.md` define the icon and background texture contracts.
+4. `src/styles/` contains the maintained production tokens and type roles.
+5. `src/data/routes.ts` defines canonical routes and the compact navigation projection; its unit tests lock labels and active-item behavior.
+6. `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md` defines the native-control contract for interactive diagrams.
+7. `tests/visual/*-snapshots/` contains maintained Chromium visual goldens.
+8. `performance-baseline.json` records the measured route delivery baseline.
+9. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
+10. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
+11. `route-redesign-plan-2026-08.md` records the completed substantial route redesign waves and evidence contract; the portfolio-first IA (ADR-003) amends the route set with `/agentic` and `/about`.
 
 ## Accepted baseline
 

@@ -74,7 +74,7 @@ for (const [name, route] of routes) {
   console.log('VISIT', url);
   try {
     await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
-  } catch (e) {
+  } catch {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
   }
   await page.waitForTimeout(800);

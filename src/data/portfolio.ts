@@ -397,7 +397,7 @@ const rawPortfolioEntries = [
     timeLens: 'current-and-proven',
     relationship: 'parent-family',
     description:
-      'A chezmoi-managed Hyprland desktop with 14 appearance themes and a wallpaper-driven Smart Colors pipeline — the personal layer on top of Hornero components.',
+      'A personal Arch Linux chezmoi source for user-level configuration and optional wallpaper media, integrated with HorneroOS product components.',
     channels: ['GitHub', 'chezmoi'],
     maturity: 'established',
     proofLines: [
@@ -407,8 +407,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'maintenance',
-        text: 'Shell and system commands now come from Hornero OS components (horneroctl); the repository keeps personal overrides.',
-        verifiedAt: '2026-09-30',
+        text: 'HorneroOS owns system defaults, appearance packs, the Quickshell interface, and stable operations; this repository keeps personal configuration.',
+        verifiedAt: '2026-10-04',
       },
     ],
     evidence: {
@@ -808,7 +808,7 @@ export const portfolioEntries: PortfolioEntry[] = rawPortfolioEntries.map((entry
 const SUMMARY_PROOF_KINDS = new Set(['history', 'distribution', 'role', 'ecosystem-scale', 'release', 'demo']);
 
 export interface HomepagePortfolioArea {
-  id: string;
+  id: PortfolioArea;
   title: string;
   /** Overview route when one exists (Agentic), else the area's canonical path. */
   path: string;

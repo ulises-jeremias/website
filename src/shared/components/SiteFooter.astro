@@ -42,16 +42,21 @@ const socialLinks = [
 <footer id={id} class="site-footer" data-testid="site-footer">
   <div class="site-footer__shell neon-frame clip-corner">
     <a href="/" class="site-footer__brand" aria-label="Digital Nest, home">
-      <img
-        class="site-footer__logo art-fade"
-        src="/assets/logo-nest.png"
-        srcset="/assets/nest/logo-nest-sm.webp 112w, /assets/nest/logo-nest.webp 256w"
-        sizes="36px"
-        width="48"
-        height="48"
-        alt=""
-        decoding="async"
-      />
+      <picture>
+        <source
+          type="image/webp"
+          srcset="/assets/nest/logo-nest-sm.webp 160w, /assets/nest/logo-nest.webp 256w"
+          sizes="36px"
+        />
+        <img
+          class="site-footer__logo art-fade"
+          src="/assets/logo-nest.png"
+          width="48"
+          height="48"
+          alt=""
+          decoding="async"
+        />
+      </picture>
     </a>
 
     <p class="site-footer__credit">

@@ -4,6 +4,8 @@ export interface VProject {
   shortLabel: string;
   description: string;
   href: string;
+  contributingHref: string;
+  issuesHref: string;
   repo: string;
   icon: string;
   role: string;

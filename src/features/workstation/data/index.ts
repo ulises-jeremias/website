@@ -73,14 +73,13 @@ export const workstationLayers: LayerMeta[] = [
     mapping: 'HorneroConfig / desktop (optional Personal DX surface)',
     accent: '#22D3EE',
     description:
-      'Optional desktop surface in the Personal DX graph — not a required predecessor of the workstation. Transforms a Linux desktop into a functional workspace via Hyprland + Quickshell + smart-colors when you want the physical nest.',
+      'Optional personal Linux configuration in the Personal DX graph — not a required predecessor of the workstation. HorneroConfig manages user-level configuration and optional media, while HorneroOS owns product defaults and desktop operations.',
     responsibilities: [
-      'Hyprland / Wayland compositor + the Hornero Quickshell shell',
-      '14 themes, smart-colors (python-materialyoucolor → dots/smart-colors)',
-      'chezmoi home/ source state (dotfiles)',
-      'Theme-intelligence: light/dark, semantic mapping',
+      'Personal Arch Linux configuration managed with chezmoi',
+      'User-level applications, preferences, and optional wallpaper media',
+      'HorneroOS owns the Quickshell UI, appearance packs, and system operations',
     ],
-    delivers: ['~/.config/hypr / quickshell', 'Rice configs (~/.local/share/dots)', 'Smart color cache'],
+    delivers: ['User-level configuration', 'Optional wallpaper media', 'Reviewed chezmoi source changes'],
     repo: 'ulises-jeremias/dotfiles',
   },
   {

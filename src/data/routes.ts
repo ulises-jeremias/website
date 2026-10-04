@@ -182,11 +182,11 @@ export const routes: RouteMeta[] = [
   {
     id: 'dotfiles',
     path: '/dotfiles',
-    title: 'HorneroConfig — Reproducible Linux Desktop Configuration',
+    title: 'HorneroConfig — Personal Linux Configuration',
     description:
-      'HorneroConfig: a chezmoi-managed Hyprland and Quickshell desktop with appearance themes and a Smart Colors wallpaper-to-scheme pipeline.',
+      'HorneroConfig is a personal Arch Linux chezmoi source for user-level configuration and optional wallpaper media, integrated with HorneroOS components.',
     ogImage: '/social/dotfiles.jpg',
-    ogImageAlt: 'HorneroConfig dotfiles and Smart Colors desktop',
+    ogImageAlt: 'HorneroConfig personal Linux configuration',
     structuredDataType: 'CollectionPage',
     dataSource: 'static',
     theme: 'dotfiles',

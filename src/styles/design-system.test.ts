@@ -331,6 +331,7 @@ describe('global design system architecture', () => {
       'semantic.css',
       'motion.css',
       'effects.css',
+      'textures.css',
       'themes/index.css',
     ].map((file) => resolve(stylesDirectory, file));
     const themeLayers = themeFiles.map((file) => resolve(stylesDirectory, 'themes', file));
@@ -366,6 +367,7 @@ describe('global design system architecture', () => {
       './semantic.css',
       './motion.css',
       './effects.css',
+      './textures.css',
       './themes/index.css',
     ]);
   });

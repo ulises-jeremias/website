@@ -25,24 +25,24 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     );
   });
 
-  test('reports successful install-command copy', async ({ page }) => {
+  test('reports successful review-command copy', async ({ page }) => {
     await page.addInitScript(() => {
       Object.defineProperty(navigator, 'clipboard', {
         configurable: true,
         value: {
           writeText: async (value: string) => {
-            Reflect.set(window, '__copiedInstall', value);
+            Reflect.set(window, '__copiedReview', value);
           },
         },
       });
     });
     await page.goto('/dotfiles');
 
-    const copy = page.getByRole('button', { name: 'Copy install command' });
+    const copy = page.getByRole('button', { name: 'Copy review command' });
     await expect(copy).toBeVisible();
     await copy.click();
-    await expect(page.locator('[data-df-copy-status]')).toHaveText('Install command copied.');
-    await expect.poll(() => page.evaluate(() => Reflect.get(window, '__copiedInstall'))).toContain('curl');
+    await expect(page.locator('[data-df-copy-status]')).toHaveText('Review command copied.');
+    await expect.poll(() => page.evaluate(() => Reflect.get(window, '__copiedReview'))).toContain('chezmoi diff');
   });
 
   test('reports clipboard failure with a manual recovery path', async ({ page }) => {
@@ -54,7 +54,7 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     });
     await page.goto('/dotfiles');
 
-    await page.getByRole('button', { name: 'Copy install command' }).click();
+    await page.getByRole('button', { name: 'Copy review command' }).click();
     await expect(page.locator('[data-df-copy-status]')).toHaveText(
       'Copy failed. Select and copy the command manually.',
     );
@@ -66,8 +66,8 @@ test.describe('Dotfiles no-JavaScript copy fallback', () => {
 
   test('does not expose an inert copy action', async ({ page }) => {
     await page.goto('/dotfiles');
-    await expect(page.getByRole('button', { name: 'Copy install command' })).toHaveCount(0);
-    await expect(page.locator('[data-df-install]')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy review command' })).toHaveCount(0);
+    await expect(page.locator('[data-df-review-command]')).toBeVisible();
   });
 });
 
