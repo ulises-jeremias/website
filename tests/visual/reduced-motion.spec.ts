@@ -8,7 +8,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Motion token contract (motion.css)', () => {
-  test('all duration tokens collapse to 1 ms under prefers-reduced-motion: reduce', async ({ page }) => {
+  test('all duration tokens collapse to 0 ms under prefers-reduced-motion: reduce', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
 
@@ -22,10 +22,10 @@ test.describe('Motion token contract (motion.css)', () => {
       };
     });
 
-    expect(tokens.fast).toBe('1ms');
-    expect(tokens.base).toBe('1ms');
-    expect(tokens.slow).toBe('1ms');
-    expect(tokens.ambient).toBe('1ms');
+    expect(tokens.fast).toBe('0s');
+    expect(tokens.base).toBe('0s');
+    expect(tokens.slow).toBe('0s');
+    expect(tokens.ambient).toBe('0s');
   });
 
   test('scroll-behavior is auto (no smooth-scroll) under reduced motion', async ({ page }) => {
@@ -36,20 +36,20 @@ test.describe('Motion token contract (motion.css)', () => {
     expect(scrollBehavior).toBe('auto');
   });
 
-  test('universal animation-duration shortens to ≤1 ms under reduced motion', async ({ page }) => {
+  test('universal animations and transitions stop under reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
 
-    // The global * rule sets animation-duration: 0.01ms; check a representative animated element
-    // that does NOT have an explicit animation: none override (atlas-world uses transform, not animation).
-    const atlasWorldDuration = await page
+    const motionStyles = await page
       .locator('.atlas-world')
       .first()
-      .evaluate((el) => getComputedStyle(el).animationDuration);
+      .evaluate((el) => {
+        const style = getComputedStyle(el);
+        return { animationName: style.animationName, transitionDuration: style.transitionDuration };
+      });
 
-    // 0.01ms rounds to 0ms in most parsers; any value ≤1ms satisfies the contract.
-    const ms = Number.parseFloat(atlasWorldDuration.replace('ms', '').replace('s', '000'));
-    expect(ms).toBeLessThanOrEqual(1);
+    expect(motionStyles.animationName).toBe('none');
+    expect(motionStyles.transitionDuration).toBe('0s');
   });
 });
 

@@ -1,8 +1,8 @@
 # Social and icon asset provenance
 
-The route social cards and application icons were generated on 2026-08-21 from
-first-party Digital Nest assets already committed under `public/assets/nest/`.
-No external illustration or generated portrait was introduced.
+The route social cards are generated from first-party Digital Nest scene art and
+original SVG diagrams under `public/media/social/`. No stock illustration or
+generated portrait is used.
 
 ## Social cards
 
@@ -10,14 +10,25 @@ No external illustration or generated portrait was introduced.
 - Dimensions: 1200x630
 - Source plate: `public/assets/nest/hero-bg.webp`
 - Route art: the corresponding first-party island under
-  `public/assets/nest/island-*.webp`
-- Home art: `public/assets/nest/logo-nest.webp`
+  `public/assets/nest/island-*.webp`; the stack, trajectory, support dock, and
+  Hornero OS mark use source SVGs already stored in the repository.
+- Composition: one shared Synthwave Systems Atlas plate, route accent orbit,
+  integrated art, and crop-safe title/subtitle area.
 - Generator: `scripts/generate-social-cards.mjs`
 - Font used during generation: locally installed Noto Sans; rendered text is
   embedded in the JPEG output
 
-Run `pnpm assets:social` only when route identity or approved art changes. Review
-all 15 outputs before committing regenerated cards.
+Card copy follows canonical route/project data. HorneroConfig describes its
+personal configuration role, Agent Toolkit describes the portable CLI runtime,
+Create Awesome names all four CLIs, and Hornero OS is labeled early-stage and
+not yet installable. Sponsor and About use route-specific system diagrams
+instead of the Digital Nest mark.
+
+Run `pnpm assets:social` when route identity or approved art changes. Inspect
+all 15 outputs at full resolution and in a contact sheet before committing.
+The generator uses locally resolved Noto Sans and ImageMagick, so output bytes
+can vary with tool and font versions; compare visual output, not hashes, across
+different machines.
 
 ## Application icons
 
@@ -34,11 +45,18 @@ source for its 64–96 CSS pixel art at device-pixel ratios 1 and 2, and the
 thumbnails are each 3.6–4.5 KB with the committed ImageMagick output and add no
 runtime dependency.
 
-## 2026-09-30 update (ADR-004)
+The legacy island PNG fallbacks under `public/assets/` can be regenerated from
+the WebP sources with `node scripts/generate-island-pngs.mjs --regenerate`.
+Island fallbacks now match their 640px source dimensions (instead of shipping
+1024px copies) and the logo fallback uses its 256px source. The 1024px hero PNG
+is preserved as-is because its source is already at full resolution.
+`--check` verifies that every full-size WebP source has a matching PNG
+fallback.
+
+## 2026-10-04 update
 
 - Added `sponsor.jpg` (Digital Nest mark) and `hornero-os.jpg` (Hornero OS MIT mark, rasterized from
   `public/media/hornero-os/hornero-logo.svg` in a separate step so SVG density never scales card text).
-- Refreshed subtitles for `home`, `dotfiles`, `agent-toolkit`, and `projects` (now titled WORK). The dotfiles card describes personal configuration and its HorneroOS ownership boundary.
-- The generator uses locally resolved Noto Sans and ImageMagick. Generated
-  bytes can vary with those local tool versions, so review every output after
-  regeneration; do not claim byte-for-byte determinism across machines.
+- Integrated art directly into the background plate with a restrained route-color orbit and an angled copy plane; removed the detached black art panel.
+- Replaced reused Home artwork on About and Sponsor with original trajectory and support-dock SVGs; Agentic now has a separate three-project map.
+- Corrected stale HorneroConfig and Hornero OS claims, added Rust to Create Awesome, and clarified that the Toolkit card describes portable capabilities plus its CLI runtime.

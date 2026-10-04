@@ -382,9 +382,9 @@ export const installSnippets: InstallSnippet[] = [
 ];
 
 /**
- * Ways to run the toolkit (verified 2026-09-30 against CHANGELOG, ADR-032,
- * ADR-033, docs/SERVE_API.md). Unreleased work on `main` is labelled
- * in progress — never presented as shipped.
+ * Ways to run the toolkit (verified 2026-10-04 against upstream README,
+ * CHANGELOG, docs/desktop, and docs/SERVE_API.md at 524918d5). Unreleased
+ * work on `main` is labelled in progress — never presented as shipped.
  */
 export const runtimeSurfaces: RuntimeSurface[] = [
   {
@@ -411,10 +411,10 @@ export const runtimeSurfaces: RuntimeSurface[] = [
     id: 'desktop',
     title: 'Desktop',
     status: 'shipped',
-    statusNote: 'Native app released for Linux, macOS, and Windows · Electron successor in progress',
+    statusNote: 'Flagship Electron app released for Linux, macOS, and Windows',
     summary:
-      'A desktop app for the catalog, operations (jobs, loops, swarms, doctor), and a real terminal. An Electron + React successor over the same backend is being built on main.',
-    command: 'agent-toolkit gui --install && agent-toolkit gui',
+      'The app bundles its V backend and brings the capability Library, Operations, People, workspaces, a real terminal, and guided onboarding into one desktop surface.',
+    installHref: `${GH}/releases/latest`,
     docsHref: `${GH}/tree/main/docs/desktop`,
   },
 ];

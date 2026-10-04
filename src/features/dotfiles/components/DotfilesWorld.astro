@@ -6,6 +6,8 @@ import '@/shared/components/visual/visual.css';
 import DotfilesNarrative from './DotfilesNarrative.astro';
 import LayersDiagram from './LayersDiagram.astro';
 import ScreenshotGallery from './ScreenshotGallery.astro';
+import HorneroExtractionBridge from '@/shared/components/HorneroExtractionBridge.astro';
+import { horneroRepositoryUrls, horneroSystemRepositories } from '@/data/hornero-transition.js';
 import { attributionEntries, dotfilesLayers, heroArt, verifiedFacts } from '../data/index.js';
 
 const layersJson = JSON.stringify(
@@ -68,6 +70,12 @@ const heroShot = heroArt;
       <figcaption class="df-world__hero-cap">{heroShot.caption}</figcaption>
     </figure>
   </header>
+
+  <HorneroExtractionBridge
+    currentPage="dotfiles"
+    compositionRepoUrl={horneroRepositoryUrls.composition}
+    repositories={horneroSystemRepositories}
+  />
 
   <DotfilesNarrative />
 

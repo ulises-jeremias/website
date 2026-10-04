@@ -33,6 +33,12 @@ import { runtimeSurfaces } from '../data/index.js';
               {surface.command}
             </code>
           )}
+          {surface.installHref && (
+            <a class="atk-surfaces__install" href={surface.installHref} target="_blank" rel="noopener noreferrer">
+              Get the desktop app <span aria-hidden="true">↗</span>
+              <span class="sr-only"> (opens in new tab)</span>
+            </a>
+          )}
           <a href={surface.docsHref} target="_blank" rel="noopener noreferrer">
             {surface.title} docs <span aria-hidden="true">↗</span>
             <span class="sr-only"> (opens in new tab)</span>
@@ -144,6 +150,25 @@ import { runtimeSurfaces } from '../data/index.js';
   .atk-surfaces__item a {
     color: var(--nest-cyan);
     font-size: 0.85rem;
+  }
+
+  .atk-surfaces__item .atk-surfaces__install {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    gap: 0.45rem;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding-inline: 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--nest-magenta) 55%, transparent);
+    color: var(--nest-paper);
+    text-decoration: none;
+  }
+
+  .atk-surfaces__item .atk-surfaces__install:hover,
+  .atk-surfaces__item .atk-surfaces__install:focus-visible {
+    border-color: var(--nest-magenta);
+    color: var(--nest-cyan);
   }
 
   .sr-only {

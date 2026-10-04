@@ -3,7 +3,7 @@
  */
 
 :root {
-  --motion-duration-instant: 1ms;
+  --motion-duration-instant: 0ms;
   --motion-duration-fast: 140ms;
   --motion-duration-base: 200ms;
   --motion-duration-slow: 320ms;
@@ -42,11 +42,8 @@
   *,
   *::before,
   *::after {
-    animation-delay: 0ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
 
@@ -74,8 +71,7 @@ html.reveal-ready [data-reveal].is-revealed {
   html.reveal-ready [data-reveal] {
     opacity: 1;
     transform: none;
-    transition-duration: 0.01ms;
-    transition-delay: 0ms;
+    transition: none;
   }
 }
 

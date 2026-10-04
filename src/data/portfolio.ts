@@ -308,8 +308,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'channel-freshness',
-        text: 'GitHub Releases, npm, PyPI, and AUR ship v1.35.0; the Homebrew tap trails behind.',
-        verifiedAt: '2026-09-30',
+        text: 'Upstream source is at v1.41.0; installers and package channels can publish on separate schedules.',
+        verifiedAt: '2026-10-04',
       },
     ],
     evidence: {

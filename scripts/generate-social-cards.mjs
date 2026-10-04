@@ -15,7 +15,7 @@ const cards = [
   {
     id: 'dotfiles',
     title: 'HORNERO\nCONFIG',
-    subtitle: 'Hyprland · Quickshell · chezmoi · Smart Colors',
+    subtitle: 'Personal Arch config · HorneroOS components',
     accent: '#ffb0ca',
     art: 'island-dotfiles.webp',
   },
@@ -29,7 +29,7 @@ const cards = [
   {
     id: 'agent-toolkit',
     title: 'AGENT\nTOOLKIT',
-    subtitle: 'Skills · agents · loops · CLI, API, desktop',
+    subtitle: 'Portable skills · agents · loops · CLI runtime',
     accent: '#ff4fd8',
     art: 'island-agent.webp',
   },
@@ -50,7 +50,7 @@ const cards = [
   {
     id: 'create-awesome',
     title: 'CREATE\nAWESOME',
-    subtitle: 'Valid application scaffolds for Node · Python · V',
+    subtitle: 'Node · Python · V · Rust application scaffolds',
     accent: '#ff9a62',
     art: 'island-scaffold.webp',
   },
@@ -87,19 +87,19 @@ const cards = [
     title: 'ABOUT',
     subtitle: 'Developer tooling · open source · the trajectory',
     accent: '#a78bfa',
-    art: 'logo-nest.webp',
+    artPath: path.join('public', 'media', 'social', 'builder-trajectory.svg'),
   },
   {
     id: 'agentic',
     title: 'AGENTIC\nDEVELOPER STACK',
     subtitle: 'Toolkit · Workstation · Harness — composable',
     accent: '#ff4fd8',
-    art: 'island-agent.webp',
+    artPath: path.join('public', 'media', 'social', 'agentic-stack.svg'),
   },
   {
     id: 'hornero-os',
     title: 'HORNERO OS',
-    subtitle: 'Arch-based Wayland desktop · development preview',
+    subtitle: 'Early-stage Arch desktop · not yet installable',
     accent: '#f2b749',
     // Project-owned MIT brand mark (HorneroOS/config assets/brand/logo.svg).
     artPath: path.join('public', 'media', 'hornero-os', 'hornero-logo.svg'),
@@ -107,9 +107,9 @@ const cards = [
   {
     id: 'sponsor',
     title: 'SPONSOR\nTHE WORK',
-    subtitle: 'GitHub Sponsors · integrations · hardware · infra',
+    subtitle: 'Support the tools · infrastructure · community',
     accent: '#ff42d0',
-    art: 'logo-nest.webp',
+    artPath: path.join('public', 'media', 'social', 'support-dock.svg'),
   },
 ];
 
@@ -131,6 +131,14 @@ const boldFont = resolveFont('Noto Sans:style=Bold');
 const regularFont = resolveFont('Noto Sans:style=Regular');
 
 const scratch = mkdtempSync(path.join(os.tmpdir(), 'social-cards-'));
+const accentRgba = (hex, alpha) => {
+  const channels = hex
+    .slice(1)
+    .match(/.{2}/g)
+    ?.map((channel) => Number.parseInt(channel, 16));
+  if (!channels || channels.length !== 3) throw new Error(`Invalid card accent: ${hex}`);
+  return `rgba(${channels.join(',')},${alpha})`;
+};
 
 /** Rasterize an SVG art source once, so density never leaks into text rendering. */
 function rasterize(relativePath) {
@@ -160,20 +168,42 @@ for (const card of cards) {
       'rgba(4,2,18,0.58)',
       '-draw',
       'rectangle 0,0 1200,630',
+      '-fill',
+      accentRgba(card.accent, 0.16),
+      '-draw',
+      'circle 930,314 1130,314',
+      '-stroke',
+      accentRgba(card.accent, 0.46),
+      '-strokewidth',
+      '2',
+      '-fill',
+      'none',
+      '-draw',
+      'ellipse 930,314 232,184 0,360',
+      '-stroke',
+      accentRgba(card.accent, 0.24),
+      '-strokewidth',
+      '1',
+      '-draw',
+      'ellipse 930,314 258,196 14,194',
+      '-stroke',
+      'none',
+      '-fill',
+      'rgba(4,2,18,0.72)',
+      '-draw',
+      'polygon 0,0 720,0 635,630 0,630',
       '(',
       card.artPath ? rasterize(card.artPath) : path.join(assetRoot, card.art),
       '-resize',
-      card.artPath ? '380x380' : '520x520',
+      card.artPath ? '430x430' : '500x500',
       ')',
       '-gravity',
       'east',
       '-geometry',
-      card.artPath ? '+90+0' : '+18+0',
+      '+58+0',
+      '-compose',
+      'screen',
       '-composite',
-      '-fill',
-      'rgba(4,2,18,0.84)',
-      '-draw',
-      'rectangle 0,0 760,630',
       '-fill',
       card.accent,
       '-draw',
@@ -187,7 +217,7 @@ for (const card of cards) {
       '-fill',
       card.accent,
       '-annotate',
-      '+120+95',
+      '+112+92',
       'DIGITAL NEST / ULISES JEREMIAS',
       '-pointsize',
       '62',
@@ -196,7 +226,7 @@ for (const card of cards) {
       '-interline-spacing',
       '-8',
       '-annotate',
-      '+120+190',
+      '+112+190',
       card.title,
       '-font',
       regularFont,
@@ -205,7 +235,7 @@ for (const card of cards) {
       '-fill',
       '#d8cfea',
       '-annotate',
-      '+120+470',
+      '+112+470',
       card.subtitle,
       '-strip',
       '-interlace',

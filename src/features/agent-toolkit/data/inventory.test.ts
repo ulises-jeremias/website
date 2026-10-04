@@ -29,7 +29,7 @@ describe('agent-toolkit inventory truth', () => {
   });
 
   it('matches verified HEAD inventory counts from a single snapshot', () => {
-    expect(inventoryCounts.skills).toBe(103);
+    expect(inventoryCounts.skills).toBe(105);
     expect(inventoryCounts.agents).toBe(18);
     expect(inventoryCounts.loops).toBe(10);
     expect(inventoryCounts.profiles).toBe(9);

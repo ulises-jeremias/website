@@ -1,44 +1,76 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import './about.css';
 import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
 import { profile } from '@/data/profile';
 import { getHomepagePortfolioAreas } from '@/data/portfolio';
 
 const meta = getRouteMeta('/about')!;
 
-/**
- * Trajectory — each stage names real, linked work. Dates come from the
- * repositories (verified 2026-09-30); no stage invents an employer or title.
- */
-const trajectory = [
+/** Each stop describes verified work or first-person experience; no roles or dates are inferred. */
+type TrajectoryStage = {
+  id: string;
+  tone: string;
+  period: string;
+  mapLabel: string;
+  heading: string;
+  body: string;
+  links: { href: string; label: string }[];
+};
+
+const trajectory: TrajectoryStage[] = [
   {
+    id: 'foundations',
+    tone: 'cyan',
     period: 'Foundations',
-    heading: 'CLIs, automation, and my own Linux setup',
-    body: 'I started where most tooling people start: scripts, command-line tools, and a desktop I kept rebuilding by hand. That is where the habit came from — treat developer experience as something to design.',
+    mapLabel: 'Developer tooling',
+    heading: 'Developer tools begin at the workbench',
+    body: 'I started with command-line tools, automation, and a Linux desktop I kept rebuilding by hand. That practice shaped a lasting focus: developer experience is part of the product, not an afterthought.',
+    links: [],
   },
   {
+    id: 'v-science',
+    tone: 'blue',
     period: 'Since 2019',
-    heading: 'V and scientific computing',
-    body: 'I started VSL, the V Scientific Library, in 2019 and still lead it. I became the main maintainer of VTL (tensors and autograd), wrote setup-v so V projects can run in CI, built RxV for reactive streams, and contribute to the V compiler.',
-    href: '/v',
+    mapLabel: 'V + scientific computing',
+    heading: 'Give a language a working ecosystem',
+    body: 'I started VSL, the V Scientific Library, in 2019 and still lead it. I maintain VTL for tensors and autograd, built setup-v for CI and RxV for reactive streams, and contribute to the V compiler.',
+    links: [{ href: '/v', label: 'Explore the V ecosystem' }],
   },
   {
+    id: 'composition',
+    tone: 'orange',
     period: 'Since 2020',
-    heading: 'Scaffolding in the open',
-    body: 'Create Awesome Node App started in 2020 as a way to compose a template with extensions instead of copying starters. In 2026 it gained Python and V siblings that share the same model. Recoil DevTools stays maintained for apps that still use Recoil.',
-    href: '/create-awesome',
+    mapLabel: 'App composition',
+    heading: 'Compose applications from parts',
+    body: 'Create Awesome Node App began in 2020 as a way to combine a template with extensions instead of copying starters. Python and V siblings now share that model; Recoil DevTools remains maintained for apps that still use Recoil.',
+    links: [{ href: '/create-awesome', label: 'Explore Create Awesome' }],
   },
   {
-    period: '2026',
-    heading: 'Reproducible Linux desktops',
-    body: 'HorneroConfig moved from its X11 years to Hyprland and Quickshell, managed with chezmoi. Its generic parts then became Hornero OS — an early-stage, Arch-based desktop OS that is not installable yet.',
-    href: '/hornero-os',
+    id: 'linux',
+    tone: 'pink',
+    period: 'HorneroConfig → Hornero OS',
+    mapLabel: 'Linux systems',
+    heading: 'Make the working environment reproducible',
+    body: 'HorneroConfig grew from its X11 roots into a Hyprland and Quickshell desktop managed with chezmoi. Generic parts of that configuration informed Hornero OS, an early-stage Arch-based desktop OS that is not installable yet.',
+    links: [
+      { href: '/dotfiles', label: 'HorneroConfig' },
+      { href: '/hornero-os', label: 'Hornero OS' },
+    ],
   },
   {
+    id: 'agentic',
+    tone: 'magenta',
     period: 'Now',
-    heading: 'Agentic developer workflows',
-    body: 'Agent Toolkit packages skills, agents, and loops so they work across coding assistants, with a native CLI, local API, and desktop app. Agentic Workstation provisions the machine; Agentic Harness keeps workspace context between sessions.',
-    href: '/agentic',
+    mapLabel: 'Agentic workflows',
+    heading: 'Carry the systems model into agentic work',
+    body: 'Agent Toolkit makes skills, agents, and loops portable across coding assistants. Agentic Workstation provisions the machine; Agentic Harness keeps workspace context between sessions.',
+    links: [
+      { href: '/agentic', label: 'Explore the Agentic Developer Stack' },
+      { href: '/agent-toolkit', label: 'Agent Toolkit' },
+      { href: '/agentic-workstation', label: 'Workstation' },
+      { href: '/agentic-harness', label: 'Harness' },
+    ],
   },
 ];
 
@@ -66,9 +98,13 @@ const values = [
 ];
 
 const roleGroups = [
-  { kind: 'employment', title: 'Work', note: 'My job. Client work stays private and is not shown on this site.' },
-  { kind: 'open-source', title: 'Open source', note: 'Roles verified against public repositories.' },
-  { kind: 'community', title: 'Community', note: 'Open to anyone; separate from my employer.' },
+  { kind: 'employment', title: 'Work', note: 'Client work stays private and is not shown on this site.' },
+  {
+    kind: 'open-source',
+    title: 'Open source',
+    note: 'Roles are linked to their public organizations and repositories.',
+  },
+  { kind: 'community', title: 'Community', note: 'Community work is open to anyone and separate from my employer.' },
 ] as const;
 
 const focusAreas = getHomepagePortfolioAreas();
@@ -97,46 +133,86 @@ const profilePageJsonLd = {
 >
   <div class="about-page">
     <div class="about-page__inner">
-      <header class="about-page__masthead">
-        <p class="about-page__kicker">Digital Nest · about</p>
-        <h1 class="about-page__title">{profile.displayName}</h1>
-        <p class="about-page__lead">
-          I am a Solutions Architect at NaNLABS and, outside that job, an open-source builder. I work on the layers
-          developers stand on — their desktops, their languages, how projects start, and now how they work with coding
-          agents — and I try to make each one cause less friction while leaving the developer in charge.
-        </p>
-        <nav class="about-page__jump" aria-label="On this page and related pages">
-          <a href="/projects">Work</a>
-          <a href="/open-source">Open Source</a>
-          <a href="/community">Community</a>
-          <a href="/sponsor">Sponsor</a>
+      <header class="about-hero" data-testid="about-hero">
+        <div class="about-hero__identity">
+          <p class="about-page__kicker">Digital Nest <span aria-hidden="true">/</span> builder profile</p>
+          <h1 class="about-hero__title">{profile.displayName}</h1>
+          <p class="about-hero__role">{profile.title}<span aria-hidden="true"> · </span>open-source builder</p>
+          <p class="about-hero__lead">{profile.summary}</p>
+          <p class="about-hero__location">
+            <span class="about-hero__location-mark" aria-hidden="true"></span>{profile.location}
+          </p>
+          <nav class="about-hero__actions" aria-label="Explore my work and contact me">
+            <a class="about-hero__primary-link" href="/projects">Explore the work</a>
+            <a href="/open-source">Trace the open-source work</a>
+          </nav>
+        </div>
+
+        <nav class="about-path" aria-label="Build trajectory" data-testid="about-build-path">
+          <p class="about-path__label">One thread through the work</p>
+          <p class="about-path__thesis">Make every layer easier to work with.</p>
+          <ol class="about-path__stops">
+            {
+              trajectory.map((stage) => (
+                <li class="about-path__stop" data-tone={stage.tone}>
+                  <a href={`#trajectory-${stage.id}`}>
+                    <span class="about-path__node" aria-hidden="true" />
+                    <span>{stage.mapLabel}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
         </nav>
       </header>
 
-      <section class="about-page__trajectory" aria-labelledby="about-trajectory-title">
-        <h2 id="about-trajectory-title">The trajectory</h2>
-        <ol class="about-page__timeline">
+      <section class="about-trajectory" aria-labelledby="about-trajectory-title">
+        <header class="about-section-heading">
+          <p class="about-page__kicker">From the workstation outward</p>
+          <h2 id="about-trajectory-title">The systems I build</h2>
+          <p>
+            The projects move across environments, languages, applications, and workflows. The common thread is to make
+            these layers work together and leave the person in control.
+          </p>
+        </header>
+        <ol class="about-stations" data-testid="about-trajectory">
           {
             trajectory.map((stage) => (
-              <li class="about-page__stage">
-                <p class="about-page__stage-period">{stage.period}</p>
-                <h3 class="about-page__stage-heading">
-                  {stage.href ? <a href={stage.href}>{stage.heading}</a> : stage.heading}
-                </h3>
-                <p class="about-page__stage-body">{stage.body}</p>
+              <li class="about-station" id={`trajectory-${stage.id}`} data-tone={stage.tone}>
+                <article aria-labelledby={`trajectory-title-${stage.id}`}>
+                  <p class="about-station__period">{stage.period}</p>
+                  <h3 id={`trajectory-title-${stage.id}`}>{stage.heading}</h3>
+                  <p class="about-station__body">{stage.body}</p>
+                  {stage.links.length > 0 && (
+                    <ul class="about-station__links" aria-label={`${stage.mapLabel} links`}>
+                      {stage.links.map((link) => (
+                        <li>
+                          <a href={link.href}>
+                            {link.label}
+                            <span aria-hidden="true"> ↗</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
               </li>
             ))
           }
         </ol>
       </section>
 
-      <section class="about-page__roles" aria-labelledby="about-roles-title">
-        <h2 id="about-roles-title">Roles</h2>
-        <div class="about-page__role-groups">
+      <section class="about-roles" aria-labelledby="about-roles-title">
+        <header class="about-section-heading about-section-heading--compact">
+          <p class="about-page__kicker">How I contribute</p>
+          <h2 id="about-roles-title">Roles and provenance</h2>
+          <p>Employment, open-source maintenance, and community work are shown as separate responsibilities.</p>
+        </header>
+        <div class="about-role-groups">
           {
             roleGroups.map((group) => (
-              <div class="about-page__role-group">
-                <h3>{group.title}</h3>
+              <section class="about-role-group" aria-labelledby={`role-group-${group.kind}`}>
+                <h3 id={`role-group-${group.kind}`}>{group.title}</h3>
                 <ul>
                   {profile.roles
                     .filter((role) => role.kind === group.kind)
@@ -158,20 +234,24 @@ const profilePageJsonLd = {
                       </li>
                     ))}
                 </ul>
-                <p class="about-page__role-note">{group.note}</p>
-              </div>
+                <p>{group.note}</p>
+              </section>
             ))
           }
         </div>
-        <p class="about-page__provenance">
-          Ownership is kept explicit throughout the site: projects I own, projects I maintain inside organizations like
-          vlang, and upstream contributions are labelled differently. <a href="/open-source">Open Source</a> has the evidence.
+        <p class="about-roles__provenance">
+          Project ownership is explicit throughout the site: work I own, work I maintain within organizations such as
+          vlang, and upstream contributions are labelled differently. <a href="/open-source">Open Source</a> links to the
+          evidence.
         </p>
       </section>
 
-      <section class="about-page__focus" aria-labelledby="about-focus-title">
-        <h2 id="about-focus-title">Current focus</h2>
-        <ul class="about-page__focus-list">
+      <section class="about-focus" aria-labelledby="about-focus-title">
+        <header class="about-section-heading about-section-heading--compact">
+          <p class="about-page__kicker">What is active across the portfolio</p>
+          <h2 id="about-focus-title">Current focus</h2>
+        </header>
+        <ul class="about-focus__areas">
           {
             focusAreas.map((area) => (
               <li>
@@ -185,359 +265,57 @@ const profilePageJsonLd = {
         </ul>
       </section>
 
-      <section class="about-page__values" aria-labelledby="about-values-title">
-        <h2 id="about-values-title">What I care about</h2>
-        <ul class="about-page__value-grid">
+      <section class="about-values" aria-labelledby="about-values-title">
+        <header class="about-section-heading about-section-heading--compact">
+          <p class="about-page__kicker">The design rules behind the work</p>
+          <h2 id="about-values-title">What I care about</h2>
+        </header>
+        <ul class="about-values__list">
           {
             values.map((value) => (
-              <li class="about-page__value">
-                <h3 class="about-page__value-title">{value.title}</h3>
-                <p class="about-page__value-body">{value.body}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section class="about-page__support" aria-labelledby="about-support-title">
-        <h2 id="about-support-title">Support or partner with the work</h2>
-        <p>
-          The projects are free and open source. If they help you or your company, you can sponsor them on GitHub or
-          talk to me about integrations, infrastructure credits, or Linux hardware for testing. Sponsorship is disclosed
-          and never buys a technical recommendation.
-        </p>
-        <p class="about-page__support-links">
-          <a class="about-page__support-cta" href="/sponsor">Sponsor &amp; partner</a>
-          <a href={profile.links.sponsors} target="_blank" rel="noopener noreferrer">
-            GitHub Sponsors ↗<span class="sr-only"> (opens in new tab)</span>
-          </a>
-        </p>
-      </section>
-
-      <section class="about-page__contact" aria-labelledby="about-contact-title">
-        <h2 id="about-contact-title">Contact</h2>
-        <p class="about-page__contact-lead">
-          Email is the best way to reach me: <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
-        </p>
-        <ul class="about-page__social">
-          {
-            profile.socials.map((social) => (
               <li>
-                <a href={social.href} target="_blank" rel="noopener noreferrer">
-                  {social.label}
-                  <span class="sr-only"> (opens in new tab)</span>
-                </a>
+                <h3>{value.title}</h3>
+                <p>{value.body}</p>
               </li>
             ))
           }
         </ul>
+      </section>
+
+      <section class="about-contact-band" aria-label="Support and contact">
+        <div class="about-support" aria-labelledby="about-support-title">
+          <p class="about-page__kicker">Open-source support</p>
+          <h2 id="about-support-title">Help the work continue</h2>
+          <p>
+            The projects are free and open source. Support can fund integrations, infrastructure credits, or Linux
+            hardware for testing. Sponsorship is disclosed and never buys a technical recommendation.
+          </p>
+          <p class="about-support__links">
+            <a class="about-hero__primary-link" href="/sponsor">Sponsor &amp; partner</a>
+            <a href={profile.links.sponsors} target="_blank" rel="noopener noreferrer">
+              GitHub Sponsors<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </p>
+        </div>
+        <div class="about-contact" aria-labelledby="about-contact-title">
+          <p class="about-page__kicker">Start a conversation</p>
+          <h2 id="about-contact-title">Contact</h2>
+          <p>Email is the best way to reach me:</p>
+          <a class="about-contact__email" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+          <ul class="about-contact__social">
+            {
+              profile.socials.map((social) => (
+                <li>
+                  <a href={social.href} target="_blank" rel="noopener noreferrer">
+                    {social.label}
+                    <span class="sr-only"> (opens in new tab)</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </section>
     </div>
   </div>
 </SectionLayout>
-
-<style>
-  .about-page {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .about-page__inner {
-    display: grid;
-    gap: 2.75rem;
-    max-inline-size: 64rem;
-    margin-inline: auto;
-    padding: clamp(1.5rem, 5vw, 3.5rem) clamp(0.75rem, 3vw, 2rem);
-  }
-
-  .about-page__kicker {
-    margin: 0 0 0.4rem;
-    color: var(--nest-cyan);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .about-page__title {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 5vw, 3rem);
-    font-weight: 700;
-  }
-
-  .about-page__lead {
-    max-inline-size: 66ch;
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--color-text-muted);
-  }
-
-  .about-page__jump {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.25rem;
-    margin-block-start: 1rem;
-  }
-
-  .about-page__jump a {
-    color: var(--nest-cyan);
-    font-size: 0.9rem;
-  }
-
-  .about-page h2 {
-    margin: 0 0 1rem;
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .about-page__timeline {
-    display: grid;
-    gap: 1.4rem;
-    max-inline-size: 70ch;
-    margin: 0;
-    padding: 0 0 0 1.25rem;
-    list-style: none;
-    border-inline-start: 2px solid transparent;
-    border-image: linear-gradient(180deg, var(--nest-cyan), var(--nest-magenta), var(--nest-violet)) 1;
-  }
-
-  .about-page__stage {
-    position: relative;
-  }
-
-  .about-page__stage::before {
-    content: '';
-    position: absolute;
-    inset-block-start: 0.35rem;
-    inset-inline-start: calc(-1.25rem - 6px);
-    inline-size: 10px;
-    block-size: 10px;
-    border-radius: 50%;
-    background: var(--nest-midnight-950);
-    border: 2px solid var(--nest-magenta);
-  }
-
-  .about-page__stage-period {
-    margin: 0;
-    color: var(--nest-cyan);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .about-page__stage-heading {
-    margin: 0.2rem 0 0.3rem;
-    font-size: 1.05rem;
-  }
-
-  .about-page__stage-heading a {
-    color: var(--nest-paper);
-    text-underline-offset: 0.2em;
-  }
-
-  .about-page__stage-body {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--color-text-muted);
-  }
-
-  .about-page__role-groups {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
-    gap: 1rem;
-  }
-
-  .about-page__role-group {
-    padding: 1rem 1.1rem;
-    border: 1px solid color-mix(in srgb, var(--nest-violet) 32%, transparent);
-    background: color-mix(in srgb, var(--nest-violet) 5%, transparent);
-  }
-
-  .about-page__role-group h3 {
-    margin: 0 0 0.6rem;
-    color: var(--nest-pink);
-    font-family: var(--font-mono);
-    font-weight: 400;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .about-page__role-group ul {
-    display: grid;
-    gap: 0.55rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .about-page__role-group li {
-    display: grid;
-    gap: 0.1rem;
-    font-size: 0.92rem;
-  }
-
-  .about-page__role-group li span,
-  .about-page__role-group li a {
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-  }
-
-  .about-page__role-note {
-    margin: 0.75rem 0 0;
-    color: var(--color-text-faint);
-    font-size: 0.78rem;
-    line-height: 1.5;
-  }
-
-  .about-page__provenance {
-    max-inline-size: 70ch;
-    margin: 1rem 0 0;
-    font-size: 0.85rem;
-    line-height: 1.55;
-    color: var(--color-text-faint);
-  }
-
-  .about-page__focus-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
-    gap: 0.6rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .about-page__focus-list a {
-    display: grid;
-    gap: 0.2rem;
-    padding: 0.75rem 0.9rem;
-    border: 1px solid color-mix(in srgb, var(--nest-cyan) 26%, transparent);
-    color: var(--nest-paper);
-    text-decoration: none;
-  }
-
-  .about-page__focus-list a:hover,
-  .about-page__focus-list a:focus-visible {
-    border-color: var(--nest-cyan);
-  }
-
-  .about-page__focus-list span {
-    font-size: 0.82rem;
-    color: var(--color-text-faint);
-  }
-
-  .about-page__value-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-    gap: 1rem 1.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .about-page__value-title {
-    margin: 0 0 0.3rem;
-    font-size: 0.95rem;
-  }
-
-  .about-page__value-body {
-    margin: 0;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--color-text-muted);
-  }
-
-  .about-page__support {
-    padding: 1.25rem 1.4rem;
-    border: 1px dashed color-mix(in srgb, var(--nest-magenta) 45%, transparent);
-    background: color-mix(in srgb, var(--nest-magenta) 5%, transparent);
-  }
-
-  .about-page__support p {
-    max-inline-size: 68ch;
-    margin: 0;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-
-  .about-page__support-links {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1.25rem;
-    margin-block-start: 1rem !important;
-  }
-
-  .about-page__support-links a {
-    color: var(--nest-cyan);
-  }
-
-  .about-page__support-links .about-page__support-cta {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--touch-min, 2.75rem);
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--nest-magenta);
-    color: var(--nest-paper);
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .about-page__contact-lead {
-    margin: 0 0 0.9rem;
-    color: var(--color-text-muted);
-  }
-
-  .about-page__contact-lead a {
-    color: var(--nest-cyan);
-  }
-
-  .about-page__social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .about-page__social a {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--touch-min, 2.75rem);
-    padding: 0.45rem 0.9rem;
-    border: 1px solid color-mix(in srgb, var(--nest-paper) 22%, transparent);
-    color: var(--nest-paper);
-    text-decoration: none;
-  }
-
-  .about-page__social a:hover,
-  .about-page__social a:focus-visible {
-    border-color: var(--nest-cyan);
-    color: var(--nest-cyan);
-  }
-
-  .sr-only {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  @media (forced-colors: active) {
-    .about-page__timeline {
-      border-image: none;
-      border-inline-start-color: CanvasText;
-    }
-  }
-</style>

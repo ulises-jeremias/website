@@ -1,3 +1,5 @@
+import { horneroRepositoryUrls } from '@/data/hornero-transition.js';
+
 /**
  * Hornero OS — verified facts for /hornero-os (ADR-004).
  *
@@ -11,7 +13,7 @@
 export const horneroFacts = {
   verifiedAt: '2026-09-30',
   orgUrl: 'https://github.com/HorneroOS',
-  compositionRepoUrl: 'https://github.com/HorneroOS/hornero',
+  compositionRepoUrl: horneroRepositoryUrls.composition,
   releasesUrl: 'https://github.com/HorneroOS/hornero/releases',
   discussionsUrl: 'https://github.com/HorneroOS/hornero/discussions',
   contributingUrl: 'https://github.com/HorneroOS/.github/blob/main/CONTRIBUTING.md',
@@ -40,21 +42,21 @@ export const manifestSlots: ManifestSlot[] = [
     status: 'pinned',
     value: '07a3397',
     note: 'desktop shell · Quickshell, QML, Qt 6',
-    href: 'https://github.com/HorneroOS/shell',
+    href: horneroRepositoryUrls.shell,
   },
   {
     id: 'config',
     status: 'pinned',
     value: 'c4a25f0',
     note: 'desktop defaults · 15 theme packs',
-    href: 'https://github.com/HorneroOS/config',
+    href: horneroRepositoryUrls.desktopDefaults,
   },
   {
     id: 'horneroctl',
     status: 'local',
     value: 'cli/',
     note: 'system CLI · built from the composition repo',
-    href: 'https://github.com/HorneroOS/hornero/tree/main/cli',
+    href: horneroRepositoryUrls.systemCli,
   },
   {
     id: 'installer',
@@ -92,7 +94,7 @@ export const horneroComponents: HorneroComponent[] = [
     summary:
       'System CLI written in V: appearance, wallpaper, colors, capture, hardware, and package verbs. Non-interactive by default, with --json, --dry-run, and --yes.',
     tryIt: 'yay -S horneroctl-bin',
-    href: 'https://github.com/HorneroOS/hornero/tree/main/cli',
+    href: horneroRepositoryUrls.systemCli,
   },
   {
     id: 'shell',
@@ -101,7 +103,7 @@ export const horneroComponents: HorneroComponent[] = [
     summary:
       'Bar, launcher, dashboard, control center, notifications, and lock screen, built with Quickshell, QML, and Qt 6 plus a native C++ plugin. Hyprland first.',
     tryIt: 'cmake -S . -B build && cmake --build build',
-    href: 'https://github.com/HorneroOS/shell',
+    href: horneroRepositoryUrls.shell,
   },
   {
     id: 'config',
@@ -110,7 +112,7 @@ export const horneroComponents: HorneroComponent[] = [
     summary:
       'Hyprland, kitty, GTK, Qt, and font defaults with 15 theme packs, including the flagship hornero-dark, hornero-light, and pampa themes.',
     tryIt: 'scripts/materialize.sh --dry-run',
-    href: 'https://github.com/HorneroOS/config',
+    href: horneroRepositoryUrls.desktopDefaults,
   },
   {
     id: 'greeter',
@@ -119,7 +121,7 @@ export const horneroComponents: HorneroComponent[] = [
     summary:
       'SDDM login screen that plays offline footage of Argentine landscapes. A Qt 6 port of aerial-sddm-theme; footage is CC BY / CC BY-SA.',
     tryIt: 'sddm-greeter --test-mode --theme <path>',
-    href: 'https://github.com/HorneroOS/greeter',
+    href: horneroRepositoryUrls.greeter,
   },
   {
     id: 'installer',

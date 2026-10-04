@@ -10,6 +10,8 @@
  */
 import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import SupportNote from '@/shared/components/SupportNote.astro';
+import HorneroExtractionBridge from '@/shared/components/HorneroExtractionBridge.astro';
+import { horneroRepositoryUrls, horneroSystemRepositories } from '@/data/hornero-transition.js';
 import {
   componentStateLabels,
   familyComparison,
@@ -79,6 +81,12 @@ const statusLabel: Record<string, string> = {
       <figcaption>Brand wallpaper, not a screenshot · {horneroAssets.wallpaper.credit}</figcaption>
     </figure>
   </section>
+
+  <HorneroExtractionBridge
+    currentPage="hornero-os"
+    compositionRepoUrl={horneroRepositoryUrls.composition}
+    repositories={horneroSystemRepositories}
+  />
 
   <section class="hos-section hos-manifest" aria-labelledby="hos-manifest-title">
     <div class="hos-manifest__copy">

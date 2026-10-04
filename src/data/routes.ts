@@ -232,7 +232,7 @@ export const routes: RouteMeta[] = [
   {
     id: 'create-awesome',
     path: '/create-awesome',
-    title: 'Create Awesome — App Scaffolding for Node, Python & V',
+    title: 'Create Awesome — App Scaffolding for Node, Python, V & Rust',
     description:
       'Choose a template and add-ons to scaffold an application in Node.js, Python, V, or Rust — one composition model across four CLIs.',
     ogImage: '/social/create-awesome.jpg',
