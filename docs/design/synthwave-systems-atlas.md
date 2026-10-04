@@ -21,16 +21,10 @@ cyberpunk dashboard, or retro arcade skin.
 
 Priority order:
 
-1. The approved dark synthwave homepage reference supplied by Ulises: chrome
-   name, asymmetric identity/atlas composition, striped sunset, landscape,
-   connected project worlds, and lower evidence panels.
-2. The cleaner synthwave reference supplied with the mission: circular
-   organization, sunset orange, technical framing, and CTA treatment.
+1. The approved dark synthwave homepage reference supplied by Ulises: chrome name, asymmetric identity/atlas composition, striped sunset, landscape, connected project worlds, and lower evidence panels.
+2. The cleaner synthwave reference supplied with the mission: circular organization, sunset orange, technical framing, and CTA treatment.
 3. The implementation-oriented standalone HTML supplied with the mission.
-4. Repository explorations under `docs/design/art-directions/`, especially:
-   - E — synthwave atmosphere and perspective floor;
-   - B/D — technical-atlas clarity and relationship diagrams;
-   - F — editorial restraint for long-form routes.
+4. Repository explorations under `docs/design/art-directions/`: E — synthwave atmosphere and perspective floor; B/D — technical-atlas clarity and relationship diagrams; F — editorial restraint for long-form routes.
 
 The references are conceptual. Generated portraits, metrics, stars, commands,
 and tiny copy are not sources of truth.
