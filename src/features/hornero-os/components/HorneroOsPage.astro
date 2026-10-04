@@ -50,18 +50,18 @@ const statusLabel: Record<string, string> = {
       </p>
       <FlagshipProvenance entryId="hornero-os" />
       <div class="hos-actions">
+        <a class="hos-cta hos-cta--primary" href={horneroFacts.websiteUrl} target="_blank" rel="noopener noreferrer">
+          Visit Hornero OS
+          <span class="sr-only"> (opens in new tab)</span>
+        </a>
+        <a class="hos-cta" href="#try">Try the components</a>
         <a
-          class="hos-cta hos-cta--primary"
+          class="hos-cta hos-cta--quiet"
           href={horneroFacts.compositionRepoUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Follow the composition
-          <span class="sr-only"> on GitHub (opens in new tab)</span>
-        </a>
-        <a class="hos-cta" href="#try">Try the components</a>
-        <a class="hos-cta hos-cta--quiet" href={horneroFacts.websiteUrl} target="_blank" rel="noopener noreferrer">
-          Project site ↗<span class="sr-only"> (opens in new tab)</span>
+          Inspect the composition ↗<span class="sr-only"> on GitHub (opens in new tab)</span>
         </a>
       </div>
     </div>
