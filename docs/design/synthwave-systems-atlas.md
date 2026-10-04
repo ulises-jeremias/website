@@ -31,19 +31,13 @@ and tiny copy are not sources of truth.
 
 ## Product principles
 
-1. **Real systems before decoration.** Every diagram must make a project,
-   capability, flow, or relationship easier to understand.
-2. **One universe, different worlds.** The global shell is consistent; each
-   route has a composition derived from its subject, not only a new accent.
+1. **Real systems before decoration.** Every diagram must make a project, capability, flow, or relationship easier to understand.
+2. **One universe, different worlds.** The global shell is consistent; each route has a composition derived from its subject, not only a new accent.
 3. **Static first.** Astro HTML, CSS, and accessible SVG are the default.
-4. **Neon is semantic.** Strong glow is reserved for active, connected,
-   focused, or selected states.
-5. **Evidence over telemetry.** Never invent counts, stars, downloads,
-   timelines, or activity.
-6. **Mobile is recomposed.** Desktop atlas scatter becomes a connected
-   narrative path, not a shrunken diagram or generic card column.
-7. **Motion explains or confirms.** Ambient movement is subtle and optional;
-   explanatory motion has a static equivalent.
+4. **Neon is semantic.** Strong glow is reserved for active, connected, focused, or selected states.
+5. **Evidence over telemetry.** Never invent counts, stars, downloads, timelines, or activity.
+6. **Mobile is recomposed.** Desktop atlas scatter becomes a connected narrative path, not a shrunken diagram or generic card column.
+7. **Motion explains or confirms.** Ambient movement is subtle and optional; explanatory motion has a static equivalent.
 
 ## Palette
 
@@ -289,10 +283,8 @@ the site shell. See [`current/textures.md`](current/textures.md).
 
 ## Implementation order
 
-1. Foundation: global CSS, tokens, typography, shell, motion/effects, flexible
-   world layout, visual test harness.
-2. Homepage: environment, identity, atlas, evidence panels, responsive/reduced
-   motion.
+1. Foundation: global CSS, tokens, typography, shell, motion/effects, flexible world layout, visual test harness.
+2. Homepage: environment, identity, atlas, evidence panels, responsive/reduced motion.
 3. Agent Toolkit.
 4. Personal DX: Dotfiles and Agentic Workstation.
 5. V and Create Awesome.
