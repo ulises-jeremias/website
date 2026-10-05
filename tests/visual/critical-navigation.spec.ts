@@ -83,7 +83,8 @@ test.describe('Mobile navigation dialog', () => {
       const trigger = page.locator('[data-mobile-trigger]');
       await expect(trigger).toHaveAttribute('aria-expanded', 'false');
       await expect(trigger).toHaveAttribute('aria-controls', 'site-navigation-drawer');
-      await expect(trigger).toHaveAttribute('aria-label', /navigation/i);
+      await expect(trigger).toHaveAccessibleName('Menu');
+      await expect(trigger).not.toHaveAttribute('aria-label');
 
       const drawer = page.locator('#site-navigation-drawer');
       await expect(drawer).toHaveAttribute('role', 'dialog');
