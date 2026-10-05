@@ -125,16 +125,31 @@ test.describe('homepage visual coverage', () => {
   });
 
   test('tablet breakpoint keeps featured destinations available before the mobile reflow', async ({ page }) => {
-    await page.setViewportSize({ width: 1024, height: 900 });
-    await page.goto('/');
-
     const featuredWork = page.getByRole('navigation', { name: 'Featured work' });
-    await expect(featuredWork).toBeVisible();
-    await expect(featuredWork.getByRole('link')).toHaveCount(4);
 
-    await page.setViewportSize({ width: 1023, height: 900 });
-    await expect(featuredWork).toBeHidden();
-    await expect(page.locator('.featured-areas')).toBeVisible();
+    for (const width of [768, 1023, 1024, 1152, 1280, 1366]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+
+      if (width >= 1024) {
+        await expect(featuredWork).toBeVisible();
+        await expect(featuredWork.getByRole('link')).toHaveCount(4);
+      } else {
+        await expect(featuredWork).toBeHidden();
+        await expect(page.locator('.featured-areas')).toBeVisible();
+      }
+
+      const overflowingNameLines = await page.locator('.hero__name-line').evaluateAll((lines) =>
+        lines
+          .filter((line) => line.scrollWidth > line.clientWidth + 1)
+          .map((line) => ({
+            text: line.textContent?.trim(),
+            scrollWidth: line.scrollWidth,
+            clientWidth: line.clientWidth,
+          })),
+      );
+      expect(overflowingNameLines, `hero title clipped at ${width}px`).toEqual([]);
+    }
 
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
