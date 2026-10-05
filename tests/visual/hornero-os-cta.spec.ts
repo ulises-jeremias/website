@@ -9,8 +9,5 @@ test('Hornero OS puts its official site before source and component paths', asyn
   await expect(officialSite).toHaveClass(/hos-cta--primary/);
 
   await expect(page.getByRole('link', { name: 'Try the components' })).toHaveAttribute('href', '#try');
-  await expect(page.getByRole('link', { name: /Inspect the composition/ })).toHaveAttribute(
-    'href',
-    'https://github.com/HorneroOS/hornero',
-  );
+  await expect(page.locator('.hos-cta--quiet')).toHaveAttribute('href', 'https://github.com/HorneroOS/hornero');
 });
