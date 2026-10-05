@@ -26,6 +26,7 @@ Verified against `ulises-jeremias/dotfiles` `main` @bf4b235 on 2026-10-04:
 - HorneroOS owns system defaults, appearance packs, Quickshell surfaces, packages, and stable system operations
 - `chezmoi diff` is reviewed before apply; package installation does not call `chezmoi apply`
 - Contributions use temporary `HOME` and isolated XDG directories; shared source excludes credentials and host-specific values
+- Security and testing claims come from `docs/Security-Guidelines.md`, `SECURITY.md`, and `docs/Testing-Strategy.md`; product behavior is accepted in `HorneroOS/qa`
 - Gallery captures under `static/` are the X11 generation (2020–2021) and are captioned as such
 
 ## Design decisions
