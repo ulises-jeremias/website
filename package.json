@@ -46,7 +46,6 @@
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/orbitron": "^5.3.0",
-    "astro": "^7.3.5",
     "zod": "^4.5.4"
   },
   "devDependencies": {
@@ -59,6 +58,7 @@
     "@vitest/coverage-v8": "^4.1.11",
     "ajv": "^8.20.0",
     "ajv-draft-04": "^1.0.0",
+    "astro": "^7.3.5",
     "axe-core": "^4.13.0",
     "chrome-launcher": "^1.2.1",
     "cspell": "^10.2.0",
