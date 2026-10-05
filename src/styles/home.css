@@ -112,6 +112,37 @@
   }
 }
 
+@keyframes atlas-orbit-spin {
+  from {
+    transform: perspective(18rem) rotateX(68deg) rotateZ(-18deg);
+  }
+  to {
+    transform: perspective(18rem) rotateX(68deg) rotateZ(342deg);
+  }
+}
+
+@keyframes atlas-beacon-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    scale: 0.78;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.28;
+  }
+}
+
+@keyframes atlas-city-shimmer {
+  0%,
+  100% {
+    filter: drop-shadow(0 12px 18px color-mix(in srgb, var(--nest-void) 55%, transparent));
+  }
+  50% {
+    filter: drop-shadow(0 12px 20px color-mix(in srgb, var(--nest-cyan) 28%, transparent));
+  }
+}
+
 @keyframes atlas-signal-shift {
   to {
     background-position:
@@ -591,6 +622,18 @@
     animation: atlas-glow-breathe 5s ease-in-out infinite;
   }
 
+  .atlas-world__platform::before {
+    animation: atlas-orbit-spin 32s linear infinite;
+  }
+
+  .atlas-world__platform::after {
+    animation: atlas-beacon-pulse 2.8s ease-in-out infinite;
+  }
+
+  .atlas-world--city .atlas-world__island {
+    animation: atlas-city-shimmer 6s ease-in-out infinite;
+  }
+
   .project-atlas__stage::after {
     animation: atlas-signal-shift 28s linear infinite alternate;
     background-size:
@@ -677,6 +720,33 @@
   block-size: var(--world-art-size);
 }
 
+.atlas-world__platform::before {
+  position: absolute;
+  inset: 16%;
+  border: 1px solid color-mix(in srgb, var(--world-color) 42%, transparent);
+  border-radius: 50%;
+  opacity: 0.34;
+  content: '';
+  transform: perspective(18rem) rotateX(68deg) rotateZ(-18deg);
+  pointer-events: none;
+}
+
+.atlas-world__platform::after {
+  position: absolute;
+  inset-block-start: 19%;
+  inset-inline-end: 21%;
+  inline-size: 0.35rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--nest-paper);
+  box-shadow:
+    0 0 0.35rem var(--nest-cyan),
+    0 0 0.9rem var(--world-color);
+  content: '';
+  opacity: 0.72;
+  pointer-events: none;
+}
+
 .atlas-world__glow {
   position: absolute;
   inset-inline: 12%;
@@ -742,6 +812,11 @@
 .atlas-world:hover .atlas-world__island,
 .atlas-world:focus-visible .atlas-world__island {
   transform: translateY(-0.2rem) scale(1.04);
+}
+
+.atlas-world:hover .atlas-world__platform::before,
+.atlas-world:focus-visible .atlas-world__platform::before {
+  opacity: 0.78;
 }
 
 .atlas-world:hover .atlas-world__title,
@@ -1137,6 +1212,9 @@
   .synthwave-environment__plate,
   .atlas-world,
   .atlas-world__glow,
+  .atlas-world__platform::before,
+  .atlas-world__platform::after,
+  .atlas-world--city .atlas-world__island,
   .project-atlas__stage::after {
     animation: none !important;
   }

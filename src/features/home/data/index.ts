@@ -4,7 +4,7 @@ import { worldsByPriority } from '@/data/project-worlds.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 import type { AtlasWorld, ContactLink, NestStatusItem } from '../types/index.js';
 
-/** ZIP island art filenames (under /assets/nest/), mapped from project-world ids. */
+/** Island art filenames (under /assets/nest/), mapped from project-world ids. */
 export const islandArtByWorldId: Record<string, string> = {
   dotfiles: 'island-dotfiles',
   workstation: 'island-workstation',
@@ -14,7 +14,7 @@ export const islandArtByWorldId: Record<string, string> = {
   'create-awesome': 'island-scaffold',
   community: 'island-community',
   blog: 'island-blog',
-  projects: 'island-projects',
+  projects: 'island-projects-neon',
   'open-source': 'island-oss',
 };
 
