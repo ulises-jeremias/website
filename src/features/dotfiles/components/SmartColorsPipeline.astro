@@ -1,0 +1,243 @@
+---
+import { verifiedFacts } from '../data/index.js';
+---
+
+<figure class="df-color-flow" aria-labelledby="df-color-flow-title">
+  <figcaption class="df-color-flow__caption">
+    <div>
+      <p>Appearance system · Smart Colors</p>
+      <h2 id="df-color-flow-title">One wallpaper, a synchronized desktop</h2>
+    </div>
+    <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noopener noreferrer">
+      Read the system contract <span aria-hidden="true">↗</span><span class="sr-only"> (opens in new tab)</span>
+    </a>
+  </figcaption>
+
+  <div class="df-color-flow__source">
+    <span class="df-color-flow__step">01 · SOURCE</span>
+    <span class="df-color-flow__wallpaper" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </span>
+    <strong>Wallpaper selected</strong>
+    <code>horneroctl wallpaper set</code>
+  </div>
+
+  <div class="df-color-flow__split" aria-hidden="true"><span></span><span></span></div>
+
+  <div class="df-color-flow__routes">
+    <section class="df-color-flow__route df-color-flow__route--live" aria-labelledby="df-colors-live-title">
+      <p class="df-color-flow__step">02A · SHELL RUNNING</p>
+      <h3 id="df-colors-live-title">Quickshell IPC</h3>
+      <p><code>appearance setWallpaper</code> refreshes the active shell.</p>
+      <span class="df-color-flow__output">Colours.qml reload</span>
+    </section>
+    <section class="df-color-flow__route df-color-flow__route--fallback" aria-labelledby="df-colors-fallback-title">
+      <p class="df-color-flow__step">02B · SHELL STOPPED</p>
+      <h3 id="df-colors-fallback-title">Apply the palette fallback</h3>
+      <p><code>apply-appearance.sh</code> runs pywal and generates Material 3 colors.</p>
+      <span class="df-color-flow__output">scheme.json · scheme state · GTK policy</span>
+    </section>
+  </div>
+
+  <p class="df-color-flow__note">
+    Both paths read the same wallpaper state; generated shell, Kitty, lockscreen, and CSS colors live in the Smart
+    Colors cache.
+  </p>
+</figure>
+
+<style>
+  .df-color-flow {
+    --flow-accent: var(--dotfiles-pink, #ffb0ca);
+    position: relative;
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: clamp(0.85rem, 2vw, 1.2rem);
+    border: 1px solid color-mix(in srgb, var(--flow-accent) 38%, transparent);
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--flow-accent) 10%, transparent), transparent 58%), #191114;
+    clip-path: var(
+      --clip-corner-md,
+      polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))
+    );
+  }
+
+  .df-color-flow__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--flow-accent) 25%, transparent);
+  }
+
+  .df-color-flow__caption p,
+  .df-color-flow__caption h2,
+  .df-color-flow__caption a {
+    margin: 0;
+  }
+
+  .df-color-flow__caption p,
+  .df-color-flow__step {
+    color: color-mix(in srgb, var(--flow-accent) 78%, white);
+    font: 0.61rem/1.4 var(--font-mono, monospace);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .df-color-flow__caption h2 {
+    margin-top: 0.3rem;
+    font-size: clamp(1rem, 1.6vw, 1.35rem);
+  }
+
+  .df-color-flow__caption a {
+    color: var(--flow-accent);
+    font: 0.68rem/1.4 var(--font-mono, monospace);
+    text-underline-offset: 0.2em;
+  }
+
+  .df-color-flow__source,
+  .df-color-flow__route {
+    position: relative;
+    min-width: 0;
+    padding: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--flow-accent) 30%, transparent);
+    background: color-mix(in srgb, var(--dotfiles-plum-soft, #241a1f) 78%, transparent);
+  }
+
+  .df-color-flow__source {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.4rem 0.75rem;
+  }
+
+  .df-color-flow__source .df-color-flow__step {
+    grid-column: 1 / -1;
+  }
+
+  .df-color-flow__wallpaper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 3.25rem;
+    height: 2rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--flow-accent) 48%, transparent);
+    transform: skewY(-8deg);
+  }
+
+  .df-color-flow__wallpaper span:nth-child(1) {
+    background: #402032;
+  }
+  .df-color-flow__wallpaper span:nth-child(2) {
+    background: #75435c;
+  }
+  .df-color-flow__wallpaper span:nth-child(3) {
+    background: #bd718c;
+  }
+  .df-color-flow__wallpaper span:nth-child(4) {
+    background: #e7a6a0;
+  }
+  .df-color-flow__wallpaper span:nth-child(5) {
+    background: #f3d2b0;
+  }
+
+  .df-color-flow__source strong {
+    font-size: 0.88rem;
+  }
+
+  .df-color-flow code {
+    color: var(--dotfiles-pink-soft, #e2bdc7);
+    font: 0.68rem/1.5 var(--font-mono, monospace);
+    overflow-wrap: anywhere;
+  }
+
+  .df-color-flow__source code {
+    grid-column: 2;
+  }
+
+  .df-color-flow__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    height: 1.2rem;
+    margin-inline: 25%;
+  }
+
+  .df-color-flow__split span {
+    border-inline-start: 1px solid color-mix(in srgb, var(--flow-accent) 55%, transparent);
+    border-block-end: 1px solid color-mix(in srgb, var(--flow-accent) 55%, transparent);
+  }
+
+  .df-color-flow__split span:last-child {
+    transform: scaleX(-1);
+  }
+
+  .df-color-flow__routes {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .df-color-flow__route {
+    border-inline-start: 2px solid var(--route-accent);
+  }
+
+  .df-color-flow__route--live {
+    --route-accent: var(--nest-cyan, #1cefff);
+  }
+  .df-color-flow__route--fallback {
+    --route-accent: var(--nest-sunset-orange, #ff9a4d);
+  }
+
+  .df-color-flow__route h3 {
+    margin: 0.25rem 0;
+    font-size: 0.88rem;
+  }
+
+  .df-color-flow__route p:not(.df-color-flow__step) {
+    margin: 0;
+    color: var(--dotfiles-text-muted, #c9a8b2);
+    font-size: 0.76rem;
+    line-height: 1.5;
+  }
+
+  .df-color-flow__step {
+    margin: 0;
+  }
+
+  .df-color-flow__output {
+    display: block;
+    margin-top: 0.5rem;
+    padding-top: 0.4rem;
+    border-top: 1px dashed color-mix(in srgb, var(--route-accent) 34%, transparent);
+    color: var(--route-accent);
+    font: 0.65rem/1.45 var(--font-mono, monospace);
+    overflow-wrap: anywhere;
+  }
+
+  .df-color-flow__note {
+    margin: 0;
+    color: var(--dotfiles-text-muted, #c9a8b2);
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 960px) {
+    .df-color-flow__routes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (forced-colors: active) {
+    .df-color-flow__source,
+    .df-color-flow__route {
+      border: 1px solid CanvasText;
+    }
+
+    .df-color-flow__output,
+    .df-color-flow__step {
+      color: CanvasText;
+    }
+  }
+</style>

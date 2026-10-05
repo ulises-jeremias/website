@@ -74,6 +74,7 @@ function digest(value) {
 }
 
 function routeName(route) {
+  if (route === '/__lighthouse/404/') return '404';
   return route === '/' ? 'home' : route.replace(/^\//, '').replace(/\/$/, '').replaceAll('/', '-');
 }
 
@@ -99,6 +100,11 @@ function serveStaticBuild(request, response) {
       response.writeHead(400).end('invalid path');
       return;
     }
+
+    // Lighthouse treats the site's intended not-found response as a failed
+    // navigation and cannot collect paint metrics from it. Serve the same
+    // built HTML at a private, successful audit URL; production keeps its 404.
+    if (pathname === '/__lighthouse/404/') pathname = '/404.html';
 
     if (pathname.endsWith('/')) pathname += 'index.html';
     else if (!extname(pathname)) pathname += '/index.html';

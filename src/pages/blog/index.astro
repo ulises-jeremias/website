@@ -79,43 +79,39 @@ const itemListJsonLd = hasPosts
         ) : (
           <div class="blog-empty">
             <EmptyDesk />
-            <h2>No posts published yet.</h2>
-            <p>
-              Entries land here only when there is something verified to write up — agent orchestration patterns from
-              Agent Toolkit, how Hornero OS composes its desktop, and V scientific-computing engineering. No filler
-              posts.
-            </p>
-            <p class="blog-empty__elsewhere">
-              Until then, the work itself is documented in <a href="/projects">the project ledger</a> and the{' '}
-              <a href="/open-source">open-source evidence trail</a>, and discussed in{' '}
-              <a href="/community">the community workshop</a>.
-            </p>
-            <p class="blog-empty__elsewhere">
-              <a href="/rss.xml">Subscribe to the RSS feed</a> to get the first entry when it ships.
-            </p>
-            <aside class="blog-empty__routes" aria-label="Read current work elsewhere">
-              <p class="blog-empty__routes-title">Read the current work</p>
-              <ul>
-                <li>
-                  <>
+            <div class="blog-empty__copy">
+              <h2>No posts published yet.</h2>
+              <p>
+                Entries land here only when there is something verified to write up — agent orchestration patterns from
+                Agent Toolkit, how Hornero OS composes its desktop, and V scientific-computing engineering. No filler
+                posts.
+              </p>
+              <p class="blog-empty__elsewhere">
+                Until then, the work itself is documented in <a href="/projects">the project ledger</a> and the{' '}
+                <a href="/open-source">open-source evidence trail</a>, and discussed in{' '}
+                <a href="/community">the community workshop</a>.
+              </p>
+              <p class="blog-empty__elsewhere">
+                <a href="/rss.xml">Subscribe to the RSS feed</a> to get the first entry when it ships.
+              </p>
+              <aside class="blog-empty__routes" aria-label="Read current work elsewhere">
+                <p class="blog-empty__routes-title">Read the current work</p>
+                <ul>
+                  <li>
                     <a href="/projects">01 · Project ledger</a>
                     <span>systems and outcomes</span>
-                  </>
-                </li>
-                <li>
-                  <>
+                  </li>
+                  <li>
                     <a href="/open-source">02 · Open-source evidence</a>
                     <span>contributions and provenance</span>
-                  </>
-                </li>
-                <li>
-                  <>
+                  </li>
+                  <li>
                     <a href="/community">03 · Community workshop</a>
                     <span>questions and coordination</span>
-                  </>
-                </li>
-              </ul>
-            </aside>
+                  </li>
+                </ul>
+              </aside>
+            </div>
           </div>
         )
       }

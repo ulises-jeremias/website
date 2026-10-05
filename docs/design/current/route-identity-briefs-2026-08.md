@@ -115,10 +115,9 @@ Before-captures for all 11 routes at all three widths were reviewed; CI
 
 ### `/open-source/` — Provenance ledger
 
-- **Direction:** give the constellation a visible legend mapping node styles
-  to the four contribution kinds (owned / maintained / organization /
-  external) so the figure informs instead of decorates; ledger rows keep
-  provenance-first hierarchy.
+- **Implemented:** four source-backed lanes show one marker per subject and
+  distinguish owned, maintained, organization, and upstream contribution
+  records. Exact roles and source links remain in the provenance-first ledger.
 
 ### `/404.html` — Signal recovery
 

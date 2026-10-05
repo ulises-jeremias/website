@@ -19,7 +19,7 @@ const accentTokens = {
 } as const;
 const islandSrc = `/assets/nest/${world.island}.webp`;
 const islandSrcSm = `/assets/nest/${world.island}-sm.webp`;
-const islandPng = world.id === 'projects' ? '/assets/island-projects.png' : `/assets/${world.island}.png`;
+const islandPng = `/assets/${world.island}.png`;
 const islandSmallWidth = world.island === 'island-harness' ? 320 : 440;
 const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-frame-accent' : 'neon-frame';
 ---

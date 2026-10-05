@@ -5,10 +5,11 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/dotfiles');
 
-    const hero = page.locator('.df-world__hero-scene img');
     const galleryMain = page.locator('[data-gallery-main]');
-    await expect(hero).toHaveAttribute('srcset', /\.webp 480w.+\.webp 1586w/);
-    await expect(hero).toHaveAttribute('sizes');
+    const smartColors = page.locator('.df-color-flow');
+    await expect(smartColors).toBeVisible();
+    await expect(smartColors.getByRole('heading', { name: 'One wallpaper, a synchronized desktop' })).toBeVisible();
+    await expect(smartColors.locator('.df-color-flow__route')).toHaveCount(2);
     await expect(galleryMain).toHaveAttribute('srcset', /\.webp 320w.+\.webp 1440w/);
     await expect(galleryMain).toHaveAttribute('sizes');
 

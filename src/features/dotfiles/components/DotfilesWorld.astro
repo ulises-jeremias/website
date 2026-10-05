@@ -6,9 +6,10 @@ import '@/shared/components/visual/visual.css';
 import DotfilesNarrative from './DotfilesNarrative.astro';
 import LayersDiagram from './LayersDiagram.astro';
 import ScreenshotGallery from './ScreenshotGallery.astro';
+import SmartColorsPipeline from './SmartColorsPipeline.astro';
 import HorneroExtractionBridge from '@/shared/components/HorneroExtractionBridge.astro';
 import { horneroRepositoryUrls, horneroSystemRepositories } from '@/data/hornero-transition.js';
-import { attributionEntries, dotfilesLayers, heroArt, verifiedFacts } from '../data/index.js';
+import { attributionEntries, dotfilesLayers, verifiedFacts } from '../data/index.js';
 
 const layersJson = JSON.stringify(
   dotfilesLayers.map((l) => ({
@@ -21,7 +22,6 @@ const layersJson = JSON.stringify(
 
 const defaultLayer = dotfilesLayers[0]!;
 const orderedLayers = [...dotfilesLayers].reverse();
-const heroShot = heroArt;
 ---
 
 <section class="df-world" aria-labelledby="df-world-title" data-df-world data-layers={layersJson}>
@@ -56,19 +56,7 @@ const heroShot = heroArt;
         <span>chezmoi</span>
       </p>
     </div>
-    <figure class="df-world__hero-scene">
-      <img
-        src={heroShot.src}
-        srcset={heroShot.srcSet}
-        sizes="(min-width: 960px) 42rem, calc(100vw - 3rem)"
-        alt={heroShot.alt}
-        width={heroShot.width}
-        height={heroShot.height}
-        decoding="async"
-        fetchpriority="high"
-      />
-      <figcaption class="df-world__hero-cap">{heroShot.caption}</figcaption>
-    </figure>
+    <SmartColorsPipeline />
   </header>
 
   <HorneroExtractionBridge
@@ -448,31 +436,6 @@ const heroShot = heroArt;
     color: var(--dotfiles-pink-soft);
     font-family: var(--font-mono);
     font-size: 0.68rem;
-  }
-
-  .df-world__hero-scene {
-    margin: 0;
-    border: 1px solid color-mix(in srgb, #ffb0ca 35%, transparent);
-    clip-path: var(--clip-corner-md, polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%));
-    overflow: hidden;
-    background: #191114;
-  }
-
-  .df-world__hero-scene img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-  }
-
-  .df-world__hero-cap {
-    padding: 0.45rem 0.75rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    color: #c9a8b2;
-    overflow-wrap: anywhere;
   }
 
   .df-world__methods,

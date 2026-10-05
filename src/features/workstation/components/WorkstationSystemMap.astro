@@ -11,6 +11,7 @@ import {
   workstationProfiles,
 } from '../data/index.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
+import { personalDxRelationships } from '@/data/personal-dx-relationships.js';
 
 const bootStages = [
   {
@@ -65,9 +66,29 @@ const nodes = [
   { id: 'harness', x: 670, y: 210, layer: workstationLayers[3]! },
 ];
 
-// The boot map selects independent responsibility stations. Cross-project
-// semantics live in ResponsibilityTopology, where every edge is verb-labeled.
-const paths: { id: string; d: string; from: string; to: string }[] = [];
+// Draw the same source-backed relationships used by the Personal DX topology.
+// Coordinates belong to this stage; the canonical verbs remain in the shared registry.
+const relationshipRoutes: Record<string, { d: string; from: string; to: string }> = {
+  'agentic-workstation→agent-toolkit': {
+    d: 'M322 120 C 360 94, 398 94, 438 120',
+    from: 'workstation',
+    to: 'toolkit',
+  },
+  'agent-toolkit→agentic-harness': {
+    d: 'M522 140 C 570 154, 604 178, 628 195',
+    from: 'toolkit',
+    to: 'harness',
+  },
+  'hornero-config→agentic-workstation': {
+    d: 'M132 190 C 168 160, 202 140, 238 120',
+    from: 'hornero',
+    to: 'workstation',
+  },
+};
+const paths = personalDxRelationships.flatMap((relationship) => {
+  const route = relationshipRoutes[`${relationship.source}→${relationship.target}`];
+  return route ? [{ ...route, id: `${relationship.source}-${relationship.target}`, label: relationship.verb }] : [];
+});
 
 const stagesJson = JSON.stringify(bootStages);
 const profilesJson = JSON.stringify(
@@ -159,7 +180,24 @@ const defaultLayer = workstationLayers[1]!;
         <text x="68" y="63" class="ws-map__chassis-label" fill="#67e8f9" font-size="9" font-family="var(--font-mono)"
           >MACHINE · BOOT</text
         >
-        {paths.map((p) => <path class="vf-flow" data-flow={p.id} data-from={p.from} data-to={p.to} d={p.d} />)}
+        {
+          paths.map((p) => (
+            <path
+              class:list={[
+                'vf-flow',
+                {
+                  'vf-flow--optional': personalDxRelationships.find((r) => `${r.source}-${r.target}` === p.id)
+                    ?.optional,
+                },
+              ]}
+              data-flow={p.id}
+              data-from={p.from}
+              data-to={p.to}
+              d={p.d}
+              aria-label={p.label}
+            />
+          ))
+        }
         {
           nodes.map((n) => (
             <g
@@ -559,6 +597,11 @@ const defaultLayer = workstationLayers[1]!;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-text-faint);
+  }
+
+  .ws-map__svg .vf-flow--optional {
+    --vf-flow-accent: var(--nest-magenta);
+    stroke-dasharray: 2 6;
   }
 
   .ws-map__header-rail span {

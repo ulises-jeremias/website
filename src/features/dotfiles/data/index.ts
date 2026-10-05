@@ -195,21 +195,6 @@ export const screenshotItems: ScreenshotItem[] = [
   },
 ];
 
-/**
- * Hero art: the hornero-dark theme wallpaper from HorneroOS/config
- * (assets/brand/wallpaper). It is a theme artifact, not a desktop screenshot;
- * the caption says so. Current desktop captures replace it once they exist.
- */
-export const heroArt = {
-  src: '/media/hornero-os/hornero-dark-960.webp',
-  srcSet:
-    '/media/hornero-os/hornero-dark-480.webp 480w, /media/hornero-os/hornero-dark-960.webp 960w, /media/hornero-os/hornero-dark-1586.webp 1586w',
-  width: 1586,
-  height: 992,
-  alt: 'The hornero-dark theme wallpaper: a rufous hornero on its mud nest above a Patagonian lake at dusk.',
-  caption: 'hornero-dark theme wallpaper — theme artwork, not a desktop screenshot · MIT',
-} as const;
-
 export const attributionEntries: AttributionEntry[] = [
   {
     component: 'HorneroConfig',

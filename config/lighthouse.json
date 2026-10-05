@@ -15,7 +15,7 @@
     "/agentic-harness/",
     "/hornero-os/",
     "/sponsor/",
-    "/404.html"
+    "/__lighthouse/404/"
   ],
   "categories": {
     "accessibility": {
@@ -36,7 +36,7 @@
     }
   },
   "routeOverrides": {
-    "/404.html": {
+    "/__lighthouse/404/": {
       "skipCategories": ["seo"]
     }
   },

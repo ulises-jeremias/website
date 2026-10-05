@@ -26,19 +26,19 @@ observatory.
 
 ## Route directions
 
-| Route                   | Dominant surface            | Signature interaction or artifact                   |
-| ----------------------- | --------------------------- | --------------------------------------------------- |
-| `/`                     | Atlas observatory           | Connected floating project worlds in the landscape  |
-| `/dotfiles/`            | Configuration cockpit       | Wallpaper → palette → desktop consumer pipeline     |
-| `/agentic-workstation/` | Provisioning chassis        | Boot stages illuminate the machine responsibilities |
-| `/agent-toolkit/`       | Orchestration console       | Capability families distribute into native profiles |
-| `/v/`                   | Computational laboratory    | Station index selects a distinct instrument         |
-| `/create-awesome/`      | Assembly line and workbench | Generated command is the visible output artifact    |
-| `/community/`           | Shared workshop plaza       | Neighborhood selection routes participation         |
-| `/blog/`                | Technical field journal     | Publication contract and readable writing column    |
-| `/projects/`            | Case-study archive          | World pointers transition into an evidence ledger   |
-| `/open-source/`         | Provenance ledger           | Four contribution kinds explain the constellation   |
-| `/404.html`             | Signal recovery atlas       | Canonical world directory is the recovery action    |
+| Route                   | Dominant surface            | Signature interaction or artifact                       |
+| ----------------------- | --------------------------- | ------------------------------------------------------- |
+| `/`                     | Atlas observatory           | Connected floating project worlds in the landscape      |
+| `/dotfiles/`            | Configuration cockpit       | Wallpaper → palette → desktop consumer pipeline         |
+| `/agentic-workstation/` | Provisioning chassis        | Boot stages illuminate the machine responsibilities     |
+| `/agent-toolkit/`       | Orchestration console       | Capability families distribute into native profiles     |
+| `/v/`                   | Computational laboratory    | Station index selects a distinct instrument             |
+| `/create-awesome/`      | Assembly line and workbench | Generated command is the visible output artifact        |
+| `/community/`           | Shared workshop plaza       | Neighborhood selection routes participation             |
+| `/blog/`                | Technical field journal     | Publication contract and readable writing column        |
+| `/projects/`            | Case-study archive          | World pointers transition into an evidence ledger       |
+| `/open-source/`         | Provenance ledger           | Four source-backed lanes distinguish contribution kinds |
+| `/404.html`             | Signal recovery atlas       | Canonical world directory is the recovery action        |
 
 ## Waves
 

@@ -21,14 +21,10 @@ const kindCounts = Object.fromEntries(
   kindLegend.map((entry) => [entry.kind, nodes.filter((node) => node.kind === entry.kind).length]),
 );
 
-/** Deterministic layout positions for the constellation (no fake metrics). */
-const positions = nodes.map((node, index) => {
-  const angle = (index / Math.max(nodes.length, 1)) * Math.PI * 2 - Math.PI / 2;
-  const radius = node.featured ? 34 : 28;
-  const cx = 50 + Math.cos(angle) * radius;
-  const cy = 50 + Math.sin(angle) * (radius * 0.72);
-  return { ...node, cx, cy };
-});
+const evidenceLanes = kindLegend.map((entry) => ({
+  ...entry,
+  records: nodes.filter((node) => node.kind === entry.kind),
+}));
 ---
 
 <section class="constellation" aria-labelledby="constellation-title" data-testid="oss-constellation">
@@ -59,7 +55,7 @@ const positions = nodes.map((node, index) => {
     <div class="constellation__legend-panel">
       <p class="constellation__legend-kicker">Reading key</p>
       <p class="constellation__legend-note">
-        The map is a relationship index. Read exact subjects, roles, and source links below.
+        Records are grouped by relationship. Read exact subjects, roles, and source links in the ledger below.
       </p>
       <ul class="constellation__legend" aria-label="Contribution kinds">
         {
@@ -76,36 +72,22 @@ const positions = nodes.map((node, index) => {
       </ul>
     </div>
     <div class="constellation__map" aria-label="Contribution evidence map">
-      <p class="constellation__map-label">Relationship index · not a popularity graph</p>
-      <svg class="constellation__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-        <g class="constellation__sweep" aria-hidden="true">
-          <line x1="50" y1="50" x2="50" y2="4" class="constellation__sweep-line"></line>
-        </g>
-        <circle cx="50" cy="50" r="3.2" class="constellation__hub"></circle>
+      <p class="constellation__map-label">Source-backed records · one marker per subject</p>
+      <ul class="constellation__lanes">
         {
-          positions.map((node, index) => (
-            <g>
-              <line
-                x1="50"
-                y1="50"
-                x2={node.cx}
-                y2={node.cy}
-                class:list={['constellation__edge', `constellation__edge--${node.kind}`]}
-                style={`animation-delay: ${(index * 0.45).toFixed(2)}s`}
-              />
-              <circle
-                cx={node.cx}
-                cy={node.cy}
-                r={node.featured ? 2.4 : 1.8}
-                class:list={['constellation__node', `constellation__node--${node.kind}`]}
-                style={`animation-delay: ${(index * 0.7).toFixed(2)}s`}
-              >
-                <title>{node.label}</title>
-              </circle>
-            </g>
+          evidenceLanes.map((lane) => (
+            <li class:list={['constellation__lane', `constellation__lane--${lane.kind}`]}>
+              <span class="constellation__lane-label">{lane.label}</span>
+              <span class="constellation__lane-count">{lane.records.length}</span>
+              <span class="constellation__lane-track" aria-hidden="true">
+                {lane.records.map((record) => (
+                  <span class="constellation__lane-marker" title={record.label} />
+                ))}
+              </span>
+            </li>
           ))
         }
-      </svg>
+      </ul>
     </div>
   </div>
 
@@ -343,107 +325,76 @@ const positions = nodes.map((node, index) => {
     }
   }
 
-  .constellation__svg {
-    width: 100%;
-    max-width: 28rem;
-    height: auto;
-    display: block;
-    margin: 0.75rem auto 0;
+  .constellation__lanes {
+    display: grid;
+    gap: 0.85rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .constellation__hub {
-    fill: var(--nest-cyan);
-    filter: drop-shadow(0 0 1.2px rgba(28, 239, 255, 0.9));
-    animation: constellation-hub 4.5s ease-in-out infinite;
+  .constellation__lane {
+    display: grid;
+    grid-template-columns: minmax(7.5rem, 0.8fr) auto minmax(0, 1.4fr);
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.65rem;
+    padding: 0.45rem 0.55rem;
+    border-inline-start: 2px solid var(--lane-color);
+    background: color-mix(in srgb, var(--lane-color) 6%, transparent);
   }
 
-  @keyframes constellation-hub {
-    0%,
-    100% {
-      opacity: 0.85;
+  .constellation__lane--owned {
+    --lane-color: var(--nest-magenta);
+  }
+
+  .constellation__lane--maintained {
+    --lane-color: var(--nest-cyan);
+  }
+
+  .constellation__lane--org {
+    --lane-color: var(--nest-violet);
+  }
+
+  .constellation__lane--external {
+    --lane-color: var(--nest-sunset-orange);
+  }
+
+  .constellation__lane-label,
+  .constellation__lane-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .constellation__lane-count {
+    color: var(--color-text-muted);
+    text-align: end;
+  }
+
+  .constellation__lane-track {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.32rem;
+    min-height: 0.6rem;
+  }
+
+  .constellation__lane-marker {
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--lane-color) 65%, white);
+    background: var(--lane-color);
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+
+  @media (width < 500px) {
+    .constellation__lane {
+      grid-template-columns: minmax(6.5rem, 1fr) auto;
+      gap: 0.45rem;
     }
-    50% {
-      opacity: 1;
+
+    .constellation__lane-track {
+      grid-column: 1 / -1;
     }
-  }
-
-  /* Radar sweep — one slow pass around the relationship index. */
-  .constellation__sweep {
-    transform-origin: 50px 50px;
-    animation: constellation-sweep 26s linear infinite;
-  }
-
-  .constellation__sweep-line {
-    stroke: var(--nest-cyan);
-    stroke-width: 0.22;
-    opacity: 0.28;
-    stroke-linecap: round;
-  }
-
-  @keyframes constellation-sweep {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .constellation__edge {
-    stroke: color-mix(in srgb, var(--nest-violet) 45%, transparent);
-    stroke-width: 0.35;
-    /* Traffic toward the hub: dashes crawl inward on a long, calm loop. */
-    stroke-dasharray: 1.2 2.6;
-    animation: constellation-edge-flow 9s linear infinite;
-  }
-
-  @keyframes constellation-edge-flow {
-    to {
-      stroke-dashoffset: -38;
-    }
-  }
-
-  .constellation__node {
-    fill: var(--nest-paper);
-    stroke: var(--nest-cyan);
-    stroke-width: 0.35;
-    animation: constellation-twinkle 6s ease-in-out infinite;
-  }
-
-  @keyframes constellation-twinkle {
-    0%,
-    100% {
-      opacity: 0.72;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .constellation__hub,
-    .constellation__sweep,
-    .constellation__edge,
-    .constellation__node {
-      animation: none;
-    }
-  }
-
-  .constellation__node--owned {
-    fill: var(--nest-magenta);
-    stroke: var(--nest-pink);
-  }
-
-  .constellation__node--maintained {
-    fill: var(--nest-cyan);
-    stroke: var(--nest-blue);
-  }
-
-  .constellation__node--org {
-    fill: var(--nest-violet);
-    stroke: var(--nest-purple);
-  }
-
-  .constellation__node--external {
-    fill: var(--nest-sunset-orange);
-    stroke: var(--nest-sunset-pink);
   }
 
   .constellation__meta {
