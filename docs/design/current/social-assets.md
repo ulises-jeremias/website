@@ -8,7 +8,7 @@ generated portrait is used.
 
 - Output: `public/social/*.jpg`
 - Dimensions: 1200x630
-- Source plate: `public/assets/nest/hero-bg.webp`
+- Source plate: `public/assets/nest/hero-bg.webp`, including the original sky-traffic art
 - Route art: the corresponding first-party island under
   `public/assets/nest/island-*.webp`; the stack, trajectory, and support dock
   use build-only SVG sources in `src/media-sources/social/`, while the Hornero
@@ -49,11 +49,13 @@ output and add no runtime dependency.
 The legacy island PNG fallbacks under `public/assets/` can be regenerated from
 the WebP sources with `node scripts/generate-island-pngs.mjs --regenerate`.
 Island fallbacks now match their 640px source dimensions (instead of shipping
-1024px copies) and the logo fallback uses its 256px source. The 1024px hero
-fallback is an optimized JPEG generated from the first-party WebP source with
-`pnpm assets:hero-fallback`; at 245 KB it preserves broad browser support while
-reducing the former 1.27 MB PNG by 81%. The island fallback check also verifies
-the hero JPEG alongside each island PNG fallback.
+1024px copies) and the logo fallback uses its 256px source. The hero uses
+responsive 1024px and 960px scene plates generated from `src/media-sources/nest/`
+with `pnpm assets:hero-scene`. Its 1024px fallback is an optimized JPEG generated
+from the desktop WebP source with `pnpm assets:hero-fallback`; at 219 KB it
+preserves broad browser support while reducing the former 1.27 MB PNG by 83%.
+The island fallback check also verifies the hero JPEG alongside each island PNG
+fallback.
 
 ## 2026-10-04 update
 
@@ -62,3 +64,8 @@ the hero JPEG alongside each island PNG fallback.
 - Integrated art directly into the background plate with a restrained route-color orbit and an angled copy plane; removed the detached black art panel.
 - Replaced reused Home artwork on About and Sponsor with original trajectory and support-dock SVGs; Agentic now has a separate three-project map.
 - Corrected stale HorneroConfig and Hornero OS claims, added Rust to Create Awesome, and clarified that the Toolkit card describes portable capabilities plus its CLI runtime.
+
+## 2026-10-05 update
+
+- Added original generated sky-traffic artwork to both responsive homepage scene plates and rebuilt all 15 route cards from the same background source.
+- The existing scene drift animates the aircraft with the skyline without adding a network request.

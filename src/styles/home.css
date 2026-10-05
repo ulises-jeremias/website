@@ -1027,6 +1027,19 @@
     padding-block-end: 1.5rem;
   }
 
+  .synthwave-environment__plate {
+    opacity: 0.78;
+  }
+
+  .synthwave-environment__veil {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--nest-midnight-950) 36%, transparent),
+      color-mix(in srgb, var(--nest-midnight-950) 54%, transparent) 58%,
+      color-mix(in srgb, var(--nest-midnight-950) 34%, transparent)
+    );
+  }
+
   .hero__identity {
     text-align: center;
     margin-inline: auto;
