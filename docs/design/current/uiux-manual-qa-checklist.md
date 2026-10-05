@@ -2,7 +2,7 @@
 
 **Site:** `https://www.ulises-jeremias.dev`
 **Target:** WCAG 2.2 AA and final visual/brand sign-off
-**Automated baseline:** current `main` (browser-quality CI: axe on 14 routes, critical navigation, reflow, reduced-motion, no-JS fallbacks, cross-browser smoke, route budgets, Lighthouse CI)
+**Automated baseline:** candidate PR #462 (browser-quality CI: axe on 16 routes, critical navigation and reflow on all public routes, reduced-motion, no-JS fallbacks, cross-browser smoke at mobile/tablet/desktop widths, route budgets, Lighthouse CI)
 **Owner:** Ulises Jeremias
 **Status:** #295 — automated evidence complete; all manual rows below remain PENDING MANUAL until executed on real devices. Automated checks (axe, Lighthouse, Playwright) are **not** substitutes for screen-reader or hardware testing.
 
@@ -29,10 +29,10 @@ Routes: Home `/`, Work `/projects`, flagship detail `/dotfiles` (HorneroConfig),
 | 400% zoom / 320px viewport                                | PASS (automated reflow 320px, all routes incl. #428)                    | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
 | Human visual zoom review (subjective)                     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
 | Forced-colors emulation (focus visibility)                | PASS (automated, pr2-a11y)                                              | PASS (automated, pr2-a11y) | PASS (automated, pr2-a11y) | PASS (automated, pr2-a11y) | PASS (automated, pr2-a11y) |
-| Mobile touch targets ≥ 44px / no hover-only               | PASS (automated, mobile-device-smoke + a11y rules)                      | PASS (automated)           | PASS (automated)           | PASS (automated)           | PASS (automated)           |
+| Mobile touch targets ≥ 44px / no hover-only               | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
 | Mobile touch exploration reaches every primary action     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
 
-Statuses: **PASS** = verified by an automated suite or named test (never hand-asserted); **PENDING MANUAL** = requires the listed human/AT procedure; **NOT APPLICABLE** = none currently identified for these routes.
+Statuses: **PASS** = verified by an automated suite or named test (never hand-asserted); **PENDING MANUAL** = requires the listed human/AT procedure; **NOT APPLICABLE** = none currently identified for these routes. Target-size assertions exist for selected Create Awesome, Hornero extraction, and Writing controls; they do not prove ≥44px targets or the absence of hover-only content across all routes.
 
 ## Screen Reader Pilots
 
@@ -67,7 +67,7 @@ Run each pilot with a clean browser profile. Use keyboard-only input for keyboar
 ## Zoom And Reflow
 
 - [ ] At 200% browser zoom on a 1280px-equivalent viewport, verify primary content remains readable without two-dimensional scrolling.
-- [ ] At 400% browser zoom or a 320px CSS viewport, verify every route remains usable; automated reflow coverage currently passes all 11 routes.
+- [ ] At 400% browser zoom or a 320px CSS viewport, verify every route remains usable; the candidate automated reflow suite checks all 16 public routes at 320px and 640px CSS widths.
 - [ ] Verify the compact header can be horizontally navigated without clipping or obscuring the focused link.
 - [ ] Verify long commands, captions, project summaries, and evidence notes wrap or scroll inside their intended containers.
 

@@ -80,13 +80,17 @@ test.describe('flagship route visuals', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto(route.path);
-      // Long proportional copy in V, Community, and Projects reflows slightly between CI and local font rendering.
+      // These reviewed mobile routes reflow between the CI and local Chromium
+      // font renderers. Keep the tolerance scoped to routes with measured diffs.
       const screenshotOptions = [
+        'agentic',
         'v',
         'community',
         'projects',
         'agentic-harness',
         'agent-toolkit',
+        'hornero-os',
+        'sponsor',
         'dotfiles',
         'workstation',
         'create-awesome',

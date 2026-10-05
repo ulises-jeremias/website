@@ -26,7 +26,7 @@ v/
 
 ## Design decisions
 
-- **Identity**: `v.css` accent #1e5a8a (6.43 AA on warm-paper), subtle `color-mix(7%, warm-paper)`, border `16% sand`. Veasel binary (`public/media/v/veasel.webp`) embedded in `VComputationalLab` with on-page attribution; upstream license is CC BY-NC 4.0 — usage decision tracked in [#170](https://github.com/ulises-jeremias/website/issues/170).
+- **Identity**: `v.css` accent #1e5a8a (6.43 AA on warm-paper), subtle `color-mix(7%, warm-paper)`, border `16% sand`. The V lab uses a first-party inline SVG to map selected independent project areas; no V mascot artwork is embedded.
 - **Cards**: HTML/CSS only, hover lift + border tint, keyboard `:focus-within` outline, `↗` external affordance with `rel="noopener noreferrer"` and sr-only text.
 - **Diagrams**: pure SVG `role="img"` + `<title>`/`<desc>` + per-node `tabindex="0"` + `role="listitem"` + `aria-label`, dashed arrows for dependency / backward flow, `prefers-reduced-motion` disables transitions, fallback chips/tables as CSS grids.
 - **Sections**: data-driven `vSections` for overview; each diagram has paired explanatory cards with code snippets (monospace on dark #0f2a44).
@@ -55,4 +55,4 @@ Page thin router: `src/pages/v/index.astro` via `SectionLayout(theme="v")`.
 - `vlang/v`, `vlang/vsl`, `vlang/vtl`, `vlang/setup-v` — MIT
 - `vlang/awesome-v` — CC0 1.0
 - `ulises-jeremias/rxv` — MIT, zero dependencies
-- `vlang/v-mascot` — CC BY-NC 4.0; Veasel is currently embedded with attribution; final usage decision in [#170](https://github.com/ulises-jeremias/website/issues/170)
+- `vlang/v-mascot` — CC BY-NC 4.0; referenced as an upstream project only. No mascot artwork is copied or served by this website.

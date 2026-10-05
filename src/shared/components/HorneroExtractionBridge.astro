@@ -1,0 +1,381 @@
+---
+interface RepositoryLink {
+  id: string;
+  label: string;
+  href: string;
+}
+
+interface Props {
+  currentPage: 'dotfiles' | 'hornero-os';
+  compositionRepoUrl: string;
+  repositories: readonly RepositoryLink[];
+}
+
+const { currentPage, compositionRepoUrl, repositories } = Astro.props;
+const headingId = `hornero-extraction-title-${currentPage}`;
+---
+
+<section class="hornero-extraction" data-hornero-extraction data-current-page={currentPage} aria-labelledby={headingId}>
+  <header class="hornero-extraction__header">
+    <p class="hornero-extraction__eyebrow">Hornero Linux Desktop · system lineage</p>
+    <h2 id={headingId}>From a personal desktop to a shared system</h2>
+    <p>
+      The everyday configuration became a place to try ideas. Reusable desktop components moved into HorneroOS-owned
+      repositories, where the preview manifest composes them into a generic desktop system.
+    </p>
+  </header>
+
+  <figure class="hornero-extraction__figure">
+    <ol class="hornero-extraction__stages" aria-label="HorneroConfig to Hornero OS composition path">
+      <li class="hornero-extraction__stage hornero-extraction__stage--personal" data-stage="personal">
+        <p class="hornero-extraction__stage-label"><span>01</span> Personal source</p>
+        <h3>HorneroConfig</h3>
+        <p>
+          A chezmoi configuration in daily use. Personal preferences and experiments stay here, with changes reviewed
+          before they are applied.
+        </p>
+        {
+          currentPage === 'dotfiles' ? (
+            <span class="hornero-extraction__current" aria-current="page">
+              This page
+            </span>
+          ) : (
+            <a class="hornero-extraction__route-link" href="/dotfiles">
+              Explore HorneroConfig
+            </a>
+          )
+        }
+      </li>
+
+      <li class="hornero-extraction__stage hornero-extraction__stage--components" data-stage="components">
+        <p class="hornero-extraction__stage-label"><span>02</span> Extraction and ownership</p>
+        <h3>Reusable desktop components</h3>
+        <p>
+          The shell and desktop defaults were extracted from HorneroConfig. HorneroOS repositories own their ongoing
+          product development; the CLI and greeter live alongside them.
+        </p>
+        <ul class="hornero-extraction__repositories" aria-label="HorneroOS component repositories">
+          {
+            repositories.map((repository) => (
+              <li>
+                <a href={repository.href} target="_blank" rel="noopener noreferrer">
+                  {repository.label}
+                  <span class="visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </li>
+
+      <li class="hornero-extraction__stage hornero-extraction__stage--preview" data-stage="composition">
+        <p class="hornero-extraction__stage-label"><span>03</span> Manifest composition</p>
+        <h3>Hornero OS</h3>
+        <p>
+          The manifest pins the shell and desktop defaults to specific commits, then builds <code>horneroctl</code> from source.
+          A virtual-machine smoke test checks the composition.
+        </p>
+        <p class="hornero-extraction__maturity" role="note">
+          <span aria-hidden="true">●</span> Development preview · no installer or ISO
+        </p>
+        {
+          currentPage === 'hornero-os' ? (
+            <span class="hornero-extraction__current" aria-current="page">
+              This page
+            </span>
+          ) : (
+            <a class="hornero-extraction__route-link" href="/hornero-os">
+              Explore the Hornero OS preview
+            </a>
+          )
+        }
+        <a
+          class="hornero-extraction__manifest-link"
+          href={compositionRepoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Inspect the composition repository<span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </li>
+    </ol>
+    <figcaption class="hornero-extraction__caption">
+      HorneroConfig remains a personal desktop source. Hornero OS is a composition preview, not an installable release.
+    </figcaption>
+  </figure>
+</section>
+
+<style>
+  .hornero-extraction {
+    --bridge-pink: var(--nest-pink, #ff78c9);
+    --bridge-cyan: var(--nest-cyan, #54e7f2);
+    --bridge-amber: #f2b749;
+    --bridge-paper: var(--color-text, #f5efff);
+    --bridge-muted: var(--color-text-muted, #c9bfda);
+    --bridge-surface: color-mix(in srgb, var(--nest-midnight-950, #080516) 92%, transparent);
+    padding-block: clamp(1.4rem, 3vw, 2.4rem);
+    border-block: 1px solid color-mix(in srgb, var(--bridge-cyan) 24%, transparent);
+    background:
+      linear-gradient(90deg, transparent, color-mix(in srgb, var(--bridge-cyan) 4%, transparent), transparent),
+      repeating-linear-gradient(90deg, transparent 0 2.7rem, rgb(84 231 242 / 0.025) 2.7rem 2.76rem);
+  }
+
+  .hornero-extraction__header,
+  .hornero-extraction__figure {
+    inline-size: min(100% - 2 * var(--gutter, 1rem), 74rem);
+    margin-inline: auto;
+  }
+
+  .hornero-extraction__header {
+    max-inline-size: 58rem;
+    margin-block-end: 1.35rem;
+  }
+
+  .hornero-extraction__eyebrow,
+  .hornero-extraction__stage-label {
+    margin: 0;
+    color: var(--bridge-cyan);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .hornero-extraction__header h2 {
+    margin: 0.45rem 0 0.55rem;
+    color: var(--bridge-paper);
+    font-family: var(--font-display, sans-serif);
+    font-size: clamp(1.35rem, 2.6vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .hornero-extraction__header > p:last-child,
+  .hornero-extraction__stage > p:not(.hornero-extraction__stage-label, .hornero-extraction__maturity) {
+    color: var(--bridge-muted);
+    line-height: 1.55;
+  }
+
+  .hornero-extraction__header > p:last-child {
+    max-inline-size: 70ch;
+    margin: 0;
+  }
+
+  .hornero-extraction__stages {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.6vw, 2.25rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hornero-extraction__stage {
+    --stage-accent: var(--bridge-pink);
+    position: relative;
+    display: flex;
+    min-inline-size: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 1rem 1rem 1.1rem;
+    border-block-start: 2px solid var(--stage-accent);
+    border-inline-start: 1px solid color-mix(in srgb, var(--stage-accent) 34%, transparent);
+    background: linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--stage-accent) 8%, transparent),
+      var(--bridge-surface) 56%
+    );
+    clip-path: polygon(0 0, calc(100% - 0.7rem) 0, 100% 0.7rem, 100% 100%, 0 100%);
+  }
+
+  .hornero-extraction__stage + .hornero-extraction__stage::before {
+    position: absolute;
+    inset-block-start: 1.35rem;
+    inset-inline-start: calc(clamp(1rem, 2.6vw, 2.25rem) * -1 - 0.78rem);
+    inline-size: 1.55rem;
+    border-block-start: 1px dashed color-mix(in srgb, var(--bridge-cyan) 68%, transparent);
+    content: '';
+  }
+
+  .hornero-extraction__stage--components {
+    --stage-accent: var(--bridge-cyan);
+  }
+
+  .hornero-extraction__stage--preview {
+    --stage-accent: var(--bridge-amber);
+  }
+
+  .hornero-extraction__stage-label {
+    display: flex;
+    min-block-size: 1.35rem;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--stage-accent);
+    font-size: 0.64rem;
+  }
+
+  .hornero-extraction__stage-label span {
+    display: grid;
+    inline-size: 1.45rem;
+    block-size: 1.35rem;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--stage-accent) 70%, transparent);
+    font-size: 0.62rem;
+  }
+
+  .hornero-extraction__stage h3 {
+    margin: 0;
+    color: var(--bridge-paper);
+    font-family: var(--font-display, sans-serif);
+    font-size: clamp(1rem, 1.5vw, 1.22rem);
+    line-height: 1.3;
+  }
+
+  .hornero-extraction__stage > p:not(.hornero-extraction__stage-label, .hornero-extraction__maturity) {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .hornero-extraction__repositories {
+    display: grid;
+    inline-size: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hornero-extraction__repositories a,
+  .hornero-extraction__route-link,
+  .hornero-extraction__manifest-link {
+    display: inline-flex;
+    min-block-size: 44px;
+    align-items: center;
+    color: var(--bridge-paper);
+    font-size: 0.77rem;
+    line-height: 1.3;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .hornero-extraction__repositories a {
+    inline-size: 100%;
+    padding-inline: 0.45rem;
+    border-block-end: 1px solid color-mix(in srgb, var(--bridge-cyan) 26%, transparent);
+    color: var(--bridge-cyan);
+  }
+
+  .hornero-extraction__route-link,
+  .hornero-extraction__manifest-link {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    color: var(--stage-accent);
+  }
+
+  .hornero-extraction__maturity {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.6rem 0.7rem;
+    border-inline-start: 2px solid var(--bridge-amber);
+    background: color-mix(in srgb, var(--bridge-amber) 9%, transparent);
+    color: var(--bridge-paper);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .hornero-extraction__maturity span {
+    color: var(--bridge-amber);
+  }
+
+  .hornero-extraction__current {
+    display: inline-flex;
+    min-block-size: 2rem;
+    align-items: center;
+    padding-inline: 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--stage-accent) 44%, transparent);
+    color: var(--stage-accent);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .hornero-extraction a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .hornero-extraction a:focus-visible {
+    outline: 2px solid var(--bridge-paper);
+    outline-offset: 3px;
+  }
+
+  .hornero-extraction__caption {
+    margin-block-start: 0.75rem;
+    color: var(--bridge-muted);
+    font-size: 0.77rem;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 760px) {
+    .hornero-extraction__stages {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.7rem;
+      padding-inline-start: 0.95rem;
+    }
+
+    .hornero-extraction__stages::before {
+      position: absolute;
+      inset-block: 0.55rem 1.2rem;
+      inset-inline-start: 0.27rem;
+      border-inline-start: 1px dashed color-mix(in srgb, var(--bridge-cyan) 48%, transparent);
+      content: '';
+    }
+
+    .hornero-extraction__stage {
+      padding: 0.8rem 0.85rem 0.9rem;
+    }
+
+    .hornero-extraction__stage + .hornero-extraction__stage::before {
+      inset-block-start: -0.48rem;
+      inset-inline-start: -0.96rem;
+      inline-size: 0.8rem;
+      border-block-start: 0;
+      border-inline-start: 1px dashed color-mix(in srgb, var(--bridge-cyan) 48%, transparent);
+      block-size: 0.48rem;
+    }
+
+    .hornero-extraction__header {
+      margin-block-end: 1rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .hornero-extraction__repositories {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hornero-extraction__stage-label {
+      font-size: 0.59rem;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .hornero-extraction__stage,
+    .hornero-extraction__repositories a,
+    .hornero-extraction__maturity,
+    .hornero-extraction__current {
+      border: 1px solid CanvasText;
+    }
+
+    .hornero-extraction a:focus-visible {
+      outline: 2px solid Highlight;
+    }
+  }
+</style>

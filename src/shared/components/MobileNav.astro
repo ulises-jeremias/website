@@ -248,6 +248,12 @@ const { items, githubHref, emailHref } = Astro.props as Props;
     text-transform: uppercase;
   }
 
+  /* Keep the compact route navigation as the no-JS fallback; only expose the
+    drawer trigger after its handlers have been installed. */
+  .mobile-nav:not([data-mobile-nav-ready]) .mobile-nav__trigger {
+    display: none;
+  }
+
   .mobile-nav__trigger svg,
   .mobile-nav__close svg {
     inline-size: 1.25rem;

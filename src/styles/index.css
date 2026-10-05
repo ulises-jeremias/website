@@ -10,6 +10,7 @@
 @import './semantic.css';
 @import './motion.css';
 @import './effects.css';
+@import './textures.css';
 @import './themes/index.css';
 
 html {

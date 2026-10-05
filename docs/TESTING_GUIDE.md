@@ -139,4 +139,6 @@ browser-quality workflow. Accessibility and best-practices scores are required
 on every audited route; SEO is required for indexable routes and is explicitly
 skipped for the intentionally `noindex` `/404.html` route. Performance and Web
 Vitals thresholds are warning-level lab signals because field Core Web Vitals
-are not available for this static pre-release.
+are not available for this static pre-release. The Lighthouse fixture serves
+the built output with Brotli compression (and gzip fallback), matching the
+encoding used by the production host for text resources.

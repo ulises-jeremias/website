@@ -38,11 +38,31 @@ import SceneEvidence from './SceneEvidence.astro';
   <p class="v-scene__live" data-v-scene-live aria-live="polite">Matrix stage — values ready for a plot.</p>
   <SceneEvidence
     caption="Rendered by VSL · MIT · v install vsl"
-    logo={{ src: '/media/v/vsl-logo.png', alt: 'VSL logo' }}
+    logo={{
+      src: '/media/v/vsl-logo.png',
+      srcSet: '/media/v/vsl-logo-88.webp 88w',
+      sizes: '44px',
+      alt: 'VSL logo',
+    }}
     images={[
-      { src: '/media/v/vsl-mandelbrot.png', alt: 'Mandelbrot set rendered by VSL' },
-      { src: '/media/v/vsl-julia-basic.png', alt: 'Julia set rendered by VSL' },
-      { src: '/media/v/vsl-sierpinski.png', alt: 'Sierpinski triangle rendered by VSL' },
+      {
+        src: '/media/v/vsl-mandelbrot.png',
+        srcSet: '/media/v/vsl-mandelbrot-160.webp 160w, /media/v/vsl-mandelbrot-320.webp 320w',
+        sizes: '148px',
+        alt: 'Mandelbrot set rendered by VSL',
+      },
+      {
+        src: '/media/v/vsl-julia-basic.png',
+        srcSet: '/media/v/vsl-julia-basic-160.webp 160w, /media/v/vsl-julia-basic-320.webp 320w',
+        sizes: '148px',
+        alt: 'Julia set rendered by VSL',
+      },
+      {
+        src: '/media/v/vsl-sierpinski.png',
+        srcSet: '/media/v/vsl-sierpinski-160.webp 160w, /media/v/vsl-sierpinski-320.webp 320w',
+        sizes: '148px',
+        alt: 'Sierpinski triangle rendered by VSL',
+      },
     ]}
   />
 </div>

@@ -26,19 +26,19 @@
     },
     "/about/": {
       "mobile": {
-        "total": 68608,
-        "document": 8192,
+        "total": 73728,
+        "document": 10240,
         "script": 0,
-        "style": 13312,
+        "style": 15360,
         "image": 5120,
         "font": 45056,
         "requests": 9
       },
       "desktop": {
-        "total": 68608,
-        "document": 8192,
+        "total": 73728,
+        "document": 10240,
         "script": 0,
-        "style": 13312,
+        "style": 15360,
         "image": 5120,
         "font": 45056,
         "requests": 9
@@ -46,19 +46,19 @@
     },
     "/agentic/": {
       "mobile": {
-        "total": 68608,
-        "document": 8192,
+        "total": 71680,
+        "document": 9216,
         "script": 0,
-        "style": 11264,
+        "style": 14336,
         "image": 5120,
         "font": 45056,
         "requests": 9
       },
       "desktop": {
-        "total": 68608,
-        "document": 8192,
+        "total": 71680,
+        "document": 9216,
         "script": 0,
-        "style": 11264,
+        "style": 14336,
         "image": 5120,
         "font": 45056,
         "requests": 9
@@ -69,7 +69,7 @@
         "total": 198766,
         "document": 16384,
         "script": 2048,
-        "style": 15360,
+        "style": 18432,
         "image": 75776,
         "font": 93184,
         "requests": 19
@@ -78,7 +78,7 @@
         "total": 337006,
         "document": 16384,
         "script": 2048,
-        "style": 15360,
+        "style": 18432,
         "image": 214016,
         "font": 93184,
         "requests": 23
@@ -289,7 +289,7 @@
         "total": 112640,
         "document": 11264,
         "script": 0,
-        "style": 13312,
+        "style": 15360,
         "image": 20480,
         "font": 69632,
         "requests": 13
@@ -298,7 +298,7 @@
         "total": 145408,
         "document": 11264,
         "script": 0,
-        "style": 13312,
+        "style": 15360,
         "image": 52224,
         "font": 69632,
         "requests": 13

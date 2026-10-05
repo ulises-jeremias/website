@@ -20,17 +20,19 @@ embedded artwork was explicitly excluded from the product.
 
 ## Inventory
 
-The post-cleanup inventory contains 88 tracked public files:
+The current inventory contains 131 tracked public files:
 
-| Area                       | Files | Contents                                                                    |
-| -------------------------- | ----: | --------------------------------------------------------------------------- |
-| `public/assets/`           |    33 | First-party atlas source PNGs and optimized Nest WEBP art                   |
-| `public/media/dotfiles/`   |    25 | Seven source captures and 18 responsive WEBP derivatives                    |
-| `public/media/hornero-os/` |     4 | Hornero OS MIT mark (SVG) and three WEBP wallpaper sizes (added 2026-09-30) |
-| `public/social/`           |    10 | Route social cards, all JPEG                                                |
-| `public/icons/`            |     5 | Apple Touch Icon and 192/512 PNG variants                                   |
-| `public/fonts/`            |    10 | JetBrains Mono and Orbitron WOFF2 files                                     |
-| Public root                |     5 | Favicon SVG/ICO/PNG files and `site.webmanifest`                            |
+| Area                       | Files | Contents                                                      |
+| -------------------------- | ----: | ------------------------------------------------------------- |
+| `public/assets/`           |    46 | First-party atlas fallback PNGs and responsive Nest WEBP art  |
+| `public/media/dotfiles/`   |    24 | Approved first-party captures and responsive WEBP derivatives |
+| `public/media/hornero-os/` |     4 | Hornero OS MIT mark and three WEBP wallpaper sizes            |
+| `public/media/v/`          |    16 | V ecosystem artwork and responsive VSL examples               |
+| Other `public/media/`      |     6 | Create Awesome marks and two NaNLABS Octonan formats          |
+| `public/social/`           |    15 | Route-specific social cards, all JPEG                         |
+| `public/icons/`            |     5 | Apple Touch Icon and 192/512 PNG variants                     |
+| `public/fonts/`            |    10 | JetBrains Mono and Orbitron WOFF2 files                       |
+| Public root                |     5 | Favicon SVG/ICO/PNG files and `site.webmanifest`              |
 
 The byte inventory was measured with `find public -type f`. The route budget
 checks, rather than this aggregate, remain authoritative for per-route delivery
@@ -42,13 +44,14 @@ limits.
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Digital Nest atlas art        | First-party Digital Nest assets committed in this repository; owner Ulises Jeremias                                                                                      | Site `LICENSE` (MIT) for site-owned code and assets                                                         | Used by the home observatory, Projects archive, shared shell, and social-card generator                                                                                                            |
 | Dotfiles captures             | `ulises-jeremias/dotfiles/static`; source and credit are recorded in `src/features/dotfiles/data/index.ts`                                                               | Dotfiles repository MIT; adapted Quickshell attribution is separately recorded as GPL-3.0                   | Gallery uses only the six approved first-party capture sets and responsive derivatives                                                                                                             |
-| Social cards                  | `scripts/generate-social-cards.mjs`, using first-party Nest art and locally installed Noto Sans for rendered text                                                        | First-party art permissions plus the source licenses above; Noto Sans is only a local generation dependency | Ten 1200x630 cards reviewed for route text, artwork, safe canvas, and missing assets                                                                                                               |
+| Social cards                  | `scripts/generate-social-cards.mjs`, using first-party Nest art and locally installed Noto Sans for rendered text                                                        | First-party art permissions plus the source licenses above; Noto Sans is only a local generation dependency | Fifteen 1200x630 cards reviewed for route text, artwork, safe canvas, and missing assets                                                                                                           |
 | Favicon and application icons | `public/favicon.svg` and the first-party Digital Nest mark                                                                                                               | Site-owned asset under the site MIT license                                                                 | PNG and ICO derivatives are used by the document head and manifest                                                                                                                                 |
 | JetBrains Mono                | `@fontsource/jetbrains-mono` 5.3.0 package                                                                                                                               | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten shipped WOFF2 files are embedded locally; no remote font request                                                                                                                               |
 | Orbitron                      | `@fontsource/orbitron` 5.3.0 package                                                                                                                                     | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten total font files include the six Orbitron weights used by the site                                                                                                                             |
 | V ecosystem references        | License table in `src/features/v/data/index.ts`                                                                                                                          | V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0 1.0                                                 | Repository links and text references only; no upstream artwork is copied                                                                                                                           |
 | Hornero OS brand assets       | `HorneroOS/config` `assets/brand/logo.svg` and `assets/brand/wallpaper/hornero-dark.png` (org owned by Ulises Jeremias); copied 2026-09-30 to `public/media/hornero-os/` | HorneroOS/config MIT                                                                                        | Mark and brand wallpaper on `/hornero-os` and its social card, captioned "brand wallpaper, not a screenshot" with credit (ADR-004). No third-party screenshots with unverified wallpapers are used |
-| V mascot reference            | `vlang/v-mascot`, recorded in the Projects and V license data                                                                                                            | CC BY-NC 4.0; non-commercial and attribution restrictions apply                                             | Veasel is embedded on `/v` since 2026-08-31 (#390, #391); attribution rendered on the page; licensing decision open in #170                                                                        |
+| Homepage sky traffic          | `src/media-sources/nest/sky-traffic.png`, generated for this site; composited by `scripts/generate-hero-scene.mjs`                                                       | Site license (MIT)                                                                                          | Used in responsive homepage background plates and generated social cards; decorative, no labels or metrics                                                                                         |
+| V mascot reference            | `vlang/v-mascot`, referenced in the Projects ledger                                                                                                                      | CC BY-NC 4.0; non-commercial and attribution restrictions apply                                             | Text reference only; no mascot artwork is copied or served. A first-party V ecosystem schematic is used on `/v`.                                                                                   |
 
 ## Cleanup
 
@@ -108,3 +111,26 @@ The 2026-08-24 audit recorded "no Veasel asset is embedded". That stopped being 
   in `src/features/v/data/index.ts` (state CC BY-NC 4.0, attribution, no endorsement/trademark).
 - Open question: whether a personal portfolio qualifies as "NonCommercial" is not settled by the
   license or upstream statements. Decision and options are tracked in #170.
+
+## Amendment — 2026-10-05 (asset removed)
+
+PR #462 removes the Veasel image and its CC BY-NC artwork from `/v`, deletes the local PNG and
+WebP copies, and removes the mascot license entry from the rendered V license list. A first-party
+inline SVG now maps selected independent V project areas without suggesting dependency links.
+`vlang/v-mascot` remains a text-only upstream reference; no mascot artwork is redistributed by the
+site. This resolves the website's reproduction decision without deciding whether portfolio use
+would qualify as noncommercial.
+
+## Amendment — 2026-10-05 (Digital Nest sky traffic)
+
+The homepage hero now includes an original air-traffic illustration composited
+into both responsive scene plates. The 2048 × 768 transparent PNG source is
+retained at `src/media-sources/nest/sky-traffic.png`; the background sources
+remain alongside it as `hero-bg-base.webp` and `hero-bg-base-sm.webp`. Run
+`pnpm assets:hero-scene` to rebuild the WebP plates and `pnpm
+assets:hero-fallback` to rebuild the JPEG fallback. The artwork was generated
+for this site with the built-in OpenAI image-generation tool on 2026-10-05 from
+a prompt for three synthwave hovercraft on a transparent background. It
+contains no text, marks, third-party characters, or copied project artwork.
+The source files and derivatives are site-owned first-party art under the
+site's MIT license.

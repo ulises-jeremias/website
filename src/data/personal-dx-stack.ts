@@ -9,11 +9,11 @@ import { z } from 'astro/zod';
  * workstation, toolkit, harness) render from this registry instead of
  * re-describing relationships in prose.
  *
- * Sources (re-verified 2026-09-30):
- * - agent-toolkit@4ea5878 README + docs/ARCHITECTURE.md + docs/SERVE_API.md + ADR-032/033
+ * Sources (re-verified 2026-10-04):
+ * - agent-toolkit@524918d5 README + CHANGELOG + docs/desktop + docs/SERVE_API.md
  *   (Capability + Runtime layer; native V core, CLI, serve API, and desktop app)
- * - agentic-workstation@1bbeb07 README + docs/ARCHITECTURE.md ("thin host" delegation)
- * - agentic-harness@a3f8822 README + docs/ARCHITECTURE.md ("Workspace Layer … not a second runtime")
+ * - agentic-workstation@803704a README + docs/ARCHITECTURE.md ("thin host" delegation)
+ * - agentic-harness@6e76a7b README + docs/ARCHITECTURE.md ("reference workspace, not a second runtime")
  */
 
 export const stackRoleSchema = z.enum(['environment', 'machine', 'platform', 'workspace']);
@@ -47,10 +47,10 @@ export const STACK_PROJECTS: StackProject[] = [
     path: '/dotfiles',
     repo: 'ulises-jeremias/dotfiles',
     role: 'environment',
-    responsibility: 'Makes the desktop feel mine — Hyprland, Quickshell, Smart Colors.',
-    owns: ['Personal desktop overrides and chezmoi setup', 'Theme and wallpaper pipeline'],
-    doesNotOwn: ['AI capabilities', 'Workspace state', 'The shell and system CLI (Hornero OS components)'],
-    verifiedAt: '2026-09-30',
+    responsibility: 'Keeps personal Linux configuration separate from HorneroOS product defaults.',
+    owns: ['Personal user-level configuration and chezmoi setup', 'Optional wallpaper media'],
+    doesNotOwn: ['AI capabilities', 'Workspace state', 'HorneroOS packages, appearance packs, shell, and system CLI'],
+    verifiedAt: '2026-10-04',
   },
   {
     id: 'agentic-workstation',
@@ -67,7 +67,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Host validation via dots-doctor',
     ],
     doesNotOwn: ['Skills, agents, loops, or MCP templates', 'Swarm orchestration', 'Workspace or engagement state'],
-    verifiedAt: '2026-09-30',
+    verifiedAt: '2026-10-04',
   },
   {
     id: 'agent-toolkit',
@@ -84,7 +84,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Local serve API and the desktop app',
     ],
     doesNotOwn: ['Machine provisioning and host LLM policy', 'Your persistent engagement state'],
-    verifiedAt: '2026-09-30',
+    verifiedAt: '2026-10-04',
   },
   {
     id: 'agentic-harness',
@@ -101,7 +101,7 @@ export const STACK_PROJECTS: StackProject[] = [
       'Loop instances, job queues, run history',
     ],
     doesNotOwn: ['Capability definitions', 'Execution engines — it calls the Toolkit'],
-    verifiedAt: '2026-09-30',
+    verifiedAt: '2026-10-04',
   },
 ];
 

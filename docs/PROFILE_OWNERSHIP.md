@@ -1,21 +1,21 @@
 # Profile data ownership
 
-**Related:** #37 (A-07), `src/data/profile.ts`, `src/content/profile.yaml`
-**Last reviewed:** 2026-09-01
+**Related:** #37 (A-07), `src/data/profile.ts`
+**Last reviewed:** 2026-10-05
 
 This document defines the canonical profile source, what is owner-curated versus externally
 verifiable, and the update workflow. It complements [DATA_PROVENANCE.md](DATA_PROVENANCE.md).
 
 ## Canonical source
 
-| Layer            | File                       | Role                                                                               |
-| ---------------- | -------------------------- | ---------------------------------------------------------------------------------- |
-| Source of truth  | `src/data/profile.ts`      | Typed Zod schema + owner-curated facts consumed by routes/components               |
-| Editorial mirror | `src/content/profile.yaml` | Human-readable mirror for review; asserted parseable by `src/data/profile.test.ts` |
-| Tests            | `src/data/profile.test.ts` | Enforce schema, verified links, and the mirror's existence                         |
+| Layer           | File                       | Role                                                                 |
+| --------------- | -------------------------- | -------------------------------------------------------------------- |
+| Source of truth | `src/data/profile.ts`      | Typed Zod schema + owner-curated facts consumed by routes/components |
+| Tests           | `src/data/profile.test.ts` | Enforce the schema and checked profile-link constraints              |
 
-`profile.ts` is the **single source of truth for the site build**. The YAML mirror exists for
-reviewability only — edits must land in both files in the same PR, or the mirror becomes stale.
+`profile.ts` is the **single source of truth**. A duplicate YAML copy had no runtime consumer and
+could drift while its test only checked a couple of substrings; it has been removed. Keep
+editorial changes, schema, and verified links together in the typed source.
 
 ## Field classes
 
@@ -58,7 +58,7 @@ requirement).
 
 ## Update workflow
 
-1. Edit `src/data/profile.ts` (schema-validated) and the same fields in `src/content/profile.yaml`.
+1. Edit `src/data/profile.ts`; the Zod schema validates the complete profile object.
 2. Run `pnpm test` — `profile.test.ts` must pass; the build fails on schema violations.
 3. Open a PR. Review expectations: the owner approves personal-fact changes; reviewers check schema validity and that any new link was actually verified (paste the check result in the PR body).
 4. Merge → build → production.

@@ -1,13 +1,13 @@
 import { expect, test } from '@playwright/test';
 
-test('Dotfiles install command is a keyboard-scrollable named region', async ({ page }) => {
+test('Dotfiles review command is a keyboard-scrollable named region', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/dotfiles');
 
-  const command = page.locator('[data-df-install]');
+  const command = page.locator('[data-df-review-command]');
   await expect(command).toHaveAttribute('role', 'region');
-  await expect(command).toHaveAttribute('aria-label', 'HorneroConfig install command');
-  await expect(command).toHaveAttribute('aria-describedby', 'df-install-hint');
+  await expect(command).toHaveAttribute('aria-label', 'HorneroConfig review command');
+  await expect(command).toHaveAttribute('aria-describedby', 'df-review-command-hint');
 
   const dimensions = await command.evaluate((element) => ({
     clientWidth: element.clientWidth,

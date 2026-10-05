@@ -1,6 +1,6 @@
 # dotfiles — HorneroConfig feature
 
-> Feature module for `/dotfiles` — narrative, layers diagram, Smart Colors animation, screenshots, attribution. Identity plum #191114 / pink #FFB0CA.
+> Feature module for `/dotfiles` — ownership map, reviewed-apply workflow, legacy screenshots, attribution. Identity plum #191114 / pink #FFB0CA.
 
 ## Structure
 
@@ -9,10 +9,9 @@ dotfiles/
 ├── components/
 │   ├── DotfilesNarrative.astro       # Narrative + verified fact strip
 │   ├── LayersDiagram.astro           # Accessible SVG: shell/compositor/terminal/scripts/chezmoi
-│   ├── SmartColorsAnimation.astro    # wallpaper→extraction→scheme→apps + controls + reduced-motion
 │   └── ScreenshotGallery.astro       # MIT static captures (anime/collage omitted)
 ├── data/
-│   └── index.ts                      # layers, narrative, smartColorSteps, screenshots, attribution, verifiedFacts
+│   └── index.ts                      # ownership layers, review narrative, screenshots, attribution, verifiedFacts
 ├── types/
 │   └── index.ts
 ├── index.ts                          # public API
@@ -21,18 +20,19 @@ dotfiles/
 
 ## Verified HEAD facts (do not invent)
 
-Audit against `ulises-jeremias/dotfiles` `main` before changing counts:
+Verified against `ulises-jeremias/dotfiles` `main` @bf4b235 on 2026-10-04:
 
-- **14** appearance themes under `home/dot_local/share/dots/themes/*/theme.json` (verified @8aae4f7, 2026-09-30)
-- **0** `dots-*` CLIs remain: since dotfiles #294–#305 the wrappers resolve to `horneroctl` verbs
-  (HorneroOS/hornero), and since #317 the Quickshell shell is consumed from HorneroOS/shell
+- Personal Arch chezmoi source for user-level apps, preferences, and optional wallpaper media
+- HorneroOS owns system defaults, appearance packs, Quickshell surfaces, packages, and stable system operations
+- `chezmoi diff` is reviewed before apply; package installation does not call `chezmoi apply`
+- Contributions use temporary `HOME` and isolated XDG directories; shared source excludes credentials and host-specific values
+- Security and testing claims come from `docs/Security-Guidelines.md`, `SECURITY.md`, and `docs/Testing-Strategy.md`; product behavior is accepted in `HorneroOS/qa`
 - Gallery captures under `static/` are the X11 generation (2020–2021) and are captioned as such
-- Smart Colors contract: wiki `Smart-Colors-System.md` (wallpaper → M3 → Quickshell/Kitty/GTK)
 
 ## Design decisions
 
 - **Identity**: `--dotfiles-plum: #191114`, `--dotfiles-pink: #FFB0CA`
-- **Smart Colors**: 4 animated steps with pause/replay/static + `prefers-reduced-motion`
+- **Review flow**: inspect the chezmoi diff, then apply deliberately
 - **Gallery**: first-party `static/*` captures only; exclude `anime.jpeg`, `anime-girl-screen.png`, and `collage.png` (anime wallpaper)
 - **Attribution**: short MIT + caelestia GPL-3.0 credit — no audit/verification checklist on the product page
 
@@ -40,12 +40,11 @@ Audit against `ulises-jeremias/dotfiles` `main` before changing counts:
 
 ```astro
 ---
-import { DotfilesNarrative, LayersDiagram, SmartColorsAnimation, ScreenshotGallery } from '@/features/dotfiles';
+import { DotfilesNarrative, LayersDiagram, ScreenshotGallery } from '@/features/dotfiles';
 ---
 
 <DotfilesNarrative />
 <LayersDiagram />
-<SmartColorsAnimation />
 <ScreenshotGallery />
 ```
 

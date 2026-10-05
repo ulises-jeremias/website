@@ -331,6 +331,7 @@ describe('global design system architecture', () => {
       'semantic.css',
       'motion.css',
       'effects.css',
+      'textures.css',
       'themes/index.css',
     ].map((file) => resolve(stylesDirectory, file));
     const themeLayers = themeFiles.map((file) => resolve(stylesDirectory, 'themes', file));
@@ -366,6 +367,7 @@ describe('global design system architecture', () => {
       './semantic.css',
       './motion.css',
       './effects.css',
+      './textures.css',
       './themes/index.css',
     ]);
   });
@@ -451,8 +453,8 @@ describe('global design system architecture', () => {
     }
 
     expect(motion).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
-    expect(motion).toMatch(/transition-duration:\s*0\.01ms\s*!important/);
-    expect(motion).not.toMatch(/transition\s*:\s*none/);
+    expect(motion).toMatch(/animation:\s*none\s*!important/);
+    expect(motion).toMatch(/transition:\s*none\s*!important/);
     expect(`${entryPoint}\n${effects}`).toMatch(/@media\s*\(forced-colors:\s*active\)/);
   });
 

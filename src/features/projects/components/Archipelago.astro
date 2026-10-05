@@ -25,10 +25,8 @@ const islands = worldPointerProjects.map((project, index) => ({
       <p class="archipelago__eyebrow">Work · portfolio</p>
       <h1 id="archipelago-title">What I build</h1>
       <p class="archipelago__lede">
-        Four related areas of open-source developer tooling: agent tooling for coding assistants, a Linux desktop,
-        scientific computing for V, and app scaffolding. Every project states my role and how mature it is. This page
-        answers what I build; <a href="/open-source">Open Source</a> holds the evidence for what I own, maintain, and contribute
-        to. Nothing here is ranked by popularity.
+        My work spans agent tooling, Hornero OS, scientific computing for V, and app scaffolding. Each entry states my
+        role and maturity. <a href="/open-source">Open Source</a> documents ownership, maintenance, and merged contributions.
       </p>
     </div>
     <aside class="archipelago__readout" aria-label="Work portfolio readout">
@@ -54,9 +52,11 @@ const islands = worldPointerProjects.map((project, index) => ({
             <img
               class="archipelago__art"
               src={`/assets/nest/${island.island}-sm.webp`}
+              srcset={`/assets/nest/${island.island}-192.webp 192w, /assets/nest/${island.island}-sm.webp 440w`}
+              sizes="144px"
               alt=""
-              width="160"
-              height="120"
+              width="440"
+              height="440"
               loading="lazy"
               decoding="async"
             />
@@ -156,6 +156,25 @@ const islands = worldPointerProjects.map((project, index) => ({
     text-align: right;
   }
 
+  @media (width < 600px) {
+    .archipelago__readout dl {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem 0.9rem;
+    }
+
+    .archipelago__readout dl div {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+    }
+
+    .archipelago__readout dl div:last-child {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: baseline;
+    }
+  }
+
   .archipelago__index-note {
     margin-top: 1.5rem;
     padding-bottom: 0.55rem;
@@ -190,7 +209,7 @@ const islands = worldPointerProjects.map((project, index) => ({
     margin: 0.85rem 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.85rem;
   }
 
@@ -242,6 +261,7 @@ const islands = worldPointerProjects.map((project, index) => ({
     width: min(100%, 9rem);
     height: auto;
     margin-inline: auto;
+    mix-blend-mode: screen;
     pointer-events: none;
   }
 

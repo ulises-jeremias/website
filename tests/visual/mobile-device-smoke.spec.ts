@@ -12,6 +12,10 @@ const routes = [
   '/projects/',
   '/open-source/',
   '/agentic-harness/',
+  '/about/',
+  '/agentic/',
+  '/hornero-os/',
+  '/sponsor/',
   '/404.html',
 ] as const;
 

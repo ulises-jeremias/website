@@ -10,12 +10,12 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "96739fe",
-  "commitFull": "96739fe58e48343c69831c4803c270ebba319559",
-  "verifiedAt": "2026-09-30",
-  "version": "1.35.0",
+  "commit": "687ab38",
+  "commitFull": "687ab3800c10c7ddf490a958f638213c4b7ae1a2",
+  "verifiedAt": "2026-10-05",
+  "version": "1.41.0",
   "counts": {
-    "skills": 103,
+    "skills": 105,
     "agents": 18,
     "loops": 10,
     "profiles": 9,
@@ -55,7 +55,7 @@
     },
     {
       "id": "design",
-      "count": 10
+      "count": 12
     },
     {
       "id": "forge",

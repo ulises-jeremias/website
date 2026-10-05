@@ -5,13 +5,14 @@
  * The site ships webp-first `<picture>` art with a single-size PNG fallback
  * (see src/features/home/components/ProjectWorld.astro). When a new world is
  * added, the webp pair lands in public/assets/nest/ but the PNG fallback is
- * easy to forget — this script regenerates every missing PNG from the full
- * (512w) webp using the Playwright Chromium canvas, so the pipeline needs no
- * native image tools.
+ * easy to forget. This script can create missing fallbacks or resize existing
+ * island fallbacks to the source WebP dimensions using the Playwright canvas.
+ * The homepage hero uses a separately optimized JPEG fallback.
  *
  * Usage:
- *   node scripts/generate-island-pngs.mjs          # create missing PNGs
- *   node scripts/generate-island-pngs.mjs --check  # exit 1 if any missing
+ *   node scripts/generate-island-pngs.mjs                 # create missing PNGs
+ *   node scripts/generate-island-pngs.mjs --regenerate    # resize all island PNG fallbacks from WebP sources
+ *   node scripts/generate-island-pngs.mjs --check         # verify island PNGs and hero JPEG
  */
 
 import { chromium } from '@playwright/test';
@@ -33,28 +34,47 @@ const nestDir = path.join(root, 'public', 'assets', 'nest');
 const outDir = path.join(root, 'public', 'assets');
 
 const checkOnly = process.argv.includes('--check');
+const regenerate = process.argv.includes('--regenerate');
 
-const webpFiles = (await readdir(nestDir)).filter((f) => f.endsWith('.webp') && !f.endsWith('-sm.webp'));
+const webpFiles = (await readdir(nestDir)).filter(
+  (f) => f.endsWith('.webp') && !f.startsWith('hero-bg.') && !f.endsWith('-sm.webp') && !f.endsWith('-192.webp'),
+);
 const missing = [];
 for (const webp of webpFiles) {
   const pngName = `${path.basename(webp, '.webp')}.png`;
   const outPath = path.join(outDir, pngName);
   try {
     await access(outPath, constants.F_OK);
+    if (regenerate && !webp.startsWith('hero-bg.')) missing.push({ webp, outPath });
   } catch {
     missing.push({ webp, outPath });
   }
 }
 
+if (checkOnly) {
+  const heroFallback = path.join(outDir, 'hero-bg.jpg');
+  let heroFallbackMissing = false;
+  try {
+    await access(heroFallback, constants.F_OK);
+  } catch {
+    heroFallbackMissing = true;
+  }
+
+  if (missing.length === 0 && !heroFallbackMissing) {
+    console.log(`island-pngs: all ${webpFiles.length} PNG fallbacks and hero JPEG present`);
+    process.exit(0);
+  }
+  console.error(
+    `island-pngs: missing ${missing.length} island PNG fallback(s)${heroFallbackMissing ? ' and hero JPEG' : ''}:`,
+  );
+  for (const m of missing) console.error(`  - ${path.relative(root, m.outPath)}`);
+  if (heroFallbackMissing) console.error(`  - ${path.relative(root, heroFallback)}`);
+  process.exit(1);
+}
+
 if (missing.length === 0) {
   console.log(`island-pngs: all ${webpFiles.length} fallbacks present`);
   process.exit(0);
-}
-
-if (checkOnly) {
-  console.error(`island-pngs: missing ${missing.length} PNG fallback(s):`);
-  for (const m of missing) console.error(`  - ${path.relative(root, m.outPath)}`);
-  process.exit(1);
 }
 
 const browser = await chromium.launch({

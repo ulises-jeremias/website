@@ -36,7 +36,7 @@ The first viewport must not require visitors to interpret raw inventory totals, 
 | `/agent-toolkit`       | Stop rebuilding your AI workflow for every coding assistant              | Capability nexus, swarm control room, install console, inventory       |
 | `/agentic-workstation` | Turn a clean machine into a reproducible AI-native workstation           | Boot sequence, profile readout, health console                         |
 | `/agentic-harness`     | Your coding agent sessions are temporary; your workspace should not be   | Workspace anatomy, pack guide, ownership model _(already conformant)_  |
-| `/dotfiles`            | A reproducible Linux desktop that feels yours, reproducibly              | Smart Colors pipeline, theme explorer, screenshot gallery, layer stack |
+| `/dotfiles`            | A personal Arch configuration with clear review and ownership boundaries | chezmoi review flow, HorneroOS ownership map, honest legacy captures   |
 | `/hornero-os`          | A finished Hyprland desktop without hand-assembling it — once it ships   | Composition manifest, component status board, HorneroConfig comparison |
 | `/v`                   | My contribution span across the V language and its ecosystem             | Six lab stations, per-project diagrams and evidence                    |
 | `/create-awesome`      | Composable app scaffolding across three languages, one composition model | Composer, per-runtime catalogs, distribution matrix                    |
@@ -51,7 +51,7 @@ To avoid retyping facts across pages, these fields come from the portfolio taxon
 - Distribution channels (`channels`)
 - Evidence reference (`evidence`)
 
-Feature-specific technical inventories (Toolkit skills, V stations, Create Awesome catalogs, Smart Colors themes) remain in their existing feature data modules.
+Feature-specific technical inventories (Toolkit skills, V stations, Create Awesome catalogs, HorneroOS appearance packs) remain in their owning feature data modules.
 
 ## Maturity and support
 

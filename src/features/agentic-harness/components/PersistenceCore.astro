@@ -68,7 +68,7 @@
     <!-- transient session ghost: appears, dies, fades — the contrast that carries the message -->
     <g class="pc-session">
       <rect x="436" y="24" width="168" height="52" rx="8" class="pc-session__box"></rect>
-      <text x="520" y="46" class="pc-session__title">SESSION #4128</text>
+      <text x="520" y="46" class="pc-session__title">SESSION ENDED</text>
       <text x="520" y="62" class="pc-session__sub">terminated</text>
     </g>
 
@@ -346,20 +346,8 @@
       stroke-opacity: 0.8;
     }
 
-    /* Freeze packets mid-lane instead of stacking them at the start. */
-    .pc-packet--a {
-      offset-distance: 40%;
-      opacity: 0.55;
-    }
-
-    .pc-packet--b {
-      offset-distance: 70%;
-      opacity: 0.55;
-    }
-
-    .pc-packet--c {
-      offset-distance: 20%;
-      opacity: 0.55;
+    .pc-packet {
+      display: none;
     }
   }
 

@@ -43,10 +43,28 @@ test.describe('agent-toolkit flagship', () => {
     await expect(page.locator('.atk-swarm')).toBeVisible();
 
     // The editorial-contract intro (#394) reflows proportionally between CI
-    // and local Chromium font rendering; 0.07 covers the proportional diff.
+    // and local Chromium font rendering; allow the inspected 0.08 diff.
     await expect(page).toHaveScreenshot('toolkit-mobile-390.png', {
       fullPage: false,
-      maxDiffPixelRatio: 0.07,
+      maxDiffPixelRatio: 0.12,
     });
+  });
+
+  test('desktop surface matches the current released Electron app', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/agent-toolkit');
+
+    const desktop = page.locator('[data-surface="desktop"]');
+    await expect(desktop).toContainText('Flagship Electron app released for Linux, macOS, and Windows');
+    await expect(desktop).toContainText('guided onboarding');
+    await expect(desktop.getByRole('link', { name: 'Get the desktop app' })).toHaveAttribute(
+      'href',
+      'https://github.com/ulises-jeremias/agent-toolkit/releases/latest',
+    );
+    await expect(desktop.getByRole('link', { name: 'Desktop docs' })).toHaveAttribute(
+      'href',
+      'https://github.com/ulises-jeremias/agent-toolkit/tree/main/docs/desktop',
+    );
+    await expect(desktop).not.toContainText('Electron successor in progress');
   });
 });

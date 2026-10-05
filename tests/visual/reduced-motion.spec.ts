@@ -8,7 +8,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Motion token contract (motion.css)', () => {
-  test('all duration tokens collapse to 1 ms under prefers-reduced-motion: reduce', async ({ page }) => {
+  test('all duration tokens collapse to 0 ms under prefers-reduced-motion: reduce', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
 
@@ -22,10 +22,10 @@ test.describe('Motion token contract (motion.css)', () => {
       };
     });
 
-    expect(tokens.fast).toBe('1ms');
-    expect(tokens.base).toBe('1ms');
-    expect(tokens.slow).toBe('1ms');
-    expect(tokens.ambient).toBe('1ms');
+    expect(tokens.fast).toBe('0s');
+    expect(tokens.base).toBe('0s');
+    expect(tokens.slow).toBe('0s');
+    expect(tokens.ambient).toBe('0s');
   });
 
   test('scroll-behavior is auto (no smooth-scroll) under reduced motion', async ({ page }) => {
@@ -36,35 +36,58 @@ test.describe('Motion token contract (motion.css)', () => {
     expect(scrollBehavior).toBe('auto');
   });
 
-  test('universal animation-duration shortens to ≤1 ms under reduced motion', async ({ page }) => {
+  test('universal animations and transitions stop under reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
 
-    // The global * rule sets animation-duration: 0.01ms; check a representative animated element
-    // that does NOT have an explicit animation: none override (atlas-world uses transform, not animation).
-    const atlasWorldDuration = await page
+    const motionStyles = await page
       .locator('.atlas-world')
       .first()
-      .evaluate((el) => getComputedStyle(el).animationDuration);
+      .evaluate((el) => {
+        const style = getComputedStyle(el);
+        return { animationName: style.animationName, transitionDuration: style.transitionDuration };
+      });
 
-    // 0.01ms rounds to 0ms in most parsers; any value ≤1ms satisfies the contract.
-    const ms = Number.parseFloat(atlasWorldDuration.replace('ms', '').replace('s', '000'));
-    expect(ms).toBeLessThanOrEqual(1);
+    expect(motionStyles.animationName).toBe('none');
+    expect(motionStyles.transitionDuration).toBe('0s');
   });
 });
 
 test.describe('Home — explicit CSS animation overrides', () => {
   test.use({ colorScheme: 'dark' });
 
-  test('scanlines animation stops completely under reduced motion', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
+  test('scanline texture stays static under reduced motion and clears in forced colors', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.goto('/');
 
-    const animationName = await page
-      .locator('.synthwave-environment__scanlines')
-      .evaluate((el) => getComputedStyle(el).animationName);
+    const scanlines = page.locator('.synthwave-environment__scanlines');
+    const defaultStyle = await scanlines.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        canonicalTexture: el.classList.contains('texture-scanline'),
+        animationName: style.animationName,
+        backgroundImage: style.backgroundImage,
+        opacity: style.opacity,
+      };
+    });
 
-    expect(animationName).toBe('none');
+    expect(defaultStyle.canonicalTexture).toBe(true);
+    expect(defaultStyle.animationName).toBe('none');
+    expect(defaultStyle.backgroundImage).not.toBe('none');
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const reducedMotionStyle = await scanlines.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { animationName: style.animationName, backgroundImage: style.backgroundImage, opacity: style.opacity };
+    });
+    expect(reducedMotionStyle).toEqual({
+      animationName: 'none',
+      backgroundImage: defaultStyle.backgroundImage,
+      opacity: defaultStyle.opacity,
+    });
+
+    await page.emulateMedia({ forcedColors: 'active' });
+    await expect.poll(() => scanlines.evaluate((el) => getComputedStyle(el).backgroundImage)).toBe('none');
   });
 
   test('atlas-connection animation stops completely under reduced motion', async ({ page }) => {
@@ -129,28 +152,22 @@ test.describe('Agent Toolkit — JS animation gating', () => {
   });
 });
 
-test.describe('V — diagram animation suppression', () => {
-  test('VSL diagram animated paths are suppressed under reduced motion', async ({ page }) => {
+test.describe('V — interactive scientific scene motion', () => {
+  test('RxV emits its static stream state under reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/v');
+    await page.goto('/v/#rxv');
 
-    // Confirm matchMedia works in page context
-    const reduceSeen = await page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    expect(reduceSeen).toBe(true);
-  });
-});
+    const scene = page.locator('[data-v-scene="rxv"]');
+    await expect(scene.locator('[data-rxv-emit]')).toBeEnabled();
+    await scene.locator('[data-rxv-emit]').click();
 
-test.describe('Community — Workshop graph', () => {
-  test('workshop graph animation is suppressed under reduced motion', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/community');
-
-    // The graph uses CSS animation; check any animated SVG element duration collapses
-    const svgPaths = await page.locator('.cm-workshop svg path').all();
-    if (svgPaths.length > 0) {
-      const duration = await svgPaths[0].evaluate((el) => getComputedStyle(el).animationDuration);
-      const ms = Number.parseFloat(duration.replace('ms', '').replace('s', '000'));
-      expect(ms).toBeLessThanOrEqual(1);
+    const events = scene.locator('[data-rxv-events] circle');
+    await expect(events).toHaveCount(4);
+    for (const event of await events.all()) {
+      await expect
+        .poll(() => event.evaluate((el) => ({ radius: el.getAttribute('r'), animations: el.getAnimations().length })))
+        .toEqual({ radius: '7', animations: 0 });
     }
+    await expect(scene.locator('[data-v-scene-live]')).toHaveText('Demo burst emitted · stream complete (not live).');
   });
 });

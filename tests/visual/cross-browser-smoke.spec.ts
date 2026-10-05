@@ -14,11 +14,15 @@ const routes = [
   '/projects/',
   '/open-source/',
   '/agentic-harness/',
+  '/hornero-os/',
+  '/sponsor/',
   '/404.html',
 ];
 
 const viewports = [
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'tablet-portrait', width: 768, height: 1024 },
+  { name: 'tablet-landscape', width: 1024, height: 768 },
   { name: 'desktop', width: 1440, height: 1000 },
 ];
 

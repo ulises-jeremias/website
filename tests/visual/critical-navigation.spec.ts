@@ -21,6 +21,9 @@ const PRIMARY_ROUTES = [
   '/projects',
   '/open-source',
   '/agentic-harness',
+  '/hornero-os',
+  '/sponsor',
+  '/404.html',
 ] as const;
 
 test.describe('Skip link', () => {

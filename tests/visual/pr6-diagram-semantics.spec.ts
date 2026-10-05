@@ -254,14 +254,14 @@ test.describe('PR6 no-JavaScript diagram fallback', () => {
 });
 
 test.describe('static diagram and inspector semantics', () => {
-  test('keeps the Open Source constellation visual-only and public-facing', async ({ page }) => {
+  test('keeps the Open Source evidence lanes visual-only and public-facing', async ({ page }) => {
     await page.goto('/open-source');
 
     const constellation = page.getByTestId('oss-constellation');
-    const svg = constellation.locator('svg');
-    await expect(svg).toHaveAttribute('aria-hidden', 'true');
-    await expect(svg).toHaveAttribute('focusable', 'false');
-    await expect(svg.locator('[role], [tabindex], [aria-pressed]')).toHaveCount(0);
+    const lanes = constellation.locator('.constellation__lane');
+    await expect(lanes).toHaveCount(4);
+    await expect(constellation.getByRole('list', { name: 'Contribution kinds' })).toBeVisible();
+    await expect(constellation.locator('[role="button"], [tabindex], [aria-pressed]')).toHaveCount(0);
     await expect(page.locator('body')).not.toContainText(
       /EDITORIAL_USER_APPROVED|GENERATED_GITHUB_SOURCE|CANONICAL_PROJECT_SOURCE|DERIVED_BUILD_TIME/,
     );

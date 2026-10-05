@@ -103,14 +103,6 @@
   -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 92%);
 }
 
-.scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--nest-cyan) 6%, transparent) 0 1px,
-    transparent 1px 3px
-  );
-}
-
 .clip-corner {
   clip-path: var(--clip-corner-md);
 }

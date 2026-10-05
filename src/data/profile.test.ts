@@ -36,13 +36,4 @@ describe('profile', () => {
     expect(getProfile().name).toBe(profile.name);
     expect(getProfileLinks().github).toBe(profile.links.github);
   });
-
-  it('profile.yaml mirror exists and is parseable', async () => {
-    const fs = await import('node:fs');
-    const path = 'src/content/profile.yaml';
-    expect(fs.existsSync(path)).toBe(true);
-    const content = fs.readFileSync(path, 'utf8');
-    expect(content).toContain('Ulises Jeremias');
-    expect(content).toContain('https://github.com/ulises-jeremias');
-  });
 });

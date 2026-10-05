@@ -30,11 +30,59 @@ def clean(text: str | None) -> str:
     return (text or "").replace("WHAT — ", "").replace("WHAT - ", "").strip()
 
 
+def verify_default_checkout(root: Path) -> None:
+    """Prevent a stale or dirty sibling checkout from replacing the pinned snapshot."""
+    remote_url = subprocess.check_output(
+        ["git", "-C", str(root), "remote", "get-url", "origin"], text=True
+    ).strip()
+    normalized_remote = (
+        remote_url.replace("https://github.com/", "")
+        .replace("git@github.com:", "")
+        .replace("ssh://git@github.com/", "")
+        .removesuffix(".git")
+        .rstrip("/")
+        .lower()
+    )
+    if normalized_remote != "ulises-jeremias/agent-toolkit":
+        raise ValueError("default sibling checkout is not the canonical Agent Toolkit repository")
+
+    dirty = subprocess.check_output(
+        ["git", "-C", str(root), "status", "--porcelain"], text=True
+    ).strip()
+    if dirty:
+        raise ValueError(
+            "default sibling checkout has local changes; set AGENT_TOOLKIT_ROOT to an explicit source checkout"
+        )
+
+    remote_main = subprocess.check_output(
+        ["git", "-C", str(root), "ls-remote", "origin", "refs/heads/main"],
+        text=True,
+        timeout=20,
+    ).split()
+    if not remote_main:
+        raise ValueError("could not resolve canonical Agent Toolkit origin/main")
+
+    head = subprocess.check_output(
+        ["git", "-C", str(root), "rev-parse", "HEAD"], text=True
+    ).strip()
+    if head != remote_main[0]:
+        raise ValueError(
+            "default sibling checkout is not current upstream main; set AGENT_TOOLKIT_ROOT to an explicit source checkout"
+        )
+
+
 def main() -> int:
-    root = Path(os.environ.get("AGENT_TOOLKIT_ROOT", DEFAULT_AT)).resolve()
+    explicit_root = os.environ.get("AGENT_TOOLKIT_ROOT")
+    root = Path(explicit_root or DEFAULT_AT).resolve()
     if not (root / "catalogs/skill-catalog.yaml").is_file():
         print(f"agent-toolkit catalogs not found at {root}", file=sys.stderr)
         return 1
+    if not explicit_root:
+        try:
+            verify_default_checkout(root)
+        except (OSError, subprocess.SubprocessError, ValueError) as error:
+            print(f"Refusing unsafe default Agent Toolkit source: {error}", file=sys.stderr)
+            return 1
 
     commit = subprocess.check_output(["git", "-C", str(root), "rev-parse", "--short", "HEAD"], text=True).strip()
     full = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()

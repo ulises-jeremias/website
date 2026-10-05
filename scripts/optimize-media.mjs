@@ -4,20 +4,22 @@
  * (quality 82) using the Playwright Chromium canvas — no native image deps.
  *
  * Usage: node scripts/optimize-media.mjs [maxWidth=1280] [quality=82]
- * Processes every *.png under public/media (recursively) that is larger
- * than its future webp savings threshold (>160 KiB), writing *.webp beside
- * it and printing the result. Idempotent: skips already-optimized pairs.
+ * Processes every *.png under src/media-sources (recursively) that is larger
+ * than its future webp savings threshold (>160 KiB), writing optimized
+ * derivatives to the matching path under public/media. Idempotent: skips
+ * already-optimized pairs.
  */
 
-import { readdir, stat, writeFile } from 'node:fs/promises';
+import { chromium } from '@playwright/test';
+import { execFileSync } from 'node:child_process';
 import { constants } from 'node:fs';
+import { readdir, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { execFileSync } from 'node:child_process';
-import { chromium } from '@playwright/test';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '..');
+const sourceDir = path.join(root, 'src', 'media-sources');
 const mediaDir = path.join(root, 'public', 'media');
 const maxWidth = Number(process.argv[2] ?? 1280);
 const quality = Number(process.argv[3] ?? 82);
@@ -39,10 +41,11 @@ const walk = async (dir) => {
   return out;
 };
 
-const files = await walk(mediaDir);
+const files = await walk(sourceDir);
 const heavy = [];
 for (const file of files) {
-  const webp = `${file.slice(0, -4)}.webp`;
+  const rel = path.relative(sourceDir, file);
+  const webp = path.join(mediaDir, rel.slice(0, -4) + '.webp');
   try {
     await stat(webp, constants.F_OK);
     continue; // already optimized
@@ -61,12 +64,12 @@ const browser = await chromium.launch({
   args: ['--no-sandbox', '--disable-dev-shm-usage', '--allow-file-access-from-files'],
 });
 const page = await browser.newPage();
-const shimPath = path.join(mediaDir, '__optimize__.html');
+const shimPath = path.join(sourceDir, '__optimize__.html');
 await writeFile(shimPath, '<!doctype html><title>optimize</title>');
 await page.goto(`file://${shimPath}`, { waitUntil: 'load' });
 
 for (const { file, webp, size } of heavy) {
-  const rel = path.relative(mediaDir, file).split(path.sep).join('/');
+  const rel = path.relative(sourceDir, file).split(path.sep).join('/');
   const b64 = await page.evaluate(
     async ({ src, maxWidth, quality }) => {
       const img = new Image();

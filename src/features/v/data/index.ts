@@ -90,7 +90,6 @@ export const vSourceFacts = {
     rxv: 'MIT',
     setupV: 'MIT',
     awesomeV: 'CC0 1.0',
-    vMascot: 'CC BY-NC 4.0',
   },
 } as const;
 
@@ -103,6 +102,8 @@ export const vProjects: VProject[] = [
     shortLabel: 'v',
     description: 'Simple, fast, safe compiled language with a self-hosted compiler and C as its primary backend.',
     href: 'https://github.com/vlang/v',
+    contributingHref: 'https://github.com/vlang/v/blob/master/CONTRIBUTING.md',
+    issuesHref: 'https://github.com/vlang/v/issues',
     repo: 'vlang/v',
     icon: 'v',
     role: 'Org member — compiler, tooling, and docs contributions (34 merged PRs)',
@@ -119,6 +120,8 @@ export const vProjects: VProject[] = [
     shortLabel: 'vsl',
     description: 'Scientific computing for V with a portable pure-V path and optional CPU and GPU backends.',
     href: 'https://github.com/vlang/vsl',
+    contributingHref: 'https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md',
+    issuesHref: 'https://github.com/vlang/vsl/issues',
     repo: 'vlang/vsl',
     icon: 'vsl',
     role: 'Creator and lead maintainer — scientific modules, compute dispatch, backends',
@@ -135,6 +138,8 @@ export const vProjects: VProject[] = [
     shortLabel: 'vtl',
     description: 'Beta tensor, reverse-mode autograd, and neural-network library backed by VSL.',
     href: 'https://github.com/vlang/vtl',
+    contributingHref: 'https://github.com/vlang/vtl/blob/main/CONTRIBUTING.md',
+    issuesHref: 'https://github.com/vlang/vtl/issues',
     repo: 'vlang/vtl',
     icon: 'vtl',
     role: 'Lead maintainer — tensor core, autograd graph, Sequential API',
@@ -152,6 +157,8 @@ export const vProjects: VProject[] = [
     description:
       'ReactiveX implementation for V with generic observables, channel pipelines, and composable operators.',
     href: 'https://github.com/ulises-jeremias/rxv',
+    contributingHref: 'https://github.com/ulises-jeremias/rxv/blob/main/CONTRIBUTING.md',
+    issuesHref: 'https://github.com/ulises-jeremias/rxv/issues',
     repo: 'ulises-jeremias/rxv',
     icon: 'rxv',
     role: 'Author — channels, operators, specs',
@@ -165,6 +172,8 @@ export const vProjects: VProject[] = [
     description:
       'GitHub Action that installs V for Linux, macOS, and Windows runners, using prebuilts when available and a source fallback otherwise.',
     href: 'https://github.com/vlang/setup-v',
+    contributingHref: 'https://github.com/vlang/setup-v/blob/main/CONTRIBUTING.md',
+    issuesHref: 'https://github.com/vlang/setup-v/issues',
     repo: 'vlang/setup-v',
     icon: 'ci',
     role: 'Creator and code owner — install flow, caching, arch detection',
@@ -177,6 +186,8 @@ export const vProjects: VProject[] = [
     shortLabel: 'awesome',
     description: 'Community-curated catalog — libraries, tools, and resources for the V ecosystem (CC0).',
     href: 'https://github.com/vlang/awesome-v',
+    contributingHref: 'https://github.com/vlang/awesome-v/blob/master/CONTRIBUTING.md',
+    issuesHref: 'https://github.com/vlang/awesome-v/issues',
     repo: 'vlang/awesome-v',
     icon: 'list',
     role: 'Contributor — scientific + template listings (community-curated list)',
@@ -408,13 +419,6 @@ export const licenseEntries: VLicenseEntry[] = [
     license: vSourceFacts.licenses.awesomeV,
     source: 'github.com/vlang/awesome-v/blob/master/LICENSE',
     notes: 'The curated catalog is released under CC0 1.0 Universal.',
-  },
-  {
-    component: 'Veasel / V mascot',
-    license: vSourceFacts.licenses.vMascot,
-    source: 'github.com/vlang/v-mascot/blob/add-mascot/LICENSE',
-    notes:
-      'Veasel shown with attribution under CC BY-NC 4.0 (noncommercial use). This is a personal portfolio site; trademark rights are not granted.',
   },
 ];
 

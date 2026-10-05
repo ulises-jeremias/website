@@ -136,7 +136,7 @@ describe('flagship editorial contract — route implementation (#394)', () => {
     expect(harness).toContain('harnessCrossLinks');
     // Dotfiles: install command + related nav.
     const dotfiles = readSource('src/features/dotfiles/components/DotfilesWorld.astro');
-    expect(dotfiles).toContain('installCurl');
+    expect(dotfiles).toContain('reviewCommand');
     expect(dotfiles).toContain('/community');
     // V: WorldDock install + community.
     const v = readSource('src/features/v/components/VComputationalLab.astro');
@@ -153,7 +153,7 @@ describe('flagship editorial contract — route implementation (#394)', () => {
     expect(readSource('src/features/agent-toolkit/components/CapabilityNexus.astro')).toContain('atk-nexus__svg');
     expect(readSource('src/features/workstation/components/WorkstationSystemMap.astro')).toContain('ws-map__svg');
     expect(readSource('src/features/agentic-harness/components/PersistenceCore.astro')).toBeTruthy();
-    expect(readSource('src/features/dotfiles/components/SmartColorsAnimation.astro')).toBeTruthy();
+    expect(readSource('src/features/dotfiles/components/LayersDiagram.astro')).toBeTruthy();
     expect(readSource('src/features/v/components/VComputationalLab.astro')).toContain('v-lab__header');
     expect(readSource('src/features/create-awesome/components/CreateAwesomeWorld.astro')).toContain('ca-world__line');
   });
@@ -168,7 +168,21 @@ describe('flagship editorial contract — route implementation (#394)', () => {
   it('HorneroConfig public name is preserved with /dotfiles canonical', () => {
     const dotfiles = readSource('src/features/dotfiles/components/DotfilesWorld.astro');
     expect(dotfiles).toContain('>HorneroConfig<');
-    expect(dotfiles).toContain('reproducible Linux developer environment');
+    expect(dotfiles).toContain('personal chezmoi source for an Arch Linux workstation');
+  });
+
+  it('HorneroConfig security and validation statements match its current policy docs', () => {
+    const dotfiles = readSource('src/features/dotfiles/data/index.ts');
+    expect(dotfiles).toContain('Templates do not run remote scripts');
+    expect(dotfiles).toContain('signed package sources');
+    expect(dotfiles).toContain('temporary HOME and isolated XDG directories');
+    expect(dotfiles).toContain('Installed behavior is accepted in HorneroOS/qa');
+    expect(dotfiles).toContain('do not validate a full desktop');
+    const dotfilesWorld = readSource('src/features/dotfiles/components/DotfilesWorld.astro');
+    expect(dotfilesWorld).toContain('verifiedFacts.securityGuidelinesUrl');
+    expect(dotfilesWorld).toContain('verifiedFacts.securityPolicyUrl');
+    expect(dotfilesWorld).toContain('verifiedFacts.testingStrategyUrl');
+    expect(dotfilesWorld).toContain('verifiedFacts.productAcceptanceUrl');
   });
 
   it('Create Awesome maturity distinction is in the proof data', () => {

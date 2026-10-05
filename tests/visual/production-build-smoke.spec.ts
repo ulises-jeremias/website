@@ -3,18 +3,22 @@ import { configureDeploymentPage, getDeploymentRequestOptions } from './deployme
 
 const PRODUCTION_ORIGIN = 'https://www.ulises-jeremias.dev';
 
-const INDEXABLE_STATIC_ROUTES = [
+const STATIC_PAGE_ROUTES = [
   '/',
+  '/agentic/',
   '/dotfiles/',
   '/agentic-workstation/',
   '/agent-toolkit/',
+  '/agentic-harness/',
+  '/hornero-os/',
   '/v/',
   '/create-awesome/',
-  '/community/',
-  '/blog/',
   '/projects/',
   '/open-source/',
-  '/agentic-harness/',
+  '/about/',
+  '/community/',
+  '/blog/',
+  '/sponsor/',
 ] as const;
 
 const REPRESENTATIVE_ASSETS = [
@@ -94,12 +98,12 @@ test.describe('static build assets', () => {
   }
 });
 
-test.describe('indexable static page metadata', () => {
+test.describe('static page metadata', () => {
   test.beforeEach(async ({ page }) => {
     await configureDeploymentPage(page);
   });
 
-  for (const route of INDEXABLE_STATIC_ROUTES) {
+  for (const route of STATIC_PAGE_ROUTES) {
     test(`${route} has title, OG tags, and canonical`, async ({ page }) => {
       const response = await page.goto(route);
       expect(response?.status(), `${route} HTTP status`).toBeGreaterThanOrEqual(200);

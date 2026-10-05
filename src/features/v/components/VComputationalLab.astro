@@ -28,6 +28,8 @@ const stations = vProjects.map((project) => ({
   role: project.role,
   repo: project.repo,
   href: project.href,
+  contributingHref: project.contributingHref,
+  issuesHref: project.issuesHref,
   license: project.license,
   chips: project.highlights.slice(0, 3),
 }));
@@ -50,17 +52,32 @@ const stationsJson = JSON.stringify(stations);
         entryId="v"
         note="Per-station roles below distinguish ownership: vlang organization projects are maintained by Ulises, not owned; RxV is personally authored; scale belongs to the ecosystem."
       />
-      <figure class="v-lab__mascot" aria-label="Veasel — the V mascot (CC BY-NC 4.0, vlang.io)">
-        <img
-          class="v-lab__mascot-img"
-          src="/media/v/veasel.webp"
-          alt=""
-          width="96"
-          height="56"
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption class="v-lab__mascot-caption">Veasel · V mascot</figcaption>
+      <figure class="v-lab__ecosystem-map">
+        <svg viewBox="0 0 480 112" role="img" aria-labelledby="v-lab-map-title v-lab-map-description">
+          <title id="v-lab-map-title">Selected V ecosystem projects</title>
+          <desc id="v-lab-map-description">
+            Three separate project areas: VSL for scientific computing, VTL for tensors and autograd, and RxV for
+            reactive streams. The lines group projects in one ecosystem and do not indicate dependencies.
+          </desc>
+          <path d="M58 35H422" fill="none" stroke="var(--v-map-line, #40506d)" stroke-width="1"></path>
+          <g class="v-lab__map-station v-lab__map-station--science">
+            <circle cx="80" cy="35" r="7"></circle>
+            <path d="M80 44V62"></path>
+          </g>
+          <g class="v-lab__map-station v-lab__map-station--tensor">
+            <circle cx="240" cy="35" r="7"></circle>
+            <path d="M240 44V62"></path>
+          </g>
+          <g class="v-lab__map-station v-lab__map-station--reactive">
+            <circle cx="400" cy="35" r="7"></circle>
+            <path d="M400 44V62"></path>
+          </g>
+        </svg>
+        <figcaption>
+          <span><strong>VSL</strong><small>Scientific computing</small></span>
+          <span><strong>VTL</strong><small>Tensors · autograd</small></span>
+          <span><strong>RxV</strong><small>Reactive channels</small></span>
+        </figcaption>
       </figure>
     </div>
     <aside class="v-lab__header-readout" aria-label="V lab readout">
@@ -134,6 +151,14 @@ const stationsJson = JSON.stringify(stations);
               <a data-v-station-repo href={station.href} target="_blank" rel="noopener noreferrer">
                 Open {station.repo} ↗
               </a>
+              <div class="v-lab__contribution-links" role="group" aria-label={`${station.title} contribution paths`}>
+                <a href={station.contributingHref} target="_blank" rel="noopener noreferrer">
+                  Contribution guide ↗
+                </a>
+                <a href={station.issuesHref} target="_blank" rel="noopener noreferrer">
+                  Open issues ↗
+                </a>
+              </div>
             </div>
           </section>
         ))
@@ -161,6 +186,17 @@ const stationsJson = JSON.stringify(stations);
           <a data-v-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer">
             Open {defaultStation.repo} ↗
           </a>
+          <div class="v-lab__contribution-links" role="group" aria-label="Contribution paths">
+            <a
+              data-v-inspector-contributing
+              href={defaultStation.contributingHref}
+              target="_blank"
+              rel="noopener noreferrer">Contribution guide ↗</a
+            >
+            <a data-v-inspector-issues href={defaultStation.issuesHref} target="_blank" rel="noopener noreferrer"
+              >Open issues ↗</a
+            >
+          </div>
         </div>
       </Fragment>
     </SceneInspector>
@@ -297,31 +333,69 @@ const stationsJson = JSON.stringify(stations);
     line-height: 1.55;
   }
 
-  .v-lab__mascot {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin: 0.85rem 0 0;
-    padding: 0.45rem 0.75rem 0.45rem 0.55rem;
-    border: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 28%, transparent);
-    border-radius: 10px;
-    background: color-mix(in srgb, var(--nest-midnight-900, #0b1020) 60%, transparent);
-    max-inline-size: fit-content;
+  .v-lab__ecosystem-map {
+    max-inline-size: 31rem;
+    margin: 0.9rem 0 0;
+    padding: 0.55rem 0.7rem 0.45rem;
+    border-block: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 28%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900, #0b1020) 62%, transparent);
   }
 
-  .v-lab__mascot-img {
-    inline-size: 72px;
+  .v-lab__ecosystem-map svg {
+    display: block;
+    inline-size: 100%;
     block-size: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--world-accent, #5b9bd5) 25%, transparent));
+    overflow: visible;
   }
 
-  .v-lab__mascot-caption {
+  .v-lab__map-station circle {
+    fill: var(--nest-midnight-950, #040212);
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  .v-lab__map-station path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  .v-lab__map-station--science {
+    color: var(--nest-cyan, #1cefff);
+  }
+
+  .v-lab__map-station--tensor {
+    color: var(--nest-violet, #a05cff);
+  }
+
+  .v-lab__map-station--reactive {
+    color: var(--nest-sunset-orange, #ff9a4d);
+  }
+
+  .v-lab__ecosystem-map figcaption {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.15rem;
     font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.06em;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
     color: var(--color-text-faint);
-    white-space: nowrap;
+  }
+
+  .v-lab__ecosystem-map figcaption span {
+    display: grid;
+    gap: 0.12rem;
+  }
+
+  .v-lab__ecosystem-map figcaption strong {
+    color: var(--world-accent, #5b9bd5);
+    font-weight: 400;
+  }
+
+  .v-lab__ecosystem-map figcaption small {
+    font-size: 0.62rem;
+    line-height: 1.35;
   }
 
   .v-lab__index {
@@ -497,6 +571,25 @@ const stationsJson = JSON.stringify(stations);
     text-underline-offset: 3px;
   }
 
+  .v-lab__contribution-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .v-lab__contribution-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-text-muted);
+    text-underline-offset: 3px;
+  }
+
+  .v-lab__contribution-links a:hover,
+  .v-lab__contribution-links a:focus-visible {
+    color: var(--world-accent, #5b9bd5);
+  }
+
   .v-lab__panel :global(.eco__wrap),
   .v-lab__panel :global(.vsl__diagram),
   .v-lab__panel :global(.vtl__diagram),
@@ -601,25 +694,12 @@ const stationsJson = JSON.stringify(stations);
   }
 </style>
 
-<script>
-  type Station = {
-    id: string;
-    label: string;
-    title: string;
-    headingId: string;
-    body: string;
-    role: string;
-    repo: string;
-    href: string;
-    license: string;
-    chips: string[];
-  };
-
-  function clearChildren(el: HTMLElement) {
+<script is:inline>
+  function clearChildren(el) {
     while (el.firstChild) el.removeChild(el.firstChild);
   }
 
-  function setChips(list: HTMLElement, chips: string[]) {
+  function setChips(list, chips) {
     clearChildren(list);
     for (const chip of chips) {
       const li = document.createElement('li');
@@ -630,29 +710,62 @@ const stationsJson = JSON.stringify(stations);
     }
   }
 
-  function bindLab(root: HTMLElement) {
+  function loadSceneEvidence(panel) {
+    panel.querySelectorAll('source[data-deferred-srcset]').forEach((source) => {
+      const srcset = source.dataset.deferredSrcset;
+      if (srcset) source.srcset = srcset;
+      const sizes = source.dataset.deferredSizes;
+      if (sizes) source.sizes = sizes;
+      source.removeAttribute('data-deferred-srcset');
+      source.removeAttribute('data-deferred-sizes');
+    });
+
+    panel.querySelectorAll('img[data-deferred-src]').forEach((image) => {
+      const src = image.dataset.deferredSrc;
+      if (src) image.src = src;
+      image.removeAttribute('data-deferred-src');
+    });
+  }
+
+  function bindLab(root) {
     if (root.hasAttribute('data-v-enhanced')) return;
 
-    const stations = JSON.parse(root.dataset.stations || '[]') as Station[];
-    const selector = root.querySelector<HTMLElement>('[data-v-station-selector]');
+    const stations = JSON.parse(root.dataset.stations || '[]');
+    const selector = root.querySelector('[data-v-station-selector]');
     const titleEl = root.querySelector('#v-lab-inspector .vf-inspector__title');
-    const bodyEl = root.querySelector<HTMLElement>('[data-v-inspector-body]');
-    const roleEl = root.querySelector<HTMLElement>('[data-v-inspector-role]');
-    const repoEl = root.querySelector<HTMLElement>('[data-v-inspector-repo]');
-    const licenseEl = root.querySelector<HTMLElement>('[data-v-inspector-license]');
-    const chipsEl = root.querySelector<HTMLElement>('[data-v-inspector-chips]');
-    const linkEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-link]');
-    const statusEl = root.querySelector<HTMLElement>('[data-v-station-status]');
-    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-v-station]')];
-    const panels = [...root.querySelectorAll<HTMLElement>('[data-v-panel]')];
+    const bodyEl = root.querySelector('[data-v-inspector-body]');
+    const roleEl = root.querySelector('[data-v-inspector-role]');
+    const repoEl = root.querySelector('[data-v-inspector-repo]');
+    const licenseEl = root.querySelector('[data-v-inspector-license]');
+    const chipsEl = root.querySelector('[data-v-inspector-chips]');
+    const linkEl = root.querySelector('[data-v-inspector-link]');
+    const contributingEl = root.querySelector('[data-v-inspector-contributing]');
+    const issuesEl = root.querySelector('[data-v-inspector-issues]');
+    const statusEl = root.querySelector('[data-v-station-status]');
+    const tabs = [...root.querySelectorAll('[data-v-station]')];
+    const panels = [...root.querySelectorAll('[data-v-panel]')];
     const stationIds = new Set(stations.map((station) => station.id));
+    const firstStation = stations[0];
+
+    if (!firstStation) return;
 
     const completeController =
       stations.length > 0 &&
       stations.length === tabs.length &&
       stations.length === panels.length &&
       stationIds.size === stations.length &&
-      Boolean(selector && titleEl && bodyEl && roleEl && repoEl && licenseEl && chipsEl && linkEl) &&
+      Boolean(
+        selector &&
+        titleEl &&
+        bodyEl &&
+        roleEl &&
+        repoEl &&
+        licenseEl &&
+        chipsEl &&
+        linkEl &&
+        contributingEl &&
+        issuesEl,
+      ) &&
       stations.every(
         (station) =>
           tabs.some((tab) => tab.dataset.vStation === station.id) &&
@@ -668,7 +781,9 @@ const stationsJson = JSON.stringify(stations);
       !repoEl ||
       !licenseEl ||
       !chipsEl ||
-      !linkEl
+      !linkEl ||
+      !contributingEl ||
+      !issuesEl
     ) {
       return;
     }
@@ -686,7 +801,7 @@ const stationsJson = JSON.stringify(stations);
 
     let selectedStationId = '';
 
-    const select = (id: string, focusTab = false, announce = false) => {
+    const select = (id, focusTab = false, announce = false) => {
       const station = stations.find((s) => s.id === id);
       if (!station) return false;
 
@@ -699,6 +814,7 @@ const stationsJson = JSON.stringify(stations);
 
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.vPanel !== id;
+        if (!panel.hidden) loadSceneEvidence(panel);
       });
 
       if (titleEl) titleEl.textContent = station.title;
@@ -711,17 +827,19 @@ const stationsJson = JSON.stringify(stations);
         linkEl.href = station.href;
         linkEl.textContent = `Open ${station.repo} ↗`;
       }
+      if (contributingEl) contributingEl.href = station.contributingHref;
+      if (issuesEl) issuesEl.href = station.issuesHref;
       if (announce && statusEl) statusEl.textContent = `Station selected: ${station.title} — ${station.role}.`;
       selectedStationId = id;
       return true;
     };
 
-    const pushStation = (id: string) => {
+    const pushStation = (id) => {
       if (location.hash === `#${id}`) return;
       history.pushState({ vStation: id }, '', `${location.pathname}${location.search}#${id}`);
     };
 
-    const selectFromUser = (id: string, focusTab = false) => {
+    const selectFromUser = (id, focusTab = false) => {
       const requested = hashStation();
       if (selectedStationId === id && (!requested || requested === id)) return;
       if (!select(id, focusTab, true)) return;
@@ -731,7 +849,7 @@ const stationsJson = JSON.stringify(stations);
     const syncFromLocation = () => {
       const requested = hashStation();
       if (!requested) {
-        select(stations[0]!.id);
+        select(firstStation.id);
         return;
       }
       if (stationIds.has(requested)) select(requested);
@@ -751,6 +869,7 @@ const stationsJson = JSON.stringify(stations);
         tab.removeAttribute('tabindex');
       });
       panels.forEach((panel) => {
+        loadSceneEvidence(panel);
         panel.hidden = false;
         panel.removeAttribute('role');
         const station = stations.find((item) => item.id === panel.id);
@@ -803,7 +922,7 @@ const stationsJson = JSON.stringify(stations);
       addEventListener('popstate', syncFromLocation, { signal: controller.signal });
 
       const requested = hashStation();
-      const initialStation = stationIds.has(requested) ? requested : stations[0]!.id;
+      const initialStation = stationIds.has(requested) ? requested : firstStation.id;
       if (!select(initialStation)) throw new Error('Unable to select the initial V station.');
 
       selector.hidden = false;
@@ -814,5 +933,5 @@ const stationsJson = JSON.stringify(stations);
     }
   }
 
-  document.querySelectorAll<HTMLElement>('[data-v-lab]').forEach(bindLab);
+  document.querySelectorAll('[data-v-lab]').forEach(bindLab);
 </script>

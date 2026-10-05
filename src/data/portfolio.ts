@@ -308,8 +308,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'channel-freshness',
-        text: 'GitHub Releases, npm, PyPI, and AUR ship v1.35.0; the Homebrew tap trails behind.',
-        verifiedAt: '2026-09-30',
+        text: 'Upstream source is at v1.41.0; installers and package channels can publish on separate schedules.',
+        verifiedAt: '2026-10-04',
       },
     ],
     evidence: {
@@ -397,7 +397,7 @@ const rawPortfolioEntries = [
     timeLens: 'current-and-proven',
     relationship: 'parent-family',
     description:
-      'A chezmoi-managed Hyprland desktop with 14 appearance themes and a wallpaper-driven Smart Colors pipeline — the personal layer on top of Hornero components.',
+      'A personal Arch Linux chezmoi source for user-level configuration and optional wallpaper media, integrated with HorneroOS product components.',
     channels: ['GitHub', 'chezmoi'],
     maturity: 'established',
     proofLines: [
@@ -407,8 +407,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'maintenance',
-        text: 'Shell and system commands now come from Hornero OS components (horneroctl); the repository keeps personal overrides.',
-        verifiedAt: '2026-09-30',
+        text: 'HorneroOS owns system defaults, appearance packs, the Quickshell interface, and stable operations; this repository keeps personal configuration.',
+        verifiedAt: '2026-10-04',
       },
     ],
     evidence: {
@@ -437,19 +437,19 @@ const rawPortfolioEntries = [
     proofLines: [
       {
         kind: 'release',
-        text: 'Composition preview v0.2.0-preview12 pins the shell and config and passes a VM smoke test; it ships no installable image.',
-        verifiedAt: '2026-09-30',
+        text: 'Composition preview v0.2.0-preview14 pins the shell and config; it ships no installable image.',
+        verifiedAt: '2026-10-05',
       },
       {
         kind: 'history',
-        text: 'Extracted from HorneroConfig in 2026 and developed in the open across eight repositories.',
+        text: 'Extracted from HorneroConfig in 2026 and developed in the open across nine public repositories.',
       },
     ],
     evidence: {
       sourceUrl: 'https://github.com/HorneroOS/hornero',
       sourceType: 'repository-metadata',
-      sourceRevision: '36c2c4b',
-      verifiedAt: '2026-09-30',
+      sourceRevision: 'bcef56a',
+      verifiedAt: '2026-10-05',
     },
     homepageEligible: false,
   },
@@ -808,7 +808,7 @@ export const portfolioEntries: PortfolioEntry[] = rawPortfolioEntries.map((entry
 const SUMMARY_PROOF_KINDS = new Set(['history', 'distribution', 'role', 'ecosystem-scale', 'release', 'demo']);
 
 export interface HomepagePortfolioArea {
-  id: string;
+  id: PortfolioArea;
   title: string;
   /** Overview route when one exists (Agentic), else the area's canonical path. */
   path: string;

@@ -5,10 +5,11 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/dotfiles');
 
-    const hero = page.locator('.df-world__hero-scene img');
     const galleryMain = page.locator('[data-gallery-main]');
-    await expect(hero).toHaveAttribute('srcset', /\.webp 480w.+\.webp 1586w/);
-    await expect(hero).toHaveAttribute('sizes');
+    const smartColors = page.locator('.df-color-flow');
+    await expect(smartColors).toBeVisible();
+    await expect(smartColors.getByRole('heading', { name: 'One wallpaper, a synchronized desktop' })).toBeVisible();
+    await expect(smartColors.locator('.df-color-flow__route')).toHaveCount(2);
     await expect(galleryMain).toHaveAttribute('srcset', /\.webp 320w.+\.webp 1440w/);
     await expect(galleryMain).toHaveAttribute('sizes');
 
@@ -25,24 +26,24 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     );
   });
 
-  test('reports successful install-command copy', async ({ page }) => {
+  test('reports successful review-command copy', async ({ page }) => {
     await page.addInitScript(() => {
       Object.defineProperty(navigator, 'clipboard', {
         configurable: true,
         value: {
           writeText: async (value: string) => {
-            Reflect.set(window, '__copiedInstall', value);
+            Reflect.set(window, '__copiedReview', value);
           },
         },
       });
     });
     await page.goto('/dotfiles');
 
-    const copy = page.getByRole('button', { name: 'Copy install command' });
+    const copy = page.getByRole('button', { name: 'Copy review command' });
     await expect(copy).toBeVisible();
     await copy.click();
-    await expect(page.locator('[data-df-copy-status]')).toHaveText('Install command copied.');
-    await expect.poll(() => page.evaluate(() => Reflect.get(window, '__copiedInstall'))).toContain('curl');
+    await expect(page.locator('[data-df-copy-status]')).toHaveText('Review command copied.');
+    await expect.poll(() => page.evaluate(() => Reflect.get(window, '__copiedReview'))).toContain('chezmoi diff');
   });
 
   test('reports clipboard failure with a manual recovery path', async ({ page }) => {
@@ -54,7 +55,7 @@ test.describe('Dotfiles resilient media and copy behavior', () => {
     });
     await page.goto('/dotfiles');
 
-    await page.getByRole('button', { name: 'Copy install command' }).click();
+    await page.getByRole('button', { name: 'Copy review command' }).click();
     await expect(page.locator('[data-df-copy-status]')).toHaveText(
       'Copy failed. Select and copy the command manually.',
     );
@@ -66,9 +67,46 @@ test.describe('Dotfiles no-JavaScript copy fallback', () => {
 
   test('does not expose an inert copy action', async ({ page }) => {
     await page.goto('/dotfiles');
-    await expect(page.getByRole('button', { name: 'Copy install command' })).toHaveCount(0);
-    await expect(page.locator('[data-df-install]')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Copy review command' })).toHaveCount(0);
+    await expect(page.locator('[data-df-review-command]')).toBeVisible();
   });
+});
+
+test.describe('Mobile navigation no-JavaScript fallback', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('keeps compact route links usable and hides the inert drawer trigger', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+
+    await expect(page.locator('.mobile-nav__trigger')).toBeHidden();
+    const compactNav = page.locator('.site-header__compact-nav');
+    await expect(compactNav).toBeVisible();
+    await expect(compactNav.getByRole('link').first()).toHaveAttribute('href', /^\//);
+  });
+});
+
+test('loads right-sized evidence only for the active V station', async ({ page }) => {
+  await page.goto('/v/#vsl');
+
+  const mandelbrot = page.getByRole('img', { name: 'Mandelbrot set rendered by VSL' });
+  await expect(mandelbrot).toHaveAttribute('src', '/media/v/vsl-mandelbrot.png');
+  const source = mandelbrot.locator('xpath=..').locator('source[type="image/webp"]');
+  await expect(source).toHaveAttribute(
+    'srcset',
+    /vsl-mandelbrot-160\.webp 160w, \/media\/v\/vsl-mandelbrot-320\.webp 320w/,
+  );
+  await expect(source).toHaveAttribute('sizes', '148px');
+  await expect.poll(() => mandelbrot.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('.webp');
+
+  const inactiveLogo = page.locator('#vtl img[data-deferred-src="/media/v/vtl-logo.webp"]');
+  await expect(inactiveLogo).not.toHaveAttribute('src', /.+/);
+  await expect.poll(() => inactiveLogo.evaluate((image: HTMLImageElement) => image.currentSrc)).toBe('');
+
+  await page.locator('[data-v-station="vtl"]').click();
+  const vtlLogo = page.getByRole('img', { name: 'VTL logo' });
+  await expect(vtlLogo).toHaveAttribute('src', '/media/v/vtl-logo.webp');
+  await expect.poll(() => vtlLogo.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('vtl-logo.webp');
 });
 
 test.describe('Projects shareable filters', () => {

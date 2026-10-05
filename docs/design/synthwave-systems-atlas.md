@@ -21,35 +21,23 @@ cyberpunk dashboard, or retro arcade skin.
 
 Priority order:
 
-1. The approved dark synthwave homepage reference supplied by Ulises: chrome
-   name, asymmetric identity/atlas composition, striped sunset, landscape,
-   connected project worlds, and lower evidence panels.
-2. The cleaner synthwave reference supplied with the mission: circular
-   organization, sunset orange, technical framing, and CTA treatment.
+1. The approved dark synthwave homepage reference supplied by Ulises: chrome name, asymmetric identity/atlas composition, striped sunset, landscape, connected project worlds, and lower evidence panels.
+2. The cleaner synthwave reference supplied with the mission: circular organization, sunset orange, technical framing, and CTA treatment.
 3. The implementation-oriented standalone HTML supplied with the mission.
-4. Repository explorations under `docs/design/art-directions/`, especially:
-   - E — synthwave atmosphere and perspective floor;
-   - B/D — technical-atlas clarity and relationship diagrams;
-   - F — editorial restraint for long-form routes.
+4. Repository explorations under `docs/design/art-directions/`: E — synthwave atmosphere and perspective floor; B/D — technical-atlas clarity and relationship diagrams; F — editorial restraint for long-form routes.
 
 The references are conceptual. Generated portraits, metrics, stars, commands,
 and tiny copy are not sources of truth.
 
 ## Product principles
 
-1. **Real systems before decoration.** Every diagram must make a project,
-   capability, flow, or relationship easier to understand.
-2. **One universe, different worlds.** The global shell is consistent; each
-   route has a composition derived from its subject, not only a new accent.
+1. **Real systems before decoration.** Every diagram must make a project, capability, flow, or relationship easier to understand.
+2. **One universe, different worlds.** The global shell is consistent; each route has a composition derived from its subject, not only a new accent.
 3. **Static first.** Astro HTML, CSS, and accessible SVG are the default.
-4. **Neon is semantic.** Strong glow is reserved for active, connected,
-   focused, or selected states.
-5. **Evidence over telemetry.** Never invent counts, stars, downloads,
-   timelines, or activity.
-6. **Mobile is recomposed.** Desktop atlas scatter becomes a connected
-   narrative path, not a shrunken diagram or generic card column.
-7. **Motion explains or confirms.** Ambient movement is subtle and optional;
-   explanatory motion has a static equivalent.
+4. **Neon is semantic.** Strong glow is reserved for active, connected, focused, or selected states.
+5. **Evidence over telemetry.** Never invent counts, stars, downloads, timelines, or activity.
+6. **Mobile is recomposed.** Desktop atlas scatter becomes a connected narrative path, not a shrunken diagram or generic card column.
+7. **Motion explains or confirms.** Ambient movement is subtle and optional; explanatory motion has a static equivalent.
 
 ## Palette
 
@@ -211,7 +199,7 @@ complete.
 ## World adaptations
 
 - **Dotfiles:** plum/pink/peach desktop environment; real screenshots and a
-  wallpaper → palette → scheme → app Smart Colors pipeline.
+  personal configuration → reviewed changes → deliberate apply flow.
 - **Agentic Workstation:** midnight/cyan/violet/lime provisioning sequence and
   a technically accurate Personal DX relationship graph.
 - **Agent Toolkit:** capability/distribution graph and complete swarm story;
@@ -281,19 +269,22 @@ Do not ship:
 
 - generic Tailwind/shadcn landing grammar;
 - repeated rounded glowing cards or pills;
-- decorative blobs, stock robots, Matrix rain, CRT scanlines, or RGB gamer UI;
+- decorative blobs, stock robots, Matrix rain, full-screen CRT scanlines, or RGB gamer UI;
 - fake terminal output, metrics, stars, testimonials, or contribution counts;
 - inaccessible neon body text;
 - video backgrounds or ornamental WebGL;
 - one layout repeated across all worlds;
 - issue IDs, implementation notes, or debug copy in public content.
 
+The homepage environment may use the restrained, static 1px cyan plate
+overlay defined by `.texture-scanline` in `src/styles/textures.css`. It is
+limited to the illustration layer behind content; it is not applied to text,
+controls, or the site shell. See [`current/textures.md`](current/textures.md).
+
 ## Implementation order
 
-1. Foundation: global CSS, tokens, typography, shell, motion/effects, flexible
-   world layout, visual test harness.
-2. Homepage: environment, identity, atlas, evidence panels, responsive/reduced
-   motion.
+1. Foundation: global CSS, tokens, typography, shell, motion/effects, flexible world layout, visual test harness.
+2. Homepage: environment, identity, atlas, evidence panels, responsive/reduced motion.
 3. Agent Toolkit.
 4. Personal DX: Dotfiles and Agentic Workstation.
 5. V and Create Awesome.

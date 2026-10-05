@@ -41,46 +41,75 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
   <div class="agentic-page">
     <div class="agentic-page__inner">
       <header class="agentic-page__masthead">
-        <p class="agentic-page__kicker">Agentic Developer Stack · overview</p>
+        <p class="agentic-page__kicker">A system map · three independent projects</p>
         <h1 class="agentic-page__title">Stop rebuilding your AI workflow for every coding assistant.</h1>
         <p class="agentic-page__lead">
-          Skills, agents, and loops you write once should work in whichever coding assistant you open next. The Agentic
-          Developer Stack is three open-source projects with separate jobs — not one monolith and not a required
-          sequence. Adopt what you need; each part works alone.
+          Write a capability once, distribute it to the assistants you use, and keep machine setup and durable workspace
+          context in separate projects. Start with one piece; none requires the others.
         </p>
       </header>
 
-      <section class="agentic-page__members" aria-labelledby="agentic-members-title">
-        <h2 id="agentic-members-title">Three responsibilities</h2>
-        <ul class="agentic-page__member-list">
-          {
-            stackMembers.map((project) => (
-              <li class="agentic-page__member">
-                <p class="agentic-page__member-role">{project.role}</p>
-                <h3 class="agentic-page__member-title">
-                  <a href={project.path}>{project.title}</a>
-                </h3>
-                <p class="agentic-page__member-responsibility">{project.responsibility}</p>
-                <p class="agentic-page__member-boundary">
-                  <strong>Owns:</strong> {project.owns.slice(0, 3).join(' · ')}
-                </p>
-                <p class="agentic-page__member-boundary">
-                  <strong>Does not own:</strong> {project.doesNotOwn.join(' · ')}
-                </p>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+      <figure class="agentic-map" aria-labelledby="agentic-map-title" aria-describedby="agentic-map-caption">
+        <h2 id="agentic-map-title" class="agentic-map__title">One capability plane, two optional extensions</h2>
+        <div class="agentic-map__stations">
+          <article class="agentic-map__station agentic-map__station--machine">
+            <p class="agentic-map__layer">HOST · MACHINE</p>
+            <h3><a href="/agentic-workstation">Agentic Workstation</a></h3>
+            <p>Rebuilds the developer machine and its policy.</p>
+            <p class="agentic-map__ownership"><strong>Owns</strong> provisioning · profiles · host policy</p>
+            <p class="agentic-map__boundary">Can install Toolkit. Does not define its capabilities.</p>
+          </article>
+          <div class="agentic-map__link agentic-map__link--install" aria-label="Workstation can install Agent Toolkit">
+            <span>can install</span><span class="agentic-map__arrow" aria-hidden="true">→</span>
+          </div>
+          <article class="agentic-map__station agentic-map__station--platform">
+            <p class="agentic-map__layer">CAPABILITIES · RUNTIME</p>
+            <h3><a href="/agent-toolkit">Agent Toolkit</a></h3>
+            <p>Keep skills, agents, loops, and MCP tooling portable across assistants.</p>
+            <div class="agentic-map__flow" aria-label="One capability system reaches coding assistants">
+              <span>one source</span><span aria-hidden="true">→</span><span>profiles + runtime</span><span
+                aria-hidden="true">→</span
+              ><span>many tools</span>
+            </div>
+            <p class="agentic-map__boundary">Works by itself. Does not provision the host or own your durable state.</p>
+          </article>
+          <div
+            class="agentic-map__link agentic-map__link--context"
+            aria-label="Harness uses Toolkit and keeps persistent workspace context"
+          >
+            <span>uses runtime</span><span class="agentic-map__arrow" aria-hidden="true">→</span>
+          </div>
+          <article class="agentic-map__station agentic-map__station--workspace">
+            <p class="agentic-map__layer">CONTEXT · WORKSPACE</p>
+            <h3><a href="/agentic-harness">Agentic Harness</a></h3>
+            <p>Keeps project context and work state between temporary sessions.</p>
+            <p class="agentic-map__ownership"><strong>Owns</strong> knowledge · personas · packs · run history</p>
+            <p class="agentic-map__boundary">Optional reference workspace. Toolkit remains the runtime.</p>
+          </article>
+        </div>
+        <figcaption id="agentic-map-caption">
+          The links show supported ways the projects work together, not setup requirements. Use Toolkit alone, provision
+          a machine with Workstation, or add Harness when persistent context helps.
+        </figcaption>
+      </figure>
 
       <section class="agentic-page__adoption" aria-labelledby="agentic-adoption-title">
-        <h2 id="agentic-adoption-title">Where do I start?</h2>
+        <p class="agentic-page__section-kicker">Choose your entry point</p>
+        <h2 id="agentic-adoption-title">Start with the need you have</h2>
         <ul class="agentic-page__adoption-list">
           {
-            ADOPTION_PATHS.map((path) => (
-              <li>
-                <p class="agentic-page__adoption-need">{path.need}</p>
-                <p class="agentic-page__adoption-detail">{path.detail}</p>
+            ADOPTION_PATHS.map((path, index) => (
+              <li class={`agentic-page__adoption-path agentic-page__adoption-path--${path.projectId}`}>
+                <span class="agentic-page__path-index" aria-hidden="true">
+                  0{index + 1}
+                </span>
+                <div>
+                  <p class="agentic-page__adoption-need">{path.need}</p>
+                  <p class="agentic-page__adoption-detail">{path.detail}</p>
+                </div>
+                <a href={getStackProject(path.projectId)?.path ?? '/agentic'}>
+                  Start with {getStackProject(path.projectId)?.title ?? 'the stack'}
+                </a>
               </li>
             ))
           }
@@ -129,10 +158,10 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
 <style>
   .agentic-page__inner {
     display: grid;
-    gap: 2rem;
-    max-inline-size: 72ch;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    max-inline-size: 78rem;
     margin-inline: auto;
-    padding: clamp(1.25rem, 4vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+    padding: clamp(1.25rem, 4vw, 3.25rem) clamp(0.75rem, 3vw, 2rem);
   }
 
   .agentic-page__kicker {
@@ -144,84 +173,256 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
   }
 
   .agentic-page__title {
-    margin: 0 0 0.5rem;
-    font-size: clamp(1.5rem, 4vw, 2.3rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    max-inline-size: 19ch;
+    margin: 0 0 0.8rem;
+    color: var(--nest-paper);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5.5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.06;
   }
 
   .agentic-page__lead {
+    max-inline-size: 68ch;
     margin: 0;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
     line-height: 1.6;
     color: var(--color-text-muted);
   }
 
-  .agentic-page h2 {
-    margin: 0 0 0.9rem;
-    font-size: 1.1rem;
-    letter-spacing: 0.04em;
+  .agentic-map {
+    --map-machine: var(--nest-cyan);
+    --map-platform: var(--nest-magenta);
+    --map-workspace: var(--nest-violet);
+
+    margin: 0;
+    padding: clamp(1rem, 3vw, 2rem);
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 28%, transparent);
+    background:
+      linear-gradient(
+        90deg,
+        transparent 49.9%,
+        color-mix(in srgb, var(--nest-cyan) 5%, transparent) 50%,
+        transparent 50.1%
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 31px,
+        color-mix(in srgb, var(--nest-cyan) 5%, transparent) 32px 33px
+      );
+  }
+
+  .agentic-map__title {
+    margin: 0 0 clamp(1.2rem, 3vw, 2rem);
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 1.3vw, 1rem);
+    font-weight: 400;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
-  .agentic-page__member-list {
+  .agentic-map__stations {
     display: grid;
-    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) minmax(4rem, 0.2fr) minmax(0, 1.25fr) minmax(4rem, 0.2fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .agentic-map__station {
+    position: relative;
+    min-block-size: 18rem;
+    padding: clamp(1rem, 2.2vw, 1.6rem);
+    border: 1px solid color-mix(in srgb, var(--station-color) 48%, transparent);
+    border-block-start: 3px solid var(--station-color);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--station-color) 10%, #08051a), #08051a 72%);
+    clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 1.2rem, 100% 100%, 0 100%);
+  }
+
+  .agentic-map__station::after {
+    position: absolute;
+    inset-inline: 1rem;
+    inset-block-end: 1rem;
+    block-size: 1px;
+    background: linear-gradient(90deg, var(--station-color), transparent);
+    content: '';
+    opacity: 0.5;
+  }
+
+  .agentic-map__station--machine {
+    --station-color: var(--map-machine);
+  }
+  .agentic-map__station--platform {
+    --station-color: var(--map-platform);
+    min-block-size: 21rem;
+  }
+  .agentic-map__station--workspace {
+    --station-color: var(--map-workspace);
+  }
+
+  .agentic-map__layer {
     margin: 0;
-    padding: 0;
-    list-style: none;
+    color: var(--station-color);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
   }
 
-  .agentic-page__member {
-    padding: 1rem;
-    border: 1px solid var(--color-border, currentColor);
-    border-radius: 8px;
+  .agentic-map__station h3 {
+    margin: 0.55rem 0 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+    line-height: 1.18;
   }
 
-  .agentic-page__member-role {
-    margin: 0;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-faint);
+  .agentic-map__station h3 a {
+    color: var(--nest-paper);
+    text-decoration-color: color-mix(in srgb, var(--station-color) 60%, transparent);
+    text-underline-offset: 0.22em;
   }
 
-  .agentic-page__member-title {
-    margin: 0.2rem 0 0.4rem;
-    font-size: 1.05rem;
-  }
-
-  .agentic-page__member-responsibility {
-    margin: 0 0 0.6rem;
-    font-size: 0.92rem;
+  .agentic-map__station > p:not(.agentic-map__layer) {
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
     line-height: 1.55;
   }
 
-  .agentic-page__member-boundary {
-    margin: 0.2rem 0 0;
-    font-size: 0.8rem;
-    line-height: 1.5;
+  .agentic-map__ownership {
+    margin-block: 0.8rem 0.4rem;
+    color: var(--nest-paper) !important;
+    font-size: 0.78rem !important;
+  }
+
+  .agentic-map__ownership strong {
+    color: var(--station-color);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .agentic-map__boundary {
+    margin-block-end: 0;
+    font-size: 0.77rem !important;
+  }
+
+  .agentic-map__flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    margin-block: 1rem 0.5rem;
+    color: var(--nest-paper);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+  }
+
+  .agentic-map__flow span:nth-child(odd) {
+    padding: 0.3rem 0.4rem;
+    border: 1px solid color-mix(in srgb, var(--station-color) 45%, transparent);
+    color: var(--station-color);
+  }
+
+  .agentic-map__link {
+    display: grid;
+    justify-items: center;
+    gap: 0.45rem;
     color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-align: center;
+  }
+
+  .agentic-map__arrow {
+    inline-size: 100%;
+    color: var(--nest-cyan);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .agentic-map__link--context .agentic-map__arrow {
+    color: var(--nest-violet);
+  }
+
+  .agentic-map figcaption {
+    max-inline-size: 78ch;
+    margin-block-start: 1rem;
+    color: var(--color-text-faint);
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .agentic-page__section-kicker {
+    margin: 0 0 0.35rem;
+    color: var(--nest-orange, #ff9a62);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .agentic-page h2:not(.agentic-map__title) {
+    margin: 0 0 1rem;
+    color: var(--nest-paper);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.02em;
   }
 
   .agentic-page__adoption-list {
     display: grid;
-    gap: 0.8rem;
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .agentic-page__adoption-list li {
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--color-border, currentColor);
-    border-radius: 8px;
+  .agentic-page__adoption-path {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 0.8rem;
+    border-block-start: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
+  }
+
+  .agentic-page__path-index {
+    color: var(--nest-violet);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  .agentic-page__adoption-path--agent-toolkit .agentic-page__path-index {
+    color: var(--nest-magenta);
+  }
+  .agentic-page__adoption-path--agentic-workstation .agentic-page__path-index {
+    color: var(--nest-cyan);
+  }
+
+  .agentic-page__adoption-path > a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding-inline: 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 45%, transparent);
+    color: var(--nest-paper);
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  .agentic-page__adoption-path > a:hover,
+  .agentic-page__adoption-path > a:focus-visible {
+    border-color: var(--nest-cyan);
+    color: var(--nest-cyan);
+  }
+
+  .agentic-page__adoption-path:last-child {
+    border-block-end: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
   }
 
   .agentic-page__adoption-need {
     margin: 0 0 0.25rem;
+    color: var(--nest-paper);
     font-weight: 600;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
   }
 
   .agentic-page__adoption-detail {
@@ -266,5 +467,98 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     font-size: 0.85rem;
     line-height: 1.55;
     color: var(--color-text-faint);
+  }
+
+  @media (max-width: 900px) {
+    .agentic-map__stations {
+      grid-template-columns: minmax(0, 1fr) 3.8rem minmax(0, 1fr);
+      row-gap: 0.4rem;
+    }
+
+    .agentic-map__station--machine {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .agentic-map__link--install {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .agentic-map__station--platform {
+      grid-column: 3;
+      grid-row: 1;
+      min-block-size: 18rem;
+    }
+    .agentic-map__link--context {
+      grid-column: 3;
+      grid-row: 2;
+    }
+    .agentic-map__station--workspace {
+      grid-column: 3;
+      grid-row: 3;
+    }
+    .agentic-map__link--context .agentic-map__arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .agentic-map {
+      padding-inline: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0 31px,
+        color-mix(in srgb, var(--nest-cyan) 5%, transparent) 32px 33px
+      );
+    }
+
+    .agentic-map__stations {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+
+    .agentic-map__station,
+    .agentic-map__station--platform {
+      grid-column: 1;
+      grid-row: auto;
+      min-block-size: 0;
+      margin: 0;
+    }
+
+    .agentic-map__link {
+      grid-column: 1;
+      grid-row: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      min-block-size: 2.75rem;
+    }
+
+    .agentic-map__arrow {
+      inline-size: auto;
+    }
+
+    .agentic-page__adoption-path {
+      grid-template-columns: 2.2rem minmax(0, 1fr);
+      gap: 0.7rem;
+    }
+
+    .agentic-page__adoption-path > a {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .agentic-map__station,
+    .agentic-page__adoption-path > a {
+      border: 1px solid CanvasText;
+    }
+    .agentic-map__station {
+      border-block-start: 3px solid CanvasText;
+    }
+    .agentic-map__station h3 a {
+      color: LinkText;
+    }
   }
 </style>

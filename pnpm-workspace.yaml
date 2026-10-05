@@ -5,3 +5,6 @@ packages:
 # updates usable while its injected three-day maturity gate protects all other packages.
 minimumReleaseAgeExclude:
   - web-features
+
+patchedDependencies:
+  http-cache-semantics@4.3.0: patches/http-cache-semantics@4.3.0.patch

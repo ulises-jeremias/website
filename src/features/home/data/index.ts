@@ -2,10 +2,9 @@ import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
 import { profile } from '@/data/profile.js';
 import { worldsByPriority } from '@/data/project-worlds.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
-import { verifiedFacts as dotfilesFacts } from '@/features/dotfiles/data/index.js';
 import type { AtlasWorld, ContactLink, NestStatusItem } from '../types/index.js';
 
-/** ZIP island art filenames (under /assets/nest/), mapped from project-world ids. */
+/** Island art filenames (under /assets/nest/), mapped from project-world ids. */
 export const islandArtByWorldId: Record<string, string> = {
   dotfiles: 'island-dotfiles',
   workstation: 'island-workstation',
@@ -15,7 +14,7 @@ export const islandArtByWorldId: Record<string, string> = {
   'create-awesome': 'island-scaffold',
   community: 'island-community',
   blog: 'island-blog',
-  projects: 'island-projects',
+  projects: 'island-projects-neon',
   'open-source': 'island-oss',
 };
 
@@ -65,8 +64,8 @@ export const nestStatus: NestStatusItem[] = [
     tone: 'violet',
   },
   {
-    label: 'dotfiles_themes',
-    value: `${dotfilesFacts.themeCount} HorneroConfig themes`,
+    label: 'dotfiles_scope',
+    value: 'Personal config layer',
     tone: 'magenta',
   },
   {
@@ -107,7 +106,7 @@ export interface FeaturedArea {
 }
 
 /** Visual-only mapping per portfolio area id (presentation, not editorial facts). */
-const featuredAreaVisuals: Record<string, { accent: FeaturedArea['accent']; island: string }> = {
+const featuredAreaVisuals: Record<FeaturedArea['id'], { accent: FeaturedArea['accent']; island: string }> = {
   agentic: { accent: 'violet', island: 'island-agent' },
   hornero: { accent: 'magenta', island: 'island-dotfiles' },
   'v-ecosystem': { accent: 'blue', island: 'island-v' },

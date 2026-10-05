@@ -1,5 +1,5 @@
 ---
-import { narrativeSections, dotfilesMeta, verifiedFacts } from '../data/index.js';
+import { narrativeSections, dotfilesMeta } from '../data/index.js';
 ---
 
 <section class="dotfiles-narrative" aria-labelledby="narrative-title">
@@ -28,20 +28,16 @@ import { narrativeSections, dotfilesMeta, verifiedFacts } from '../data/index.js
 
   <div class="dotfiles-narrative__facts" role="list" aria-label="Key facts verified against upstream HEAD">
     <div class="dotfiles-narrative__fact" role="listitem">
-      <span class="dotfiles-narrative__fact-number">{verifiedFacts.themeCount}</span>
-      <span class="dotfiles-narrative__fact-label">appearance themes</span>
+      <span class="dotfiles-narrative__fact-number">diff</span>
+      <span class="dotfiles-narrative__fact-label">review before apply</span>
     </div>
     <div class="dotfiles-narrative__fact" role="listitem">
-      <span class="dotfiles-narrative__fact-number">1</span>
-      <span class="dotfiles-narrative__fact-label">system CLI ({verifiedFacts.systemCli})</span>
+      <span class="dotfiles-narrative__fact-number">opt-in</span>
+      <span class="dotfiles-narrative__fact-label">no automatic apply</span>
     </div>
     <div class="dotfiles-narrative__fact" role="listitem">
-      <span class="dotfiles-narrative__fact-number">1</span>
-      <span class="dotfiles-narrative__fact-label">install command</span>
-    </div>
-    <div class="dotfiles-narrative__fact" role="listitem">
-      <span class="dotfiles-narrative__fact-number">0</span>
-      <span class="dotfiles-narrative__fact-label">manual drift (chezmoi)</span>
+      <span class="dotfiles-narrative__fact-number">isolated</span>
+      <span class="dotfiles-narrative__fact-label">temporary HOME + XDG for tests</span>
     </div>
   </div>
 </section>
@@ -131,14 +127,14 @@ import { narrativeSections, dotfilesMeta, verifiedFacts } from '../data/index.js
 
   .dotfiles-narrative__facts {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 0.9rem;
     margin-top: 1.25rem;
   }
 
   @media (min-width: 640px) {
     .dotfiles-narrative__facts {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 

@@ -74,6 +74,7 @@ export interface RuntimeSurface {
   statusNote: string;
   summary: string;
   command?: string;
+  installHref?: string;
   docsHref: string;
 }
 
