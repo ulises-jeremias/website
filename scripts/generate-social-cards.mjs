@@ -37,7 +37,7 @@ const cards = [
     id: 'agentic-harness',
     title: 'AGENTIC\nHARNESS',
     subtitle: 'Persistent workspace context · knowledge · state',
-    accent: '#34d399',
+    accent: '#1cefff',
     art: 'island-harness.webp',
   },
   {

@@ -81,6 +81,46 @@
   }
 }
 
+@keyframes neon-city-drift {
+  from {
+    transform: scale(1.04) translate3d(-0.25%, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(0.25%, -0.45%, 0);
+  }
+}
+
+@keyframes atlas-world-drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -0.45rem;
+  }
+}
+
+@keyframes atlas-glow-breathe {
+  0%,
+  100% {
+    opacity: 0.52;
+    scale: 0.92 0.82;
+  }
+  50% {
+    opacity: 0.92;
+    scale: 1.08 1.12;
+  }
+}
+
+@keyframes atlas-signal-shift {
+  to {
+    background-position:
+      3rem 0,
+      -2rem 1rem,
+      0 0;
+  }
+}
+
 /* -------------------------------------------------------------------------- */
 /* Hero                                                                       */
 /* -------------------------------------------------------------------------- */
@@ -383,6 +423,21 @@
   flex: 1;
   min-block-size: 36rem;
   overflow: visible;
+  isolation: isolate;
+}
+
+.project-atlas__stage::after {
+  position: absolute;
+  inset: 0.5rem -1rem;
+  z-index: -1;
+  border: 1px solid color-mix(in srgb, var(--nest-cyan) 12%, transparent);
+  background:
+    radial-gradient(ellipse at 50% 8%, color-mix(in srgb, var(--nest-magenta) 13%, transparent), transparent 43%),
+    radial-gradient(ellipse at 12% 72%, color-mix(in srgb, var(--nest-cyan) 11%, transparent), transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--nest-midnight-950) 15%, transparent), transparent 48%);
+  box-shadow: inset 0 0 4rem color-mix(in srgb, var(--nest-violet) 7%, transparent);
+  content: '';
+  pointer-events: none;
 }
 
 @media (width < 1024px) {
@@ -505,6 +560,38 @@
   transition:
     transform var(--motion-duration-fast) var(--motion-ease-out),
     filter var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .synthwave-environment__plate {
+    animation: neon-city-drift 42s ease-in-out infinite alternate;
+  }
+
+  .atlas-world {
+    animation: atlas-world-drift 7s ease-in-out infinite;
+  }
+
+  .atlas-world:nth-child(3n + 2) {
+    animation-delay: -2.2s;
+    animation-duration: 8.4s;
+  }
+
+  .atlas-world:nth-child(3n) {
+    animation-delay: -4.6s;
+    animation-duration: 7.7s;
+  }
+
+  .atlas-world__glow {
+    animation: atlas-glow-breathe 5s ease-in-out infinite;
+  }
+
+  .project-atlas__stage::after {
+    animation: atlas-signal-shift 28s linear infinite alternate;
+    background-size:
+      auto,
+      auto,
+      100% 100%;
+  }
 }
 
 .atlas-world--lg {
@@ -1028,6 +1115,13 @@
 /* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+  .synthwave-environment__plate,
+  .atlas-world,
+  .atlas-world__glow,
+  .project-atlas__stage::after {
+    animation: none !important;
+  }
+
   .atlas-connection {
     animation: none !important;
   }
