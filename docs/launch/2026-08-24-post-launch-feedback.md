@@ -3,7 +3,16 @@
 **Owner:** Ulises Jeremias
 
 **Start:** when the production launch is accepted
-**Status:** Ready for owner review
+**Status:** Decision recorded — no private analytics or visitor-level tracking
+
+## Analytics decision
+
+The site will not add private analytics, session replay, visitor identification,
+or member-count tracking. Actionable feedback continues through GitHub issues,
+pull requests, Discord, and private email as described below. Revisit this only
+when a concrete operational question cannot be answered through those channels;
+any proposed measurement must document data collected, retention, access, and
+privacy impact before implementation.
 
 ## Purpose
 
