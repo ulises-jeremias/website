@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  http-cache-semantics@4.3.0:
+    hash: c5826a89d70c94bd74568f1fc0ee6858ba37a0014965a73b48c25236cf9e49fb
+    path: patches/http-cache-semantics@4.3.0.patch
+
 importers:
 
   .:
@@ -75,6 +80,9 @@ importers:
       eslint-plugin-jsx-a11y:
         specifier: ^6.10.2
         version: 6.10.2(eslint@9.39.5(jiti@2.7.0))
+      http-cache-semantics:
+        specifier: 4.3.0
+        version: 4.3.0(patch_hash=c5826a89d70c94bd74568f1fc0ee6858ba37a0014965a73b48c25236cf9e49fb)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -3023,8 +3031,8 @@ packages:
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
 
-  http-cache-semantics@4.2.0:
-    resolution: {integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==}
+  http-cache-semantics@4.3.0:
+    resolution: {integrity: sha512-M5t5LlJpS1UHMjvwRQVdFHvPISGeLAxNcrWuJkeGh0KxsqCHZ1O3NXZU/8x7cD0BDcGW8kapxMKTvwlqrNkHkA==}
 
   http-link-header@1.1.4:
     resolution: {integrity: sha512-xT3GPW6/ZbGuw4UvwHqErSCEjNUlwbQJuZn9/q5U4WEKfp2kENVCAlousG1zLxHeaQ/ffOHUNpWamvkbBW0eNw==}
@@ -6560,7 +6568,7 @@ snapshots:
       get-tsconfig: 5.0.0-beta.4
       github-slugger: 2.0.0
       html-escaper: 3.0.3
-      http-cache-semantics: 4.2.0
+      http-cache-semantics: 4.3.0(patch_hash=c5826a89d70c94bd74568f1fc0ee6858ba37a0014965a73b48c25236cf9e49fb)
       js-yaml: 4.3.2
       jsonc-parser: 3.3.1
       magic-string: 1.4.2
@@ -7628,7 +7636,7 @@ snapshots:
 
   html-void-elements@3.0.0: {}
 
-  http-cache-semantics@4.2.0: {}
+  http-cache-semantics@4.3.0(patch_hash=c5826a89d70c94bd74568f1fc0ee6858ba37a0014965a73b48c25236cf9e49fb): {}
 
   http-link-header@1.1.4: {}
 

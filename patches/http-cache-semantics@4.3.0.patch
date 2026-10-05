@@ -1,0 +1,22 @@
+diff --git a/index.js b/index.js
+index 56c26025074cbcf218e3ec4d810662da93f8024e..dcc88979a2205da5e6c510f8110b00bf5e7e0365 100644
+--- a/index.js
++++ b/index.js
+@@ -424,6 +424,17 @@ module.exports = class CachePolicy {
+         // the stored response is either:
+         // fresh, or allowed to be served stale
+         if (this.stale()) {
++            // A request's max-stale preference must not override response directives
++            // that require revalidation or this library's shared Set-Cookie policy.
++            const requiresRevalidation = this._rescc['no-cache'] ||
++                (this._isShared && (this._rescc['proxy-revalidate'] ||
++                    (this._resHeaders['set-cookie'] &&
++                        !this._rescc.public && !this._rescc.immutable)));
++
++            if (requiresRevalidation) {
++                return this._evaluateRequestMissResult(req);
++            }
++
+             // If a value is present, then the client is willing to accept a response that has
+             // exceeded its freshness lifetime by no more than the specified number of seconds
+             const allowsStaleWithoutRevalidation = 'max-stale' in requestCC &&
