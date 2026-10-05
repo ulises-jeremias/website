@@ -19,6 +19,7 @@ export const verifiedFacts = {
   securityGuidelinesUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/docs/Security-Guidelines.md',
   securityPolicyUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/SECURITY.md',
   testingStrategyUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/docs/Testing-Strategy.md',
+  productAcceptanceUrl: 'https://github.com/HorneroOS/qa',
   reviewCommand: 'chezmoi diff --source=/path/to/dotfiles --config ~/.config/chezmoi/dotfiles.toml',
   applyCommand: 'chezmoi apply --source=/path/to/dotfiles --config ~/.config/chezmoi/dotfiles.toml',
   wikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki',

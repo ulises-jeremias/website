@@ -182,6 +182,7 @@ describe('flagship editorial contract — route implementation (#394)', () => {
     expect(dotfilesWorld).toContain('verifiedFacts.securityGuidelinesUrl');
     expect(dotfilesWorld).toContain('verifiedFacts.securityPolicyUrl');
     expect(dotfilesWorld).toContain('verifiedFacts.testingStrategyUrl');
+    expect(dotfilesWorld).toContain('verifiedFacts.productAcceptanceUrl');
   });
 
   it('Create Awesome maturity distinction is in the proof data', () => {
