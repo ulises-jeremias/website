@@ -11,7 +11,7 @@
  *
  * Usage:
  *   node scripts/generate-island-pngs.mjs                 # create missing PNGs
- *   node scripts/generate-island-pngs.mjs --regenerate    # resize all fallbacks from WebP sources
+ *   node scripts/generate-island-pngs.mjs --regenerate    # resize all island PNG fallbacks from WebP sources
  *   node scripts/generate-island-pngs.mjs --check         # verify island PNGs and hero JPEG
  */
 

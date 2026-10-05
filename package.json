@@ -31,6 +31,7 @@
     "lighthouse:ci": "pnpm build && node scripts/run-lighthouse-ci.mjs",
     "assets:social": "node scripts/generate-social-cards.mjs",
     "assets:featured": "node scripts/generate-featured-thumbnails.mjs",
+    "assets:hero-fallback": "node scripts/generate-hero-fallback.mjs",
     "data:refresh": "node scripts/refresh-github-data.mjs",
     "data:agent-toolkit:sync": "python3 scripts/sync-agent-toolkit-inventory.py",
     "data:agent-toolkit:check": "python3 scripts/sync-agent-toolkit-inventory.py && prettier --write --log-level warn src/features/agent-toolkit/data/inventory.snapshot.json && git diff --exit-code -- src/features/agent-toolkit/data/inventory.snapshot.json",
