@@ -56,15 +56,38 @@ test.describe('Motion token contract (motion.css)', () => {
 test.describe('Home — explicit CSS animation overrides', () => {
   test.use({ colorScheme: 'dark' });
 
-  test('scanlines animation stops completely under reduced motion', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
+  test('scanline texture stays static under reduced motion and clears in forced colors', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.goto('/');
 
-    const animationName = await page
-      .locator('.synthwave-environment__scanlines')
-      .evaluate((el) => getComputedStyle(el).animationName);
+    const scanlines = page.locator('.synthwave-environment__scanlines');
+    const defaultStyle = await scanlines.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        canonicalTexture: el.classList.contains('texture-scanline'),
+        animationName: style.animationName,
+        backgroundImage: style.backgroundImage,
+        opacity: style.opacity,
+      };
+    });
 
-    expect(animationName).toBe('none');
+    expect(defaultStyle.canonicalTexture).toBe(true);
+    expect(defaultStyle.animationName).toBe('none');
+    expect(defaultStyle.backgroundImage).not.toBe('none');
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const reducedMotionStyle = await scanlines.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return { animationName: style.animationName, backgroundImage: style.backgroundImage, opacity: style.opacity };
+    });
+    expect(reducedMotionStyle).toEqual({
+      animationName: 'none',
+      backgroundImage: defaultStyle.backgroundImage,
+      opacity: defaultStyle.opacity,
+    });
+
+    await page.emulateMedia({ forcedColors: 'active' });
+    await expect.poll(() => scanlines.evaluate((el) => getComputedStyle(el).backgroundImage)).toBe('none');
   });
 
   test('atlas-connection animation stops completely under reduced motion', async ({ page }) => {
@@ -129,13 +152,22 @@ test.describe('Agent Toolkit — JS animation gating', () => {
   });
 });
 
-test.describe('V — diagram animation suppression', () => {
-  test('VSL diagram animated paths are suppressed under reduced motion', async ({ page }) => {
+test.describe('V — interactive scientific scene motion', () => {
+  test('RxV emits its static stream state under reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/v');
+    await page.goto('/v/#rxv');
 
-    // Confirm matchMedia works in page context
-    const reduceSeen = await page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    expect(reduceSeen).toBe(true);
+    const scene = page.locator('[data-v-scene="rxv"]');
+    await expect(scene.locator('[data-rxv-emit]')).toBeEnabled();
+    await scene.locator('[data-rxv-emit]').click();
+
+    const events = scene.locator('[data-rxv-events] circle');
+    await expect(events).toHaveCount(4);
+    for (const event of await events.all()) {
+      await expect
+        .poll(() => event.evaluate((el) => ({ radius: el.getAttribute('r'), animations: el.getAnimations().length })))
+        .toEqual({ radius: '7', animations: 0 });
+    }
+    await expect(scene.locator('[data-v-scene-live]')).toHaveText('Demo burst emitted · stream complete (not live).');
   });
 });

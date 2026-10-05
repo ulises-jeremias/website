@@ -54,7 +54,7 @@
   position: absolute;
   inset: 0;
   opacity: 0.4;
-  animation: nest-flicker 6s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .synthwave-environment__floor-fade {
@@ -64,19 +64,6 @@
   block-size: 10rem;
   background: linear-gradient(to top, var(--nest-midnight-950), transparent);
   pointer-events: none;
-}
-
-@keyframes nest-flicker {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  48% {
-    opacity: 0.28;
-  }
-  52% {
-    opacity: 0.38;
-  }
 }
 
 @keyframes nest-world-float {
@@ -1041,13 +1028,8 @@
 /* -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .synthwave-environment__scanlines,
   .atlas-connection {
     animation: none !important;
-  }
-
-  .synthwave-environment__scanlines {
-    opacity: 0.35;
   }
 
   .atlas-world:hover,

@@ -36,20 +36,11 @@
   );
 }
 
-.scanlines {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--nest-cyan) 3%, transparent) 0 1px,
-    transparent 1px 3px
-  );
-}
-
 @media (forced-colors: active) {
   .texture-grid,
   .texture-topographic,
   .texture-woven,
-  .texture-scanline,
-  .scanlines {
+  .texture-scanline {
     background-image: none;
   }
 }
@@ -58,8 +49,7 @@
   .texture-grid,
   .texture-topographic,
   .texture-woven,
-  .texture-scanline,
-  .scanlines {
+  .texture-scanline {
     background-image: none;
   }
 }

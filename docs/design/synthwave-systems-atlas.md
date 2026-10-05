@@ -277,9 +277,9 @@ Do not ship:
 - issue IDs, implementation notes, or debug copy in public content.
 
 The homepage environment may use the restrained, static 1px cyan plate
-overlay defined by `.scanlines` in `src/styles/effects.css`. It is limited to
-the illustration layer behind content; it is not applied to text, controls, or
-the site shell. See [`current/textures.md`](current/textures.md).
+overlay defined by `.texture-scanline` in `src/styles/textures.css`. It is
+limited to the illustration layer behind content; it is not applied to text,
+controls, or the site shell. See [`current/textures.md`](current/textures.md).
 
 ## Implementation order
 
