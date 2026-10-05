@@ -26,15 +26,25 @@ const islands = worldPointerProjects.map((project, index) => ({
       <h1 id="archipelago-title">What I build</h1>
       <p class="archipelago__lede">
         My work spans agent tooling, Hornero OS, scientific computing for V, and app scaffolding. Each entry states my
-        role and maturity. <a href="/open-source">Open Source</a> documents ownership, maintenance, and merged contributions.
+        role and maturity. <a href="/open-source">Open Source</a> documents ownership, maintenance, and merged
+        contributions.
       </p>
     </div>
     <aside class="archipelago__readout" aria-label="Work portfolio readout">
       <p class="archipelago__readout-kicker">Portfolio readout</p>
       <dl>
-        <div><dt>Flagship areas</dt><dd>{portfolioAreas.length}</dd></div>
-        <div><dt>Ledger records</dt><dd>{ledgerProjects.length}</dd></div>
-        <div><dt>Building now</dt><dd>Agentic stack · Hornero OS</dd></div>
+        <div>
+          <dt>Flagship areas</dt>
+          <dd>{portfolioAreas.length}</dd>
+        </div>
+        <div>
+          <dt>Ledger records</dt>
+          <dd>{ledgerProjects.length}</dd>
+        </div>
+        <div>
+          <dt>Building now</dt>
+          <dd>Agentic stack · Hornero OS</dd>
+        </div>
       </dl>
     </aside>
   </header>
@@ -42,32 +52,30 @@ const islands = worldPointerProjects.map((project, index) => ({
   <p class="archipelago__index-note">01–{String(islands.length).padStart(2, '0')} · Dedicated project pages</p>
 
   <ul class="archipelago__map" role="list">
-    {
-      islands.map((island) => (
-        <li class="archipelago__island" data-group={island.group}>
-          <a class="archipelago__link" href={island.href} data-testid="archipelago-island">
-            <span class="archipelago__num" aria-hidden="true">
-              {island.number}
-            </span>
-            <img
-              class="archipelago__art"
-              src={`/assets/nest/${island.island}-sm.webp`}
-              srcset={`/assets/nest/${island.island}-192.webp 192w, /assets/nest/${island.island}-sm.webp 440w`}
-              sizes="144px"
-              alt=""
-              width="440"
-              height="440"
-              loading="lazy"
-              decoding="async"
-            />
-            <span class="archipelago__label">
-              <span class="archipelago__title">{island.title}</span>
-              <span class="archipelago__group">{groupLabels[island.group]}</span>
-            </span>
-          </a>
-        </li>
-      ))
-    }
+    {islands.map((island) => (
+      <li class="archipelago__island" data-group={island.group}>
+        <a class="archipelago__link" href={island.href} data-testid="archipelago-island">
+          <span class="archipelago__num" aria-hidden="true">
+            {island.number}
+          </span>
+          <img
+            class="archipelago__art"
+            src={`/assets/nest/${island.island}-sm.webp`}
+            srcset={`/assets/nest/${island.island}-192.webp 192w, /assets/nest/${island.island}-sm.webp 440w`}
+            sizes="144px"
+            alt=""
+            width="440"
+            height="440"
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="archipelago__label">
+            <span class="archipelago__title">{island.title}</span>
+            <span class="archipelago__group">{groupLabels[island.group]}</span>
+          </span>
+        </a>
+      </li>
+    ))}
   </ul>
 
   <svg class="archipelago__constellation" viewBox="0 0 100 20" aria-hidden="true" focusable="false">
@@ -76,8 +84,11 @@ const islands = worldPointerProjects.map((project, index) => ({
       fill="none"
       stroke="currentColor"
       stroke-width="0.35"
-      stroke-dasharray="1.2 1.4"></path>
-    {[8, 28, 48, 68, 88].map((x, i) => <circle cx={x} cy={i % 2 === 0 ? 11 : 9} r="0.7" fill="currentColor" />)}
+      stroke-dasharray="1.2 1.4"
+    ></path>
+    {[8, 28, 48, 68, 88].map((x, i) => (
+      <circle cx={x} cy={i % 2 === 0 ? 11 : 9} r="0.7" fill="currentColor" />
+    ))}
   </svg>
 </section>
 

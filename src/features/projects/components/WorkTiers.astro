@@ -42,100 +42,94 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
 
 <div class="work-tiers" data-testid="work-tiers">
   <section class="work-tiers__tier" aria-labelledby="work-featured-title">
-    <h2 id="work-featured-title" class="work-tiers__heading">Featured work</h2>
+    <h2 id="work-featured-title" class="work-tiers__heading">
+      Featured work
+    </h2>
     <ul class="work-tiers__featured-grid">
-      {
-        featured.map((area) => (
-          <li class="work-tiers__card">
-            <h3>
-              <a href={area.path}>{area.title}</a>
-            </h3>
-            <p class="work-tiers__proposition">{area.proposition}</p>
-            <ul class="work-tiers__members" aria-label={`${area.title} projects`}>
-              {area.memberLinks.map((member) => (
-                <li>
-                  <a href={member.path}>{member.title}</a>
-                  {member.maturity && <span class="work-tiers__maturity">{maturityLabel[member.maturity]}</span>}
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
+      {featured.map((area) => (
+        <li class="work-tiers__card">
+          <h3>
+            <a href={area.path}>{area.title}</a>
+          </h3>
+          <p class="work-tiers__proposition">{area.proposition}</p>
+          <ul class="work-tiers__members" aria-label={`${area.title} projects`}>
+            {area.memberLinks.map((member) => (
+              <li>
+                <a href={member.path}>{member.title}</a>
+                {member.maturity && <span class="work-tiers__maturity">{maturityLabel[member.maturity]}</span>}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
     </ul>
     <p class="work-tiers__support">
-      Building on one of these, or want to support one? <a href="/sponsor">Sponsorship and partnerships</a> are disclosed
-      and scoped per area.
+      Building on one of these, or want to support one? <a href="/sponsor">Sponsorship and partnerships</a> are
+      disclosed and scoped per area.
     </p>
   </section>
 
-  {
-    maintained.length > 0 && (
-      <section class="work-tiers__tier" aria-labelledby="work-maintained-title">
-        <h2 id="work-maintained-title" class="work-tiers__heading">
-          Maintained ecosystems
-        </h2>
-        <p class="work-tiers__tier-note">
-          Projects where I hold significant responsibility but external or organization ownership stays explicit.
-        </p>
-        <ul class="work-tiers__entry-list">
-          {maintained.map((entry) => (
-            <li>
-              <a class="work-tiers__row" href={entry.path}>
-                <strong>{entry.title}</strong>
-                <span>
-                  {entry.roleLabel ?? entry.responsibility.replaceAll('-', ' ')} · {entry.repositoryOwner}/
-                  {entry.repositorySlug}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {maintained.length > 0 && (
+    <section class="work-tiers__tier" aria-labelledby="work-maintained-title">
+      <h2 id="work-maintained-title" class="work-tiers__heading">
+        Maintained ecosystems
+      </h2>
+      <p class="work-tiers__tier-note">
+        Projects where I hold significant responsibility but external or organization ownership stays explicit.
+      </p>
+      <ul class="work-tiers__entry-list">
+        {maintained.map((entry) => (
+          <li>
+            <a class="work-tiers__row" href={entry.path}>
+              <strong>{entry.title}</strong>
+              <span>
+                {entry.roleLabel ?? entry.responsibility.replaceAll('-', ' ')} · {entry.repositoryOwner}/
+                {entry.repositorySlug}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  {
-    selected.length > 0 && (
-      <section class="work-tiers__tier" aria-labelledby="work-selected-title">
-        <h2 id="work-selected-title" class="work-tiers__heading">
-          Selected work
-        </h2>
-        <ul class="work-tiers__entry-list">
-          {selected.map((entry) => (
-            <li>
-              <a class="work-tiers__row" href={entry.path}>
-                <strong>{entry.title}</strong>
-                <span>{entry.description}</span>
-              </a>
-              <ProofStrip entry={entry} label={`Contextual proof for ${entry.title}`} />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {selected.length > 0 && (
+    <section class="work-tiers__tier" aria-labelledby="work-selected-title">
+      <h2 id="work-selected-title" class="work-tiers__heading">
+        Selected work
+      </h2>
+      <ul class="work-tiers__entry-list">
+        {selected.map((entry) => (
+          <li>
+            <a class="work-tiers__row" href={entry.path}>
+              <strong>{entry.title}</strong>
+              <span>{entry.description}</span>
+            </a>
+            <ProofStrip entry={entry} label={`Contextual proof for ${entry.title}`} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  {
-    labs.length > 0 && (
-      <section class="work-tiers__tier" aria-labelledby="work-labs-title">
-        <h2 id="work-labs-title" class="work-tiers__heading">
-          Labs, demos &amp; references
-        </h2>
-        <p class="work-tiers__tier-note">Supporting material — useful context, not flagship products.</p>
-        <ul class="work-tiers__entry-list">
-          {labs.map((entry) => (
-            <li>
-              <a class="work-tiers__row" href={entry.path}>
-                <strong>{entry.title}</strong>
-                <span>{entry.description}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {labs.length > 0 && (
+    <section class="work-tiers__tier" aria-labelledby="work-labs-title">
+      <h2 id="work-labs-title" class="work-tiers__heading">
+        Labs, demos &amp; references
+      </h2>
+      <p class="work-tiers__tier-note">Supporting material — useful context, not flagship products.</p>
+      <ul class="work-tiers__entry-list">
+        {labs.map((entry) => (
+          <li>
+            <a class="work-tiers__row" href={entry.path}>
+              <strong>{entry.title}</strong>
+              <span>{entry.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
 </div>
 
 <style>

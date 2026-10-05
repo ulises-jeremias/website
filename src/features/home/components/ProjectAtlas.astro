@@ -28,7 +28,9 @@ const scaleFor = (id: string): 'lg' | 'md' | 'sm' => {
   <header class="project-atlas__header">
     <div class="project-atlas__label">
       <span class="project-atlas__label-rule" aria-hidden="true"></span>
-      <p id="project-atlas-title" class="project-atlas__eyebrow text-glow-accent">Project Worlds</p>
+      <p id="project-atlas-title" class="project-atlas__eyebrow text-glow-accent">
+        Project Worlds
+      </p>
       <span class="project-atlas__label-rule project-atlas__label-rule--flip" aria-hidden="true"></span>
     </div>
     <span class="project-atlas__chevron" aria-hidden="true"></span>
@@ -41,15 +43,13 @@ const scaleFor = (id: string): 'lg' | 'md' | 'sm' => {
   <div class="project-atlas__stage">
     <AtlasConnections />
     <div class="project-atlas__worlds">
-      {
-        atlasWorlds.map((world, index) => (
-          <ProjectWorld
-            world={world}
-            offsetClass={offsetClasses[index % offsetClasses.length]}
-            scale={scaleFor(world.id)}
-          />
-        ))
-      }
+      {atlasWorlds.map((world, index) => (
+        <ProjectWorld
+          world={world}
+          offsetClass={offsetClasses[index % offsetClasses.length]}
+          scale={scaleFor(world.id)}
+        />
+      ))}
     </div>
   </div>
 </section>

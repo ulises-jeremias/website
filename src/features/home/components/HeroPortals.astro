@@ -27,24 +27,22 @@ const portalIcons = {
     <span class="hero-portals__count">{String(featuredAreas.length).padStart(2, '0')} areas</span>
   </p>
   <ol class="hero-portals__list">
-    {
-      featuredAreas.map((area) => (
-        <li class="hero-portals__item" style={`--portal-accent: ${accentTokens[area.accent]}`}>
-          <a class="hero-portals__link" href={area.path}>
-            <span class="hero-portals__icon" aria-hidden="true">
-              <Icon name={portalIcons[area.id]} size={20} />
-            </span>
-            <span class="hero-portals__copy">
-              <span class="hero-portals__lens">{area.lens}</span>
-              <span class="hero-portals__title">{area.title}</span>
-            </span>
-            <span class="hero-portals__arrow" aria-hidden="true">
-              ↗
-            </span>
-          </a>
-        </li>
-      ))
-    }
+    {featuredAreas.map((area) => (
+      <li class="hero-portals__item" style={`--portal-accent: ${accentTokens[area.accent]}`}>
+        <a class="hero-portals__link" href={area.path}>
+          <span class="hero-portals__icon" aria-hidden="true">
+            <Icon name={portalIcons[area.id]} size={20} />
+          </span>
+          <span class="hero-portals__copy">
+            <span class="hero-portals__lens">{area.lens}</span>
+            <span class="hero-portals__title">{area.title}</span>
+          </span>
+          <span class="hero-portals__arrow" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      </li>
+    ))}
   </ol>
 </nav>
 

@@ -50,70 +50,74 @@ const nodeById = new Map<string, (typeof nodes)[number]>(nodes.map((node) => [no
       <path class="dx-topology__edge dx-topology__edge--optional" d="M210 150 C190 195 175 225 175 265"></path>
       <path class="dx-topology__edge" d="M220 322 C335 275 445 215 570 180"></path>
       <path class="dx-topology__edge" d="M680 150 C760 205 755 255 680 300"></path>
-      <g class="dx-topology__edge-label dx-topology__edge-label--optional"
-        ><rect x="235" y="54" width="270" height="38" rx="8"></rect><text x="252" y="78">optionally coexists with</text
-        ></g
-      >
-      <g class="dx-topology__edge-label"
-        ><rect x="285" y="388" width="330" height="34" rx="8"></rect><text x="300" y="410"
-          >can provision host dependencies for</text
-        ></g
-      >
-      <g class="dx-topology__edge-label"
-        ><rect x="676" y="192" width="212" height="54" rx="8"></rect><text x="690" y="215">provides capabilities</text
-        ><text x="690" y="234">and workspace commands</text></g
-      >
-      {
-        nodes.map((node) => (
-          <a href={node.href} tabindex="-1" class:list={['dx-topology__node', `dx-topology__node--${node.className}`]}>
-            <rect
-              x={
-                node.className === 'hornero'
+      <g class="dx-topology__edge-label dx-topology__edge-label--optional">
+        <rect x="235" y="54" width="270" height="38" rx="8"></rect>
+        <text x="252" y="78">
+          optionally coexists with
+        </text>
+      </g>
+      <g class="dx-topology__edge-label">
+        <rect x="285" y="388" width="330" height="34" rx="8"></rect>
+        <text x="300" y="410">
+          can provision host dependencies for
+        </text>
+      </g>
+      <g class="dx-topology__edge-label">
+        <rect x="676" y="192" width="212" height="54" rx="8"></rect>
+        <text x="690" y="215">
+          provides capabilities
+        </text>
+        <text x="690" y="234">
+          and workspace commands
+        </text>
+      </g>
+      {nodes.map((node) => (
+        <a href={node.href} tabindex="-1" class:list={['dx-topology__node', `dx-topology__node--${node.className}`]}>
+          <rect
+            x={
+              node.className === 'hornero'
+                ? 24
+                : node.className === 'workstation'
                   ? 24
-                  : node.className === 'workstation'
-                    ? 24
-                    : node.className === 'toolkit'
-                      ? 510
-                      : 510
-              }
-              y={node.className === 'hornero' || node.className === 'toolkit' ? 80 : 265}
-              width="230"
-              height="100"
-              rx="14"
-            />
-            <text
-              class="dx-topology__node-title"
-              x={node.className === 'hornero' || node.className === 'workstation' ? 48 : 534}
-              y={node.className === 'hornero' || node.className === 'toolkit' ? 120 : 305}
-            >
-              {node.title}
-            </text>
-            <text
-              class="dx-topology__node-role"
-              x={node.className === 'hornero' || node.className === 'workstation' ? 48 : 534}
-              y={node.className === 'hornero' || node.className === 'toolkit' ? 148 : 333}
-            >
-              {node.role}
-            </text>
-          </a>
-        ))
-      }
+                  : node.className === 'toolkit'
+                    ? 510
+                    : 510
+            }
+            y={node.className === 'hornero' || node.className === 'toolkit' ? 80 : 265}
+            width="230"
+            height="100"
+            rx="14"
+          />
+          <text
+            class="dx-topology__node-title"
+            x={node.className === 'hornero' || node.className === 'workstation' ? 48 : 534}
+            y={node.className === 'hornero' || node.className === 'toolkit' ? 120 : 305}
+          >
+            {node.title}
+          </text>
+          <text
+            class="dx-topology__node-role"
+            x={node.className === 'hornero' || node.className === 'workstation' ? 48 : 534}
+            y={node.className === 'hornero' || node.className === 'toolkit' ? 148 : 333}
+          >
+            {node.role}
+          </text>
+        </a>
+      ))}
     </svg>
   </div>
 
   <div class="dx-topology__structured">
     <h3>Relationships</h3>
     <ul>
-      {
-        personalDxRelationships.map((relation) => (
-          <li>
-            <a href={nodeById.get(relation.source)?.href}>{nodeById.get(relation.source)?.title}</a>
-            <span>{relation.verb}</span>
-            <a href={nodeById.get(relation.target)?.href}>{nodeById.get(relation.target)?.title}</a>
-            {relation.optional ? <small>Optional relationship</small> : null}
-          </li>
-        ))
-      }
+      {personalDxRelationships.map((relation) => (
+        <li>
+          <a href={nodeById.get(relation.source)?.href}>{nodeById.get(relation.source)?.title}</a>
+          <span>{relation.verb}</span>
+          <a href={nodeById.get(relation.target)?.href}>{nodeById.get(relation.target)?.title}</a>
+          {relation.optional ? <small>Optional relationship</small> : null}
+        </li>
+      ))}
     </ul>
     <p class="dx-topology__note">
       Edges describe responsibility, not required installation. Herdr and tmux are Toolkit UI backends, not additional

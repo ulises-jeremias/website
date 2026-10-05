@@ -49,32 +49,30 @@ const { items, githubHref, emailHref } = Astro.props as Props;
 
     <nav aria-label="Primary">
       <ol class="mobile-nav__list">
-        {
-          items.map((item, index) => (
-            <li>
-              <a
-                href={item.path}
-                class:list={['mobile-nav__link', { 'is-active': item.isActive }]}
-                aria-current={item.isActive ? 'page' : undefined}
-              >
-                <span class="mobile-nav__index" aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span>{item.label}</span>
-                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                  <path d="M4 10h11m-4-4 4 4-4 4" />
-                </svg>
-              </a>
-            </li>
-          ))
-        }
+        {items.map((item, index) => (
+          <li>
+            <a
+              href={item.path}
+              class:list={['mobile-nav__link', { 'is-active': item.isActive }]}
+              aria-current={item.isActive ? 'page' : undefined}
+            >
+              <span class="mobile-nav__index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span>{item.label}</span>
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11m-4-4 4 4-4 4" />
+              </svg>
+            </a>
+          </li>
+        ))}
       </ol>
     </nav>
 
     <div class="mobile-nav__footer">
-      <a href={githubHref} target="_blank" rel="noopener noreferrer"
-        >GitHub <span class="sr-only">(opens in new tab)</span></a
-      >
+      <a href={githubHref} target="_blank" rel="noopener noreferrer">
+        GitHub <span class="sr-only">(opens in new tab)</span>
+      </a>
       <a href={emailHref}>Start a conversation</a>
     </div>
   </div>

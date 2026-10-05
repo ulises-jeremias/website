@@ -11,14 +11,18 @@ const labels = vProjects.map((p) => p.shortLabel);
 <section class="v-overview" aria-labelledby="v-overview-title">
   <header class="v-overview__header">
     <p class="v-overview__eyebrow">Digital Nest · V world</p>
-    <h2 id="v-overview-title" class="v-overview__title">V Lab</h2>
+    <h2 id="v-overview-title" class="v-overview__title">
+      V Lab
+    </h2>
     <p class="v-overview__lead">
       Creator of VSL and setup-v, lead maintainer of VTL, compiler contributor — select stations on the lab surface.
     </p>
   </header>
 
   <div class="v-overview__lab" aria-label="Stations">
-    {labels.map((label) => <span class="v-overview__lab-mod">{label}</span>)}
+    {labels.map((label) => (
+      <span class="v-overview__lab-mod">{label}</span>
+    ))}
   </div>
 </section>
 

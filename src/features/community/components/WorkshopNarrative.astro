@@ -5,23 +5,25 @@ import { communityMeta, workshopSections } from '../data/index.js';
 <section class="cm-narrative" aria-labelledby="cm-narrative-title" data-testid="workshop-narrative">
   <header class="cm-narrative__header">
     <p class="cm-narrative__eyebrow">Workshop narrative</p>
-    <h2 id="cm-narrative-title" class="cm-narrative__title">What this community is</h2>
+    <h2 id="cm-narrative-title" class="cm-narrative__title">
+      What this community is
+    </h2>
   </header>
   <div class="cm-narrative__grid">
-    {
-      workshopSections.map((section) => (
-        <article class="cm-narrative__card" aria-labelledby={`narrative-${section.id}`}>
-          <h3 id={`narrative-${section.id}`} class="cm-narrative__card-title">
-            {section.title}
-          </h3>
-          {section.paragraphs.map((p) => (
-            <p class="cm-narrative__text">{p}</p>
-          ))}
-        </article>
-      ))
-    }
+    {workshopSections.map((section) => (
+      <article class="cm-narrative__card" aria-labelledby={`narrative-${section.id}`}>
+        <h3 id={`narrative-${section.id}`} class="cm-narrative__card-title">
+          {section.title}
+        </h3>
+        {section.paragraphs.map((p) => (
+          <p class="cm-narrative__text">{p}</p>
+        ))}
+      </article>
+    ))}
   </div>
-  <p class="cm-narrative__note" role="note">{communityMeta.communityDistinctNote}</p>
+  <p class="cm-narrative__note" role="note">
+    {communityMeta.communityDistinctNote}
+  </p>
 </section>
 
 <style>

@@ -88,39 +88,39 @@ if (hasPost) {
     <div class="blog-page__inner">
       <nav class="blog-page__nav" aria-label="Writing">
         <a href="/blog">← Writing</a>
-        <span class="blog-page__nav-sep" aria-hidden="true">·</span>
+        <span class="blog-page__nav-sep" aria-hidden="true">
+          ·
+        </span>
         <a href="/rss.xml">RSS</a>
       </nav>
 
-      {
-        hasPost && Content ? (
-          <article itemscope itemtype="https://schema.org/BlogPosting">
-            <h1 class="blog-page__title" itemprop="headline">
-              {post.data.title}
-            </h1>
-            <p class="blog-post__meta">
-              <time datetime={post.data.pubDate.toISOString()} itemprop="datePublished">
-                {formatBlogDate(post.data.pubDate)}
-              </time>
-            </p>
-            <meta itemprop="description" content={post.data.description} />
-            <div class="blog-post__content blog-prose" itemprop="articleBody">
-              <Content />
-            </div>
-            <BlogReadingTools />
-          </article>
-        ) : (
-          <article>
-            <h1 class="blog-page__title">Note not found</h1>
-            <p>This note has not been published yet. The writing desk is ready for future field notes.</p>
-            <p>
-              <a class="blog-page__recovery" href="/blog">
-                Back to the blog index
-              </a>
-            </p>
-          </article>
-        )
-      }
+      {hasPost && Content ? (
+        <article itemscope itemtype="https://schema.org/BlogPosting">
+          <h1 class="blog-page__title" itemprop="headline">
+            {post.data.title}
+          </h1>
+          <p class="blog-post__meta">
+            <time datetime={post.data.pubDate.toISOString()} itemprop="datePublished">
+              {formatBlogDate(post.data.pubDate)}
+            </time>
+          </p>
+          <meta itemprop="description" content={post.data.description} />
+          <div class="blog-post__content blog-prose" itemprop="articleBody">
+            <Content />
+          </div>
+          <BlogReadingTools />
+        </article>
+      ) : (
+        <article>
+          <h1 class="blog-page__title">Note not found</h1>
+          <p>This note has not been published yet. The writing desk is ready for future field notes.</p>
+          <p>
+            <a class="blog-page__recovery" href="/blog">
+              Back to the blog index
+            </a>
+          </p>
+        </article>
+      )}
     </div>
   </div>
 </SectionLayout>

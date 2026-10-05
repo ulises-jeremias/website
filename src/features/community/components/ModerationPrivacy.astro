@@ -5,21 +5,21 @@ import { moderationItems } from '../data/index.js';
 <section class="cm-moderation" aria-labelledby="cm-moderation-title" data-testid="moderation-privacy">
   <header class="cm-moderation__header">
     <p class="cm-moderation__eyebrow">Boundaries</p>
-    <h2 id="cm-moderation-title" class="cm-moderation__title">Moderation & privacy — only what is real</h2>
+    <h2 id="cm-moderation-title" class="cm-moderation__title">
+      Moderation & privacy — only what is real
+    </h2>
     <p class="cm-moderation__lead">
       No invented escalation ladders, appeals processes, or universal policies. When a Digital Nest–wide Code of Conduct
       exists, it will be linked explicitly.
     </p>
   </header>
   <ul class="cm-moderation__list">
-    {
-      moderationItems.map((item) => (
-        <li class="cm-moderation__item">
-          <h3 class="cm-moderation__item-title">{item.title}</h3>
-          <p class="cm-moderation__item-text">{item.description}</p>
-        </li>
-      ))
-    }
+    {moderationItems.map((item) => (
+      <li class="cm-moderation__item">
+        <h3 class="cm-moderation__item-title">{item.title}</h3>
+        <p class="cm-moderation__item-text">{item.description}</p>
+      </li>
+    ))}
   </ul>
 </section>
 

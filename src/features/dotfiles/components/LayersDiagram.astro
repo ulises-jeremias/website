@@ -63,105 +63,110 @@ const paletteFor = (id: string, fallback: string) =>
     >
       SURFACE
     </text>
-    <line x1={RAIL_X} y1="30" x2={RAIL_X} y2="556" stroke="rgba(255,176,202,0.25)" stroke-width="2" aria-hidden="true"
+    <line
+      x1={RAIL_X}
+      y1="30"
+      x2={RAIL_X}
+      y2="556"
+      stroke="rgba(255,176,202,0.25)"
+      stroke-width="2"
+      aria-hidden="true"
     ></line>
-    {
-      ordered.map((layer, index) => {
-        const slab = slabFor(index);
-        const palette = paletteFor(layer.id, layer.color);
-        const numeral = String(index + 1).padStart(2, '0');
-        return (
-          <g class:list={['df-layers__layer', { 'is-selected': layer.id === 'chezmoi' }]} data-layer-visual={layer.id}>
-            <text
-              class="df-layers__num"
-              x="34"
-              y={slab.cy + 4}
-              text-anchor="middle"
-              font-size="11"
-              font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
-              letter-spacing="0.08em"
-              aria-hidden="true"
-            >
-              {numeral}
-            </text>
-            <line
-              x1={RAIL_X + 6}
-              y1={slab.cy}
-              x2={FACE.x - 6}
-              y2={slab.cy}
-              stroke="rgba(255,176,202,0.22)"
-              stroke-width="1.5"
-              aria-hidden="true"
-            />
-            <circle class="df-layers__node" cx={RAIL_X} cy={slab.cy} r="5" stroke-width="1.5" aria-hidden="true" />
-            <polygon
-              points={slab.top}
-              fill={palette.top}
-              stroke="rgba(255,176,202,0.18)"
-              stroke-width="1"
-              aria-hidden="true"
-            />
-            <polygon
-              points={slab.side}
-              fill={palette.side}
-              stroke="rgba(255,176,202,0.14)"
-              stroke-width="1"
-              aria-hidden="true"
-            />
-            <rect
-              class="df-layers__front"
-              x={slab.front.x}
-              y={slab.front.y}
-              width={slab.front.w}
-              height={slab.front.h}
-              rx="10"
-              fill={palette.front}
-            />
-            <rect
-              class="df-layers__accent"
-              x={slab.front.x + 8}
-              y={slab.front.y + 12}
-              width="3"
-              height="46"
-              rx="1.5"
-              aria-hidden="true"
-            />
-            <text
-              x={slab.front.x + 24}
-              y={slab.front.y + 31}
-              font-size="17"
-              font-weight="800"
-              letter-spacing="-0.02em"
-              fill="#fbe7ec"
-            >
-              {layer.label}
-            </text>
-            <text x={slab.front.x + 24} y={slab.front.y + 53} font-size="12.5" fill="#d5c2c6">
-              {layer.description}
-            </text>
-            <circle
-              cx={slab.front.x + slab.front.w - 9}
-              cy={slab.front.y + 27}
-              r="2.5"
-              fill="#FFB0CA"
-              opacity="0.85"
-              aria-hidden="true"
-            />
-            <text
-              x={slab.front.x + slab.front.w - 18}
-              y={slab.front.y + 31}
-              text-anchor="end"
-              font-size="11"
-              font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
-              letter-spacing="0.04em"
-              fill="#FFB0CA"
-            >
-              {layer.shortLabel}
-            </text>
-          </g>
-        );
-      })
-    }
+    {ordered.map((layer, index) => {
+      const slab = slabFor(index);
+      const palette = paletteFor(layer.id, layer.color);
+      const numeral = String(index + 1).padStart(2, '0');
+      return (
+        <g class:list={['df-layers__layer', { 'is-selected': layer.id === 'chezmoi' }]} data-layer-visual={layer.id}>
+          <text
+            class="df-layers__num"
+            x="34"
+            y={slab.cy + 4}
+            text-anchor="middle"
+            font-size="11"
+            font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            letter-spacing="0.08em"
+            aria-hidden="true"
+          >
+            {numeral}
+          </text>
+          <line
+            x1={RAIL_X + 6}
+            y1={slab.cy}
+            x2={FACE.x - 6}
+            y2={slab.cy}
+            stroke="rgba(255,176,202,0.22)"
+            stroke-width="1.5"
+            aria-hidden="true"
+          />
+          <circle class="df-layers__node" cx={RAIL_X} cy={slab.cy} r="5" stroke-width="1.5" aria-hidden="true" />
+          <polygon
+            points={slab.top}
+            fill={palette.top}
+            stroke="rgba(255,176,202,0.18)"
+            stroke-width="1"
+            aria-hidden="true"
+          />
+          <polygon
+            points={slab.side}
+            fill={palette.side}
+            stroke="rgba(255,176,202,0.14)"
+            stroke-width="1"
+            aria-hidden="true"
+          />
+          <rect
+            class="df-layers__front"
+            x={slab.front.x}
+            y={slab.front.y}
+            width={slab.front.w}
+            height={slab.front.h}
+            rx="10"
+            fill={palette.front}
+          />
+          <rect
+            class="df-layers__accent"
+            x={slab.front.x + 8}
+            y={slab.front.y + 12}
+            width="3"
+            height="46"
+            rx="1.5"
+            aria-hidden="true"
+          />
+          <text
+            x={slab.front.x + 24}
+            y={slab.front.y + 31}
+            font-size="17"
+            font-weight="800"
+            letter-spacing="-0.02em"
+            fill="#fbe7ec"
+          >
+            {layer.label}
+          </text>
+          <text x={slab.front.x + 24} y={slab.front.y + 53} font-size="12.5" fill="#d5c2c6">
+            {layer.description}
+          </text>
+          <circle
+            cx={slab.front.x + slab.front.w - 9}
+            cy={slab.front.y + 27}
+            r="2.5"
+            fill="#FFB0CA"
+            opacity="0.85"
+            aria-hidden="true"
+          />
+          <text
+            x={slab.front.x + slab.front.w - 18}
+            y={slab.front.y + 31}
+            text-anchor="end"
+            font-size="11"
+            font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+            letter-spacing="0.04em"
+            fill="#FFB0CA"
+          >
+            {layer.shortLabel}
+          </text>
+        </g>
+      );
+    })}
     <rect
       x="109"
       y="528"
@@ -171,7 +176,8 @@ const paletteFor = (id: string, fallback: string) =>
       fill="#1a1015"
       stroke="rgba(255,176,202,0.22)"
       stroke-width="1"
-      aria-hidden="true"></rect>
+      aria-hidden="true"
+    ></rect>
     <text
       x="333"
       y="547"

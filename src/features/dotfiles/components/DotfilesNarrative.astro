@@ -5,25 +5,25 @@ import { narrativeSections, dotfilesMeta } from '../data/index.js';
 <section class="dotfiles-narrative" aria-labelledby="narrative-title">
   <header class="dotfiles-narrative__header">
     <p class="dotfiles-narrative__eyebrow">Narrative</p>
-    <h2 id="narrative-title" class="dotfiles-narrative__title">Build the nest, don’t copy it</h2>
+    <h2 id="narrative-title" class="dotfiles-narrative__title">
+      Build the nest, don’t copy it
+    </h2>
     <blockquote class="dotfiles-narrative__quote">
       <p>“{dotfilesMeta.quote}”</p>
     </blockquote>
   </header>
 
   <div class="dotfiles-narrative__grid">
-    {
-      narrativeSections.map((section) => (
-        <article class="dotfiles-narrative__card" aria-labelledby={`narrative-${section.id}`}>
-          <h3 id={`narrative-${section.id}`} class="dotfiles-narrative__card-title">
-            {section.title}
-          </h3>
-          {section.paragraphs.map((p) => (
-            <p class="dotfiles-narrative__card-text">{p}</p>
-          ))}
-        </article>
-      ))
-    }
+    {narrativeSections.map((section) => (
+      <article class="dotfiles-narrative__card" aria-labelledby={`narrative-${section.id}`}>
+        <h3 id={`narrative-${section.id}`} class="dotfiles-narrative__card-title">
+          {section.title}
+        </h3>
+        {section.paragraphs.map((p) => (
+          <p class="dotfiles-narrative__card-text">{p}</p>
+        ))}
+      </article>
+    ))}
   </div>
 
   <div class="dotfiles-narrative__facts" role="list" aria-label="Key facts verified against upstream HEAD">

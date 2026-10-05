@@ -144,10 +144,18 @@ const defaultLayer = workstationLayers[1]!;
       note="Capabilities stay in Agent Toolkit; workspace state stays in Agentic Harness — Workstation owns only the host."
     />
     <div class="ws-map__header-rail" aria-label="Personal DX layer boundaries">
-      <span><strong>Desktop</strong> optional personal surface</span>
-      <span><strong>Machine</strong> provisioning + host policy</span>
-      <span><strong>Platform</strong> capabilities + execution runtime</span>
-      <span><strong>Workspace</strong> persistent context and state</span>
+      <span>
+        <strong>Desktop</strong> optional personal surface
+      </span>
+      <span>
+        <strong>Machine</strong> provisioning + host policy
+      </span>
+      <span>
+        <strong>Platform</strong> capabilities + execution runtime
+      </span>
+      <span>
+        <strong>Workspace</strong> persistent context and state
+      </span>
     </div>
   </header>
 
@@ -175,87 +183,79 @@ const defaultLayer = workstationLayers[1]!;
           rx="10"
           fill="url(#ws-chassis)"
           stroke="color-mix(in srgb, var(--nest-cyan) 35%, transparent)"
-          stroke-width="1.5"></rect>
+          stroke-width="1.5"
+        ></rect>
         <rect x="64" y="52" width="180" height="14" rx="2" fill="color-mix(in srgb, #22d3ee 25%, transparent)"></rect>
-        <text x="68" y="63" class="ws-map__chassis-label" fill="#67e8f9" font-size="9" font-family="var(--font-mono)"
-          >MACHINE · BOOT</text
-        >
-        {
-          paths.map((p) => (
-            <path
-              class:list={[
-                'vf-flow',
-                {
-                  'vf-flow--optional': personalDxRelationships.find((r) => `${r.source}-${r.target}` === p.id)
-                    ?.optional,
-                },
-              ]}
-              data-flow={p.id}
-              data-from={p.from}
-              data-to={p.to}
-              d={p.d}
-              aria-label={p.label}
-            />
-          ))
-        }
-        {
-          nodes.map((n) => (
-            <g
-              class:list={['ws-map__node', { 'is-selected': n.id === defaultLayer.id }]}
-              data-node={n.id}
-              style={`--vf-node-accent:${n.layer.accent}`}
-            >
-              <rect x={n.x - 42} y={n.y - 28} width="84" height="56" rx="4" class="ws-map__module" />
-              <text x={n.x} y={n.y - 2} text-anchor="middle" class="ws-map__node-label">
-                {n.layer.title}
-              </text>
-              <text x={n.x} y={n.y + 14} text-anchor="middle" class="ws-map__node-sub">
-                {n.layer.label.split('·')[0]?.trim()}
-              </text>
-            </g>
-          ))
-        }
-        <text x="380" y="318" text-anchor="middle" class="ws-map__thin"
-          >no embedded capabilities — Toolkit remains independently installable</text
-        >
+        <text x="68" y="63" class="ws-map__chassis-label" fill="#67e8f9" font-size="9" font-family="var(--font-mono)">
+          MACHINE · BOOT
+        </text>
+        {paths.map((p) => (
+          <path
+            class:list={[
+              'vf-flow',
+              {
+                'vf-flow--optional': personalDxRelationships.find((r) => `${r.source}-${r.target}` === p.id)?.optional,
+              },
+            ]}
+            data-flow={p.id}
+            data-from={p.from}
+            data-to={p.to}
+            d={p.d}
+            aria-label={p.label}
+          />
+        ))}
+        {nodes.map((n) => (
+          <g
+            class:list={['ws-map__node', { 'is-selected': n.id === defaultLayer.id }]}
+            data-node={n.id}
+            style={`--vf-node-accent:${n.layer.accent}`}
+          >
+            <rect x={n.x - 42} y={n.y - 28} width="84" height="56" rx="4" class="ws-map__module" />
+            <text x={n.x} y={n.y - 2} text-anchor="middle" class="ws-map__node-label">
+              {n.layer.title}
+            </text>
+            <text x={n.x} y={n.y + 14} text-anchor="middle" class="ws-map__node-sub">
+              {n.layer.label.split('·')[0]?.trim()}
+            </text>
+          </g>
+        ))}
+        <text x="380" y="318" text-anchor="middle" class="ws-map__thin">
+          no embedded capabilities — Toolkit remains independently installable
+        </text>
       </svg>
 
       <fieldset class="ws-map__node-controls" data-ws-layer-controls disabled>
         <legend>Choose a responsibility</legend>
         <div class="ws-map__node-options">
-          {
-            workstationLayers.map((layer, i) => (
-              <>
-                <input
-                  class="ws-map__radio"
-                  type="radio"
-                  name="ws-layer"
-                  id={`ws-layer-${layer.id}`}
-                  value={layer.id}
-                  checked={i === 1}
-                  data-layer={layer.id}
-                  data-layer-control={layer.id}
-                  aria-controls="ws-layer-inspector"
-                />
-                <label class="vf-node" for={`ws-layer-${layer.id}`} style={`--vf-node-accent:${layer.accent}`}>
-                  {layer.title}
-                </label>
-              </>
-            ))
-          }
+          {workstationLayers.map((layer, i) => (
+            <>
+              <input
+                class="ws-map__radio"
+                type="radio"
+                name="ws-layer"
+                id={`ws-layer-${layer.id}`}
+                value={layer.id}
+                checked={i === 1}
+                data-layer={layer.id}
+                data-layer-control={layer.id}
+                aria-controls="ws-layer-inspector"
+              />
+              <label class="vf-node" for={`ws-layer-${layer.id}`} style={`--vf-node-accent:${layer.accent}`}>
+                {layer.title}
+              </label>
+            </>
+          ))}
         </div>
       </fieldset>
       <noscript>
         <div class="ws-map__layer-fallback" data-ws-layer-fallback>
           <p>Interactive selection is unavailable. Project responsibilities:</p>
           <ul>
-            {
-              workstationLayers.map((layer) => (
-                <li>
-                  <strong>{layer.title}</strong> — {layer.description}
-                </li>
-              ))
-            }
+            {workstationLayers.map((layer) => (
+              <li>
+                <strong>{layer.title}</strong> — {layer.description}
+              </li>
+            ))}
           </ul>
         </div>
       </noscript>
@@ -272,17 +272,15 @@ const defaultLayer = workstationLayers[1]!;
       <Fragment slot="meta">
         <div data-layer-meta>
           <span data-layer-label>{defaultLayer.label}</span>
-          {
-            defaultLayer.repo ? (
-              <span>
-                <code data-layer-repo>{defaultLayer.repo}</code>
-              </span>
-            ) : (
-              <span>
-                <code data-layer-repo hidden />
-              </span>
-            )
-          }
+          {defaultLayer.repo ? (
+            <span>
+              <code data-layer-repo>{defaultLayer.repo}</code>
+            </span>
+          ) : (
+            <span>
+              <code data-layer-repo hidden />
+            </span>
+          )}
         </div>
       </Fragment>
     </SceneInspector>
@@ -301,54 +299,53 @@ const defaultLayer = workstationLayers[1]!;
       />
     </div>
     <StageScrubber stages={bootStages} label="Boot stage" />
-    <p class="ws-map__stage-copy" data-stage-copy>{bootStages[0]!.summary}</p>
+    <p class="ws-map__stage-copy" data-stage-copy>
+      {bootStages[0]!.summary}
+    </p>
     <pre
       class="ws-map__stage-cmd"
       tabindex="0"
       role="region"
-      aria-label="Current boot command"><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
+      aria-label="Current boot command"
+    ><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
     <PlaybackControls label="Boot playback" />
   </div>
 
   <div class="ws-map__profile">
     <h2>Profile</h2>
     <div class="ws-map__profile-grid" role="radiogroup" aria-label="Chezmoi profile">
-      {
-        workstationProfiles.map((profile, i) => (
-          <>
-            <input
-              class="ws-map__radio"
-              type="radio"
-              name="ws-profile"
-              id={`ws-profile-${profile.id}`}
-              value={profile.id}
-              checked={i === 0}
-              data-profile={profile.id}
-            />
-            <label class="vf-node" for={`ws-profile-${profile.id}`}>
-              {profile.id}
-            </label>
-          </>
-        ))
-      }
+      {workstationProfiles.map((profile, i) => (
+        <>
+          <input
+            class="ws-map__radio"
+            type="radio"
+            name="ws-profile"
+            id={`ws-profile-${profile.id}`}
+            value={profile.id}
+            checked={i === 0}
+            data-profile={profile.id}
+          />
+          <label class="vf-node" for={`ws-profile-${profile.id}`}>
+            {profile.id}
+          </label>
+        </>
+      ))}
     </div>
     <SceneInspector eyebrow="Profile" title={defaultProfile.id} id="ws-profile-inspector">
       <p data-profile-copy>{defaultProfile.description}</p>
       <Fragment slot="meta">
         <div data-profile-groups>
-          {
-            defaultProfile.groups.length ? (
-              defaultProfile.groups.map((g) => (
-                <code class="ws-map__profile-token" data-group={g}>
-                  {g}
-                </code>
-              ))
-            ) : (
-              <span class="ws-map__profile-empty" data-profile-empty>
-                custom — answer every group prompt
-              </span>
-            )
-          }
+          {defaultProfile.groups.length ? (
+            defaultProfile.groups.map((g) => (
+              <code class="ws-map__profile-token" data-group={g}>
+                {g}
+              </code>
+            ))
+          ) : (
+            <span class="ws-map__profile-empty" data-profile-empty>
+              custom — answer every group prompt
+            </span>
+          )}
         </div>
       </Fragment>
     </SceneInspector>
@@ -357,22 +354,19 @@ const defaultLayer = workstationLayers[1]!;
   <div class="ws-map__health">
     <h2>Health console</h2>
     <ul class="ws-map__health-list">
-      {
-        doctorChecks.map((check) => (
-          <li>
-            <code>{check.command}</code>
-            <span>{check.name}</span>
-          </li>
-        ))
-      }
+      {doctorChecks.map((check) => (
+        <li>
+          <code>{check.command}</code>
+          <span>{check.name}</span>
+        </li>
+      ))}
     </ul>
     <section class="ws-map__verification">
       <h3>Thin workstation verification</h3>
       <p>{thinWorkstationVerification.statement}</p>
       <p>
-        No embedded: {thinWorkstationVerification.noEmbedded.join(', ')}. Kept: {
-          thinWorkstationVerification.kept.join(', ')
-        }.
+        No embedded: {thinWorkstationVerification.noEmbedded.join(', ')}. Kept:{' '}
+        {thinWorkstationVerification.kept.join(', ')}.
       </p>
     </section>
   </div>

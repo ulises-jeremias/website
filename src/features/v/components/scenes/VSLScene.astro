@@ -4,11 +4,17 @@ import SceneEvidence from './SceneEvidence.astro';
 ---
 
 <div class="v-scene" data-v-scene="vsl">
-  <h2 class="v-scene__title" id="v-scene-vsl-title">VSL</h2>
+  <h2 class="v-scene__title" id="v-scene-vsl-title">
+    VSL
+  </h2>
   <p class="v-scene__note">Pure-V numerics by default. Advance the matrix → plot conveyor.</p>
   <div class="v-scene__controls" role="group" aria-label="VSL demo steps">
-    <button type="button" data-vsl-step="matrix" aria-pressed="true" disabled>Matrix</button>
-    <button type="button" data-vsl-step="plot" aria-pressed="false" disabled>Plot</button>
+    <button type="button" data-vsl-step="matrix" aria-pressed="true" disabled>
+      Matrix
+    </button>
+    <button type="button" data-vsl-step="plot" aria-pressed="false" disabled>
+      Plot
+    </button>
   </div>
   <svg
     class="v-scene__svg"
@@ -20,22 +26,30 @@ import SceneEvidence from './SceneEvidence.astro';
     <desc id="v-scene-vsl-description">A four-by-four matrix feeds a separate plot stage from left to right.</desc>
     <rect width="560" height="240" fill="#0f2a44" rx="8"></rect>
     <g data-vsl-panel="matrix" class="is-active">
-      {
-        Array.from({ length: 4 }, (_, row) =>
-          Array.from({ length: 4 }, (_, col) => (
-            <rect x={80 + col * 36} y={60 + row * 36} width="28" height="28" rx="2" fill="#1e4d6b" stroke="#5b9bd5" />
-          )),
-        )
-      }
-      <text x="140" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">matrix</text>
+      {Array.from({ length: 4 }, (_, row) =>
+        Array.from({ length: 4 }, (_, col) => (
+          <rect x={80 + col * 36} y={60 + row * 36} width="28" height="28" rx="2" fill="#1e4d6b" stroke="#5b9bd5" />
+        )),
+      )}
+      <text x="140" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">
+        matrix
+      </text>
     </g>
     <g data-vsl-panel="plot">
-      <polyline points="320,180 360,120 400,140 440,80 480,100" fill="none" stroke="#38bdf8" stroke-width="2"
+      <polyline
+        points="320,180 360,120 400,140 440,80 480,100"
+        fill="none"
+        stroke="#38bdf8"
+        stroke-width="2"
       ></polyline>
-      <text x="400" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">plot</text>
+      <text x="400" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">
+        plot
+      </text>
     </g>
   </svg>
-  <p class="v-scene__live" data-v-scene-live aria-live="polite">Matrix stage — values ready for a plot.</p>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">
+    Matrix stage — values ready for a plot.
+  </p>
   <SceneEvidence
     caption="Rendered by VSL · MIT · v install vsl"
     logo={{

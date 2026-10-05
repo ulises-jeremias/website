@@ -57,7 +57,9 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
   <section class="sp-hero" aria-labelledby="sp-title">
     <div class="sp-hero__copy">
       <p class="sp-kicker">Digital Nest · sponsor &amp; partner</p>
-      <h1 id="sp-title" class="sp-hero__title">Support the work behind Digital Nest</h1>
+      <h1 id="sp-title" class="sp-hero__title">
+        Support the work behind Digital Nest
+      </h1>
       <p class="sp-hero__lead">
         I maintain open-source developer tooling across four areas: agent tooling for coding assistants, a Linux
         desktop, scientific computing for V, and app scaffolding. Sponsorship buys time for maintenance, testing, and
@@ -66,14 +68,17 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
       <div class="sp-actions">
         <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
           <svg class="sp-cta__icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 20.4s-7.6-4.6-7.6-9.6a4.2 4.2 0 0 1 7.6-2.5A4.2 4.2 0 0 1 19.6 10.8c0 5-7.6 9.6-7.6 9.6Z"
-            ></path>
+            <path d="M12 20.4s-7.6-4.6-7.6-9.6a4.2 4.2 0 0 1 7.6-2.5A4.2 4.2 0 0 1 19.6 10.8c0 5-7.6 9.6-7.6 9.6Z"></path>
           </svg>
           Sponsor on GitHub
           <span class="sr-only"> (opens in new tab)</span>
         </a>
-        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>Discuss a partnership</a>
-        <a class="sp-cta sp-cta--quiet" href="/projects">Explore the work <span aria-hidden="true">→</span></a>
+        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>
+          Discuss a partnership
+        </a>
+        <a class="sp-cta sp-cta--quiet" href="/projects">
+          Explore the work <span aria-hidden="true">→</span>
+        </a>
       </div>
       <p class="sp-hero__note">
         Partnerships start with an email to <span class="sp-mono">{profile.contact.email}</span>. There are no fixed
@@ -83,33 +88,38 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
 
     <figure class="sp-route neon-frame clip-corner" aria-labelledby="sp-route-caption">
       <figcaption id="sp-route-caption" class="sp-route__head">
-        <span class="sp-route__prompt" aria-hidden="true">&gt;</span> where support goes
+        <span class="sp-route__prompt" aria-hidden="true">
+          &gt;
+        </span>{' '}
+        where support goes
       </figcaption>
       <!-- Explicit roles keep table semantics when rows stack on narrow screens (display: block). -->
       <table class="sp-route__table" role="table">
         <caption class="sr-only">Project areas and the work that support funds in each</caption>
         <thead role="rowgroup">
           <tr role="row">
-            <th scope="col" role="columnheader">Area</th>
-            <th scope="col" role="columnheader">Funds</th>
+            <th scope="col" role="columnheader">
+              Area
+            </th>
+            <th scope="col" role="columnheader">
+              Funds
+            </th>
           </tr>
         </thead>
         <tbody role="rowgroup">
-          {
-            sponsorshipAreas.map((area) => (
-              <tr role="row" style={`--area-accent: ${areaAccent[area.id]}`}>
-                <th scope="row" role="rowheader">
-                  <a href={`#area-${area.id}`}>{area.title}</a>
-                </th>
-                <td role="cell">{area.focus.join(' · ')}</td>
-              </tr>
-            ))
-          }
+          {sponsorshipAreas.map((area) => (
+            <tr role="row" style={`--area-accent: ${areaAccent[area.id]}`}>
+              <th scope="row" role="rowheader">
+                <a href={`#area-${area.id}`}>{area.title}</a>
+              </th>
+              <td role="cell">{area.focus.join(' · ')}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <p class="sp-route__foot">
-        <span aria-hidden="true">#</span> the projects exist without sponsorship; support decides how much time and hardware
-        they get
+        <span aria-hidden="true">#</span> the projects exist without sponsorship; support decides how much time and
+        hardware they get
       </p>
     </figure>
   </section>
@@ -120,14 +130,12 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
       <h2 id="sp-uses-title">What support pays for</h2>
     </header>
     <ul class="sp-uses">
-      {
-        supportUses.map((use) => (
-          <li>
-            <h3>{use.title}</h3>
-            <p>{use.detail}</p>
-          </li>
-        ))
-      }
+      {supportUses.map((use) => (
+        <li>
+          <h3>{use.title}</h3>
+          <p>{use.detail}</p>
+        </li>
+      ))}
     </ul>
   </section>
 
@@ -141,48 +149,46 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
       </p>
     </header>
     <div class="sp-areas">
-      {
-        sponsorshipAreas.map((area) => (
-          <article
-            id={`area-${area.id}`}
-            class="sp-area"
-            style={`--area-accent: ${areaAccent[area.id]}`}
-            aria-labelledby={`area-${area.id}-title`}
-          >
-            <header class="sp-area__head">
-              <h3 id={`area-${area.id}-title`}>{area.title}</h3>
-              <p class="sp-area__projects">{area.projects.join(' · ')}</p>
-            </header>
-            <p class="sp-area__summary">{area.summary}</p>
-            {area.scope && (
-              <p class="sp-area__scope">
-                <strong>Scope:</strong> {area.scope}
-              </p>
-            )}
-            <div class="sp-area__cols">
-              <div>
-                <h4>Support enables</h4>
-                <ul class="sp-list">
-                  {area.supportEnables.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h4>Good fit for</h4>
-                <ul class="sp-tags">
-                  {area.partnerFit.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
+      {sponsorshipAreas.map((area) => (
+        <article
+          id={`area-${area.id}`}
+          class="sp-area"
+          style={`--area-accent: ${areaAccent[area.id]}`}
+          aria-labelledby={`area-${area.id}-title`}
+        >
+          <header class="sp-area__head">
+            <h3 id={`area-${area.id}-title`}>{area.title}</h3>
+            <p class="sp-area__projects">{area.projects.join(' · ')}</p>
+          </header>
+          <p class="sp-area__summary">{area.summary}</p>
+          {area.scope && (
+            <p class="sp-area__scope">
+              <strong>Scope:</strong> {area.scope}
+            </p>
+          )}
+          <div class="sp-area__cols">
+            <div>
+              <h4>Support enables</h4>
+              <ul class="sp-list">
+                {area.supportEnables.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
             </div>
-            <a class="sp-area__link" href={area.href}>
-              Read about {area.title} <span aria-hidden="true">→</span>
-            </a>
-          </article>
-        ))
-      }
+            <div>
+              <h4>Good fit for</h4>
+              <ul class="sp-tags">
+                {area.partnerFit.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <a class="sp-area__link" href={area.href}>
+            Read about {area.title} <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -192,90 +198,85 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
       <h2 id="sp-modes-title">Two ways in</h2>
     </header>
     <div class="sp-modes">
-      {
-        directMode && (
-          <div class="sp-direct neon-frame-accent clip-corner">
-            <p class="sp-kicker">Direct support</p>
-            <h3>{directMode.title}</h3>
-            <p>{directMode.description}</p>
-            <ul class="sp-list">
-              {directMode.examples.map((example) => (
-                <li>{example}</li>
-              ))}
-            </ul>
-            <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
-              Sponsor on GitHub
-              <span class="sr-only"> (opens in new tab)</span>
-            </a>
-          </div>
-        )
-      }
+      {directMode && (
+        <div class="sp-direct neon-frame-accent clip-corner">
+          <p class="sp-kicker">Direct support</p>
+          <h3>{directMode.title}</h3>
+          <p>{directMode.description}</p>
+          <ul class="sp-list">
+            {directMode.examples.map((example) => (
+              <li>{example}</li>
+            ))}
+          </ul>
+          <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+            Sponsor on GitHub
+            <span class="sr-only"> (opens in new tab)</span>
+          </a>
+        </div>
+      )}
       <div class="sp-partners">
         <p class="sp-kicker">Partnerships · start with a conversation</p>
         <ul class="sp-partners__list">
-          {
-            partnerModes.map((mode) => (
-              <li class="sp-partner">
-                <h3>{mode.title}</h3>
-                <p>{mode.description}</p>
-                <p class="sp-partner__examples">{mode.examples.join(' · ')}</p>
-              </li>
-            ))
-          }
+          {partnerModes.map((mode) => (
+            <li class="sp-partner">
+              <h3>{mode.title}</h3>
+              <p>{mode.description}</p>
+              <p class="sp-partner__examples">{mode.examples.join(' · ')}</p>
+            </li>
+          ))}
         </ul>
-        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>Discuss a partnership</a>
+        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>
+          Discuss a partnership
+        </a>
         <p class="sp-partners__note">
-          Community partnerships run through the <a href="/community">Digital Nest community</a> — contributor events, workshops,
-          and the shared Discord.
+          Community partnerships run through the <a href="/community">Digital Nest community</a> — contributor events,
+          workshops, and the shared Discord.
         </p>
       </div>
     </div>
   </section>
 
-  {
-    sponsorMetrics.metrics.length > 0 && (
-      <section class="sp-section" aria-labelledby="sp-signals-title">
-        <header class="sp-section__head">
-          <p class="sp-kicker">Signals, with caveats</p>
-          <h2 id="sp-signals-title">A few measurable signals</h2>
-          <p class="sp-section__lead">
-            Each figure comes from a public source for a stated period. Downloads count package fetches — including CI
-            and mirrors — not people. Agent Toolkit download counts are left out until its packages have a longer
-            history.
-          </p>
-        </header>
-        <dl class="sp-signals">
-          {orderedMetrics.map((metric) => (
-            <div class="sp-signal">
-              <dt>
-                <span class="sp-signal__project">{metric.project}</span>{' '}
-                <span class="sp-signal__label">{metric.label}</span>
-              </dt>
-              <dd class="sp-signal__value">
-                {numberFormat.format(metric.value)} <span class="sp-signal__unit">{metric.unit}</span>
-              </dd>
-              <dd class="sp-signal__meta">
-                <time datetime={metric.period.start}>{formatDate(metric.period.start)}</time> –{' '}
-                <time datetime={metric.period.end}>{formatDate(metric.period.end)}</time> ·{' '}
-                <a href={metric.source.url} target="_blank" rel="noopener noreferrer">
-                  {metric.source.name}
-                  <span class="sr-only"> (opens in new tab)</span>
-                </a>{' '}
-                · retrieved <time datetime={metric.retrievedAt}>{formatDate(metric.retrievedAt)}</time>
-              </dd>
-              <dd class="sp-signal__caveat">{metric.caveat}</dd>
-            </div>
-          ))}
-        </dl>
-        {metricsAsOf && (
-          <p class="sp-signals__stamp">
-            Figures as of <time datetime={metricsAsOf}>{formatDate(metricsAsOf)}</time> or later · refreshed by a
-            reviewed script, never fetched live.
-          </p>
-        )}
-      </section>
-    )
-  }
+  {sponsorMetrics.metrics.length > 0 && (
+    <section class="sp-section" aria-labelledby="sp-signals-title">
+      <header class="sp-section__head">
+        <p class="sp-kicker">Signals, with caveats</p>
+        <h2 id="sp-signals-title">A few measurable signals</h2>
+        <p class="sp-section__lead">
+          Each figure comes from a public source for a stated period. Downloads count package fetches — including CI and
+          mirrors — not people. Agent Toolkit download counts are left out until its packages have a longer history.
+        </p>
+      </header>
+      <dl class="sp-signals">
+        {orderedMetrics.map((metric) => (
+          <div class="sp-signal">
+            <dt>
+              <span class="sp-signal__project">{metric.project}</span>{' '}
+              <span class="sp-signal__label">{metric.label}</span>
+            </dt>
+            <dd class="sp-signal__value">
+              {numberFormat.format(metric.value)} <span class="sp-signal__unit">{metric.unit}</span>
+            </dd>
+            <dd class="sp-signal__meta">
+              <time datetime={metric.period.start}>{formatDate(metric.period.start)}</time> –{' '}
+              <time datetime={metric.period.end}>{formatDate(metric.period.end)}</time> ·{' '}
+              <a href={metric.source.url} target="_blank" rel="noopener noreferrer">
+                {metric.source.name}
+                <span class="sr-only"> (opens in new tab)</span>
+              </a>{' '}
+              · retrieved <time datetime={metric.retrievedAt}>{formatDate(metric.retrievedAt)}</time>
+            </dd>
+            <dd class="sp-signal__caveat">{metric.caveat}</dd>
+          </div>
+        ))}
+      </dl>
+      {metricsAsOf && (
+        <p class="sp-signals__stamp">
+          Figures as of <time datetime={metricsAsOf}>{formatDate(metricsAsOf)}</time> or later · refreshed by a reviewed
+          script, never fetched live.
+        </p>
+      )}
+    </section>
+  )}
 
   <section id="principles" class="sp-section sp-principles" aria-labelledby="sp-principles-title">
     <header class="sp-section__head">
@@ -286,14 +287,12 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
       </p>
     </header>
     <ul class="sp-principles__list">
-      {
-        sponsorshipPrinciples.map((principle) => (
-          <li>
-            <h3>{principle.title}</h3>
-            <p>{principle.body}</p>
-          </li>
-        ))
-      }
+      {sponsorshipPrinciples.map((principle) => (
+        <li>
+          <h3>{principle.title}</h3>
+          <p>{principle.body}</p>
+        </li>
+      ))}
     </ul>
   </section>
 
@@ -302,54 +301,52 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
       <p class="sp-kicker">Sponsors &amp; partners</p>
       <h2 id="sp-sponsors-title">Supporters and partners</h2>
     </header>
-    {
-      rosterGroups.length > 0 ? (
-        rosterGroups.map((group) => (
-          <div class="sp-roster-group">
-            <h3 class="sp-roster-group__title">{group.title}</h3>
-            <ul class="sp-roster">
-              {group.list.map((sponsor) => (
-                <li class="sp-roster__item">
-                  <a href={sponsor.url} target="_blank" rel={getSponsorLinkRel(sponsor)}>
-                    {sponsor.logo ? (
-                      <img src={sponsor.logo} alt={sponsor.logoAlt} width="160" height="48" loading="lazy" />
-                    ) : (
-                      <strong>{sponsor.name}</strong>
-                    )}
-                    <span class="sr-only"> (opens in new tab)</span>
-                  </a>
-                  <p class="sp-roster__meta">
-                    {sponsor.compensated && <span class="sp-roster__paid">Paid relationship</span>}{' '}
-                    {sponsor.relationship.replaceAll('-', ' ')} · {sponsor.areas.map(areaTitle).join(', ')} ·{' '}
-                    <time datetime={sponsor.startDate}>{sponsor.startDate}</time>
-                    {sponsor.endDate ? (
-                      <>
-                        {' '}
-                        – <time datetime={sponsor.endDate}>{sponsor.endDate}</time>
-                      </>
-                    ) : (
-                      ' – present'
-                    )}
-                  </p>
-                  <p class="sp-roster__disclosure">{sponsor.disclosure}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      ) : (
-        <div class="sp-empty">
-          <p>
-            There are no sponsors or partners yet. Early supporters will be listed here with what they support, since
-            when, and whether the relationship is paid.
-          </p>
-          <a class="sp-cta sp-cta--secondary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
-            Become an early supporter
-            <span class="sr-only"> (opens in new tab)</span>
-          </a>
+    {rosterGroups.length > 0 ? (
+      rosterGroups.map((group) => (
+        <div class="sp-roster-group">
+          <h3 class="sp-roster-group__title">{group.title}</h3>
+          <ul class="sp-roster">
+            {group.list.map((sponsor) => (
+              <li class="sp-roster__item">
+                <a href={sponsor.url} target="_blank" rel={getSponsorLinkRel(sponsor)}>
+                  {sponsor.logo ? (
+                    <img src={sponsor.logo} alt={sponsor.logoAlt} width="160" height="48" loading="lazy" />
+                  ) : (
+                    <strong>{sponsor.name}</strong>
+                  )}
+                  <span class="sr-only"> (opens in new tab)</span>
+                </a>
+                <p class="sp-roster__meta">
+                  {sponsor.compensated && <span class="sp-roster__paid">Paid relationship</span>}{' '}
+                  {sponsor.relationship.replaceAll('-', ' ')} · {sponsor.areas.map(areaTitle).join(', ')} ·{' '}
+                  <time datetime={sponsor.startDate}>{sponsor.startDate}</time>
+                  {sponsor.endDate ? (
+                    <>
+                      {' '}
+                      – <time datetime={sponsor.endDate}>{sponsor.endDate}</time>
+                    </>
+                  ) : (
+                    ' – present'
+                  )}
+                </p>
+                <p class="sp-roster__disclosure">{sponsor.disclosure}</p>
+              </li>
+            ))}
+          </ul>
         </div>
-      )
-    }
+      ))
+    ) : (
+      <div class="sp-empty">
+        <p>
+          There are no sponsors or partners yet. Early supporters will be listed here with what they support, since
+          when, and whether the relationship is paid.
+        </p>
+        <a class="sp-cta sp-cta--secondary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+          Become an early supporter
+          <span class="sr-only"> (opens in new tab)</span>
+        </a>
+      </div>
+    )}
   </section>
 
   <section class="sp-close neon-frame clip-corner" aria-labelledby="sp-close-title">
@@ -363,7 +360,9 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
         Sponsor on GitHub
         <span class="sr-only"> (opens in new tab)</span>
       </a>
-      <a class="sp-cta sp-cta--secondary" href={partnershipHref}>Discuss a partnership</a>
+      <a class="sp-cta sp-cta--secondary" href={partnershipHref}>
+        Discuss a partnership
+      </a>
     </div>
   </section>
 </div>

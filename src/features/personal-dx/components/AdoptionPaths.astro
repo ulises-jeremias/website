@@ -11,24 +11,22 @@ import { ADOPTION_PATHS, getStackProject } from '@/data/personal-dx-stack.js';
     </p>
   </header>
   <ul class="adoption__list">
-    {
-      ADOPTION_PATHS.map((entry) => {
-        const project = getStackProject(entry.projectId);
-        return (
-          <li class="adoption__item">
-            <p class="adoption__need">{entry.need}</p>
-            {project?.path ? (
-              <a class="adoption__answer" href={project.path}>
-                {project.title} <span aria-hidden="true">→</span>
-              </a>
-            ) : (
-              <span class="adoption__answer">{project?.title}</span>
-            )}
-            <p class="adoption__detail">{entry.detail}</p>
-          </li>
-        );
-      })
-    }
+    {ADOPTION_PATHS.map((entry) => {
+      const project = getStackProject(entry.projectId);
+      return (
+        <li class="adoption__item">
+          <p class="adoption__need">{entry.need}</p>
+          {project?.path ? (
+            <a class="adoption__answer" href={project.path}>
+              {project.title} <span aria-hidden="true">→</span>
+            </a>
+          ) : (
+            <span class="adoption__answer">{project?.title}</span>
+          )}
+          <p class="adoption__detail">{entry.detail}</p>
+        </li>
+      );
+    })}
   </ul>
 </section>
 

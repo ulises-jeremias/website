@@ -7,34 +7,30 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
     <h2>Composition</h2>
     <p class="ca-muted">Not opaque scaffolding — it composes real files. Verifiable examples:</p>
     <div class="ca-examples">
-      {
-        compositionExamples.map((e) => (
-          <div class="ca-example">
-            <h3>
-              {e.title} <span class="ca-chip">{e.variant}</span>
-            </h3>
-            <p class="ca-muted">
-              template <code>{e.template}</code> + addons <code>{e.addons.join(', ')}</code>
-            </p>
-            <pre>
+      {compositionExamples.map((e) => (
+        <div class="ca-example">
+          <h3>
+            {e.title} <span class="ca-chip">{e.variant}</span>
+          </h3>
+          <p class="ca-muted">
+            template <code>{e.template}</code> + addons <code>{e.addons.join(', ')}</code>
+          </p>
+          <pre>
               <code>{e.command}</code>
             </pre>
-          </div>
-        ))
-      }
+        </div>
+      ))}
     </div>
   </div>
 
   <div class="ca-block">
     <h2>Distribution</h2>
     <ul class="ca-channels">
-      {
-        distributionChannels.map((c) => (
-          <li>
-            <strong>{c.label}</strong> <code>{c.command}</code> <span class="ca-muted">— {c.note}</span>
-          </li>
-        ))
-      }
+      {distributionChannels.map((c) => (
+        <li>
+          <strong>{c.label}</strong> <code>{c.command}</code> <span class="ca-muted">— {c.note}</span>
+        </li>
+      ))}
     </ul>
   </div>
 
@@ -42,21 +38,27 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
     <h2>Quick comparison</h2>
     <div class="ca-table-wrap">
       <table class="ca-table">
-        <thead><tr><th>Feature</th><th>Node</th><th>Python</th><th>V</th><th>Rust</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Node</th>
+            <th>Python</th>
+            <th>V</th>
+            <th>Rust</th>
+          </tr>
+        </thead>
         <tbody>
-          {
-            comparisonRows.map((r) => (
-              <tr>
-                <>
-                  <td>{r.feature}</td>
-                  <td>{r.node}</td>
-                  <td>{r.python}</td>
-                  <td>{r.v}</td>
-                  <td>{r.rust}</td>
-                </>
-              </tr>
-            ))
-          }
+          {comparisonRows.map((r) => (
+            <tr>
+              <>
+                <td>{r.feature}</td>
+                <td>{r.node}</td>
+                <td>{r.python}</td>
+                <td>{r.v}</td>
+                <td>{r.rust}</td>
+              </>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
@@ -65,24 +67,22 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
   <div class="ca-block">
     <h2>How to contribute</h2>
     <ol class="ca-steps">
-      {
-        contributionSteps.map((s) => (
-          <li>
-            <strong>
-              {s.step}. {s.title}
-            </strong>{' '}
-            — {s.description}
-            {s.href ? (
-              <span>
-                {' '}
-                <a href={s.href} target="_blank" rel="noopener noreferrer">
-                  →
-                </a>
-              </span>
-            ) : null}
-          </li>
-        ))
-      }
+      {contributionSteps.map((s) => (
+        <li>
+          <strong>
+            {s.step}. {s.title}
+          </strong>{' '}
+          — {s.description}
+          {s.href ? (
+            <span>
+              {' '}
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                →
+              </a>
+            </span>
+          ) : null}
+        </li>
+      ))}
     </ol>
     <p class="ca-muted">
       Build-time sync: catalog lives in <code>cna-templates / cpa-templates / cva-templates / cra-templates</code>, the
@@ -93,13 +93,15 @@ import { compositionExamples, comparisonRows, contributionSteps, distributionCha
   <div class="ca-block ca-community">
     <h2>Community</h2>
     <p>
-      Create Awesome sits inside the shared <a href="/community">Digital Nest community</a> — HorneroConfig, agentic tooling,
-      V ecosystem work, and incubating experiments. Discord is the workshop for the whole nest, not a Create-Awesome-only
-      server.
+      Create Awesome sits inside the shared <a href="/community">Digital Nest community</a> — HorneroConfig, agentic
+      tooling, V ecosystem work, and incubating experiments. Discord is the workshop for the whole nest, not a
+      Create-Awesome-only server.
     </p>
     <p class="ca-muted">
       <a href="/community">Community workshop →</a> ·
-      <a href="https://discord.gg/bR5VyATgka" target="_blank" rel="noopener noreferrer">Discord invite ↗</a>
+      <a href="https://discord.gg/bR5VyATgka" target="_blank" rel="noopener noreferrer">
+        Discord invite ↗
+      </a>
     </p>
   </div>
 </section>

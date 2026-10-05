@@ -57,43 +57,39 @@ const stageCount = swarmStages.length;
 
   <div class="atk-swarm__toolbar">
     <div class="atk-swarm__recipes" role="radiogroup" aria-label="Swarm recipe">
-      {
-        swarmRecipes.map((recipe, index) => (
-          <>
-            <input
-              class="atk-swarm__recipe-radio"
-              type="radio"
-              name="atk-recipe"
-              id={`atk-recipe-${recipe.id}`}
-              value={recipe.id}
-              checked={index === 0}
-            />
-            <label class="atk-swarm__recipe" for={`atk-recipe-${recipe.id}`}>
-              {recipe.label}
-            </label>
-          </>
-        ))
-      }
+      {swarmRecipes.map((recipe, index) => (
+        <>
+          <input
+            class="atk-swarm__recipe-radio"
+            type="radio"
+            name="atk-recipe"
+            id={`atk-recipe-${recipe.id}`}
+            value={recipe.id}
+            checked={index === 0}
+          />
+          <label class="atk-swarm__recipe" for={`atk-recipe-${recipe.id}`}>
+            {recipe.label}
+          </label>
+        </>
+      ))}
     </div>
 
     <div class="atk-swarm__shell" role="radiogroup" aria-label="UI backend">
-      {
-        uiBackends.map((backend, index) => (
-          <>
-            <input
-              class="atk-swarm__shell-radio"
-              type="radio"
-              name="atk-shell"
-              id={`atk-shell-${backend.id}`}
-              value={backend.id}
-              checked={index === 0}
-            />
-            <label class="atk-swarm__shell-btn" for={`atk-shell-${backend.id}`}>
-              {backend.title}
-            </label>
-          </>
-        ))
-      }
+      {uiBackends.map((backend, index) => (
+        <>
+          <input
+            class="atk-swarm__shell-radio"
+            type="radio"
+            name="atk-shell"
+            id={`atk-shell-${backend.id}`}
+            value={backend.id}
+            checked={index === 0}
+          />
+          <label class="atk-swarm__shell-btn" for={`atk-shell-${backend.id}`}>
+            {backend.title}
+          </label>
+        </>
+      ))}
     </div>
   </div>
 
@@ -102,7 +98,9 @@ const stageCount = swarmStages.length;
       <span class="atk-swarm__chrome-dot"></span>
       <span class="atk-swarm__chrome-dot"></span>
       <span class="atk-swarm__chrome-dot"></span>
-      <span class="atk-swarm__chrome-title" data-shell-title>Herdr workspace · swarm-demo</span>
+      <span class="atk-swarm__chrome-title" data-shell-title>
+        Herdr workspace · swarm-demo
+      </span>
     </div>
 
     <div class="atk-swarm__layout">
@@ -137,13 +135,11 @@ const stageCount = swarmStages.length;
         <div class="atk-swarm__state-files">
           <h3 class="atk-swarm__label">Run state</h3>
           <ul>
-            {
-              sharedRunStateFiles.map((file) => (
-                <li>
-                  <code>{file}</code>
-                </li>
-              ))
-            }
+            {sharedRunStateFiles.map((file) => (
+              <li>
+                <code>{file}</code>
+              </li>
+            ))}
           </ul>
         </div>
       </aside>
@@ -151,7 +147,9 @@ const stageCount = swarmStages.length;
 
     <div class="atk-swarm__gate" data-gate hidden>
       <p>APPROVAL REQUIRED</p>
-      <button type="button" class="atk-swarm__approve" data-approve>Approve demo</button>
+      <button type="button" class="atk-swarm__approve" data-approve>
+        Approve demo
+      </button>
       <span>Educational only — no remote actions.</span>
     </div>
 
@@ -172,64 +170,72 @@ const stageCount = swarmStages.length;
 
   <div class="atk-swarm__transport">
     <ol class="atk-swarm__scrubber" aria-label="Swarm pipeline stage" data-scrubber>
-      {
-        swarmStages.map((stage, index) => (
-          <li>
-            <button
-              type="button"
-              aria-pressed={index === 0 ? 'true' : 'false'}
-              data-stage={stage.id}
-              data-stage-index={String(stage.index)}
-            >
-              <span>{String(stage.index).padStart(2, '0')}</span>
-              {stage.title}
-            </button>
-          </li>
-        ))
-      }
+      {swarmStages.map((stage, index) => (
+        <li>
+          <button
+            type="button"
+            aria-pressed={index === 0 ? 'true' : 'false'}
+            data-stage={stage.id}
+            data-stage-index={String(stage.index)}
+          >
+            <span>{String(stage.index).padStart(2, '0')}</span>
+            {stage.title}
+          </button>
+        </li>
+      ))}
     </ol>
-    <p class="atk-swarm__stage-copy" data-stage-copy>{swarmStages[0]!.summary}</p>
+    <p class="atk-swarm__stage-copy" data-stage-copy>
+      {swarmStages[0]!.summary}
+    </p>
     <div class="atk-swarm__playback" role="group" aria-label="Playback controls">
-      <button type="button" data-play>Play</button>
-      <button type="button" data-pause>Pause</button>
-      <button type="button" data-prev>Prev</button>
-      <button type="button" data-next>Next</button>
-      <button type="button" data-replay>Replay</button>
+      <button type="button" data-play>
+        Play
+      </button>
+      <button type="button" data-pause>
+        Pause
+      </button>
+      <button type="button" data-prev>
+        Prev
+      </button>
+      <button type="button" data-next>
+        Next
+      </button>
+      <button type="button" data-replay>
+        Replay
+      </button>
     </div>
   </div>
 
   <div class="atk-swarm__cli">
     <h3 class="atk-swarm__label">CLI</h3>
     <div class="atk-swarm__cli-grid">
-      {
-        uiBackends.map((backend) => (
-          <figure>
-            <figcaption>{backend.title}</figcaption>
-            <pre tabindex="0" role="region" aria-label={`${backend.title} CLI command`}>
+      {uiBackends.map((backend) => (
+        <figure>
+          <figcaption>{backend.title}</figcaption>
+          <pre tabindex="0" role="region" aria-label={`${backend.title} CLI command`}>
               <code>{backend.commands[0]}</code>
             </pre>
-          </figure>
-        ))
-      }
+        </figure>
+      ))}
     </div>
     <p>
       Full swarm manual:{' '}
-      <a href={toolkitDocs.swarm} target="_blank" rel="noopener noreferrer">docs/SWARMS.md ↗</a>
+      <a href={toolkitDocs.swarm} target="_blank" rel="noopener noreferrer">
+        docs/SWARMS.md ↗
+      </a>
     </p>
   </div>
 
   <noscript>
     <div class="atk-swarm__fallback">
       <p>Static recipe topologies (canonical inventory):</p>
-      {
-        swarmRecipes.map((recipe) => (
-          <p>
-            <strong>{recipe.label}</strong>
-            {' — '}
-            {recipe.roles.map((r) => r.id).join(' → ')}
-          </p>
-        ))
-      }
+      {swarmRecipes.map((recipe) => (
+        <p>
+          <strong>{recipe.label}</strong>
+          {' — '}
+          {recipe.roles.map((r) => r.id).join(' → ')}
+        </p>
+      ))}
       <p>
         Demo handoff aesthetic uses commit hashes such as <code>{demoHandoff}</code> — never uncommitted code.
       </p>

@@ -84,27 +84,25 @@ const seoType = ogType === 'article' || ogType === 'profile' ? ogType : 'website
   >
     <SiteHeader currentPath={pagePath} transparent={immersive} />
 
-    {
-      hero && (
-        <section
-          class:list={[
-            'section-hero',
-            `section-hero--${hero.align ?? 'left'}`,
-            `section-hero--${hero.variant ?? 'default'}`,
-          ]}
-          aria-labelledby="hero-title"
-        >
-          <div class="section-hero__inner">
-            {hero.eyebrow && <p class="section-hero__eyebrow">{hero.eyebrow}</p>}
-            <h1 id="hero-title" class="section-hero__title">
-              {hero.title}
-            </h1>
-            {hero.description && <p class="section-hero__description">{hero.description}</p>}
-            <slot name="hero-actions" />
-          </div>
-        </section>
-      )
-    }
+    {hero && (
+      <section
+        class:list={[
+          'section-hero',
+          `section-hero--${hero.align ?? 'left'}`,
+          `section-hero--${hero.variant ?? 'default'}`,
+        ]}
+        aria-labelledby="hero-title"
+      >
+        <div class="section-hero__inner">
+          {hero.eyebrow && <p class="section-hero__eyebrow">{hero.eyebrow}</p>}
+          <h1 id="hero-title" class="section-hero__title">
+            {hero.title}
+          </h1>
+          {hero.description && <p class="section-hero__description">{hero.description}</p>}
+          <slot name="hero-actions" />
+        </div>
+      </section>
+    )}
 
     {/* Named slot for hero-extra (e.g., diagrams, code) without forcing h2 */}
     <slot name="hero" />

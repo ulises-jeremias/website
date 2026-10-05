@@ -56,7 +56,9 @@ const statusLabel: Record<string, string> = {
           Visit Hornero OS
           <span class="sr-only"> (opens in new tab)</span>
         </a>
-        <a class="hos-cta" href="#try">Try the components</a>
+        <a class="hos-cta" href="#try">
+          Try the components
+        </a>
         <a
           class="hos-cta hos-cta--quiet"
           href={horneroFacts.compositionRepoUrl}
@@ -93,9 +95,9 @@ const statusLabel: Record<string, string> = {
       <p class="hos-kicker">How it is composed</p>
       <h2 id="hos-manifest-title">A preview is a manifest, not an image</h2>
       <p>
-        Each development preview is a YAML manifest in <code>HorneroOS/hornero</code> that pins the shell and config to exact
-        commits and builds <code>horneroctl</code> from source. A virtual-machine smoke test checks that the pinned composition
-        materializes and applies its theme.
+        Each development preview is a YAML manifest in <code>HorneroOS/hornero</code> that pins the shell and config to
+        exact commits and builds <code>horneroctl</code> from source. A virtual-machine smoke test checks that the
+        pinned composition materializes and applies its theme.
       </p>
       <p>
         The installer and ISO are named in the manifest as future slots. Until they exist, a preview is something you
@@ -114,21 +116,23 @@ const statusLabel: Record<string, string> = {
           released <time datetime={horneroFacts.latestPreviewDate}>{horneroFacts.latestPreviewDate}</time>
         </span>
       </figcaption>
-      <p class="hos-yaml__line" aria-hidden="true"><span class="hos-yaml__key">kind:</span> CompositionManifest</p>
-      <p class="hos-yaml__line" aria-hidden="true"><span class="hos-yaml__key">components:</span></p>
+      <p class="hos-yaml__line" aria-hidden="true">
+        <span class="hos-yaml__key">kind:</span> CompositionManifest
+      </p>
+      <p class="hos-yaml__line" aria-hidden="true">
+        <span class="hos-yaml__key">components:</span>
+      </p>
       <ul class="hos-yaml__slots">
-        {
-          manifestSlots.map((slot) => (
-            <li class={`hos-yaml__slot hos-yaml__slot--${slot.status}`}>
-              <a href={slot.href} target="_blank" rel="noopener noreferrer">
-                <span class="hos-yaml__key">{slot.id}:</span>{' '}
-                <span class="hos-yaml__status">{statusLabel[slot.status]}</span>{' '}
-                <span class="hos-yaml__value">{slot.value}</span> <span class="hos-yaml__note"># {slot.note}</span>
-                <span class="sr-only"> (opens in new tab)</span>
-              </a>
-            </li>
-          ))
-        }
+        {manifestSlots.map((slot) => (
+          <li class={`hos-yaml__slot hos-yaml__slot--${slot.status}`}>
+            <a href={slot.href} target="_blank" rel="noopener noreferrer">
+              <span class="hos-yaml__key">{slot.id}:</span>{' '}
+              <span class="hos-yaml__status">{statusLabel[slot.status]}</span>{' '}
+              <span class="hos-yaml__value">{slot.value}</span> <span class="hos-yaml__note"># {slot.note}</span>
+              <span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </li>
+        ))}
       </ul>
     </figure>
   </section>
@@ -143,25 +147,23 @@ const statusLabel: Record<string, string> = {
       </p>
     </header>
     <ul class="hos-components">
-      {
-        horneroComponents.map((component) => (
-          <li class={`hos-component hos-component--${component.state}`}>
-            <p class="hos-component__state">{componentStateLabels[component.state]}</p>
-            <h3>
-              <a href={component.href} target="_blank" rel="noopener noreferrer">
-                {component.name}
-                <span class="sr-only"> (opens in new tab)</span>
-              </a>
-            </h3>
-            <p>{component.summary}</p>
-            {component.tryIt && (
-              <code class="hos-component__cmd" tabindex="0">
-                {component.tryIt}
-              </code>
-            )}
-          </li>
-        ))
-      }
+      {horneroComponents.map((component) => (
+        <li class={`hos-component hos-component--${component.state}`}>
+          <p class="hos-component__state">{componentStateLabels[component.state]}</p>
+          <h3>
+            <a href={component.href} target="_blank" rel="noopener noreferrer">
+              {component.name}
+              <span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </h3>
+          <p>{component.summary}</p>
+          {component.tryIt && (
+            <code class="hos-component__cmd" tabindex="0">
+              {component.tryIt}
+            </code>
+          )}
+        </li>
+      ))}
     </ul>
   </section>
 
@@ -178,21 +180,23 @@ const statusLabel: Record<string, string> = {
       <table class="hos-table">
         <thead>
           <tr>
-            <th scope="col"><span class="sr-only">Aspect</span></th>
-            <th scope="col"><a href="/dotfiles">HorneroConfig</a></th>
+            <th scope="col">
+              <span class="sr-only">Aspect</span>
+            </th>
+            <th scope="col">
+              <a href="/dotfiles">HorneroConfig</a>
+            </th>
             <th scope="col">Hornero OS</th>
           </tr>
         </thead>
         <tbody>
-          {
-            familyComparison.map((row) => (
-              <tr>
-                <th scope="row">{row.aspect}</th>
-                <td>{row.config}</td>
-                <td>{row.os}</td>
-              </tr>
-            ))
-          }
+          {familyComparison.map((row) => (
+            <tr>
+              <th scope="row">{row.aspect}</th>
+              <td>{row.config}</td>
+              <td>{row.os}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
@@ -205,15 +209,16 @@ const statusLabel: Record<string, string> = {
     </header>
     <ul class="hos-contribute__list">
       <li>
-        <strong>Hardware reports.</strong> Run the shell and defaults on your machine and report what breaks — there is no
-        compatibility record yet, and every laptop helps start one.
+        <strong>Hardware reports.</strong> Run the shell and defaults on your machine and report what breaks — there is
+        no compatibility record yet, and every laptop helps start one.
       </li>
       <li>
-        <strong>Shell and QML work.</strong> Open issues cover the plugin contract, performance baselines, and lock-screen
-        behavior.
+        <strong>Shell and QML work.</strong> Open issues cover the plugin contract, performance baselines, and
+        lock-screen behavior.
       </li>
       <li>
-        <strong>Docs.</strong> The documentation is nine pages and growing; install and architecture guides need writers.
+        <strong>Docs.</strong> The documentation is nine pages and growing; install and architecture guides need
+        writers.
       </li>
     </ul>
     <p class="hos-contribute__links">

@@ -62,13 +62,11 @@ const classes = cn(base, variants[variant], className);
   data-external={isExternal ? 'true' : undefined}
 >
   <slot />
-  {
-    shouldShowIcon && (
-      <span aria-hidden="true" class="link__external">
-        ↗
-      </span>
-    )
-  }
+  {shouldShowIcon && (
+    <span aria-hidden="true" class="link__external">
+      ↗
+    </span>
+  )}
   {isExternal && <span class="sr-only"> (opens in new tab)</span>}
 </a>
 

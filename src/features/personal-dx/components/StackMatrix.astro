@@ -33,40 +33,40 @@ const COLUMNS = [
   </header>
   <div class="stack-matrix__scroll" role="region" aria-label="Ownership matrix" tabindex="0">
     <table>
-      <caption class="visually-hidden"
-        >Ownership of platform concepts across Workstation, Toolkit, Harness, and project repositories</caption
-      >
+      <caption class="visually-hidden">
+        Ownership of platform concepts across Workstation, Toolkit, Harness, and project repositories
+      </caption>
       <thead>
         <tr>
           <th scope="col">Concept</th>
-          {COLUMNS.map((column) => <th scope="col">{column.label}</th>)}
+          {COLUMNS.map((column) => (
+            <th scope="col">{column.label}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        {
-          OWNERSHIP_MATRIX.map((row) => (
-            <tr>
-              <th scope="row">{row.concept}</th>
-              {COLUMNS.map((column) => {
-                const mark = row[column.key];
-                return (
-                  <td data-mark={mark} class:list={{ 'stack-matrix__cell--owned': mark === 'owns' }}>
-                    <span class="visually-hidden">{MARK_LABELS[mark]}</span>
-                    <span aria-hidden="true" class="stack-matrix__mark">
-                      {MARK_LABELS[mark]}
-                    </span>
-                  </td>
-                );
-              })}
-            </tr>
-          ))
-        }
+        {OWNERSHIP_MATRIX.map((row) => (
+          <tr>
+            <th scope="row">{row.concept}</th>
+            {COLUMNS.map((column) => {
+              const mark = row[column.key];
+              return (
+                <td data-mark={mark} class:list={{ 'stack-matrix__cell--owned': mark === 'owns' }}>
+                  <span class="visually-hidden">{MARK_LABELS[mark]}</span>
+                  <span aria-hidden="true" class="stack-matrix__mark">
+                    {MARK_LABELS[mark]}
+                  </span>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
   <p class="stack-matrix__note">
-    Derived from the repositories at agent-toolkit <code>4ea5878</code>, agentic-workstation{' '}
-    <code>1bbeb07</code>, and agentic-harness <code>a3f8822</code> (re-verified 2026-09-30).
+    Derived from the repositories at agent-toolkit <code>4ea5878</code>, agentic-workstation <code>1bbeb07</code>, and
+    agentic-harness <code>a3f8822</code> (re-verified 2026-09-30).
   </p>
 </section>
 

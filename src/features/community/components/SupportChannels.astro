@@ -5,28 +5,28 @@ import { supportChannels } from '../data/index.js';
 <section class="cm-support" aria-labelledby="cm-support-title" data-testid="support-channels">
   <header class="cm-support__header">
     <p class="cm-support__eyebrow">Channels</p>
-    <h2 id="cm-support-title" class="cm-support__title">Where to talk and where to leave a trail</h2>
+    <h2 id="cm-support-title" class="cm-support__title">
+      Where to talk and where to leave a trail
+    </h2>
     <p class="cm-support__lead">
       Channel names inside Discord are not listed here unless they are intentionally published. Prefer durable GitHub
       issues for work that should outlive a chat thread.
     </p>
   </header>
   <ul class="cm-support__list">
-    {
-      supportChannels.map((channel) => (
-        <li class="cm-support__item">
-          <a
-            href={channel.href}
-            class="cm-support__link"
-            target={channel.external ? '_blank' : undefined}
-            rel={channel.external ? 'noopener noreferrer' : undefined}
-          >
-            {channel.label}
-          </a>
-          <p class="cm-support__desc">{channel.description}</p>
-        </li>
-      ))
-    }
+    {supportChannels.map((channel) => (
+      <li class="cm-support__item">
+        <a
+          href={channel.href}
+          class="cm-support__link"
+          target={channel.external ? '_blank' : undefined}
+          rel={channel.external ? 'noopener noreferrer' : undefined}
+        >
+          {channel.label}
+        </a>
+        <p class="cm-support__desc">{channel.description}</p>
+      </li>
+    ))}
   </ul>
 </section>
 

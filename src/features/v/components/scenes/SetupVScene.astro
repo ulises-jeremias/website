@@ -5,7 +5,9 @@ import { SETUP_V_PIN } from '../../data/index.js';
 ---
 
 <div class="v-scene" data-v-scene="setup-v">
-  <h2 class="v-scene__title" id="v-scene-setup-title">setup-v</h2>
+  <h2 class="v-scene__title" id="v-scene-setup-title">
+    setup-v
+  </h2>
   <p class="v-scene__note">CI conveyor using the README-recommended {SETUP_V_PIN} action pin.</p>
   <ol class="v-scene__conveyor" data-setup-steps>
     <li class="is-active">checkout</li>
@@ -13,8 +15,12 @@ import { SETUP_V_PIN } from '../../data/index.js';
     <li>install V</li>
     <li>verify</li>
   </ol>
-  <button type="button" data-setup-advance disabled>Advance conveyor</button>
-  <p class="v-scene__live" data-v-scene-live aria-live="polite">Step 1/4 · checkout</p>
+  <button type="button" data-setup-advance disabled>
+    Advance conveyor
+  </button>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite">
+    Step 1/4 · checkout
+  </p>
 </div>
 
 <script>

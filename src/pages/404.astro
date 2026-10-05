@@ -20,8 +20,12 @@ const atlasGroups = getFooterRouteGroups().map((group) => ({
     <header class="lost-world__header">
       <div>
         <p class="lost-world__eyebrow">404 · Digital Nest recovery</p>
-        <p class="lost-world__signal" aria-hidden="true">COORDINATE UNRESOLVED</p>
-        <h1 id="lost-title" class="lost-world__title">This world is unlisted</h1>
+        <p class="lost-world__signal" aria-hidden="true">
+          COORDINATE UNRESOLVED
+        </p>
+        <h1 id="lost-title" class="lost-world__title">
+          This world is unlisted
+        </h1>
         <p class="lost-world__lead">
           There is no page at this address. The link may be outdated or mistyped; use the verified route index below to
           continue.
@@ -30,42 +34,55 @@ const atlasGroups = getFooterRouteGroups().map((group) => ({
       <aside class="lost-world__console" aria-label="Recovery console">
         <p class="lost-world__console-kicker">Recovery console</p>
         <dl>
-          <div><dt>Coordinate</dt><dd>404 / unresolved</dd></div>
-          <div><dt>Next action</dt><dd>Return home</dd></div>
-          <div><dt>Route source</dt><dd>Digital Nest index</dd></div>
+          <div>
+            <dt>Coordinate</dt>
+            <dd>404 / unresolved</dd>
+          </div>
+          <div>
+            <dt>Next action</dt>
+            <dd>Return home</dd>
+          </div>
+          <div>
+            <dt>Route source</dt>
+            <dd>Digital Nest index</dd>
+          </div>
         </dl>
         <nav class="lost-world__actions" aria-label="Primary recovery">
-          <a class="lost-world__cta lost-world__cta--primary" href="/">Return to Digital Nest</a>
-          <a class="lost-world__cta" href="/projects">Browse the work</a>
+          <a class="lost-world__cta lost-world__cta--primary" href="/">
+            Return to Digital Nest
+          </a>
+          <a class="lost-world__cta" href="/projects">
+            Browse the work
+          </a>
         </nav>
       </aside>
     </header>
 
     <nav class="lost-world__atlas" aria-labelledby="lost-atlas-title">
       <p class="lost-world__atlas-kicker">Verified destination index</p>
-      <h2 id="lost-atlas-title" class="lost-world__atlas-title">Jump to a known route</h2>
-      {
-        atlasGroups.map((group) => (
-          <>
-            <h3 class="lost-world__atlas-group">{group.label}</h3>
-            <ul class="lost-world__atlas-list">
-              {group.routes.map((route, index) => (
-                <li>
-                  <a class="lost-world__atlas-link" href={route.path}>
-                    <span class="lost-world__atlas-index" aria-hidden="true">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span>
-                      <strong>{getNavLabel(route)}</strong>
-                      <code>{route.path}</code>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
-        ))
-      }
+      <h2 id="lost-atlas-title" class="lost-world__atlas-title">
+        Jump to a known route
+      </h2>
+      {atlasGroups.map((group) => (
+        <>
+          <h3 class="lost-world__atlas-group">{group.label}</h3>
+          <ul class="lost-world__atlas-list">
+            {group.routes.map((route, index) => (
+              <li>
+                <a class="lost-world__atlas-link" href={route.path}>
+                  <span class="lost-world__atlas-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>
+                    <strong>{getNavLabel(route)}</strong>
+                    <code>{route.path}</code>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ))}
     </nav>
   </section>
 </SectionLayout>

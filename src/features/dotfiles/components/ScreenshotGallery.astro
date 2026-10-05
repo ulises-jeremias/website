@@ -29,42 +29,42 @@ const rest = screenshotItems.slice(1);
     />
     <figcaption>
       <span data-gallery-caption>{hero.caption}</span>
-      <span class="df-gallery__credit" data-gallery-credit>{hero.credit}</span>
+      <span class="df-gallery__credit" data-gallery-credit>
+        {hero.credit}
+      </span>
     </figcaption>
   </figure>
 
   <ul class="df-gallery__rail" aria-label="Select capture">
-    {
-      screenshotItems.map((shot, i) => (
-        <li>
-          <button
-            type="button"
-            class="df-gallery__thumb"
-            aria-pressed={i === 0 ? 'true' : 'false'}
-            data-gallery-id={shot.id}
-            data-src={shot.src}
-            data-srcset={shot.srcSet}
-            data-alt={shot.alt}
-            data-caption={shot.caption}
-            data-credit={shot.credit}
-            data-w={String(shot.width)}
-            data-h={String(shot.height)}
-          >
-            <img
-              src={shot.src}
-              srcset={shot.srcSet}
-              sizes="160px"
-              alt=""
-              width="160"
-              height="90"
-              loading="lazy"
-              decoding="async"
-            />
-            <span>{shot.caption}</span>
-          </button>
-        </li>
-      ))
-    }
+    {screenshotItems.map((shot, i) => (
+      <li>
+        <button
+          type="button"
+          class="df-gallery__thumb"
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          data-gallery-id={shot.id}
+          data-src={shot.src}
+          data-srcset={shot.srcSet}
+          data-alt={shot.alt}
+          data-caption={shot.caption}
+          data-credit={shot.credit}
+          data-w={String(shot.width)}
+          data-h={String(shot.height)}
+        >
+          <img
+            src={shot.src}
+            srcset={shot.srcSet}
+            sizes="160px"
+            alt=""
+            width="160"
+            height="90"
+            loading="lazy"
+            decoding="async"
+          />
+          <span>{shot.caption}</span>
+        </button>
+      </li>
+    ))}
   </ul>
 
   <p class="df-gallery__note">

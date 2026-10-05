@@ -68,41 +68,70 @@ const orderedLayers = [...dotfilesLayers].reverse();
   <DotfilesNarrative />
 
   <WorldDock label="Review configuration">
-    <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer"> GitHub </a>
-    <a href={verifiedFacts.readmeUrl} target="_blank" rel="noopener noreferrer">README ↗</a>
-    <a href={verifiedFacts.contributingUrl} target="_blank" rel="noopener noreferrer">Contribution policy ↗</a>
-    <button type="button" data-df-copy aria-label="Copy review command" hidden>Copy review command</button>
+    <a class="vf-dock__primary" href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer">
+      {' '}
+      GitHub{' '}
+    </a>
+    <a href={verifiedFacts.readmeUrl} target="_blank" rel="noopener noreferrer">
+      README ↗
+    </a>
+    <a href={verifiedFacts.contributingUrl} target="_blank" rel="noopener noreferrer">
+      Contribution policy ↗
+    </a>
+    <button type="button" data-df-copy aria-label="Copy review command" hidden>
+      Copy review command
+    </button>
     <code
       class="vf-dock__code"
       data-df-review-command
       tabindex="0"
       role="region"
       aria-label="HorneroConfig review command"
-      aria-describedby="df-review-command-hint">{verifiedFacts.reviewCommand}</code
+      aria-describedby="df-review-command-hint"
     >
-    <span class="df-world__review-command-hint" id="df-review-command-hint"
-      >Review the proposed changes before applying this source.</span
-    >
+      {verifiedFacts.reviewCommand}
+    </code>
+    <span class="df-world__review-command-hint" id="df-review-command-hint">
+      Review the proposed changes before applying this source.
+    </span>
   </WorldDock>
   <p class="df-world__copy-status" role="status" aria-atomic="true" data-df-copy-status></p>
 
   <section class="df-world__methods">
     <h2 class="df-world__label">Other methods &amp; docs</h2>
     <ul>
-      <li><code>{verifiedFacts.applyCommand}</code> — apply only after reviewing the diff</li>
+      <li>
+        <code>{verifiedFacts.applyCommand}</code> — apply only after reviewing the diff
+      </li>
       <li>
         <code>horneroctl --help</code> — product operations come from{' '}
-        <a href={verifiedFacts.systemCliUrl} target="_blank" rel="noopener noreferrer">HorneroOS/hornero ↗</a>; inspect
-        the <a href={verifiedFacts.horneroctlDocUrl} target="_blank" rel="noopener noreferrer">current CLI guide ↗</a>
+        <a href={verifiedFacts.systemCliUrl} target="_blank" rel="noopener noreferrer">
+          HorneroOS/hornero ↗
+        </a>
+        ; inspect the{' '}
+        <a href={verifiedFacts.horneroctlDocUrl} target="_blank" rel="noopener noreferrer">
+          current CLI guide ↗
+        </a>
       </li>
-      <li>Package installation does not run <code>chezmoi apply</code> automatically.</li>
       <li>
-        <a href={verifiedFacts.securityGuidelinesUrl} target="_blank" rel="noopener noreferrer">Security guidelines ↗</a
-        >
-        · <a href={verifiedFacts.securityPolicyUrl} target="_blank" rel="noopener noreferrer">Security policy ↗</a>
-        · <a href={verifiedFacts.testingStrategyUrl} target="_blank" rel="noopener noreferrer">Testing strategy ↗</a>
-        · <a href={verifiedFacts.productAcceptanceUrl} target="_blank" rel="noopener noreferrer">Product acceptance ↗</a
-        >
+        Package installation does not run <code>chezmoi apply</code> automatically.
+      </li>
+      <li>
+        <a href={verifiedFacts.securityGuidelinesUrl} target="_blank" rel="noopener noreferrer">
+          Security guidelines ↗
+        </a>
+        ·{' '}
+        <a href={verifiedFacts.securityPolicyUrl} target="_blank" rel="noopener noreferrer">
+          Security policy ↗
+        </a>
+        ·{' '}
+        <a href={verifiedFacts.testingStrategyUrl} target="_blank" rel="noopener noreferrer">
+          Testing strategy ↗
+        </a>
+        ·{' '}
+        <a href={verifiedFacts.productAcceptanceUrl} target="_blank" rel="noopener noreferrer">
+          Product acceptance ↗
+        </a>
       </li>
     </ul>
   </section>
@@ -118,38 +147,34 @@ const orderedLayers = [...dotfilesLayers].reverse();
         <fieldset class="df-world__layer-controls" data-df-layer-controls disabled>
           <legend>Choose a HorneroConfig layer</legend>
           <div class="df-world__layer-options">
-            {
-              orderedLayers.map((layer) => (
-                <>
-                  <input
-                    class="df-world__layer-radio"
-                    type="radio"
-                    name="df-layer"
-                    id={`df-layer-${layer.id}`}
-                    value={layer.id}
-                    checked={layer.id === defaultLayer.id}
-                    data-layer-control={layer.id}
-                    aria-controls="df-layer-inspector"
-                  />
-                  <label class="vf-node" for={`df-layer-${layer.id}`}>
-                    {layer.label}
-                  </label>
-                </>
-              ))
-            }
+            {orderedLayers.map((layer) => (
+              <>
+                <input
+                  class="df-world__layer-radio"
+                  type="radio"
+                  name="df-layer"
+                  id={`df-layer-${layer.id}`}
+                  value={layer.id}
+                  checked={layer.id === defaultLayer.id}
+                  data-layer-control={layer.id}
+                  aria-controls="df-layer-inspector"
+                />
+                <label class="vf-node" for={`df-layer-${layer.id}`}>
+                  {layer.label}
+                </label>
+              </>
+            ))}
           </div>
         </fieldset>
         <noscript>
           <div class="df-world__layer-fallback" data-df-layer-fallback>
             <p>Interactive selection is unavailable. Complete stack, from daily surface to foundation:</p>
             <ul>
-              {
-                orderedLayers.map((layer) => (
-                  <li>
-                    <strong>{layer.label}</strong> — {layer.description}
-                  </li>
-                ))
-              }
+              {orderedLayers.map((layer) => (
+                <li>
+                  <strong>{layer.label}</strong> — {layer.description}
+                </li>
+              ))}
             </ul>
           </div>
         </noscript>
@@ -158,7 +183,9 @@ const orderedLayers = [...dotfilesLayers].reverse();
         <p data-layer-copy>{defaultLayer.description}</p>
         <Fragment slot="meta">
           <div data-layer-meta>
-            {defaultLayer.details.map((d) => <code data-layer-detail>{d}</code>)}
+            {defaultLayer.details.map((d) => (
+              <code data-layer-detail>{d}</code>
+            ))}
           </div>
         </Fragment>
       </SceneInspector>
@@ -174,21 +201,21 @@ const orderedLayers = [...dotfilesLayers].reverse();
       <span aria-hidden="true">·</span>
       <span>{verifiedFacts.systemCli}</span>
       <span aria-hidden="true">·</span>
-      <span>verified upstream {verifiedFacts.verifiedAt} @{verifiedFacts.sourceRevision}</span>
+      <span>
+        verified upstream {verifiedFacts.verifiedAt} @{verifiedFacts.sourceRevision}
+      </span>
     </p>
   </aside>
 
   <section class="df-world__attribution">
     <h2 class="df-world__label">Attribution &amp; licenses</h2>
     <ul>
-      {
-        attributionEntries.map((entry) => (
-          <li>
-            <strong>{entry.component}</strong> · {entry.license} · {entry.source}
-            <span> — {entry.notes}</span>
-          </li>
-        ))
-      }
+      {attributionEntries.map((entry) => (
+        <li>
+          <strong>{entry.component}</strong> · {entry.license} · {entry.source}
+          <span> — {entry.notes}</span>
+        </li>
+      ))}
     </ul>
   </section>
 
@@ -197,7 +224,9 @@ const orderedLayers = [...dotfilesLayers].reverse();
     <a href="/community">Community</a>
     <a href="/agentic-workstation">Workstation</a>
     <a href="/agent-toolkit">Toolkit</a>
-    <a href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    <a href={verifiedFacts.repoUrl} target="_blank" rel="noopener noreferrer">
+      GitHub ↗
+    </a>
   </nav>
 
   <SupportNote area="hornero" />

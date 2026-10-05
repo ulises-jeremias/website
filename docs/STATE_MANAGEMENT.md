@@ -24,7 +24,9 @@ const items = (await getCollection('blog')).filter((p) => !p.data.draft);
 ---
 
 <ul>
-  {items.map((item) => <li>{item.data.title}</li>)}
+  {items.map((item) => (
+    <li>{item.data.title}</li>
+  ))}
 </ul>
 ```
 

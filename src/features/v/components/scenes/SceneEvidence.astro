@@ -12,57 +12,51 @@ const { caption, logo, images } = Astro.props as Props;
 ---
 
 <figure class="scene-evidence">
-  {
-    logo && (
-      <>
+  {logo && (
+    <>
+      <picture class="scene-evidence__logo-picture">
+        {logo.srcSet && (
+          <source type="image/webp" data-deferred-srcset={logo.srcSet} data-deferred-sizes={logo.sizes} />
+        )}
+        <img
+          class="scene-evidence__logo"
+          data-deferred-src={logo.src}
+          alt={logo.alt}
+          width={logo.width ?? 44}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      <noscript>
         <picture class="scene-evidence__logo-picture">
-          {logo.srcSet && (
-            <source type="image/webp" data-deferred-srcset={logo.srcSet} data-deferred-sizes={logo.sizes} />
-          )}
+          {logo.srcSet && <source type="image/webp" srcset={logo.srcSet} sizes={logo.sizes} />}
+          <img class="scene-evidence__logo" src={logo.src} alt={logo.alt} width={logo.width ?? 44} loading="lazy" />
+        </picture>
+      </noscript>
+    </>
+  )}
+  <div class="scene-evidence__items">
+    {images.map((img) => (
+      <>
+        <picture class="scene-evidence__picture">
+          {img.srcSet && <source type="image/webp" data-deferred-srcset={img.srcSet} data-deferred-sizes={img.sizes} />}
           <img
-            class="scene-evidence__logo"
-            data-deferred-src={logo.src}
-            alt={logo.alt}
-            width={logo.width ?? 44}
+            class="scene-evidence__img"
+            data-deferred-src={img.src}
+            alt={img.alt}
+            width={img.width ?? 132}
             loading="lazy"
             decoding="async"
           />
         </picture>
         <noscript>
-          <picture class="scene-evidence__logo-picture">
-            {logo.srcSet && <source type="image/webp" srcset={logo.srcSet} sizes={logo.sizes} />}
-            <img class="scene-evidence__logo" src={logo.src} alt={logo.alt} width={logo.width ?? 44} loading="lazy" />
+          <picture class="scene-evidence__picture">
+            {img.srcSet && <source type="image/webp" srcset={img.srcSet} sizes={img.sizes} />}
+            <img class="scene-evidence__img" src={img.src} alt={img.alt} width={img.width ?? 132} loading="lazy" />
           </picture>
         </noscript>
       </>
-    )
-  }
-  <div class="scene-evidence__items">
-    {
-      images.map((img) => (
-        <>
-          <picture class="scene-evidence__picture">
-            {img.srcSet && (
-              <source type="image/webp" data-deferred-srcset={img.srcSet} data-deferred-sizes={img.sizes} />
-            )}
-            <img
-              class="scene-evidence__img"
-              data-deferred-src={img.src}
-              alt={img.alt}
-              width={img.width ?? 132}
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-          <noscript>
-            <picture class="scene-evidence__picture">
-              {img.srcSet && <source type="image/webp" srcset={img.srcSet} sizes={img.sizes} />}
-              <img class="scene-evidence__img" src={img.src} alt={img.alt} width={img.width ?? 132} loading="lazy" />
-            </picture>
-          </noscript>
-        </>
-      ))
-    }
+    ))}
   </div>
   <figcaption class="scene-evidence__caption">{caption}</figcaption>
 </figure>

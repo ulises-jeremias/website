@@ -59,43 +59,43 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
         <circle class="atk-nexus__orbit atk-nexus__orbit--mid" cx="320" cy="320" r="188"></circle>
         <circle cx="320" cy="320" r="96" fill="url(#atk-core-glow)"></circle>
 
-        {
-          distributionTargets.map((target, index) => {
-            const angle = (targetAngles[index]! * Math.PI) / 180;
-            const x = 320 + Math.cos(angle) * 268;
-            const y = 320 + Math.sin(angle) * 268;
-            return (
-              <g class="atk-nexus__target" data-target={target.id}>
-                <line class="atk-nexus__beam" x1="320" y1="320" x2={x} y2={y} style={`--beam-i: ${index}`} />
-                <circle cx={x} cy={y} r="18" class="atk-nexus__target-node" />
-                <text x={x} y={y + 34} text-anchor="middle" class="atk-nexus__target-label">
-                  {target.label}
-                </text>
-              </g>
-            );
-          })
-        }
+        {distributionTargets.map((target, index) => {
+          const angle = (targetAngles[index]! * Math.PI) / 180;
+          const x = 320 + Math.cos(angle) * 268;
+          const y = 320 + Math.sin(angle) * 268;
+          return (
+            <g class="atk-nexus__target" data-target={target.id}>
+              <line class="atk-nexus__beam" x1="320" y1="320" x2={x} y2={y} style={`--beam-i: ${index}`} />
+              <circle cx={x} cy={y} r="18" class="atk-nexus__target-node" />
+              <text x={x} y={y + 34} text-anchor="middle" class="atk-nexus__target-label">
+                {target.label}
+              </text>
+            </g>
+          );
+        })}
 
-        {
-          capabilityNodes.map((node, index) => {
-            const angle = (familyAngles[index]! * Math.PI) / 180;
-            const x = 320 + Math.cos(angle) * 188;
-            const y = 320 + Math.sin(angle) * 188;
-            return (
-              <g class="atk-nexus__family-mark" data-family-mark={node.id} style={`--node-color: ${node.color}`}>
-                <circle cx={x} cy={y} r="28" class="atk-nexus__family-ring" />
-                <text x={x} y={y + 4} text-anchor="middle" class="atk-nexus__family-count">
-                  {node.count}
-                </text>
-              </g>
-            );
-          })
-        }
+        {capabilityNodes.map((node, index) => {
+          const angle = (familyAngles[index]! * Math.PI) / 180;
+          const x = 320 + Math.cos(angle) * 188;
+          const y = 320 + Math.sin(angle) * 188;
+          return (
+            <g class="atk-nexus__family-mark" data-family-mark={node.id} style={`--node-color: ${node.color}`}>
+              <circle cx={x} cy={y} r="28" class="atk-nexus__family-ring" />
+              <text x={x} y={y + 4} text-anchor="middle" class="atk-nexus__family-count">
+                {node.count}
+              </text>
+            </g>
+          );
+        })}
 
         <g class="atk-nexus__core" filter="url(#atk-soft)">
           <circle cx="320" cy="320" r="54" class="atk-nexus__core-disk"></circle>
-          <text x="320" y="312" text-anchor="middle" class="atk-nexus__core-title">AGENT</text>
-          <text x="320" y="334" text-anchor="middle" class="atk-nexus__core-title">TOOLKIT</text>
+          <text x="320" y="312" text-anchor="middle" class="atk-nexus__core-title">
+            AGENT
+          </text>
+          <text x="320" y="334" text-anchor="middle" class="atk-nexus__core-title">
+            TOOLKIT
+          </text>
         </g>
 
         <g class="atk-nexus__packets" data-packets>
@@ -107,112 +107,108 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
 
       <fieldset class="atk-nexus__family-controls" disabled>
         <legend>Capability family</legend>
-        {
-          capabilityNodes.map((node, index) => (
-            <>
-              <input
-                class="atk-nexus__radio"
-                type="radio"
-                name="atk-family"
-                id={`atk-family-${node.id}`}
-                value={node.id}
-                checked={index === 0}
-                data-family={node.id}
-                data-family-status={`${node.title} — ${node.count} catalog items`}
-                aria-controls="atk-family-inspector"
-              />
-              <label class="atk-nexus__chip" for={`atk-family-${node.id}`} style={`--node-color: ${node.color}`}>
-                <span class="atk-nexus__chip-count">{node.count}</span>
-                <span>{node.title}</span>
-              </label>
-            </>
-          ))
-        }
+        {capabilityNodes.map((node, index) => (
+          <>
+            <input
+              class="atk-nexus__radio"
+              type="radio"
+              name="atk-family"
+              id={`atk-family-${node.id}`}
+              value={node.id}
+              checked={index === 0}
+              data-family={node.id}
+              data-family-status={`${node.title} — ${node.count} catalog items`}
+              aria-controls="atk-family-inspector"
+            />
+            <label class="atk-nexus__chip" for={`atk-family-${node.id}`} style={`--node-color: ${node.color}`}>
+              <span class="atk-nexus__chip-count">{node.count}</span>
+              <span>{node.title}</span>
+            </label>
+          </>
+        ))}
       </fieldset>
 
       <aside class="atk-nexus__static-index" data-atk-static-index aria-labelledby="atk-static-index-title">
-        <p id="atk-static-index-title" class="atk-nexus__static-index-kicker">Static distribution index</p>
+        <p id="atk-static-index-title" class="atk-nexus__static-index-kicker">
+          Static distribution index
+        </p>
         <ul class="atk-nexus__static-families" aria-label="Capability families">
-          {
-            capabilityNodes.map((node) => (
-              <li>
-                <strong>{node.title}</strong>
-                <span>{node.count}</span>
-                <span class="atk-nexus__static-family-summary">{node.summary}</span>
-              </li>
-            ))
-          }
+          {capabilityNodes.map((node) => (
+            <li>
+              <strong>{node.title}</strong>
+              <span>{node.count}</span>
+              <span class="atk-nexus__static-family-summary">{node.summary}</span>
+            </li>
+          ))}
         </ul>
         <p class="atk-nexus__static-targets-title">Native profiles</p>
         <ul class="atk-nexus__static-targets" aria-label="Native assistant profiles">
-          {
-            distributionTargets.map((target) => (
-              <li>
-                <strong>{target.label}</strong>
-                <code>{target.path}</code>
-              </li>
-            ))
-          }
+          {distributionTargets.map((target) => (
+            <li>
+              <strong>{target.label}</strong>
+              <code>{target.path}</code>
+            </li>
+          ))}
         </ul>
       </aside>
     </div>
 
     <aside class="atk-nexus__inspector" id="atk-family-inspector">
-      {
-        capabilityNodes.map((node, index) => (
-          <div
-            class:list={['atk-nexus__panel', { 'is-active': index === 0 }]}
-            data-family-panel={node.id}
-            hidden={index !== 0}
-          >
-            <p class="atk-nexus__panel-kicker">{node.title}</p>
-            <p class="atk-nexus__panel-count">{node.count}</p>
-            <p class="atk-nexus__panel-summary">{node.summary}</p>
-            <ul class="atk-nexus__examples" aria-label={`${node.title} examples`}>
-              {node.examples.slice(0, 3).map((example) => (
-                <li>
-                  <code>{example.name}</code>
-                </li>
+      {capabilityNodes.map((node, index) => (
+        <div
+          class:list={['atk-nexus__panel', { 'is-active': index === 0 }]}
+          data-family-panel={node.id}
+          hidden={index !== 0}
+        >
+          <p class="atk-nexus__panel-kicker">{node.title}</p>
+          <p class="atk-nexus__panel-count">{node.count}</p>
+          <p class="atk-nexus__panel-summary">{node.summary}</p>
+          <ul class="atk-nexus__examples" aria-label={`${node.title} examples`}>
+            {node.examples.slice(0, 3).map((example) => (
+              <li>
+                <code>{example.name}</code>
+              </li>
+            ))}
+          </ul>
+          {node.id === 'skills' ? (
+            <div class="atk-nexus__domains">
+              {skillDomains.map((domain) => (
+                <div class="atk-nexus__domain" style={`--fill: ${(domain.count / maxDomain) * 100}%`}>
+                  <span>{domain.id}</span>
+                  <span class="atk-nexus__domain-bar" title={`${domain.id}: ${domain.count}`}>
+                    <span />
+                  </span>
+                  <span class="atk-nexus__domain-n">{domain.count}</span>
+                </div>
               ))}
-            </ul>
-            {node.id === 'skills' ? (
-              <div class="atk-nexus__domains">
-                {skillDomains.map((domain) => (
-                  <div class="atk-nexus__domain" style={`--fill: ${(domain.count / maxDomain) * 100}%`}>
-                    <span>{domain.id}</span>
-                    <span class="atk-nexus__domain-bar" title={`${domain.id}: ${domain.count}`}>
-                      <span />
+            </div>
+          ) : null}
+          {node.id === 'agents' ? (
+            <ul class="atk-nexus__personas" aria-label="Agent personas">
+              {agentVisualIds.map((id) => {
+                const visual = personaVisuals[id]!;
+                return (
+                  <li data-glyph={visual.glyph}>
+                    <span class="atk-nexus__persona-glyph" aria-hidden="true" />
+                    <span>
+                      <strong>{visual.label}</strong>
+                      <small>{visual.prop}</small>
                     </span>
-                    <span class="atk-nexus__domain-n">{domain.count}</span>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-            {node.id === 'agents' ? (
-              <ul class="atk-nexus__personas" aria-label="Agent personas">
-                {agentVisualIds.map((id) => {
-                  const visual = personaVisuals[id]!;
-                  return (
-                    <li data-glyph={visual.glyph}>
-                      <span class="atk-nexus__persona-glyph" aria-hidden="true" />
-                      <span>
-                        <strong>{visual.label}</strong>
-                        <small>{visual.prop}</small>
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
-            <a class="atk-nexus__browse" href={node.href} target="_blank" rel="noopener noreferrer">
-              Browse {node.title.toLowerCase()} ↗
-            </a>
-          </div>
-        ))
-      }
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
+          <a class="atk-nexus__browse" href={node.href} target="_blank" rel="noopener noreferrer">
+            Browse {node.title.toLowerCase()} ↗
+          </a>
+        </div>
+      ))}
       <p class="atk-nexus__dist-note">
         Compile once → land in {distributionTargets.length} native profiles.
-        <a href={toolkitDocs.repo} target="_blank" rel="noopener noreferrer">Docs ↗</a>
+        <a href={toolkitDocs.repo} target="_blank" rel="noopener noreferrer">
+          Docs ↗
+        </a>
       </p>
     </aside>
   </div>

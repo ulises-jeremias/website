@@ -33,17 +33,26 @@ function formatVerifiedDate(value: string): string {
       <h2 id="projects-ledger-title">Grouped ledger</h2>
       <p class="projects-ledger__lede">
         Every project I own, maintain, or contribute to, grouped by ecosystem. Entries marked
-        <span class="projects-ledger__world-tag">world</span> have a dedicated page on this site. No stars or download counts
-        appear unless independently verified.
+        <span class="projects-ledger__world-tag">world</span> have a dedicated page on this site. No stars or download
+        counts appear unless independently verified.
       </p>
     </div>
 
     <aside class="projects-ledger__readout" aria-label="Project ledger readout">
       <p class="projects-ledger__readout-kicker">Reading key</p>
       <dl>
-        <div><dt>Records</dt><dd>{ledgerProjects.length}</dd></div>
-        <div><dt>World pointers</dt><dd>{worldCount}</dd></div>
-        <div><dt>Archived</dt><dd>{archivedCount}</dd></div>
+        <div>
+          <dt>Records</dt>
+          <dd>{ledgerProjects.length}</dd>
+        </div>
+        <div>
+          <dt>World pointers</dt>
+          <dd>{worldCount}</dd>
+        </div>
+        <div>
+          <dt>Archived</dt>
+          <dd>{archivedCount}</dd>
+        </div>
       </dl>
     </aside>
 
@@ -56,13 +65,11 @@ function formatVerifiedDate(value: string): string {
         <span class="visually-hidden">Group</span>
         <select name="group" data-projects-group>
           <option value="">All groups</option>
-          {
-            groupOptions.map((g) => (
-              <option value={g.id}>
-                {g.label} ({g.count})
-              </option>
-            ))
-          }
+          {groupOptions.map((g) => (
+            <option value={g.id}>
+              {g.label} ({g.count})
+            </option>
+          ))}
         </select>
       </label>
       <noscript>
@@ -73,75 +80,73 @@ function formatVerifiedDate(value: string): string {
     </form>
   </div>
 
-  {
-    groups.map((bucket) => (
-      <section
-        class="projects-ledger__group"
-        aria-labelledby={`group-${bucket.id}`}
-        data-group={bucket.id}
-        data-projects-group-section
-      >
-        <h3 id={`group-${bucket.id}`}>{bucket.label}</h3>
-        <div class="projects-ledger__table">
-          <div class="projects-ledger__row projects-ledger__row--head" aria-hidden="true">
-            <span>Project</span>
-            <span>Status</span>
-            <span>Links</span>
-          </div>
-          {bucket.projects.map((p) => (
-            <article
-              class="projects-ledger__row"
-              aria-labelledby={`project-${p.slug}-title`}
-              data-status={p.status}
-              data-visibility={p.visibility}
-              data-testid="project-row"
-              data-projects-row
-              data-search={`${p.title} ${p.summary} ${p.tags.join(' ')} ${p.role} ${p.kind} ${p.slug}`}
-            >
-              <div>
-                <h4 id={`project-${p.slug}-title`}>
-                  <a href={primaryHref(p)}>{p.title}</a>
-                  {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
-                </h4>
-                <div class="projects-ledger__meta">
-                  <p class="projects-ledger__summary">{p.summary}</p>
-                  {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
-                  {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
-                  <p class="projects-ledger__tags">
-                    {p.tags.slice(0, 2).map((t) => (
-                      <span>#{t}</span>
-                    ))}
-                  </p>
-                </div>
-              </div>
-              <div>
-                <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>
-                  {statusLabels[p.status]}
-                </span>
-                <span class="projects-ledger__kind">
-                  {p.kind} · {roleLabels[p.role]} ·{' '}
-                  <time datetime={p.lastVerified}>{formatVerifiedDate(p.lastVerified)}</time>
-                </span>
-              </div>
-              <div class="projects-ledger__links">
-                {p.links.map((l) => (
-                  <a
-                    href={l.href}
-                    target={l.href.startsWith('http') ? '_blank' : undefined}
-                    rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  >
-                    {l.label}
-                  </a>
-                ))}
-              </div>
-            </article>
-          ))}
+  {groups.map((bucket) => (
+    <section
+      class="projects-ledger__group"
+      aria-labelledby={`group-${bucket.id}`}
+      data-group={bucket.id}
+      data-projects-group-section
+    >
+      <h3 id={`group-${bucket.id}`}>{bucket.label}</h3>
+      <div class="projects-ledger__table">
+        <div class="projects-ledger__row projects-ledger__row--head" aria-hidden="true">
+          <span>Project</span>
+          <span>Status</span>
+          <span>Links</span>
         </div>
-      </section>
-    ))
-  }
+        {bucket.projects.map((p) => (
+          <article
+            class="projects-ledger__row"
+            aria-labelledby={`project-${p.slug}-title`}
+            data-status={p.status}
+            data-visibility={p.visibility}
+            data-testid="project-row"
+            data-projects-row
+            data-search={`${p.title} ${p.summary} ${p.tags.join(' ')} ${p.role} ${p.kind} ${p.slug}`}
+          >
+            <div>
+              <h4 id={`project-${p.slug}-title`}>
+                <a href={primaryHref(p)}>{p.title}</a>
+                {p.visibility === 'world' ? <span class="projects-ledger__world-tag">world</span> : null}
+              </h4>
+              <div class="projects-ledger__meta">
+                <p class="projects-ledger__summary">{p.summary}</p>
+                {p.licenseNote ? <p class="projects-ledger__caution">{p.licenseNote}</p> : null}
+                {p.archivedNote ? <p class="projects-ledger__archived-note">{p.archivedNote}</p> : null}
+                <p class="projects-ledger__tags">
+                  {p.tags.slice(0, 2).map((t) => (
+                    <span>#{t}</span>
+                  ))}
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class={`projects-ledger__badge projects-ledger__badge--${p.status}`}>{statusLabels[p.status]}</span>
+              <span class="projects-ledger__kind">
+                {p.kind} · {roleLabels[p.role]} ·{' '}
+                <time datetime={p.lastVerified}>{formatVerifiedDate(p.lastVerified)}</time>
+              </span>
+            </div>
+            <div class="projects-ledger__links">
+              {p.links.map((l) => (
+                <a
+                  href={l.href}
+                  target={l.href.startsWith('http') ? '_blank' : undefined}
+                  rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
 
-  <p class="projects-ledger__empty" data-projects-empty hidden>No projects match this filter.</p>
+  <p class="projects-ledger__empty" data-projects-empty hidden>
+    No projects match this filter.
+  </p>
   <p class="visually-hidden" role="status" aria-atomic="true" data-projects-status>
     {ledgerProjects.length} projects shown.
   </p>

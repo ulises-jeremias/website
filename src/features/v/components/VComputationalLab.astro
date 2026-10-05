@@ -74,9 +74,18 @@ const stationsJson = JSON.stringify(stations);
           </g>
         </svg>
         <figcaption>
-          <span><strong>VSL</strong><small>Scientific computing</small></span>
-          <span><strong>VTL</strong><small>Tensors · autograd</small></span>
-          <span><strong>RxV</strong><small>Reactive channels</small></span>
+          <span>
+            <strong>VSL</strong>
+            <small>Scientific computing</small>
+          </span>
+          <span>
+            <strong>VTL</strong>
+            <small>Tensors · autograd</small>
+          </span>
+          <span>
+            <strong>RxV</strong>
+            <small>Reactive channels</small>
+          </span>
         </figcaption>
       </figure>
     </div>
@@ -101,74 +110,68 @@ const stationsJson = JSON.stringify(stations);
 
   <nav class="v-lab__index" aria-label="Lab stations">
     <ol class="v-lab__index-list">
-      {
-        stations.map((station) => (
-          <li>
-            <a class="v-lab__index-link" href={`#${station.id}`}>
-              <strong>{station.title}</strong>
-              <span class="v-lab__index-role">{station.role}</span>
-            </a>
-          </li>
-        ))
-      }
+      {stations.map((station) => (
+        <li>
+          <a class="v-lab__index-link" href={`#${station.id}`}>
+            <strong>{station.title}</strong>
+            <span class="v-lab__index-role">{station.role}</span>
+          </a>
+        </li>
+      ))}
     </ol>
   </nav>
 
   <div class="v-lab__stations" data-v-station-selector hidden>
-    {
-      stations.map((station) => (
-        <button type="button" class="vf-node" id={`v-station-${station.id}`} data-v-station={station.id}>
-          {station.label}
-        </button>
-      ))
-    }
+    {stations.map((station) => (
+      <button type="button" class="vf-node" id={`v-station-${station.id}`} data-v-station={station.id}>
+        {station.label}
+      </button>
+    ))}
   </div>
 
   <div class="vf-scene v-lab__scene">
     <div class="vf-stage v-lab__stage">
-      {
-        stations.map((station) => (
-          <section class="v-lab__panel" id={station.id} aria-labelledby={station.headingId} data-v-panel={station.id}>
-            {station.id === 'v' ? <VLanguageScene /> : null}
-            {station.id === 'vsl' ? <VSLScene /> : null}
-            {station.id === 'vtl' ? <VTLAutoGradScene /> : null}
-            {station.id === 'rxv' ? <RxVStreamScene /> : null}
-            {station.id === 'setup-v' ? <SetupVScene /> : null}
-            {station.id === 'awesome-v' ? <AwesomeVScene chips={station.chips} /> : null}
-            <div class="v-lab__station-summary" data-v-station-summary>
-              <p>{station.body}</p>
-              <p class="v-lab__station-role">{station.role}</p>
-              <p class="v-lab__station-source">
-                <code>{station.repo}</code> · {station.license}
-              </p>
-              <ul class="v-lab__chips" aria-label={`${station.title} highlights`}>
-                {station.chips.map((chip) => (
-                  <li>
-                    <code>{chip}</code>
-                  </li>
-                ))}
-              </ul>
-              <a
-                class="v-lab__repo-link"
-                data-v-station-repo
-                href={station.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Open {station.repo} ↗
+      {stations.map((station) => (
+        <section class="v-lab__panel" id={station.id} aria-labelledby={station.headingId} data-v-panel={station.id}>
+          {station.id === 'v' ? <VLanguageScene /> : null}
+          {station.id === 'vsl' ? <VSLScene /> : null}
+          {station.id === 'vtl' ? <VTLAutoGradScene /> : null}
+          {station.id === 'rxv' ? <RxVStreamScene /> : null}
+          {station.id === 'setup-v' ? <SetupVScene /> : null}
+          {station.id === 'awesome-v' ? <AwesomeVScene chips={station.chips} /> : null}
+          <div class="v-lab__station-summary" data-v-station-summary>
+            <p>{station.body}</p>
+            <p class="v-lab__station-role">{station.role}</p>
+            <p class="v-lab__station-source">
+              <code>{station.repo}</code> · {station.license}
+            </p>
+            <ul class="v-lab__chips" aria-label={`${station.title} highlights`}>
+              {station.chips.map((chip) => (
+                <li>
+                  <code>{chip}</code>
+                </li>
+              ))}
+            </ul>
+            <a
+              class="v-lab__repo-link"
+              data-v-station-repo
+              href={station.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open {station.repo} ↗
+            </a>
+            <div class="v-lab__contribution-links" role="group" aria-label={`${station.title} contribution paths`}>
+              <a href={station.contributingHref} target="_blank" rel="noopener noreferrer">
+                Contribution guide ↗
               </a>
-              <div class="v-lab__contribution-links" role="group" aria-label={`${station.title} contribution paths`}>
-                <a href={station.contributingHref} target="_blank" rel="noopener noreferrer">
-                  Contribution guide ↗
-                </a>
-                <a href={station.issuesHref} target="_blank" rel="noopener noreferrer">
-                  Open issues ↗
-                </a>
-              </div>
+              <a href={station.issuesHref} target="_blank" rel="noopener noreferrer">
+                Open issues ↗
+              </a>
             </div>
-          </section>
-        ))
-      }
+          </div>
+        </section>
+      ))}
     </div>
 
     <SceneInspector eyebrow="Station" title={defaultStation.title} id="v-lab-inspector">
@@ -177,17 +180,15 @@ const stationsJson = JSON.stringify(stations);
         <div data-v-inspector-meta>
           <span data-v-inspector-role>{defaultStation.role}</span>
           <span>
-            <code data-v-inspector-repo>{defaultStation.repo}</code>
-            · <span data-v-inspector-license>{defaultStation.license}</span>
+            <code data-v-inspector-repo>{defaultStation.repo}</code>·{' '}
+            <span data-v-inspector-license>{defaultStation.license}</span>
           </span>
           <ul class="v-lab__chips" data-v-inspector-chips aria-label="Highlights">
-            {
-              defaultStation.chips.map((chip) => (
-                <li>
-                  <code>{chip}</code>
-                </li>
-              ))
-            }
+            {defaultStation.chips.map((chip) => (
+              <li>
+                <code>{chip}</code>
+              </li>
+            ))}
           </ul>
           <a
             class="v-lab__repo-link"
@@ -203,11 +204,13 @@ const stationsJson = JSON.stringify(stations);
               data-v-inspector-contributing
               href={defaultStation.contributingHref}
               target="_blank"
-              rel="noopener noreferrer">Contribution guide ↗</a
+              rel="noopener noreferrer"
             >
-            <a data-v-inspector-issues href={defaultStation.issuesHref} target="_blank" rel="noopener noreferrer"
-              >Open issues ↗</a
-            >
+              Contribution guide ↗
+            </a>
+            <a data-v-inspector-issues href={defaultStation.issuesHref} target="_blank" rel="noopener noreferrer">
+              Open issues ↗
+            </a>
           </div>
         </div>
       </Fragment>
@@ -220,9 +223,15 @@ const stationsJson = JSON.stringify(stations);
     <a class="vf-dock__primary" href="https://github.com/vlang/v" target="_blank" rel="noopener noreferrer">
       vlang/v
     </a>
-    <a href="https://github.com/vlang/vsl" target="_blank" rel="noopener noreferrer">VSL</a>
-    <a href="https://github.com/vlang/vtl" target="_blank" rel="noopener noreferrer">VTL</a>
-    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noopener noreferrer">RxV</a>
+    <a href="https://github.com/vlang/vsl" target="_blank" rel="noopener noreferrer">
+      VSL
+    </a>
+    <a href="https://github.com/vlang/vtl" target="_blank" rel="noopener noreferrer">
+      VTL
+    </a>
+    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noopener noreferrer">
+      RxV
+    </a>
     <a href="/community">Community</a>
     <code class="vf-dock__code">v install vsl · v install vtl · uses: {SETUP_V_PIN}</code>
   </WorldDock>
@@ -230,14 +239,12 @@ const stationsJson = JSON.stringify(stations);
   <section class="v-lab__licenses">
     <h2>Licenses</h2>
     <ul>
-      {
-        licenseEntries.map((entry) => (
-          <li>
-            <strong>{entry.component}</strong> · {entry.license}
-            {entry.notes ? ` — ${entry.notes}` : ''}
-          </li>
-        ))
-      }
+      {licenseEntries.map((entry) => (
+        <li>
+          <strong>{entry.component}</strong> · {entry.license}
+          {entry.notes ? ` — ${entry.notes}` : ''}
+        </li>
+      ))}
     </ul>
   </section>
 </section>

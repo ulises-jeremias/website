@@ -24,14 +24,12 @@ import { atlasWorlds } from '../data/index.js';
 
   <nav class="nest-explore__textual" aria-label="Digital Nest route list">
     <ul class="nest-explore__routes">
-      {
-        atlasWorlds.map((world) => (
-          <li>
-            <a href={world.path}>{world.title}</a>
-            <span>{world.description}</span>
-          </li>
-        ))
-      }
+      {atlasWorlds.map((world) => (
+        <li>
+          <a href={world.path}>{world.title}</a>
+          <span>{world.description}</span>
+        </li>
+      ))}
     </ul>
   </nav>
 

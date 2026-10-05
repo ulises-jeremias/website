@@ -18,7 +18,11 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
   <section class="ah-hero" aria-labelledby="ah-hero-title">
     <div class="ah-hero__copy">
       <p class="ah-hero__eyebrow">Persistent workspace layer · powered by Agent Toolkit</p>
-      <h1 id="ah-hero-title">Your coding agent sessions are temporary.<br />Your workspace should not be.</h1>
+      <h1 id="ah-hero-title">
+        Your coding agent sessions are temporary.
+        <br />
+        Your workspace should not be.
+      </h1>
       <p class="ah-hero__lead">
         Agentic Harness is a workspace scaffold, not another runtime. It holds the knowledge, personas, packs, project
         collections, and run history that Agent Toolkit's engines read and write — so context survives across sessions,
@@ -29,7 +33,9 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
         <a class="ah-hero__cta" href={harnessMeta.repo} target="_blank" rel="noopener noreferrer">
           GitHub repository ↗
         </a>
-        <a class="ah-hero__secondary" href="/agent-toolkit">How the runtime works</a>
+        <a class="ah-hero__secondary" href="/agent-toolkit">
+          How the runtime works
+        </a>
       </div>
     </div>
     <div class="ah-hero__scene">
@@ -49,19 +55,18 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
       </p>
     </header>
     <ol class="ah-quickstart__steps">
-      {
-        harnessQuickStart.map((step) => (
-          <li>
-            <span class="ah-quickstart__label">{step.label}</span>
-            <pre tabindex="0" role="region" aria-label={`${step.label} command`}>
+      {harnessQuickStart.map((step) => (
+        <li>
+          <span class="ah-quickstart__label">{step.label}</span>
+          <pre tabindex="0" role="region" aria-label={`${step.label} command`}>
               <code>{step.command}</code>
             </pre>
-          </li>
-        ))
-      }
+        </li>
+      ))}
     </ol>
     <p class="ah-quickstart__note">
-      Alternative scaffold: <code>agent-toolkit workspace init --dir my-workspace</code> creates the same structure anywhere.
+      Alternative scaffold: <code>agent-toolkit workspace init --dir my-workspace</code> creates the same structure
+      anywhere.
     </p>
   </section>
 
@@ -72,15 +77,13 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
       <p>Same noun, three precise meanings — defined in the Toolkit's concept docs.</p>
     </header>
     <ul class="ah-packs__list">
-      {
-        packSemantics.map((pack) => (
-          <li>
-            <strong>{pack.name}</strong>
-            <span class="ah-packs__location">{pack.location}</span>
-            <p>{pack.detail}</p>
-          </li>
-        ))
-      }
+      {packSemantics.map((pack) => (
+        <li>
+          <strong>{pack.name}</strong>
+          <span class="ah-packs__location">{pack.location}</span>
+          <p>{pack.detail}</p>
+        </li>
+      ))}
     </ul>
   </section>
 
@@ -88,17 +91,15 @@ import { harnessCrossLinks, harnessMeta, harnessQuickStart, packSemantics } from
   <AdoptionPaths />
 
   <nav class="ah-crosslinks" aria-label="Related projects">
-    {
-      harnessCrossLinks.map((link) => (
-        <a href={link.href}>
-          <p class="ah-crosslinks__lead">{link.lead}</p>
-          <span class="ah-crosslinks__title">
-            {link.title} <span aria-hidden="true">→</span>
-          </span>
-          <p class="ah-crosslinks__detail">{link.detail}</p>
-        </a>
-      ))
-    }
+    {harnessCrossLinks.map((link) => (
+      <a href={link.href}>
+        <p class="ah-crosslinks__lead">{link.lead}</p>
+        <span class="ah-crosslinks__title">
+          {link.title} <span aria-hidden="true">→</span>
+        </span>
+        <p class="ah-crosslinks__detail">{link.detail}</p>
+      </a>
+    ))}
   </nav>
 </SectionLayout>
 

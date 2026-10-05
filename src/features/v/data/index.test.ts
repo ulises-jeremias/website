@@ -45,8 +45,11 @@ describe('V source-fidelity data', () => {
     expect(setupDiagram).toContain(
       'aria-label="5 Verify — run v version and expose bin-path, v-bin-path, version, and architecture outputs"',
     );
+    const diagramText = Array.from(setupDiagram.matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/g), ([, content]) =>
+      content.replace(/\s+/g, ''),
+    );
     for (const output of vSourceFacts.setupV.outputs) {
-      expect(setupDiagram).toContain(`>${output}</text>`);
+      expect(diagramText).toContain(output);
     }
   });
 
