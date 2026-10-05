@@ -106,6 +106,8 @@ describe('Synthwave Systems Atlas homepage', () => {
     const environment = await readSource('features/home/components/SynthwaveEnvironment.astro');
 
     expect(environment).toContain('hero-bg.webp');
+    expect(environment).toContain('hero-bg.jpg');
+    expect(environment).toContain('texture-scanline');
     expect(environment).toContain('synthwave-environment__veil');
     expect(environment).toContain('synthwave-environment__scanlines');
     expect(environment).toContain('synthwave-environment__floor-fade');

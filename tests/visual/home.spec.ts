@@ -2,6 +2,33 @@ import { expect, test } from '@playwright/test';
 import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
 
 test.describe('homepage visual coverage', () => {
+  test('atlas responsive image descriptors match the intrinsic WebP widths', async ({ page }) => {
+    await page.goto('/');
+
+    const sources = page.locator('.atlas-world__visual source[type="image/webp"]');
+    await expect(sources).toHaveCount(10);
+
+    const mismatches = await sources.evaluateAll(async (elements) => {
+      const results = await Promise.all(
+        elements.flatMap((source) => {
+          const srcset = source.getAttribute('srcset') ?? '';
+          return srcset.split(',').map(async (candidate) => {
+            const [url, descriptor] = candidate.trim().split(/\s+/);
+            if (!url || !descriptor) throw new Error(`Invalid srcset candidate: ${candidate}`);
+            const image = new Image();
+            image.src = url;
+            await image.decode();
+            return { url, descriptor, intrinsicWidth: image.naturalWidth };
+          });
+        }),
+      );
+
+      return results.filter(({ descriptor, intrinsicWidth }) => descriptor !== `${intrinsicWidth}w`);
+    });
+
+    expect(mismatches).toEqual([]);
+  });
+
   test('desktop atlas composition', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 1440, height: 1100 });

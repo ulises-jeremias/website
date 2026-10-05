@@ -20,6 +20,7 @@ const accentTokens = {
 const islandSrc = `/assets/nest/${world.island}.webp`;
 const islandSrcSm = `/assets/nest/${world.island}-sm.webp`;
 const islandPng = `/assets/${world.island}.png`;
+const islandSmallWidth = world.island === 'island-harness' ? 320 : 440;
 const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-frame-accent' : 'neon-frame';
 ---
 
@@ -42,7 +43,7 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
     <picture class="atlas-world__visual">
       <source
         type="image/webp"
-        srcset={`${islandSrcSm} 256w, ${islandSrc} 512w`}
+        srcset={`${islandSrcSm} ${islandSmallWidth}w, ${islandSrc} 640w`}
         sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
       />
       <img

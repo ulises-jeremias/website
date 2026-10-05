@@ -7,11 +7,12 @@
  * added, the webp pair lands in public/assets/nest/ but the PNG fallback is
  * easy to forget. This script can create missing fallbacks or resize existing
  * island fallbacks to the source WebP dimensions using the Playwright canvas.
+ * The homepage hero uses a separately optimized JPEG fallback.
  *
  * Usage:
  *   node scripts/generate-island-pngs.mjs                 # create missing PNGs
  *   node scripts/generate-island-pngs.mjs --regenerate    # resize all fallbacks from WebP sources
- *   node scripts/generate-island-pngs.mjs --check         # exit 1 if any missing
+ *   node scripts/generate-island-pngs.mjs --check         # verify island PNGs and hero JPEG
  */
 
 import { chromium } from '@playwright/test';
@@ -36,7 +37,7 @@ const checkOnly = process.argv.includes('--check');
 const regenerate = process.argv.includes('--regenerate');
 
 const webpFiles = (await readdir(nestDir)).filter(
-  (f) => f.endsWith('.webp') && !f.endsWith('-sm.webp') && !f.endsWith('-192.webp'),
+  (f) => f.endsWith('.webp') && !f.startsWith('hero-bg.') && !f.endsWith('-sm.webp') && !f.endsWith('-192.webp'),
 );
 const missing = [];
 for (const webp of webpFiles) {
@@ -51,12 +52,23 @@ for (const webp of webpFiles) {
 }
 
 if (checkOnly) {
-  if (missing.length === 0) {
-    console.log(`island-pngs: all ${webpFiles.length} fallbacks present`);
+  const heroFallback = path.join(outDir, 'hero-bg.jpg');
+  let heroFallbackMissing = false;
+  try {
+    await access(heroFallback, constants.F_OK);
+  } catch {
+    heroFallbackMissing = true;
+  }
+
+  if (missing.length === 0 && !heroFallbackMissing) {
+    console.log(`island-pngs: all ${webpFiles.length} PNG fallbacks and hero JPEG present`);
     process.exit(0);
   }
-  console.error(`island-pngs: missing ${missing.length} PNG fallback(s):`);
+  console.error(
+    `island-pngs: missing ${missing.length} island PNG fallback(s)${heroFallbackMissing ? ' and hero JPEG' : ''}:`,
+  );
   for (const m of missing) console.error(`  - ${path.relative(root, m.outPath)}`);
+  if (heroFallbackMissing) console.error(`  - ${path.relative(root, heroFallback)}`);
   process.exit(1);
 }
 

@@ -48,10 +48,10 @@ runtime dependency.
 The legacy island PNG fallbacks under `public/assets/` can be regenerated from
 the WebP sources with `node scripts/generate-island-pngs.mjs --regenerate`.
 Island fallbacks now match their 640px source dimensions (instead of shipping
-1024px copies) and the logo fallback uses its 256px source. The 1024px hero PNG
-is preserved as-is because its source is already at full resolution.
-`--check` verifies that every full-size WebP source has a matching PNG
-fallback.
+1024px copies) and the logo fallback uses its 256px source. The 1024px hero
+fallback is an optimized JPEG; at 197 KB it preserves broad browser support
+while reducing the former 1.27 MB PNG by 84%. The script checks for that hero
+JPEG alongside each island PNG fallback.
 
 ## 2026-10-04 update
 
