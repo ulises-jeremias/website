@@ -14,7 +14,7 @@ exploration.
 6. `docs/INTERACTIVE_DIAGRAM_SEMANTICS.md` defines the native-control contract for interactive diagrams.
 7. `tests/visual/*-snapshots/` contains maintained Chromium visual goldens.
 8. `performance-baseline.json` records the measured route delivery baseline.
-9. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
+9. `uiux-assessment-2026-08.md` is a dated August 2026 assessment; its measurements and baseline are historical. The current production evidence is recorded below and in the manual QA checklist. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
 10. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
 11. `route-redesign-plan-2026-08.md` records the completed substantial route redesign waves and evidence contract; the portfolio-first IA (ADR-003) amends the route set with `/agentic` and `/about`.
 12. `writing-system.md` defines article structure, Markdown conventions, and progressive code-copy behavior for Field Notes.
@@ -26,19 +26,22 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Assessment implementation baseline: `main@fe489798`.
-- UI/UX recovery epic: #319 remains open for current corrective work and final
-  acceptance.
+- Current production baseline: `main@0da422d659df79c460ef7030ff59e96b8f4459af` (PRs #462 and #464).
+- The route redesign, accessibility navigation correction, production deployment,
+  and automated release checks are complete on this baseline. Portfolio release
+  evidence is tracked in issue #405; manual assistive-technology validation
+  remains tracked separately in #295.
 
 The maintained snapshots are the regression authority. Captures under dated
 `docs/design/` directories are historical evidence and are not rewritten by
 normal Playwright runs.
 
-The 2026-10-05 candidate refreshes only the Agent Toolkit, Agentic, Hornero OS,
+The 2026-10-05 refresh in PR #462 updates the Agent Toolkit, Agentic, Hornero OS,
 and Sponsor mobile goldens. Their previous CI baselines no longer matched the
-current Linux browser renders; the candidate captures were inspected at 390px
-and preserve the intended route hierarchy and readable wrapping. All other
-goldens remain unchanged.
+current Linux browser renders; the captures were reviewed at 390px and preserve
+the intended route hierarchy and readable wrapping. PR #464 then updated the
+navigation accessible name and V repository-link target. All current changes
+are merged to `main`; other goldens remain unchanged.
 
 ## Historical documents
 
@@ -64,7 +67,8 @@ goldens remain unchanged.
 - Manual screen-reader pilots with NVDA/Firefox, VoiceOver/Safari, and
   TalkBack/Chrome.
 - Representative visitor testing for homepage hierarchy and route naming.
-- Final product-owner review of new desktop and mobile captures.
+- Real-device touch exploration and human zoom/reflow review, as detailed in
+  #295. Automated accessibility results do not substitute for these checks.
 
 Automated checks must not be described as WCAG conformance or human visual
 acceptance.
