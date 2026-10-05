@@ -90,11 +90,12 @@ test('serves right-sized VSL evidence images with WebP candidates and legacy fal
 
   const mandelbrot = page.getByRole('img', { name: 'Mandelbrot set rendered by VSL' });
   await expect(mandelbrot).toHaveAttribute('src', '/media/v/vsl-mandelbrot.png');
-  await expect(mandelbrot).toHaveAttribute(
+  const source = mandelbrot.locator('xpath=..').locator('source[type="image/webp"]');
+  await expect(source).toHaveAttribute(
     'srcset',
     /vsl-mandelbrot-160\.webp 160w, \/media\/v\/vsl-mandelbrot-320\.webp 320w/,
   );
-  await expect(mandelbrot).toHaveAttribute('sizes', '148px');
+  await expect(source).toHaveAttribute('sizes', '148px');
   await expect.poll(() => mandelbrot.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('.webp');
 });
 

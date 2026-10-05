@@ -14,31 +14,33 @@ const { caption, logo, images } = Astro.props as Props;
 <figure class="scene-evidence">
   {
     logo && (
-      <img
-        class="scene-evidence__logo"
-        src={logo.src}
-        srcset={logo.srcSet}
-        sizes={logo.sizes}
-        alt={logo.alt}
-        width={logo.width ?? 44}
-        loading="lazy"
-        decoding="async"
-      />
+      <picture class="scene-evidence__logo-picture">
+        {logo.srcSet && <source type="image/webp" srcset={logo.srcSet} sizes={logo.sizes} />}
+        <img
+          class="scene-evidence__logo"
+          src={logo.src}
+          alt={logo.alt}
+          width={logo.width ?? 44}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     )
   }
   <div class="scene-evidence__items">
     {
       images.map((img) => (
-        <img
-          class="scene-evidence__img"
-          src={img.src}
-          srcset={img.srcSet}
-          sizes={img.sizes}
-          alt={img.alt}
-          width={img.width ?? 132}
-          loading="lazy"
-          decoding="async"
-        />
+        <picture class="scene-evidence__picture">
+          {img.srcSet && <source type="image/webp" srcset={img.srcSet} sizes={img.sizes} />}
+          <img
+            class="scene-evidence__img"
+            src={img.src}
+            alt={img.alt}
+            width={img.width ?? 132}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
       ))
     }
   </div>
@@ -60,9 +62,13 @@ const { caption, logo, images } = Astro.props as Props;
   }
 
   .scene-evidence__logo {
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .scene-evidence__logo-picture {
     grid-row: 1 / span 2;
     inline-size: 44px;
-    block-size: auto;
   }
 
   .scene-evidence__items {
@@ -78,6 +84,11 @@ const { caption, logo, images } = Astro.props as Props;
     border-radius: 6px;
     border: 1px solid color-mix(in srgb, var(--world-accent, #22d3ee) 25%, transparent);
     background: #050317;
+  }
+
+  .scene-evidence__picture {
+    display: block;
+    max-inline-size: 100%;
   }
 
   .scene-evidence__caption {
