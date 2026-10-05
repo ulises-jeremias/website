@@ -21,7 +21,7 @@ not described as live data.
 | ----------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | Route names, descriptions, canonicals, OG cards | `src/data/routes.ts` and `src/data/site.ts`                                        | `main@6f8fc0ab`                                                                        | Pass; 11 production routes are represented and the canonical host is `www.ulises-jeremias.dev` |
 | Home worlds and relationships                   | `src/data/project-worlds.ts`, `src/data/personal-dx-relationships.ts`              | 2026-08-10 for relationship evidence                                                   | Pass; route paths, related-world IDs, and source commits are schema-validated                  |
-| Profile, role, location, and contact            | `src/data/profile.ts`, `src/content/profile.yaml`                                  | 2026-08-07                                                                             | Owner confirmation required; these are user-owned claims, not GitHub-generated metrics         |
+| Profile, role, location, and contact            | `src/data/profile.ts`                                                              | 2026-08-07                                                                             | Owner confirmation required; these are user-owned claims, not GitHub-generated metrics         |
 | HorneroConfig counts and pipeline               | `src/features/dotfiles/data/index.ts`                                              | 2026-08-07                                                                             | Pass as a dated source claim; refresh before a future content release                          |
 | Workstation profiles and responsibility split   | `src/features/workstation/data/index.ts`                                           | Source comments and current feature data                                               | Pass; the page states that HorneroConfig is optional and Toolkit owns capabilities             |
 | Agent Toolkit inventory                         | `src/features/agent-toolkit/data/inventory.snapshot.json`                          | `v1.8.4`, commit `b6700ca`, 2026-08-07                                                 | Pass as a pinned snapshot; the page exposes provenance and does not claim live counts          |
@@ -63,13 +63,13 @@ profile sign-off.
 
 ## Follow-up Register
 
-| Item                               | Reason                                                                            | Owner action                                                                          |
-| ---------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Profile role and employment claims | Source mirror is dated and cannot prove current employment or organizational role | Confirm or edit `src/data/profile.ts` and `src/content/profile.yaml`                  |
-| Toolkit and Open Source snapshots  | These surfaces intentionally expose pinned evidence rather than live API calls    | Refresh through the documented data workflow before the next content release          |
-| V release and role claims          | Upstream projects evolve independently                                            | Reverify versions, maintainer roles, and experimental labels before changing copy     |
-| Blog navigation decision           | The collection is empty and product direction is unresolved                       | Keep the honest empty state or remove Blog from primary navigation after owner review |
-| LinkedIn destination               | Automated request is blocked by the provider                                      | Confirm the profile manually; do not treat HTTP 999 as a broken link                  |
+| Item                               | Reason                                                                         | Owner action                                                                          |
+| ---------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Profile role and employment claims | User-owned claims require current owner confirmation                           | Confirm or edit `src/data/profile.ts`                                                 |
+| Toolkit and Open Source snapshots  | These surfaces intentionally expose pinned evidence rather than live API calls | Refresh through the documented data workflow before the next content release          |
+| V release and role claims          | Upstream projects evolve independently                                         | Reverify versions, maintainer roles, and experimental labels before changing copy     |
+| Blog navigation decision           | The collection is empty and product direction is unresolved                    | Keep the honest empty state or remove Blog from primary navigation after owner review |
+| LinkedIn destination               | Automated request is blocked by the provider                                   | Confirm the profile manually; do not treat HTTP 999 as a broken link                  |
 
 These items do not invalidate the current launch copy because the site exposes
 the relevant dates, source boundaries, or uncertainty. They must not be silently
@@ -98,3 +98,10 @@ converted into live or permanent claims.
 - `src/features/projects/data/index.ts`
 - `src/data/generated/github-evidence.json`
 - Issue [#308](https://github.com/ulises-jeremias/website/issues/308)
+
+## Amendment — 2026-10-05
+
+The duplicate `src/content/profile.yaml` review copy was removed because it had no runtime
+consumer and its test did not detect drift from `src/data/profile.ts`. The typed, Zod-validated
+`src/data/profile.ts` remains the sole source. This does not resolve the owner confirmations for
+employment, role titles, location, or email deliverability tracked by issue #37.
