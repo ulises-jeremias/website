@@ -109,6 +109,16 @@ test('loads right-sized evidence only for the active V station', async ({ page }
   await expect.poll(() => vtlLogo.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('vtl-logo.webp');
 });
 
+test('V repository links meet the minimum touch target size', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/v/');
+
+  const inspectorLink = page.locator('[data-v-inspector-link]');
+  await expect(inspectorLink).toBeVisible();
+  const box = await inspectorLink.boundingBox();
+  expect(box?.height).toBeGreaterThanOrEqual(44);
+});
+
 test.describe('Projects shareable filters', () => {
   test('restores query state and announces filtered result counts', async ({ page }) => {
     await page.goto('/projects?q=agent');

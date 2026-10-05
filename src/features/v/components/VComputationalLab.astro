@@ -148,7 +148,13 @@ const stationsJson = JSON.stringify(stations);
                   </li>
                 ))}
               </ul>
-              <a data-v-station-repo href={station.href} target="_blank" rel="noopener noreferrer">
+              <a
+                class="v-lab__repo-link"
+                data-v-station-repo
+                href={station.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Open {station.repo} ↗
               </a>
               <div class="v-lab__contribution-links" role="group" aria-label={`${station.title} contribution paths`}>
@@ -183,7 +189,13 @@ const stationsJson = JSON.stringify(stations);
               ))
             }
           </ul>
-          <a data-v-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer">
+          <a
+            class="v-lab__repo-link"
+            data-v-inspector-link
+            href={defaultStation.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Open {defaultStation.repo} ↗
           </a>
           <div class="v-lab__contribution-links" role="group" aria-label="Contribution paths">
@@ -569,6 +581,12 @@ const stationsJson = JSON.stringify(stations);
     color: var(--world-accent, #5b9bd5);
     font-weight: 700;
     text-underline-offset: 3px;
+  }
+
+  .v-lab__repo-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   .v-lab__contribution-links {
