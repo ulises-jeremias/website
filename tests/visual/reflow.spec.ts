@@ -22,6 +22,8 @@ const routes = [
 test.describe('WCAG 1.4.10 reflow', () => {
   for (const viewport of [
     { label: '320px', width: 320 },
+    { label: '360px', width: 360 },
+    { label: '390px', width: 390 },
     { label: '200%-equivalent 640px', width: 640 },
   ]) {
     for (const route of routes) {
