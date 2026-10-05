@@ -1,129 +1,81 @@
-# 🗄️ Project Structure — website
+# Project structure
 
-This Astro site is **content-first** and **feature-based** (inspired by [`nextjs-saas-ai-template/src/features`](https://github.com/Create-Node-App/nextjs-saas-ai-template/tree/main/src/features)). Pages are thin routers; domain logic lives in `src/features/`.
-
-## Top-level layout
-
-```sh
-.
-├── public/                 # static assets (favicon, images) → served as-is
-├── src/
-│   ├── content/            # Markdown/MDX collections
-│   │   └── blog/           # sample blog
-│   ├── content.config.ts   # loaders (glob) + Zod schemas
-│   ├── features/           # domain modules
-│   │   ├── _feature-template_/  # scaffold for new features
-│   │   ├── blog/           # blog: components, services, types
-│   │   └── landing/        # landing: data + Features component
-│   ├── shared/
-│   │   ├── lib/            # cross-feature utils (cn, formatDate, slugify)
-│   │   └── components/     # cross-feature UI
-│   ├── components/         # legacy shared (BaseHead)
-│   ├── layouts/            # BaseLayout (HTML shell)
-│   ├── pages/              # file-based routes (thin)
-│   │   ├── index.astro     # -> /
-│   │   └── blog/           # -> /blog, /blog/[slug]
-│   └── styles/             # global CSS (landing, blog)
-├── docs/                   # human-readable guides
-├── .github/workflows/      # CI: build, lint, type-check, tests, mega-linter, pr-review, todo
-├── .husky/                 # pre-commit, commit-msg, pre-push
-├── astro.config.mjs
-├── eslint.config.mjs
-├── tsconfig.json
-└── vitest.config.ts
-```
-
-## Routing
-
-| `src/pages/` file         | Route         |
-| ------------------------- | ------------- |
-| `pages/index.astro`       | `/`           |
-| `pages/blog/index.astro`  | `/blog`       |
-| `pages/blog/[slug].astro` | `/blog/:slug` |
-
-Add new marketing pages as `pages/<slug>.astro`; tenant/slug logic belongs in features.
-
-## Content collections
-
-- **Config:** `src/content.config.ts` defines `blog` collection with Zod schema (title, description, pubDate, updatedDate, draft).
-- **Loader:** `glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' })`
-- **Query:** `getCollection('blog')` in `src/features/blog/services/blog.ts` or directly in pages; filter `!data.draft` and sort by date.
-- **New collection:** add `defineCollection` entry and export in `collections`, then create `src/content/<name>/`.
-
-## Feature modules
-
-Encapsulated domains under `src/features/<name>`:
+The Digital Nest is an Astro static site organized around file-based routes and
+feature areas. Pages compose route-specific content; shared shell, canonical
+editorial data, and visual systems live in dedicated modules. There is no
+client-side UI framework.
 
 ```text
-<feature>/
-├── components/  # Astro components (or React islands)
-├── services/    # data fetching / business logic (e.g., blog.ts)
-├── types/       # domain types
-├── hooks/       # client hooks (if island)
-├── index.ts     # public API — only exports
-└── README.md
+public/                 Static assets, fonts, icons, images, social cards
+src/
+  content/blog/         Future Markdown/MDX Field Notes (currently empty)
+  data/                 Canonical routes, portfolio, profile, evidence, SEO,
+                        open-source and sponsorship data
+  features/             Route/domain components, data, tests and public APIs
+  components/           BaseHead document metadata
+  layouts/              BaseLayout document shell and SectionLayout
+  pages/                Astro file routes and generated endpoints
+  shared/
+    components/         Site shell, reusable controls and visual primitives
+    scripts/            Small progressive-enhancement scripts
+    lib/                Cross-feature utilities
+  styles/               Global tokens, semantics, themes, motion and textures
+docs/                   Architecture, product and design authority
+scripts/                Asset/data generation and validation tools
+tests/                  Browser, deployment and visual regression suites
 ```
 
-Active features include `home`, `agent-toolkit`, `agentic-harness`,
-`workstation`, `dotfiles`, `hornero-os`, `v`, `create-awesome`, `community`,
-`blog`, `projects`, `open-source`, and `sponsor`. Sponsorship copy lives in
-`src/data/sponsorship.ts` (ADR-004); project pages use the shared
-`SupportNote` component instead of retyping it. The shared Personal DX ecosystem model
-(responsibilities, adoption paths, ownership matrix) lives in
-`src/data/personal-dx-stack.ts` and renders through
-`src/features/personal-dx/`.
+## Routes and feature boundaries
 
-**Rules:**
+`src/pages/` defines the public URL structure. Most pages import a route feature
+and pass it through the shared layout. Keep route files focused on composition,
+SEO metadata and route-specific structured data. Special endpoints such as
+`robots.txt.ts`, `rss.xml.ts` and `sitemap.xml.ts` generate their responses at
+build time.
 
-- Import only via public API: `import { BlogCard } from '@/features/blog'` — never `from '@/features/blog/services/blog'`.
-- `services/` has no UI; `components/` receives data via props (no direct `getCollection` inside components).
-- Start from `_feature-template_` (`cp -r src/features/_feature-template_ src/features/my-feature`).
+The professional portfolio hierarchy is canonical in
+[`src/data/portfolio.ts`](../src/data/portfolio.ts). The visual exploration
+taxonomy is separate in `src/data/project-worlds.ts`; do not use exploration
+worlds as a replacement for professional portfolio areas. Route labels and
+navigation behavior belong in `src/data/routes.ts`.
 
-### Example
+Feature areas include Home, Agent Toolkit, Agentic Workstation, Agentic Harness,
+HorneroConfig, Hornero OS, V, Create Awesome, Projects/Work, Open Source, About,
+Community, Writing and Sponsor. A feature may contain Astro components, local
+data, styles, tests and an `index.ts` public API as appropriate; the directory
+shape is intentionally not forced when a feature has no need for those layers.
+Prefer public feature exports over cross-feature deep imports.
 
-```ts
-// src/pages/blog/index.astro (thin router)
----
-import { getPublishedPosts } from '@/features/blog';
-const posts = await getPublishedPosts();
----
-<ul>{posts.map(p => <li>{p.title}</li>)}</ul>
-```
+Shared responsibility and adoption relationships live in
+`src/data/personal-dx-stack.ts` and render through `src/features/personal-dx/`.
+Sponsorship terms are canonical in `src/data/sponsorship.ts` and project routes
+reuse the shared `SupportNote` component.
 
-## Shared
+## Content and evidence
 
-- `src/shared/lib/utils.ts` — `cn`, `formatDate`, `slugify` (tested via Vitest)
-- `src/shared/components/` — cross-feature UI stubs (add Button, Card, etc.)
+`src/content.config.ts` defines the Astro content collection schema. Field Notes
+content belongs in `src/content/blog/`; the collection is intentionally empty
+until real articles are ready. Do not add sample or invented posts.
 
-## Layouts & components
+Portfolio facts, route metadata, social cards and generated evidence have
+different owners. Keep editorial facts in their canonical data modules. Files
+under `src/data/generated/` and source snapshots are refreshed or checked with
+the corresponding scripts in `package.json`; do not hand-edit generated output
+unless its generation workflow explicitly requires it.
 
-- `layouts/BaseLayout.astro` — `<html>`, `<body>`, slots for `BaseHead`
-- `components/BaseHead.astro` — `<title>`, meta description, charset, viewport
+## Development conventions
 
-## Import alias
+- Keep the default page output static HTML; add browser JavaScript only for a
+  meaningful interaction, with a complete no-JavaScript reading path.
+- Keep shared components in `src/shared/components/` only when they represent
+  a repeated site-level pattern. Route-specific illustrations stay with their
+  feature.
+- Preserve the separation between professional portfolio data and the Digital
+  Nest exploration map.
+- Read `docs/COMPONENTS_AND_STYLING.md` before changing component or CSS
+  conventions, and `docs/design/current/README.md` for current design authority
+  and acceptance state.
+- Validate source-backed and generated content with the scripts documented in
+  `package.json`; run the repository checks before opening a PR.
 
-`tsconfig.json` maps `@/*` → `src/*`:
-
-```ts
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getPublishedPosts } from '@/features/blog';
-```
-
-## When to add folders
-
-| Need               | Location                                                             |
-| ------------------ | -------------------------------------------------------------------- |
-| New marketing page | `pages/about.astro` (thin, delegates to feature)                     |
-| New domain         | `features/<domain>/` (copy template)                                 |
-| Shared util/UI     | `shared/lib/` or `shared/components/`                                |
-| Blog/docs content  | `content/<collection>/`                                              |
-| Global styles      | `styles/` or component `<style>`                                     |
-| Interactive widget | `features/<domain>/components/` + `npx astro add react` + `client:*` |
-
-## Principles
-
-1. **Content-first** — static HTML & collections over client state.
-2. **Feature encapsulation** — public `index.ts`, no cross-feature deep imports.
-3. **Thin pages** — routing only; logic in features/shared.
-4. **Schema at the edge** — Zod in `content.config.ts` validates frontmatter early.
-5. **CI is law** — `pnpm lint && pnpm type-check && pnpm test && pnpm build` must pass on `main`.
+The `@/*` TypeScript alias maps to `src/*`.

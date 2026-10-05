@@ -1,102 +1,74 @@
-# 🧱 Components and Styling
+# Components and styling
 
-Astro components are the primary building block. They can render static HTML, scoped CSS, and optional client-side JavaScript via [islands](https://docs.astro.build/en/concepts/islands/).
+The site uses Astro components and plain CSS. Static HTML is the default; small
+browser scripts progressively enhance interactions where needed. The project
+has no React, Vue, Tailwind or general-purpose component-library integration.
 
-## Component patterns
+## Components
 
-### Prefer `.astro` for static UI
+- Use `.astro` for static structure and server-rendered data.
+- Keep route composition in `src/pages/` and route/domain presentation in
+  `src/features/<feature>/`.
+- Put repeated site-level controls and shell elements in
+  `src/shared/components/`. Existing examples include `SiteHeader`,
+  `SiteFooter`, `Button`, `Link`, `Icon`, `MobileNav` and visual-stage
+  primitives.
+- Keep route-specific artwork and diagrams close to the feature that explains
+  them. Extract a primitive when the same visual or behavior genuinely recurs.
+- Prefer native HTML controls and small progressive-enhancement scripts over a
+  framework island. Preserve useful content and navigation when JavaScript is
+  unavailable.
 
-Use `.astro` files when no client JavaScript is required. The compiler strips unused JS and ships HTML by default.
+Astro component-scoped `<style>` is suitable for local composition. Global
+systems belong in `src/styles/`; `src/styles/index.css` assembles the reset,
+tokens, semantic roles, typography, atmosphere, motion and world themes.
 
-```astro
----
-interface Props {
-  label: string;
-}
-const { label } = Astro.props;
----
+## Design system
 
-<button type="button">{label}</button>
-```
+The approved identity is **Synthwave Systems Atlas**. Its authority and current
+implementation state are indexed in
+[`docs/design/current/README.md`](design/current/README.md). Use the existing
+tokens and semantic roles in `src/styles/tokens.css`, `semantic.css`,
+`typography.css`, `spacing.css`, `effects.css`, `textures.css` and
+`motion.css`. Route themes live in `src/styles/themes/`.
 
-### Colocate styles with components
+Use semantic color and spacing tokens for recurring decisions. Add a token when
+a value becomes a stable pattern; keep one-off illustration details local. Do
+not introduce generic card, glass, glow or gradient treatments where a
+project-specific diagram or composition carries the information better.
 
-Scoped styles live in the same file:
+## Interaction and motion
 
-```astro
-<p class="note">Hello</p>
-<style>
-  .note {
-    color: var(--cna-text-muted);
-  }
-</style>
-```
+Use native links, buttons, forms and radio/checkbox controls whenever possible.
+Interactive diagrams must follow
+[`docs/INTERACTIVE_DIAGRAM_SEMANTICS.md`](INTERACTIVE_DIAGRAM_SEMANTICS.md):
+provide visible control state and a text-equivalent explanation without making
+the SVG itself the only source of meaning.
 
-Use `is:global` sparingly — the landing page imports `src/styles/cna-landing.css` because those utilities span many elements.
-
-### Extract shared pieces early
-
-When two pages repeat the same header, meta tags, or shell:
-
-- **`BaseHead.astro`** — SEO and document metadata
-- **`BaseLayout.astro`** — shared HTML document wrapper
-
-Add `SiteHeader.astro`, `SiteFooter.astro`, etc. as the site grows.
-
-### Keep components focused
-
-Avoid large single files with many responsibilities. Split cards, lists, and navigation into dedicated components under `src/components/`.
-
-## Styling options
-
-This starter uses plain CSS files under `src/styles/` for the CNA landing and blog pages. Astro supports multiple approaches:
-
-| Approach                                                               | Good for                                      |
-| ---------------------------------------------------------------------- | --------------------------------------------- |
-| Scoped `<style>` in `.astro`                                           | Component-specific rules                      |
-| Global CSS imports                                                     | Shared tokens, landing themes                 |
-| [Tailwind](https://tailwindcss.com/)                                   | Utility-first teams (add `@astrojs/tailwind`) |
-| [CSS Modules](https://docs.astro.build/en/guides/styling/#css-modules) | Locally scoped class names                    |
-| Sass/Less                                                              | Teams already standardized on preprocessors   |
-
-Pick one primary strategy per project to avoid conflicting conventions.
-
-## Islands (interactive components)
-
-This template does **not** ship a UI framework integration. When you need hydration:
-
-1. Add an integration, e.g. `npx astro add react`
-2. Place interactive components in `src/components/`
-3. Opt in with a client directive:
-
-```astro
----
-import Counter from '@/components/Counter';
----
-
-<Counter client:load />
-```
-
-Use the smallest directive that fits (`client:visible`, `client:idle`) to limit JavaScript payload.
+Motion should communicate atmosphere, feedback or a real system process. Every
+autonomous or explanatory animation must respect `prefers-reduced-motion`; in
+that mode, content remains visible and the essential state remains available.
+Avoid scroll hijacking, hover-only information and motion that competes with
+reading.
 
 ## Accessibility
 
-- Use semantic HTML (`nav`, `main`, `article`, `time`)
-- Provide `alt` text on images and meaningful link labels
-- Prefer real headings in order (`h1` → `h2`)
-- Test keyboard focus when adding islands or custom buttons
+- Preserve landmarks and a logical heading order.
+- Give meaningful images useful alternative text; mark decorative SVG and
+  icons as hidden from assistive technology.
+- Give controls visible labels and visible keyboard focus.
+- Keep state understandable without color alone.
+- Maintain touch-sized actions and responsive reflow at narrow widths.
+- Test keyboard behavior, no-JavaScript behavior and reduced motion for new
+  interactions. Automated results do not replace the manual AT matrix in
+  `docs/design/current/uiux-manual-qa-checklist.md`.
 
-## Component libraries
+## Naming and validation
 
-For marketing sites, consider:
+Use PascalCase for Astro components (`SiteHeader.astro`) and kebab-case for
+route and content slugs. Keep feature data and tests beside the feature when
+they are feature-specific; shared editorial facts belong in `src/data/`.
 
-- **Headless + your CSS** — Radix primitives, Headless UI (via React/Vue/Solid islands)
-- **Full libraries** — only when their look-and-feel matches your brand
-
-Wrap third-party components in your own Astro wrapper so you can swap implementations later.
-
-## File naming
-
-- PascalCase for components: `BaseHead.astro`, `PostCard.astro`
-- kebab-case for routes: `pages/about.astro`
-- kebab-case for content slugs: `welcome-to-your-blog.md`
+Use the package scripts for formatting, linting, type checking, tests, build,
+route budgets, Lighthouse and generated-data checks. See `package.json` and the
+repository workflows for the current commands and required gates.
