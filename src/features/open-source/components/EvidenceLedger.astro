@@ -28,32 +28,28 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
       <span>Evidence</span>
       <span>Link</span>
     </li>
-    {
-      evidenceItems.map((row) => (
-        <li class="oss-ledger__row">
-          <span class="oss-ledger__kind">{getEvidenceKindLabel(row.kind)}</span>
-          <span>{row.subject}</span>
-          <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
-          <a href={row.href} target="_blank" rel="noopener noreferrer" data-testid="oss-row">
-            {getEvidenceProvenanceLabel(row.provenance)} ↗
-          </a>
-        </li>
-      ))
-    }
+    {evidenceItems.map((row) => (
+      <li class="oss-ledger__row">
+        <span class="oss-ledger__kind">{getEvidenceKindLabel(row.kind)}</span>
+        <span>{row.subject}</span>
+        <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
+        <a href={row.href} target="_blank" rel="noopener noreferrer" data-testid="oss-row">
+          {getEvidenceProvenanceLabel(row.provenance)} ↗
+        </a>
+      </li>
+    ))}
   </ul>
 
-  {
-    notes.length > 0 && (
-      <div class="oss-ledger__notes">
-        <h3 class="oss-ledger__notes-label">Notes</h3>
-        <ul>
-          {notes.map((note) => (
-            <li>{note}</li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
+  {notes.length > 0 && (
+    <div class="oss-ledger__notes">
+      <h3 class="oss-ledger__notes-label">Notes</h3>
+      <ul>
+        {notes.map((note) => (
+          <li>{note}</li>
+        ))}
+      </ul>
+    </div>
+  )}
 </section>
 
 <style>

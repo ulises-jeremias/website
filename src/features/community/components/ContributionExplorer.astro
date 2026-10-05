@@ -19,42 +19,42 @@ const opsJson = JSON.stringify(
 >
   <header class="cm-explore__header">
     <p class="cm-explore__eyebrow">Contribute</p>
-    <h2 id="cm-explore-title" class="cm-explore__title">Explore by interest</h2>
+    <h2 id="cm-explore-title" class="cm-explore__title">
+      Explore by interest
+    </h2>
     <p class="cm-explore__lead">Filter across Digital Nest worlds and Create Awesome orgs.</p>
   </header>
 
   <div class="cm-explore__filters" role="group" aria-label="Interest filters">
-    <button type="button" class="cm-explore__chip" data-cm-filter="all" aria-pressed="true" disabled>All</button>
-    {
-      interestFilters.map((filter) => (
-        <button
-          type="button"
-          class="cm-explore__chip"
-          data-cm-filter={filter.id}
-          aria-pressed="false"
-          disabled
-          title={filter.hint}
-        >
-          {filter.label}
-        </button>
-      ))
-    }
+    <button type="button" class="cm-explore__chip" data-cm-filter="all" aria-pressed="true" disabled>
+      All
+    </button>
+    {interestFilters.map((filter) => (
+      <button
+        type="button"
+        class="cm-explore__chip"
+        data-cm-filter={filter.id}
+        aria-pressed="false"
+        disabled
+        title={filter.hint}
+      >
+        {filter.label}
+      </button>
+    ))}
   </div>
 
   <ul class="cm-explore__ops" aria-label="Contribution opportunities">
-    {
-      contributionOpportunities.map((op) => (
-        <li class="cm-explore__op" data-cm-op={op.id}>
-          <div class="cm-explore__op-main">
-            <h3 class="cm-explore__op-title">{op.title}</h3>
-            <p class="cm-explore__op-desc">{op.description}</p>
-          </div>
-          <a class="cm-explore__op-link" href={op.href} target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-        </li>
-      ))
-    }
+    {contributionOpportunities.map((op) => (
+      <li class="cm-explore__op" data-cm-op={op.id}>
+        <div class="cm-explore__op-main">
+          <h3 class="cm-explore__op-title">{op.title}</h3>
+          <p class="cm-explore__op-desc">{op.description}</p>
+        </div>
+        <a class="cm-explore__op-link" href={op.href} target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </li>
+    ))}
   </ul>
 
   <p class="cm-explore__hint" data-cm-explore-hint aria-live="polite">

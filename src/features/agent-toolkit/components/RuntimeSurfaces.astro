@@ -17,35 +17,33 @@ import { runtimeSurfaces } from '../data/index.js';
     </p>
   </header>
   <ul class="atk-surfaces__list">
-    {
-      runtimeSurfaces.map((surface) => (
-        <li class="atk-surfaces__item" data-surface={surface.id}>
-          <h3>{surface.title}</h3>
-          <p class="atk-surfaces__status">
-            <span class={`atk-surfaces__badge atk-surfaces__badge--${surface.status}`}>
-              {surface.status === 'shipped' ? 'Released' : 'In progress'}
-            </span>
-            <span>{surface.statusNote}</span>
-          </p>
-          <p class="atk-surfaces__summary">{surface.summary}</p>
-          {surface.command && (
-            <code class="atk-surfaces__cmd" tabindex="0">
-              {surface.command}
-            </code>
-          )}
-          {surface.installHref && (
-            <a class="atk-surfaces__install" href={surface.installHref} target="_blank" rel="noopener noreferrer">
-              Get the desktop app <span aria-hidden="true">↗</span>
-              <span class="sr-only"> (opens in new tab)</span>
-            </a>
-          )}
-          <a href={surface.docsHref} target="_blank" rel="noopener noreferrer">
-            {surface.title} docs <span aria-hidden="true">↗</span>
+    {runtimeSurfaces.map((surface) => (
+      <li class="atk-surfaces__item" data-surface={surface.id}>
+        <h3>{surface.title}</h3>
+        <p class="atk-surfaces__status">
+          <span class={`atk-surfaces__badge atk-surfaces__badge--${surface.status}`}>
+            {surface.status === 'shipped' ? 'Released' : 'In progress'}
+          </span>
+          <span>{surface.statusNote}</span>
+        </p>
+        <p class="atk-surfaces__summary">{surface.summary}</p>
+        {surface.command && (
+          <code class="atk-surfaces__cmd" tabindex="0">
+            {surface.command}
+          </code>
+        )}
+        {surface.installHref && (
+          <a class="atk-surfaces__install" href={surface.installHref} target="_blank" rel="noopener noreferrer">
+            Get the desktop app <span aria-hidden="true">↗</span>
             <span class="sr-only"> (opens in new tab)</span>
           </a>
-        </li>
-      ))
-    }
+        )}
+        <a href={surface.docsHref} target="_blank" rel="noopener noreferrer">
+          {surface.title} docs <span aria-hidden="true">↗</span>
+          <span class="sr-only"> (opens in new tab)</span>
+        </a>
+      </li>
+    ))}
   </ul>
 </section>
 

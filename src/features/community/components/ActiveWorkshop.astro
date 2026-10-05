@@ -22,80 +22,80 @@ const stateLabel: Record<CommunityProject['state'], string> = {
 <section class="cm-active" aria-labelledby="cm-active-title" data-testid="active-workshop">
   <header class="cm-active__header">
     <p class="cm-active__eyebrow">Active workshop</p>
-    <h2 id="cm-active-title" class="cm-active__title">Projects you can touch today</h2>
+    <h2 id="cm-active-title" class="cm-active__title">
+      Projects you can touch today
+    </h2>
     <p class="cm-active__lead">
       Participation is controlled per project with communityEnabled in the community registry. Adding a future public
       repo should mean one registry entry — not rewriting this page by hand five times.
     </p>
   </header>
 
-  {
-    sections.map((section) => {
-      const projects = byEcosystem(section.id);
-      // Avoid double-listing create-awesome orgs under v when alsoIn includes v
-      const unique =
-        section.id === 'v-ecosystem'
-          ? projects.filter((p) => p.ecosystem === 'v-ecosystem')
-          : projects.filter((p) => p.ecosystem === section.id);
-      if (unique.length === 0) return null;
-      return (
-        <div class="cm-active__family" data-ecosystem={section.id}>
-          <h3 class="cm-active__family-title">{ecosystemLabels[section.id]}</h3>
-          {section.note ? <p class="cm-active__family-note">{section.note}</p> : null}
-          <ul class="cm-active__grid">
-            {unique.map((project) => (
-              <li class="cm-active__card">
-                <div class="cm-active__card-top">
-                  <h4 class="cm-active__name">{project.name}</h4>
-                  <span class="cm-active__state">{stateLabel[project.state]}</span>
-                </div>
-                <p class="cm-active__summary">{project.summary}</p>
-                <p class="cm-active__role">
-                  Role: <strong>{project.role}</strong>
-                </p>
-                <p class="cm-active__areas">Contribute: {project.contributionAreas.join(' · ')}</p>
-                <div class="cm-active__links">
-                  {project.repo ? (
-                    <a href={`https://github.com/${project.repo}`} target="_blank" rel="noopener noreferrer">
-                      Repository
-                    </a>
-                  ) : null}
-                  {project.worldPath ? <a href={project.worldPath}>World</a> : null}
-                  {project.website && project.website !== `https://github.com/${project.repo}` ? (
-                    <a href={project.website} target="_blank" rel="noopener noreferrer">
-                      Site
-                    </a>
-                  ) : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    })
-  }
+  {sections.map((section) => {
+    const projects = byEcosystem(section.id);
+    // Avoid double-listing create-awesome orgs under v when alsoIn includes v
+    const unique =
+      section.id === 'v-ecosystem'
+        ? projects.filter((p) => p.ecosystem === 'v-ecosystem')
+        : projects.filter((p) => p.ecosystem === section.id);
+    if (unique.length === 0) return null;
+    return (
+      <div class="cm-active__family" data-ecosystem={section.id}>
+        <h3 class="cm-active__family-title">{ecosystemLabels[section.id]}</h3>
+        {section.note ? <p class="cm-active__family-note">{section.note}</p> : null}
+        <ul class="cm-active__grid">
+          {unique.map((project) => (
+            <li class="cm-active__card">
+              <div class="cm-active__card-top">
+                <h4 class="cm-active__name">{project.name}</h4>
+                <span class="cm-active__state">{stateLabel[project.state]}</span>
+              </div>
+              <p class="cm-active__summary">{project.summary}</p>
+              <p class="cm-active__role">
+                Role: <strong>{project.role}</strong>
+              </p>
+              <p class="cm-active__areas">Contribute: {project.contributionAreas.join(' · ')}</p>
+              <div class="cm-active__links">
+                {project.repo ? (
+                  <a href={`https://github.com/${project.repo}`} target="_blank" rel="noopener noreferrer">
+                    Repository
+                  </a>
+                ) : null}
+                {project.worldPath ? <a href={project.worldPath}>World</a> : null}
+                {project.website && project.website !== `https://github.com/${project.repo}` ? (
+                  <a href={project.website} target="_blank" rel="noopener noreferrer">
+                    Site
+                  </a>
+                ) : null}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  })}
 </section>
 
 <section class="cm-incubating" aria-labelledby="cm-incubating-title" data-testid="incubating-workshop">
   <header class="cm-incubating__header">
     <p class="cm-incubating__eyebrow">Incubating</p>
-    <h2 id="cm-incubating-title" class="cm-incubating__title">Blueprints on the horizon</h2>
+    <h2 id="cm-incubating-title" class="cm-incubating__title">
+      Blueprints on the horizon
+    </h2>
     <p class="cm-incubating__lead">
       These directions are editorial and public by choice. No repositories, release dates, or contributor lists until
       canonical sources exist. More experiments may appear later without a product name yet.
     </p>
   </header>
   <ul class="cm-incubating__grid">
-    {
-      incubatingProjects.map((item) => (
-        <li class="cm-incubating__card">
-          <h3 class="cm-incubating__name">{item.workingTitle}</h3>
-          <p class="cm-incubating__badge">Incubating · coming later</p>
-          <p class="cm-incubating__summary">{item.summary}</p>
-          <p class="cm-incubating__themes">{item.themes.join(' · ')}</p>
-        </li>
-      ))
-    }
+    {incubatingProjects.map((item) => (
+      <li class="cm-incubating__card">
+        <h3 class="cm-incubating__name">{item.workingTitle}</h3>
+        <p class="cm-incubating__badge">Incubating · coming later</p>
+        <p class="cm-incubating__summary">{item.summary}</p>
+        <p class="cm-incubating__themes">{item.themes.join(' · ')}</p>
+      </li>
+    ))}
   </ul>
 </section>
 

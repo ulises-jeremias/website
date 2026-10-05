@@ -5,11 +5,14 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
 <section class="vtl" aria-labelledby="vtl-title">
   <header class="vtl__header">
     <p class="vtl__eyebrow">03 · VTL</p>
-    <h2 id="vtl-title" class="vtl__title">Tensors that remember their graph</h2>
+    <h2 id="vtl-title" class="vtl__title">
+      Tensors that remember their graph
+    </h2>
     <p class="vtl__desc">
-      Created <code>Tensor[T]</code> values own storage; <code>view()</code> and selected slicing operations can share it,
-      while <code>copy()</code> clones it. Wrap a tensor in a <code>Variable</code> via <code>Context</code> to record gates
-      for reverse-mode autograd. CPU training is the default beta path; CUDA and Vulkan support is feature-scoped and experimental.
+      Created <code>Tensor[T]</code> values own storage; <code>view()</code> and selected slicing operations can share
+      it, while <code>copy()</code> clones it. Wrap a tensor in a <code>Variable</code> via <code>Context</code> to
+      record gates for reverse-mode autograd. CPU training is the default beta path; CUDA and Vulkan support is
+      feature-scoped and experimental.
     </p>
   </header>
 
@@ -39,8 +42,10 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">forward →</text
+          style="text-transform: uppercase;"
         >
+          forward →
+        </text>
         <text
           x="522"
           y="34"
@@ -49,8 +54,10 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">← backward</text
+          style="text-transform: uppercase;"
         >
+          ← backward
+        </text>
 
         <!-- nodes row -->
         <!-- Input -->
@@ -69,11 +76,19 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">input</text
+            style="text-transform: uppercase;"
           >
-          <text x="32" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">Tensor</text>
-          <text x="32" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">[64, 784]</text>
-          <text x="32" y="122" font-size="9.5" fill="#8bb8e0">ctx.variable()</text>
+            input
+          </text>
+          <text x="32" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">
+            Tensor
+          </text>
+          <text x="32" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            [64, 784]
+          </text>
+          <text x="32" y="122" font-size="9.5" fill="#8bb8e0">
+            ctx.variable()
+          </text>
         </g>
 
         <!-- arrow 1 -->
@@ -89,7 +104,8 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             stroke="rgba(124,183,201,0.95)"
             stroke-width="1.7"
             stroke-dasharray="5 5"
-            stroke-linecap="round"></line>
+            stroke-linecap="round"
+          ></line>
           <polygon points="124,102 130,98 130,106" fill="#7cb7c9"></polygon>
         </g>
 
@@ -104,11 +120,19 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">layer 1</text
+            style="text-transform: uppercase;"
           >
-          <text x="174" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">Linear</text>
-          <text x="174" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">784 → 256</text>
-          <text x="174" y="122" font-size="9.5" fill="#8bb8e0">200,960 params</text>
+            layer 1
+          </text>
+          <text x="174" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">
+            Linear
+          </text>
+          <text x="174" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            784 → 256
+          </text>
+          <text x="174" y="122" font-size="9.5" fill="#8bb8e0">
+            200,960 params
+          </text>
         </g>
 
         <!-- arrow -->
@@ -123,7 +147,8 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             stroke="rgba(124,183,201,0.95)"
             stroke-width="1.7"
             stroke-dasharray="5 5"
-            stroke-linecap="round"></line>
+            stroke-linecap="round"
+          ></line>
           <polygon points="266,102 272,98 272,106" fill="#7cb7c9"></polygon>
         </g>
 
@@ -137,11 +162,17 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             height="56"
             rx="12"
             fill="rgba(255,255,255,0.06)"
-            stroke="rgba(91,155,213,0.28)"></rect>
-          <text x="316" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" aria-hidden="true">◐</text
-          >
-          <text x="343" y="90" font-size="11" font-weight="700" fill="#e6f0fb">ReLU</text>
-          <text x="316" y="106" font-size="9.5" fill="#8bb8e0">gate</text>
+            stroke="rgba(91,155,213,0.28)"
+          ></rect>
+          <text x="316" y="90" text-anchor="middle" dominant-baseline="middle" font-size="16" aria-hidden="true">
+            ◐
+          </text>
+          <text x="343" y="90" font-size="11" font-weight="700" fill="#e6f0fb">
+            ReLU
+          </text>
+          <text x="316" y="106" font-size="9.5" fill="#8bb8e0">
+            gate
+          </text>
         </g>
 
         <!-- arrow -->
@@ -156,7 +187,8 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             stroke="rgba(124,183,201,0.95)"
             stroke-width="1.7"
             stroke-dasharray="5 5"
-            stroke-linecap="round"></line>
+            stroke-linecap="round"
+          ></line>
           <polygon points="382,102 388,98 388,106" fill="#7cb7c9"></polygon>
         </g>
 
@@ -171,11 +203,19 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">layer 2</text
+            style="text-transform: uppercase;"
           >
-          <text x="432" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">Linear</text>
-          <text x="432" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">256 → 10</text>
-          <text x="432" y="122" font-size="9.5" fill="#8bb8e0">logits</text>
+            layer 2
+          </text>
+          <text x="432" y="94" font-size="11.5" font-weight="800" fill="#e6f0fb">
+            Linear
+          </text>
+          <text x="432" y="110" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            256 → 10
+          </text>
+          <text x="432" y="122" font-size="9.5" fill="#8bb8e0">
+            logits
+          </text>
         </g>
 
         <!-- Loss row second line -->
@@ -191,7 +231,8 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             stroke="rgba(124,183,201,0.95)"
             stroke-width="1.7"
             stroke-dasharray="5 5"
-            stroke-linecap="round"></line>
+            stroke-linecap="round"
+          ></line>
           <polygon points="480,126 476,132 484,132" fill="#7cb7c9"></polygon>
         </g>
 
@@ -209,10 +250,15 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             rx="12"
             fill="#0d223a"
             stroke="rgba(91,155,213,0.35)"
-            stroke-width="1.1"></rect>
+            stroke-width="1.1"
+          ></rect>
           <rect x="392" y="172" width="160" height="4" rx="2" fill="#7cb7c9"></rect>
-          <text x="408" y="192" font-size="11" font-weight="800" fill="#e6f0fb">Loss</text>
-          <text x="408" y="208" font-size="10" fill="#b8d0e6">MSE / CrossEntropy</text>
+          <text x="408" y="192" font-size="11" font-weight="800" fill="#e6f0fb">
+            Loss
+          </text>
+          <text x="408" y="208" font-size="10" fill="#b8d0e6">
+            MSE / CrossEntropy
+          </text>
           <text
             x="535"
             y="204"
@@ -220,8 +266,10 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             font-size="11"
             font-weight="700"
             fill="#7cb7c9"
-            font-family="ui-monospace, monospace">.backprop()!</text
+            font-family="ui-monospace, monospace"
           >
+            .backprop()!
+          </text>
         </g>
 
         <!-- target tensor left of loss -->
@@ -234,7 +282,8 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             height="62"
             rx="12"
             fill="rgba(255,255,255,0.05)"
-            stroke="rgba(91,155,213,0.22)"></rect>
+            stroke="rgba(91,155,213,0.22)"
+          ></rect>
           <text
             x="212"
             y="192"
@@ -242,10 +291,16 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">target</text
+            style="text-transform: uppercase;"
           >
-          <text x="212" y="208" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">[64, 10]</text>
-          <text x="212" y="222" font-size="9.5" fill="#8bb8e0">ground truth</text>
+            target
+          </text>
+          <text x="212" y="208" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            [64, 10]
+          </text>
+          <text x="212" y="222" font-size="9.5" fill="#8bb8e0">
+            ground truth
+          </text>
         </g>
 
         <!-- connection target to loss -->
@@ -255,7 +310,14 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
         </g>
 
         <!-- optimizer bottom -->
-        <rect x="18" y="258" width="604" height="62" rx="12" fill="rgba(255,255,255,0.06)" stroke="rgba(91,155,213,0.2)"
+        <rect
+          x="18"
+          y="258"
+          width="604"
+          height="62"
+          rx="12"
+          fill="rgba(255,255,255,0.06)"
+          stroke="rgba(91,155,213,0.2)"
         ></rect>
         <text
           x="32"
@@ -264,16 +326,24 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.06em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">optimizer · update</text
+          style="text-transform: uppercase;"
         >
-        <text x="32" y="296" font-size="11.5" font-weight="700" fill="#e6f0fb">Adam · AdamW · RMSProp · SGD</text>
-        <text x="32" y="310" font-size="10" fill="#b8d0e6">lr + build_params(layers) + update()!</text>
+          optimizer · update
+        </text>
+        <text x="32" y="296" font-size="11.5" font-weight="700" fill="#e6f0fb">
+          Adam · AdamW · RMSProp · SGD
+        </text>
+        <text x="32" y="310" font-size="10" fill="#b8d0e6">
+          lr + build_params(layers) + update()!
+        </text>
         <g aria-hidden="true">
           <rect x="430" y="268" width="178" height="42" rx="10" fill="#0d223a" stroke="rgba(91,155,213,0.28)"></rect>
-          <text x="444" y="284" font-size="10" font-weight="700" fill="#e6f0fb" font-family="ui-monospace, monospace"
-            >opt.update()!</text
-          >
-          <text x="444" y="298" font-size="9.5" fill="#8bb8e0">applies ∇ to params</text>
+          <text x="444" y="284" font-size="10" font-weight="700" fill="#e6f0fb" font-family="ui-monospace, monospace">
+            opt.update()!
+          </text>
+          <text x="444" y="298" font-size="9.5" fill="#8bb8e0">
+            applies ∇ to params
+          </text>
         </g>
 
         <!-- backprop dashed loop up -->
@@ -284,13 +354,16 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
           stroke-width="1.6"
           stroke-dasharray="6 5"
           stroke-linecap="round"
-          aria-hidden="true"></path>
+          aria-hidden="true"
+        ></path>
         <polygon points="134,110 126,114 132,122" fill="#7cb7c9" aria-hidden="true"></polygon>
 
         <!-- legend bottom -->
         <g aria-hidden="true">
           <line x1="18" y1="350" x2="44" y2="350" stroke="#5b9bd5" stroke-width="2.2" stroke-linecap="round"></line>
-          <text x="50" y="354" font-size="9.5" fill="#b8d0e6">forward</text>
+          <text x="50" y="354" font-size="9.5" fill="#b8d0e6">
+            forward
+          </text>
           <line
             x1="104"
             y1="350"
@@ -299,30 +372,31 @@ import { vtlMaturity, vtlModules } from '../data/index.js';
             stroke="#7cb7c9"
             stroke-width="1.7"
             stroke-dasharray="5 4"
-            stroke-linecap="round"></line>
-          <text x="136" y="354" font-size="9.5" fill="#b8d0e6">backward</text>
+            stroke-linecap="round"
+          ></line>
+          <text x="136" y="354" font-size="9.5" fill="#b8d0e6">
+            backward
+          </text>
           <rect x="206" y="342" width="10" height="10" rx="3" fill="#5b9bd5"></rect>
-          <text x="222" y="351" font-size="9.5" fill="#b8d0e6">gate records op</text>
+          <text x="222" y="351" font-size="9.5" fill="#b8d0e6">
+            gate records op
+          </text>
         </g>
       </svg>
 
       <div class="vtl__legend" role="list" aria-label="VTL modules">
-        {
-          vtlModules.map((m) => (
-            <span class="vtl__chip" role="listitem">
-              <strong>{m.title}</strong> {m.desc}
-            </span>
-          ))
-        }
+        {vtlModules.map((m) => (
+          <span class="vtl__chip" role="listitem">
+            <strong>{m.title}</strong> {m.desc}
+          </span>
+        ))}
       </div>
       <div class="vtl__legend" role="list" aria-label="VTL compute maturity">
-        {
-          vtlMaturity.map((m) => (
-            <span class="vtl__chip" role="listitem">
-              <strong>{m.label}</strong> <em>{m.maturity}</em> — {m.note}
-            </span>
-          ))
-        }
+        {vtlMaturity.map((m) => (
+          <span class="vtl__chip" role="listitem">
+            <strong>{m.label}</strong> <em>{m.maturity}</em> — {m.note}
+          </span>
+        ))}
       </div>
     </div>
 
@@ -347,7 +421,9 @@ loss.<span class="vtl__c-fn">backprop</span>()!</code></pre>
           knows how to differentiate it.
         </p>
         <ul class="vtl__list">
-          <li><code>Sequential</code>: input([784]).linear(256).linear(10)</li>
+          <li>
+            <code>Sequential</code>: input([784]).linear(256).linear(10)
+          </li>
           <li>Losses: MSE / BCE / CrossEntropy / Huber</li>
           <li>Optimizers: Adam, AdamW, RMSProp, AdaGrad, SGD + schedulers</li>
         </ul>

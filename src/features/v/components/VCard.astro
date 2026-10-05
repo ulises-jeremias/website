@@ -10,7 +10,9 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
 
 <article class:list={['v-card', compact && 'v-card--compact']} data-project={shortLabel}>
   <header class="v-card__header">
-    <span class="v-card__icon" aria-hidden="true">{icon}</span>
+    <span class="v-card__icon" aria-hidden="true">
+      {icon}
+    </span>
     <div class="v-card__meta">
       <h3 class="v-card__title">{title}</h3>
       <p class="v-card__repo">{repo}</p>
@@ -20,22 +22,22 @@ const { title, shortLabel, description, href, repo, icon, role, highlights, comp
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${title} on GitHub (external)`}>↗</a
+      aria-label={`${title} on GitHub (external)`}
     >
+      ↗
+    </a>
   </header>
 
   <p class="v-card__desc">{description}</p>
   <p class="v-card__role">{role}</p>
 
-  {
-    highlights.length > 0 && (
-      <ul class="v-card__list" role="list">
-        {highlights.map((h) => (
-          <li class="v-card__item">{h}</li>
-        ))}
-      </ul>
-    )
-  }
+  {highlights.length > 0 && (
+    <ul class="v-card__list" role="list">
+      {highlights.map((h) => (
+        <li class="v-card__item">{h}</li>
+      ))}
+    </ul>
+  )}
 
   <a href={href} class="v-card__link" target="_blank" rel="noopener noreferrer">
     {repo} →<span class="sr-only"> (opens in new tab)</span>

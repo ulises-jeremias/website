@@ -6,9 +6,14 @@ import { profile } from '@/data/profile.js';
   <span class="about-panel__corner" aria-hidden="true"></span>
 
   <p class="about-panel__eyebrow text-glow-accent">
-    <span class="about-panel__slash" aria-hidden="true">/</span> About Ulises
+    <span class="about-panel__slash" aria-hidden="true">
+      /
+    </span>{' '}
+    About Ulises
   </p>
-  <h2 id="about-panel-title" class="sr-only">{profile.displayName}</h2>
+  <h2 id="about-panel-title" class="sr-only">
+    {profile.displayName}
+  </h2>
 
   <div class="about-panel__body">
     <p class="about-panel__bio">{profile.bio}</p>
@@ -16,26 +21,24 @@ import { profile } from '@/data/profile.js';
     <div class="about-panel__more">
       <h3 class="about-panel__label">Roles &amp; focus</h3>
       <ul class="about-panel__roles">
-        {
-          profile.roles.slice(0, 3).map((role) => (
-            <li>
-              <strong>{role.label}</strong>
-              {role.organization && (
-                <>
-                  {' '}
-                  <span aria-hidden="true">·</span>{' '}
-                  {role.href ? (
-                    <a href={role.href} target="_blank" rel="noopener noreferrer">
-                      {role.organization}
-                    </a>
-                  ) : (
-                    <span>{role.organization}</span>
-                  )}
-                </>
-              )}
-            </li>
-          ))
-        }
+        {profile.roles.slice(0, 3).map((role) => (
+          <li>
+            <strong>{role.label}</strong>
+            {role.organization && (
+              <>
+                {' '}
+                <span aria-hidden="true">·</span>{' '}
+                {role.href ? (
+                  <a href={role.href} target="_blank" rel="noopener noreferrer">
+                    {role.organization}
+                  </a>
+                ) : (
+                  <span>{role.organization}</span>
+                )}
+              </>
+            )}
+          </li>
+        ))}
       </ul>
       <a class="about-panel__cta" href="/about">
         Read the full trajectory <span aria-hidden="true">→</span>

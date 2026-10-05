@@ -9,32 +9,44 @@ import { verifiedFacts } from '../data/index.js';
       <h2 id="df-color-flow-title">One wallpaper, a synchronized desktop</h2>
     </div>
     <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noopener noreferrer">
-      Read the system contract <span aria-hidden="true">↗</span><span class="sr-only"> (opens in new tab)</span>
+      Read the system contract <span aria-hidden="true">↗</span>
+      <span class="sr-only"> (opens in new tab)</span>
     </a>
   </figcaption>
 
   <div class="df-color-flow__source">
     <span class="df-color-flow__step">01 · SOURCE</span>
     <span class="df-color-flow__wallpaper" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </span>
     <strong>Wallpaper selected</strong>
     <code>horneroctl wallpaper set</code>
   </div>
 
-  <div class="df-color-flow__split" aria-hidden="true"><span></span><span></span></div>
+  <div class="df-color-flow__split" aria-hidden="true">
+    <span></span>
+    <span></span>
+  </div>
 
   <div class="df-color-flow__routes">
     <section class="df-color-flow__route df-color-flow__route--live" aria-labelledby="df-colors-live-title">
       <p class="df-color-flow__step">02A · SHELL RUNNING</p>
       <h3 id="df-colors-live-title">Quickshell IPC</h3>
-      <p><code>appearance setWallpaper</code> refreshes the active shell.</p>
+      <p>
+        <code>appearance setWallpaper</code> refreshes the active shell.
+      </p>
       <span class="df-color-flow__output">Colours.qml reload</span>
     </section>
     <section class="df-color-flow__route df-color-flow__route--fallback" aria-labelledby="df-colors-fallback-title">
       <p class="df-color-flow__step">02B · SHELL STOPPED</p>
       <h3 id="df-colors-fallback-title">Apply the palette fallback</h3>
-      <p><code>apply-appearance.sh</code> runs pywal and generates Material 3 colors.</p>
+      <p>
+        <code>apply-appearance.sh</code> runs pywal and generates Material 3 colors.
+      </p>
       <span class="df-color-flow__output">scheme.json · scheme state · GTK policy</span>
     </section>
   </div>

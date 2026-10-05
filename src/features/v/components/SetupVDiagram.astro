@@ -5,11 +5,13 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
 <section class="setup" aria-labelledby="setup-title">
   <header class="setup__header">
     <p class="setup__eyebrow">05 · setup-v</p>
-    <h2 id="setup-title" class="setup__title">From workflow line to verified binary</h2>
+    <h2 id="setup-title" class="setup__title">
+      From workflow line to verified binary
+    </h2>
     <p class="setup__desc">
-      <code>uses: {SETUP_V_PIN}</code> resolves a ref or version-file value, detects the architecture, conditionally restores
-      an explicit-version cache, and installs a prebuilt release asset or builds V from source. It then adds V to PATH and
-      exposes the documented outputs.
+      <code>uses: {SETUP_V_PIN}</code> resolves a ref or version-file value, detects the architecture, conditionally
+      restores an explicit-version cache, and installs a prebuilt release asset or builds V from source. It then adds V
+      to PATH and exposes the documented outputs.
     </p>
   </header>
 
@@ -37,8 +39,10 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">pipeline · 5 stages · cache-aware</text
+          style="text-transform: uppercase;"
         >
+          pipeline · 5 stages · cache-aware
+        </text>
 
         <!-- workflow line top -->
         <rect x="16" y="38" width="688" height="32" rx="8" fill="#0d223a" stroke="rgba(91,155,213,0.22)"></rect>
@@ -49,13 +53,23 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.06em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">workflow.yml</text
+          style="text-transform: uppercase;"
         >
-        <text x="132" y="58" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace"
-          >{`- uses: ${SETUP_V_PIN}`}</text
-        >
-        <text x="340" y="58" font-size="10" fill="#8bb8e0">with: version / arch / cache</text>
-        <text x="580" y="58" font-size="10" fill="#5b9bd5" font-weight="700">runs: 5 stages →</text>
+          workflow.yml
+        </text>
+        <text
+          x="132"
+          y="58"
+          font-size="11"
+          fill="#cfe1f5"
+          font-family="ui-monospace, monospace"
+        >{`- uses: ${SETUP_V_PIN}`}</text>
+        <text x="340" y="58" font-size="10" fill="#8bb8e0">
+          with: version / arch / cache
+        </text>
+        <text x="580" y="58" font-size="10" fill="#5b9bd5" font-weight="700">
+          runs: 5 stages →
+        </text>
 
         <!-- stages -->
         <!-- Resolve -->
@@ -68,7 +82,9 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           <rect x="16" y="88" width="128" height="96" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.3)"></rect>
           <rect x="16" y="88" width="128" height="4" rx="2" fill="#5b9bd5"></rect>
           <circle cx="30" cy="106" r="9" fill="#5b9bd5" aria-hidden="true"></circle>
-          <text x="30" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">1</text>
+          <text x="30" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">
+            1
+          </text>
           <text
             x="48"
             y="108"
@@ -76,12 +92,22 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">resolve</text
+            style="text-transform: uppercase;"
           >
-          <text x="30" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Version</text>
-          <text x="30" y="144" font-size="9.5" fill="#b8d0e6">stable / ref</text>
-          <text x="30" y="158" font-size="9" fill="#8bb8e0" font-family="ui-monospace, monospace">.v-version</text>
-          <text x="120" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ resolved ref</text>
+            resolve
+          </text>
+          <text x="30" y="128" font-size="11" font-weight="800" fill="#e6f0fb">
+            Version
+          </text>
+          <text x="30" y="144" font-size="9.5" fill="#b8d0e6">
+            stable / ref
+          </text>
+          <text x="30" y="158" font-size="9" fill="#8bb8e0" font-family="ui-monospace, monospace">
+            .v-version
+          </text>
+          <text x="120" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">
+            → resolved ref
+          </text>
         </g>
         <g aria-hidden="true">
           <line x1="144" y1="136" x2="168" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
@@ -97,7 +123,9 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           <title>Arch — target architecture — prebuilt or source fallback</title>
           <rect x="176" y="88" width="128" height="96" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
           <circle cx="190" cy="106" r="9" fill="rgba(91,155,213,0.92)"></circle>
-          <text x="190" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">2</text>
+          <text x="190" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">
+            2
+          </text>
           <text
             x="208"
             y="108"
@@ -105,12 +133,22 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">arch</text
+            style="text-transform: uppercase;"
           >
-          <text x="190" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Arch</text>
-          <text x="190" y="144" font-size="9.5" fill="#b8d0e6">target arch</text>
-          <text x="190" y="158" font-size="9" fill="#8bb8e0">map or build</text>
-          <text x="280" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">→ platform/arch</text>
+            arch
+          </text>
+          <text x="190" y="128" font-size="11" font-weight="800" fill="#e6f0fb">
+            Arch
+          </text>
+          <text x="190" y="144" font-size="9.5" fill="#b8d0e6">
+            target arch
+          </text>
+          <text x="190" y="158" font-size="9" fill="#8bb8e0">
+            map or build
+          </text>
+          <text x="280" y="166" text-anchor="end" font-size="8.5" fill="#8bb8e0">
+            → platform/arch
+          </text>
         </g>
         <g aria-hidden="true">
           <line x1="304" y1="136" x2="328" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
@@ -127,7 +165,9 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           <rect x="336" y="88" width="128" height="96" rx="12" fill="#14365a" stroke="rgba(91,155,213,0.32)"></rect>
           <rect x="336" y="88" width="128" height="4" rx="2" fill="#7cb7c9"></rect>
           <circle cx="350" cy="106" r="9" fill="#7cb7c9"></circle>
-          <text x="350" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">3</text>
+          <text x="350" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">
+            3
+          </text>
           <text
             x="368"
             y="108"
@@ -135,12 +175,22 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">cache</text
+            style="text-transform: uppercase;"
           >
-          <text x="350" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Cache</text>
-          <text x="350" y="144" font-size="9.5" fill="#b8d0e6">restore</text>
-          <text x="350" y="158" font-size="9" fill="#8bb8e0">v+version+os+arch</text>
-          <text x="440" y="166" text-anchor="end" font-size="8.5" fill="#7cb7c9">hit → skip</text>
+            cache
+          </text>
+          <text x="350" y="128" font-size="11" font-weight="800" fill="#e6f0fb">
+            Cache
+          </text>
+          <text x="350" y="144" font-size="9.5" fill="#b8d0e6">
+            restore
+          </text>
+          <text x="350" y="158" font-size="9" fill="#8bb8e0">
+            v+version+os+arch
+          </text>
+          <text x="440" y="166" text-anchor="end" font-size="8.5" fill="#7cb7c9">
+            hit → skip
+          </text>
         </g>
         <g aria-hidden="true">
           <line x1="464" y1="136" x2="488" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
@@ -153,8 +203,11 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
             stroke-width="1.4"
             stroke-dasharray="6 5"
             stroke-linecap="round"
-            opacity="0.85"></path>
-          <text x="464" y="206" font-size="8.5" fill="#7cb7c9">cache hit path</text>
+            opacity="0.85"
+          ></path>
+          <text x="464" y="206" font-size="8.5" fill="#7cb7c9">
+            cache hit path
+          </text>
         </g>
 
         <!-- Install -->
@@ -162,7 +215,9 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           <title>Install — prebuilt or source build + PATH</title>
           <rect x="496" y="88" width="100" height="96" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.26)"></rect>
           <circle cx="510" cy="106" r="9" fill="rgba(91,155,213,0.92)"></circle>
-          <text x="510" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">4</text>
+          <text x="510" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">
+            4
+          </text>
           <text
             x="528"
             y="108"
@@ -170,11 +225,19 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">install</text
+            style="text-transform: uppercase;"
           >
-          <text x="510" y="128" font-size="11" font-weight="800" fill="#e6f0fb">Fetch</text>
-          <text x="510" y="144" font-size="9.5" fill="#b8d0e6">asset/build</text>
-          <text x="510" y="158" font-size="9" fill="#8bb8e0">+ PATH</text>
+            install
+          </text>
+          <text x="510" y="128" font-size="11" font-weight="800" fill="#e6f0fb">
+            Fetch
+          </text>
+          <text x="510" y="144" font-size="9.5" fill="#b8d0e6">
+            asset/build
+          </text>
+          <text x="510" y="158" font-size="9" fill="#8bb8e0">
+            + PATH
+          </text>
         </g>
         <g aria-hidden="true">
           <line x1="596" y1="136" x2="620" y2="136" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
@@ -190,7 +253,9 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           <title>Verify — v version + outputs</title>
           <rect x="628" y="88" width="76" height="96" rx="12" fill="#0d223a" stroke="rgba(91,155,213,0.32)"></rect>
           <circle cx="642" cy="106" r="9" fill="#5b9bd5"></circle>
-          <text x="642" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">5</text>
+          <text x="642" y="110" text-anchor="middle" font-size="10" font-weight="800" fill="#0f2a44">
+            5
+          </text>
           <text
             x="660"
             y="108"
@@ -198,11 +263,19 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">verify</text
+            style="text-transform: uppercase;"
           >
-          <text x="642" y="128" font-size="10.5" font-weight="800" fill="#e6f0fb">Verify</text>
-          <text x="642" y="144" font-size="9" fill="#b8d0e6">v -v</text>
-          <text x="642" y="158" font-size="8.5" fill="#8bb8e0">outputs</text>
+            verify
+          </text>
+          <text x="642" y="128" font-size="10.5" font-weight="800" fill="#e6f0fb">
+            Verify
+          </text>
+          <text x="642" y="144" font-size="9" fill="#b8d0e6">
+            v -v
+          </text>
+          <text x="642" y="158" font-size="8.5" fill="#8bb8e0">
+            outputs
+          </text>
         </g>
 
         <!-- bottom outputs -->
@@ -213,7 +286,8 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           height="62"
           rx="12"
           fill="rgba(255,255,255,0.05)"
-          stroke="rgba(91,155,213,0.18)"></rect>
+          stroke="rgba(91,155,213,0.18)"
+        ></rect>
         <text
           x="30"
           y="222"
@@ -221,17 +295,27 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.06em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">outputs · used by later steps</text
+          style="text-transform: uppercase;"
         >
+          outputs · used by later steps
+        </text>
         <g aria-hidden="true">
           <rect x="30" y="230" width="140" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="44" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">version</text>
+          <text x="44" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            version
+          </text>
           <rect x="180" y="230" width="140" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">bin-path</text>
+          <text x="194" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            bin-path
+          </text>
           <rect x="330" y="230" width="160" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="344" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">v-bin-path</text>
+          <text x="344" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            v-bin-path
+          </text>
           <rect x="500" y="230" width="174" height="26" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
-          <text x="514" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">architecture</text>
+          <text x="514" y="246" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            architecture
+          </text>
         </g>
 
         <!-- bottom platforms -->
@@ -243,29 +327,37 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.06em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">runners</text
+          style="text-transform: uppercase;"
         >
+          runners
+        </text>
         <g aria-hidden="true">
           <rect x="112" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
-          <text x="158" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">ubuntu-latest</text>
+          <text x="158" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">
+            ubuntu-latest
+          </text>
           <rect x="212" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
-          <text x="258" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">macos-latest</text>
+          <text x="258" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">
+            macos-latest
+          </text>
           <rect x="312" y="286" width="92" height="30" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.2)"></rect>
-          <text x="358" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">windows-latest</text>
-          <text x="420" y="304" font-size="10" fill="#8bb8e0">+ runner or requested arch</text>
+          <text x="358" y="305" text-anchor="middle" font-size="10" fill="#e6f0fb">
+            windows-latest
+          </text>
+          <text x="420" y="304" font-size="10" fill="#8bb8e0">
+            + runner or requested arch
+          </text>
         </g>
       </svg>
 
       <div class="setup__fallback" role="list" aria-label="setup-v pipeline steps">
-        {
-          setupVPipeline.map((s, idx) => (
-            <span class="setup__chip" role="listitem">
-              <span class="setup__chip-num">{idx + 1}</span>
-              <strong>{s.label}</strong>
-              <span>{s.description}</span>
-            </span>
-          ))
-        }
+        {setupVPipeline.map((s, idx) => (
+          <span class="setup__chip" role="listitem">
+            <span class="setup__chip-num">{idx + 1}</span>
+            <strong>{s.label}</strong>
+            <span>{s.description}</span>
+          </span>
+        ))}
       </div>
     </div>
 
@@ -273,8 +365,8 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
       <article class="setup__card">
         <h3 class="setup__card-title">Explicit-version cache</h3>
         <p class="setup__card-text">
-          When <code>version</code> is supplied, setup-v can restore a GitHub cache keyed by version, operating system, and
-          architecture. Otherwise it resolves and installs without claiming a reusable version-keyed cache.
+          When <code>version</code> is supplied, setup-v can restore a GitHub cache keyed by version, operating system,
+          and architecture. Otherwise it resolves and installs without claiming a reusable version-keyed cache.
         </p>
         <div class="setup__code" role="region" aria-label="setup-v usage yaml">
           <pre><code><span class="setup__c-kw">- uses</span>: <span class="setup__c-str">{SETUP_V_PIN}</span>
@@ -286,11 +378,13 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
       <article class="setup__card">
         <h3 class="setup__card-title">Version is flexible</h3>
         <p class="setup__card-text">
-          The <code>version</code> input accepts a tag, branch, or commit SHA. The separate <code>version-file</code> input
-          can read <code>.v-version</code>. The action uses the workflow token by default.
+          The <code>version</code> input accepts a tag, branch, or commit SHA. The separate <code>version-file</code>{' '}
+          input can read <code>.v-version</code>. The action uses the workflow token by default.
         </p>
         <ul class="setup__list">
-          <li><code>stable: true</code> selects the latest stable V release</li>
+          <li>
+            <code>stable: true</code> selects the latest stable V release
+          </li>
           <li>Mapped prebuilts are preferred; unavailable combinations build from source</li>
           <li>Post-job cleanup removes credential state on a best-effort basis</li>
         </ul>
@@ -299,7 +393,11 @@ import { SETUP_V_PIN, setupVPipeline } from '../data/index.js';
   </div>
 
   <p class="setup__note">
-    Action: <a href="https://github.com/vlang/setup-v" target="_blank" rel="noopener noreferrer">vlang/setup-v ↗</a> · Marketplace:
+    Action:{' '}
+    <a href="https://github.com/vlang/setup-v" target="_blank" rel="noopener noreferrer">
+      vlang/setup-v ↗
+    </a>{' '}
+    · Marketplace:
     <code>{SETUP_V_PIN}</code> · Cache docs via <code>README.md</code> inputs table.
   </p>
 </section>

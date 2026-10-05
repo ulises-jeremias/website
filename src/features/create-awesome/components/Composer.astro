@@ -61,16 +61,14 @@ const composerBootstrap = {
   <header>
     <p class="ca-composer__eyebrow">Composer</p>
     <h2 id="ca-composer-title">Runtime + template + addons → command</h2>
-    {
-      embedded ? null : (
-        <p>
-          Native controls. Catalogs: CNA {catalogTotals.node.templates}+{catalogTotals.node.addons}, CPA{' '}
-          {catalogTotals.python.templates}+{catalogTotals.python.addons}, CVA {catalogTotals.v.templates}+
-          {catalogTotals.v.addons}, CRA {catalogTotals.rust.templates}+{catalogTotals.rust.addons}. Commands follow each
-          family’s CLI shape.
-        </p>
-      )
-    }
+    {embedded ? null : (
+      <p>
+        Native controls. Catalogs: CNA {catalogTotals.node.templates}+{catalogTotals.node.addons}, CPA{' '}
+        {catalogTotals.python.templates}+{catalogTotals.python.addons}, CVA {catalogTotals.v.templates}+
+        {catalogTotals.v.addons}, CRA {catalogTotals.rust.templates}+{catalogTotals.rust.addons}. Commands follow each
+        family’s CLI shape.
+      </p>
+    )}
   </header>
 
   <div class="ca-composer__fallback" data-ca-static-fallback>
@@ -79,27 +77,25 @@ const composerBootstrap = {
       becomes available after the interactive composer initializes successfully.
     </p>
     <div class="ca-composer__fallback-grid">
-      {
-        staticFamilies.map((family) => (
-          <article id={family.id} data-ca-static-family={family.id}>
-            <p class="ca-composer__fallback-family">{family.label}</p>
-            <h3>{family.title}</h3>
-            <p>{family.description}</p>
-            <p class="ca-composer__fallback-command">
-              <span>Base example · {family.exampleNote}</span>
-              <code>{family.baseExample}</code>
-            </p>
-            <p class="ca-composer__fallback-links">
-              <a href={family.catalog} target="_blank" rel="noopener noreferrer">
-                {family.label} catalog ↗
-              </a>
-              <a href={family.repository} target="_blank" rel="noopener noreferrer">
-                {family.label} repository ↗
-              </a>
-            </p>
-          </article>
-        ))
-      }
+      {staticFamilies.map((family) => (
+        <article id={family.id} data-ca-static-family={family.id}>
+          <p class="ca-composer__fallback-family">{family.label}</p>
+          <h3>{family.title}</h3>
+          <p>{family.description}</p>
+          <p class="ca-composer__fallback-command">
+            <span>Base example · {family.exampleNote}</span>
+            <code>{family.baseExample}</code>
+          </p>
+          <p class="ca-composer__fallback-links">
+            <a href={family.catalog} target="_blank" rel="noopener noreferrer">
+              {family.label} catalog ↗
+            </a>
+            <a href={family.repository} target="_blank" rel="noopener noreferrer">
+              {family.label} repository ↗
+            </a>
+          </p>
+        </article>
+      ))}
     </div>
   </div>
 
@@ -118,23 +114,21 @@ const composerBootstrap = {
       aria-hidden={embedded ? 'true' : undefined}
     >
       {embedded ? null : <legend>Runtime</legend>}
-      {
-        variants.map((variant, index) => (
-          <>
-            <input
-              type="radio"
-              name="ca-runtime"
-              id={`ca-runtime-${variant.id}`}
-              value={variant.id}
-              data-family={variant.id}
-              checked={index === 0}
-              tabindex={embedded ? -1 : undefined}
-              aria-label={embedded ? variant.label : undefined}
-            />
-            {embedded ? null : <label for={`ca-runtime-${variant.id}`}>{variant.label}</label>}
-          </>
-        ))
-      }
+      {variants.map((variant, index) => (
+        <>
+          <input
+            type="radio"
+            name="ca-runtime"
+            id={`ca-runtime-${variant.id}`}
+            value={variant.id}
+            data-family={variant.id}
+            checked={index === 0}
+            tabindex={embedded ? -1 : undefined}
+            aria-label={embedded ? variant.label : undefined}
+          />
+          {embedded ? null : <label for={`ca-runtime-${variant.id}`}>{variant.label}</label>}
+        </>
+      ))}
     </fieldset>
 
     <label class="ca-composer__project">
@@ -150,93 +144,93 @@ const composerBootstrap = {
       />
     </label>
 
-    {
-      variants.map((variant, index) => (
-        <div
-          class={`ca-composer__panel ca-composer__panel--${variant.id}`}
-          data-runtime={variant.id}
-          data-ca-panel={variant.id}
-          data-ca-panel-active={index === 0 ? 'true' : 'false'}
-        >
-          <label>
-            Template
-            <select name={`template-${variant.id}`} data-ca-template aria-label={`${variant.label} template`}>
-              {variant.templates.map((template) => (
-                <option value={template.id} selected={template.featured}>
-                  {template.name} ({template.id})
-                </option>
-              ))}
-            </select>
+    {variants.map((variant, index) => (
+      <div
+        class={`ca-composer__panel ca-composer__panel--${variant.id}`}
+        data-runtime={variant.id}
+        data-ca-panel={variant.id}
+        data-ca-panel-active={index === 0 ? 'true' : 'false'}
+      >
+        <label>
+          Template
+          <select name={`template-${variant.id}`} data-ca-template aria-label={`${variant.label} template`}>
+            {variant.templates.map((template) => (
+              <option value={template.id} selected={template.featured}>
+                {template.name} ({template.id})
+              </option>
+            ))}
+          </select>
+        </label>
+        <div class="ca-composer__addon-tools">
+          <label class="ca-composer__addon-search">
+            Search addons
+            <input
+              type="search"
+              autocomplete="off"
+              placeholder={`Filter ${variant.label} addons`}
+              data-ca-addon-search={variant.id}
+            />
           </label>
-          <div class="ca-composer__addon-tools">
-            <label class="ca-composer__addon-search">
-              Search addons
-              <input
-                type="search"
-                autocomplete="off"
-                placeholder={`Filter ${variant.label} addons`}
-                data-ca-addon-search={variant.id}
-              />
-            </label>
-            <div class="ca-composer__presets" role="group" aria-label={`${variant.label} presets`}>
-              {compositionExamples
-                .filter((example) => example.variant === variant.id)
-                .map((example) => (
-                  <button
-                    type="button"
-                    data-ca-preset={example.id}
-                    data-template={example.template}
-                    data-addons={JSON.stringify(example.addons)}
-                  >
-                    {example.title}
-                  </button>
-                ))}
-            </div>
+          <div class="ca-composer__presets" role="group" aria-label={`${variant.label} presets`}>
+            {compositionExamples
+              .filter((example) => example.variant === variant.id)
+              .map((example) => (
+                <button
+                  type="button"
+                  data-ca-preset={example.id}
+                  data-template={example.template}
+                  data-addons={JSON.stringify(example.addons)}
+                >
+                  {example.title}
+                </button>
+              ))}
           </div>
-          <fieldset class="ca-composer__addons">
-            <legend>Addons ({variant.addons.length})</legend>
-            {addonCategories.map((category) => {
-              const addons = variant.addons.filter((addon) => addon.category === category.id);
-              if (addons.length === 0) return null;
-
-              return (
-                <section class="ca-composer__addon-group" data-ca-addon-group>
-                  <h3>
-                    {category.label} <span class="ca-composer__addon-count">({addons.length})</span>
-                  </h3>
-                  <div>
-                    {addons.map((addon) => (
-                      <label
-                        data-ca-addon-row
-                        data-addon-search={`${addon.id} ${addon.name} ${addon.description} ${addon.labels.join(' ')}`}
-                      >
-                        <input
-                          type="checkbox"
-                          name={`addon-${variant.id}`}
-                          value={addon.id}
-                          data-ca-addon
-                          data-compatible-templates={JSON.stringify(addon.compatibleTemplateIds)}
-                          data-incompatible-addons={JSON.stringify(addon.incompatibleAddonIds)}
-                        />
-                        <span>
-                          <code>{addon.id}</code>
-                          <small>{addon.description}</small>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
-          </fieldset>
         </div>
-      ))
-    }
+        <fieldset class="ca-composer__addons">
+          <legend>Addons ({variant.addons.length})</legend>
+          {addonCategories.map((category) => {
+            const addons = variant.addons.filter((addon) => addon.category === category.id);
+            if (addons.length === 0) return null;
+
+            return (
+              <section class="ca-composer__addon-group" data-ca-addon-group>
+                <h3>
+                  {category.label} <span class="ca-composer__addon-count">({addons.length})</span>
+                </h3>
+                <div>
+                  {addons.map((addon) => (
+                    <label
+                      data-ca-addon-row
+                      data-addon-search={`${addon.id} ${addon.name} ${addon.description} ${addon.labels.join(' ')}`}
+                    >
+                      <input
+                        type="checkbox"
+                        name={`addon-${variant.id}`}
+                        value={addon.id}
+                        data-ca-addon
+                        data-compatible-templates={JSON.stringify(addon.compatibleTemplateIds)}
+                        data-incompatible-addons={JSON.stringify(addon.incompatibleAddonIds)}
+                      />
+                      <span>
+                        <code>{addon.id}</code>
+                        <small>{addon.description}</small>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </fieldset>
+      </div>
+    ))}
 
     <p class="ca-composer__preview">
       <span>Composable command</span>
       <code data-ca-command>{initialCommand}</code>
-      <button type="button" data-ca-command-copy hidden>Copy command</button>
+      <button type="button" data-ca-command-copy hidden>
+        Copy command
+      </button>
     </p>
     <p class="visually-hidden" role="status" aria-atomic="true" data-ca-composer-status></p>
   </form>

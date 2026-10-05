@@ -5,7 +5,9 @@ import { vslBackends } from '../data/index.js';
 <section class="vsl" aria-labelledby="vsl-title">
   <header class="vsl__header">
     <p class="vsl__eyebrow">02 · VSL</p>
-    <h2 id="vsl-title" class="vsl__title">Portable by default, optional backends when needed</h2>
+    <h2 id="vsl-title" class="vsl__title">
+      Portable by default, optional backends when needed
+    </h2>
     <p class="vsl__desc">
       VSL provides a portable pure-V scientific path and optional C BLAS/LAPACK backends. Its current pure-V QR path has
       a documented correctness caveat. VCL, CUDA, and Vulkan are module- and operation-specific experimental paths. The
@@ -42,7 +44,8 @@ import { vslBackends } from '../data/index.js';
           rx="12"
           fill="#102e4e"
           stroke="rgba(91,155,213,0.22)"
-          aria-hidden="true"></rect>
+          aria-hidden="true"
+        ></rect>
         <text
           x="28"
           y="46"
@@ -50,42 +53,69 @@ import { vslBackends } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">fractal · deterministic</text
+          style="text-transform: uppercase;"
         >
-        <text x="28" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">Sierpinski · lvl 4</text>
+          fractal · deterministic
+        </text>
+        <text x="28" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">
+          Sierpinski · lvl 4
+        </text>
 
         <!-- Sierpinski via triangles -->
         <!-- level 0 big -->
-        <polygon points="143,78 56,228 230,228" fill="none" stroke="#5b9bd5" stroke-width="1.8" opacity="0.95"
+        <polygon
+          points="143,78 56,228 230,228"
+          fill="none"
+          stroke="#5b9bd5"
+          stroke-width="1.8"
+          opacity="0.95"
         ></polygon>
         <!-- level 1 inverted -->
-        <polygon points="143,153 99.5,228 186.5,228" fill="rgba(91,155,213,0.14)" stroke="#5b9bd5" stroke-width="1.25"
+        <polygon
+          points="143,153 99.5,228 186.5,228"
+          fill="rgba(91,155,213,0.14)"
+          stroke="#5b9bd5"
+          stroke-width="1.25"
         ></polygon>
-        <polygon points="99.5,78 56,153 143,153" fill="none" stroke="#5b9bd5" stroke-width="1.1" opacity="0.9"
+        <polygon
+          points="99.5,78 56,153 143,153"
+          fill="none"
+          stroke="#5b9bd5"
+          stroke-width="1.1"
+          opacity="0.9"
         ></polygon>
-        <polygon points="186.5,78 143,153 230,153" fill="none" stroke="#5b9bd5" stroke-width="1.1" opacity="0.9"
+        <polygon
+          points="186.5,78 143,153 230,153"
+          fill="none"
+          stroke="#5b9bd5"
+          stroke-width="1.1"
+          opacity="0.9"
         ></polygon>
         <!-- level 2 smaller -->
         <polygon
           points="77.5,115.5 56,153 99.5,153"
           fill="rgba(91,155,213,0.08)"
           stroke="rgba(91,155,213,0.7)"
-          stroke-width="0.9"></polygon>
+          stroke-width="0.9"
+        ></polygon>
         <polygon
           points="121,115.5 99.5,153 143,153"
           fill="rgba(91,155,213,0.08)"
           stroke="rgba(91,155,213,0.7)"
-          stroke-width="0.9"></polygon>
+          stroke-width="0.9"
+        ></polygon>
         <polygon
           points="165,115.5 143,153 186.5,153"
           fill="rgba(91,155,213,0.08)"
           stroke="rgba(91,155,213,0.7)"
-          stroke-width="0.9"></polygon>
+          stroke-width="0.9"
+        ></polygon>
         <polygon
           points="208.5,115.5 186.5,153 230,153"
           fill="rgba(91,155,213,0.08)"
           stroke="rgba(91,155,213,0.7)"
-          stroke-width="0.9"></polygon>
+          stroke-width="0.9"
+        ></polygon>
 
         <!-- backend selector right -->
         <rect x="286" y="28" width="260" height="258" rx="12" fill="#122f4f" stroke="rgba(91,155,213,0.22)"></rect>
@@ -96,17 +126,27 @@ import { vslBackends } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">backends · flag select</text
+          style="text-transform: uppercase;"
         >
-        <text x="300" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">LA pipeline</text>
+          backends · flag select
+        </text>
+        <text x="300" y="62" font-size="12.5" font-weight="700" fill="#e6f0fb">
+          LA pipeline
+        </text>
 
         <!-- Pure V pill -->
         <g tabindex="0" role="listitem" aria-label="Pure V — portable default — QR caveat documented upstream">
           <title>Pure V — zero deps</title>
           <rect x="300" y="76" width="232" height="44" rx="11" fill="#5b9bd5" stroke="rgba(255,255,255,0.18)"></rect>
-          <text x="318" y="96" font-size="11.5" font-weight="800" fill="#0f2a44">Pure V</text>
-          <text x="318" y="110" font-size="10.5" fill="#0f2a44" opacity="0.85">default · zero deps</text>
-          <text x="514" y="102" text-anchor="end" font-size="11" font-weight="700" fill="#0f2a44">✓</text>
+          <text x="318" y="96" font-size="11.5" font-weight="800" fill="#0f2a44">
+            Pure V
+          </text>
+          <text x="318" y="110" font-size="10.5" fill="#0f2a44" opacity="0.85">
+            default · zero deps
+          </text>
+          <text x="514" y="102" text-anchor="end" font-size="11" font-weight="700" fill="#0f2a44">
+            ✓
+          </text>
         </g>
 
         <!-- CBLAS -->
@@ -119,12 +159,17 @@ import { vslBackends } from '../data/index.js';
             height="44"
             rx="11"
             fill="rgba(255,255,255,0.06)"
-            stroke="rgba(91,155,213,0.3)"></rect>
-          <text x="318" y="148" font-size="11.5" font-weight="700" fill="#e6f0fb">OpenBLAS</text>
-          <text x="318" y="162" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace"
-            >-d vsl_blas_cblas</text
-          >
-          <text x="514" y="154" text-anchor="end" font-size="10" fill="#8bb8e0">optional</text>
+            stroke="rgba(91,155,213,0.3)"
+          ></rect>
+          <text x="318" y="148" font-size="11.5" font-weight="700" fill="#e6f0fb">
+            OpenBLAS
+          </text>
+          <text x="318" y="162" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            -d vsl_blas_cblas
+          </text>
+          <text x="514" y="154" text-anchor="end" font-size="10" fill="#8bb8e0">
+            optional
+          </text>
         </g>
 
         <!-- LAPACKE -->
@@ -137,12 +182,17 @@ import { vslBackends } from '../data/index.js';
             height="44"
             rx="11"
             fill="rgba(255,255,255,0.06)"
-            stroke="rgba(91,155,213,0.3)"></rect>
-          <text x="318" y="200" font-size="11.5" font-weight="700" fill="#e6f0fb">LAPACKE</text>
-          <text x="318" y="214" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace"
-            >-d vsl_lapack_lapacke</text
-          >
-          <text x="514" y="206" text-anchor="end" font-size="10" fill="#8bb8e0">optional</text>
+            stroke="rgba(91,155,213,0.3)"
+          ></rect>
+          <text x="318" y="200" font-size="11.5" font-weight="700" fill="#e6f0fb">
+            LAPACKE
+          </text>
+          <text x="318" y="214" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            -d vsl_lapack_lapacke
+          </text>
+          <text x="514" y="206" text-anchor="end" font-size="10" fill="#8bb8e0">
+            optional
+          </text>
         </g>
 
         <!-- arrow to vis row -->
@@ -155,7 +205,8 @@ import { vslBackends } from '../data/index.js';
           stroke-width="1.8"
           stroke-dasharray="5 5"
           stroke-linecap="round"
-          aria-hidden="true"></line>
+          aria-hidden="true"
+        ></line>
         <polygon points="288,160 282,156 282,164" fill="#5b9bd5" aria-hidden="true"></polygon>
 
         <!-- vis row bottom -->
@@ -166,7 +217,8 @@ import { vslBackends } from '../data/index.js';
           height="50"
           rx="12"
           fill="rgba(255,255,255,0.06)"
-          stroke="rgba(91,155,213,0.18)"></rect>
+          stroke="rgba(91,155,213,0.18)"
+        ></rect>
         <text
           x="28"
           y="314"
@@ -174,9 +226,13 @@ import { vslBackends } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">visualization</text
+          style="text-transform: uppercase;"
         >
-        <text x="28" y="330" font-size="11" fill="#cfe1f5">Plotly-style · 2D/3D · FFT · stats</text>
+          visualization
+        </text>
+        <text x="28" y="330" font-size="11" fill="#cfe1f5">
+          Plotly-style · 2D/3D · FFT · stats
+        </text>
         <g aria-hidden="true">
           <rect x="360" y="304" width="68" height="34" rx="8" fill="#102e4e" stroke="rgba(91,155,213,0.25)"></rect>
           <polyline
@@ -185,23 +241,24 @@ import { vslBackends } from '../data/index.js';
             stroke="#5b9bd5"
             stroke-width="1.4"
             stroke-linecap="round"
-            stroke-linejoin="round"></polyline>
+            stroke-linejoin="round"
+          ></polyline>
           <rect x="436" y="304" width="68" height="34" rx="8" fill="#102e4e" stroke="rgba(91,155,213,0.25)"></rect>
           <circle cx="470" cy="321" r="10" fill="none" stroke="#7cb7c9" stroke-width="1.3"></circle>
           <circle cx="470" cy="321" r="4" fill="#7cb7c9" opacity="0.9"></circle>
           <rect x="460" y="318" width="20" height="2" fill="#7cb7c9" opacity="0.7"></rect>
         </g>
-        <text x="520" y="322" font-size="9.5" fill="#8bb8e0" aria-hidden="true">→</text>
+        <text x="520" y="322" font-size="9.5" fill="#8bb8e0" aria-hidden="true">
+          →
+        </text>
       </svg>
 
       <div class="vsl__fallback" role="list" aria-label="VSL backends">
-        {
-          vslBackends.map((b) => (
-            <span class="vsl__chip" role="listitem">
-              <strong>{b.label}</strong> <code>{b.flag}</code> · <em>{b.maturity}</em> — {b.bestFor}
-            </span>
-          ))
-        }
+        {vslBackends.map((b) => (
+          <span class="vsl__chip" role="listitem">
+            <strong>{b.label}</strong> <code>{b.flag}</code> · <em>{b.maturity}</em> — {b.bestFor}
+          </span>
+        ))}
       </div>
     </div>
 
@@ -234,11 +291,15 @@ import { vslBackends } from '../data/index.js';
   </div>
 
   <p class="vsl__note">
-    Try locally: <code>v install vsl</code> → <code>v run examples/*/main.v</code>. Docs: <a
-      href="https://vlang.github.io/vsl"
-      target="_blank"
-      rel="noopener noreferrer">vlang.github.io/vsl ↗</a
-    >. Source: <a href="https://github.com/vlang/vsl" target="_blank" rel="noopener noreferrer">vlang/vsl ↗</a>.
+    Try locally: <code>v install vsl</code> → <code>v run examples/*/main.v</code>. Docs:{' '}
+    <a href="https://vlang.github.io/vsl" target="_blank" rel="noopener noreferrer">
+      vlang.github.io/vsl ↗
+    </a>
+    . Source:{' '}
+    <a href="https://github.com/vlang/vsl" target="_blank" rel="noopener noreferrer">
+      vlang/vsl ↗
+    </a>
+    .
   </p>
 </section>
 

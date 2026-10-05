@@ -63,41 +63,39 @@ const sizes: Record<string, string> = {
 const classes = cn(base, variants[variant], sizes[size], className);
 ---
 
-{
-  isLink ? (
-    <a
-      id={id}
-      href={href}
-      class={classes}
-      aria-label={ariaLabel}
-      aria-disabled={disabled ? 'true' : undefined}
-      target={computedTarget}
-      rel={computedRel}
-      data-variant={variant}
-      data-size={size}
-    >
-      <slot />
-      {isExternal && (
-        <span aria-hidden="true" class="btn__external">
-          ↗
-        </span>
-      )}
-      {isExternal && <span class="sr-only"> (opens in new tab)</span>}
-    </a>
-  ) : (
-    <button
-      id={id}
-      type={type}
-      class={classes}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      data-variant={variant}
-      data-size={size}
-    >
-      <slot />
-    </button>
-  )
-}
+{isLink ? (
+  <a
+    id={id}
+    href={href}
+    class={classes}
+    aria-label={ariaLabel}
+    aria-disabled={disabled ? 'true' : undefined}
+    target={computedTarget}
+    rel={computedRel}
+    data-variant={variant}
+    data-size={size}
+  >
+    <slot />
+    {isExternal && (
+      <span aria-hidden="true" class="btn__external">
+        ↗
+      </span>
+    )}
+    {isExternal && <span class="sr-only"> (opens in new tab)</span>}
+  </a>
+) : (
+  <button
+    id={id}
+    type={type}
+    class={classes}
+    disabled={disabled}
+    aria-label={ariaLabel}
+    data-variant={variant}
+    data-size={size}
+  >
+    <slot />
+  </button>
+)}
 
 <style>
   .btn {

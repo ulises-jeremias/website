@@ -9,20 +9,20 @@ import { vProjects } from '../data/index.js';
 <section class="v-cards" aria-labelledby="v-cards-title">
   <header class="v-cards__header">
     <p class="v-cards__eyebrow">Repos</p>
-    <h2 id="v-cards-title" class="v-cards__title">Repos</h2>
+    <h2 id="v-cards-title" class="v-cards__title">
+      Repos
+    </h2>
   </header>
 
   <ul class="v-cards__strip" role="list">
-    {
-      vProjects.map((p) => (
-        <li role="listitem">
-          <a href={p.href} target="_blank" rel="noopener noreferrer">
-            <span>{p.title}</span>
-            <code>{p.repo}</code>
-          </a>
-        </li>
-      ))
-    }
+    {vProjects.map((p) => (
+      <li role="listitem">
+        <a href={p.href} target="_blank" rel="noopener noreferrer">
+          <span>{p.title}</span>
+          <code>{p.repo}</code>
+        </a>
+      </li>
+    ))}
   </ul>
 </section>
 

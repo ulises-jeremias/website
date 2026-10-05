@@ -37,40 +37,32 @@ const decorative = !label;
   focusable="false"
 >
   {label && <title id={id}>{label}</title>}
-  {
-    name === 'agent-network' && (
-      <>
-        <circle cx="12" cy="5" r="2.25" />
-        <circle cx="5" cy="18" r="2.25" />
-        <circle cx="19" cy="18" r="2.25" />
-        <path d="m10.9 7-4.8 8.8M13.1 7l4.8 8.8M7.3 18h9.4" />
-      </>
-    )
-  }
-  {
-    name === 'stack' && (
-      <>
-        <path d="m12 3 9 4.5-9 4.5-9-4.5L12 3Z" />
-        <path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
-      </>
-    )
-  }
-  {
-    name === 'lattice' && (
-      <>
-        <path d="M5 4v16M12 4v16M19 4v16M3 7h18M3 12h18M3 17h18" />
-        <circle cx="12" cy="12" r="2" />
-      </>
-    )
-  }
-  {
-    name === 'modules' && (
-      <>
-        <rect x="3" y="3" width="8" height="8" rx="1" />
-        <rect x="13" y="3" width="8" height="5" rx="1" />
-        <rect x="13" y="10" width="8" height="11" rx="1" />
-        <rect x="3" y="13" width="8" height="8" rx="1" />
-      </>
-    )
-  }
+  {name === 'agent-network' && (
+    <>
+      <circle cx="12" cy="5" r="2.25" />
+      <circle cx="5" cy="18" r="2.25" />
+      <circle cx="19" cy="18" r="2.25" />
+      <path d="m10.9 7-4.8 8.8M13.1 7l4.8 8.8M7.3 18h9.4" />
+    </>
+  )}
+  {name === 'stack' && (
+    <>
+      <path d="m12 3 9 4.5-9 4.5-9-4.5L12 3Z" />
+      <path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
+    </>
+  )}
+  {name === 'lattice' && (
+    <>
+      <path d="M5 4v16M12 4v16M19 4v16M3 7h18M3 12h18M3 17h18" />
+      <circle cx="12" cy="12" r="2" />
+    </>
+  )}
+  {name === 'modules' && (
+    <>
+      <rect x="3" y="3" width="8" height="8" rx="1" />
+      <rect x="13" y="3" width="8" height="5" rx="1" />
+      <rect x="13" y="10" width="8" height="11" rx="1" />
+      <rect x="3" y="13" width="8" height="8" rx="1" />
+    </>
+  )}
 </svg>

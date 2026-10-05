@@ -15,10 +15,18 @@ import { toolkitDocs } from '../data/index.js';
         <title>Queue conveyor</title>
         <rect x="16" y="60" width="288" height="18" rx="2" class="atk-qvs__belt"></rect>
         <g class="atk-qvs__stations">
-          <text x="40" y="40">JOB</text>
-          <text x="110" y="40">QUEUE</text>
-          <text x="190" y="40">RUN</text>
-          <text x="260" y="40">DONE</text>
+          <text x="40" y="40">
+            JOB
+          </text>
+          <text x="110" y="40">
+            QUEUE
+          </text>
+          <text x="190" y="40">
+            RUN
+          </text>
+          <text x="260" y="40">
+            DONE
+          </text>
         </g>
         <rect class="atk-qvs__job" x="28" y="54" width="36" height="30" rx="2"></rect>
       </svg>
@@ -30,16 +38,26 @@ import { toolkitDocs } from '../data/index.js';
       <svg class="atk-qvs__svg" viewBox="0 0 320 160" role="img" aria-label="Multiple roles around shared run state">
         <title>Swarm topology</title>
         <circle cx="160" cy="84" r="28" class="atk-qvs__state"></circle>
-        <text x="160" y="88" text-anchor="middle" class="atk-qvs__state-label">STATE</text>
+        <text x="160" y="88" text-anchor="middle" class="atk-qvs__state-label">
+          STATE
+        </text>
         <g class="atk-qvs__roles">
           <rect x="118" y="12" width="84" height="28" rx="2"></rect>
-          <text x="160" y="30" text-anchor="middle">Reviewer</text>
+          <text x="160" y="30" text-anchor="middle">
+            Reviewer
+          </text>
           <rect x="18" y="70" width="90" height="28" rx="2"></rect>
-          <text x="63" y="88" text-anchor="middle">Implementer</text>
+          <text x="63" y="88" text-anchor="middle">
+            Implementer
+          </text>
           <rect x="212" y="70" width="90" height="28" rx="2"></rect>
-          <text x="257" y="88" text-anchor="middle">Integrator</text>
+          <text x="257" y="88" text-anchor="middle">
+            Integrator
+          </text>
           <rect x="105" y="122" width="110" height="24" rx="2"></rect>
-          <text x="160" y="138" text-anchor="middle">worktrees</text>
+          <text x="160" y="138" text-anchor="middle">
+            worktrees
+          </text>
         </g>
         <path d="M160 40 V56 M108 84 H132 M188 84 H212 M160 112 V122" class="atk-qvs__links"></path>
       </svg>
@@ -49,7 +67,9 @@ import { toolkitDocs } from '../data/index.js';
 
   <p class="atk-qvs__copy">
     Queue = durable background jobs. Swarm = coordinated multi-role execution.
-    <a href={toolkitDocs.swarm} target="_blank" rel="noopener noreferrer">Learn more ↗</a>
+    <a href={toolkitDocs.swarm} target="_blank" rel="noopener noreferrer">
+      Learn more ↗
+    </a>
   </p>
 </section>
 

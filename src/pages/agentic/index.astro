@@ -50,26 +50,39 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
       </header>
 
       <figure class="agentic-map" aria-labelledby="agentic-map-title" aria-describedby="agentic-map-caption">
-        <h2 id="agentic-map-title" class="agentic-map__title">One capability plane, two optional extensions</h2>
+        <h2 id="agentic-map-title" class="agentic-map__title">
+          One capability plane, two optional extensions
+        </h2>
         <div class="agentic-map__stations">
           <article class="agentic-map__station agentic-map__station--machine">
             <p class="agentic-map__layer">HOST · MACHINE</p>
-            <h3><a href="/agentic-workstation">Agentic Workstation</a></h3>
+            <h3>
+              <a href="/agentic-workstation">Agentic Workstation</a>
+            </h3>
             <p>Rebuilds the developer machine and its policy.</p>
-            <p class="agentic-map__ownership"><strong>Owns</strong> provisioning · profiles · host policy</p>
+            <p class="agentic-map__ownership">
+              <strong>Owns</strong> provisioning · profiles · host policy
+            </p>
             <p class="agentic-map__boundary">Can install Toolkit. Does not define its capabilities.</p>
           </article>
           <div class="agentic-map__link agentic-map__link--install" aria-label="Workstation can install Agent Toolkit">
-            <span>can install</span><span class="agentic-map__arrow" aria-hidden="true">→</span>
+            <span>can install</span>
+            <span class="agentic-map__arrow" aria-hidden="true">
+              →
+            </span>
           </div>
           <article class="agentic-map__station agentic-map__station--platform">
             <p class="agentic-map__layer">CAPABILITIES · RUNTIME</p>
-            <h3><a href="/agent-toolkit">Agent Toolkit</a></h3>
+            <h3>
+              <a href="/agent-toolkit">Agent Toolkit</a>
+            </h3>
             <p>Keep skills, agents, loops, and MCP tooling portable across assistants.</p>
             <div class="agentic-map__flow" aria-label="One capability system reaches coding assistants">
-              <span>one source</span><span aria-hidden="true">→</span><span>profiles + runtime</span><span
-                aria-hidden="true">→</span
-              ><span>many tools</span>
+              <span>one source</span>
+              <span aria-hidden="true">→</span>
+              <span>profiles + runtime</span>
+              <span aria-hidden="true">→</span>
+              <span>many tools</span>
             </div>
             <p class="agentic-map__boundary">Works by itself. Does not provision the host or own your durable state.</p>
           </article>
@@ -77,13 +90,20 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
             class="agentic-map__link agentic-map__link--context"
             aria-label="Harness uses Toolkit and keeps persistent workspace context"
           >
-            <span>uses runtime</span><span class="agentic-map__arrow" aria-hidden="true">→</span>
+            <span>uses runtime</span>
+            <span class="agentic-map__arrow" aria-hidden="true">
+              →
+            </span>
           </div>
           <article class="agentic-map__station agentic-map__station--workspace">
             <p class="agentic-map__layer">CONTEXT · WORKSPACE</p>
-            <h3><a href="/agentic-harness">Agentic Harness</a></h3>
+            <h3>
+              <a href="/agentic-harness">Agentic Harness</a>
+            </h3>
             <p>Keeps project context and work state between temporary sessions.</p>
-            <p class="agentic-map__ownership"><strong>Owns</strong> knowledge · personas · packs · run history</p>
+            <p class="agentic-map__ownership">
+              <strong>Owns</strong> knowledge · personas · packs · run history
+            </p>
             <p class="agentic-map__boundary">Optional reference workspace. Toolkit remains the runtime.</p>
           </article>
         </div>
@@ -97,22 +117,20 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
         <p class="agentic-page__section-kicker">Choose your entry point</p>
         <h2 id="agentic-adoption-title">Start with the need you have</h2>
         <ul class="agentic-page__adoption-list">
-          {
-            ADOPTION_PATHS.map((path, index) => (
-              <li class={`agentic-page__adoption-path agentic-page__adoption-path--${path.projectId}`}>
-                <span class="agentic-page__path-index" aria-hidden="true">
-                  0{index + 1}
-                </span>
-                <div>
-                  <p class="agentic-page__adoption-need">{path.need}</p>
-                  <p class="agentic-page__adoption-detail">{path.detail}</p>
-                </div>
-                <a href={getStackProject(path.projectId)?.path ?? '/agentic'}>
-                  Start with {getStackProject(path.projectId)?.title ?? 'the stack'}
-                </a>
-              </li>
-            ))
-          }
+          {ADOPTION_PATHS.map((path, index) => (
+            <li class={`agentic-page__adoption-path agentic-page__adoption-path--${path.projectId}`}>
+              <span class="agentic-page__path-index" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <div>
+                <p class="agentic-page__adoption-need">{path.need}</p>
+                <p class="agentic-page__adoption-detail">{path.detail}</p>
+              </div>
+              <a href={getStackProject(path.projectId)?.path ?? '/agentic'}>
+                Start with {getStackProject(path.projectId)?.title ?? 'the stack'}
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -126,23 +144,22 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           >
             agentic-workstation-demo <span aria-hidden="true">↗</span>
           </a>{' '}
-          is a small demo repository showing AGENTS.md routing work to skills and sub-agents — a reference, not a fourth product.
+          is a small demo repository showing AGENTS.md routing work to skills and sub-agents — a reference, not a fourth
+          product.
         </p>
       </section>
 
       <section class="agentic-page__details" aria-labelledby="agentic-details-title">
         <h2 id="agentic-details-title">Go deeper</h2>
         <ul class="agentic-page__detail-list">
-          {
-            detailRoutes.map((route) => (
-              <li>
-                <a href={route.href}>
-                  <strong>{route.label}</strong>
-                  <span>{route.note}</span>
-                </a>
-              </li>
-            ))
-          }
+          {detailRoutes.map((route) => (
+            <li>
+              <a href={route.href}>
+                <strong>{route.label}</strong>
+                <span>{route.note}</span>
+              </a>
+            </li>
+          ))}
         </ul>
         <p class="agentic-page__related">
           HorneroConfig is an optional, adjacent desktop environment — not part of the stack. See{' '}

@@ -29,50 +29,48 @@ const accentTokens = {
     </p>
   </header>
   <ol class="featured-areas__grid">
-    {
-      featuredAreas.map((area, index) => (
-        <li class="featured-areas__item" style={`--world-color: ${accentTokens[area.accent]}`}>
-          <article class="featured-areas__card" aria-labelledby={`featured-${area.id}-title`}>
-            <span class="featured-areas__art clip-corner-sm" aria-hidden="true">
-              <picture>
-                <source
-                  type="image/webp"
-                  srcset={`/assets/nest/${area.island}-192.webp 192w, /assets/nest/${area.island}.webp 640w`}
-                  sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
-                />
-                <img
-                  class="art-fade"
-                  src={`/assets/${area.island}.png`}
-                  width="96"
-                  height="96"
-                  alt=""
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                />
-              </picture>
-            </span>
-            <div class="featured-areas__body">
-              <span class="featured-areas__lens">{area.lens}</span>
-              <h3 id={`featured-${area.id}-title`} class="featured-areas__title">
-                <a href={area.path}>{area.title}</a>
-              </h3>
-              <p class="featured-areas__proposition">{area.proposition}</p>
-              {area.memberLinks.length > 1 && (
-                <ul class="featured-areas__members" aria-label={`${area.title} projects`}>
-                  {area.memberLinks.map((member) => (
-                    <li>
-                      <a href={member.path}>{member.title}</a>
-                      {member.maturity === 'preview' && <span class="featured-areas__badge">preview</span>}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {area.proof && <p class="featured-areas__proof">{area.proof}</p>}
-            </div>
-          </article>
-        </li>
-      ))
-    }
+    {featuredAreas.map((area, index) => (
+      <li class="featured-areas__item" style={`--world-color: ${accentTokens[area.accent]}`}>
+        <article class="featured-areas__card" aria-labelledby={`featured-${area.id}-title`}>
+          <span class="featured-areas__art clip-corner-sm" aria-hidden="true">
+            <picture>
+              <source
+                type="image/webp"
+                srcset={`/assets/nest/${area.island}-192.webp 192w, /assets/nest/${area.island}.webp 640w`}
+                sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
+              />
+              <img
+                class="art-fade"
+                src={`/assets/${area.island}.png`}
+                width="96"
+                height="96"
+                alt=""
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </picture>
+          </span>
+          <div class="featured-areas__body">
+            <span class="featured-areas__lens">{area.lens}</span>
+            <h3 id={`featured-${area.id}-title`} class="featured-areas__title">
+              <a href={area.path}>{area.title}</a>
+            </h3>
+            <p class="featured-areas__proposition">{area.proposition}</p>
+            {area.memberLinks.length > 1 && (
+              <ul class="featured-areas__members" aria-label={`${area.title} projects`}>
+                {area.memberLinks.map((member) => (
+                  <li>
+                    <a href={member.path}>{member.title}</a>
+                    {member.maturity === 'preview' && <span class="featured-areas__badge">preview</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {area.proof && <p class="featured-areas__proof">{area.proof}</p>}
+          </div>
+        </article>
+      </li>
+    ))}
   </ol>
 </section>
 

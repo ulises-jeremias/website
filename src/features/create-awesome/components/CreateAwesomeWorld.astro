@@ -71,10 +71,30 @@ const lineModules = [
     <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
       <p>Catalog counter</p>
       <ul>
-        <li><strong>Node</strong><span>{catalogTotals.node.templates} + {catalogTotals.node.addons}</span></li>
-        <li><strong>Python</strong><span>{catalogTotals.python.templates} + {catalogTotals.python.addons}</span></li>
-        <li><strong>V</strong><span>{catalogTotals.v.templates} + {catalogTotals.v.addons}</span></li>
-        <li><strong>Rust</strong><span>{catalogTotals.rust.templates} + {catalogTotals.rust.addons}</span></li>
+        <li>
+          <strong>Node</strong>
+          <span>
+            {catalogTotals.node.templates} + {catalogTotals.node.addons}
+          </span>
+        </li>
+        <li>
+          <strong>Python</strong>
+          <span>
+            {catalogTotals.python.templates} + {catalogTotals.python.addons}
+          </span>
+        </li>
+        <li>
+          <strong>V</strong>
+          <span>
+            {catalogTotals.v.templates} + {catalogTotals.v.addons}
+          </span>
+        </li>
+        <li>
+          <strong>Rust</strong>
+          <span>
+            {catalogTotals.rust.templates} + {catalogTotals.rust.addons}
+          </span>
+        </li>
       </ul>
       <small>templates + addons · sourced totals</small>
     </aside>
@@ -95,68 +115,63 @@ const lineModules = [
           class="vf-flow is-active"
           data-ca-belt
           d="M70 110 H650"
-          style="--vf-flow-accent: var(--nest-sunset-orange, #fb923c)"></path>
-        {
-          lineModules.map((mod, index) => {
-            const x = 70 + index * 180;
-            return (
-              <g class="ca-world__module" data-module={mod.id} transform={`translate(${x} 60)`}>
-                <rect class="ca-world__module-disk" x="-48" y="0" width="96" height="100" rx="4" />
-                <text class="ca-world__module-label" x="0" y="42" text-anchor="middle">
-                  {mod.label}
-                </text>
-                <text class="ca-world__module-hint" x="0" y="68" text-anchor="middle">
-                  {mod.hint}
-                </text>
-              </g>
-            );
-          })
-        }
+          style="--vf-flow-accent: var(--nest-sunset-orange, #fb923c)"
+        ></path>
+        {lineModules.map((mod, index) => {
+          const x = 70 + index * 180;
+          return (
+            <g class="ca-world__module" data-module={mod.id} transform={`translate(${x} 60)`}>
+              <rect class="ca-world__module-disk" x="-48" y="0" width="96" height="100" rx="4" />
+              <text class="ca-world__module-label" x="0" y="42" text-anchor="middle">
+                {mod.label}
+              </text>
+              <text class="ca-world__module-hint" x="0" y="68" text-anchor="middle">
+                {mod.hint}
+              </text>
+            </g>
+          );
+        })}
       </svg>
 
       <ol class="ca-world__flow-index" aria-label="Composition stages">
-        {
-          lineModules.map((mod, index) => (
-            <li>
-              <span class="ca-world__flow-number">{String(index + 1).padStart(2, '0')}</span>
-              <strong>{mod.label}</strong>
-              <small>{mod.hint}</small>
-            </li>
-          ))
-        }
+        {lineModules.map((mod, index) => (
+          <li>
+            <span class="ca-world__flow-number">{String(index + 1).padStart(2, '0')}</span>
+            <strong>{mod.label}</strong>
+            <small>{mod.hint}</small>
+          </li>
+        ))}
       </ol>
 
       <fieldset class="ca-world__stations" role="radiogroup" aria-labelledby="ca-runtime-legend" disabled hidden>
         <legend id="ca-runtime-legend">Runtime station</legend>
-        {
-          stations.map((station, index) => (
-            <>
-              <input
-                class="ca-world__radio"
-                type="radio"
-                name="ca-world-runtime"
-                id={`ca-station-${station.id}`}
-                value={station.id}
-                checked={index === 0}
-                data-ca-station={station.id}
-                aria-controls="ca-runtime-inspector"
-              />
-              <label
-                class="vf-node"
-                for={`ca-station-${station.id}`}
-                style={`--vf-node-accent: ${station.accent}`}
-                data-visual-node={station.id}
-              >
-                <span>
-                  {station.label}
-                  <small>
-                    {station.templates}+{station.addons}
-                  </small>
-                </span>
-              </label>
-            </>
-          ))
-        }
+        {stations.map((station, index) => (
+          <>
+            <input
+              class="ca-world__radio"
+              type="radio"
+              name="ca-world-runtime"
+              id={`ca-station-${station.id}`}
+              value={station.id}
+              checked={index === 0}
+              data-ca-station={station.id}
+              aria-controls="ca-runtime-inspector"
+            />
+            <label
+              class="vf-node"
+              for={`ca-station-${station.id}`}
+              style={`--vf-node-accent: ${station.accent}`}
+              data-visual-node={station.id}
+            >
+              <span>
+                {station.label}
+                <small>
+                  {station.templates}+{station.addons}
+                </small>
+              </span>
+            </label>
+          </>
+        ))}
       </fieldset>
     </div>
 
@@ -173,7 +188,10 @@ const lineModules = [
           <code data-ca-inspector-install>{defaultStation.install}</code>
         </span>
         <span>
-          <a data-ca-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer"> Catalog ↗ </a>
+          <a data-ca-inspector-link href={defaultStation.href} target="_blank" rel="noopener noreferrer">
+            {' '}
+            Catalog ↗{' '}
+          </a>
         </span>
       </Fragment>
     </SceneInspector>
@@ -198,8 +216,10 @@ const lineModules = [
       data-ca-dock-install
       tabindex="0"
       role="region"
-      aria-label="Current Create Awesome command">{defaultStation.install}</code
+      aria-label="Current Create Awesome command"
     >
+      {defaultStation.install}
+    </code>
   </WorldDock>
 
   <Composer embedded />
@@ -220,55 +240,47 @@ const lineModules = [
           </tr>
         </thead>
         <tbody>
-          {
-            comparisonRows.map((row) => (
-              <tr>
-                <td>{row.feature}</td>
-                <td>{row.node}</td>
-                <td>{row.python}</td>
-                <td>{row.v}</td>
-                <td>{row.rust}</td>
-              </tr>
-            ))
-          }
+          {comparisonRows.map((row) => (
+            <tr>
+              <td>{row.feature}</td>
+              <td>{row.node}</td>
+              <td>{row.python}</td>
+              <td>{row.v}</td>
+              <td>{row.rust}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
     <ul class="ca-world__channels">
-      {
-        distributionChannels.map((channel) => (
-          <li>
-            <strong>{channel.label}</strong> <code>{channel.command}</code>
-          </li>
-        ))
-      }
+      {distributionChannels.map((channel) => (
+        <li>
+          <strong>{channel.label}</strong> <code>{channel.command}</code>
+        </li>
+      ))}
     </ul>
     <ol class="ca-world__steps">
-      {
-        contributionSteps.map((step) => (
-          <li>
-            {step.title}
-            {step.href ? (
-              <>
-                {' '}
-                <a href={step.href} target="_blank" rel="noopener noreferrer">
-                  ↗
-                </a>
-              </>
-            ) : null}
-          </li>
-        ))
-      }
+      {contributionSteps.map((step) => (
+        <li>
+          {step.title}
+          {step.href ? (
+            <>
+              {' '}
+              <a href={step.href} target="_blank" rel="noopener noreferrer">
+                ↗
+              </a>
+            </>
+          ) : null}
+        </li>
+      ))}
     </ol>
     <ul class="ca-world__examples">
-      {
-        compositionExamples.map((example) => (
-          <li>
-            <strong>{example.title}</strong>
-            <code>{example.command}</code>
-          </li>
-        ))
-      }
+      {compositionExamples.map((example) => (
+        <li>
+          <strong>{example.title}</strong>
+          <code>{example.command}</code>
+        </li>
+      ))}
     </ul>
   </section>
 </section>

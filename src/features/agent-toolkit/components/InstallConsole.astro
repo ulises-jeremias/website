@@ -16,34 +16,41 @@ const tabsJson = JSON.stringify(tabs);
     <h2 id="atk-install-title">One console</h2>
   </header>
   <div class="atk-install__tabs" role="tablist" aria-label="Install method">
-    {
-      tabs.map((tab, index) => (
-        <button
-          type="button"
-          role="tab"
-          id={`install-tab-${tab.id}`}
-          aria-selected={index === 0 ? 'true' : 'false'}
-          aria-controls="install-panel"
-          data-install-tab={tab.id}
-          tabindex={index === 0 ? 0 : -1}
-        >
-          {tab.label}
-        </button>
-      ))
-    }
+    {tabs.map((tab, index) => (
+      <button
+        type="button"
+        role="tab"
+        id={`install-tab-${tab.id}`}
+        aria-selected={index === 0 ? 'true' : 'false'}
+        aria-controls="install-panel"
+        data-install-tab={tab.id}
+        tabindex={index === 0 ? 0 : -1}
+      >
+        {tab.label}
+      </button>
+    ))}
   </div>
   <div class="atk-install__panel" role="tabpanel" id="install-panel" aria-labelledby={`install-tab-${tabs[0]!.id}`}>
-    <p class="atk-install__scroll-hint" id="install-scroll-hint">Scroll horizontally to read the full command.</p>
+    <p class="atk-install__scroll-hint" id="install-scroll-hint">
+      Scroll horizontally to read the full command.
+    </p>
     <pre
       tabindex="0"
       role="region"
       aria-label="Install command"
-      aria-describedby="install-scroll-hint"><code data-install-cmd>{tabs[0]!.command}</code></pre>
-    <button type="button" class="atk-install__copy" data-install-copy>Copy</button>
+      aria-describedby="install-scroll-hint"
+    ><code data-install-cmd>{tabs[0]!.command}</code></pre>
+    <button type="button" class="atk-install__copy" data-install-copy>
+      Copy
+    </button>
   </div>
-  <p class="atk-install__note" data-install-note>{tabs[0]!.note}</p>
+  <p class="atk-install__note" data-install-note>
+    {tabs[0]!.note}
+  </p>
   <p class="atk-install__docs">
-    <a href={toolkitDocs.install} target="_blank" rel="noopener noreferrer">Installation docs ↗</a>
+    <a href={toolkitDocs.install} target="_blank" rel="noopener noreferrer">
+      Installation docs ↗
+    </a>
   </p>
 </section>
 

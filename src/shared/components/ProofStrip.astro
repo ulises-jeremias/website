@@ -19,22 +19,20 @@ const { entry, label = `Contextual proof for ${entry.title}` } = Astro.props as 
 const lines = entry.proofLines;
 ---
 
-{
-  lines.length > 0 && (
-    <ul class="proof-strip" aria-label={label}>
-      {lines.map((line) => (
-        <li class="proof-strip__line" data-proof-kind={line.kind}>
-          <span class="proof-strip__text">{line.text}</span>
-          {line.verifiedAt && (
-            <time class="proof-strip__date" datetime={line.verifiedAt}>
-              verified {line.verifiedAt}
-            </time>
-          )}
-        </li>
-      ))}
-    </ul>
-  )
-}
+{lines.length > 0 && (
+  <ul class="proof-strip" aria-label={label}>
+    {lines.map((line) => (
+      <li class="proof-strip__line" data-proof-kind={line.kind}>
+        <span class="proof-strip__text">{line.text}</span>
+        {line.verifiedAt && (
+          <time class="proof-strip__date" datetime={line.verifiedAt}>
+            verified {line.verifiedAt}
+          </time>
+        )}
+      </li>
+    ))}
+  </ul>
+)}
 
 <style>
   .proof-strip {

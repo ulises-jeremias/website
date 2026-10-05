@@ -5,7 +5,9 @@ import { rxvOperatorGroups } from '../data/index.js';
 <section class="rxv" aria-labelledby="rxv-title">
   <header class="rxv__header">
     <p class="rxv__eyebrow">04 · RxV</p>
-    <h2 id="rxv-title" class="rxv__title">Streams as channels, operators as threads</h2>
+    <h2 id="rxv-title" class="rxv__title">
+      Streams as channels, operators as threads
+    </h2>
     <p class="rxv__desc">
       Create an <code>Observable[T]</code> and chain: <code>source → filter → map → merge/reduce → subscriber</code>.
       Each step spawns one thread and communicates via <code>chan Item[T]</code>. Values and errors travel as items;
@@ -37,8 +39,10 @@ import { rxvOperatorGroups } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.07em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">pipeline · chan Item[T]</text
+          style="text-transform: uppercase;"
         >
+          pipeline · chan Item[T]
+        </text>
 
         <!-- source -->
         <g tabindex="0" role="listitem" aria-label="Source — range 1 to 10 — emits integers sequentially">
@@ -52,11 +56,19 @@ import { rxvOperatorGroups } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">source</text
+            style="text-transform: uppercase;"
           >
-          <text x="30" y="78" font-size="12.5" font-weight="800" fill="#e6f0fb">range</text>
-          <text x="30" y="94" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">1 → 10</text>
-          <text x="30" y="110" font-size="9.5" fill="#8bb8e0">emits 10 items</text>
+            source
+          </text>
+          <text x="30" y="78" font-size="12.5" font-weight="800" fill="#e6f0fb">
+            range
+          </text>
+          <text x="30" y="94" font-size="10" fill="#b8d0e6" font-family="ui-monospace, monospace">
+            1 → 10
+          </text>
+          <text x="30" y="110" font-size="9.5" fill="#8bb8e0">
+            emits 10 items
+          </text>
         </g>
 
         <!-- filter -->
@@ -70,18 +82,28 @@ import { rxvOperatorGroups } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">filter</text
+            style="text-transform: uppercase;"
           >
-          <text x="166" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">v % 2 == 0</text>
-          <text x="166" y="96" font-size="9.5" fill="#b8d0e6">keeps 5 · drops 5</text>
-          <text x="166" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">.filter(fn)</text>
+            filter
+          </text>
+          <text x="166" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">
+            v % 2 == 0
+          </text>
+          <text x="166" y="96" font-size="9.5" fill="#b8d0e6">
+            keeps 5 · drops 5
+          </text>
+          <text x="166" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">
+            .filter(fn)
+          </text>
         </g>
 
         <g aria-hidden="true">
           <line x1="124" y1="81" x2="152" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
           <polygon points="155,81 149,77 149,85" fill="#5b9bd5"></polygon>
           <rect x="130" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
-          <text x="138" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+          <text x="138" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">
+            chan
+          </text>
         </g>
 
         <!-- map -->
@@ -95,18 +117,28 @@ import { rxvOperatorGroups } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">map</text
+            style="text-transform: uppercase;"
           >
-          <text x="302" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">× 2</text>
-          <text x="302" y="96" font-size="9.5" fill="#b8d0e6">5 items → doubled</text>
-          <text x="302" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">map_[T,T](…)</text>
+            map
+          </text>
+          <text x="302" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">
+            × 2
+          </text>
+          <text x="302" y="96" font-size="9.5" fill="#b8d0e6">
+            5 items → doubled
+          </text>
+          <text x="302" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">
+            map_[T,T](…)
+          </text>
         </g>
 
         <g aria-hidden="true">
           <line x1="260" y1="81" x2="288" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
           <polygon points="291,81 285,77 285,85" fill="#5b9bd5"></polygon>
           <rect x="266" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
-          <text x="274" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+          <text x="274" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">
+            chan
+          </text>
         </g>
 
         <!-- merge/reduce -->
@@ -121,18 +153,28 @@ import { rxvOperatorGroups } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">reduce</text
+            style="text-transform: uppercase;"
           >
-          <text x="438" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">sum</text>
-          <text x="438" y="96" font-size="9.5" fill="#b8d0e6">acc 0 → 60</text>
-          <text x="438" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">reduce_[T,U]</text>
+            reduce
+          </text>
+          <text x="438" y="80" font-size="11.5" font-weight="700" fill="#e6f0fb">
+            sum
+          </text>
+          <text x="438" y="96" font-size="9.5" fill="#b8d0e6">
+            acc 0 → 60
+          </text>
+          <text x="438" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">
+            reduce_[T,U]
+          </text>
         </g>
 
         <g aria-hidden="true">
           <line x1="396" y1="81" x2="424" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
           <polygon points="427,81 421,77 421,85" fill="#5b9bd5"></polygon>
           <rect x="402" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
-          <text x="410" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+          <text x="410" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">
+            chan
+          </text>
         </g>
 
         <!-- subscriber -->
@@ -147,18 +189,28 @@ import { rxvOperatorGroups } from '../data/index.js';
             font-weight="700"
             letter-spacing="0.06em"
             fill="#8bb8e0"
-            style="text-transform: uppercase;">subscribe</text
+            style="text-transform: uppercase;"
           >
-          <text x="574" y="78" font-size="11.5" font-weight="700" fill="#e6f0fb">for_each</text>
-          <text x="574" y="94" font-size="9.5" fill="#b8d0e6">prints 60 · done</text>
-          <text x="574" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">&lt;- done</text>
+            subscribe
+          </text>
+          <text x="574" y="78" font-size="11.5" font-weight="700" fill="#e6f0fb">
+            for_each
+          </text>
+          <text x="574" y="94" font-size="9.5" fill="#b8d0e6">
+            prints 60 · done
+          </text>
+          <text x="574" y="110" font-size="8.8" fill="#8bb8e0" font-family="ui-monospace, monospace">
+            &lt;- done
+          </text>
         </g>
 
         <g aria-hidden="true">
           <line x1="532" y1="81" x2="560" y2="81" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"></line>
           <polygon points="563,81 557,77 557,85" fill="#5b9bd5"></polygon>
           <rect x="538" y="66" width="16" height="12" rx="6" fill="#0f2a44" stroke="rgba(91,155,213,0.25)"></rect>
-          <text x="546" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">chan</text>
+          <text x="546" y="75" text-anchor="middle" font-size="7.5" fill="#8bb8e0">
+            chan
+          </text>
         </g>
 
         <!-- bottom thread row -->
@@ -169,7 +221,8 @@ import { rxvOperatorGroups } from '../data/index.js';
           height="84"
           rx="12"
           fill="rgba(255,255,255,0.05)"
-          stroke="rgba(91,155,213,0.18)"></rect>
+          stroke="rgba(91,155,213,0.18)"
+        ></rect>
         <text
           x="30"
           y="162"
@@ -177,32 +230,36 @@ import { rxvOperatorGroups } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.06em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">thread per operator · chan Item[T]</text
+          style="text-transform: uppercase;"
         >
-        <text x="30" y="178" font-size="10" fill="#b8d0e6"
-          >Each operator spawns a thread → reads chan Item[T], writes chan Item[T] → completion closes the channel →
-          for_each waits for done.</text
-        >
+          thread per operator · chan Item[T]
+        </text>
+        <text x="30" y="178" font-size="10" fill="#b8d0e6">
+          Each operator spawns a thread → reads chan Item[T], writes chan Item[T] → completion closes the channel →
+          for_each waits for done.
+        </text>
         <!-- thread dots -->
         <g aria-hidden="true">
           <rect x="30" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="42" cy="202" r="4" fill="#5b9bd5"></circle>
-          <text x="50" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >thread 1: source</text
-          >
+          <text x="50" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            thread 1: source
+          </text>
           <rect x="164" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="176" cy="202" r="4" fill="#5b9bd5"></circle>
-          <text x="184" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >thread 2: filter</text
-          >
+          <text x="184" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            thread 2: filter
+          </text>
           <rect x="298" y="188" width="124" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="310" cy="202" r="4" fill="#5b9bd5"></circle>
-          <text x="318" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">thread 3: map</text>
+          <text x="318" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            thread 3: map
+          </text>
           <rect x="432" y="188" width="136" height="28" rx="8" fill="#0f2a44" stroke="rgba(91,155,213,0.22)"></rect>
           <circle cx="444" cy="202" r="4" fill="#7cb7c9"></circle>
-          <text x="452" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace"
-            >thread 4: reduce</text
-          >
+          <text x="452" y="206" font-size="10" fill="#cfe1f5" font-family="ui-monospace, monospace">
+            thread 4: reduce
+          </text>
         </g>
 
         <!-- example code line bottom -->
@@ -214,27 +271,31 @@ import { rxvOperatorGroups } from '../data/index.js';
           font-weight="700"
           letter-spacing="0.06em"
           fill="#8bb8e0"
-          style="text-transform: uppercase;">example · sum even doubles 1..10</text
+          style="text-transform: uppercase;"
         >
-        <text x="30" y="282" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace"
-          >range(1,10) → filter(even) → map(×2) → reduce(0, sum) → for_each(print)</text
-        >
-        <text x="30" y="298" font-size="10" fill="#8bb8e0">Output: </text>
-        <text x="68" y="298" font-size="10" font-weight="700" fill="#5b9bd5" font-family="ui-monospace, monospace"
-          >Sum 1..10 even×2 = 60</text
-        >
-        <text x="224" y="298" font-size="10" fill="#8bb8e0">(5 items: 4,8,12,16,20 → sum)</text>
+          example · sum even doubles 1..10
+        </text>
+        <text x="30" y="282" font-size="11" fill="#cfe1f5" font-family="ui-monospace, monospace">
+          range(1,10) → filter(even) → map(×2) → reduce(0, sum) → for_each(print)
+        </text>
+        <text x="30" y="298" font-size="10" fill="#8bb8e0">
+          Output:{' '}
+        </text>
+        <text x="68" y="298" font-size="10" font-weight="700" fill="#5b9bd5" font-family="ui-monospace, monospace">
+          Sum 1..10 even×2 = 60
+        </text>
+        <text x="224" y="298" font-size="10" fill="#8bb8e0">
+          (5 items: 4,8,12,16,20 → sum)
+        </text>
       </svg>
 
       <div class="rxv__operators" role="list" aria-label="RxV operator groups">
-        {
-          rxvOperatorGroups.map((g) => (
-            <div class="rxv__group" role="listitem">
-              <span class="rxv__group-cat">{g.category}</span>
-              <span class="rxv__group-ops">{g.operators.join(' · ')}</span>
-            </div>
-          ))
-        }
+        {rxvOperatorGroups.map((g) => (
+          <div class="rxv__group" role="listitem">
+            <span class="rxv__group-cat">{g.category}</span>
+            <span class="rxv__group-ops">{g.operators.join(' · ')}</span>
+          </div>
+        ))}
       </div>
     </div>
 
@@ -242,21 +303,24 @@ import { rxvOperatorGroups } from '../data/index.js';
       <article class="rxv__card">
         <h3 class="rxv__card-title">Why channels?</h3>
         <p class="rxv__card-text">
-          RxV uses typed V channels, with buffering available through <code>with_buffer_size</code> and an unbuffered default.
-          Each operator owns its channel stage and spawned thread.
+          RxV uses typed V channels, with buffering available through <code>with_buffer_size</code> and an unbuffered
+          default. Each operator owns its channel stage and spawned thread.
         </p>
         <ul class="rxv__list">
-          <li><code>ObservableImpl[T]</code> generic over any T</li>
-          <li>Errors as <code>Item[T]&#123; err: IError &#125;</code></li>
+          <li>
+            <code>ObservableImpl[T]</code> generic over any T
+          </li>
+          <li>
+            Errors as <code>Item[T]&#123; err: IError &#125;</code>
+          </li>
           <li>Channel closure represents completion</li>
         </ul>
       </article>
       <article class="rxv__card">
         <h3 class="rxv__card-title">From V generics to free fns</h3>
         <p class="rxv__card-text">
-          V doesn’t allow generic methods with extra type params, so <code>.map</code> is <code
-            >rxv.map_[T,U](mut obs, fn)</code
-          >. Verbose once, clear forever — types stay explicit.
+          V doesn’t allow generic methods with extra type params, so <code>.map</code> is{' '}
+          <code>rxv.map_[T,U](mut obs, fn)</code>. Verbose once, clear forever — types stay explicit.
         </p>
         <div class="rxv__code" role="region" aria-label="RxV snippet">
           <pre><code><span class="rxv__c-kw">mut</span> obs := rxv.<span class="rxv__c-fn">range</span>(<span class="rxv__c-nu">1</span>, <span class="rxv__c-nu">10</span>)
@@ -270,11 +334,11 @@ _ = &lt;-done</code></pre>
   </div>
 
   <p class="rxv__note">
-    Install: <code>v install ulises-jeremias.rxv</code> → <code>import ulises_jeremias.rxv</code>. Docs: <a
-      href="https://github.com/ulises-jeremias/rxv"
-      target="_blank"
-      rel="noopener noreferrer">ulises-jeremias/rxv ↗</a
-    >. Operators reference: <code>docs/OPERATORS.md</code>.
+    Install: <code>v install ulises-jeremias.rxv</code> → <code>import ulises_jeremias.rxv</code>. Docs:{' '}
+    <a href="https://github.com/ulises-jeremias/rxv" target="_blank" rel="noopener noreferrer">
+      ulises-jeremias/rxv ↗
+    </a>
+    . Operators reference: <code>docs/OPERATORS.md</code>.
   </p>
 </section>
 

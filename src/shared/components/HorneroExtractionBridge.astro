@@ -28,67 +28,67 @@ const headingId = `hornero-extraction-title-${currentPage}`;
   <figure class="hornero-extraction__figure">
     <ol class="hornero-extraction__stages" aria-label="HorneroConfig to Hornero OS composition path">
       <li class="hornero-extraction__stage hornero-extraction__stage--personal" data-stage="personal">
-        <p class="hornero-extraction__stage-label"><span>01</span> Personal source</p>
+        <p class="hornero-extraction__stage-label">
+          <span>01</span> Personal source
+        </p>
         <h3>HorneroConfig</h3>
         <p>
           A chezmoi configuration in daily use. Personal preferences and experiments stay here, with changes reviewed
           before they are applied.
         </p>
-        {
-          currentPage === 'dotfiles' ? (
-            <span class="hornero-extraction__current" aria-current="page">
-              This page
-            </span>
-          ) : (
-            <a class="hornero-extraction__route-link" href="/dotfiles">
-              Explore HorneroConfig
-            </a>
-          )
-        }
+        {currentPage === 'dotfiles' ? (
+          <span class="hornero-extraction__current" aria-current="page">
+            This page
+          </span>
+        ) : (
+          <a class="hornero-extraction__route-link" href="/dotfiles">
+            Explore HorneroConfig
+          </a>
+        )}
       </li>
 
       <li class="hornero-extraction__stage hornero-extraction__stage--components" data-stage="components">
-        <p class="hornero-extraction__stage-label"><span>02</span> Extraction and ownership</p>
+        <p class="hornero-extraction__stage-label">
+          <span>02</span> Extraction and ownership
+        </p>
         <h3>Reusable desktop components</h3>
         <p>
           The shell and desktop defaults were extracted from HorneroConfig. HorneroOS repositories own their ongoing
           product development; the CLI and greeter live alongside them.
         </p>
         <ul class="hornero-extraction__repositories" aria-label="HorneroOS component repositories">
-          {
-            repositories.map((repository) => (
-              <li>
-                <a href={repository.href} target="_blank" rel="noopener noreferrer">
-                  {repository.label}
-                  <span class="visually-hidden"> (opens in a new tab)</span>
-                </a>
-              </li>
-            ))
-          }
+          {repositories.map((repository) => (
+            <li>
+              <a href={repository.href} target="_blank" rel="noopener noreferrer">
+                {repository.label}
+                <span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
         </ul>
       </li>
 
       <li class="hornero-extraction__stage hornero-extraction__stage--preview" data-stage="composition">
-        <p class="hornero-extraction__stage-label"><span>03</span> Manifest composition</p>
+        <p class="hornero-extraction__stage-label">
+          <span>03</span> Manifest composition
+        </p>
         <h3>Hornero OS</h3>
         <p>
-          The manifest pins the shell and desktop defaults to specific commits, then builds <code>horneroctl</code> from source.
-          A virtual-machine smoke test checks the composition.
+          The manifest pins the shell and desktop defaults to specific commits, then builds <code>horneroctl</code> from
+          source. A virtual-machine smoke test checks the composition.
         </p>
         <p class="hornero-extraction__maturity" role="note">
           <span aria-hidden="true">●</span> Development preview · no installer or ISO
         </p>
-        {
-          currentPage === 'hornero-os' ? (
-            <span class="hornero-extraction__current" aria-current="page">
-              This page
-            </span>
-          ) : (
-            <a class="hornero-extraction__route-link" href="/hornero-os">
-              Explore the Hornero OS preview
-            </a>
-          )
-        }
+        {currentPage === 'hornero-os' ? (
+          <span class="hornero-extraction__current" aria-current="page">
+            This page
+          </span>
+        ) : (
+          <a class="hornero-extraction__route-link" href="/hornero-os">
+            Explore the Hornero OS preview
+          </a>
+        )}
         <a
           class="hornero-extraction__manifest-link"
           href={compositionRepoUrl}

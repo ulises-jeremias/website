@@ -8,17 +8,15 @@ const { href, hover = true } = Astro.props as Props;
 const klass = ['shared-card', hover ? 'shared-card--hover' : ''].join(' ');
 ---
 
-{
-  href ? (
-    <a href={href} class={klass}>
-      <slot />
-    </a>
-  ) : (
-    <article class={klass}>
-      <slot />
-    </article>
-  )
-}
+{href ? (
+  <a href={href} class={klass}>
+    <slot />
+  </a>
+) : (
+  <article class={klass}>
+    <slot />
+  </article>
+)}
 <style>
   .shared-card {
     display: block;

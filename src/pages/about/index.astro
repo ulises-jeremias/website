@@ -135,15 +135,23 @@ const profilePageJsonLd = {
     <div class="about-page__inner">
       <header class="about-hero" data-testid="about-hero">
         <div class="about-hero__identity">
-          <p class="about-page__kicker">Digital Nest <span aria-hidden="true">/</span> builder profile</p>
+          <p class="about-page__kicker">
+            Digital Nest <span aria-hidden="true">/</span> builder profile
+          </p>
           <h1 class="about-hero__title">{profile.displayName}</h1>
-          <p class="about-hero__role">{profile.title}<span aria-hidden="true"> · </span>open-source builder</p>
+          <p class="about-hero__role">
+            {profile.title}
+            <span aria-hidden="true"> · </span>open-source builder
+          </p>
           <p class="about-hero__lead">{profile.summary}</p>
           <p class="about-hero__location">
-            <span class="about-hero__location-mark" aria-hidden="true"></span>{profile.location}
+            <span class="about-hero__location-mark" aria-hidden="true"></span>
+            {profile.location}
           </p>
           <nav class="about-hero__actions" aria-label="Explore my work and contact me">
-            <a class="about-hero__primary-link" href="/projects">Explore the work</a>
+            <a class="about-hero__primary-link" href="/projects">
+              Explore the work
+            </a>
             <a href="/open-source">Trace the open-source work</a>
           </nav>
         </div>
@@ -152,16 +160,14 @@ const profilePageJsonLd = {
           <p class="about-path__label">One thread through the work</p>
           <p class="about-path__thesis">Make every layer easier to work with.</p>
           <ol class="about-path__stops">
-            {
-              trajectory.map((stage) => (
-                <li class="about-path__stop" data-tone={stage.tone}>
-                  <a href={`#trajectory-${stage.id}`}>
-                    <span class="about-path__node" aria-hidden="true" />
-                    <span>{stage.mapLabel}</span>
-                  </a>
-                </li>
-              ))
-            }
+            {trajectory.map((stage) => (
+              <li class="about-path__stop" data-tone={stage.tone}>
+                <a href={`#trajectory-${stage.id}`}>
+                  <span class="about-path__node" aria-hidden="true" />
+                  <span>{stage.mapLabel}</span>
+                </a>
+              </li>
+            ))}
           </ol>
         </nav>
       </header>
@@ -176,29 +182,27 @@ const profilePageJsonLd = {
           </p>
         </header>
         <ol class="about-stations" data-testid="about-trajectory">
-          {
-            trajectory.map((stage) => (
-              <li class="about-station" id={`trajectory-${stage.id}`} data-tone={stage.tone}>
-                <article aria-labelledby={`trajectory-title-${stage.id}`}>
-                  <p class="about-station__period">{stage.period}</p>
-                  <h3 id={`trajectory-title-${stage.id}`}>{stage.heading}</h3>
-                  <p class="about-station__body">{stage.body}</p>
-                  {stage.links.length > 0 && (
-                    <ul class="about-station__links" aria-label={`${stage.mapLabel} links`}>
-                      {stage.links.map((link) => (
-                        <li>
-                          <a href={link.href}>
-                            {link.label}
-                            <span aria-hidden="true"> ↗</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </article>
-              </li>
-            ))
-          }
+          {trajectory.map((stage) => (
+            <li class="about-station" id={`trajectory-${stage.id}`} data-tone={stage.tone}>
+              <article aria-labelledby={`trajectory-title-${stage.id}`}>
+                <p class="about-station__period">{stage.period}</p>
+                <h3 id={`trajectory-title-${stage.id}`}>{stage.heading}</h3>
+                <p class="about-station__body">{stage.body}</p>
+                {stage.links.length > 0 && (
+                  <ul class="about-station__links" aria-label={`${stage.mapLabel} links`}>
+                    {stage.links.map((link) => (
+                      <li>
+                        <a href={link.href}>
+                          {link.label}
+                          <span aria-hidden="true"> ↗</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            </li>
+          ))}
         </ol>
       </section>
 
@@ -209,40 +213,38 @@ const profilePageJsonLd = {
           <p>Employment, open-source maintenance, and community work are shown as separate responsibilities.</p>
         </header>
         <div class="about-role-groups">
-          {
-            roleGroups.map((group) => (
-              <section class="about-role-group" aria-labelledby={`role-group-${group.kind}`}>
-                <h3 id={`role-group-${group.kind}`}>{group.title}</h3>
-                <ul>
-                  {profile.roles
-                    .filter((role) => role.kind === group.kind)
-                    .map((role) => (
-                      <li>
-                        <strong>{role.label}</strong>
-                        {role.organization && (
-                          <span>
-                            {role.href ? (
-                              <a href={role.href} target="_blank" rel="noopener noreferrer">
-                                {role.organization}
-                                <span class="sr-only"> (opens in new tab)</span>
-                              </a>
-                            ) : (
-                              role.organization
-                            )}
-                          </span>
-                        )}
-                      </li>
-                    ))}
-                </ul>
-                <p>{group.note}</p>
-              </section>
-            ))
-          }
+          {roleGroups.map((group) => (
+            <section class="about-role-group" aria-labelledby={`role-group-${group.kind}`}>
+              <h3 id={`role-group-${group.kind}`}>{group.title}</h3>
+              <ul>
+                {profile.roles
+                  .filter((role) => role.kind === group.kind)
+                  .map((role) => (
+                    <li>
+                      <strong>{role.label}</strong>
+                      {role.organization && (
+                        <span>
+                          {role.href ? (
+                            <a href={role.href} target="_blank" rel="noopener noreferrer">
+                              {role.organization}
+                              <span class="sr-only"> (opens in new tab)</span>
+                            </a>
+                          ) : (
+                            role.organization
+                          )}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+              </ul>
+              <p>{group.note}</p>
+            </section>
+          ))}
         </div>
         <p class="about-roles__provenance">
           Project ownership is explicit throughout the site: work I own, work I maintain within organizations such as
-          vlang, and upstream contributions are labelled differently. <a href="/open-source">Open Source</a> links to the
-          evidence.
+          vlang, and upstream contributions are labelled differently. <a href="/open-source">Open Source</a> links to
+          the evidence.
         </p>
       </section>
 
@@ -252,16 +254,14 @@ const profilePageJsonLd = {
           <h2 id="about-focus-title">Current focus</h2>
         </header>
         <ul class="about-focus__areas">
-          {
-            focusAreas.map((area) => (
-              <li>
-                <a href={area.path}>
-                  <strong>{area.title}</strong>
-                  <span>{area.memberLinks.map((member) => member.title).join(' · ')}</span>
-                </a>
-              </li>
-            ))
-          }
+          {focusAreas.map((area) => (
+            <li>
+              <a href={area.path}>
+                <strong>{area.title}</strong>
+                <span>{area.memberLinks.map((member) => member.title).join(' · ')}</span>
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -271,14 +271,12 @@ const profilePageJsonLd = {
           <h2 id="about-values-title">What I care about</h2>
         </header>
         <ul class="about-values__list">
-          {
-            values.map((value) => (
-              <li>
-                <h3>{value.title}</h3>
-                <p>{value.body}</p>
-              </li>
-            ))
-          }
+          {values.map((value) => (
+            <li>
+              <h3>{value.title}</h3>
+              <p>{value.body}</p>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -291,9 +289,12 @@ const profilePageJsonLd = {
             hardware for testing. Sponsorship is disclosed and never buys a technical recommendation.
           </p>
           <p class="about-support__links">
-            <a class="about-hero__primary-link" href="/sponsor">Sponsor &amp; partner</a>
+            <a class="about-hero__primary-link" href="/sponsor">
+              Sponsor &amp; partner
+            </a>
             <a href={profile.links.sponsors} target="_blank" rel="noopener noreferrer">
-              GitHub Sponsors<span aria-hidden="true"> ↗</span><span class="sr-only"> (opens in new tab)</span>
+              GitHub Sponsors<span aria-hidden="true"> ↗</span>
+              <span class="sr-only"> (opens in new tab)</span>
             </a>
           </p>
         </div>
@@ -301,18 +302,18 @@ const profilePageJsonLd = {
           <p class="about-page__kicker">Start a conversation</p>
           <h2 id="about-contact-title">Contact</h2>
           <p>Email is the best way to reach me:</p>
-          <a class="about-contact__email" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+          <a class="about-contact__email" href={`mailto:${profile.contact.email}`}>
+            {profile.contact.email}
+          </a>
           <ul class="about-contact__social">
-            {
-              profile.socials.map((social) => (
-                <li>
-                  <a href={social.href} target="_blank" rel="noopener noreferrer">
-                    {social.label}
-                    <span class="sr-only"> (opens in new tab)</span>
-                  </a>
-                </li>
-              ))
-            }
+            {profile.socials.map((social) => (
+              <li>
+                <a href={social.href} target="_blank" rel="noopener noreferrer">
+                  {social.label}
+                  <span class="sr-only"> (opens in new tab)</span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
