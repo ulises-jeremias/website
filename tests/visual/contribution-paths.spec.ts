@@ -22,8 +22,11 @@ test('HorneroConfig publishes upstream review and safety practices', async ({ pa
 
   await expect(page.getByRole('button', { name: 'Copy review command' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Review before applying' })).toBeVisible();
-  await expect(page.getByText(/temporary HOME and isolated XDG directories/)).toBeVisible();
-  await expect(page.getByText(/shared source avoids secrets, personal credentials/i)).toBeVisible();
+  await expect(page.getByText(/Contributions use temporary HOME and isolated XDG directories/i)).toBeVisible();
+  await expect(
+    page.getByText(/Shared source avoids secrets, personal credentials, generated caches, and host-specific values/i),
+  ).toBeVisible();
+  await expect(page.getByText(/tests must not apply to a live account/i)).toBeVisible();
   await expect(page.getByText(/Package installation does not run chezmoi apply automatically/)).toBeVisible();
   await expect(page.getByText(/14 themes|Smart Colors pipeline|curl -fsSL/)).toHaveCount(0);
 });
