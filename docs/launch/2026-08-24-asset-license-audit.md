@@ -48,7 +48,7 @@ limits.
 | Orbitron                      | `@fontsource/orbitron` 5.3.0 package                                                                                                                                     | SIL Open Font License 1.1; copyright notice is present in the package license                               | Ten total font files include the six Orbitron weights used by the site                                                                                                                             |
 | V ecosystem references        | License table in `src/features/v/data/index.ts`                                                                                                                          | V, VSL, VTL, RxV, and setup-v are MIT; Awesome V is CC0 1.0                                                 | Repository links and text references only; no upstream artwork is copied                                                                                                                           |
 | Hornero OS brand assets       | `HorneroOS/config` `assets/brand/logo.svg` and `assets/brand/wallpaper/hornero-dark.png` (org owned by Ulises Jeremias); copied 2026-09-30 to `public/media/hornero-os/` | HorneroOS/config MIT                                                                                        | Mark and brand wallpaper on `/hornero-os` and its social card, captioned "brand wallpaper, not a screenshot" with credit (ADR-004). No third-party screenshots with unverified wallpapers are used |
-| V mascot reference            | `vlang/v-mascot`, recorded in the Projects and V license data                                                                                                            | CC BY-NC 4.0; non-commercial and attribution restrictions apply                                             | Veasel is embedded on `/v` since 2026-08-31 (#390, #391); attribution rendered on the page; licensing decision open in #170                                                                        |
+| V mascot reference            | `vlang/v-mascot`, referenced in the Projects ledger                                                                                                                      | CC BY-NC 4.0; non-commercial and attribution restrictions apply                                             | Text reference only; no mascot artwork is copied or served. A first-party V ecosystem schematic is used on `/v`.                                                                                   |
 
 ## Cleanup
 
@@ -108,3 +108,12 @@ The 2026-08-24 audit recorded "no Veasel asset is embedded". That stopped being 
   in `src/features/v/data/index.ts` (state CC BY-NC 4.0, attribution, no endorsement/trademark).
 - Open question: whether a personal portfolio qualifies as "NonCommercial" is not settled by the
   license or upstream statements. Decision and options are tracked in #170.
+
+## Amendment — 2026-10-05 (asset removed)
+
+PR #462 removes the Veasel image and its CC BY-NC artwork from `/v`, deletes the local PNG and
+WebP copies, and removes the mascot license entry from the rendered V license list. A first-party
+inline SVG now maps selected independent V project areas without suggesting dependency links.
+`vlang/v-mascot` remains a text-only upstream reference; no mascot artwork is redistributed by the
+site. This resolves the website's reproduction decision without deciding whether portfolio use
+would qualify as noncommercial.

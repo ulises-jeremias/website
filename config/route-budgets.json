@@ -46,7 +46,7 @@
     },
     "/agentic/": {
       "mobile": {
-        "total": 73728,
+        "total": 71680,
         "document": 9216,
         "script": 0,
         "style": 14336,
@@ -55,7 +55,7 @@
         "requests": 9
       },
       "desktop": {
-        "total": 73728,
+        "total": 71680,
         "document": 9216,
         "script": 0,
         "style": 14336,

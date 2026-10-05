@@ -88,11 +88,13 @@ describe('V source-fidelity data', () => {
     expect(getProject('setup-v').license).toBe('MIT');
     expect(getProject('awesome-v').license).toBe('CC0 1.0');
 
-    const mascot = licenseEntries.find((entry) => entry.component.includes('mascot'))!;
-    expect(mascot.license).toBe('CC BY-NC 4.0');
-    expect(mascot.notes).toContain('CC BY-NC 4.0');
-    expect(mascot.notes).toContain('attribution');
-    expect(mascot.notes).toContain('trademark rights are not granted');
+    expect(vSourceFacts.licenses).not.toHaveProperty('vMascot');
+    expect(licenseEntries.map((entry) => entry.component)).not.toContain('Veasel / V mascot');
+
+    const lab = readSourceFile('../components/VComputationalLab.astro');
+    expect(lab).not.toMatch(/veasel|v-mascot/i);
+    expect(lab).toContain('Selected V ecosystem projects');
+    expect(lab).toContain('do not indicate dependencies');
   });
 
   it('does not reintroduce contradicted V ecosystem claims', () => {

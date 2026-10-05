@@ -101,8 +101,15 @@ test.describe('PR5 V source-fidelity route', () => {
     const licenses = page.locator('.v-lab__licenses');
     await expect(licenses.locator('h2')).toHaveText('Licenses');
     await expect(licenses).toContainText('Awesome V · CC0 1.0');
-    await expect(licenses).toContainText('Veasel / V mascot · CC BY-NC 4.0');
-    await expect(licenses).toContainText('Veasel shown with attribution under CC BY-NC 4.0');
+    await expect(licenses).not.toContainText(/Veasel|v-mascot/i);
+    await expect(page.getByRole('img', { name: 'Selected V ecosystem projects' })).toBeVisible();
+    await expect(page.locator('img[src*="veasel"]')).toHaveCount(0);
+    const map = page.locator('.v-lab__ecosystem-map');
+    await expect(map).toContainText('Scientific computing');
+    await expect(map).toContainText('Tensors · autograd');
+    await expect(map).toContainText('Reactive channels');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.locator('.flagship-provenance__role > [aria-hidden="true"]')).toBeHidden();
   });
 
   test('uses the canonical Awesome V destination in the Projects ledger', async ({ page }) => {

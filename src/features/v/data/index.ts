@@ -90,7 +90,6 @@ export const vSourceFacts = {
     rxv: 'MIT',
     setupV: 'MIT',
     awesomeV: 'CC0 1.0',
-    vMascot: 'CC BY-NC 4.0',
   },
 } as const;
 
@@ -420,13 +419,6 @@ export const licenseEntries: VLicenseEntry[] = [
     license: vSourceFacts.licenses.awesomeV,
     source: 'github.com/vlang/awesome-v/blob/master/LICENSE',
     notes: 'The curated catalog is released under CC0 1.0 Universal.',
-  },
-  {
-    component: 'Veasel / V mascot',
-    license: vSourceFacts.licenses.vMascot,
-    source: 'github.com/vlang/v-mascot/blob/add-mascot/LICENSE',
-    notes:
-      'Veasel shown with attribution under CC BY-NC 4.0 (noncommercial use). This is a personal portfolio site; trademark rights are not granted.',
   },
 ];
 

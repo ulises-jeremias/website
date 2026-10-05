@@ -12,7 +12,9 @@ const routes = [
   '/dotfiles/',
   '/open-source/',
   '/agentic-harness/',
+  '/hornero-os/',
   '/projects/',
+  '/sponsor/',
   '/v/',
   '/404.html',
 ] as const;
