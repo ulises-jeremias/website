@@ -46,22 +46,22 @@
     },
     "/agentic/": {
       "mobile": {
-        "total": 119808,
+        "total": 73728,
         "document": 9216,
         "script": 0,
         "style": 14336,
         "image": 5120,
-        "font": 93184,
-        "requests": 12
+        "font": 45056,
+        "requests": 9
       },
       "desktop": {
-        "total": 119808,
+        "total": 73728,
         "document": 9216,
         "script": 0,
         "style": 14336,
         "image": 5120,
-        "font": 93184,
-        "requests": 12
+        "font": 45056,
+        "requests": 9
       }
     },
     "/dotfiles/": {

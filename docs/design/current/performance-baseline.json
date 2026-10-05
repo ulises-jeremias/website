@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T23:37:13.918Z",
+  "generatedAt": "2026-10-05T00:01:32.276Z",
   "method": "Fresh browser context per route and viewport; text resources gzip level 9; already-compressed assets use source bytes.",
   "routes": {
     "/": {
@@ -26,20 +26,20 @@
     },
     "/about/": {
       "mobile": {
-        "total": 66656,
-        "document": 8516,
+        "total": 66345,
+        "document": 8371,
         "script": 0,
-        "style": 13506,
+        "style": 13340,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 66656,
-        "document": 8516,
+        "total": 66345,
+        "document": 8371,
         "script": 0,
-        "style": 13506,
+        "style": 13340,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -48,24 +48,24 @@
     },
     "/agentic/": {
       "mobile": {
-        "total": 108362,
-        "document": 7855,
+        "total": 64620,
+        "document": 7853,
         "script": 0,
         "style": 12133,
         "image": 3802,
-        "font": 84572,
+        "font": 40832,
         "other": 0,
-        "requests": 10
+        "requests": 8
       },
       "desktop": {
-        "total": 108362,
-        "document": 7855,
+        "total": 64620,
+        "document": 7853,
         "script": 0,
         "style": 12133,
         "image": 3802,
-        "font": 84572,
+        "font": 40832,
         "other": 0,
-        "requests": 10
+        "requests": 8
       }
     },
     "/dotfiles/": {
@@ -190,14 +190,14 @@
         "requests": 11
       },
       "desktop": {
-        "total": 109876,
+        "total": 115940,
         "document": 27833,
         "script": 0,
         "style": 15577,
-        "image": 3802,
+        "image": 9866,
         "font": 62664,
         "other": 0,
-        "requests": 10
+        "requests": 14
       }
     },
     "/community/": {
