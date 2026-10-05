@@ -2,7 +2,7 @@
 
 **Site:** `https://www.ulises-jeremias.dev`
 **Target:** WCAG 2.2 AA and final visual/brand sign-off
-**Automated baseline:** candidate PR #462 (browser-quality CI: axe on 16 routes, critical navigation and reflow on all public routes, reduced-motion, no-JS fallbacks, cross-browser smoke at mobile/tablet/desktop widths, route budgets, Lighthouse CI)
+**Automated baseline:** production `main@0a323a3` (PR #462; browser-quality CI: axe on 16 routes, critical navigation and reflow on all public routes, reduced-motion, no-JS fallbacks, cross-browser smoke at mobile/tablet/desktop widths, route budgets, Lighthouse CI). PR #464 adds an explicit visible-name assertion for the mobile Menu trigger and a 44px V repository-link target assertion; its Lighthouse CI run reports accessibility 1.00 on all audited routes.
 **Owner:** Ulises Jeremias
 **Status:** #295 — automated evidence complete; all manual rows below remain PENDING MANUAL until executed on real devices. Automated checks (axe, Lighthouse, Playwright) are **not** substitutes for screen-reader or hardware testing.
 
@@ -32,7 +32,7 @@ Routes: Home `/`, Work `/projects`, flagship detail `/dotfiles` (HorneroConfig),
 | Mobile touch targets ≥ 44px / no hover-only               | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
 | Mobile touch exploration reaches every primary action     | PENDING MANUAL                                                          | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             | PENDING MANUAL             |
 
-Statuses: **PASS** = verified by an automated suite or named test (never hand-asserted); **PENDING MANUAL** = requires the listed human/AT procedure; **NOT APPLICABLE** = none currently identified for these routes. Target-size assertions exist for selected Create Awesome, Hornero extraction, and Writing controls; they do not prove ≥44px targets or the absence of hover-only content across all routes.
+Statuses: **PASS** = verified by an automated suite or named test (never hand-asserted); **PENDING MANUAL** = requires the listed human/AT procedure; **NOT APPLICABLE** = none currently identified for these routes. Target-size assertions cover selected Create Awesome, Hornero extraction, Writing, and V repository controls. They do not prove ≥44px targets or the absence of hover-only content across all routes.
 
 ## Screen Reader Pilots
 

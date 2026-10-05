@@ -19,9 +19,12 @@ test.describe('global shell visual coverage', () => {
     await expect(compact).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Primary', exact: true })).toHaveCount(0);
 
-    const trigger = page.getByRole('button', { name: 'Open navigation' });
+    const trigger = page.locator('[data-mobile-trigger]');
+    await expect(trigger).toHaveAccessibleName('Menu');
+    await expect(trigger).not.toHaveAttribute('aria-label');
     const pageShell = page.locator('.section-layout');
     await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
     const dialog = page.getByRole('dialog', { name: 'Navigate the atlas' });
     await expect(dialog).toBeVisible();
     const drawerBox = await dialog.boundingBox();
@@ -34,6 +37,7 @@ test.describe('global shell visual coverage', () => {
 
     await dialog.getByRole('button', { name: 'Close navigation' }).click();
     await expect(dialog).toBeHidden();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false');
     await expect(compact).toBeVisible();
     await expect(pageShell).not.toHaveAttribute('inert', '');
     await expect(pageShell).not.toHaveAttribute('aria-hidden', 'true');

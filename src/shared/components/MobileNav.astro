@@ -16,7 +16,6 @@ const { items, githubHref, emailHref } = Astro.props as Props;
     class="mobile-nav__trigger"
     aria-expanded="false"
     aria-controls="site-navigation-drawer"
-    aria-label="Open navigation"
     data-mobile-trigger
   >
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -144,7 +143,6 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       navBackdrop.hidden = false;
       navBackdrop.removeAttribute('aria-hidden');
       navTrigger.setAttribute('aria-expanded', 'true');
-      navTrigger.setAttribute('aria-label', 'Close navigation');
       navCloseButton.focus();
       isolateBackground();
       document.documentElement.classList.add('mobile-nav-open');
@@ -168,7 +166,6 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       navDrawer.classList.remove('is-open');
       navBackdrop.classList.remove('is-open');
       navTrigger.setAttribute('aria-expanded', 'false');
-      navTrigger.setAttribute('aria-label', 'Open navigation');
       document.documentElement.classList.remove('mobile-nav-open');
       document.removeEventListener('keydown', handleKeydown);
       restoreFocusAfterClose = restoreFocus;

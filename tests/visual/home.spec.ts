@@ -161,9 +161,11 @@ test.describe('homepage visual coverage', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
 
-    const toggle = page.getByRole('button', { name: 'Open navigation' });
+    const toggle = page.locator('[data-mobile-trigger]');
     await expect(toggle).toBeVisible();
+    await expect(toggle).toHaveAccessibleName('Menu');
     await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
 
     await expect(page.getByRole('button', { name: 'Close navigation' }).first()).toBeVisible();
     await expect(page.getByRole('dialog', { name: 'Navigate the atlas' })).toBeVisible();
