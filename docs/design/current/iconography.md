@@ -2,8 +2,12 @@
 
 ## Visual language
 
-First-party interface icons use simple geometric SVG outlines with rounded
-joins, a 1.7px stroke on a 24×24 viewBox, and `currentColor`. Render them at
+The shared atlas icons and most shell utility icons use simple geometric SVG
+outlines with rounded joins, a 1.7px stroke on a 24×24 viewBox, and
+`currentColor`. Route-specific controls may use a locally authored mark when
+its shape belongs to that route's visual language; keep it simple, legible,
+decorative to assistive technology when adjacent text names the control, and
+free of glow in its default state. Render shared icons at
 16px for dense inline controls, 20px for navigation and buttons, and 24px for
 standalone explanatory marks. Keep one icon optically centered in a square
 wrapper; the wrapper sets layout size and the SVG keeps its 24×24 coordinate
@@ -49,6 +53,11 @@ uses the same viewBox, stroke, joins, size contract, and current color:
 
 These marks are navigation cues, not data visualizations. The labels remain
 visible and complete without the icons.
+
+`MobileNav.astro`, `SupportNote.astro`, and sponsor calls to action use a small
+locally authored heart, menu, close, mail, or directional mark for their own
+controls. Their geometry is intentionally maintained with the component; the
+shared `Icon.astro` set is reserved for atlas destination cues.
 
 ## Current samples
 

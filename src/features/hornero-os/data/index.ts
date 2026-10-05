@@ -3,15 +3,15 @@ import { horneroRepositoryUrls } from '@/data/hornero-transition.js';
 /**
  * Hornero OS — verified facts for /hornero-os (ADR-004).
  *
- * Source of truth: github.com/HorneroOS (8 public repositories), read
- * 2026-09-30. Composition facts come from HorneroOS/hornero
- * manifests/v0.2.0-preview12.yaml (@36c2c4b). Maturity rule: while the
+ * Source of truth: github.com/HorneroOS (9 public repositories), read
+ * 2026-10-05. Composition facts come from HorneroOS/hornero
+ * manifests/v0.2.0-preview14.yaml (@bcef56a). Maturity rule: while the
  * installer and iso slots are `future`, nothing here may say Hornero OS is
  * installable, downloadable, or a finished distribution.
  */
 
 export const horneroFacts = {
-  verifiedAt: '2026-09-30',
+  verifiedAt: '2026-10-05',
   orgUrl: 'https://github.com/HorneroOS',
   compositionRepoUrl: horneroRepositoryUrls.composition,
   releasesUrl: 'https://github.com/HorneroOS/hornero/releases',
@@ -19,9 +19,9 @@ export const horneroFacts = {
   contributingUrl: 'https://github.com/HorneroOS/.github/blob/main/CONTRIBUTING.md',
   docsUrl: 'https://github.com/HorneroOS/docs',
   websiteUrl: 'https://horneroos.com',
-  latestPreview: 'v0.2.0-preview12',
-  latestPreviewDate: '2026-09-30',
-  repositoryCount: 8,
+  latestPreview: 'v0.2.0-preview14',
+  latestPreviewDate: '2026-10-02',
+  repositoryCount: 9,
 } as const;
 
 export type ManifestSlotStatus = 'pinned' | 'local' | 'future';
@@ -35,19 +35,19 @@ export interface ManifestSlot {
   href: string;
 }
 
-/** Components of manifests/v0.2.0-preview12.yaml, in manifest order. */
+/** Components of manifests/v0.2.0-preview14.yaml, in manifest order. */
 export const manifestSlots: ManifestSlot[] = [
   {
     id: 'shell',
     status: 'pinned',
-    value: '07a3397',
+    value: '3658e1b',
     note: 'desktop shell · Quickshell, QML, Qt 6',
     href: horneroRepositoryUrls.shell,
   },
   {
     id: 'config',
     status: 'pinned',
-    value: 'c4a25f0',
+    value: '96b6870',
     note: 'desktop defaults · 15 theme packs',
     href: horneroRepositoryUrls.desktopDefaults,
   },

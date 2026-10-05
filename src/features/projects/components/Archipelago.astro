@@ -52,6 +52,8 @@ const islands = worldPointerProjects.map((project, index) => ({
             <img
               class="archipelago__art"
               src={`/assets/nest/${island.island}-sm.webp`}
+              srcset={`/assets/nest/${island.island}-192.webp 192w, /assets/nest/${island.island}-sm.webp 440w`}
+              sizes="144px"
               alt=""
               width="440"
               height="440"

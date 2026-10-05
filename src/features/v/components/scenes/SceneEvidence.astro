@@ -3,9 +3,9 @@ export interface Props {
   /** Short caption, e.g. "Rendered by VSL · v0.1.51" */
   caption: string;
   /** Optional leading logo (src, alt). */
-  logo?: { src: string; alt: string; width?: number };
+  logo?: { src: string; alt: string; width?: number; srcSet?: string; sizes?: string };
   /** Evidence images (real screenshots/renders from the project). */
-  images: Array<{ src: string; alt: string; width?: number }>;
+  images: Array<{ src: string; alt: string; width?: number; srcSet?: string; sizes?: string }>;
 }
 
 const { caption, logo, images } = Astro.props as Props;
@@ -17,6 +17,8 @@ const { caption, logo, images } = Astro.props as Props;
       <img
         class="scene-evidence__logo"
         src={logo.src}
+        srcset={logo.srcSet}
+        sizes={logo.sizes}
         alt={logo.alt}
         width={logo.width ?? 44}
         loading="lazy"
@@ -30,6 +32,8 @@ const { caption, logo, images } = Astro.props as Props;
         <img
           class="scene-evidence__img"
           src={img.src}
+          srcset={img.srcSet}
+          sizes={img.sizes}
           alt={img.alt}
           width={img.width ?? 132}
           loading="lazy"

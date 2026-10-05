@@ -1,11 +1,15 @@
 import { spawnSync } from 'node:child_process';
+import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const assetRoot = path.join(root, 'public', 'assets', 'nest');
-const assets = ['island-agent', 'island-dotfiles', 'island-v', 'island-scaffold'];
+const assets = readdirSync(assetRoot)
+  .filter((file) => /^island-.+-sm\.webp$/.test(file))
+  .map((file) => file.replace(/-sm\.webp$/, ''))
+  .sort();
 const magick = process.env.MAGICK ?? 'magick';
 
 for (const asset of assets) {
@@ -22,4 +26,4 @@ for (const asset of assets) {
   }
 }
 
-console.log(`Generated ${assets.length} 192px featured-work thumbnails.`);
+console.log(`Generated ${assets.length} 192px island thumbnails.`);

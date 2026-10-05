@@ -71,6 +71,33 @@ test.describe('Dotfiles no-JavaScript copy fallback', () => {
   });
 });
 
+test.describe('Mobile navigation no-JavaScript fallback', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('keeps compact route links usable and hides the inert drawer trigger', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+
+    await expect(page.locator('.mobile-nav__trigger')).toBeHidden();
+    const compactNav = page.locator('.site-header__compact-nav');
+    await expect(compactNav).toBeVisible();
+    await expect(compactNav.getByRole('link').first()).toHaveAttribute('href', /^\//);
+  });
+});
+
+test('serves right-sized VSL evidence images with WebP candidates and legacy fallbacks', async ({ page }) => {
+  await page.goto('/v/#vsl');
+
+  const mandelbrot = page.getByRole('img', { name: 'Mandelbrot set rendered by VSL' });
+  await expect(mandelbrot).toHaveAttribute('src', '/media/v/vsl-mandelbrot.png');
+  await expect(mandelbrot).toHaveAttribute(
+    'srcset',
+    /vsl-mandelbrot-160\.webp 160w, \/media\/v\/vsl-mandelbrot-320\.webp 320w/,
+  );
+  await expect(mandelbrot).toHaveAttribute('sizes', '148px');
+  await expect.poll(() => mandelbrot.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('.webp');
+});
+
 test.describe('Projects shareable filters', () => {
   test('restores query state and announces filtered result counts', async ({ page }) => {
     await page.goto('/projects?q=agent');

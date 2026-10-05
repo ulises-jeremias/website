@@ -27,6 +27,14 @@ describe('Hornero OS facts (ADR-004 maturity rule)', () => {
     expect(horneroFacts.websiteUrl).toBe('https://horneroos.com');
   });
 
+  it('tracks the latest verified preview and its pinned components', () => {
+    expect(horneroFacts.latestPreview).toBe('v0.2.0-preview14');
+    expect(horneroFacts.latestPreviewDate).toBe('2026-10-02');
+    expect(horneroFacts.repositoryCount).toBe(9);
+    expect(manifestSlots.find((slot) => slot.id === 'shell')?.value).toBe('3658e1b');
+    expect(manifestSlots.find((slot) => slot.id === 'config')?.value).toBe('96b6870');
+  });
+
   it('states the preview status in the hero and credits the brand imagery', () => {
     expect(page).toContain('not installable yet');
     expect(page).toContain('Brand wallpaper, not a screenshot');

@@ -96,7 +96,7 @@ export const workstationLayers: LayerMeta[] = [
       'chezmoi apply: packages, shell, LLM policy (env.d)',
       'Profile-driven install (technical, non-technical, ai, node, python, data, infra, minimal, custom)',
       'dots-* thin helpers (doctor, skills, loop, devcompanion)',
-      'dev-companion/runner — workstation-only runtime (kept)',
+      'dev-companion/runner — workstation-only provider-policy runner (kept)',
     ],
     delivers: [
       '~/.local/bin/dots-* (thin, delegate)',

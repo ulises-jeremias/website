@@ -87,14 +87,14 @@ const cards = [
     title: 'ABOUT',
     subtitle: 'Developer tooling · open source · the trajectory',
     accent: '#a78bfa',
-    artPath: path.join('public', 'media', 'social', 'builder-trajectory.svg'),
+    artPath: path.join('src', 'media-sources', 'social', 'builder-trajectory.svg'),
   },
   {
     id: 'agentic',
     title: 'AGENTIC\nDEVELOPER STACK',
     subtitle: 'Toolkit · Workstation · Harness — composable',
     accent: '#ff4fd8',
-    artPath: path.join('public', 'media', 'social', 'agentic-stack.svg'),
+    artPath: path.join('src', 'media-sources', 'social', 'agentic-stack.svg'),
   },
   {
     id: 'hornero-os',
@@ -109,7 +109,7 @@ const cards = [
     title: 'SPONSOR\nTHE WORK',
     subtitle: 'Support the tools · infrastructure · community',
     accent: '#ff42d0',
-    artPath: path.join('public', 'media', 'social', 'support-dock.svg'),
+    artPath: path.join('src', 'media-sources', 'social', 'support-dock.svg'),
   },
 ];
 
@@ -129,6 +129,22 @@ function resolveFont(query) {
 
 const boldFont = resolveFont('Noto Sans:style=Bold');
 const regularFont = resolveFont('Noto Sans:style=Regular');
+
+function wrapSubtitle(text) {
+  const words = text.split(/\s+/);
+  const lines = [];
+  let line = '';
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > 34 && line) {
+      lines.push(line);
+      line = word;
+    } else line = next;
+  }
+  if (line) lines.push(line);
+  if (lines.length > 2) throw new Error(`Social subtitle exceeds two lines: ${text}`);
+  return lines.join('\\n');
+}
 
 const scratch = mkdtempSync(path.join(os.tmpdir(), 'social-cards-'));
 const accentRgba = (hex, alpha) => {
@@ -236,7 +252,7 @@ for (const card of cards) {
       '#d8cfea',
       '-annotate',
       '+112+470',
-      card.subtitle,
+      wrapSubtitle(card.subtitle),
       '-strip',
       '-interlace',
       'Plane',

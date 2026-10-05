@@ -437,19 +437,19 @@ const rawPortfolioEntries = [
     proofLines: [
       {
         kind: 'release',
-        text: 'Composition preview v0.2.0-preview12 pins the shell and config and passes a VM smoke test; it ships no installable image.',
-        verifiedAt: '2026-09-30',
+        text: 'Composition preview v0.2.0-preview14 pins the shell and config; it ships no installable image.',
+        verifiedAt: '2026-10-05',
       },
       {
         kind: 'history',
-        text: 'Extracted from HorneroConfig in 2026 and developed in the open across eight repositories.',
+        text: 'Extracted from HorneroConfig in 2026 and developed in the open across nine public repositories.',
       },
     ],
     evidence: {
       sourceUrl: 'https://github.com/HorneroOS/hornero',
       sourceType: 'repository-metadata',
-      sourceRevision: '36c2c4b',
-      verifiedAt: '2026-09-30',
+      sourceRevision: 'bcef56a',
+      verifiedAt: '2026-10-05',
     },
     homepageEligible: false,
   },

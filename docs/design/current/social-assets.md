@@ -1,7 +1,7 @@
 # Social and icon asset provenance
 
 The route social cards are generated from first-party Digital Nest scene art and
-original SVG diagrams under `public/media/social/`. No stock illustration or
+original SVG diagrams under `src/media-sources/social/`. No stock illustration or
 generated portrait is used.
 
 ## Social cards
@@ -10,8 +10,9 @@ generated portrait is used.
 - Dimensions: 1200x630
 - Source plate: `public/assets/nest/hero-bg.webp`
 - Route art: the corresponding first-party island under
-  `public/assets/nest/island-*.webp`; the stack, trajectory, support dock, and
-  Hornero OS mark use source SVGs already stored in the repository.
+  `public/assets/nest/island-*.webp`; the stack, trajectory, and support dock
+  use build-only SVG sources in `src/media-sources/social/`, while the Hornero
+  OS mark remains under `public/media/hornero-os/` because the page uses it.
 - Composition: one shared Synthwave Systems Atlas plate, route accent orbit,
   integrated art, and crop-safe title/subtitle area.
 - Generator: `scripts/generate-social-cards.mjs`
@@ -36,14 +37,14 @@ PNG and ICO derivatives are generated from `public/favicon.svg` and the
 first-party Digital Nest logo. Maskable icons use the approved midnight
 background with a safe inset around the logo.
 
-## Homepage featured art
+## Island thumbnails
 
-Four 192×192 WebP thumbnails are derived from the committed 440×440 island
-images with `pnpm assets:featured`. `FeaturedAreas.astro` serves the 192px
-source for its 64–96 CSS pixel art at device-pixel ratios 1 and 2, and the
-640px source for larger rendered sizes. PNG remains the fallback. The
-thumbnails are each 3.6–4.5 KB with the committed ImageMagick output and add no
-runtime dependency.
+Ten 192×192 WebP thumbnails are derived from the committed 440×440 island
+images with `pnpm assets:featured`. Homepage featured areas serve a 192/640px
+responsive pair. The Work archive serves 192/440px candidates for its 144 CSS
+pixel thumbnails. PNG remains the fallback on the larger homepage artwork.
+The 192px files are each only a few kilobytes with the committed ImageMagick
+output and add no runtime dependency.
 
 The legacy island PNG fallbacks under `public/assets/` can be regenerated from
 the WebP sources with `node scripts/generate-island-pngs.mjs --regenerate`.
