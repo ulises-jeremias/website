@@ -33,6 +33,12 @@ The maintained snapshots are the regression authority. Captures under dated
 `docs/design/` directories are historical evidence and are not rewritten by
 normal Playwright runs.
 
+The 2026-10-05 candidate refreshes only the Agent Toolkit, Agentic, Hornero OS,
+and Sponsor mobile goldens. Their previous CI baselines no longer matched the
+current Linux browser renders; the candidate captures were inspected at 390px
+and preserve the intended route hierarchy and readable wrapping. All other
+goldens remain unchanged.
+
 ## Historical documents
 
 - `docs/design/tokens.md` is the superseded warm/light token proposal.
