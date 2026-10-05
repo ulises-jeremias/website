@@ -1,8 +1,5 @@
-import { createRequire } from 'node:module';
+import CachePolicy from 'http-cache-semantics';
 import { describe, expect, it } from 'vitest';
-
-const require = createRequire(import.meta.url);
-const CachePolicy = require('http-cache-semantics');
 
 const request = {
   url: '/private',
