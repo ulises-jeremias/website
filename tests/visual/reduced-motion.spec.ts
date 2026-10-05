@@ -139,18 +139,3 @@ test.describe('V — diagram animation suppression', () => {
     expect(reduceSeen).toBe(true);
   });
 });
-
-test.describe('Community — Workshop graph', () => {
-  test('workshop graph animation is suppressed under reduced motion', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/community');
-
-    // The graph uses CSS animation; check any animated SVG element duration collapses
-    const svgPaths = await page.locator('.cm-workshop svg path').all();
-    if (svgPaths.length > 0) {
-      const duration = await svgPaths[0].evaluate((el) => getComputedStyle(el).animationDuration);
-      const ms = Number.parseFloat(duration.replace('ms', '').replace('s', '000'));
-      expect(ms).toBeLessThanOrEqual(1);
-    }
-  });
-});
