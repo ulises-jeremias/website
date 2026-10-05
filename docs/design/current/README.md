@@ -17,6 +17,7 @@ exploration.
 9. `uiux-assessment-2026-08.md` records the current automated results and unresolved human/product gates. `uiux-hardening-evidence.md` is the historical pre-merge hardening record.
 10. `route-identity-briefs-2026-08.md` records the route-identity redesign diagnosis and per-route design briefs.
 11. `route-redesign-plan-2026-08.md` records the completed substantial route redesign waves and evidence contract; the portfolio-first IA (ADR-003) amends the route set with `/agentic` and `/about`.
+12. `writing-system.md` defines article structure, Markdown conventions, and progressive code-copy behavior for Field Notes.
 
 ## Accepted baseline
 

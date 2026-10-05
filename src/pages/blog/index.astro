@@ -3,6 +3,7 @@ import SectionLayout from '@/layouts/SectionLayout.astro';
 import { getCollection } from 'astro:content';
 import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
 import { EmptyDesk } from '@/features/blog';
+import { formatBlogDate } from '@/features/blog/lib/format-date';
 import '@/styles/blog.css';
 
 const meta = getRouteMeta('/blog')!;
@@ -68,13 +69,7 @@ const itemListJsonLd = hasPosts
                 <a class="blog-list__link" href={`/blog/${post.id}/`}>
                   <h2 class="blog-list__title">{post.data.title}</h2>
                   <p class="blog-list__meta">
-                    <time datetime={post.data.pubDate.toISOString()}>
-                      {post.data.pubDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </time>
+                    <time datetime={post.data.pubDate.toISOString()}>{formatBlogDate(post.data.pubDate, 'short')}</time>
                   </p>
                   <p class="blog-list__desc">{post.data.description}</p>
                 </a>

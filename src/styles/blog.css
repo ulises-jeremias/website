@@ -321,20 +321,6 @@
   letter-spacing: 0.02em;
 }
 
-.blog-prose pre,
-.blog-prose code {
-  font-family: var(--font-mono);
-}
-
-.blog-prose pre {
-  padding: 0.9rem 1rem;
-  overflow-x: auto;
-  border: 1px solid var(--blog-border);
-  background: color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
-  clip-path: var(--clip-corner-sm);
-  font-size: 0.86rem;
-}
-
 .blog-prose a {
   color: var(--blog-accent);
 }

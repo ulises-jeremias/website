@@ -1,4 +1,6 @@
 ---
+import { formatBlogDate } from '../lib/format-date';
+
 interface Props {
   slug: string;
   title: string;
@@ -8,11 +10,7 @@ interface Props {
 
 const { slug, title, description, pubDate } = Astro.props as Props;
 
-const formattedDate = pubDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const formattedDate = formatBlogDate(pubDate);
 ---
 
 <article class="blog-card">

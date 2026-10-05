@@ -4,7 +4,10 @@ import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { getCanonicalUrl, getCanonicalUrlForSlug } from '@/data/routes';
 import { profile } from '@/data/profile';
+import { BlogReadingTools } from '@/features/blog';
+import { formatBlogDate } from '@/features/blog/lib/format-date';
 import '@/styles/blog.css';
+import '@/styles/blog-reading.css';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -97,17 +100,14 @@ if (hasPost) {
             </h1>
             <p class="blog-post__meta">
               <time datetime={post.data.pubDate.toISOString()} itemprop="datePublished">
-                {post.data.pubDate.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {formatBlogDate(post.data.pubDate)}
               </time>
             </p>
             <meta itemprop="description" content={post.data.description} />
             <div class="blog-post__content blog-prose" itemprop="articleBody">
               <Content />
             </div>
+            <BlogReadingTools />
           </article>
         ) : (
           <article>
