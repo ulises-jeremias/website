@@ -61,6 +61,17 @@ describe('global site shell', () => {
     expect(shell).toContain('<svg');
   });
 
+  it('keeps decorative and informative interface icon modes explicit', async () => {
+    const icon = await readSource('shared/components/Icon.astro');
+
+    expect(icon).toMatch(/size\?: 16 \| 20 \| 24/);
+    expect(icon).toContain("aria-hidden={decorative ? 'true' : undefined}");
+    expect(icon).toContain("role={label ? 'img' : undefined}");
+    expect(icon).toContain('aria-labelledby={label ? id : undefined}');
+    expect(icon).toContain('<title id={id}>{label}</title>');
+    expect(icon).toContain('focusable="false"');
+  });
+
   it('removes the superseded homepage-only header and footer components', async () => {
     await expect(access(resolve(componentsDirectory, 'Header.astro'))).rejects.toThrow();
     await expect(access(resolve(componentsDirectory, 'Footer.astro'))).rejects.toThrow();

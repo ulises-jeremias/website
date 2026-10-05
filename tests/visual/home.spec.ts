@@ -29,6 +29,46 @@ test.describe('homepage visual coverage', () => {
     expect(mismatches).toEqual([]);
   });
 
+  test('homepage hero falls back to the optimized JPEG when WebP is unsupported', async ({ page }) => {
+    await page.goto('/');
+
+    const heroImage = page.locator('.synthwave-environment__plate');
+    await page
+      .locator('.synthwave-environment source[type="image/webp"]')
+      .evaluate((source) => source.setAttribute('type', 'image/x-digital-nest-unsupported'));
+
+    await expect
+      .poll(() => heroImage.evaluate((image: HTMLImageElement) => image.currentSrc))
+      .toContain('/assets/hero-bg.jpg');
+    await expect.poll(() => heroImage.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
+  });
+
+  test('featured portal icons stay decorative while links keep visible names', async ({ page }) => {
+    await page.goto('/');
+
+    const portals = page.getByRole('navigation', { name: 'Featured work' });
+    const links = portals.getByRole('link');
+    const icons = portals.locator('.hero-portals__icon svg');
+    await expect(links).toHaveCount(4);
+    await expect(icons).toHaveCount(4);
+
+    for (const area of getHomepagePortfolioAreas()) {
+      await expect(links.filter({ hasText: area.title })).toHaveAccessibleName(new RegExp(area.title));
+    }
+
+    const iconAttributes = await icons.evaluateAll((elements) =>
+      elements.map((icon) => ({
+        hidden: icon.getAttribute('aria-hidden'),
+        focusable: icon.getAttribute('focusable'),
+        role: icon.getAttribute('role'),
+        labelledBy: icon.getAttribute('aria-labelledby'),
+      })),
+    );
+    expect(iconAttributes).toEqual(
+      Array.from({ length: 4 }, () => ({ hidden: 'true', focusable: 'false', role: null, labelledBy: null })),
+    );
+  });
+
   test('desktop atlas composition', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 1440, height: 1100 });
