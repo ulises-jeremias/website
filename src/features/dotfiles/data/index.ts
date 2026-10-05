@@ -16,6 +16,9 @@ export const verifiedFacts = {
   repoUrl: 'https://github.com/ulises-jeremias/dotfiles',
   readmeUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/README.md',
   contributingUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/CONTRIBUTING.md',
+  securityGuidelinesUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/docs/Security-Guidelines.md',
+  securityPolicyUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/SECURITY.md',
+  testingStrategyUrl: 'https://github.com/ulises-jeremias/dotfiles/blob/main/docs/Testing-Strategy.md',
   reviewCommand: 'chezmoi diff --source=/path/to/dotfiles --config ~/.config/chezmoi/dotfiles.toml',
   applyCommand: 'chezmoi apply --source=/path/to/dotfiles --config ~/.config/chezmoi/dotfiles.toml',
   wikiUrl: 'https://github.com/ulises-jeremias/dotfiles/wiki',
@@ -108,6 +111,7 @@ export const narrativeSections: NarrativeSection[] = [
     paragraphs: [
       'You can inspect changes with chezmoi diff before chezmoi apply. Package installation does not apply this source automatically, and --force is only for a deliberate replacement after reviewing the diff.',
       'Contributions use temporary HOME and isolated XDG directories. Shared source avoids secrets, personal credentials, generated caches, and host-specific values; tests must not apply to a live account.',
+      'Templates do not run remote scripts. Prefer signed package sources and avoid privileged login hooks; document system-service changes for independent review. Installed behavior is accepted in HorneroOS/qa; local source checks do not validate a full desktop.',
     ],
   },
 ];

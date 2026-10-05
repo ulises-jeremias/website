@@ -171,6 +171,19 @@ describe('flagship editorial contract — route implementation (#394)', () => {
     expect(dotfiles).toContain('personal chezmoi source for an Arch Linux workstation');
   });
 
+  it('HorneroConfig security and validation statements match its current policy docs', () => {
+    const dotfiles = readSource('src/features/dotfiles/data/index.ts');
+    expect(dotfiles).toContain('Templates do not run remote scripts');
+    expect(dotfiles).toContain('signed package sources');
+    expect(dotfiles).toContain('temporary HOME and isolated XDG directories');
+    expect(dotfiles).toContain('Installed behavior is accepted in HorneroOS/qa');
+    expect(dotfiles).toContain('do not validate a full desktop');
+    const dotfilesWorld = readSource('src/features/dotfiles/components/DotfilesWorld.astro');
+    expect(dotfilesWorld).toContain('verifiedFacts.securityGuidelinesUrl');
+    expect(dotfilesWorld).toContain('verifiedFacts.securityPolicyUrl');
+    expect(dotfilesWorld).toContain('verifiedFacts.testingStrategyUrl');
+  });
+
   it('Create Awesome maturity distinction is in the proof data', () => {
     const node = getPortfolioEntryById('create-node-app')!;
     const py = getPortfolioEntryById('create-python-app')!;
