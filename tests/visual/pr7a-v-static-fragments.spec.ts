@@ -174,6 +174,8 @@ test.describe('PR7A static V station document', () => {
         );
       }
 
+      await expect(page.getByRole('img', { name: 'Mandelbrot set rendered by VSL' })).toBeVisible();
+
       for (const control of await page.locator('section[data-v-panel] button').all()) {
         await expect(control).toBeDisabled();
       }

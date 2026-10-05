@@ -86,7 +86,7 @@ test.describe('Mobile navigation no-JavaScript fallback', () => {
   });
 });
 
-test('serves right-sized VSL evidence images with WebP candidates and legacy fallbacks', async ({ page }) => {
+test('loads right-sized evidence only for the active V station', async ({ page }) => {
   await page.goto('/v/#vsl');
 
   const mandelbrot = page.getByRole('img', { name: 'Mandelbrot set rendered by VSL' });
@@ -98,6 +98,15 @@ test('serves right-sized VSL evidence images with WebP candidates and legacy fal
   );
   await expect(source).toHaveAttribute('sizes', '148px');
   await expect.poll(() => mandelbrot.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('.webp');
+
+  const inactiveLogo = page.locator('#vtl img[data-deferred-src="/media/v/vtl-logo.webp"]');
+  await expect(inactiveLogo).not.toHaveAttribute('src', /.+/);
+  await expect.poll(() => inactiveLogo.evaluate((image: HTMLImageElement) => image.currentSrc)).toBe('');
+
+  await page.locator('[data-v-station="vtl"]').click();
+  const vtlLogo = page.getByRole('img', { name: 'VTL logo' });
+  await expect(vtlLogo).toHaveAttribute('src', '/media/v/vtl-logo.webp');
+  await expect.poll(() => vtlLogo.evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('vtl-logo.webp');
 });
 
 test.describe('Projects shareable filters', () => {

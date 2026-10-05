@@ -694,27 +694,12 @@ const stationsJson = JSON.stringify(stations);
   }
 </style>
 
-<script>
-  type Station = {
-    id: string;
-    label: string;
-    title: string;
-    headingId: string;
-    body: string;
-    role: string;
-    repo: string;
-    href: string;
-    contributingHref: string;
-    issuesHref: string;
-    license: string;
-    chips: string[];
-  };
-
-  function clearChildren(el: HTMLElement) {
+<script is:inline>
+  function clearChildren(el) {
     while (el.firstChild) el.removeChild(el.firstChild);
   }
 
-  function setChips(list: HTMLElement, chips: string[]) {
+  function setChips(list, chips) {
     clearChildren(list);
     for (const chip of chips) {
       const li = document.createElement('li');
@@ -725,24 +710,44 @@ const stationsJson = JSON.stringify(stations);
     }
   }
 
-  function bindLab(root: HTMLElement) {
+  function loadSceneEvidence(panel) {
+    panel.querySelectorAll('source[data-deferred-srcset]').forEach((source) => {
+      const srcset = source.dataset.deferredSrcset;
+      if (srcset) source.srcset = srcset;
+      const sizes = source.dataset.deferredSizes;
+      if (sizes) source.sizes = sizes;
+      source.removeAttribute('data-deferred-srcset');
+      source.removeAttribute('data-deferred-sizes');
+    });
+
+    panel.querySelectorAll('img[data-deferred-src]').forEach((image) => {
+      const src = image.dataset.deferredSrc;
+      if (src) image.src = src;
+      image.removeAttribute('data-deferred-src');
+    });
+  }
+
+  function bindLab(root) {
     if (root.hasAttribute('data-v-enhanced')) return;
 
-    const stations = JSON.parse(root.dataset.stations || '[]') as Station[];
-    const selector = root.querySelector<HTMLElement>('[data-v-station-selector]');
+    const stations = JSON.parse(root.dataset.stations || '[]');
+    const selector = root.querySelector('[data-v-station-selector]');
     const titleEl = root.querySelector('#v-lab-inspector .vf-inspector__title');
-    const bodyEl = root.querySelector<HTMLElement>('[data-v-inspector-body]');
-    const roleEl = root.querySelector<HTMLElement>('[data-v-inspector-role]');
-    const repoEl = root.querySelector<HTMLElement>('[data-v-inspector-repo]');
-    const licenseEl = root.querySelector<HTMLElement>('[data-v-inspector-license]');
-    const chipsEl = root.querySelector<HTMLElement>('[data-v-inspector-chips]');
-    const linkEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-link]');
-    const contributingEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-contributing]');
-    const issuesEl = root.querySelector<HTMLAnchorElement>('[data-v-inspector-issues]');
-    const statusEl = root.querySelector<HTMLElement>('[data-v-station-status]');
-    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-v-station]')];
-    const panels = [...root.querySelectorAll<HTMLElement>('[data-v-panel]')];
+    const bodyEl = root.querySelector('[data-v-inspector-body]');
+    const roleEl = root.querySelector('[data-v-inspector-role]');
+    const repoEl = root.querySelector('[data-v-inspector-repo]');
+    const licenseEl = root.querySelector('[data-v-inspector-license]');
+    const chipsEl = root.querySelector('[data-v-inspector-chips]');
+    const linkEl = root.querySelector('[data-v-inspector-link]');
+    const contributingEl = root.querySelector('[data-v-inspector-contributing]');
+    const issuesEl = root.querySelector('[data-v-inspector-issues]');
+    const statusEl = root.querySelector('[data-v-station-status]');
+    const tabs = [...root.querySelectorAll('[data-v-station]')];
+    const panels = [...root.querySelectorAll('[data-v-panel]')];
     const stationIds = new Set(stations.map((station) => station.id));
+    const firstStation = stations[0];
+
+    if (!firstStation) return;
 
     const completeController =
       stations.length > 0 &&
@@ -796,7 +801,7 @@ const stationsJson = JSON.stringify(stations);
 
     let selectedStationId = '';
 
-    const select = (id: string, focusTab = false, announce = false) => {
+    const select = (id, focusTab = false, announce = false) => {
       const station = stations.find((s) => s.id === id);
       if (!station) return false;
 
@@ -809,6 +814,7 @@ const stationsJson = JSON.stringify(stations);
 
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.vPanel !== id;
+        if (!panel.hidden) loadSceneEvidence(panel);
       });
 
       if (titleEl) titleEl.textContent = station.title;
@@ -828,12 +834,12 @@ const stationsJson = JSON.stringify(stations);
       return true;
     };
 
-    const pushStation = (id: string) => {
+    const pushStation = (id) => {
       if (location.hash === `#${id}`) return;
       history.pushState({ vStation: id }, '', `${location.pathname}${location.search}#${id}`);
     };
 
-    const selectFromUser = (id: string, focusTab = false) => {
+    const selectFromUser = (id, focusTab = false) => {
       const requested = hashStation();
       if (selectedStationId === id && (!requested || requested === id)) return;
       if (!select(id, focusTab, true)) return;
@@ -843,7 +849,7 @@ const stationsJson = JSON.stringify(stations);
     const syncFromLocation = () => {
       const requested = hashStation();
       if (!requested) {
-        select(stations[0]!.id);
+        select(firstStation.id);
         return;
       }
       if (stationIds.has(requested)) select(requested);
@@ -863,6 +869,7 @@ const stationsJson = JSON.stringify(stations);
         tab.removeAttribute('tabindex');
       });
       panels.forEach((panel) => {
+        loadSceneEvidence(panel);
         panel.hidden = false;
         panel.removeAttribute('role');
         const station = stations.find((item) => item.id === panel.id);
@@ -915,7 +922,7 @@ const stationsJson = JSON.stringify(stations);
       addEventListener('popstate', syncFromLocation, { signal: controller.signal });
 
       const requested = hashStation();
-      const initialStation = stationIds.has(requested) ? requested : stations[0]!.id;
+      const initialStation = stationIds.has(requested) ? requested : firstStation.id;
       if (!select(initialStation)) throw new Error('Unable to select the initial V station.');
 
       selector.hidden = false;
@@ -926,5 +933,5 @@ const stationsJson = JSON.stringify(stations);
     }
   }
 
-  document.querySelectorAll<HTMLElement>('[data-v-lab]').forEach(bindLab);
+  document.querySelectorAll('[data-v-lab]').forEach(bindLab);
 </script>
