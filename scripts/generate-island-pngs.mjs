@@ -55,7 +55,7 @@ for (const webp of webpFiles) {
       const width = png.readUInt32BE(16);
       const height = png.readUInt32BE(20);
       const hasInvalidDimensions = width !== size || height !== size;
-      if (regenerate && hasInvalidDimensions) missing.push({ webp, outPath, size });
+      if (regenerate) missing.push({ webp, outPath, size });
       if (checkOnly && hasInvalidDimensions) {
         invalidDimensions.push({ outPath, width, height, size });
       }

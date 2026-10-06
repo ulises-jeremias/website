@@ -78,9 +78,9 @@ fallback.
 Atlas islands now have 220px and 440px PNG fallback variants, selected through
 the existing `<picture>` element by rendered size and device pixel ratio. The
 full-resolution authored originals and WebP sources remain unchanged. The
-220px set is 745,612 bytes and the 440px set is 2,471,321 bytes; each is chosen
+220px set is 749,699 bytes and the 440px set is 2,496,768 bytes; each is chosen
 instead of the former single 640px PNG set of 4,660,266 bytes. This reduces the
-fallback library by 84% at 1× and 47% at 2×. WebP-capable browsers continue to
+PNG payload by 84% at 1× and 46% at 2× (30% for both sets together). WebP-capable browsers continue to
 use the existing responsive WebP pair. Unit tests lock the PNG dimensions and
 per-density byte budgets, while `node scripts/generate-island-pngs.mjs --check`
 validates all variants and the hero fallback.
