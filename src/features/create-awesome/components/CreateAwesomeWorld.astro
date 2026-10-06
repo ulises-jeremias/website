@@ -61,17 +61,8 @@ const lineModules = [
       <p class="ca-world__problem">Choose a runtime, starter and compatible addons to build your project.</p>
       <p class="ca-world__lede">{familyIntro.principle}</p>
     </div>
-  </header>
-
-  <Composer embedded />
-
-  <section class="ca-world__family-record" aria-label="Create Awesome family record">
-    <FlagshipProvenance
-      entryId="create-node-app"
-      note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
-    />
     <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
-      <p>Catalog counter</p>
+      <p>Catalog counter · templates + addons</p>
       <ul>
         <li>
           <strong>Node</strong>
@@ -100,6 +91,15 @@ const lineModules = [
       </ul>
       <small>templates + addons · sourced totals</small>
     </aside>
+  </header>
+
+  <Composer embedded />
+
+  <section class="ca-world__family-record" aria-label="Create Awesome family record">
+    <FlagshipProvenance
+      entryId="create-node-app"
+      note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
+    />
   </section>
 
   <div class="vf-scene ca-world__scene">
@@ -620,24 +620,16 @@ const lineModules = [
     background: linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 8%, transparent), transparent 70%);
   }
 
-  .ca-world__family-record {
-    display: grid;
-    gap: 1rem;
-    margin-top: 1.25rem;
-    align-items: start;
-  }
-
-  @media (min-width: 820px) {
-    .ca-world__family-record {
-      grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
-    }
-  }
-
   @media (min-width: 820px) {
     .ca-world__hero {
       grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
       align-items: end;
     }
+  }
+
+  .ca-world__family-record {
+    display: grid;
+    margin-top: 1.25rem;
   }
 
   .ca-world__hero-ledger {
@@ -686,6 +678,12 @@ const lineModules = [
     margin-top: 0.7rem;
     color: var(--color-text-faint);
     font-size: 0.68rem;
+  }
+
+  @media (max-width: 390px) {
+    .ca-world__hero-ledger {
+      display: none;
+    }
   }
 
   .ca-world__eyebrow {
