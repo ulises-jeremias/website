@@ -44,6 +44,35 @@ test.describe('PR 2 value and group semantics', () => {
     await expect(meter.locator('[data-vf-meter-value]')).toHaveText('Step 4/6');
   });
 
+  test('pairs the boot sequence with the Workstation overview on wide screens', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/agentic-workstation');
+
+    const intro = page.locator('.ws-map__intro');
+    const bootConsole = page.locator('.ws-map__hero-console');
+    await expect(intro).toBeVisible();
+    await expect(bootConsole).toBeVisible();
+    await expect(bootConsole.getByRole('heading', { name: 'Boot sequence (illustrative)' })).toBeVisible();
+    await page.waitForTimeout(2600);
+    await expect(page.locator('[data-boot] .vf-meter')).toHaveAttribute('aria-valuetext', 'Step 1/6');
+
+    const { introRight, consoleLeft } = await page.evaluate(() => ({
+      introRight: document.querySelector('.ws-map__intro')!.getBoundingClientRect().right,
+      consoleLeft: document.querySelector('.ws-map__hero-console')!.getBoundingClientRect().left,
+    }));
+    expect(consoleLeft).toBeGreaterThanOrEqual(introRight);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(bootConsole).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    const [consoleTop, railTop] = await Promise.all([
+      bootConsole.evaluate((element) => element.getBoundingClientRect().top),
+      page.locator('.ws-map__header-rail').evaluate((element) => element.getBoundingClientRect().top),
+    ]);
+    expect(consoleTop).toBeLessThan(railTop);
+  });
+
   test('exposes the Projects ledger as named articles rather than a fake table', async ({ page }) => {
     await page.goto('/projects');
 

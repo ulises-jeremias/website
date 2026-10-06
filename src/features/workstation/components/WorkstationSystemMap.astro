@@ -144,24 +144,51 @@ const defaultLayer = workstationLayers[1]!;
   data-doctor={doctorJson}
 >
   <header class="ws-map__header">
-    <p class="ws-map__eyebrow">Workstation System Map</p>
-    <h1 id="ws-map-title">Agentic Workstation</h1>
-    <p class="ws-map__problem">
-      A fresh machine drifts — packages, shells, and AI-tool policies get assembled by hand and cannot be rebuilt.
-    </p>
-    <p class="ws-map__lede">
-      Agentic Workstation provisions the machine reproducibly — packages, shell, developer tooling, LLM policy — and
-      installs Agent Toolkit rather than duplicating it.
-    </p>
-    <p class="ws-map__lede">
-      Agent Toolkit owns workspace, loop, and swarm execution; Workstation's retained runner applies provider and LLM
-      policy to queued jobs.
-    </p>
-    <FlagshipProvenance
-      entryId="agentic-workstation"
-      note="Capabilities stay in Agent Toolkit; workspace state stays in Agentic Harness — Workstation owns only the host."
-    />
-    <div class="ws-map__header-rail" aria-label="Personal DX layer boundaries">
+    <div class="ws-map__intro">
+      <p class="ws-map__eyebrow">Workstation System Map</p>
+      <h1 id="ws-map-title">Agentic Workstation</h1>
+      <p class="ws-map__problem">
+        A fresh machine drifts — packages, shells, and AI-tool policies get assembled by hand and cannot be rebuilt.
+      </p>
+      <p class="ws-map__lede">
+        Agentic Workstation provisions the machine reproducibly — packages, shell, developer tooling, LLM policy — and
+        installs Agent Toolkit rather than duplicating it.
+      </p>
+      <p class="ws-map__lede">
+        Agent Toolkit owns workspace, loop, and swarm execution; Workstation's retained runner applies provider and LLM
+        policy to queued jobs.
+      </p>
+      <FlagshipProvenance
+        entryId="agentic-workstation"
+        note="Toolkit owns capabilities; Harness owns workspace state. Workstation provisions only the host."
+      />
+    </div>
+    <div class="ws-map__boot ws-map__hero-console" data-boot>
+      <div class="ws-map__boot-head">
+        <h2>
+          Boot sequence <small>(illustrative)</small>
+        </h2>
+        <StatusMeter
+          value={Math.round((1 / bootStageCount) * 100)}
+          label="Boot stage"
+          caption="boot sequence"
+          displayValue={`Step 1/${bootStageCount}`}
+          accent={workstationIdentity.cyan}
+        />
+      </div>
+      <StageScrubber stages={bootStages} label="Boot stage" />
+      <p class="ws-map__stage-copy" data-stage-copy>
+        {bootStages[0]!.summary}
+      </p>
+      <pre
+        class="ws-map__stage-cmd"
+        tabindex="0"
+        role="region"
+        aria-label="Current boot command"
+      ><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
+      <PlaybackControls label="Boot playback" />
+    </div>
+    <div class="ws-map__header-rail">
       <span>
         <strong>Desktop</strong> optional personal surface
       </span>
@@ -317,30 +344,6 @@ const defaultLayer = workstationLayers[1]!;
     </SceneInspector>
   </div>
   <p class="ws-map__layer-status" role="status" aria-atomic="true" data-ws-layer-status></p>
-
-  <div class="ws-map__boot" data-boot>
-    <div class="ws-map__boot-head">
-      <h2>Boot sequence</h2>
-      <StatusMeter
-        value={Math.round((1 / bootStageCount) * 100)}
-        label="Boot stage"
-        caption="boot sequence"
-        displayValue={`Step 1/${bootStageCount}`}
-        accent={workstationIdentity.cyan}
-      />
-    </div>
-    <StageScrubber stages={bootStages} label="Boot stage" />
-    <p class="ws-map__stage-copy" data-stage-copy>
-      {bootStages[0]!.summary}
-    </p>
-    <pre
-      class="ws-map__stage-cmd"
-      tabindex="0"
-      role="region"
-      aria-label="Current boot command"
-    ><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
-    <PlaybackControls label="Boot playback" />
-  </div>
 
   <div class="ws-map__profile">
     <h2>Profile</h2>
@@ -604,12 +607,35 @@ const defaultLayer = workstationLayers[1]!;
 
   .ws-map__header {
     display: grid;
-    gap: 0.45rem;
-    max-inline-size: 62rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
     padding: clamp(1.5rem, 4vw, 3.25rem) clamp(0.75rem, 3vw, 2rem);
     border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 30%, transparent);
     border-inline-start: 2px solid var(--nest-cyan);
     background: linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 8%, transparent), transparent 65%);
+  }
+
+  .ws-map__intro {
+    min-inline-size: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .ws-map__header {
+      grid-template-columns: minmax(0, 1.1fr) minmax(24rem, 0.9fr);
+      gap: 1.25rem 1.75rem;
+      align-items: start;
+    }
+
+    .ws-map__header-rail {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+
+    .ws-map__hero-console {
+      grid-column: 2;
+      grid-row: 1;
+      margin-top: 0;
+    }
   }
 
   .ws-map__header-rail {
@@ -871,6 +897,23 @@ const defaultLayer = workstationLayers[1]!;
     background: linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 7%, transparent), transparent 72%);
   }
 
+  .ws-map__hero-console {
+    min-inline-size: 0;
+    margin-top: 0;
+    padding: 0.9rem 1rem 1rem;
+    border-color: color-mix(in srgb, var(--nest-cyan) 42%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 84%, transparent);
+  }
+
+  .ws-map__boot-head h2 small {
+    margin-inline-start: 0.25rem;
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.65em;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+  }
+
   .ws-map__boot .vf-scrubber {
     padding-block-end: 0.8rem;
     border-block-end: 1px dashed color-mix(in srgb, var(--nest-cyan) 26%, transparent);
@@ -904,6 +947,10 @@ const defaultLayer = workstationLayers[1]!;
   }
 
   .ws-map__stage-cmd {
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     margin: 0 0 0.65rem;
     padding: 0.55rem 0.75rem;
     overflow-x: auto;
