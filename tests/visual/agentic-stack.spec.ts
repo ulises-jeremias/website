@@ -70,6 +70,7 @@ test.describe('Agentic Developer Stack system map', () => {
     await expect(status).toContainText('HOST · MACHINE');
     await expect(stations.nth(1)).toHaveClass(/is-current/, { timeout: 1500 });
     await expect(links.nth(0)).toHaveClass(/is-current/);
+    await expect(status).toContainText('CONTEXT · WORKSPACE');
     await expect(map).toHaveAttribute('data-trace-state', 'complete', { timeout: 3000 });
     await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(3);
     await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(2);

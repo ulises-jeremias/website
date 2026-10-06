@@ -199,6 +199,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
 
     button.addEventListener('click', () => {
       window.clearInterval(timer);
+      window.clearTimeout(timer);
       [...stations, ...links].forEach((part) => part.classList.remove('is-current'));
       button.textContent = 'Replay system map';
       map.dataset.traceState = 'running';
@@ -213,7 +214,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
         index += 1;
         if (index === stations.length) {
           window.clearInterval(timer);
-          finish();
+          timer = window.setTimeout(finish, 850);
         }
       };
       showStep();
@@ -223,6 +224,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     reducedMotion.addEventListener('change', () => {
       if (!reducedMotion.matches || map.dataset.traceState !== 'running') return;
       window.clearInterval(timer);
+      window.clearTimeout(timer);
       finish();
     });
   })();
