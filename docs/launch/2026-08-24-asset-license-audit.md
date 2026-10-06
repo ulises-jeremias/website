@@ -134,3 +134,16 @@ a prompt for three synthwave hovercraft on a transparent background. It
 contains no text, marks, third-party characters, or copied project artwork.
 The source files and derivatives are site-owned first-party art under the
 site's MIT license.
+
+## Amendment — 2026-10-06 (Agent Toolkit island)
+
+The Agent Toolkit island at `src/features/home/assets/island-agent.png` was
+generated for this site with the built-in OpenAI image-generation tool on
+2026-10-06. It depicts the canonical capability families converging on one
+nexus and branching to three distribution ports. No external artwork, marks,
+brands, reference images, or live telemetry are included. Responsive WebP and
+PNG derivatives are produced by `pnpm assets:island-art`; the featured
+thumbnail and social card are regenerated with `pnpm assets:featured` and
+`pnpm assets:social`. The repository currently classifies the first-party
+source and outputs under its MIT license. This engineering record is not legal
+approval; the broader owner review noted in this audit remains pending.

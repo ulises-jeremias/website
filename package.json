@@ -31,6 +31,7 @@
     "lighthouse:ci": "pnpm build && node scripts/run-lighthouse-ci.mjs",
     "assets:social": "node scripts/generate-social-cards.mjs",
     "assets:featured": "node scripts/generate-featured-thumbnails.mjs",
+    "assets:island-art": "node scripts/generate-island-art.mjs",
     "assets:hero-fallback": "node scripts/generate-hero-fallback.mjs",
     "assets:hero-scene": "node scripts/generate-hero-scene.mjs",
     "data:refresh": "node scripts/refresh-github-data.mjs",

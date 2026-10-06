@@ -46,6 +46,17 @@ pixel thumbnails. PNG remains the fallback on the larger homepage artwork.
 The 192px files are each only a few kilobytes with the committed ImageMagick
 output and add no runtime dependency.
 
+The Agent Toolkit island source is `src/features/home/assets/island-agent.png`.
+It was generated for this site with OpenAI image generation on 2026-10-06; no
+external artwork, brands, or reference image were used. The illustration maps
+the canonical capability families to a single nexus with three distribution
+ports and is intentionally illustrative rather than live telemetry. Generate
+its 640px/440px WebP and PNG fallback with `pnpm assets:island-art`, then run
+`pnpm assets:featured` and `pnpm assets:social` to refresh dependent outputs.
+The source and derivatives are first-party site assets currently classified
+under the repository MIT license. The engineering provenance record still
+requires the owner's broader legal review and does not claim legal approval.
+
 The legacy island PNG fallbacks under `public/assets/` can be regenerated from
 the WebP sources with `node scripts/generate-island-pngs.mjs --regenerate`.
 Island fallbacks now match their 640px source dimensions (instead of shipping
@@ -69,3 +80,8 @@ fallback.
 
 - Added original generated sky-traffic artwork to both responsive homepage scene plates and rebuilt all 15 route cards from the same background source.
 - The existing scene drift animates the aircraft with the skyline without adding a network request.
+
+## 2026-10-06 update
+
+- Replaced the Agent Toolkit atlas island's generic robot with a first-party capability-distribution diorama; regenerated its responsive WebP, PNG fallback, featured thumbnail, and Agent Toolkit social card.
+- Added `pnpm assets:island-art` to reproduce the authored source's padded responsive variants with the repository's existing ImageMagick toolchain.
