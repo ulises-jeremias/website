@@ -28,6 +28,28 @@ test.describe('Archive and recovery routes', () => {
       await expect(page.locator('#constellation-title')).toHaveText('Open-source evidence');
       await expect(page.locator('[data-testid="oss-ledger"]')).toContainText('Primary record');
       await expect(page.locator('[data-testid="oss-row"]')).not.toHaveCount(0);
+      await expect(page.locator('.constellation__lane-link')).toHaveCount(4);
+      await expect(page.locator('.oss-ledger__group')).toHaveCount(4);
+      for (const kind of ['owned', 'maintained', 'org', 'external']) {
+        const lane = page.locator(`.constellation__lane-link[href="#evidence-${kind}"]`);
+        const group = page.locator(`#evidence-${kind}`);
+        await expect(lane).toBeVisible();
+        await expect(group).toContainText(/record/);
+        if (kind === 'owned') {
+          await lane.focus();
+          await expect(lane).toBeFocused();
+          await expect(lane).toHaveCSS('outline-style', 'solid');
+          await lane.press('Enter');
+        } else {
+          await lane.click();
+        }
+        await expect(group).toBeInViewport();
+        const headerHeight = await page
+          .locator('.site-header')
+          .evaluate((header) => header.getBoundingClientRect().height);
+        const groupTop = await group.evaluate((section) => section.getBoundingClientRect().top);
+        expect(groupTop).toBeGreaterThanOrEqual(headerHeight);
+      }
 
       await page.goto('/404.html');
       await expect(page.locator('#lost-title')).toHaveText('This world is unlisted');
@@ -59,7 +81,7 @@ for (const viewport of [
 
     await page.goto('/open-source/');
     await page.addStyleTag({ content: '.site-header { position: static !important; }' });
-    await page.locator('.oss-ledger__table').scrollIntoViewIfNeeded();
+    await page.locator('.oss-ledger__group').first().scrollIntoViewIfNeeded();
     await expect(page).toHaveScreenshot(`open-source-ledger-${viewport.label}.png`, {
       animations: 'disabled',
       maxDiffPixelRatio: 0.07,

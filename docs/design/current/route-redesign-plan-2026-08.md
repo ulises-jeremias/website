@@ -52,6 +52,17 @@ The `/v/` hero keeps its verified role and source-backed ownership proof in view
 while removing a repeated cross-station ownership note. This reduces evidence
 density before the lab bench without moving provenance out of the initial page.
 
+The `/open-source/` constellation now navigates into four matching evidence
+groups. Each colored lane is a keyboard-operable jump link, its markers and
+record count come from the evidence cache, and the destination group keeps the
+same provenance color and count. Native anchors work without client JavaScript
+and reserve space for the sticky header on mobile.
+The route stays at zero JavaScript and within its existing budgets. Against the
+same-day `main@a6fa8e23` capture, `/open-source/` grows from 64,249 to 64,732
+bytes in both viewports (+483 bytes: 220 document, 263 stylesheet); image and
+font delivery are unchanged. The maintained baseline was refreshed from this
+capture.
+
 ## Route directions
 
 | Route                   | Dominant surface            | Signature interaction or artifact                       |
