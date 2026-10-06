@@ -458,6 +458,7 @@ const selectedTarget = distributionTargets[0];
 
     const selectedTarget = () => targets.find((target) => target.getAttribute('aria-pressed') === 'true');
     const cancelTrace = () => {
+      const wasCompiling = flow.classList.contains('is-compiling');
       window.clearTimeout(finishTimer);
       activeAnimations.forEach((animation) => animation.cancel());
       core.getAnimations().forEach((animation) => animation.cancel());
@@ -467,6 +468,9 @@ const selectedTarget = distributionTargets[0];
         packet.style.opacity = '0';
         packet.style.transform = '';
       });
+      if (wasCompiling) {
+        status.textContent = 'Distribution trace cancelled. The selected native profile remains available.';
+      }
     };
 
     const setTarget = (target: HTMLButtonElement, announce = true) => {

@@ -52,6 +52,26 @@ test.describe('Agent Toolkit profile compiler trace', () => {
     ).toHaveLength(0);
   });
 
+  test('announces a cancelled trace when the page becomes hidden', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/agent-toolkit');
+
+    const chamber = page.locator('[data-atk-compile]');
+    const flow = chamber.locator('[data-compile-flow]');
+    await chamber.getByRole('button', { name: 'Trace a distribution pass' }).click();
+    await expect(flow).toHaveClass(/is-compiling/);
+
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', { configurable: true, get: () => true });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+
+    await expect(flow).not.toHaveClass(/is-compiling/);
+    await expect(chamber.locator('[data-compile-status]')).toHaveText(
+      'Distribution trace cancelled. The selected native profile remains available.',
+    );
+  });
+
   test('shows the complete static composition without JavaScript', async ({ browser }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
