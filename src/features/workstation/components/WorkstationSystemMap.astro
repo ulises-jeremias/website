@@ -12,6 +12,7 @@ import {
 } from '../data/index.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
 import { personalDxRelationships } from '@/data/personal-dx-relationships.js';
+import { stackByNarrative } from '@/data/personal-dx-stack.js';
 
 const bootStages = [
   {
@@ -88,6 +89,23 @@ const relationshipRoutes: Record<string, { d: string; from: string; to: string }
 const paths = personalDxRelationships.flatMap((relationship) => {
   const route = relationshipRoutes[`${relationship.source}→${relationship.target}`];
   return route ? [{ ...route, id: `${relationship.source}-${relationship.target}`, label: relationship.verb }] : [];
+});
+
+const mobileStations = stackByNarrative();
+const relationshipProjectIds: Record<(typeof mobileStations)[number]['id'], string> = {
+  dotfiles: 'hornero-config',
+  'agentic-workstation': 'agentic-workstation',
+  'agent-toolkit': 'agent-toolkit',
+  'agentic-harness': 'agentic-harness',
+};
+const mobileRelationships = mobileStations.slice(0, -1).map((project, index) => {
+  const nextProject = mobileStations[index + 1];
+  if (!nextProject) return undefined;
+  const source = relationshipProjectIds[project.id];
+  const target = relationshipProjectIds[nextProject.id];
+  return personalDxRelationships.find(
+    (relationship) => relationship.source === source && relationship.target === target,
+  );
 });
 
 const stagesJson = JSON.stringify(bootStages);
@@ -223,6 +241,19 @@ const defaultLayer = workstationLayers[1]!;
           no embedded capabilities — Toolkit remains independently installable
         </text>
       </svg>
+
+      <figure>
+        <figcaption>Optional connections.</figcaption>
+        {mobileStations.map((project, index) => {
+          const relationship = mobileRelationships[index];
+          return (
+            <Fragment>
+              <a href={project.path}>{project.title}</a>
+              {relationship ? <p>{relationship.verb}</p> : null}
+            </Fragment>
+          );
+        })}
+      </figure>
 
       <fieldset class="ws-map__node-controls" data-ws-layer-controls disabled>
         <legend>Choose a responsibility</legend>
@@ -696,6 +727,10 @@ const defaultLayer = workstationLayers[1]!;
     display: block;
   }
 
+  figure {
+    display: none;
+  }
+
   .ws-map__module {
     fill: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 14%, #020617);
     stroke: color-mix(in srgb, var(--vf-node-accent, #22d3ee) 45%, transparent);
@@ -976,7 +1011,7 @@ const defaultLayer = workstationLayers[1]!;
     overflow-wrap: anywhere;
   }
 
-  @media (width < 680px) {
+  @media (width <= 680px) {
     .ws-map__header-rail {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -990,14 +1025,71 @@ const defaultLayer = workstationLayers[1]!;
     }
 
     .ws-map__svg {
-      min-height: 10rem;
+      display: none;
     }
 
-    .ws-map__svg .ws-map__node-label,
-    .ws-map__svg .ws-map__node-sub,
-    .ws-map__svg .ws-map__thin,
-    .ws-map__svg .ws-map__chassis-label {
-      visibility: hidden;
+    figure {
+      display: grid;
+      gap: 0.45rem;
+      margin: 0;
+      padding: 0.75rem 0.25rem 1rem;
+    }
+
+    figure figcaption {
+      margin: 0 0 0.55rem;
+      color: var(--color-text-muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    figure > a {
+      display: block;
+      min-inline-size: 0;
+      padding: 0.8rem 0.9rem;
+      border: 1px solid color-mix(in srgb, var(--mobile-station-accent) 54%, transparent);
+      border-inline-start: 3px solid var(--mobile-station-accent);
+      background: color-mix(in srgb, var(--mobile-station-accent) 7%, var(--nest-midnight-950));
+      clip-path: var(--clip-corner-sm);
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    figure > a:nth-of-type(1) {
+      --mobile-station-accent: var(--nest-magenta);
+    }
+
+    figure > a:nth-of-type(2) {
+      --mobile-station-accent: var(--nest-cyan);
+    }
+
+    figure > a:nth-of-type(3) {
+      --mobile-station-accent: var(--nest-violet);
+    }
+
+    figure > a:nth-of-type(4) {
+      --mobile-station-accent: var(--nest-lime, #a3e635);
+    }
+
+    figure > a {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    figure > a:focus-visible {
+      outline: 2px solid var(--color-focus, var(--nest-cyan));
+      outline-offset: 3px;
+    }
+
+    figure > p {
+      display: flex;
+      margin-block: 0;
+      margin-inline-start: 1rem;
+      padding: 0.2rem 0.65rem 0.25rem;
+      border-inline-start: 1px dashed color-mix(in srgb, var(--nest-cyan) 62%, transparent);
+      color: var(--color-text-muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
     }
 
     .ws-map__stage {

@@ -45,11 +45,11 @@ const diagrams = [
     status: '[data-ws-layer-status]',
     startRadio: '#ws-layer-workstation',
     keyboardRadio: '#ws-layer-toolkit',
-    keyboardVisual: '[data-node="toolkit"]',
+    keyboardVisual: '.ws-map__svg [data-node="toolkit"]',
     keyboardTitle: 'Toolkit',
     keyboardStatus: 'Responsibility selected: Toolkit — capabilities · runtime.',
     pointerRadio: '#ws-layer-harness',
-    pointerVisual: '[data-node="harness"]',
+    pointerVisual: '.ws-map__svg [data-node="harness"]',
     pointerTitle: 'Agentic Harness',
     pointerStatus: 'Responsibility selected: Agentic Harness — workspace · persistent context.',
     fallback: '[data-ws-layer-fallback]',
@@ -171,7 +171,7 @@ test.describe('PR6 native interactive-diagram grammar', () => {
 
   for (const diagram of diagrams) {
     test(`${diagram.id} converges keyboard and pointer input on native radio state`, async ({ page }) => {
-      await page.setViewportSize({ width: 390, height: 844 });
+      await page.setViewportSize({ width: diagram.id === 'workstation' ? 1440 : 390, height: 844 });
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.goto(diagram.route);
 
