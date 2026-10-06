@@ -32,6 +32,10 @@ command dock stays visible while configuring addons; narrow phones get a
 keyboard-scrollable single-line command. The server-rendered family fallback
 remains complete without JavaScript.
 
+The `/v/` hero keeps its verified role and source-backed ownership proof in view
+while removing a repeated cross-station ownership note. This reduces evidence
+density before the lab bench without moving provenance out of the initial page.
+
 ## Route directions
 
 | Route                   | Dominant surface            | Signature interaction or artifact                       |
