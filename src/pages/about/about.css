@@ -17,8 +17,8 @@
 
 .about-hero {
   display: grid;
-  grid-template-columns: minmax(0, 0.94fr) minmax(21rem, 1.06fr);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
   gap: clamp(2rem, 5vw, 5rem);
   padding-block: clamp(1.1rem, 2vw, 1.75rem) clamp(2rem, 4.5vw, 4rem);
   border-block-end: 1px solid var(--about-line);
@@ -136,6 +136,10 @@
   clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 1.2rem, 100% 100%, 1.2rem 100%, 0 calc(100% - 1.2rem));
 }
 
+.about-trajectory > .about-path {
+  margin-block-end: 2rem;
+}
+
 .about-path__label {
   margin: 0;
   color: var(--about-soft);
@@ -158,21 +162,22 @@
 .about-path__stops {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.65rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 0.2rem;
   list-style: none;
 }
 
 .about-path__stops::before {
   content: '';
   position: absolute;
-  inset-inline: 0.4rem;
-  inset-block-start: 0.38rem;
-  block-size: 1px;
+  inset-inline-start: 0.38rem;
+  inset-block: 0.4rem 0.8rem;
+  inline-size: 1px;
+  block-size: auto;
   background: linear-gradient(
-    90deg,
+    180deg,
     var(--nest-cyan),
     var(--nest-blue),
     var(--nest-sunset-orange),
@@ -189,11 +194,12 @@
 
 .about-path__stop a {
   display: grid;
-  justify-items: start;
-  gap: 0.6rem;
-  min-block-size: 4.8rem;
+  grid-template-columns: 0.8rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  min-block-size: 2.6rem;
   color: var(--color-text-muted);
-  font-size: 0.76rem;
+  font-size: 0.84rem;
   line-height: 1.35;
   text-decoration: none;
 }
@@ -234,10 +240,20 @@
 .about-path__stop a:focus-visible {
   color: var(--nest-paper);
 }
+.about-path__stop[data-current='true'] a {
+  color: var(--nest-paper);
+  font-weight: 700;
+}
 .about-path__stop a:hover .about-path__node,
 .about-path__stop a:focus-visible .about-path__node {
   background: currentColor;
   transform: rotate(45deg) scale(1.22);
+}
+.about-path__stop[data-current='true'] .about-path__node {
+  background: currentColor;
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+  transform: rotate(45deg) scale(1.12);
 }
 
 .about-section-heading {
@@ -285,7 +301,7 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 2.6rem 1.5rem;
+  gap: 2rem 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -297,26 +313,29 @@
   padding: 1rem 0.25rem 0;
   border-block-start: 1px solid color-mix(in srgb, var(--station-accent) 62%, transparent);
 }
+.about-station[data-current='true'] {
+  border-block-start-color: var(--station-accent);
+}
 
 .about-station:nth-child(1) {
-  grid-column: 1 / span 5;
-  margin-block-start: 0.75rem;
+  grid-column: 1 / span 9;
+  margin-block-start: 0;
 }
 .about-station:nth-child(2) {
-  grid-column: 7 / span 6;
-  margin-block-start: 4.5rem;
+  grid-column: 4 / span 9;
+  margin-block-start: 0;
 }
 .about-station:nth-child(3) {
-  grid-column: 2 / span 5;
-  margin-block-start: -0.3rem;
+  grid-column: 1 / span 8;
+  margin-block-start: 0;
 }
 .about-station:nth-child(4) {
-  grid-column: 8 / span 5;
-  margin-block-start: -1.5rem;
+  grid-column: 5 / span 8;
+  margin-block-start: 0;
 }
 .about-station:nth-child(5) {
-  grid-column: 3 / span 8;
-  margin-block-start: 0.25rem;
+  grid-column: 2 / span 10;
+  margin-block-start: 0;
 }
 .about-station[data-tone='blue'] {
   --station-accent: var(--nest-blue);
@@ -345,6 +364,14 @@
   border: 1px solid var(--station-accent);
   background: var(--nest-midnight-950);
   transform: rotate(45deg);
+}
+.about-station[data-current='true'] article::before {
+  background: var(--station-accent);
+  outline: 1px solid var(--station-accent);
+  outline-offset: 3px;
+}
+.about-station[data-current='true'] h3 {
+  color: var(--nest-paper);
 }
 
 .about-station__period {
@@ -578,8 +605,8 @@
 
 @media (max-width: 70rem) {
   .about-hero {
-    grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.95fr);
-    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
   .about-path__stops {
     grid-template-columns: 1fr;
@@ -615,28 +642,53 @@
     gap: 2rem 1.25rem;
   }
   .about-station:nth-child(1) {
-    grid-column: 1 / span 6;
+    grid-column: 1 / span 9;
     margin-block-start: 0;
   }
   .about-station:nth-child(2) {
-    grid-column: 7 / span 6;
-    margin-block-start: 2rem;
+    grid-column: 4 / span 9;
+    margin-block-start: 0;
   }
   .about-station:nth-child(3) {
-    grid-column: 1 / span 6;
+    grid-column: 1 / span 8;
     margin-block-start: 0;
   }
   .about-station:nth-child(4) {
-    grid-column: 7 / span 6;
-    margin-block-start: 2rem;
+    grid-column: 5 / span 8;
+    margin-block-start: 0;
   }
   .about-station:nth-child(5) {
-    grid-column: 3 / span 8;
+    grid-column: 2 / span 10;
     margin-block-start: 0;
   }
   .about-values__list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     row-gap: 1.5rem;
+  }
+}
+
+@media (min-width: 70rem) {
+  .about-trajectory {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.72fr) minmax(0, 1.55fr);
+    align-items: start;
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+  .about-trajectory > .about-path {
+    position: sticky;
+    inset-block-start: calc(var(--header-height) + 1rem);
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    margin-block-end: 0;
+  }
+  .about-trajectory > .about-section-heading {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .about-trajectory > .about-stations {
+    grid-column: 2;
+    grid-row: 2;
   }
 }
 
@@ -781,11 +833,25 @@
   .about-stations::before {
     background: CanvasText;
   }
+  .about-station[data-current='true'] {
+    border-block-start-color: Highlight;
+  }
+  .about-station[data-current='true'] article::before {
+    background: Highlight;
+    outline-color: Highlight;
+  }
   .about-path__stop[data-tone] {
     color: LinkText;
   }
   .about-path__stop[data-tone] .about-path__node {
     color: CanvasText;
+  }
+  .about-path__stop[data-current='true'] a {
+    color: Highlight;
+  }
+  .about-path__stop[data-current='true'] .about-path__node {
+    background: Highlight;
+    outline-color: Highlight;
   }
   .about-path__node,
   .about-station article::before {
