@@ -202,6 +202,31 @@ test.describe('PR8 static Create Awesome targets', () => {
 });
 
 test.describe('PR8 enhanced family restoration', () => {
+  test('opens on the assembly line and keeps a direct path into the composer', async ({ page }) => {
+    for (const viewport of [responsiveViewports[1], responsiveViewports[4]]) {
+      await page.setViewportSize(viewport);
+      await page.goto('/create-awesome');
+
+      const scene = page.locator('.ca-world__scene');
+      const composer = page.locator('[data-ca-composer-root]');
+      await expect(scene.getByRole('heading', { name: 'Runtime → template → addons → project' })).toBeVisible();
+      await expect(scene.locator('[data-ca-step]')).toHaveCount(4);
+      expect(
+        await scene.evaluate((element) =>
+          Boolean(
+            element.compareDocumentPosition(document.querySelector('[data-ca-composer-root]')!) &
+            Node.DOCUMENT_POSITION_FOLLOWING,
+          ),
+        ),
+      ).toBe(true);
+
+      const composeLink = page.getByRole('link', { name: 'Build a command' });
+      await expect(composeLink).toHaveAttribute('href', '#ca-composer-title');
+      await composeLink.click();
+      await expect(composer.getByRole('heading', { name: 'Runtime + template + addons → command' })).toBeInViewport();
+    }
+  });
+
   test('keeps the generated command visible while configuring addons', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 844 });
     await page.goto('/create-awesome');
