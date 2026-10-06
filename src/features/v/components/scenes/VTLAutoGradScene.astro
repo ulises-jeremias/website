@@ -1,63 +1,174 @@
 ---
-/** VTL station — reverse-mode autograd teaching beat. */
+/** VTL station — inspect a symbolic forward pass and its reverse gradients. */
 import SceneEvidence from './SceneEvidence.astro';
+import traceScriptUrl from '../../scripts/vtl-autograd-trace.js?url';
 ---
 
-<div class="v-scene" data-v-scene="vtl">
+<div class="v-scene vtl-trace" data-v-scene="vtl" data-vtl-pass="forward">
   <h2 class="v-scene__title" id="v-scene-vtl-title">
     VTL
   </h2>
-  <p class="v-scene__note">Forward compute, then reverse gradients. Scrub the tape.</p>
-  <div class="v-scene__controls" role="group" aria-label="Autograd direction">
+  <p class="v-scene__note">A tiny autograd graph. Send values forward; send gradients back.</p>
+  <div class="v-scene__controls" role="group" aria-label="Trace the VTL graph">
     <button type="button" data-vtl-dir="forward" aria-pressed="true" disabled>
-      Forward
+      Run forward
     </button>
     <button type="button" data-vtl-dir="reverse" aria-pressed="false" disabled>
-      Reverse
+      Run backward
     </button>
   </div>
+  <ol class="vtl-trace__mobile-flow" aria-label="Tensor values and reverse gradients">
+    <li data-vtl-mobile-stage="inputs">
+      <span class="vtl-trace__mobile-kind">INPUT TENSORS</span>
+      <span class="vtl-trace__mobile-pair">
+        <span>x · ∂L/∂x = w</span>
+        <span>w · ∂L/∂w = x</span>
+      </span>
+    </li>
+    <li data-vtl-mobile-stage="gate">
+      <span class="vtl-trace__mobile-arrow" aria-hidden="true">
+        ↓
+      </span>
+      <span class="vtl-trace__mobile-kind">RECORDED GATE</span>
+      <strong>× multiply</strong>
+    </li>
+    <li data-vtl-mobile-stage="output">
+      <span class="vtl-trace__mobile-arrow" aria-hidden="true">
+        ↓
+      </span>
+      <span class="vtl-trace__mobile-kind">OUTPUT TENSOR</span>
+      <strong>y = xw</strong>
+      <span class="vtl-trace__mobile-kind">LOSS GRADIENT · ∂L/∂y = 1</span>
+    </li>
+  </ol>
   <svg
-    class="v-scene__svg"
-    viewBox="0 0 560 200"
+    class="v-scene__svg vtl-trace__svg"
+    viewBox="0 0 700 300"
     role="img"
     aria-labelledby="v-scene-vtl-title"
     aria-describedby="v-scene-vtl-description"
   >
     <desc id="v-scene-vtl-description">
-      Three nodes connect in a left-to-right computation path for forward and reverse passes.
+      An illustrative graph computes y equals x times w. Forward values flow from x and w through multiply to y. Reverse
+      mode starts with dL over dy equals one and returns gradients dL over dx equals w and dL over dw equals x.
     </desc>
-    <rect width="560" height="200" fill="#111827" rx="8"></rect>
-    <g data-vtl-nodes>
-      <circle cx="100" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="x"></circle>
-      <circle cx="240" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="w"></circle>
-      <circle cx="380" cy="100" r="22" fill="#1f2937" stroke="#a78bfa" data-node="y"></circle>
-      <text x="100" y="104" text-anchor="middle" fill="#e9d5ff" font-size="12" font-family="monospace">
-        x
-      </text>
-      <text x="240" y="104" text-anchor="middle" fill="#e9d5ff" font-size="12" font-family="monospace">
-        w
-      </text>
-      <text x="380" y="104" text-anchor="middle" fill="#e9d5ff" font-size="12" font-family="monospace">
-        y
-      </text>
-    </g>
-    <path
-      data-vtl-flow
-      d="M122 100 H218"
-      stroke="#38bdf8"
-      stroke-width="2"
-      fill="none"
-      marker-end="url(#vtl-arrow)"
-    ></path>
-    <path data-vtl-flow d="M262 100 H358" stroke="#38bdf8" stroke-width="2" fill="none"></path>
     <defs>
-      <marker id="vtl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-        <path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"></path>
+      <marker id="vtl-forward-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0 0 8 4 0 8Z" fill="#22d3ee"></path>
+      </marker>
+      <marker id="vtl-reverse-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0 0 8 4 0 8Z" fill="#ff42d0"></path>
       </marker>
     </defs>
+    <rect class="vtl-trace__plate" width="700" height="300" rx="5"></rect>
+    <path
+      class="vtl-trace__edge"
+      data-vtl-edge
+      data-pass="forward"
+      data-stage="x"
+      d="M156 89 C210 89 222 128 278 139"
+      marker-end="url(#vtl-forward-arrow)"
+    ></path>
+    <path
+      class="vtl-trace__edge"
+      data-vtl-edge
+      data-pass="forward"
+      data-stage="w"
+      d="M156 211 C210 211 222 172 278 161"
+      marker-end="url(#vtl-forward-arrow)"
+    ></path>
+    <path
+      class="vtl-trace__edge"
+      data-vtl-edge
+      data-pass="forward"
+      data-stage="y"
+      d="M376 150 H517"
+      marker-end="url(#vtl-forward-arrow)"
+    ></path>
+    <path
+      class="vtl-trace__edge vtl-trace__edge--reverse"
+      data-vtl-edge
+      data-pass="reverse"
+      data-stage="y"
+      d="M517 166 H376"
+      marker-end="url(#vtl-reverse-arrow)"
+    ></path>
+    <path
+      class="vtl-trace__edge vtl-trace__edge--reverse"
+      data-vtl-edge
+      data-pass="reverse"
+      data-stage="x"
+      d="M278 128 C226 103 210 65 156 65"
+      marker-end="url(#vtl-reverse-arrow)"
+    ></path>
+    <path
+      class="vtl-trace__edge vtl-trace__edge--reverse"
+      data-vtl-edge
+      data-pass="reverse"
+      data-stage="w"
+      d="M278 172 C226 197 210 235 156 235"
+      marker-end="url(#vtl-reverse-arrow)"
+    ></path>
+
+    <g class="vtl-trace__node" data-vtl-node="x">
+      <rect x="54" y="57" width="104" height="64" rx="4"></rect>
+      <text class="vtl-trace__kind" x="106" y="78" text-anchor="middle">
+        TENSOR
+      </text>
+      <text class="vtl-trace__symbol" x="106" y="105" text-anchor="middle">
+        x
+      </text>
+    </g>
+    <g class="vtl-trace__node" data-vtl-node="w">
+      <rect x="54" y="179" width="104" height="64" rx="4"></rect>
+      <text class="vtl-trace__kind" x="106" y="200" text-anchor="middle">
+        TENSOR
+      </text>
+      <text class="vtl-trace__symbol" x="106" y="227" text-anchor="middle">
+        w
+      </text>
+    </g>
+    <g class="vtl-trace__node vtl-trace__node--operation" data-vtl-node="multiply">
+      <rect x="278" y="118" width="98" height="64" rx="4"></rect>
+      <text class="vtl-trace__kind" x="327" y="139" text-anchor="middle">
+        GATE
+      </text>
+      <text class="vtl-trace__symbol" x="327" y="166" text-anchor="middle">
+        ×
+      </text>
+    </g>
+    <g class="vtl-trace__node" data-vtl-node="y">
+      <rect x="517" y="118" width="118" height="64" rx="4"></rect>
+      <text class="vtl-trace__kind" x="576" y="139" text-anchor="middle">
+        OUTPUT
+      </text>
+      <text class="vtl-trace__symbol" x="576" y="166" text-anchor="middle">
+        y = xw
+      </text>
+    </g>
+
+    <text class="vtl-trace__edge-label" data-vtl-label="forward-x" x="208" y="116">
+      x
+    </text>
+    <text class="vtl-trace__edge-label" data-vtl-label="forward-w" x="208" y="241">
+      w
+    </text>
+    <text class="vtl-trace__edge-label" data-vtl-label="forward-y" x="438" y="141">
+      xw
+    </text>
+    <text class="vtl-trace__edge-label vtl-trace__edge-label--reverse" data-vtl-label="reverse-y" x="438" y="190">
+      ∂L/∂y = 1
+    </text>
+    <text class="vtl-trace__edge-label vtl-trace__edge-label--reverse" data-vtl-label="reverse-x" x="205" y="50">
+      ∂L/∂x = w
+    </text>
+    <text class="vtl-trace__edge-label vtl-trace__edge-label--reverse" data-vtl-label="reverse-w" x="205" y="267">
+      ∂L/∂w = x
+    </text>
   </svg>
-  <p class="v-scene__live" data-v-scene-live aria-live="polite">
-    Forward pass · values flow left → right.
+  <p class="vtl-trace__caption">Illustrative graph · y = x × w and L = y · symbolic values, not a runtime trace</p>
+  <p class="v-scene__live" data-v-scene-live aria-live="polite" aria-atomic="true">
+    Forward pass ready. Run it to follow tensor values from inputs to output.
   </p>
   <SceneEvidence
     caption="VTL · MIT — pure-V tensors with autograd (needs VSL for LA backends)"
@@ -66,32 +177,7 @@ import SceneEvidence from './SceneEvidence.astro';
   />
 </div>
 
-<script>
-  function init(root: HTMLElement) {
-    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
-    const flows = root.querySelectorAll<SVGPathElement>('[data-vtl-flow]');
-    const setDir = (dir: string) => {
-      root.querySelectorAll<HTMLButtonElement>('[data-vtl-dir]').forEach((b) => {
-        b.setAttribute('aria-pressed', b.dataset.vtlDir === dir ? 'true' : 'false');
-      });
-      flows.forEach((f) => {
-        f.style.transform = dir === 'reverse' ? 'scaleX(-1)' : 'none';
-        f.style.transformOrigin = 'center';
-      });
-      if (live) {
-        live.textContent =
-          dir === 'reverse'
-            ? 'Reverse mode · gradients flow right → left.'
-            : 'Forward pass · values flow left → right.';
-      }
-    };
-    root.querySelectorAll<HTMLButtonElement>('[data-vtl-dir]').forEach((b) => {
-      b.addEventListener('click', () => setDir(b.dataset.vtlDir || 'forward'));
-      b.disabled = false;
-    });
-  }
-  document.querySelectorAll<HTMLElement>('[data-v-scene="vtl"]').forEach(init);
-</script>
+<script is:inline src={traceScriptUrl} defer></script>
 
 <style>
   .v-scene {
@@ -106,13 +192,15 @@ import SceneEvidence from './SceneEvidence.astro';
     color: var(--world-accent, #a78bfa);
   }
   .v-scene__note,
-  .v-scene__live {
+  .v-scene__live,
+  .vtl-trace__caption {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.85rem;
   }
   .v-scene__controls {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.4rem;
   }
   .v-scene__controls button {
@@ -123,7 +211,7 @@ import SceneEvidence from './SceneEvidence.astro';
     color: var(--color-text);
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
   }
@@ -131,9 +219,146 @@ import SceneEvidence from './SceneEvidence.astro';
     border-color: #a78bfa;
     color: var(--nest-paper, #f8fafc);
   }
+  .v-scene__controls button:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
   .v-scene__svg {
     width: 100%;
     height: auto;
     display: block;
+  }
+  .vtl-trace__mobile-flow {
+    display: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .vtl-trace__plate {
+    fill: #0a0920;
+    stroke: #292149;
+  }
+  .vtl-trace__edge {
+    fill: none;
+    stroke: #22d3ee;
+    stroke-width: 2;
+    opacity: 0.68;
+    transition:
+      opacity 180ms ease,
+      stroke-width 180ms ease;
+  }
+  .vtl-trace__edge--reverse {
+    stroke: #ff42d0;
+    opacity: 0.38;
+  }
+  .vtl-trace[data-vtl-pass='forward'] .vtl-trace__edge[data-pass='reverse'],
+  .vtl-trace[data-vtl-pass='reverse'] .vtl-trace__edge[data-pass='forward'] {
+    opacity: 0.12;
+  }
+  .vtl-trace__edge.is-current {
+    opacity: 1;
+    stroke-width: 4;
+  }
+  .vtl-trace__node rect {
+    fill: #12102a;
+    stroke: #7358ff;
+    stroke-width: 1.5;
+    transition:
+      fill 180ms ease,
+      stroke 180ms ease;
+  }
+  .vtl-trace__node--operation rect {
+    fill: #1b1030;
+    stroke: #ff42d0;
+  }
+  .vtl-trace__node.is-current rect {
+    fill: #272048;
+    stroke: #1cefff;
+  }
+  .vtl-trace__node--operation.is-current rect {
+    stroke: #ff84f1;
+  }
+  .vtl-trace__kind,
+  .vtl-trace__edge-label {
+    fill: #b9b2d8;
+    font: 10px var(--font-mono);
+    letter-spacing: 0.08em;
+    paint-order: stroke;
+    stroke: #0a0920;
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+  .vtl-trace__symbol {
+    fill: #f7f5ff;
+    font: 19px var(--font-mono);
+  }
+  .vtl-trace__edge-label--reverse {
+    fill: #ff84f1;
+  }
+  @media (width < 620px) {
+    .vtl-trace__mobile-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .vtl-trace__mobile-flow li {
+      display: grid;
+      gap: 0.2rem;
+      min-height: 3.25rem;
+      padding: 0.55rem 0.7rem;
+      border-inline-start: 2px solid color-mix(in srgb, var(--nest-violet) 68%, transparent);
+      background: color-mix(in srgb, var(--nest-midnight-950) 74%, transparent);
+      color: var(--nest-paper);
+      transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease;
+    }
+    .vtl-trace__mobile-arrow {
+      line-height: 0.8;
+      color: var(--nest-cyan);
+      font: 0.65rem var(--font-mono);
+    }
+    .vtl-trace__mobile-flow li.is-current {
+      border-color: var(--nest-cyan);
+      background: color-mix(in srgb, var(--nest-cyan) 9%, var(--nest-midnight-950));
+      transform: translateX(3px);
+    }
+    .vtl-trace__mobile-kind {
+      color: var(--nest-text-muted);
+      font: 0.6rem var(--font-mono);
+      letter-spacing: 0.1em;
+    }
+    .vtl-trace__mobile-pair {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .vtl-trace__mobile-pair > span,
+    .vtl-trace__mobile-flow li > strong {
+      color: var(--nest-paper);
+      font: 0.85rem var(--font-mono);
+    }
+    .vtl-trace[data-vtl-pass='reverse'] .vtl-trace__mobile-flow li.is-current {
+      border-color: var(--nest-pink);
+      background: color-mix(in srgb, var(--nest-magenta) 9%, var(--nest-midnight-950));
+    }
+    .vtl-trace[data-vtl-pass='reverse'] .vtl-trace__mobile-arrow {
+      color: var(--nest-pink);
+      transform: rotate(180deg);
+    }
+  }
+  .vtl-trace__caption {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vtl-trace__edge,
+    .vtl-trace__node rect {
+      transition: none;
+    }
+    .vtl-trace__mobile-flow li {
+      transition: none;
+    }
   }
 </style>

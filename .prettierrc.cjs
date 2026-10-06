@@ -7,6 +7,13 @@ module.exports = {
   plugins: ['prettier-plugin-astro'],
   overrides: [
     {
+      files: 'src/features/v/scripts/*.js',
+      options: {
+        semi: false,
+        trailingComma: 'none',
+      },
+    },
+    {
       files: '*.astro',
       options: {
         parser: 'astro',
