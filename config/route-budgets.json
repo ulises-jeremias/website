@@ -127,8 +127,8 @@
     "/v/": {
       "mobile": {
         "total": 177231,
-        "document": 16384,
-        "script": 0,
+        "document": 17408,
+        "script": 2048,
         "style": 16384,
         "image": 86016,
         "font": 69632,
@@ -136,8 +136,8 @@
       },
       "desktop": {
         "total": 177231,
-        "document": 16384,
-        "script": 0,
+        "document": 17408,
+        "script": 2048,
         "style": 16384,
         "image": 86016,
         "font": 69632,

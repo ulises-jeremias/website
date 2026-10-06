@@ -106,3 +106,18 @@ The repository owner has explicitly authorized implementation of this redesign.
 The remaining manual assistive-technology and visual sign-off records are not a
 stop condition for this engineering pass, but the implementation must not claim
 those human validations were performed.
+
+## VTL motion pass — 2026-10-06
+
+The VTL station now teaches one symbolic multiplication graph (`y = x × w`,
+`L = y`) through a user-triggered forward value pass and reverse gradient pass.
+The signal follows the recorded-gate topology; the caption makes clear that
+this is an illustrative graph rather than a trace from a running model.
+Desktop animates SVG paths with the Web Animations API. Mobile uses its own
+vertical stage composition because the lab intentionally suppresses dense SVG
+diagrams at narrow widths. Reduced-motion mode selects a static path, and the
+server-rendered page includes both directions without requiring JavaScript.
+The `/v/` document ceiling is raised one 1 KiB step to 17 KiB for the semantic
+SVG explanation and its mobile-only sequence; the complete route remains below
+its existing total budget, and the trace JavaScript is budgeted separately at
+2 KiB.
