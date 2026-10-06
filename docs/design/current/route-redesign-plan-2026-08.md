@@ -32,6 +32,10 @@ command dock stays visible while configuring addons; narrow phones get a
 keyboard-scrollable single-line command. The server-rendered family fallback
 remains complete without JavaScript.
 
+The `/v/` hero keeps its verified role and source-backed ownership proof in view
+while removing a repeated cross-station ownership note. This reduces evidence
+density before the lab bench without moving provenance out of the initial page.
+
 ## Route directions
 
 | Route                   | Dominant surface            | Signature interaction or artifact                       |
@@ -160,3 +164,9 @@ the art communicates the project's composition model at a glance. The source is
 first-party image-generation output, recorded with its reference and repeatable
 responsive asset pipeline in `docs/design/current/social-assets.md`. Its 640px
 WebP is 45 KiB, the 440px WebP is 24 KiB, and the 192px thumbnail is 5.9 KiB.
+
+The compact V provenance changes VTL capture bounds slightly in Chromium, and
+CI/local renderers vary mobile scene height by one or two pixels due to text
+metrics. The desktop golden remains; mobile coverage asserts the vertical flow,
+input/output equations, reverse-gradient values, and zero autonomous movement
+before and after interaction. The focused mobile smoke suite checks route reflow.

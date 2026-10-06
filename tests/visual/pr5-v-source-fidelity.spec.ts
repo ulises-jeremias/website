@@ -108,6 +108,11 @@ test.describe('PR5 V source-fidelity route', () => {
     await expect(map).toContainText('Scientific computing');
     await expect(map).toContainText('Tensors · autograd');
     await expect(map).toContainText('Reactive channels');
+    const provenance = page.locator('.flagship-provenance');
+    await expect(provenance.locator('.flagship-provenance__role')).toContainText(
+      'Organization member and compiler contributor',
+    );
+    await expect(provenance).toContainText('scale belongs to the ecosystem, not to personal ownership');
     await page.setViewportSize({ width: 390, height: 844 });
     await expect(page.locator('.flagship-provenance__role > [aria-hidden="true"]')).toBeHidden();
   });
@@ -157,6 +162,9 @@ test.describe('PR5 V progressive enhancement', () => {
       await expect(page.locator('[data-v-station-selector]')).toBeHidden();
       await expect(page.locator('[data-v-panel]')).toHaveCount(stationIds.length);
       await expect(page.locator('#v-lab-inspector')).toBeHidden();
+      await expect(page.locator('.flagship-provenance')).toContainText(
+        'scale belongs to the ecosystem, not to personal ownership',
+      );
       for (const stationId of stationIds) {
         const station = page.locator(`[data-v-panel="${stationId}"]`);
         await expect(station).toBeVisible();
