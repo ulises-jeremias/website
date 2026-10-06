@@ -39,6 +39,9 @@ test('Hornero OS traces the real manifest stages on request', async ({ page }, t
       window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - 90, behavior: 'instant' });
   });
   await page.screenshot({ path: testInfo.outputPath('manifest-trace-first-pin.png') });
+  await expect(manifest.locator('[data-hos-trace-status]')).toContainText('installer: future slot reserved', {
+    timeout: 4500,
+  });
   await expect(manifest.locator('[data-hos-trace-status]')).toContainText('iso: future slot reserved', {
     timeout: 4500,
   });
