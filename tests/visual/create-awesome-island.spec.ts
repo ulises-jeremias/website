@@ -21,7 +21,9 @@ test('Create Awesome island art stays consistent across the homepage and Work ma
   );
   await expect(featuredCard.locator('img')).toHaveAttribute('src', `/assets/${asset}.png`);
   await featuredCard.scrollIntoViewIfNeeded();
-  await expect(featuredCard).toHaveScreenshot('create-awesome-island-featured-desktop.png');
+  await expect(featuredCard.locator('.featured-areas__art')).toHaveScreenshot(
+    'create-awesome-island-featured-art-desktop.png',
+  );
 
   await page.goto('/projects/');
   const workIsland = page.locator('.archipelago__link[href="/create-awesome"]');
