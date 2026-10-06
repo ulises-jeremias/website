@@ -111,6 +111,12 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           The links show supported ways the projects work together, not setup requirements. Use Toolkit alone, provision
           a machine with Workstation, or add Harness when persistent context helps.
         </figcaption>
+        <div class="agentic-map__trace">
+          <button class="agentic-map__trace-button" type="button" data-agentic-trace hidden>
+            Trace a workflow
+          </button>
+          <p data-agentic-trace-status role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
       </figure>
 
       <section class="agentic-page__adoption" aria-labelledby="agentic-adoption-title">
@@ -171,6 +177,58 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     </div>
   </div>
 </SectionLayout>
+
+<script is:inline>
+  (() => {
+    const map = document.querySelector('.agentic-map');
+    const button = map?.querySelector('[data-agentic-trace]');
+    const status = map?.querySelector('[data-agentic-trace-status]');
+    const stations = [...(map?.querySelectorAll('.agentic-map__station') || [])];
+    const links = [...(map?.querySelectorAll('.agentic-map__link') || [])];
+    if (!map || !button || !status || stations.length !== 3 || links.length !== 2) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timer;
+    button.hidden = false;
+
+    const finish = () => {
+      [...stations, ...links].forEach((part) => part.classList.add('is-current'));
+      map.dataset.traceState = 'complete';
+      status.textContent = 'Map complete. Start with one project; extensions remain optional.';
+    };
+
+    button.addEventListener('click', () => {
+      window.clearInterval(timer);
+      window.clearTimeout(timer);
+      [...stations, ...links].forEach((part) => part.classList.remove('is-current'));
+      button.textContent = 'Replay system map';
+      map.dataset.traceState = 'running';
+      if (reducedMotion.matches) return finish();
+
+      let index = 0;
+      const showStep = () => {
+        const station = stations[index];
+        station.classList.add('is-current');
+        if (index) links[index - 1].classList.add('is-current');
+        status.textContent = `${station.querySelector('.agentic-map__layer')?.textContent.trim()}: ${station.querySelector('.agentic-map__boundary')?.textContent.trim()}`;
+        index += 1;
+        if (index === stations.length) {
+          window.clearInterval(timer);
+          timer = window.setTimeout(finish, 850);
+        }
+      };
+      showStep();
+      timer = window.setInterval(showStep, 850);
+    });
+
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches || map.dataset.traceState !== 'running') return;
+      window.clearInterval(timer);
+      window.clearTimeout(timer);
+      finish();
+    });
+  })();
+</script>
 
 <style>
   .agentic-page__inner {
@@ -254,6 +312,14 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     border-block-start: 3px solid var(--station-color);
     background: linear-gradient(145deg, color-mix(in srgb, var(--station-color) 10%, #08051a), #08051a 72%);
     clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 1.2rem, 100% 100%, 0 100%);
+    transition:
+      filter 240ms ease,
+      transform 240ms ease;
+  }
+
+  .agentic-map__station.is-current {
+    filter: drop-shadow(0 0 0.7rem color-mix(in srgb, var(--station-color) 38%, transparent));
+    transform: translateY(-0.25rem);
   }
 
   .agentic-map__station::after {
@@ -355,6 +421,11 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     line-height: 1;
   }
 
+  .agentic-map__link.is-current .agentic-map__arrow {
+    color: var(--nest-lime, #d5ff4f);
+    filter: drop-shadow(0 0 0.45rem var(--nest-cyan));
+  }
+
   .agentic-map__link--context .agentic-map__arrow {
     color: var(--nest-violet);
   }
@@ -365,6 +436,38 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     color: var(--color-text-faint);
     font-size: 0.82rem;
     line-height: 1.55;
+  }
+
+  .agentic-map__trace {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-block-start: 1rem;
+  }
+
+  .agentic-map__trace-button {
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.55rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    background: color-mix(in srgb, var(--nest-cyan) 10%, var(--nest-midnight-950));
+    color: var(--nest-paper);
+    font: 400 0.8rem var(--font-mono);
+    cursor: pointer;
+  }
+
+  .agentic-map__trace-button:hover,
+  .agentic-map__trace-button:focus-visible {
+    border-color: var(--nest-cyan);
+    background: color-mix(in srgb, var(--nest-cyan) 20%, var(--nest-midnight-950));
+  }
+
+  .agentic-map__trace [role='status'] {
+    min-block-size: 1.5em;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
   }
 
   .agentic-page__section-kicker {
@@ -576,6 +679,12 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
     }
     .agentic-map__station h3 a {
       color: LinkText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .agentic-map__station {
+      transition: none;
     }
   }
 </style>
