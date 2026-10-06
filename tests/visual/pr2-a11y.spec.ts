@@ -53,7 +53,7 @@ test.describe('PR 2 value and group semantics', () => {
     const bootConsole = page.locator('.ws-map__hero-console');
     await expect(intro).toBeVisible();
     await expect(bootConsole).toBeVisible();
-    await expect(bootConsole.getByRole('heading', { name: 'Boot sequence' })).toBeVisible();
+    await expect(bootConsole.getByRole('heading', { name: 'Boot sequence (illustrative)' })).toBeVisible();
     await page.waitForTimeout(2600);
     await expect(page.locator('[data-boot] .vf-meter')).toHaveAttribute('aria-valuetext', 'Step 1/6');
 

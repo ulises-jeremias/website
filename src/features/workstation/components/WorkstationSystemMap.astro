@@ -160,15 +160,14 @@ const defaultLayer = workstationLayers[1]!;
       </p>
       <FlagshipProvenance
         entryId="agentic-workstation"
-        note="Capabilities stay in Agent Toolkit; workspace state stays in Agentic Harness — Workstation owns only the host."
+        note="Toolkit owns capabilities; Harness owns workspace state. Workstation provisions only the host."
       />
     </div>
     <div class="ws-map__boot ws-map__hero-console" data-boot>
       <div class="ws-map__boot-head">
-        <div>
-          <p class="ws-map__console-label">Illustrative provisioning sequence</p>
-          <h2>Boot sequence</h2>
-        </div>
+        <h2>
+          Boot sequence <small>(illustrative)</small>
+        </h2>
         <StatusMeter
           value={Math.round((1 / bootStageCount) * 100)}
           label="Boot stage"
@@ -189,7 +188,7 @@ const defaultLayer = workstationLayers[1]!;
       ><code data-stage-cmd>{bootStages[0]!.command}</code></pre>
       <PlaybackControls label="Boot playback" />
     </div>
-    <div class="ws-map__header-rail" aria-label="Personal DX layer boundaries">
+    <div class="ws-map__header-rail">
       <span>
         <strong>Desktop</strong> optional personal surface
       </span>
@@ -906,13 +905,13 @@ const defaultLayer = workstationLayers[1]!;
     background: color-mix(in srgb, var(--nest-midnight-950) 84%, transparent);
   }
 
-  .ws-map__console-label {
-    margin: 0 0 0.25rem;
+  .ws-map__boot-head h2 small {
+    margin-inline-start: 0.25rem;
     color: var(--nest-cyan);
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.65em;
+    font-weight: 400;
+    letter-spacing: 0.06em;
   }
 
   .ws-map__boot .vf-scrubber {
