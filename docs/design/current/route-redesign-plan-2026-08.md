@@ -165,9 +165,8 @@ first-party image-generation output, recorded with its reference and repeatable
 responsive asset pipeline in `docs/design/current/social-assets.md`. Its 640px
 WebP is 45 KiB, the 440px WebP is 24 KiB, and the 192px thumbnail is 5.9 KiB.
 
-The compact V provenance changes VTL capture bounds by one CSS pixel in
-Chromium. CI and local renderers differ by two pixels in the reduced-motion
-mobile outer bounds, so that duplicate outer-box golden was removed. The test
-checks the reduced-motion state for zero autonomous animation before and after
-interaction; desktop and mobile reverse-pass captures cover the explanatory
-diagram composition.
+The compact V provenance changes VTL capture bounds slightly in Chromium, and
+CI/local renderers differ by two pixels in the full mobile scene. The mobile
+forward and reverse snapshots therefore target the explanatory flow itself,
+while layout/state assertions retain coverage of the enclosing scene. Reduced
+motion still verifies zero autonomous animation before and after interaction.
