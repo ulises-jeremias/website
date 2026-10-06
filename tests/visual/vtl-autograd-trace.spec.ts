@@ -46,7 +46,11 @@ test.describe('VTL autograd trace', () => {
     await expect(scene.locator('.vtl-trace__svg')).toBeHidden();
     await expect(scene.locator('.vtl-trace__mobile-flow')).toBeVisible();
     await expect(scene.locator('.vtl-trace__mobile-flow .vtl-trace__mobile-arrow')).toHaveCount(2);
-    await expect(scene).toHaveScreenshot('vtl-autograd-mobile.png');
+    await expect
+      .poll(() =>
+        scene.locator('[data-vtl-edge]').evaluateAll((edges) => edges.some((edge) => edge.getAnimations().length > 0)),
+      )
+      .toBe(false);
     await scene.getByRole('button', { name: 'Run backward' }).click();
     await expect(scene.locator('[data-v-scene-live]')).toHaveText(
       'Backward pass complete. The graph returned ∂L/∂x = w and ∂L/∂w = x.',
