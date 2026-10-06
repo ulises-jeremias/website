@@ -166,7 +166,7 @@ responsive asset pipeline in `docs/design/current/social-assets.md`. Its 640px
 WebP is 45 KiB, the 440px WebP is 24 KiB, and the 192px thumbnail is 5.9 KiB.
 
 The compact V provenance changes VTL capture bounds slightly in Chromium, and
-CI/local renderers differ by two pixels in the full mobile scene. The mobile
-forward and reverse snapshots therefore target the explanatory flow itself,
-while layout/state assertions retain coverage of the enclosing scene. Reduced
-motion still verifies zero autonomous animation before and after interaction.
+CI/local renderers vary mobile scene height by one or two pixels due to text
+metrics. The desktop golden remains; mobile coverage asserts the vertical flow,
+input/output equations, reverse-gradient values, and zero autonomous movement
+before and after interaction. The focused mobile smoke suite checks route reflow.
