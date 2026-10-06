@@ -42,7 +42,10 @@ background with a safe inset around the logo.
 Ten 192×192 WebP thumbnails are derived from the committed 440×440 island
 images with `pnpm assets:featured`. Homepage featured areas serve a 192/640px
 responsive pair. The Work archive serves 192/440px candidates for its 144 CSS
-pixel thumbnails. PNG remains the fallback on the larger homepage artwork.
+pixel thumbnails. Responsive 220px/440px PNGs remain the fallback on larger
+homepage artwork; they serve 1×/2× density for an atlas illustration displayed
+at no more than 220 CSS pixels. Featured-work illustrations render at 96 CSS
+pixels and choose the matching PNG density through the same source set.
 The 192px files are each only a few kilobytes with the committed ImageMagick
 output and add no runtime dependency.
 
@@ -51,7 +54,7 @@ It was generated for this site with OpenAI image generation on 2026-10-06; no
 external artwork, brands, or reference image were used. The illustration maps
 the canonical capability families to a single nexus with three distribution
 ports and is intentionally illustrative rather than live telemetry. Generate
-its 640px/440px WebP and PNG fallback with `pnpm assets:island-art`, then run
+its 640px/440px WebP and 220px/440px PNG fallbacks with `pnpm assets:island-art`, then run
 `pnpm assets:featured` and `pnpm assets:social` to refresh dependent outputs.
 The source and derivatives are first-party site assets currently classified
 under the repository MIT license. The engineering provenance record still
@@ -59,14 +62,28 @@ requires the owner's broader legal review and does not claim legal approval.
 
 The legacy island PNG fallbacks under `public/assets/` can be regenerated from
 the WebP sources with `node scripts/generate-island-pngs.mjs --regenerate`.
-Island fallbacks now match their 640px source dimensions (instead of shipping
-1024px copies) and the logo fallback uses its 256px source. The hero uses
+Island PNG fallbacks use 220px/440px responsive variants instead of 640px
+copies; full-resolution originals remain in `src/features/home/assets/` and
+responsive WebP art remains unchanged. The logo fallback uses its 256px source.
+The hero uses
 responsive 1024px and 960px scene plates generated from `src/media-sources/nest/`
 with `pnpm assets:hero-scene`. Its 1024px fallback is an optimized JPEG generated
 from the desktop WebP source with `pnpm assets:hero-fallback`; at 219 KB it
 preserves broad browser support while reducing the former 1.27 MB PNG by 83%.
 The island fallback check also verifies the hero JPEG alongside each island PNG
 fallback.
+
+## 2026-10-06 update — responsive PNG fallbacks
+
+Atlas islands now have 220px and 440px PNG fallback variants, selected through
+the existing `<picture>` element by rendered size and device pixel ratio. The
+full-resolution authored originals and WebP sources remain unchanged. The
+220px set is 749,699 bytes and the 440px set is 2,496,768 bytes; each is chosen
+instead of the former single 640px PNG set of 4,660,266 bytes. This reduces the
+PNG payload by 84% at 1× and 46% at 2× (30% for both sets together). WebP-capable browsers continue to
+use the existing responsive WebP pair. Unit tests lock the PNG dimensions and
+per-density byte budgets, while `node scripts/generate-island-pngs.mjs --check`
+validates all variants and the hero fallback.
 
 ## 2026-10-04 update
 
