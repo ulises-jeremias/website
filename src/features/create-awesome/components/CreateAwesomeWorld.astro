@@ -459,6 +459,7 @@ const lineModules = [
 
 <script is:inline>
   (() => {
+    // Keep the visual choreography inline to preserve this route's zero external-JS budget.
     const stages = ['runtime', 'template', 'addons', 'app'];
 
     document.querySelectorAll('[data-ca-world]').forEach((world) => {
