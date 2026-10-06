@@ -117,6 +117,10 @@ const lineModules = [
           d="M70 110 H650"
           style="--vf-flow-accent: var(--nest-sunset-orange, #fb923c)"
         ></path>
+        <g class="ca-world__package" data-ca-package aria-hidden="true">
+          <circle class="ca-world__package-halo" cx="70" cy="110" r="12"></circle>
+          <rect class="ca-world__package-core" x="65" y="105" width="10" height="10"></rect>
+        </g>
         {lineModules.map((mod, index) => {
           const x = 70 + index * 180;
           return (
@@ -125,7 +129,7 @@ const lineModules = [
               <text class="ca-world__module-label" x="0" y="42" text-anchor="middle">
                 {mod.label}
               </text>
-              <text class="ca-world__module-hint" x="0" y="68" text-anchor="middle">
+              <text class="ca-world__module-hint" data-ca-module-value={mod.id} x="0" y="68" text-anchor="middle">
                 {mod.hint}
               </text>
             </g>
@@ -135,10 +139,10 @@ const lineModules = [
 
       <ol class="ca-world__flow-index" aria-label="Composition stages">
         {lineModules.map((mod, index) => (
-          <li>
+          <li data-ca-step={mod.id}>
             <span class="ca-world__flow-number">{String(index + 1).padStart(2, '0')}</span>
             <strong>{mod.label}</strong>
-            <small>{mod.hint}</small>
+            <small data-ca-flow-value={mod.id}>{mod.hint}</small>
           </li>
         ))}
       </ol>
@@ -392,7 +396,9 @@ const lineModules = [
       const composerRadio = root.querySelector<HTMLInputElement>(`#ca-runtime-${station.id}`);
       if (composerRadio && !composerRadio.checked) {
         composerRadio.checked = true;
-        composerRadio.dispatchEvent(new Event('change', { bubbles: true }));
+        composerRadio.dispatchEvent(
+          new CustomEvent('change', { bubbles: true, detail: { animate: origin === 'user' } }),
+        );
       }
 
       root.querySelectorAll<HTMLElement>('[data-visual-node]').forEach((node) => {
@@ -449,6 +455,136 @@ const lineModules = [
   }
 
   document.querySelectorAll<HTMLElement>('[data-ca-world]').forEach(initWorld);
+</script>
+
+<script is:inline>
+  (() => {
+    // Keep the visual choreography inline to preserve this route's zero external-JS budget.
+    const stages = ['runtime', 'template', 'addons', 'app'];
+
+    document.querySelectorAll('[data-ca-world]').forEach((world) => {
+      const stations = JSON.parse(world.getAttribute('data-stations') || '[]');
+      const modules = [...world.querySelectorAll('[data-module]')];
+      const steps = [...world.querySelectorAll('[data-ca-step]')];
+      const packageGroup = world.querySelector('[data-ca-package]');
+      const belt = world.querySelector('[data-ca-belt]');
+      const form = world.querySelector('[data-ca-composer]');
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let animationId = 0;
+      let timers = [];
+
+      const currentState = () => {
+        const family = form?.querySelector('[name="ca-runtime"]:checked')?.value || stations[0]?.id;
+        const panel = family && world.querySelector(`[data-ca-panel="${family}"]`);
+        return {
+          family,
+          projectName: form?.querySelector('[data-ca-project]')?.value || 'my-app',
+          template: panel?.querySelector('[data-ca-template]')?.value || 'starter',
+          addons: [...(panel?.querySelectorAll('[data-ca-addon]:checked') || [])].map((input) => input.value),
+          animate: false,
+        };
+      };
+
+      const syncValues = (state) => {
+        const station = stations.find((candidate) => candidate.id === state.family);
+        if (!station) return;
+        const panel = world.querySelector(`[data-ca-panel="${station.id}"]`);
+        const template = state.template || panel?.querySelector('[data-ca-template]')?.value || 'starter';
+        const addons = Array.isArray(state.addons)
+          ? state.addons.length
+          : panel?.querySelectorAll('[data-ca-addon]:checked').length || 0;
+        const values = {
+          runtime: station.label,
+          template,
+          addons: `${addons} selected`,
+          app: state.projectName || 'my-app',
+        };
+
+        Object.entries(values).forEach(([stage, value]) => {
+          const compact = value.length > 14 ? `${value.slice(0, 13)}…` : value;
+          world.querySelector(`[data-ca-module-value="${stage}"]`)?.replaceChildren(compact);
+          world.querySelector(`[data-ca-flow-value="${stage}"]`)?.replaceChildren(value);
+        });
+      };
+
+      const stopAssembly = () => {
+        animationId += 1;
+        timers.forEach((timer) => window.clearTimeout(timer));
+        timers = [];
+        packageGroup?.getAnimations().forEach((animation) => animation.cancel());
+        world.removeAttribute('data-ca-animating');
+        modules.forEach((module) => module.classList.remove('is-current'));
+        steps.forEach((step) => step.classList.remove('is-current'));
+      };
+
+      const showRuntime = () => {
+        modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === 'runtime'));
+        steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === 'runtime'));
+      };
+
+      const runAssembly = (state) => {
+        syncValues(state);
+        if (!state.animate) return;
+
+        stopAssembly();
+        if (motionPreference.matches || !packageGroup || !belt) {
+          showRuntime();
+          return;
+        }
+
+        const currentAnimation = animationId;
+        const station = stations.find((candidate) => candidate.id === state.family);
+        const svgWidth = belt.ownerSVGElement?.getBoundingClientRect().width || 0;
+        world.dataset.caAnimating = 'true';
+        packageGroup.style.setProperty('--ca-package-accent', station?.accent || 'var(--nest-sunset-orange)');
+
+        if (svgWidth > 0) {
+          const distance = 540 * (svgWidth / 720);
+          packageGroup.animate(
+            [
+              { transform: 'translateX(0px)', opacity: 0 },
+              { transform: 'translateX(0px)', opacity: 1, offset: 0.08 },
+              { transform: `translateX(${distance}px)`, opacity: 1, offset: 0.9 },
+              { transform: `translateX(${distance}px)`, opacity: 0 },
+            ],
+            { duration: 1600, easing: 'linear', fill: 'forwards' },
+          );
+        }
+
+        stages.forEach((stage, index) => {
+          timers.push(
+            window.setTimeout(() => {
+              if (currentAnimation !== animationId) return;
+              modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === stage));
+              steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === stage));
+            }, index * 520),
+          );
+        });
+
+        timers.push(
+          window.setTimeout(() => {
+            if (currentAnimation !== animationId) return;
+            world.removeAttribute('data-ca-animating');
+            modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === 'app'));
+            steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === 'app'));
+          }, 1700),
+        );
+      };
+
+      world.addEventListener('ca:composition-change', (event) => {
+        if (event instanceof CustomEvent) runAssembly(event.detail);
+      });
+      motionPreference.addEventListener('change', () => {
+        if (motionPreference.matches) {
+          stopAssembly();
+          showRuntime();
+        }
+      });
+
+      syncValues(currentState());
+      showRuntime();
+    });
+  })();
 </script>
 
 <style>
@@ -664,6 +800,18 @@ const lineModules = [
     stroke-width: 1.5;
   }
 
+  .ca-world__module[data-module='template'] {
+    --ca-module-accent: var(--nest-cyan);
+  }
+
+  .ca-world__module[data-module='addons'] {
+    --ca-module-accent: var(--nest-magenta);
+  }
+
+  .ca-world__module[data-module='app'] {
+    --ca-module-accent: var(--nest-violet);
+  }
+
   .ca-world__module.is-active .ca-world__module-disk {
     stroke: var(--ca-module-accent, var(--nest-cyan, #22d3ee));
     fill: color-mix(in srgb, var(--ca-module-accent, var(--nest-cyan, #22d3ee)) 14%, #020617);
@@ -842,19 +990,60 @@ const lineModules = [
     }
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .ca-world__module.is-active .ca-world__module-disk {
-      animation: ca-module-pulse 3.6s ease-in-out infinite;
-    }
+  .ca-world__module-disk {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      fill 180ms ease,
+      stroke 180ms ease,
+      transform 180ms ease,
+      filter 180ms ease;
   }
 
-  @keyframes ca-module-pulse {
-    0%,
-    100% {
-      opacity: 0.9;
-    }
-    50% {
-      opacity: 1;
+  .ca-world__module.is-current .ca-world__module-disk {
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--ca-module-accent, var(--nest-cyan)) 48%, transparent));
+    transform: scale(1.08);
+  }
+
+  .ca-world__flow-index li {
+    border-top: 1px solid transparent;
+    transition:
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .ca-world__flow-index li.is-current {
+    border-color: var(--nest-sunset-orange);
+    color: var(--nest-paper);
+    transform: translateY(-2px);
+  }
+
+  .ca-world__flow-index li.is-current small {
+    color: var(--nest-cyan);
+  }
+
+  .ca-world__package {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ca-world__package-halo {
+    fill: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 22%, transparent);
+    stroke: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 72%, transparent);
+    stroke-width: 1;
+  }
+
+  .ca-world__package-core {
+    fill: var(--ca-package-accent, var(--nest-sunset-orange));
+    stroke: var(--nest-paper);
+    stroke-width: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ca-world__module-disk,
+    .ca-world__flow-index li {
+      transition: none;
     }
   }
 </style>
