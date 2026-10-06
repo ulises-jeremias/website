@@ -164,3 +164,7 @@ the art communicates the project's composition model at a glance. The source is
 first-party image-generation output, recorded with its reference and repeatable
 responsive asset pipeline in `docs/design/current/social-assets.md`. Its 640px
 WebP is 45 KiB, the 440px WebP is 24 KiB, and the 192px thumbnail is 5.9 KiB.
+
+The V route's compact provenance note changes the VTL capture bounds by one
+CSS pixel in Chromium. The desktop and mobile flow goldens record the unchanged
+diagram and explanatory states.
