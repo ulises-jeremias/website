@@ -90,3 +90,28 @@ test('support dock responds to keyboard input and respects reduced motion change
   );
   expect(heights.every((height) => height >= 44)).toBe(true);
 });
+
+test('support dock preserves selected state and focus in forced colors', async ({ page }) => {
+  await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/sponsor');
+
+  const dock = page.locator('[data-sp-route-dock]');
+  const hornero = dock.locator('input[name="sp-route"][value="hornero"]');
+  const port = hornero.locator('xpath=..');
+  await hornero.focus();
+  await page.keyboard.press('Space');
+
+  await expect(hornero).toBeFocused();
+  await expect(hornero).toBeVisible();
+  await expect(dock.getByRole('heading', { name: 'Hornero Linux Desktop' })).toBeVisible();
+  await expect(dock.locator('[data-sp-route-note]')).toContainText('does not earmark');
+
+  const focusIndicator = await port.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { outlineStyle: style.outlineStyle, outlineWidth: Number.parseFloat(style.outlineWidth) };
+  });
+  expect(focusIndicator.outlineStyle).not.toBe('none');
+  expect(focusIndicator.outlineWidth).toBeGreaterThan(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+});
