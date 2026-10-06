@@ -7,6 +7,34 @@
 **Production:** <https://www.ulises-jeremias.dev/>
 **Status:** Engineering launch gate complete; owner and assistive-technology gates remain open.
 
+## Current Verification Addendum — 2026-10-06
+
+The checklist below records the original August launch candidate. The latest
+design follow-up is on protected `main@a13203c74ac49a9e1c3838ac857b6ead9b10e0f6`.
+PR [#483](https://github.com/ulises-jeremias/website/pull/483) refined the V
+laboratory experience and reduced-motion mobile evidence; PR
+[#484](https://github.com/ulises-jeremias/website/pull/484) added original
+Create Awesome assembly artwork across the atlas, featured work, and social
+card. Both PRs merged after their required CI checks passed.
+
+For the current `main` revision, Build ([run 37475423901](https://github.com/ulises-jeremias/website/actions/runs/37475423901)),
+Run tests ([37475423840](https://github.com/ulises-jeremias/website/actions/runs/37475423840)),
+Lint ([37475423952](https://github.com/ulises-jeremias/website/actions/runs/37475423952)),
+Typecheck ([37475424019](https://github.com/ulises-jeremias/website/actions/runs/37475424019)),
+Browser quality ([37475424013](https://github.com/ulises-jeremias/website/actions/runs/37475424013)),
+Todo Checker ([37475423847](https://github.com/ulises-jeremias/website/actions/runs/37475423847)),
+and deployment smoke ([37475466963](https://github.com/ulises-jeremias/website/actions/runs/37475466963)) passed.
+MegaLinter was skipped by its workflow condition. Production deployment smoke
+passed for the current revision. The canonical Hornero OS project site remains
+`https://horneroos.com`; the internal `/hornero-os/` route explains the
+portfolio relationship.
+
+This update does not claim manual accessibility or visual/brand approval. The
+NVDA/Firefox, VoiceOver/Safari, TalkBack/Chrome, zoom, contrast, asset-license,
+profile-fact, and owner review items below remain open under issue #405. The
+current manual test matrix is maintained in
+[`../design/current/uiux-manual-qa-checklist.md`](../design/current/uiux-manual-qa-checklist.md).
+
 ## Release Scope
 
 The launch candidate contains the completed route redesign waves A-E for:
