@@ -26,7 +26,7 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Current production baseline: `main@0da422d659df79c460ef7030ff59e96b8f4459af` (PRs #462 and #464).
+- Current production baseline: `main@78d68221a577f1b0c76c95e1cf5daf544153a99a` (PRs #462, #464, #467, and #468).
 - The route redesign, accessibility navigation correction, production deployment,
   and automated release checks are complete on this baseline. Portfolio release
   evidence is tracked in issue #405; manual assistive-technology validation
@@ -40,8 +40,12 @@ The 2026-10-05 refresh in PR #462 updates the Agent Toolkit, Agentic, Hornero OS
 and Sponsor mobile goldens. Their previous CI baselines no longer matched the
 current Linux browser renders; the captures were reviewed at 390px and preserve
 the intended route hierarchy and readable wrapping. PR #464 then updated the
-navigation accessible name and V repository-link target. All current changes
-are merged to `main`; other goldens remain unchanged.
+navigation accessible name and V repository-link target. PR #467 adds the
+manifest-driven Create Awesome composition sequence; PR #468 adds an on-demand
+trace through Hornero OS's actual manifest. Both keep a complete static fallback
+and respect reduced motion. At `main@78d6822`, build, tests, type-check, lint,
+browser quality (531 Playwright tests plus Lighthouse CI), deployment smoke, and
+the route budgets pass. Other goldens remain unchanged.
 
 ## Historical documents
 

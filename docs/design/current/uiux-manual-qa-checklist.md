@@ -2,7 +2,7 @@
 
 **Site:** `https://www.ulises-jeremias.dev`
 **Target:** WCAG 2.2 AA and final visual/brand sign-off
-**Automated baseline:** production `main@0da422d659df79c460ef7030ff59e96b8f4459af` (PRs #462 and #464; Browser Quality passed 525 Playwright tests, axe on 16 routes, critical navigation and reflow on all public routes, reduced-motion, no-JS fallbacks, cross-browser smoke at mobile/tablet/desktop widths, route budgets, and Lighthouse CI). The baseline includes an explicit visible-name assertion for the mobile Menu trigger and a 44px V repository-link target assertion. Lighthouse reports accessibility 1.00 on all audited routes. Production deployment smoke passed after merge.
+**Automated baseline:** production `main@78d68221a577f1b0c76c95e1cf5daf544153a99a` (PRs #462, #464, #467, and #468; Browser Quality passed 531 Playwright tests, axe on 16 routes, critical navigation and reflow on all public routes, reduced-motion, no-JS fallbacks, cross-browser smoke at mobile/tablet/desktop widths, route budgets, and Lighthouse CI). The baseline includes an explicit visible-name assertion for the mobile Menu trigger and a 44px V repository-link target assertion. Production deployment smoke passed after merge.
 **Owner:** Ulises Jeremias
 **Status:** #295 — automated evidence complete; all manual rows below remain PENDING MANUAL until executed on real devices. Automated checks (axe, Lighthouse, Playwright) are **not** substitutes for screen-reader or hardware testing.
 
