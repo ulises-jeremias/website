@@ -110,7 +110,9 @@ function init(root) {
 
   buttons.forEach((button) => {
     button.disabled = false;
-    button.addEventListener('click', () => void run(button.dataset.vtlDir || 'forward'));
+    button.addEventListener('click', () => {
+      run(button.dataset.vtlDir || 'forward');
+    });
   });
   reduceMotion.addEventListener('change', () => {
     if (!reduceMotion.matches) return;
