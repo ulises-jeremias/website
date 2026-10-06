@@ -235,6 +235,7 @@ test.describe('PR8 enhanced family restoration', () => {
     const command = page.locator('[data-ca-command]');
     const copyCommand = page.locator('[data-ca-command-copy]');
     const template = page.locator('[data-ca-panel="node"] [data-ca-template]');
+    await preview.scrollIntoViewIfNeeded();
     await expect(preview).toBeVisible();
     await expect(preview).toBeInViewport({ ratio: 1 });
     await expect(preview).toHaveCSS('position', 'sticky');
@@ -284,7 +285,7 @@ test.describe('PR8 enhanced family restoration', () => {
     expect(dockRect!.y + dockRect!.height).toBeLessThanOrEqual(844);
   });
 
-  test('puts the live project composer before the assembly line', async ({ page }) => {
+  test('keeps the assembly line before the live project composer', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/create-awesome');
 
@@ -301,7 +302,7 @@ test.describe('PR8 enhanced family restoration', () => {
           const composerElement = document.querySelector('[data-ca-composer-root]');
           const line = document.querySelector('.ca-world__scene');
           return Boolean(
-            composerElement && line && composerElement.compareDocumentPosition(line) & Node.DOCUMENT_POSITION_FOLLOWING,
+            composerElement && line && line.compareDocumentPosition(composerElement) & Node.DOCUMENT_POSITION_FOLLOWING,
           );
         }),
       )
