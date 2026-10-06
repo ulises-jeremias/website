@@ -38,28 +38,64 @@ const selected = getPortfolioEntriesByTier('selected-work');
 
 /** Labs, demos, and supporting resources. */
 const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesByTier('supporting-resource')];
+
+const areaArt: Record<string, { src: string; code: string }> = {
+  agentic: { src: 'island-agent', code: 'SYS / 01' },
+  hornero: { src: 'island-dotfiles', code: 'SYS / 02' },
+  'v-ecosystem': { src: 'island-v', code: 'LAB / 03' },
+  'create-awesome': { src: 'island-assembly-workshop', code: 'FORGE / 04' },
+};
 ---
 
 <div class="work-tiers" data-testid="work-tiers">
   <section class="work-tiers__tier" aria-labelledby="work-featured-title">
-    <h2 id="work-featured-title" class="work-tiers__heading">
-      Featured work
-    </h2>
+    <header class="work-tiers__section-head">
+      <div>
+        <p class="work-tiers__eyebrow">Portfolio / four connected areas</p>
+        <h2 id="work-featured-title" class="work-tiers__heading">
+          Flagship systems
+        </h2>
+      </div>
+      <p>Start with an area, then follow its component projects.</p>
+    </header>
     <ul class="work-tiers__featured-grid">
-      {featured.map((area) => (
-        <li class="work-tiers__card">
-          <h3>
-            <a href={area.path}>{area.title}</a>
-          </h3>
-          <p class="work-tiers__proposition">{area.proposition}</p>
-          <ul class="work-tiers__members" aria-label={`${area.title} projects`}>
-            {area.memberLinks.map((member) => (
-              <li>
-                <a href={member.path}>{member.title}</a>
-                {member.maturity && <span class="work-tiers__maturity">{maturityLabel[member.maturity]}</span>}
-              </li>
-            ))}
-          </ul>
+      {featured.map((area, areaIndex) => (
+        <li class="work-tiers__plate" data-area={area.id}>
+          <div class="work-tiers__plate-art" aria-hidden="true">
+            <span>{areaArt[area.id].code}</span>
+            <img
+              src={`/assets/nest/${areaArt[area.id].src}-sm.webp`}
+              srcset={`/assets/nest/${areaArt[area.id].src}-192.webp 192w, /assets/nest/${areaArt[area.id].src}-sm.webp 440w`}
+              sizes="(min-width: 900px) 112px, 88px"
+              alt=""
+              width="440"
+              height="440"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="work-tiers__lens">{area.lens}</span>
+          </div>
+          <div class="work-tiers__plate-main">
+            <p class="work-tiers__plate-index">Area / {String(areaIndex + 1).padStart(2, '0')}</p>
+            <h3>
+              <a href={area.path}>{area.title}</a>
+            </h3>
+            <p class="work-tiers__proposition">{area.proposition}</p>
+            <ul class="work-tiers__members" aria-label={`${area.title} projects`}>
+              {area.memberLinks.map((member, index) => (
+                <li>
+                  <span class="work-tiers__member-node" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <a href={member.path}>{member.title}</a>
+                  {member.maturity && <span class="work-tiers__maturity">{maturityLabel[member.maturity]}</span>}
+                </li>
+              ))}
+            </ul>
+            <a class="work-tiers__enter" href={area.path}>
+              Open area <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </li>
       ))}
     </ul>
@@ -164,57 +200,6 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
     list-style: none;
   }
 
-  .work-tiers__card {
-    display: grid;
-    align-content: start;
-    gap: 0.45rem;
-    block-size: 100%;
-    padding: 0.95rem 1.05rem;
-    border: 1px solid color-mix(in srgb, var(--nest-violet) 30%, transparent);
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--nest-violet) 5%, transparent);
-  }
-
-  .work-tiers__card:hover,
-  .work-tiers__card:focus-within {
-    border-color: var(--nest-violet);
-  }
-
-  .work-tiers__card h3 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .work-tiers__card h3 a {
-    color: var(--nest-paper);
-    text-underline-offset: 0.2em;
-  }
-
-  .work-tiers__proposition {
-    margin: 0;
-  }
-
-  .work-tiers__members {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem 0.9rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-size: 0.82rem;
-  }
-
-  .work-tiers__members a {
-    color: var(--nest-cyan);
-  }
-
-  .work-tiers__maturity {
-    margin-inline-start: 0.35rem;
-    color: var(--color-text-faint);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-  }
-
   .work-tiers__support {
     margin: 0.9rem 0 0;
     color: var(--color-text-faint);
@@ -229,11 +214,6 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
     font-size: 0.86rem;
     line-height: 1.5;
     color: var(--color-text-muted);
-  }
-
-  .work-tiers__meta {
-    font-size: 0.72rem;
-    color: var(--color-text-faint);
   }
 
   .work-tiers__entry-list {
@@ -258,5 +238,240 @@ const labs = [...getPortfolioEntriesByTier('lab-demo'), ...getPortfolioEntriesBy
     font-size: 0.8rem;
     line-height: 1.45;
     color: var(--color-text-faint);
+  }
+
+  .work-tiers__tier:first-child {
+    padding-block: 0.25rem 0.8rem;
+    border-block-end: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 22%, transparent);
+  }
+
+  .work-tiers__section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed color-mix(in srgb, var(--nest-sunset-orange) 38%, transparent);
+  }
+
+  .work-tiers__section-head > p {
+    max-width: 34ch;
+    margin: 0;
+    color: var(--color-text-faint);
+    font-size: 0.8rem;
+    text-align: right;
+  }
+
+  .work-tiers__eyebrow {
+    margin: 0 0 0.25rem;
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .work-tiers__heading {
+    margin-bottom: 0;
+  }
+
+  .work-tiers__featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .work-tiers__plate {
+    --area-ink: var(--nest-cyan);
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 0.9rem;
+    min-width: 0;
+    min-height: 14rem;
+    padding: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--area-ink) 32%, transparent);
+    border-inline-start: 2px solid var(--area-ink);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--area-ink) 7%, transparent), transparent 42%),
+      color-mix(in srgb, var(--nest-midnight-950) 45%, transparent);
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .work-tiers__plate[data-area='hornero'] {
+    --area-ink: var(--nest-magenta);
+  }
+
+  .work-tiers__plate[data-area='v-ecosystem'] {
+    --area-ink: var(--nest-violet);
+  }
+
+  .work-tiers__plate[data-area='create-awesome'] {
+    --area-ink: var(--nest-sunset-orange);
+  }
+
+  .work-tiers__plate:focus-within {
+    border-color: var(--area-ink);
+  }
+
+  .work-tiers__plate-art {
+    display: grid;
+    grid-template-rows: auto minmax(5rem, 1fr) auto;
+    align-items: center;
+    justify-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    border-inline-end: 1px dashed color-mix(in srgb, var(--area-ink) 28%, transparent);
+    color: var(--area-ink);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .work-tiers__plate-art img {
+    display: block;
+    width: min(100%, 6rem);
+    height: auto;
+    mix-blend-mode: screen;
+  }
+
+  .work-tiers__lens {
+    max-width: 100%;
+    color: var(--color-text-faint);
+    font-size: 0.54rem;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .work-tiers__plate-main {
+    display: grid;
+    align-content: start;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .work-tiers__plate-index {
+    margin: 0;
+    color: var(--area-ink);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .work-tiers__plate-main h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .work-tiers__plate-main h3 a {
+    color: var(--nest-paper);
+    text-underline-offset: 0.2em;
+  }
+
+  .work-tiers__plate .work-tiers__proposition {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .work-tiers__plate .work-tiers__members {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0.15rem 0 0;
+  }
+
+  .work-tiers__plate .work-tiers__members li {
+    display: grid;
+    grid-template-columns: 1rem minmax(0, auto) minmax(0, 1fr);
+    align-items: center;
+    justify-content: start;
+    gap: 0.25rem;
+    min-width: 0;
+    min-height: 2.75rem;
+    font-size: 0.72rem;
+  }
+
+  .work-tiers__member-node {
+    color: var(--area-ink);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+  }
+
+  .work-tiers__plate .work-tiers__members a {
+    min-width: 0;
+    color: var(--nest-cyan);
+    text-underline-offset: 0.2em;
+  }
+
+  .work-tiers__plate .work-tiers__maturity {
+    margin-inline-start: 0;
+    color: var(--color-text-faint);
+    font-size: 0.56rem;
+  }
+
+  .work-tiers__enter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-self: start;
+    min-height: 2.75rem;
+    margin-top: 0.1rem;
+    color: var(--area-ink);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .work-tiers__enter:hover,
+  .work-tiers__enter:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .work-tiers__row {
+    border-radius: 0;
+  }
+
+  @media (width < 760px) {
+    .work-tiers__featured-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (width < 480px) {
+    .work-tiers__section-head {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .work-tiers__section-head > p {
+      text-align: left;
+    }
+
+    .work-tiers__plate {
+      grid-template-columns: 5rem minmax(0, 1fr);
+      gap: 0.65rem;
+      padding: 0.65rem;
+    }
+
+    .work-tiers__plate-art img {
+      width: min(100%, 4.5rem);
+    }
+
+    .work-tiers__lens {
+      font-size: 0.48rem;
+    }
+
+    .work-tiers__plate .work-tiers__members li {
+      grid-template-columns: 1rem minmax(0, 1fr);
+    }
+
+    .work-tiers__plate .work-tiers__maturity {
+      grid-column: 2;
+    }
   }
 </style>

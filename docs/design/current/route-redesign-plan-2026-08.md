@@ -26,6 +26,22 @@ observatory.
 
 ## Follow-up — 2026-10-06
 
+The `/projects` Work route now leads with its four canonical portfolio areas.
+Each area is rendered as a clipped atlas plate with its first-party world art,
+role maturity, and direct member links. The more granular Digital Nest route
+map follows as a second layer, then the searchable provenance-rich ledger. This
+keeps the professional portfolio hierarchy ahead of the exploration taxonomy.
+The route stylesheet limit moves one 1 KiB step from 13,312 to 14,336 bytes
+for the four responsive art plates. The final measured sheet is 13,628 bytes
+(316 bytes above the old limit); total route delivery remains well below its
+existing 256,400-byte ceiling. Against the same-day pre-change capture from
+`main@28a449e`, desktop delivery moves from 128,274 to 129,386 bytes (+1,112);
+mobile moves from 128,274 to 124,296 bytes (−3,978),
+with route JavaScript remaining at zero. Mobile image delivery drops from
+34,464 to 29,374 bytes as the professional area plates replace the map's
+above-the-fold image load. The maintained route performance baseline was
+refreshed from the same-day capture.
+
 The Create Awesome workbench now keeps its generated command beside the runtime
 and project choices while templates and addons remain directly below. The
 command dock stays visible while configuring addons; narrow phones get a

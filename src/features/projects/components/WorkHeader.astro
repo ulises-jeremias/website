@@ -1,0 +1,138 @@
+---
+import { ledgerProjects } from '../data/index.js';
+import { portfolioAreas } from '@/data/portfolio.js';
+
+const activeCount = ledgerProjects.filter((project) => project.status === 'active').length;
+---
+
+<header class="work-header">
+  <div>
+    <p class="work-header__eyebrow">Work · portfolio atlas</p>
+    <h1 id="work-title">What I build</h1>
+    <p class="work-header__lede">
+      Four areas of developer systems, scientific computing, desktop infrastructure, and project scaffolding. Each entry
+      shows my role and its current state. <a href="/open-source">Open Source</a> records ownership, maintenance, and
+      merged contributions.
+    </p>
+  </div>
+  <aside class="work-header__readout" aria-label="Portfolio readout">
+    <p>Portfolio / current index</p>
+    <dl>
+      <div>
+        <dt>Areas</dt>
+        <dd>{String(portfolioAreas.length).padStart(2, '0')}</dd>
+      </div>
+      <div>
+        <dt>Active projects</dt>
+        <dd>{String(activeCount).padStart(2, '0')}</dd>
+      </div>
+      <div>
+        <dt>Lens</dt>
+        <dd>Build · maintain · contribute</dd>
+      </div>
+    </dl>
+  </aside>
+</header>
+
+<style>
+  .work-header {
+    display: grid;
+    gap: 1.25rem;
+    width: min(100% - 2 * var(--section-padding-x), 74rem);
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(0.75rem, 2vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
+    border-block-end: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 32%, transparent);
+    border-inline-start: 2px solid var(--nest-sunset-orange);
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 7%, transparent), transparent 68%),
+      linear-gradient(180deg, color-mix(in srgb, var(--nest-violet) 4%, transparent), transparent 58%);
+  }
+
+  @media (min-width: 820px) {
+    .work-header {
+      grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr);
+      align-items: end;
+      gap: 2rem;
+    }
+  }
+
+  .work-header__eyebrow,
+  .work-header__readout > p {
+    margin: 0 0 var(--space-2);
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .work-header h1 {
+    margin: 0 0 var(--space-3);
+    font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .work-header__lede {
+    max-inline-size: 66ch;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .work-header__lede a {
+    color: var(--nest-cyan);
+    text-underline-offset: 0.2em;
+  }
+
+  .work-header__readout {
+    padding: 0.85rem 0.95rem 0.55rem;
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 32%, transparent);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-cyan) 5%, transparent), transparent);
+  }
+
+  .work-header__readout > p {
+    color: var(--nest-cyan);
+  }
+
+  .work-header__readout dl {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .work-header__readout dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding-top: 0.35rem;
+    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 18%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .work-header__readout dt,
+  .work-header__readout dd {
+    margin: 0;
+  }
+
+  .work-header__readout dt {
+    color: var(--color-text-faint);
+    text-transform: uppercase;
+  }
+
+  .work-header__readout dd {
+    color: var(--nest-paper);
+    text-align: right;
+  }
+
+  @media (width < 480px) {
+    .work-header__readout dl div:last-child {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .work-header__readout dl div:last-child dd {
+      text-align: left;
+    }
+  }
+</style>

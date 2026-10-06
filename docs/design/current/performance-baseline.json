@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-10-05T00:01:32.276Z",
+  "generatedAt": "2026-10-06T17:55:49.926Z",
   "method": "Fresh browser context per route and viewport; text resources gzip level 9; already-compressed assets use source bytes.",
   "routes": {
     "/": {
       "mobile": {
-        "total": 157964,
-        "document": 11331,
+        "total": 147958,
+        "document": 11341,
         "script": 0,
-        "style": 15519,
-        "image": 83882,
+        "style": 16159,
+        "image": 73226,
         "font": 47232,
         "other": 0,
         "requests": 14
       },
       "desktop": {
-        "total": 393416,
-        "document": 11331,
+        "total": 394644,
+        "document": 11341,
         "script": 0,
-        "style": 15519,
-        "image": 319334,
+        "style": 16159,
+        "image": 319912,
         "font": 47232,
         "other": 0,
         "requests": 23
@@ -26,20 +26,20 @@
     },
     "/about/": {
       "mobile": {
-        "total": 66345,
-        "document": 8371,
+        "total": 66802,
+        "document": 8663,
         "script": 0,
-        "style": 13340,
+        "style": 13505,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 66345,
-        "document": 8371,
+        "total": 66802,
+        "document": 8663,
         "script": 0,
-        "style": 13340,
+        "style": 13505,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -48,20 +48,20 @@
     },
     "/agentic/": {
       "mobile": {
-        "total": 64620,
-        "document": 7853,
+        "total": 65506,
+        "document": 8459,
         "script": 0,
-        "style": 12133,
+        "style": 12413,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 64620,
-        "document": 7853,
+        "total": 65506,
+        "document": 8459,
         "script": 0,
-        "style": 12133,
+        "style": 12413,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -70,42 +70,42 @@
     },
     "/dotfiles/": {
       "mobile": {
-        "total": 110771,
-        "document": 14298,
+        "total": 99804,
+        "document": 15595,
         "script": 0,
-        "style": 16573,
-        "image": 17236,
+        "style": 17743,
+        "image": 3802,
+        "font": 62664,
+        "other": 0,
+        "requests": 11
+      },
+      "desktop": {
+        "total": 214610,
+        "document": 15595,
+        "script": 0,
+        "style": 17743,
+        "image": 118608,
         "font": 62664,
         "other": 0,
         "requests": 12
-      },
-      "desktop": {
-        "total": 254569,
-        "document": 14298,
-        "script": 0,
-        "style": 16573,
-        "image": 161034,
-        "font": 62664,
-        "other": 0,
-        "requests": 13
       }
     },
     "/agentic-workstation/": {
       "mobile": {
-        "total": 117424,
-        "document": 11950,
+        "total": 118136,
+        "document": 12270,
         "script": 2410,
-        "style": 14690,
+        "style": 15082,
         "image": 3802,
         "font": 84572,
         "other": 0,
         "requests": 13
       },
       "desktop": {
-        "total": 117424,
-        "document": 11950,
+        "total": 118136,
+        "document": 12270,
         "script": 2410,
-        "style": 14690,
+        "style": 15082,
         "image": 3802,
         "font": 84572,
         "other": 0,
@@ -114,8 +114,8 @@
     },
     "/agent-toolkit/": {
       "mobile": {
-        "total": 128074,
-        "document": 18953,
+        "total": 128116,
+        "document": 18995,
         "script": 2861,
         "style": 17886,
         "image": 3802,
@@ -124,8 +124,8 @@
         "requests": 12
       },
       "desktop": {
-        "total": 128074,
-        "document": 18953,
+        "total": 128116,
+        "document": 18995,
         "script": 2861,
         "style": 17886,
         "image": 3802,
@@ -136,43 +136,43 @@
     },
     "/agentic-harness/": {
       "mobile": {
-        "total": 118954,
-        "document": 10817,
-        "script": 0,
-        "style": 13175,
+        "total": 120573,
+        "document": 11142,
+        "script": 889,
+        "style": 13580,
         "image": 3802,
         "font": 91160,
         "other": 0,
-        "requests": 11
+        "requests": 12
       },
       "desktop": {
-        "total": 118954,
-        "document": 10817,
-        "script": 0,
-        "style": 13175,
+        "total": 120573,
+        "document": 11142,
+        "script": 889,
+        "style": 13580,
         "image": 3802,
         "font": 91160,
         "other": 0,
-        "requests": 11
+        "requests": 12
       }
     },
     "/v/": {
       "mobile": {
-        "total": 175844,
-        "document": 14461,
-        "script": 0,
-        "style": 14614,
-        "image": 84105,
+        "total": 152066,
+        "document": 16558,
+        "script": 1523,
+        "style": 15488,
+        "image": 55833,
         "font": 62664,
         "other": 0,
         "requests": 14
       },
       "desktop": {
-        "total": 175844,
-        "document": 14461,
-        "script": 0,
-        "style": 14614,
-        "image": 84105,
+        "total": 152066,
+        "document": 16558,
+        "script": 1523,
+        "style": 15488,
+        "image": 55833,
         "font": 62664,
         "other": 0,
         "requests": 14
@@ -180,42 +180,42 @@
     },
     "/create-awesome/": {
       "mobile": {
-        "total": 112001,
-        "document": 27833,
+        "total": 112533,
+        "document": 29850,
         "script": 0,
-        "style": 15577,
-        "image": 5927,
+        "style": 16217,
+        "image": 3802,
         "font": 62664,
         "other": 0,
-        "requests": 11
+        "requests": 10
       },
       "desktop": {
-        "total": 115940,
-        "document": 27833,
+        "total": 112533,
+        "document": 29850,
         "script": 0,
-        "style": 15577,
-        "image": 9866,
+        "style": 16217,
+        "image": 3802,
         "font": 62664,
         "other": 0,
-        "requests": 14
+        "requests": 10
       }
     },
     "/community/": {
       "mobile": {
-        "total": 92265,
-        "document": 12010,
+        "total": 92253,
+        "document": 11991,
         "script": 0,
-        "style": 13713,
+        "style": 13720,
         "image": 3802,
         "font": 62740,
         "other": 0,
         "requests": 10
       },
       "desktop": {
-        "total": 92265,
-        "document": 12010,
+        "total": 92253,
+        "document": 11991,
         "script": 0,
-        "style": 13713,
+        "style": 13720,
         "image": 3802,
         "font": 62740,
         "other": 0,
@@ -224,43 +224,43 @@
     },
     "/blog/": {
       "mobile": {
-        "total": 64773,
-        "document": 7085,
+        "total": 64417,
+        "document": 7057,
         "script": 0,
-        "style": 13054,
+        "style": 12726,
         "image": 3802,
         "font": 40832,
         "other": 0,
-        "requests": 9
+        "requests": 8
       },
       "desktop": {
-        "total": 64773,
-        "document": 7085,
+        "total": 64417,
+        "document": 7057,
         "script": 0,
-        "style": 13054,
+        "style": 12726,
         "image": 3802,
         "font": 40832,
         "other": 0,
-        "requests": 9
+        "requests": 8
       }
     },
     "/projects/": {
       "mobile": {
-        "total": 235184,
-        "document": 11516,
+        "total": 124296,
+        "document": 12014,
         "script": 0,
-        "style": 12926,
-        "image": 141462,
+        "style": 13628,
+        "image": 29374,
         "font": 69280,
         "other": 0,
-        "requests": 16
+        "requests": 15
       },
       "desktop": {
-        "total": 235184,
-        "document": 11516,
+        "total": 129386,
+        "document": 12014,
         "script": 0,
-        "style": 12926,
-        "image": 141462,
+        "style": 13628,
+        "image": 34464,
         "font": 69280,
         "other": 0,
         "requests": 16
@@ -268,20 +268,20 @@
     },
     "/open-source/": {
       "mobile": {
-        "total": 65036,
-        "document": 8060,
+        "total": 64249,
+        "document": 7421,
         "script": 0,
-        "style": 12342,
+        "style": 12194,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 65036,
-        "document": 8060,
+        "total": 64249,
+        "document": 7421,
         "script": 0,
-        "style": 12342,
+        "style": 12194,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -290,20 +290,20 @@
     },
     "/hornero-os/": {
       "mobile": {
-        "total": 104972,
-        "document": 10723,
+        "total": 105710,
+        "document": 11256,
         "script": 0,
-        "style": 13732,
+        "style": 13937,
         "image": 17853,
         "font": 62664,
         "other": 0,
         "requests": 12
       },
       "desktop": {
-        "total": 133964,
-        "document": 10723,
+        "total": 134702,
+        "document": 11256,
         "script": 0,
-        "style": 13732,
+        "style": 13937,
         "image": 46845,
         "font": 62664,
         "other": 0,
@@ -312,20 +312,20 @@
     },
     "/sponsor/": {
       "mobile": {
-        "total": 68422,
-        "document": 10900,
+        "total": 70591,
+        "document": 12274,
         "script": 0,
-        "style": 12888,
+        "style": 13683,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 68422,
-        "document": 10900,
+        "total": 70591,
+        "document": 12274,
         "script": 0,
-        "style": 12888,
+        "style": 13683,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -334,20 +334,20 @@
     },
     "/404.html": {
       "mobile": {
-        "total": 62308,
-        "document": 6060,
+        "total": 62296,
+        "document": 6041,
         "script": 0,
-        "style": 11614,
+        "style": 11621,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 62308,
-        "document": 6060,
+        "total": 62296,
+        "document": 6041,
         "script": 0,
-        "style": 11614,
+        "style": 11621,
         "image": 3802,
         "font": 40832,
         "other": 0,

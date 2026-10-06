@@ -1,5 +1,6 @@
 ---
 import Archipelago from './Archipelago.astro';
+import WorkHeader from './WorkHeader.astro';
 import WorkTiers from './WorkTiers.astro';
 import ProofStrip from '@/shared/components/ProofStrip.astro';
 import { getGroupedLedger, ledgerProjects } from '../data/index.js';
@@ -22,9 +23,9 @@ function formatVerifiedDate(value: string): string {
 }
 ---
 
-<Archipelago />
-
+<WorkHeader />
 <WorkTiers />
+<Archipelago />
 
 <section class="projects-ledger" data-reveal aria-labelledby="projects-ledger-title" data-testid="projects-ledger">
   <div class="projects-ledger__head">

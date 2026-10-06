@@ -1,7 +1,6 @@
 ---
-import { ledgerProjects, worldPointerProjects } from '../data/index.js';
+import { worldPointerProjects } from '../data/index.js';
 import { groupLabels } from '../types/index.js';
-import { portfolioAreas } from '@/data/portfolio.js';
 
 const islandByWorld: Record<string, string> = {
   dotfiles: 'island-dotfiles',
@@ -21,35 +20,16 @@ const islands = worldPointerProjects.map((project, index) => ({
 
 <section class="archipelago" aria-labelledby="archipelago-title" data-testid="projects-archipelago">
   <header class="archipelago__header">
-    <div class="archipelago__intro">
-      <p class="archipelago__eyebrow">Work · portfolio</p>
-      <h1 id="archipelago-title">What I build</h1>
+    <div>
+      <p class="archipelago__eyebrow">Digital Nest · route map</p>
+      <h2 id="archipelago-title">Explore project worlds</h2>
       <p class="archipelago__lede">
-        My work spans agent tooling, Hornero OS, scientific computing for V, and app scaffolding. Each entry states my
-        role and maturity. <a href="/open-source">Open Source</a> documents ownership, maintenance, and merged
-        contributions.
+        The four portfolio areas branch into these dedicated project pages. Open a world for its architecture, tools,
+        and current work.
       </p>
     </div>
-    <aside class="archipelago__readout" aria-label="Work portfolio readout">
-      <p class="archipelago__readout-kicker">Portfolio readout</p>
-      <dl>
-        <div>
-          <dt>Flagship areas</dt>
-          <dd>{portfolioAreas.length}</dd>
-        </div>
-        <div>
-          <dt>Ledger records</dt>
-          <dd>{ledgerProjects.length}</dd>
-        </div>
-        <div>
-          <dt>Building now</dt>
-          <dd>Agentic stack · Hornero OS</dd>
-        </div>
-      </dl>
-    </aside>
+    <p class="archipelago__index-note">01–{String(islands.length).padStart(2, '0')} · project destinations</p>
   </header>
-
-  <p class="archipelago__index-note">01–{String(islands.length).padStart(2, '0')} · Dedicated project pages</p>
 
   <ul class="archipelago__map" role="list">
     {islands.map((island) => (
@@ -106,27 +86,13 @@ const islands = worldPointerProjects.map((project, index) => ({
 
   .archipelago__header {
     display: grid;
-    gap: 1.25rem;
-    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(0.75rem, 3vw, 2rem);
-    border-block: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 32%, transparent);
-    border-inline-start: 2px solid var(--nest-sunset-orange);
-    background: linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 7%, transparent), transparent 70%);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 1rem;
+    padding: 0 0 0.85rem;
+    border-block-end: 1px dashed color-mix(in srgb, var(--nest-violet) 42%, transparent);
   }
 
-  @media (min-width: 820px) {
-    .archipelago__header {
-      grid-template-columns: minmax(0, 1.3fr) minmax(17rem, 0.7fr);
-      align-items: end;
-    }
-  }
-
-  .archipelago__readout {
-    padding: 0.9rem 1rem;
-    border: 1px solid color-mix(in srgb, var(--nest-cyan) 38%, transparent);
-    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
-  }
-
-  .archipelago__readout-kicker,
   .archipelago__index-note {
     margin: 0;
     color: var(--nest-cyan);
@@ -134,63 +100,6 @@ const islands = worldPointerProjects.map((project, index) => ({
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-  }
-
-  .archipelago__readout dl {
-    display: grid;
-    gap: 0.45rem;
-    margin: 0.65rem 0 0;
-  }
-
-  .archipelago__readout dl div {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding-top: 0.4rem;
-    border-top: 1px solid color-mix(in srgb, var(--nest-cyan) 22%, transparent);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
-
-  .archipelago__readout dt,
-  .archipelago__readout dd {
-    margin: 0;
-  }
-
-  .archipelago__readout dt {
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-  }
-
-  .archipelago__readout dd {
-    color: var(--color-text);
-    text-align: right;
-  }
-
-  @media (width < 600px) {
-    .archipelago__readout dl {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.45rem 0.9rem;
-    }
-
-    .archipelago__readout dl div {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.2rem;
-    }
-
-    .archipelago__readout dl div:last-child {
-      grid-column: 1 / -1;
-      flex-direction: row;
-      align-items: baseline;
-    }
-  }
-
-  .archipelago__index-note {
-    margin-top: 1.5rem;
-    padding-bottom: 0.55rem;
-    border-bottom: 1px dashed var(--color-border);
-    color: var(--nest-sunset-orange);
   }
 
   .archipelago__eyebrow {
@@ -202,8 +111,8 @@ const islands = worldPointerProjects.map((project, index) => ({
     color: var(--nest-sunset-orange);
   }
 
-  .archipelago__intro h1 {
-    margin: 0 0 var(--space-3);
+  .archipelago__header h2 {
+    margin: 0 0 0.4rem;
     font-size: clamp(1.55rem, 3.4vw, 2.15rem);
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -301,13 +210,11 @@ const islands = worldPointerProjects.map((project, index) => ({
     color: color-mix(in srgb, var(--nest-violet) 55%, transparent);
   }
 
-  @media (width < 960px) {
-    .archipelago__map {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
   @media (width < 640px) {
+    .archipelago__header {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .archipelago__map {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
