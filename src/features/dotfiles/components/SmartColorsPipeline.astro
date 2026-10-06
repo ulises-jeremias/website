@@ -10,11 +10,23 @@ import { verifiedFacts } from '../data/index.js';
     </div>
     <a href={verifiedFacts.smartColorsWikiUrl} target="_blank" rel="noopener noreferrer">
       Read the system contract <span aria-hidden="true">↗</span>
-      <span class="sr-only"> (opens in new tab)</span>
+      <span class="visually-hidden"> (opens in new tab)</span>
     </a>
   </figcaption>
 
-  <div class="df-color-flow__source">
+  <div class="df-color-flow__controls" data-df-flow-controls hidden>
+    <span>Trace a system path</span>
+    <button type="button" data-df-flow="live">
+      Shell running · Quickshell IPC
+    </button>
+    <button type="button" data-df-flow="fallback">
+      Shell stopped · palette fallback
+    </button>
+  </div>
+
+  <p class="visually-hidden" role="status" aria-atomic="true" data-df-flow-status></p>
+
+  <div class="df-color-flow__source" data-df-flow-source>
     <span class="df-color-flow__step">01 · SOURCE</span>
     <span class="df-color-flow__wallpaper" aria-hidden="true">
       <span></span>
@@ -33,21 +45,33 @@ import { verifiedFacts } from '../data/index.js';
   </div>
 
   <div class="df-color-flow__routes">
-    <section class="df-color-flow__route df-color-flow__route--live" aria-labelledby="df-colors-live-title">
+    <section
+      class="df-color-flow__route df-color-flow__route--live"
+      aria-labelledby="df-colors-live-title"
+      data-df-flow-route="live"
+    >
       <p class="df-color-flow__step">02A · SHELL RUNNING</p>
       <h3 id="df-colors-live-title">Quickshell IPC</h3>
       <p>
         <code>appearance setWallpaper</code> refreshes the active shell.
       </p>
-      <span class="df-color-flow__output">Colours.qml reload</span>
+      <span class="df-color-flow__output" data-df-flow-output>
+        Colours.qml reload
+      </span>
     </section>
-    <section class="df-color-flow__route df-color-flow__route--fallback" aria-labelledby="df-colors-fallback-title">
+    <section
+      class="df-color-flow__route df-color-flow__route--fallback"
+      aria-labelledby="df-colors-fallback-title"
+      data-df-flow-route="fallback"
+    >
       <p class="df-color-flow__step">02B · SHELL STOPPED</p>
       <h3 id="df-colors-fallback-title">Apply the palette fallback</h3>
       <p>
         <code>apply-appearance.sh</code> runs pywal and generates Material 3 colors.
       </p>
-      <span class="df-color-flow__output">scheme.json · scheme state · GTK policy</span>
+      <span class="df-color-flow__output" data-df-flow-output>
+        scheme.json · scheme state · GTK policy
+      </span>
     </section>
   </div>
 
@@ -56,6 +80,98 @@ import { verifiedFacts } from '../data/index.js';
     Colors cache.
   </p>
 </figure>
+
+<script>
+  const routeCopy = {
+    live: {
+      source: 'Wallpaper selected with horneroctl.',
+      route: 'Quickshell is running. appearance setWallpaper refreshes the active shell.',
+      output: 'Colours.qml reload.',
+    },
+    fallback: {
+      source: 'Wallpaper selected with horneroctl.',
+      route: 'Quickshell is stopped. apply-appearance.sh runs pywal and generates Material 3 colors.',
+      output: 'scheme.json, scheme state, and GTK policy.',
+    },
+  } as const;
+
+  document.querySelectorAll<HTMLElement>('.df-color-flow').forEach((flow) => {
+    const controls = flow.querySelector<HTMLElement>('[data-df-flow-controls]');
+    const source = flow.querySelector<HTMLElement>('[data-df-flow-source]');
+    const status = flow.querySelector<HTMLElement>('[data-df-flow-status]');
+    const buttons = Array.from(flow.querySelectorAll<HTMLButtonElement>('[data-df-flow]'));
+    const routes = Array.from(flow.querySelectorAll<HTMLElement>('[data-df-flow-route]'));
+    if (!controls || !source || !status || buttons.length !== 2 || routes.length !== 2) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timer: number | undefined;
+    let activePath: keyof typeof routeCopy | undefined;
+
+    const reset = () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      timer = undefined;
+      activePath = undefined;
+      flow.dataset.traceState = 'idle';
+      source.classList.remove('is-active');
+      routes.forEach((route) => {
+        route.classList.remove('is-active', 'is-complete');
+        route.querySelector('[data-df-flow-output]')?.classList.remove('is-active');
+      });
+    };
+
+    const complete = (route: HTMLElement, path: (typeof routeCopy)[keyof typeof routeCopy]) => {
+      route.classList.add('is-complete');
+      flow.dataset.traceState = 'complete';
+      status.textContent = `Path complete. ${path.route} ${path.output} Both branches read the same wallpaper state.`;
+      timer = undefined;
+    };
+
+    const trace = (button: HTMLButtonElement) => {
+      const id = button.dataset.dfFlow as keyof typeof routeCopy;
+      const path = routeCopy[id];
+      const route = routes.find((candidate) => candidate.dataset.dfFlowRoute === id);
+      if (!path || !route) return;
+
+      reset();
+      activePath = id;
+      flow.dataset.traceState = 'running';
+      source.classList.add('is-active');
+      status.textContent = path.source;
+
+      if (reduceMotion.matches) {
+        route.classList.add('is-active');
+        route.querySelector('[data-df-flow-output]')?.classList.add('is-active');
+        complete(route, path);
+        return;
+      }
+
+      timer = window.setTimeout(() => {
+        route.classList.add('is-active');
+        status.textContent = path.route;
+        timer = window.setTimeout(() => {
+          route.querySelector('[data-df-flow-output]')?.classList.add('is-active');
+          complete(route, path);
+          timer = undefined;
+        }, 560);
+      }, 700);
+    };
+
+    buttons.forEach((button) => button.addEventListener('click', () => trace(button)));
+    reduceMotion.addEventListener('change', (event) => {
+      if (!event.matches || !activePath || flow.dataset.traceState !== 'running') return;
+      const path = routeCopy[activePath];
+      const route = routes.find((candidate) => candidate.dataset.dfFlowRoute === activePath);
+      if (!route) return;
+      if (timer !== undefined) window.clearTimeout(timer);
+      timer = undefined;
+      source.classList.add('is-active');
+      route.classList.add('is-active');
+      route.querySelector('[data-df-flow-output]')?.classList.add('is-active');
+      complete(route, path);
+    });
+    controls.hidden = false;
+  });
+</script>
 
 <style>
   .df-color-flow {
@@ -116,6 +232,70 @@ import { verifiedFacts } from '../data/index.js';
     padding: 0.75rem;
     border: 1px solid color-mix(in srgb, var(--flow-accent) 30%, transparent);
     background: color-mix(in srgb, var(--dotfiles-plum-soft, #241a1f) 78%, transparent);
+    transition:
+      border-color var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out),
+      box-shadow var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out),
+      background-color var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out);
+  }
+
+  .df-color-flow__source.is-active,
+  .df-color-flow__route.is-active {
+    border-color: var(--flow-accent);
+    box-shadow: 0 0 1.25rem color-mix(in srgb, var(--flow-accent) 22%, transparent);
+    background-color: color-mix(in srgb, var(--flow-accent) 10%, #191114);
+  }
+
+  .df-color-flow__route.is-active::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    content: '';
+    background: var(--route-accent);
+    transform-origin: top;
+    animation: df-flow-ignite 560ms var(--motion-ease-out, ease-out) both;
+  }
+
+  .df-color-flow__route.is-complete .df-color-flow__output {
+    color: white;
+    text-shadow: 0 0 0.75rem var(--route-accent);
+  }
+
+  .df-color-flow__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.25rem;
+  }
+
+  .df-color-flow__controls[hidden] {
+    display: none;
+  }
+
+  .df-color-flow__controls > span {
+    margin-inline-end: 0.2rem;
+    color: var(--dotfiles-text-muted, #c9a8b2);
+    font: 0.64rem/1.4 var(--font-mono, monospace);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .df-color-flow__controls button {
+    min-height: 44px;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--flow-accent) 45%, transparent);
+    background: color-mix(in srgb, var(--dotfiles-plum-soft, #241a1f) 80%, transparent);
+    color: var(--color-text, #f8fafc);
+    font: 0.64rem/1.4 var(--font-mono, monospace);
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .df-color-flow__controls button:hover,
+  .df-color-flow__controls button:focus-visible {
+    border-color: var(--flow-accent);
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 
   .df-color-flow__source {
@@ -226,6 +406,9 @@ import { verifiedFacts } from '../data/index.js';
     color: var(--route-accent);
     font: 0.65rem/1.45 var(--font-mono, monospace);
     overflow-wrap: anywhere;
+    transition:
+      color var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out),
+      text-shadow var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out);
   }
 
   .df-color-flow__note {
@@ -250,6 +433,30 @@ import { verifiedFacts } from '../data/index.js';
     .df-color-flow__output,
     .df-color-flow__step {
       color: CanvasText;
+    }
+  }
+
+  @keyframes df-flow-ignite {
+    from {
+      transform: scaleY(0.08);
+      opacity: 0.35;
+    }
+    to {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .df-color-flow__source,
+    .df-color-flow__route,
+    .df-color-flow__output {
+      transition: none;
+    }
+
+    .df-color-flow__route.is-active::before {
+      animation: none;
+      transform: none;
     }
   }
 </style>
