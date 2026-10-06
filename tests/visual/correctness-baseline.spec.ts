@@ -180,6 +180,74 @@ test.describe('PR 1 correctness baseline', () => {
     await expect(page.locator('#ca-runtime-inspector .vf-inspector__title')).toHaveText('create-awesome-python-app');
   });
 
+  test('Create Awesome moves a selected composition through its assembly line', async ({ page }) => {
+    await page.goto('/create-awesome');
+
+    const world = page.locator('[data-ca-world]');
+    const packageParcel = page.locator('[data-ca-package]');
+    const initialParcelX = (await packageParcel.boundingBox())?.x ?? 0;
+    await selectRadio(page, '[data-ca-station="rust"]');
+    await expect(page.locator('[data-ca-module-value="runtime"]')).toHaveText('Rust');
+    await expect(page.locator('[data-ca-flow-value="runtime"]')).toHaveText('Rust');
+    await expect
+      .poll(async () => (await packageParcel.boundingBox())?.x ?? initialParcelX)
+      .toBeGreaterThan(initialParcelX + 40);
+
+    const rustPanel = page.locator('[data-ca-panel="rust"]');
+    await rustPanel.locator('[data-ca-template]').selectOption({ index: 1 });
+    const selectedTemplate = await rustPanel.locator('[data-ca-template]').inputValue();
+    await rustPanel.locator('[data-ca-addon]:not(:disabled)').first().check();
+    await expect(page.locator('[data-ca-flow-value="addons"]')).toHaveText('1 selected');
+    await expect(world).toHaveAttribute('data-ca-animating', 'true');
+    await expect
+      .poll(() =>
+        packageParcel.evaluate(
+          (element) => element.getAnimations().filter((animation) => animation.playState === 'running').length,
+        ),
+      )
+      .toBeGreaterThan(0);
+    await expect(page.locator('[data-ca-step="app"]')).toHaveClass(/is-current/, { timeout: 3000 });
+    await expect(page.locator('[data-ca-module-value="template"]')).toHaveText(selectedTemplate);
+  });
+
+  test('Create Awesome keeps the composition path still when reduced motion is preferred', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/create-awesome');
+
+    await selectRadio(page, '[data-ca-station="python"]');
+
+    await expect(page.locator('[data-ca-module-value="runtime"]')).toHaveText('Python');
+    await expect(page.locator('[data-ca-flow-value="runtime"]')).toHaveText('Python');
+    await expect(page.locator('[data-ca-world]')).not.toHaveAttribute('data-ca-animating', 'true');
+    await expect
+      .poll(() =>
+        page
+          .locator('[data-ca-package]')
+          .evaluate(
+            (element) => element.getAnimations().filter((animation) => animation.playState === 'running').length,
+          ),
+      )
+      .toBe(0);
+  });
+
+  test('Create Awesome advances its readable stage sequence on mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/create-awesome');
+    await page.locator('.ca-world__stage').scrollIntoViewIfNeeded();
+
+    await selectRadio(page, '[data-ca-station="v"]');
+
+    await expect(page.locator('[data-ca-flow-value="runtime"]')).toHaveText('V');
+    await expect(page.locator('[data-ca-step="runtime"]')).toHaveClass(/is-current/);
+    await expect(page.locator('.ca-world__line')).toBeHidden();
+    await expect
+      .poll(() => page.locator('[data-ca-step="template"]').getAttribute('class'), { timeout: 1500 })
+      .toContain('is-current');
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))
+      .toBe(true);
+  });
+
   test('Create Awesome keeps the static fallback if enhancement initialization fails', async ({ page }) => {
     await page.addInitScript(() => {
       const original = EventTarget.prototype.addEventListener;
