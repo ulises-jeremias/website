@@ -106,8 +106,7 @@ const composerBootstrap = {
     data-ca-bootstrap={JSON.stringify(composerBootstrap)}
     hidden
   >
-    {/* Runtime radios stay in the form for command state; embedded worlds expose stations instead. */}
-    {/* Proxied radios stay in the form for command state but leave the a11y tree when embedded. */}
+    {/* Embedded worlds use one native family select here and sync the map stations to its state. */}
     <fieldset
       class:list={[{ 'ca-composer__runtime--proxy': embedded }]}
       inert={embedded || undefined}
@@ -130,6 +129,15 @@ const composerBootstrap = {
         </>
       ))}
     </fieldset>
+
+    <label class="ca-composer__family-select" hidden={!embedded}>
+      Runtime
+      <select data-ca-family-select aria-label="Runtime">
+        {variants.map((variant) => (
+          <option value={variant.id}>{variant.label}</option>
+        ))}
+      </select>
+    </label>
 
     <label class="ca-composer__project">
       Project name
@@ -244,6 +252,7 @@ const composerBootstrap = {
     const root = form.closest('[data-ca-composer-root]');
     const fallback = root && root.querySelector('[data-ca-static-fallback]');
     const embedded = root && root.getAttribute('data-ca-embedded') === 'true';
+    const familySelect = form.querySelector('[data-ca-family-select]');
 
     let composerBootstrap;
     try {
@@ -459,6 +468,7 @@ const composerBootstrap = {
 
     function refresh(preferredAddon, announce, animate = announce) {
       const family = activeFamily();
+      if (familySelect && familySelect.value !== family) familySelect.value = family;
       syncPanels(family);
       const removed = applyCompatibility(family, preferredAddon);
       const projectInput = form.querySelector('[data-ca-project]');
@@ -501,6 +511,14 @@ const composerBootstrap = {
       form.addEventListener('change', function (event) {
         const target = event.target;
         if (!target || !target.matches) return;
+        if (target.matches('[data-ca-family-select]')) {
+          const radio = form.querySelector('#ca-runtime-' + CSS.escape(target.value));
+          if (radio && !radio.checked) {
+            radio.checked = true;
+            radio.dispatchEvent(new CustomEvent('change', { bubbles: true, detail: { animate: true } }));
+          }
+          return;
+        }
         const preferred = target.matches('[data-ca-addon]:checked') ? target.value : undefined;
         const detail = event instanceof CustomEvent ? event.detail : undefined;
         refresh(preferred, true, detail && typeof detail.animate === 'boolean' ? detail.animate : true);
@@ -746,6 +764,17 @@ const composerBootstrap = {
     gap: 0.35rem;
     margin: 0 0 1rem;
     font-size: 0.9rem;
+  }
+
+  .ca-composer__family-select {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+  }
+
+  .ca-composer__family-select[hidden] {
+    display: none;
   }
 
   .ca-composer__project input,

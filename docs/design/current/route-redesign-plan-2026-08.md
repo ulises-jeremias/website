@@ -54,6 +54,14 @@ Redesign V and Create Awesome around a laboratory bench and a real assembly-line
 workbench. Preserve hashes, static station indexes, compatibility data, and
 no-JavaScript content.
 
+The Create Awesome route places its live template + addon composer immediately
+after the hero so the generated project command is the primary interactive
+experience. The assembly line remains as the supporting family map, and its
+native runtime selector stays with the composer while remaining synchronized
+with the family stations. Runtime commands are labeled as project creation or
+CLI installation according to what they actually do. Provenance and catalog
+totals follow the composer as supporting family evidence.
+
 ### C — Workshop and editorial
 
 Redesign Community and Blog so their visual language no longer resembles a
