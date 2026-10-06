@@ -42,8 +42,11 @@ current Linux browser renders; the captures were reviewed at 390px and preserve
 the intended route hierarchy and readable wrapping. PR #464 then updated the
 navigation accessible name and V repository-link target. PR #467 adds the
 manifest-driven Create Awesome composition sequence; PR #468 adds an on-demand
-trace through Hornero OS's actual manifest. Both keep a complete static fallback
-and respect reduced motion. At `main@78d6822`, build, tests, type-check, lint,
+trace through Hornero OS's actual manifest. The Hornero OS trace now announces
+each pinned, local, or future manifest entry to assistive technology, animates
+the active row, and holds the final reserved-slot state long enough to read.
+Both interactions keep a complete static fallback and respect reduced motion.
+At `main@78d6822`, build, tests, type-check, lint,
 browser quality (531 Playwright tests plus Lighthouse CI), deployment smoke, and
 the route budgets pass. Other goldens remain unchanged.
 
