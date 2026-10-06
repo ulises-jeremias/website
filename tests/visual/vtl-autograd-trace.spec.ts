@@ -59,7 +59,12 @@ test.describe('VTL autograd trace', () => {
     await expect(scene.locator('[data-vtl-edge][data-pass="reverse"]')).toHaveCount(3);
     await expect(scene.locator('.vtl-trace__mobile-flow')).toBeVisible();
     await expect(scene.locator('.vtl-trace__mobile-flow')).toContainText('∂L/∂w = x');
-    await expect(scene.locator('.vtl-trace__mobile-flow')).toHaveCSS('flex-direction', 'column-reverse');
+    await expect(scene.locator('.vtl-trace__mobile-flow')).toHaveCSS('flex-direction', 'column');
+    await expect(scene.locator('.vtl-trace__mobile-arrow').first()).toHaveCSS(
+      'transform',
+      'matrix(-1, 0, 0, -1, 0, 0)',
+    );
+    await expect(scene).toHaveScreenshot('vtl-autograd-mobile-reverse.png');
   });
 });
 
