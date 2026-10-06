@@ -155,7 +155,9 @@ const profilePageJsonLd = {
             <a href="/open-source">Trace the open-source work</a>
           </nav>
         </div>
+      </header>
 
+      <section class="about-trajectory" aria-labelledby="about-trajectory-title">
         <nav class="about-path" aria-label="Build trajectory" data-testid="about-build-path">
           <p class="about-path__label">One thread through the work</p>
           <p class="about-path__thesis">Make every layer easier to work with.</p>
@@ -170,9 +172,6 @@ const profilePageJsonLd = {
             ))}
           </ol>
         </nav>
-      </header>
-
-      <section class="about-trajectory" aria-labelledby="about-trajectory-title">
         <header class="about-section-heading">
           <p class="about-page__kicker">From the workstation outward</p>
           <h2 id="about-trajectory-title">The systems I build</h2>
@@ -320,3 +319,67 @@ const profilePageJsonLd = {
     </div>
   </div>
 </SectionLayout>
+
+<script>
+  const path = document.querySelector<HTMLElement>('.about-path');
+  const stations = Array.from(document.querySelectorAll<HTMLElement>('.about-station[id^="trajectory-"]'));
+
+  if (path && stations.length > 0) {
+    const stops = new Map(
+      Array.from(path.querySelectorAll<HTMLElement>('.about-path__stop')).map((stop) => {
+        const link = stop.querySelector<HTMLAnchorElement>('a[href^="#trajectory-"]');
+        return [link?.hash.slice(1), stop] as const;
+      }),
+    );
+    const hasMatchingStops = stations.every((station) => stops.has(station.id));
+
+    if (hasMatchingStops) {
+      let currentStage: string | undefined;
+      let scheduledFrame: number | undefined;
+
+      const updateCurrentStage = () => {
+        scheduledFrame = undefined;
+        const readingLine = window.innerHeight * 0.55;
+        let nextStage: string | undefined;
+
+        for (const station of stations) {
+          const bounds = station.getBoundingClientRect();
+          if (bounds.top > readingLine) break;
+          nextStage = station.id;
+        }
+
+        if (nextStage === currentStage) return;
+        currentStage = nextStage;
+
+        for (const station of stations) {
+          if (station.id === currentStage) {
+            station.dataset.current = 'true';
+          } else {
+            delete station.dataset.current;
+          }
+        }
+
+        for (const [stage, stop] of stops) {
+          const link = stop.querySelector('a');
+          if (stage === currentStage) {
+            stop.dataset.current = 'true';
+            link?.setAttribute('aria-current', 'step');
+          } else {
+            delete stop.dataset.current;
+            link?.removeAttribute('aria-current');
+          }
+        }
+      };
+
+      const scheduleUpdate = () => {
+        if (scheduledFrame === undefined) {
+          scheduledFrame = window.requestAnimationFrame(updateCurrentStage);
+        }
+      };
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate, { passive: true });
+      scheduleUpdate();
+    }
+  }
+</script>

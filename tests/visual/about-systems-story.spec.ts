@@ -32,7 +32,7 @@ test.describe('About systems-builder story', () => {
         items.map((item) => Math.round(item.getBoundingClientRect().top)),
       );
       expect(stopTops).toEqual([...stopTops].sort((a, b) => a - b));
-      expect(new Set(stopTops).size).toBe(width <= 1120 ? 5 : 1);
+      expect(new Set(stopTops).size).toBe(5);
 
       const stations = page.getByTestId('about-trajectory').locator(':scope > li');
       await expect(stations).toHaveCount(5);
@@ -72,5 +72,70 @@ test.describe('About systems-builder story', () => {
     expect(outline.style).not.toBe('none');
     expect(outline.width).toBeGreaterThanOrEqual(2);
     await expect(page.getByTestId('about-trajectory').locator(':scope > li')).toHaveCount(5);
+  });
+
+  test('tracks the stage at the reading line without moving the page and supports reduced motion', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/about');
+
+    const path = page.getByTestId('about-build-path');
+    const stations = page.getByTestId('about-trajectory').locator(':scope > li');
+    const stops = path.locator('.about-path__stop');
+    await expect(stops).toHaveCount(5);
+    await expect(stops.locator('[aria-current="step"]')).toHaveCount(0);
+
+    for (const station of await stations.all()) {
+      const stageId = (await station.getAttribute('id'))!;
+      await station.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+      const scrollAtStage = await page.evaluate(() => window.scrollY);
+      await expect(path.locator(`a[href="#${stageId}"]`)).toHaveAttribute('aria-current', 'step');
+      await expect(page.locator('.about-station[data-current="true"]')).toHaveCount(1);
+      await expect(station).toHaveAttribute('data-current', 'true');
+      expect(await page.evaluate(() => window.scrollY)).toBe(scrollAtStage);
+
+      const documentWidth = await page.locator('body').evaluate((element) => element.scrollWidth);
+      expect(documentWidth).toBeLessThanOrEqual(320);
+      const transitionDuration = await path
+        .locator(`a[href="#${stageId}"] .about-path__node`)
+        .evaluate((element) => Number.parseFloat(getComputedStyle(element).transitionDuration));
+      expect(transitionDuration).toBeLessThanOrEqual(0.001);
+    }
+  });
+
+  test('keeps the active route map beside the reading path on wide screens', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/about');
+
+    const path = page.getByTestId('about-build-path');
+    await expect(path).toHaveCSS('position', 'sticky');
+    const stations = await page.getByTestId('about-trajectory').locator(':scope > li').all();
+    for (const station of stations) {
+      const stageId = (await station.getAttribute('id'))!;
+      await station.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+      await expect(path.locator(`a[href="#${stageId}"]`)).toHaveAttribute('aria-current', 'step');
+      await expect(station).toHaveAttribute('data-current', 'true');
+    }
+
+    const [pathTop, headerBottom] = await Promise.all([
+      path.evaluate((element) => element.getBoundingClientRect().top),
+      page.getByTestId('site-header').evaluate((element) => element.getBoundingClientRect().bottom),
+    ]);
+    expect(pathTop).toBeGreaterThanOrEqual(headerBottom);
+    expect(pathTop).toBeLessThan(100);
+  });
+
+  test('keeps every trajectory link usable without JavaScript', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto('/about');
+
+    const path = page.getByTestId('about-build-path');
+    await expect(path.getByRole('link')).toHaveCount(5);
+    await expect(path.locator('[aria-current="step"]')).toHaveCount(0);
+    await expect(page.getByTestId('about-trajectory').locator(':scope > li')).toHaveCount(5);
+
+    await context.close();
   });
 });
