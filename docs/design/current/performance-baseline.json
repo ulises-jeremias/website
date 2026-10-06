@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T18:30:39.141Z",
+  "generatedAt": "2026-10-06T19:10:04.463Z",
   "method": "Fresh browser context per route and viewport; text resources gzip level 9; already-compressed assets use source bytes.",
   "routes": {
     "/": {
@@ -26,20 +26,20 @@
     },
     "/about/": {
       "mobile": {
-        "total": 66802,
-        "document": 8663,
+        "total": 67056,
+        "document": 8777,
         "script": 0,
-        "style": 13505,
+        "style": 13645,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 66802,
-        "document": 8663,
+        "total": 67056,
+        "document": 8777,
         "script": 0,
-        "style": 13505,
+        "style": 13645,
         "image": 3802,
         "font": 40832,
         "other": 0,

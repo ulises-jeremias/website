@@ -197,3 +197,22 @@ CI/local renderers vary mobile scene height by one or two pixels due to text
 metrics. The desktop golden remains; mobile coverage asserts the vertical flow,
 input/output equations, reverse-gradient values, and zero autonomous movement
 before and after interaction. The focused mobile smoke suite checks route reflow.
+
+## About reading-path motion — 2026-10-06
+
+The About story now traces the active systems-builder station through its
+five-stage map. As the reader moves through the story, a restrained color path
+extends to the current waypoint; the station's diamond and heading transition
+into the active state. This is reading-position feedback, not an autonomous
+timeline or a claim that the projects depended on one another. At mobile widths,
+the active station marker carries the feedback alongside the text because the
+map is intentionally not pinned over the reading area.
+
+The full story and map remain static HTML and work without JavaScript. Reduced
+motion removes the transitions while keeping the current stage and progress
+state. Desktop and mobile active-station captures cover the changed composition;
+the focused browser spec checks forward and reverse progress, real transition
+timing, 320px reflow, reduced motion, forced colors, and the no-JavaScript path.
+The `/about/` baseline moves from 66,802 to 67,056 bytes (+254: 114 document
+and 140 stylesheet), with no new image, request, or external script payload;
+the route remains below its existing budget.
