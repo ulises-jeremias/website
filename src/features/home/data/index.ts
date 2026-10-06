@@ -11,7 +11,7 @@ export const islandArtByWorldId: Record<string, string> = {
   toolkit: 'island-agent',
   harness: 'island-harness',
   v: 'island-v',
-  'create-awesome': 'island-scaffold',
+  'create-awesome': 'island-assembly-workshop',
   community: 'island-community',
   blog: 'island-blog',
   projects: 'island-projects-neon',
@@ -110,7 +110,7 @@ const featuredAreaVisuals: Record<FeaturedArea['id'], { accent: FeaturedArea['ac
   agentic: { accent: 'violet', island: 'island-agent' },
   hornero: { accent: 'magenta', island: 'island-dotfiles' },
   'v-ecosystem': { accent: 'blue', island: 'island-v' },
-  'create-awesome': { accent: 'orange', island: 'island-scaffold' },
+  'create-awesome': { accent: 'orange', island: 'island-assembly-workshop' },
 };
 
 export const featuredAreas: FeaturedArea[] = getHomepagePortfolioAreas().map((area) => {

@@ -150,3 +150,13 @@ as JavaScript: 889 gzipped bytes. Harness remains at 120,565 bytes total against
 its existing 127,278-byte route ceiling. Its script budget is now 1 KiB, and the
 CSS budget moves one 1 KiB step to 14 KiB for the control, focus, reduced-motion,
 and forced-colors states; the measured stylesheet is 13,570 bytes.
+
+## Create Awesome atlas art — 2026-10-06
+
+The Create Awesome world now uses an assembly-workshop island across the home
+atlas, featured portfolio portal, Work map, and social card. Cyan template
+modules and magenta add-ons feed a completed orange application artifact, so
+the art communicates the project's composition model at a glance. The source is
+first-party image-generation output, recorded with its reference and repeatable
+responsive asset pipeline in `docs/design/current/social-assets.md`. Its 640px
+WebP is 45 KiB, the 440px WebP is 24 KiB, and the 192px thumbnail is 5.9 KiB.
