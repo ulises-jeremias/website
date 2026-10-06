@@ -19,8 +19,10 @@ const accentTokens = {
 } as const;
 const islandSrc = `/assets/nest/${world.island}.webp`;
 const islandSrcSm = `/assets/nest/${world.island}-sm.webp`;
-const islandPng = `/assets/${world.island}.png`;
+const islandPngSrcSet = `/assets/${world.island}-220.png 220w, /assets/${world.island}-440.png 440w`;
+const islandPng = `/assets/${world.island}-220.png`;
 const islandSmallWidth = world.island === 'island-harness' ? 320 : 440;
+const islandSizes = '(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px';
 const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-frame-accent' : 'neon-frame';
 ---
 
@@ -41,11 +43,8 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
   <span class="atlas-world__platform" aria-hidden="true">
     <span class="atlas-world__glow"></span>
     <picture class="atlas-world__visual">
-      <source
-        type="image/webp"
-        srcset={`${islandSrcSm} ${islandSmallWidth}w, ${islandSrc} 640w`}
-        sizes="(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px"
-      />
+      <source type="image/webp" srcset={`${islandSrcSm} ${islandSmallWidth}w, ${islandSrc} 640w`} sizes={islandSizes} />
+      <source type="image/png" srcset={islandPngSrcSet} sizes={islandSizes} />
       <img
         class="atlas-world__island art-fade"
         src={islandPng}

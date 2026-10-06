@@ -39,9 +39,14 @@ const accentTokens = {
                 srcset={`/assets/nest/${area.island}-192.webp 192w, /assets/nest/${area.island}.webp 640w`}
                 sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
               />
+              <source
+                type="image/png"
+                srcset={`/assets/${area.island}-220.png 220w, /assets/${area.island}-440.png 440w`}
+                sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
+              />
               <img
                 class="art-fade"
-                src={`/assets/${area.island}.png`}
+                src={`/assets/${area.island}-220.png`}
                 width="96"
                 height="96"
                 alt=""

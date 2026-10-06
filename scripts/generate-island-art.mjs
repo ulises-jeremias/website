@@ -63,31 +63,33 @@ for (const source of sources) {
     console.log(`island-art: wrote ${path.relative(root, output)}`);
   }
 
-  const fallback = path.join(fallbackRoot, `${base}.png`);
-  const result = spawnSync(
-    magick,
-    [
-      input,
-      ...(sourceCrops[base] ? ['-crop', sourceCrops[base], '+repage'] : []),
-      '-gravity',
-      'center',
-      '-background',
-      'none',
-      '-extent',
-      '1800x1800',
-      '-resize',
-      '640x640',
-      '-strip',
-      '-define',
-      'png:compression-level=9',
-      fallback,
-    ],
-    { encoding: 'utf8' },
-  );
-  if (result.status !== 0) {
-    throw new Error(result.stderr || `ImageMagick could not create ${fallback}`);
+  for (const size of [220, 440]) {
+    const fallback = path.join(fallbackRoot, `${base}-${size}.png`);
+    const result = spawnSync(
+      magick,
+      [
+        input,
+        ...(sourceCrops[base] ? ['-crop', sourceCrops[base], '+repage'] : []),
+        '-gravity',
+        'center',
+        '-background',
+        'none',
+        '-extent',
+        '1800x1800',
+        '-resize',
+        `${size}x${size}`,
+        '-strip',
+        '-define',
+        'png:compression-level=9',
+        fallback,
+      ],
+      { encoding: 'utf8' },
+    );
+    if (result.status !== 0) {
+      throw new Error(result.stderr || `ImageMagick could not create ${fallback}`);
+    }
+    console.log(`island-art: wrote ${path.relative(root, fallback)}`);
   }
-  console.log(`island-art: wrote ${path.relative(root, fallback)}`);
 }
 
 console.log(`Generated ${sources.length} responsive atlas island source(s).`);
