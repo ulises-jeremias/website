@@ -25,13 +25,13 @@ test.describe('Agentic Developer Stack system map', () => {
     expect(overflow).toBe(false);
   });
 
-  test('keeps the map and all entry paths readable without JavaScript at mobile width', async ({ page }) => {
-    await page.route('**/*.js', (route) => route.abort());
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.setViewportSize({ width: 390, height: 844 });
+  test('keeps the map and all entry paths readable without JavaScript at mobile width', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 320, height: 844 } });
+    const page = await context.newPage();
     await page.goto('/agentic');
 
     const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
+    await expect(map.getByRole('button', { name: 'Trace a workflow' })).toBeHidden();
     const stations = map.getByRole('article');
     await expect(stations).toHaveCount(3);
     await expect(map.getByText('can install', { exact: true })).toBeVisible();
@@ -49,5 +49,41 @@ test.describe('Agentic Developer Stack system map', () => {
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
     );
     expect(overflow).toBe(false);
+    await context.close();
+  });
+
+  test('traces the real optional relationships on request', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/agentic');
+
+    const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
+    const stations = map.locator('.agentic-map__station');
+    const links = map.locator('.agentic-map__link');
+    const status = map.locator('[data-agentic-trace-status]');
+
+    const traceButton = map.getByRole('button', { name: 'Trace a workflow' });
+    await traceButton.focus();
+    await expect(traceButton).toBeFocused();
+    await traceButton.press('Enter');
+    await expect(map).toHaveAttribute('data-trace-state', 'running');
+    await expect(stations.nth(0)).toHaveClass(/is-current/);
+    await expect(status).toContainText('HOST · MACHINE');
+    await expect(stations.nth(1)).toHaveClass(/is-current/, { timeout: 1500 });
+    await expect(links.nth(0)).toHaveClass(/is-current/);
+    await expect(map).toHaveAttribute('data-trace-state', 'complete', { timeout: 3000 });
+    await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(3);
+    await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(2);
+    await expect(status).toContainText('extensions remain optional');
+  });
+
+  test('keeps the system map static with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/agentic');
+
+    const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
+    await map.getByRole('button', { name: 'Trace a workflow' }).click();
+    await expect(map).toHaveAttribute('data-trace-state', 'complete');
+    await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(3);
+    await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(2);
   });
 });
