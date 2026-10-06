@@ -1,4 +1,4 @@
-function init (root) {
+const init = (root) => {
   const live = root.querySelector('[data-v-scene-live]')
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   const svg = root.querySelector('.vtl-trace__svg')
