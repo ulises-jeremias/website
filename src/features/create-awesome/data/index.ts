@@ -32,7 +32,7 @@ export { buildCreateAwesomeCommand } from '../lib/buildCommand.js';
 export const familyIntro: FamilyIntro = {
   title: 'One command. Any stack.',
   lead: 'Family of CLIs that compose templates + addons into production-ready apps — not generators that hide files, but composers that ship real code you own.',
-  principle: 'Template + addons = real files. No lock-in, no hidden runtime.',
+  principle: 'Real files. No hidden runtime. No lock-in.',
 };
 
 export const catalogTotals = {
