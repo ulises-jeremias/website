@@ -7,6 +7,11 @@ import {
 } from '@/data/open-source/index.js';
 
 const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
+const evidenceGroups = (['owned', 'maintained', 'org', 'external'] as const).map((kind) => ({
+  kind,
+  label: getEvidenceKindLabel(kind),
+  records: evidenceItems.filter((item) => item.kind === kind),
+}));
 ---
 
 <section class="oss-ledger" data-reveal aria-labelledby="oss-ledger-title" data-testid="oss-ledger">
@@ -21,24 +26,38 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
     <p class="oss-ledger__reading-key">Kind → subject → evidence → source</p>
   </header>
 
-  <ul class="oss-ledger__table" aria-label="Contribution evidence">
-    <li class="oss-ledger__row oss-ledger__row--head" aria-hidden="true">
-      <span>Kind</span>
-      <span>Subject</span>
-      <span>Evidence</span>
-      <span>Link</span>
-    </li>
-    {evidenceItems.map((row) => (
-      <li class="oss-ledger__row">
-        <span class="oss-ledger__kind">{getEvidenceKindLabel(row.kind)}</span>
-        <span>{row.subject}</span>
-        <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
-        <a href={row.href} target="_blank" rel="noopener noreferrer" data-testid="oss-row">
-          {getEvidenceProvenanceLabel(row.provenance)} ↗
-        </a>
-      </li>
+  <div class="oss-ledger__groups">
+    {evidenceGroups.map((group) => (
+      <section
+        class:list={['oss-ledger__group', `oss-ledger__group--${group.kind}`]}
+        id={`evidence-${group.kind}`}
+        aria-labelledby={`evidence-${group.kind}-title`}
+      >
+        <header class="oss-ledger__group-head">
+          <h3 id={`evidence-${group.kind}-title`}>{group.label}</h3>
+          <span>
+            {group.records.length} {group.records.length === 1 ? 'record' : 'records'}
+          </span>
+        </header>
+        <ul class="oss-ledger__table" aria-label={`${group.label} contribution evidence`}>
+          <li class="oss-ledger__row oss-ledger__row--head" aria-hidden="true">
+            <span>Subject</span>
+            <span>Evidence</span>
+            <span>Source</span>
+          </li>
+          {group.records.map((row) => (
+            <li class="oss-ledger__row">
+              <span class="oss-ledger__subject">{row.subject}</span>
+              <span class="oss-ledger__evidence">{row.summary ?? row.evidence}</span>
+              <a href={row.href} target="_blank" rel="noopener noreferrer" data-testid="oss-row">
+                {getEvidenceProvenanceLabel(row.provenance)} ↗
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
     ))}
-  </ul>
+  </div>
 
   {notes.length > 0 && (
     <div class="oss-ledger__notes">
@@ -117,7 +136,7 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
   .oss-ledger__row {
     display: grid;
-    grid-template-columns: 7rem minmax(0, 1.1fr) minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr) minmax(0, 1fr);
     gap: 0.75rem;
     padding: 0.8rem 1rem;
     border-block-end: 1px solid var(--color-border);
@@ -161,14 +180,6 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
     background: color-mix(in srgb, var(--nest-cyan) 8%, transparent);
   }
 
-  .oss-ledger__kind {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--nest-cyan);
-  }
-
   .oss-ledger__notes {
     margin: 1rem 0 0;
     padding-inline-start: 1.1rem;
@@ -193,6 +204,77 @@ const notes = getEvidenceNotes().filter((n) => !n.startsWith('[refresh'));
 
     .oss-ledger__row {
       grid-template-columns: 1fr;
+    }
+  }
+
+  .oss-ledger__groups {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .oss-ledger__group {
+    --group-color: var(--nest-magenta);
+    scroll-margin-block-start: calc(var(--header-height, 64px) + 1rem);
+  }
+
+  .oss-ledger__group--maintained {
+    --group-color: var(--nest-cyan);
+  }
+
+  .oss-ledger__group--org {
+    --group-color: var(--nest-violet);
+  }
+
+  .oss-ledger__group--external {
+    --group-color: var(--nest-sunset-orange);
+  }
+
+  .oss-ledger__group-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.65rem 0.9rem;
+    border-inline-start: 2px solid var(--group-color);
+    background: color-mix(in srgb, var(--group-color) 7%, transparent);
+  }
+
+  .oss-ledger__group-head h3 {
+    margin: 0;
+    color: var(--group-color);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .oss-ledger__group-head > span {
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  .oss-ledger__group .oss-ledger__row--head {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr) minmax(0, 1fr);
+    border-inline-start: 2px solid var(--group-color);
+  }
+
+  .oss-ledger__subject {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  @media (width < 820px) {
+    .oss-ledger__group .oss-ledger__row--head {
+      display: none;
+    }
+  }
+
+  @media (width < 640px) {
+    .oss-ledger__group {
+      scroll-margin-block-start: calc(var(--header-height-sm, 56px) + 4rem);
     }
   }
 </style>

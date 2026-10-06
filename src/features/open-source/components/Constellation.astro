@@ -17,10 +17,6 @@ const kindLegend = [
   { kind: 'external', label: 'Upstream', detail: 'merged pull requests to projects run by other people' },
 ] as const;
 
-const kindCounts = Object.fromEntries(
-  kindLegend.map((entry) => [entry.kind, nodes.filter((node) => node.kind === entry.kind).length]),
-);
-
 const evidenceLanes = kindLegend.map((entry) => ({
   ...entry,
   records: nodes.filter((node) => node.kind === entry.kind),
@@ -70,9 +66,7 @@ const evidenceLanes = kindLegend.map((entry) => ({
         {kindLegend.map((entry) => (
           <li class="constellation__legend-item">
             <span class:list={['constellation__swatch', `constellation__swatch--${entry.kind}`]} aria-hidden="true" />
-            <span class="constellation__legend-label">
-              {entry.label} ({kindCounts[entry.kind]})
-            </span>
+            <span class="constellation__legend-label">{entry.label}</span>
             <span class="constellation__legend-detail">{entry.detail}</span>
           </li>
         ))}
@@ -83,13 +77,21 @@ const evidenceLanes = kindLegend.map((entry) => ({
       <ul class="constellation__lanes">
         {evidenceLanes.map((lane) => (
           <li class:list={['constellation__lane', `constellation__lane--${lane.kind}`]}>
-            <span class="constellation__lane-label">{lane.label}</span>
-            <span class="constellation__lane-count">{lane.records.length}</span>
-            <span class="constellation__lane-track" aria-hidden="true">
-              {lane.records.map((record) => (
-                <span class="constellation__lane-marker" title={record.label} />
-              ))}
-            </span>
+            <a
+              class="constellation__lane-link"
+              href={`#evidence-${lane.kind}`}
+              aria-label={`View ${lane.records.length} ${lane.label.toLowerCase()} evidence records`}
+            >
+              <span class="constellation__lane-label">{lane.label}</span>
+              <span class="constellation__lane-track" aria-hidden="true">
+                {lane.records.map((record) => (
+                  <span class="constellation__lane-marker" title={record.label} />
+                ))}
+              </span>
+              <span class="constellation__lane-count">
+                {lane.records.length} records <span aria-hidden="true">↘</span>
+              </span>
+            </a>
           </li>
         ))}
       </ul>
@@ -340,14 +342,31 @@ const evidenceLanes = kindLegend.map((entry) => ({
   }
 
   .constellation__lane {
-    display: grid;
-    grid-template-columns: minmax(7.5rem, 0.8fr) auto minmax(0, 1.4fr);
-    align-items: center;
-    gap: 0.75rem;
-    min-height: 2.65rem;
-    padding: 0.45rem 0.55rem;
+    min-width: 0;
     border-inline-start: 2px solid var(--lane-color);
     background: color-mix(in srgb, var(--lane-color) 6%, transparent);
+  }
+
+  .constellation__lane-link {
+    display: grid;
+    grid-template-columns: minmax(7.5rem, 0.8fr) minmax(0, 1.4fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: var(--touch-min, 44px);
+    padding: 0.45rem 0.55rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .constellation__lane-link:hover {
+    background: color-mix(in srgb, var(--lane-color) 8%, transparent);
+  }
+
+  .constellation__lane-link:focus-visible {
+    outline: 2px solid var(--lane-color);
+    outline-offset: 2px;
+    position: relative;
+    z-index: 1;
   }
 
   .constellation__lane--owned {
@@ -373,8 +392,9 @@ const evidenceLanes = kindLegend.map((entry) => ({
   }
 
   .constellation__lane-count {
-    color: var(--color-text-muted);
+    color: var(--lane-color);
     text-align: end;
+    white-space: nowrap;
   }
 
   .constellation__lane-track {
@@ -393,8 +413,8 @@ const evidenceLanes = kindLegend.map((entry) => ({
   }
 
   @media (width < 500px) {
-    .constellation__lane {
-      grid-template-columns: minmax(6.5rem, 1fr) auto;
+    .constellation__lane-link {
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 0.45rem;
     }
 

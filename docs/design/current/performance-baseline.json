@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T17:55:49.926Z",
+  "generatedAt": "2026-10-06T18:30:39.141Z",
   "method": "Fresh browser context per route and viewport; text resources gzip level 9; already-compressed assets use source bytes.",
   "routes": {
     "/": {
@@ -268,20 +268,20 @@
     },
     "/open-source/": {
       "mobile": {
-        "total": 64249,
-        "document": 7421,
+        "total": 64732,
+        "document": 7641,
         "script": 0,
-        "style": 12194,
+        "style": 12457,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 64249,
-        "document": 7421,
+        "total": 64732,
+        "document": 7641,
         "script": 0,
-        "style": 12194,
+        "style": 12457,
         "image": 3802,
         "font": 40832,
         "other": 0,
