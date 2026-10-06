@@ -24,6 +24,14 @@ capability console, a laboratory bench, an assembly line, a workshop plaza, an
 editorial desk, an evidence ledger, an archive, a recovery atlas, or the main
 observatory.
 
+## Follow-up — 2026-10-06
+
+The Create Awesome workbench now keeps its generated command beside the runtime
+and project choices while templates and addons remain directly below. The
+command dock stays visible while configuring addons; narrow phones get a
+keyboard-scrollable single-line command. The server-rendered family fallback
+remains complete without JavaScript.
+
 ## Route directions
 
 | Route                   | Dominant surface            | Signature interaction or artifact                       |

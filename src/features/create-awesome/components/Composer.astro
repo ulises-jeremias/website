@@ -152,6 +152,18 @@ const composerBootstrap = {
       />
     </label>
 
+    <p class="ca-composer__preview">
+      <span>
+        Live command <small>· updates with selections</small>
+      </span>
+      <code data-ca-command tabindex="0">
+        {initialCommand}
+      </code>
+      <button type="button" data-ca-command-copy hidden>
+        Copy command
+      </button>
+    </p>
+
     {variants.map((variant, index) => (
       <div
         class={`ca-composer__panel ca-composer__panel--${variant.id}`}
@@ -233,13 +245,6 @@ const composerBootstrap = {
       </div>
     ))}
 
-    <p class="ca-composer__preview">
-      <span>Composable command</span>
-      <code data-ca-command>{initialCommand}</code>
-      <button type="button" data-ca-command-copy hidden>
-        Copy command
-      </button>
-    </p>
     <p class="visually-hidden" role="status" aria-atomic="true" data-ca-composer-status></p>
   </form>
 </section>
@@ -800,6 +805,70 @@ const composerBootstrap = {
     display: none;
   }
 
+  /* Keep the generated artifact beside the choices that shape it on the embedded world. */
+  .ca-composer--embedded .ca-composer__form:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  @media (width >= 300px) {
+    .ca-composer--embedded .ca-composer__form:not([hidden]) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: start;
+    }
+  }
+
+  .ca-composer--embedded .ca-composer__family-select {
+    order: 1;
+    margin: 0;
+  }
+
+  .ca-composer--embedded .ca-composer__project {
+    order: 2;
+    margin: 0;
+  }
+
+  @media (width >= 300px) {
+    .ca-composer--embedded .ca-composer__family-select,
+    .ca-composer--embedded .ca-composer__project {
+      min-width: 0;
+    }
+  }
+
+  .ca-composer--embedded .ca-composer__panel:not([hidden]) {
+    display: contents;
+  }
+
+  .ca-composer--embedded .ca-composer__panel > label {
+    order: 4;
+    grid-column: 1 / -1;
+  }
+
+  .ca-composer--embedded .ca-composer__preview {
+    position: sticky;
+    z-index: 2;
+    top: calc(var(--header-height, 4rem) + 0.5rem);
+    order: 3;
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-950) 96%, black);
+    box-shadow: 0 0.45rem 1.2rem rgb(0 0 0 / 38%);
+  }
+
+  .ca-composer--embedded .ca-composer__addon-tools {
+    order: 5;
+    grid-column: 1 / -1;
+  }
+
+  .ca-composer--embedded .ca-composer__addons {
+    order: 6;
+    grid-column: 1 / -1;
+  }
+
   .ca-composer__panel > label {
     display: grid;
     gap: 0.35rem;
@@ -934,6 +1003,12 @@ const composerBootstrap = {
     color: var(--color-text-faint);
   }
 
+  .ca-composer__preview span small {
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: none;
+  }
+
   .ca-composer__preview code {
     display: block;
     padding: 0.7rem;
@@ -944,6 +1019,11 @@ const composerBootstrap = {
     font-size: 0.78rem;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .ca-composer__preview code:focus-visible {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 3px;
   }
 
   .ca-composer__preview button {
@@ -957,6 +1037,17 @@ const composerBootstrap = {
     }
   }
 
+  @media (width <= 360px) {
+    .ca-composer__preview span small {
+      display: none;
+    }
+
+    .ca-composer__preview code {
+      white-space: pre;
+      overflow-wrap: normal;
+    }
+  }
+
   @media (forced-colors: active) {
     .ca-composer__addons label[data-ca-unavailable] {
       color: GrayText;
@@ -965,7 +1056,8 @@ const composerBootstrap = {
 
     .ca-composer__addons label:has(input:focus-visible),
     .ca-composer__presets button:focus-visible,
-    .ca-composer__preview button:focus-visible {
+    .ca-composer__preview button:focus-visible,
+    .ca-composer__preview code:focus-visible {
       outline-color: Highlight;
     }
   }

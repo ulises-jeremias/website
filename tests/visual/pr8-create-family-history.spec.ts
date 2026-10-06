@@ -202,6 +202,63 @@ test.describe('PR8 static Create Awesome targets', () => {
 });
 
 test.describe('PR8 enhanced family restoration', () => {
+  test('keeps the generated command visible while configuring addons', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 844 });
+    await page.goto('/create-awesome');
+
+    const preview = page.locator('.ca-composer__preview');
+    const command = page.locator('[data-ca-command]');
+    const copyCommand = page.locator('[data-ca-command-copy]');
+    const template = page.locator('[data-ca-panel="node"] [data-ca-template]');
+    await expect(preview).toBeVisible();
+    await expect(preview).toBeInViewport({ ratio: 1 });
+    await expect(preview).toHaveCSS('position', 'sticky');
+    await expect.poll(() => command.evaluate((code) => code.scrollWidth > code.clientWidth)).toBe(true);
+
+    await page.locator('[data-ca-project]').focus();
+    await page.keyboard.press('Tab');
+    await expect(command).toBeFocused();
+    await page.keyboard.press('ArrowRight');
+    await expect.poll(() => command.evaluate((code) => code.scrollLeft)).toBeGreaterThan(0);
+    await page.keyboard.press('Tab');
+    await expect(copyCommand).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(template).toBeFocused();
+
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const projectRect = document.querySelector('[data-ca-project]')?.getBoundingClientRect();
+          const templateRect = document
+            .querySelector('[data-ca-panel="node"] [data-ca-template]')
+            ?.getBoundingClientRect();
+          const previewRect = document.querySelector('.ca-composer__preview')?.getBoundingClientRect();
+          const addonRect = document
+            .querySelector('[data-ca-panel="node"] .ca-composer__addon-tools')
+            ?.getBoundingClientRect();
+          return Boolean(
+            projectRect &&
+            templateRect &&
+            previewRect &&
+            addonRect &&
+            projectRect.bottom <= previewRect.top &&
+            previewRect.bottom <= templateRect.top &&
+            templateRect.bottom <= addonRect.top,
+          );
+        }),
+      )
+      .toBe(true);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(preview).toBeInViewport({ ratio: 1 });
+    await page.locator('[data-ca-panel="node"] [data-ca-addon]').last().scrollIntoViewIfNeeded();
+    await expect(preview).toBeInViewport({ ratio: 1 });
+    const dockRect = await preview.boundingBox();
+    expect(dockRect).not.toBeNull();
+    expect(dockRect!.y).toBeGreaterThan(0);
+    expect(dockRect!.y + dockRect!.height).toBeLessThanOrEqual(844);
+  });
+
   test('puts the live project composer before the assembly line', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/create-awesome');
