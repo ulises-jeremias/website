@@ -121,3 +121,24 @@ The `/v/` document ceiling is raised one 1 KiB step to 17 KiB for the semantic
 SVG explanation and its mobile-only sequence; the complete route remains below
 its existing total budget, and the trace JavaScript is budgeted separately at
 2 KiB.
+
+## Harness session lifecycle trace — 2026-10-06
+
+The Agentic Harness hero now lets visitors end and restart an illustrative
+coding session. The temporary session and its runtime link animate away or
+return, while the knowledge, personas, projects, and Toolkit runtime remain
+visibly present. The single native button keeps keyboard focus as its action
+label changes; a concise status message reports the new state. The caption
+clarifies that this is an explanatory model, not a live agent session.
+
+The server-rendered diagram remains complete without JavaScript, and controls
+appear only after their script is ready. Reduced-motion mode changes the same
+states without playing autonomous or user-triggered movement. The focused
+browser spec checks both animated transitions, the persistent nodes, mobile
+reflow, reduced motion, and no-JavaScript output; its desktop and mobile
+captures record the active and ended-session states. The separate Vite asset
+is forced out of its inline data URL, so route delivery measures the interaction
+as JavaScript: 889 gzipped bytes. Harness remains at 120,565 bytes total against
+its existing 127,278-byte route ceiling. Its script budget is now 1 KiB, and the
+CSS budget moves one 1 KiB step to 14 KiB for the control, focus, reduced-motion,
+and forced-colors states; the measured stylesheet is 13,570 bytes.
