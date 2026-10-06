@@ -45,10 +45,9 @@ const statusLabel: Record<string, string> = {
         and keeping them in sync afterwards.
       </p>
       <p class="hos-hero__lede">
-        Hornero OS is an Arch-based Wayland desktop built around Hyprland and Quickshell, with an Argentine identity. It
-        is composed from separate repositories — shell, desktop defaults, a system CLI, and a login screen — that a
-        versioned manifest pins together. The long-term direction is a desktop with an integrated assistant; none of
-        that ships today.
+        An Arch-based Wayland desktop built around Hyprland and Quickshell. A versioned manifest joins its Argentine-
+        branded shell, defaults, system CLI, and login screen from separate repositories. An integrated assistant is a
+        future direction; it does not ship today.
       </p>
       <FlagshipProvenance entryId="hornero-os" />
       <div class="hos-actions">
@@ -95,14 +94,10 @@ const statusLabel: Record<string, string> = {
       <p class="hos-kicker">How it is composed</p>
       <h2 id="hos-manifest-title">A preview is a manifest, not an image</h2>
       <p>
-        Each development preview is a YAML manifest in <code>HorneroOS/hornero</code> that pins the shell and config to
-        exact commits and builds <code>horneroctl</code> from source. A virtual-machine smoke test checks that the
-        pinned composition materializes and applies its theme.
+        Every preview manifest in <code>HorneroOS/hornero</code> pins exact shell and config commits, then builds
+        <code>horneroctl</code> from source. A VM smoke test verifies the composition and its theme.
       </p>
-      <p>
-        The installer and ISO are named in the manifest as future slots. Until they exist, a preview is something you
-        inspect and test piece by piece, not something you install.
-      </p>
+      <p>Installer and ISO slots remain empty: this preview can be inspected, not installed.</p>
       <p class="hos-manifest__links">
         <a href={horneroFacts.releasesUrl} target="_blank" rel="noopener noreferrer">
           All previews ↗<span class="sr-only"> (opens in new tab)</span>
@@ -134,6 +129,11 @@ const statusLabel: Record<string, string> = {
           </li>
         ))}
       </ul>
+      <div class="hos-yaml__trace">
+        <button class="hos-yaml__trace-button" type="button" data-hos-trace hidden>
+          Trace manifest assembly
+        </button>
+      </div>
     </figure>
   </section>
 
@@ -142,8 +142,7 @@ const statusLabel: Record<string, string> = {
       <p class="hos-kicker">Status, component by component</p>
       <h2 id="hos-try-title">What you can use today</h2>
       <p class="hos-section__lead">
-        On an existing Arch Linux machine with Hyprland, the finished components already work on their own. The pieces
-        that would make Hornero OS installable do not exist yet.
+        These components can be used on an existing Arch + Hyprland desktop. The installer and ISO do not exist yet.
       </p>
     </header>
     <ul class="hos-components">
@@ -172,8 +171,8 @@ const statusLabel: Record<string, string> = {
       <p class="hos-kicker">Same family, different jobs</p>
       <h2 id="hos-family-title">Hornero OS and HorneroConfig</h2>
       <p class="hos-section__lead">
-        Hornero OS grew out of <a href="/dotfiles">HorneroConfig</a>. The generic parts moved into the OS repositories;
-        HorneroConfig now installs them and keeps what is personal.
+        Hornero OS grew from <a href="/dotfiles">HorneroConfig</a>: shared components moved into reusable repositories,
+        while its personal configuration stayed.
       </p>
     </header>
     <div class="hos-table-wrap" tabindex="0" role="region" aria-label="HorneroConfig and Hornero OS comparison table">
@@ -243,6 +242,55 @@ const statusLabel: Record<string, string> = {
     <a href="/projects">All work</a>
   </nav>
 </div>
+
+<script is:inline>
+  (() => {
+    const manifest = document.querySelector('.hos-yaml');
+    const traceButton = manifest?.querySelector('[data-hos-trace]');
+    const steps = [...(manifest?.querySelectorAll('.hos-yaml__slot') || [])];
+    if (!manifest || !traceButton || steps.length === 0) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timer;
+
+    traceButton.hidden = false;
+
+    const finishTrace = () => {
+      steps.forEach((step) => step.classList.add('is-current'));
+      manifest.dataset.traceState = 'complete';
+    };
+
+    traceButton.addEventListener('click', () => {
+      window.clearInterval(timer);
+      steps.forEach((step) => step.classList.remove('is-current'));
+      traceButton.textContent = 'Replay manifest assembly';
+      manifest.dataset.traceState = 'running';
+
+      if (reducedMotion.matches) {
+        finishTrace();
+        return;
+      }
+
+      let index = 0;
+      const showStep = () => {
+        const step = steps[index++];
+        step.classList.add('is-current');
+        if (index === steps.length) {
+          finishTrace();
+          window.clearInterval(timer);
+        }
+      };
+      showStep();
+      timer = window.setInterval(showStep, 700);
+    });
+
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches || manifest.dataset.traceState !== 'running') return;
+      window.clearInterval(timer);
+      finishTrace();
+    });
+  })();
+</script>
 
 <style>
   .hos {
@@ -502,6 +550,46 @@ const statusLabel: Record<string, string> = {
   .hos-yaml__note {
     flex-basis: 100%;
     color: var(--color-text-faint);
+  }
+
+  .hos-yaml__slot {
+    border-inline-start: 2px solid transparent;
+  }
+
+  .hos-yaml__slot.is-current {
+    border-inline-start-color: var(--hos-amber);
+    background: color-mix(in srgb, var(--hos-clay) 12%, transparent);
+    transform: translateX(0.3rem);
+  }
+
+  .hos-yaml__slot.is-current a {
+    color: var(--nest-paper);
+  }
+
+  .hos-yaml__trace {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-block-start: 0.9rem;
+    padding-block-start: 0.85rem;
+    border-block-start: 1px dashed color-mix(in srgb, var(--hos-amber) 30%, transparent);
+  }
+
+  .hos-yaml__trace-button {
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.55rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--hos-amber) 55%, transparent);
+    background: color-mix(in srgb, var(--hos-clay) 12%, transparent);
+    color: var(--nest-paper);
+    font: 400 0.8rem var(--font-mono);
+    cursor: pointer;
+  }
+
+  .hos-yaml__trace-button:hover,
+  .hos-yaml__trace-button:focus-visible {
+    border-color: var(--hos-amber);
+    background: color-mix(in srgb, var(--hos-clay) 24%, transparent);
   }
 
   /* components */
