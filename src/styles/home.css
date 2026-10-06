@@ -722,25 +722,40 @@
 
 .atlas-world__platform::before {
   position: absolute;
-  inset: 16%;
+  inset-block-start: auto;
+  inset-inline: 7%;
+  inset-block-end: 4%;
+  block-size: 30%;
   border: 1px solid color-mix(in srgb, var(--world-color) 42%, transparent);
-  border-radius: 50%;
-  opacity: 0.34;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 0.5rem,
+      color-mix(in srgb, var(--world-color) 12%, transparent) 0.5rem 0.56rem
+    ),
+    linear-gradient(180deg, color-mix(in srgb, var(--world-color) 17%, transparent), transparent 76%);
+  clip-path: polygon(20% 0, 80% 0, 100% 50%, 80% 100%, 20% 100%, 0 50%);
+  opacity: 0.46;
+  box-shadow:
+    0 0 1.5rem color-mix(in srgb, var(--world-color) 20%, transparent),
+    inset 0 0 0.75rem color-mix(in srgb, var(--world-color) 22%, transparent);
   content: '';
-  transform: perspective(18rem) rotateX(68deg) rotateZ(-18deg);
+  transform: perspective(20rem) rotateX(65deg) rotateZ(-18deg);
   pointer-events: none;
 }
 
 .atlas-world__platform::after {
   position: absolute;
-  inset-block-start: 19%;
-  inset-inline-end: 21%;
-  inline-size: 0.35rem;
+  inset-block-start: auto;
+  inset-inline-end: auto;
+  inset-block-end: 15%;
+  inset-inline-start: 48%;
+  inline-size: 0.3rem;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--nest-paper);
   box-shadow:
-    0 0 0.35rem var(--nest-cyan),
+    0 0 0.35rem var(--world-color),
     0 0 0.9rem var(--world-color);
   content: '';
   opacity: 0.72;

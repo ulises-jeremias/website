@@ -216,3 +216,13 @@ timing, 320px reflow, reduced motion, forced colors, and the no-JavaScript path.
 The `/about/` baseline moves from 66,802 to 67,056 bytes (+254: 114 document
 and 140 stylesheet), with no new image, request, or external script payload;
 the route remains below its existing budget.
+
+## Atlas landing platforms — 2026-10-06
+
+Each atlas island now docks over a shallow, clipped hexagonal platform whose
+grid and beacon use that world's semantic accent. This replaces the generic
+elliptical orbital ring with a constructed landing surface, making the
+floating-world metaphor clearer while keeping each existing first-party island
+illustration in focus. The platform is CSS-only, uses no new image or script,
+and keeps its slow rotation disabled under reduced motion. Desktop and mobile
+Create Awesome captures record the updated atlas surface.
