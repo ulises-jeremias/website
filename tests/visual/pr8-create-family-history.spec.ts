@@ -84,7 +84,11 @@ async function expectFamilyState(page: Page, familyId: FamilyId) {
   await expect(page.locator('[data-ca-command]')).toHaveText(facts.command);
   await expect(page.locator('[data-ca-dock-catalog]')).toHaveAttribute('href', facts.catalog);
   await expect(page.locator('[data-ca-dock-repo]')).toHaveAttribute('href', facts.repository);
-  await expect(page.locator('[data-ca-dock-install]')).toHaveText(facts.install);
+  await expect(page.locator('[data-ca-inspector-install]')).toHaveText(facts.install);
+  await expect(page.locator('[data-ca-inspector-install-label]')).toHaveText(
+    familyId === 'v' || familyId === 'rust' ? 'CLI installation command' : 'Base project command',
+  );
+  await expect(page.locator('[data-ca-family-select]')).toHaveValue(familyId);
   await expect(page.locator(`[data-visual-node="${familyId}"]`)).toHaveClass(/is-active/);
 }
 
@@ -198,6 +202,36 @@ test.describe('PR8 static Create Awesome targets', () => {
 });
 
 test.describe('PR8 enhanced family restoration', () => {
+  test('puts the live project composer before the assembly line', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/create-awesome');
+
+    const composer = page.locator('[data-ca-composer-root]');
+    const command = page.locator('[data-ca-command]');
+    await expect(composer).toBeVisible();
+    await expect(command).toBeVisible();
+    await expect(page.locator('[data-ca-command-copy]')).toBeVisible();
+    await expect(page.getByRole('combobox', { name: 'Runtime' })).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Project links' })).toBeVisible();
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const composerElement = document.querySelector('[data-ca-composer-root]');
+          const line = document.querySelector('.ca-world__scene');
+          return Boolean(
+            composerElement && line && composerElement.compareDocumentPosition(line) & Node.DOCUMENT_POSITION_FOLLOWING,
+          );
+        }),
+      )
+      .toBe(true);
+
+    await page.getByRole('combobox', { name: 'Runtime' }).selectOption('rust');
+    await expectFamilyState(page, 'rust');
+    await expect(page).toHaveURL(/\/create-awesome\/?#rust$/);
+
+    await expectPageToFit(page);
+  });
+
   test('keeps the default route hash-free and exposes one native family selector', async ({ page }) => {
     await installHistoryProbe(page);
     await page.goto('/create-awesome');

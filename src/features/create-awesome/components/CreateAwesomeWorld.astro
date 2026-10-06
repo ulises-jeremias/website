@@ -63,11 +63,16 @@ const lineModules = [
         language you use.
       </p>
       <p class="ca-world__lede">{familyIntro.principle}</p>
-      <FlagshipProvenance
-        entryId="create-node-app"
-        note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
-      />
     </div>
+  </header>
+
+  <Composer embedded />
+
+  <section class="ca-world__family-record" aria-label="Create Awesome family record">
+    <FlagshipProvenance
+      entryId="create-node-app"
+      note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
+    />
     <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
       <p>Catalog counter</p>
       <ul>
@@ -98,7 +103,7 @@ const lineModules = [
       </ul>
       <small>templates + addons · sourced totals</small>
     </aside>
-  </header>
+  </section>
 
   <div class="vf-scene ca-world__scene">
     <div class="vf-stage ca-world__stage">
@@ -189,6 +194,12 @@ const lineModules = [
           source <code data-ca-inspector-source>{defaultStation.source}</code>
         </span>
         <span>
+          <span data-ca-inspector-install-label>
+            {defaultStation.id === 'v' || defaultStation.id === 'rust'
+              ? 'CLI installation command'
+              : 'Base project command'}
+          </span>
+          <br />
           <code data-ca-inspector-install>{defaultStation.install}</code>
         </span>
         <span>
@@ -201,7 +212,7 @@ const lineModules = [
     </SceneInspector>
   </div>
 
-  <WorldDock label="Current command">
+  <WorldDock label="Project links">
     <a
       class="vf-dock__primary"
       href={defaultStation.href}
@@ -215,18 +226,7 @@ const lineModules = [
       GitHub
     </a>
     <a href="/community">Community</a>
-    <code
-      class="vf-dock__code"
-      data-ca-dock-install
-      tabindex="0"
-      role="region"
-      aria-label="Current Create Awesome command"
-    >
-      {defaultStation.install}
-    </code>
   </WorldDock>
-
-  <Composer embedded />
 
   <Variants />
 
@@ -318,7 +318,6 @@ const lineModules = [
     const link = root.querySelector<HTMLAnchorElement>('[data-ca-inspector-link]');
     const dockCatalog = root.querySelector<HTMLAnchorElement>('[data-ca-dock-catalog]');
     const dockRepo = root.querySelector<HTMLAnchorElement>('[data-ca-dock-repo]');
-    const dockInstall = root.querySelector<HTMLElement>('[data-ca-dock-install]');
     const modules = root.querySelectorAll<SVGGElement>('[data-module]');
     const composer = root.querySelector<HTMLElement>('[data-ca-composer]');
     const fallback = root.querySelector<HTMLElement>('[data-ca-static-fallback]');
@@ -375,12 +374,16 @@ const lineModules = [
       }
       if (source) source.textContent = station.source;
       if (install) install.textContent = station.install;
+      const installLabel = root.querySelector<HTMLElement>('[data-ca-inspector-install-label]');
+      if (installLabel) {
+        installLabel.textContent =
+          station.id === 'v' || station.id === 'rust' ? 'CLI installation command' : 'Base project command';
+      }
       if (link) {
         link.href = station.href;
       }
       if (dockCatalog) dockCatalog.href = station.href;
       if (dockRepo) dockRepo.href = `https://github.com/${station.repo}`;
-      if (dockInstall) dockInstall.textContent = station.install;
 
       modules.forEach((mod) => {
         const kind = mod.dataset.module;
@@ -416,6 +419,11 @@ const lineModules = [
       input.addEventListener('change', () => {
         if (input.checked) select(input.value, 'user');
       });
+    });
+    root.addEventListener('ca:composition-change', (event) => {
+      if (!(event instanceof CustomEvent)) return;
+      const family = event.detail?.family;
+      if (typeof family === 'string' && family !== selectedStationId) select(family, 'user');
     });
     if (stationControls) stationControls.disabled = false;
 
@@ -613,6 +621,19 @@ const lineModules = [
     border-block: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 34%, transparent);
     border-inline-start: 2px solid var(--nest-sunset-orange);
     background: linear-gradient(90deg, color-mix(in srgb, var(--nest-sunset-orange) 8%, transparent), transparent 70%);
+  }
+
+  .ca-world__family-record {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    align-items: start;
+  }
+
+  @media (min-width: 820px) {
+    .ca-world__family-record {
+      grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+    }
   }
 
   @media (min-width: 820px) {
@@ -965,15 +986,6 @@ const lineModules = [
   .ca-world :global(.ca-composer--embedded .ca-composer__form) {
     border-color: color-mix(in srgb, var(--nest-cyan) 38%, transparent);
     background: color-mix(in srgb, var(--nest-midnight-950) 82%, transparent);
-  }
-
-  .ca-world :global(.vf-dock__code) {
-    flex: 1 1 100%;
-    min-inline-size: 0;
-    max-inline-size: 100%;
-    box-sizing: border-box;
-    overflow-x: auto;
-    white-space: nowrap;
   }
 
   @media (width < 620px) {
