@@ -60,6 +60,10 @@ const lineModules = [
       <h1 id="ca-world-title">{familyIntro.title}</h1>
       <p class="ca-world__problem">Choose a runtime, starter and compatible addons to build your project.</p>
       <p class="ca-world__lede">{familyIntro.principle}</p>
+      <a class="ca-world__compose-link" href="#ca-composer-title">
+        <span>Build a command</span>
+        <span aria-hidden="true">↓</span>
+      </a>
     </div>
     <aside class="ca-world__hero-ledger" aria-label="Create Awesome catalog totals">
       <p>Catalog counter · templates + addons</p>
@@ -93,17 +97,17 @@ const lineModules = [
     </aside>
   </header>
 
-  <Composer embedded />
-
-  <section class="ca-world__family-record" aria-label="Create Awesome family record">
-    <FlagshipProvenance
-      entryId="create-node-app"
-      note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
-    />
-  </section>
-
   <div class="vf-scene ca-world__scene">
     <div class="vf-stage ca-world__stage">
+      <div class="ca-world__stage-heading">
+        <div>
+          <p>Assembly line · composition model</p>
+          <h2>Runtime → template → addons → project</h2>
+        </div>
+      </div>
+      <p class="ca-world__stage-copy">
+        Choose a runtime. Your template and compatible addons travel through the line to shape the command.
+      </p>
       <svg class="ca-world__line" viewBox="0 0 720 220" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="ca-line-glow" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -208,6 +212,15 @@ const lineModules = [
       </Fragment>
     </SceneInspector>
   </div>
+
+  <Composer embedded />
+
+  <section class="ca-world__family-record" aria-label="Create Awesome family record">
+    <FlagshipProvenance
+      entryId="create-node-app"
+      note="One composable scaffolding family across Node.js, Python, V, and Rust — created and maintained by Ulises across the four Create Awesome organizations."
+    />
+  </section>
 
   <WorldDock label="Project links">
     <a
@@ -506,7 +519,7 @@ const lineModules = [
         };
 
         Object.entries(values).forEach(([stage, value]) => {
-          const compact = value.length > 14 ? `${value.slice(0, 13)}…` : value;
+          const compact = value.length > 11 ? `${value.slice(0, 10)}…` : value;
           world.querySelector(`[data-ca-module-value="${stage}"]`)?.replaceChildren(compact);
           world.querySelector(`[data-ca-flow-value="${stage}"]`)?.replaceChildren(value);
         });
@@ -718,6 +731,41 @@ const lineModules = [
     font-size: 0.95rem;
   }
 
+  .ca-world__compose-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 2.75rem;
+    width: fit-content;
+    margin-top: 1rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 70%, transparent);
+    color: var(--nest-paper);
+    background: color-mix(in srgb, var(--nest-sunset-orange) 9%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .ca-world__compose-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--nest-sunset-orange);
+    color: var(--nest-midnight-950);
+    background: var(--nest-sunset-orange);
+  }
+
+  .ca-world__compose-link:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
   .ca-world__scene {
     margin-top: 1.5rem;
     align-items: stretch;
@@ -751,14 +799,35 @@ const lineModules = [
       auto;
   }
 
-  .ca-world__stage::before {
-    display: block;
-    margin-bottom: 0.65rem;
-    content: 'WORKBENCH / COMPOSITION PATH';
+  .ca-world__stage-heading {
+    order: -3;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 38%, transparent);
+  }
+
+  .ca-world__stage-heading p {
+    margin: 0 0 0.25rem;
     color: var(--nest-sunset-orange);
     font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.12em;
+    font-size: 0.62rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .ca-world__stage-heading h2 {
+    margin: 0;
+    color: var(--nest-paper);
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
+    letter-spacing: 0.02em;
+  }
+
+  .ca-world__stage-copy {
+    order: -2;
+    margin: 0;
+    max-width: 68ch;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.5;
   }
 
   .ca-world__flow-index {
@@ -967,6 +1036,7 @@ const lineModules = [
 
   .ca-world :global(.ca-composer > header h2) {
     font-size: 1.1rem;
+    scroll-margin-top: 5.5rem;
   }
 
   .ca-world :global(.ca-composer--embedded) {
@@ -1048,6 +1118,10 @@ const lineModules = [
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .ca-world__compose-link {
+      transition: none;
+    }
+
     .ca-world__module-disk,
     .ca-world__flow-index li {
       transition: none;
