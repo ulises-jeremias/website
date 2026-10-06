@@ -3,7 +3,7 @@
  * SponsorPage — /sponsor (ADR-004).
  *
  * Composes `src/data/sponsorship.ts` only; no commercial wording is retyped
- * here. Structure: hero with the support routing table (signature element) →
+ * here. Structure: hero with the support routing dock (signature element) →
  * what support pays for → areas (anchored #area-<id>) → ways to work together
  * → dated signals → principles (#principles) → sponsors (honest empty state)
  * → closing call to action.
@@ -66,14 +66,20 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
         integrations — it never buys a recommendation.
       </p>
       <div class="sp-actions">
-        <a class="sp-cta sp-cta--primary" href={GITHUB_SPONSORS_URL} target="_blank" rel="noopener noreferrer">
+        <a
+          class="sp-cta sp-cta--primary"
+          href={GITHUB_SPONSORS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-sp-general-sponsor-link
+        >
           <svg class="sp-cta__icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 20.4s-7.6-4.6-7.6-9.6a4.2 4.2 0 0 1 7.6-2.5A4.2 4.2 0 0 1 19.6 10.8c0 5-7.6 9.6-7.6 9.6Z"></path>
           </svg>
           Sponsor on GitHub
           <span class="sr-only"> (opens in new tab)</span>
         </a>
-        <a class="sp-cta sp-cta--secondary" href={partnershipHref}>
+        <a class="sp-cta sp-cta--secondary" href={partnershipHref} data-sp-general-partnership-link>
           Discuss a partnership
         </a>
         <a class="sp-cta sp-cta--quiet" href="/projects">
@@ -93,34 +99,73 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
         </span>{' '}
         where support goes
       </figcaption>
-      <!-- Explicit roles keep table semantics when rows stack on narrow screens (display: block). -->
-      <table class="sp-route__table" role="table">
-        <caption class="sr-only">Project areas and the work that support funds in each</caption>
-        <thead role="rowgroup">
-          <tr role="row">
-            <th scope="col" role="columnheader">
-              Area
-            </th>
-            <th scope="col" role="columnheader">
-              Funds
-            </th>
-          </tr>
-        </thead>
-        <tbody role="rowgroup">
-          {sponsorshipAreas.map((area) => (
-            <tr role="row" style={`--area-accent: ${areaAccent[area.id]}`}>
-              <th scope="row" role="rowheader">
-                <a href={`#area-${area.id}`}>{area.title}</a>
-              </th>
-              <td role="cell">{area.focus.join(' · ')}</td>
+      <div data-sp-route-fallback>
+        <!-- Keep the full route index as the no-JS experience. -->
+        <table class="sp-route__table">
+          <caption class="sr-only">Project areas and the work that support can help enable</caption>
+          <thead>
+            <tr>
+              <th scope="col">Area</th>
+              <th scope="col">Can help enable</th>
             </tr>
+          </thead>
+          <tbody>
+            {sponsorshipAreas.map((area) => (
+              <tr style={`--area-accent: ${areaAccent[area.id]}`}>
+                <th scope="row">
+                  <a href={`#area-${area.id}`}>{area.title}</a>
+                </th>
+                <td>{area.focus.join(' · ')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="sp-route__foot">
+          <span aria-hidden="true">#</span> the projects exist without sponsorship; support can create more time for
+          maintenance, testing, and hardware
+        </p>
+      </div>
+
+      <div class="sp-route__dock" data-sp-route-dock hidden>
+        <div class="sp-route__source">
+          <span class="sp-route__source-mark" aria-hidden="true">
+            N
+          </span>
+          <span>
+            <strong>Open-source work</strong>
+            <small>continues with or without sponsorship</small>
+          </span>
+        </div>
+
+        <fieldset class="sp-route__ports" data-sp-route-ports>
+          <legend>Choose a support focus to explore</legend>
+          <label class="sp-route__port sp-route__port--general">
+            <input type="radio" name="sp-route" value="general" checked />
+            <span class="sp-route__port-node" aria-hidden="true"></span>
+            <span>
+              <strong>General support</strong>
+            </span>
+          </label>
+          {sponsorshipAreas.map((area) => (
+            <label class="sp-route__port" style={`--area-accent: ${areaAccent[area.id]}`}>
+              <input type="radio" name="sp-route" value={area.id} />
+              <span class="sp-route__port-node" aria-hidden="true"></span>
+              <span>
+                <strong>{area.title}</strong>
+              </span>
+            </label>
           ))}
-        </tbody>
-      </table>
-      <p class="sp-route__foot">
-        <span aria-hidden="true">#</span> the projects exist without sponsorship; support decides how much time and
-        hardware they get
-      </p>
+        </fieldset>
+
+        <section class="sp-route__output" data-sp-route-output aria-labelledby="sp-route-output-title">
+          <p class="sp-route__output-kicker">Current channel</p>
+          <h3 id="sp-route-output-title" data-sp-route-title></h3>
+          <p data-sp-route-summary></p>
+          <p class="sp-route__output-note" data-sp-route-note></p>
+          <div class="sp-route__output-actions" data-sp-route-actions></div>
+        </section>
+        <p class="sr-only" role="status" aria-atomic="true" data-sp-route-status></p>
+      </div>
     </figure>
   </section>
 
@@ -153,6 +198,7 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
         <article
           id={`area-${area.id}`}
           class="sp-area"
+          data-sp-route-area={area.id}
           style={`--area-accent: ${areaAccent[area.id]}`}
           aria-labelledby={`area-${area.id}-title`}
         >
@@ -503,11 +549,16 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
     clip-path: none;
   }
 
-  /* Signature: support routing table */
+  /* Signature: support routing dock */
   .sp-route {
     margin: 0;
     padding: 1.1rem 1.25rem 1rem;
     font-family: var(--font-mono);
+  }
+
+  .sp-route strong,
+  .sp-route legend {
+    font-weight: 400;
   }
 
   .sp-route__head {
@@ -578,6 +629,230 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
     color: var(--color-text-faint);
     font-size: 0.72rem;
     line-height: 1.5;
+  }
+
+  .sp-route__dock[hidden] {
+    display: none;
+  }
+
+  .sp-route__dock {
+    display: grid;
+    gap: 0.9rem;
+    color: var(--color-text);
+  }
+
+  .sp-route__source {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 35%, transparent);
+    background: color-mix(in srgb, var(--nest-cyan) 5%, var(--color-surface));
+  }
+
+  .sp-route__source-mark {
+    display: grid;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid var(--nest-cyan);
+    color: var(--nest-cyan);
+    font-family: var(--font-display);
+  }
+
+  .sp-route__source strong,
+  .sp-route__port strong {
+    display: block;
+  }
+
+  .sp-route__ports {
+    display: grid;
+    gap: 0.4rem;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .sp-route__ports legend {
+    margin-block-end: 0.45rem;
+    color: var(--color-text-faint);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .sp-route__port {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.65rem;
+    min-block-size: 3rem;
+    padding: 0.5rem 0.65rem;
+    border-inline-start: 1px solid color-mix(in srgb, var(--area-accent, var(--nest-cyan)) 45%, transparent);
+    background: color-mix(in srgb, var(--area-accent, var(--nest-cyan)) 4%, transparent);
+    cursor: pointer;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .sp-route__port input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+  }
+
+  .sp-route__port-node {
+    inline-size: 0.65rem;
+    aspect-ratio: 1;
+    border: 1px solid var(--area-accent, var(--nest-cyan));
+    border-radius: 50%;
+    background: var(--color-bg);
+  }
+
+  .sp-route__port:has(input:checked) {
+    border-inline-start-width: 3px;
+    background: color-mix(in srgb, var(--area-accent, var(--nest-cyan)) 13%, transparent);
+  }
+
+  .sp-route__port:has(input:checked) .sp-route__port-node {
+    background: var(--area-accent, var(--nest-cyan));
+    box-shadow: 0 0 0.8rem color-mix(in srgb, var(--area-accent, var(--nest-cyan)) 75%, transparent);
+  }
+
+  .sp-route__port:focus-within {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 2px;
+  }
+
+  .sp-route__port:hover {
+    transform: translateX(2px);
+  }
+
+  .sp-route__output {
+    --channel-accent: var(--nest-cyan);
+    padding: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--channel-accent) 48%, transparent);
+    border-block-start: 2px solid var(--channel-accent);
+    background: color-mix(in srgb, var(--channel-accent) 5%, var(--color-surface));
+  }
+
+  .sp-route__output-kicker {
+    margin: 0;
+    color: var(--channel-accent);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sp-route__output h3 {
+    margin: 0.35rem 0;
+    color: var(--channel-accent);
+    font-family: var(--font-display);
+    font-size: 1rem;
+  }
+
+  .sp-route__output > p:not(.sp-route__output-kicker) {
+    margin: 0.4rem 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .sp-route__output-note {
+    padding-inline-start: 0.65rem;
+    border-inline-start: 2px solid var(--channel-accent);
+    font-size: 0.78rem !important;
+  }
+
+  .sp-route__output-list {
+    margin: 0.5rem 0;
+    padding-inline-start: 1.2rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .sp-route__output-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-block-start: 0.7rem;
+  }
+
+  :global(.sp-route__output-actions .sp-cta) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 2.75rem;
+    padding: 0.6rem 0.75rem;
+    clip-path: var(--clip-corner-sm);
+    font-family: var(--font-display);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  :global(.sp-route__output-actions .sp-cta--primary) {
+    border: 1px solid var(--nest-magenta);
+    color: var(--nest-midnight-950);
+    background: var(--nest-magenta);
+  }
+
+  :global(.sp-route__output-actions .sp-cta--secondary) {
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 55%, transparent);
+    color: var(--nest-paper);
+    background: color-mix(in srgb, var(--nest-midnight-950) 55%, transparent);
+  }
+
+  :global(.sp-route__output-actions .sp-cta--primary:hover) {
+    border-color: var(--nest-pink);
+    background: var(--nest-pink);
+  }
+
+  :global(.sp-route__output-actions .sp-cta--secondary:hover) {
+    border-color: var(--nest-cyan);
+    color: var(--nest-cyan);
+  }
+
+  :global(.sp-route__output-actions .sp-cta:focus-visible) {
+    outline: 2px solid var(--nest-cyan);
+    outline-offset: 3px;
+    clip-path: none;
+  }
+
+  :global(.sp-route__output-actions .sp-route__output-list) {
+    flex-basis: 100%;
+    margin: 0.5rem 0;
+    padding-inline-start: 1.2rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .sp-route__output.is-changing {
+    animation: sp-channel-arrive 280ms ease-out both;
+  }
+
+  @keyframes sp-channel-arrive {
+    from {
+      opacity: 0.55;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* ---------- sections ---------- */
@@ -1056,15 +1331,23 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sp-cta {
+    .sp-cta,
+    :global(.sp-route__output-actions .sp-cta),
+    .sp-route__port,
+    .sp-route__output.is-changing {
       transition: none;
+      animation: none;
+      transform: none;
     }
   }
 
   @media (forced-colors: active) {
     .sp-cta,
     .sp-area,
-    .sp-signal {
+    .sp-signal,
+    .sp-route__source,
+    .sp-route__port,
+    .sp-route__output {
       border-color: CanvasText;
     }
 
@@ -1074,3 +1357,121 @@ const orderedMetrics = [...sponsorMetrics.metrics].sort(
     }
   }
 </style>
+
+<script>
+  const dock = document.querySelector<HTMLElement>('[data-sp-route-dock]');
+  const fallback = document.querySelector<HTMLElement>('[data-sp-route-fallback]');
+  const ports = dock?.querySelector<HTMLElement>('[data-sp-route-ports]');
+  const output = dock?.querySelector<HTMLElement>('[data-sp-route-output]');
+  const title = dock?.querySelector<HTMLElement>('[data-sp-route-title]');
+  const summary = dock?.querySelector<HTMLElement>('[data-sp-route-summary]');
+  const note = dock?.querySelector<HTMLElement>('[data-sp-route-note]');
+  const actions = dock?.querySelector<HTMLElement>('[data-sp-route-actions]');
+  const status = dock?.querySelector<HTMLElement>('[data-sp-route-status]');
+  const sponsorHref = document.querySelector<HTMLAnchorElement>('[data-sp-general-sponsor-link]')?.href;
+  const generalPartnershipHref = document.querySelector<HTMLAnchorElement>('[data-sp-general-partnership-link]')?.href;
+  const routeInputs = [...(ports?.querySelectorAll<HTMLInputElement>('input[type="radio"]') ?? [])];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (
+    dock &&
+    fallback &&
+    ports &&
+    output &&
+    title &&
+    summary &&
+    note &&
+    actions &&
+    status &&
+    sponsorHref &&
+    generalPartnershipHref &&
+    routeInputs.length === 5
+  ) {
+    const setText = (element: HTMLElement, value: string) => {
+      element.textContent = value;
+    };
+    const addAction = (label: string, href: string, primary = false, external = false) => {
+      const link = document.createElement('a');
+      link.className = primary ? 'sp-cta sp-cta--primary' : 'sp-cta sp-cta--secondary';
+      link.href = href;
+      link.textContent = label;
+      if (external) {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', `${label} (opens in new tab)`);
+        const indicator = document.createElement('span');
+        indicator.setAttribute('aria-hidden', 'true');
+        indicator.textContent = ' ↗';
+        link.append(indicator);
+      }
+      actions.append(link);
+    };
+
+    const renderRoute = (value: string, animate: boolean) => {
+      const area = document.querySelector<HTMLElement>(`[data-sp-route-area="${CSS.escape(value)}"]`);
+      output.style.removeProperty('--channel-accent');
+      actions.replaceChildren();
+
+      if (value === 'general') {
+        setText(title, 'General support');
+        setText(summary, 'Individual support helps make time for open-source maintenance.');
+        setText(note, 'GitHub Sponsors is general support; project sponsorship starts with a conversation.');
+        addAction('Sponsor on GitHub', sponsorHref, true, true);
+        addAction('Discuss a partnership', generalPartnershipHref);
+        status.textContent =
+          'General support selected. GitHub Sponsors contributions are not earmarked for individual projects.';
+      } else if (area) {
+        const areaTitle = area.querySelector('.sp-area__head h3')?.textContent?.trim() ?? value;
+        const projects = area.querySelector('.sp-area__projects')?.textContent?.trim() ?? '';
+        const areaSummary = area.querySelector('.sp-area__summary')?.textContent?.trim() ?? '';
+        const scope = area.querySelector('.sp-area__scope')?.textContent?.trim();
+        const enables = [...(area.querySelector('.sp-area__cols .sp-list')?.querySelectorAll('li') ?? [])]
+          .map((item) => item.textContent?.trim() ?? '')
+          .filter(Boolean);
+        const anchor = area.querySelector<HTMLAnchorElement>('.sp-area__link');
+        const accent = getComputedStyle(area).getPropertyValue('--area-accent').trim();
+        if (accent) output.style.setProperty('--channel-accent', accent);
+        setText(title, areaTitle);
+        setText(summary, `${projects}. ${areaSummary}`.trim());
+        setText(note, `${scope ? `${scope} ` : ''}Choosing this focus does not earmark GitHub Sponsors contributions.`);
+        const list = document.createElement('ul');
+        list.className = 'sp-route__output-list';
+        for (const item of enables) {
+          const row = document.createElement('li');
+          row.textContent = item;
+          list.append(row);
+        }
+        actions.append(list);
+        addAction(`Read about ${areaTitle}`, anchor?.href ?? '#area-' + value, true);
+        const partnershipAddress = generalPartnershipHref.split('?')[0];
+        addAction(
+          'Discuss a partnership',
+          `${partnershipAddress}?subject=${encodeURIComponent(`Open-source partnership: ${areaTitle}`)}`,
+        );
+        status.textContent = `${areaTitle} selected. GitHub Sponsors contributions are not earmarked for individual projects.`;
+      }
+
+      if (animate && !reduceMotion.matches) {
+        output.classList.remove('is-changing');
+        void output.offsetWidth;
+        output.classList.add('is-changing');
+      } else {
+        output.classList.remove('is-changing');
+      }
+    };
+
+    dock.hidden = false;
+    fallback.hidden = true;
+    ports.addEventListener('change', (event) => {
+      const input = event.target;
+      if (input instanceof HTMLInputElement && input.name === 'sp-route') renderRoute(input.value, true);
+    });
+    reduceMotion.addEventListener('change', (event) => {
+      if (event.matches) {
+        output.getAnimations().forEach((animation) => animation.cancel());
+        output.classList.remove('is-changing');
+      }
+    });
+    renderRoute('general', false);
+  }
+</script>
