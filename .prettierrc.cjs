@@ -14,6 +14,14 @@ module.exports = {
       },
     },
     {
+      files: 'src/features/agentic-harness/scripts/*.js',
+      options: {
+        semi: false,
+        trailingComma: 'none',
+        arrowParens: 'avoid',
+      },
+    },
+    {
       files: '*.astro',
       options: {
         parser: 'astro',

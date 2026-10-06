@@ -1,120 +1,161 @@
 ---
 /**
- * PersistenceCore — signature hero scene for the Agentic Harness page.
- *
- * The visual argument of the product in one frame: three persistent cores
- * (knowledge, context, projects) keep feeding the Agent Toolkit runtime while
- * individual sessions fade around them. Pure SVG + CSS motion, no JS, no
- * dependencies; the global reduced-motion kill switch freezes every layer.
+ * PersistenceCore — interactive explanation of session state vs workspace state.
+ * The diagram starts as a complete static figure; its controls appear only
+ * after the small route-local script is ready.
  */
+import traceScriptUrl from '../scripts/session-trace.js?url&no-inline';
 ---
 
-<div
-  class="persistence-core"
-  role="img"
-  aria-label="Diagram: three persistent workspace cores — knowledge, context, projects — feeding the Agent Toolkit runtime ring, while transient sessions appear and fade around them."
->
-  <svg viewBox="0 0 640 460" fill="none" aria-hidden="true" focusable="false">
-    <defs>
-      <radialGradient id="pc-core-glow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#34d399" stop-opacity="0.5"></stop>
-        <stop offset="70%" stop-color="#34d399" stop-opacity="0.08"></stop>
-        <stop offset="100%" stop-color="#34d399" stop-opacity="0"></stop>
-      </radialGradient>
-      <linearGradient id="pc-link" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#34d399" stop-opacity="0.7"></stop>
-        <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.25"></stop>
-      </linearGradient>
-      <linearGradient id="pc-ring-stroke" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#34d399"></stop>
-        <stop offset="100%" stop-color="#22d3ee"></stop>
-      </linearGradient>
-    </defs>
+<figure class="persistence-core" data-persistence-core data-pc-state="active">
+  <div class="persistence-core__stage">
+    <svg
+      id="persistence-core-diagram"
+      viewBox="0 0 640 460"
+      fill="none"
+      role="img"
+      aria-labelledby="pc-title pc-description"
+    >
+      <title id="pc-title">Persistent workspace state and a temporary coding session</title>
+      <desc id="pc-description">
+        Knowledge, personas and project context feed the Agent Toolkit runtime. A separate illustrative coding session
+        can end while those workspace cores and their runtime connection remain.
+      </desc>
+      <defs>
+        <radialGradient id="pc-core-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#34d399" stop-opacity="0.5"></stop>
+          <stop offset="70%" stop-color="#34d399" stop-opacity="0.08"></stop>
+          <stop offset="100%" stop-color="#34d399" stop-opacity="0"></stop>
+        </radialGradient>
+        <linearGradient id="pc-link" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#34d399" stop-opacity="0.7"></stop>
+          <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.25"></stop>
+        </linearGradient>
+        <linearGradient id="pc-ring-stroke" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#34d399"></stop>
+          <stop offset="100%" stop-color="#22d3ee"></stop>
+        </linearGradient>
+      </defs>
 
-    <!-- connection lanes: core → runtime -->
-    <g class="pc-links">
-      <path class="pc-link" d="M140 168 C 150 240, 250 270, 306 306" pathLength="100"></path>
-      <path class="pc-link" d="M320 168 L 320 300" pathLength="100"></path>
-      <path class="pc-link" d="M500 168 C 490 240, 390 270, 334 306" pathLength="100"></path>
-    </g>
+      <g class="pc-links">
+        <path class="pc-link" d="M140 168 C 150 240, 250 270, 306 306" pathLength="100"></path>
+        <path class="pc-link" d="M320 168 L 320 300" pathLength="100"></path>
+        <path class="pc-link" d="M500 168 C 490 240, 390 270, 334 306" pathLength="100"></path>
+      </g>
 
-    <!-- packets travelling down the lanes -->
-    <g class="pc-packets">
-      <circle class="pc-packet pc-packet--a" r="3.5" fill="#6ee7b7"></circle>
-      <circle class="pc-packet pc-packet--b" r="3.5" fill="#6ee7b7"></circle>
-      <circle class="pc-packet pc-packet--c" r="3.5" fill="#6ee7b7"></circle>
-    </g>
+      <g class="pc-packets" aria-hidden="true">
+        <circle class="pc-packet pc-packet--a" r="3.5" fill="#6ee7b7"></circle>
+        <circle class="pc-packet pc-packet--b" r="3.5" fill="#6ee7b7"></circle>
+        <circle class="pc-packet pc-packet--c" r="3.5" fill="#6ee7b7"></circle>
+      </g>
 
-    <!-- persistent cores -->
-    <g class="pc-core pc-core--k">
-      <circle cx="140" cy="120" r="46" fill="url(#pc-core-glow)"></circle>
-      <circle cx="140" cy="120" r="30" class="pc-core__ring"></circle>
-      <text x="140" y="126" class="pc-core__glyph">
-        K
-      </text>
-      <text x="140" y="182" class="pc-core__label">
-        knowledge/
-      </text>
-    </g>
-    <g class="pc-core pc-core--c">
-      <circle cx="320" cy="120" r="46" fill="url(#pc-core-glow)"></circle>
-      <circle cx="320" cy="120" r="30" class="pc-core__ring"></circle>
-      <text x="320" y="126" class="pc-core__glyph">
-        C
-      </text>
-      <text x="320" y="182" class="pc-core__label">
-        personas · packs
-      </text>
-    </g>
-    <g class="pc-core pc-core--p">
-      <circle cx="500" cy="120" r="46" fill="url(#pc-core-glow)"></circle>
-      <circle cx="500" cy="120" r="30" class="pc-core__ring"></circle>
-      <text x="500" y="126" class="pc-core__glyph">
-        P
-      </text>
-      <text x="500" y="182" class="pc-core__label">
-        projects/
-      </text>
-    </g>
+      <path
+        class="pc-session-link"
+        data-pc-session-link
+        d="M375 314 C 439 280, 490 189, 520 78"
+        pathLength="100"
+      ></path>
+      <circle class="pc-session-packet" r="4" fill="#67e8f9" aria-hidden="true"></circle>
 
-    <!-- transient session ghost: appears, dies, fades — the contrast that carries the message -->
-    <g class="pc-session">
-      <rect x="436" y="24" width="168" height="52" rx="8" class="pc-session__box"></rect>
-      <text x="520" y="46" class="pc-session__title">
-        SESSION ENDED
-      </text>
-      <text x="520" y="62" class="pc-session__sub">
-        terminated
-      </text>
-    </g>
+      <g class="pc-core pc-core--k">
+        <circle cx="140" cy="120" r="46" fill="url(#pc-core-glow)"></circle>
+        <circle cx="140" cy="120" r="30" class="pc-core__ring"></circle>
+        <text x="140" y="126" class="pc-core__glyph">
+          K
+        </text>
+        <text x="140" y="182" class="pc-core__label">
+          knowledge/
+        </text>
+      </g>
+      <g class="pc-core pc-core--c">
+        <circle cx="320" cy="120" r="46" fill="url(#pc-core-glow)"></circle>
+        <circle cx="320" cy="120" r="30" class="pc-core__ring"></circle>
+        <text x="320" y="126" class="pc-core__glyph">
+          C
+        </text>
+        <text x="320" y="182" class="pc-core__label">
+          personas · packs
+        </text>
+      </g>
+      <g class="pc-core pc-core--p">
+        <circle cx="500" cy="120" r="46" fill="url(#pc-core-glow)"></circle>
+        <circle cx="500" cy="120" r="30" class="pc-core__ring"></circle>
+        <text x="500" y="126" class="pc-core__glyph">
+          P
+        </text>
+        <text x="500" y="182" class="pc-core__label">
+          projects/
+        </text>
+      </g>
 
-    <!-- runtime ring -->
-    <g class="pc-runtime" transform="translate(320 356)">
-      <circle r="64" class="pc-runtime__track"></circle>
-      <circle r="64" class="pc-runtime__dash" pathLength="100"></circle>
-      <circle r="46" class="pc-runtime__inner"></circle>
-      <text y="-4" class="pc-runtime__title">
-        AGENT TOOLKIT
-      </text>
-      <text y="14" class="pc-runtime__sub">
-        loops · jobs · memory
-      </text>
-    </g>
-  </svg>
-</div>
+      <g class="pc-session" data-pc-session-visual>
+        <rect x="436" y="24" width="168" height="52" rx="8" class="pc-session__box"></rect>
+        <g class="pc-session__variant pc-session__variant--active">
+          <text x="520" y="46" class="pc-session__title">
+            DEMO SESSION
+          </text>
+          <text x="520" y="62" class="pc-session__sub">
+            active · temporary
+          </text>
+        </g>
+        <g class="pc-session__variant pc-session__variant--ended">
+          <text x="520" y="46" class="pc-session__title">
+            SESSION ENDED
+          </text>
+          <text x="520" y="62" class="pc-session__sub">
+            workspace remains
+          </text>
+        </g>
+      </g>
+
+      <g class="pc-runtime" transform="translate(320 356)">
+        <circle r="64" class="pc-runtime__track"></circle>
+        <circle r="64" class="pc-runtime__dash" pathLength="100"></circle>
+        <circle r="46" class="pc-runtime__inner"></circle>
+        <text y="-4" class="pc-runtime__title">
+          AGENT TOOLKIT
+        </text>
+        <text y="14" class="pc-runtime__sub">
+          loops · jobs · memory
+        </text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="pc-controls" data-pc-controls hidden>
+    <button type="button" data-pc-toggle aria-controls="persistence-core-diagram">
+      End the demo session
+    </button>
+    <p class="pc-controls__status" data-pc-status role="status" aria-live="polite" aria-atomic="true">
+      Demo session active. Workspace state remains connected through the runtime.
+    </p>
+  </div>
+
+  <figcaption class="pc-caption">
+    An illustrative model, not a live agent session. The session is temporary; knowledge, personas and project context
+    remain connected through the runtime.
+  </figcaption>
+</figure>
+
+<script is:inline src={traceScriptUrl} defer></script>
 
 <style>
   .persistence-core {
     container-type: inline-size;
     width: 100%;
     max-width: 40rem;
-    margin-inline: auto;
+    margin: 0 auto;
+  }
+
+  .persistence-core__stage {
+    position: relative;
   }
 
   .persistence-core svg {
     display: block;
     width: 100%;
     height: auto;
+    overflow: visible;
   }
 
   .pc-link {
@@ -134,25 +175,25 @@
 
   .pc-packet {
     opacity: 0;
-    filter: drop-shadow(0 0 6px rgba(110, 231, 183, 0.9));
+    filter: drop-shadow(0 0 6px rgb(110 231 183 / 90%));
   }
 
   .pc-packet--a {
     offset-path: path('M140 168 C 150 240, 250 270, 306 306');
-    animation: pc-travel-a 3.4s ease-in-out infinite;
+    animation: pc-travel 3.4s ease-in-out infinite;
   }
 
   .pc-packet--b {
     offset-path: path('M320 168 L 320 300');
-    animation: pc-travel-b 3.4s ease-in-out 1.1s infinite;
+    animation: pc-travel 3.4s ease-in-out 1.1s infinite;
   }
 
   .pc-packet--c {
     offset-path: path('M500 168 C 490 240, 390 270, 334 306');
-    animation: pc-travel-c 3.4s ease-in-out 2.2s infinite;
+    animation: pc-travel 3.4s ease-in-out 2.2s infinite;
   }
 
-  @keyframes pc-travel-a {
+  @keyframes pc-travel {
     0% {
       offset-distance: 0%;
       opacity: 0;
@@ -169,32 +210,37 @@
     }
   }
 
-  @keyframes pc-travel-b {
-    0% {
-      offset-distance: 0%;
-      opacity: 0;
-    }
-    12% {
-      opacity: 1;
-    }
-    82% {
-      opacity: 1;
-    }
-    100% {
-      offset-distance: 100%;
-      opacity: 0;
+  .pc-session-link {
+    fill: none;
+    stroke: var(--world-accent-secondary, #22d3ee);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 7;
+    stroke-linecap: round;
+    opacity: 0.68;
+    animation: pc-session-flow 2.8s linear infinite;
+  }
+
+  @keyframes pc-session-flow {
+    to {
+      stroke-dashoffset: -100;
     }
   }
 
-  @keyframes pc-travel-c {
+  .pc-session-packet {
+    offset-path: path('M375 314 C 439 280, 490 189, 520 78');
+    filter: drop-shadow(0 0 6px rgb(103 232 249 / 90%));
+    animation: pc-session-travel 3.8s ease-in-out infinite;
+  }
+
+  @keyframes pc-session-travel {
     0% {
       offset-distance: 0%;
       opacity: 0;
     }
-    12% {
+    14% {
       opacity: 1;
     }
-    82% {
+    84% {
       opacity: 1;
     }
     100% {
@@ -204,14 +250,9 @@
   }
 
   .pc-core__ring {
-    fill: rgba(6, 26, 18, 0.55);
+    fill: rgb(6 26 18 / 55%);
     stroke: var(--world-accent, #34d399);
     stroke-width: 1.5;
-  }
-
-  .pc-core--k .pc-core__ring,
-  .pc-core--c .pc-core__ring,
-  .pc-core--p .pc-core__ring {
     animation: pc-breathe 5.5s ease-in-out infinite;
   }
 
@@ -249,52 +290,54 @@
     text-anchor: middle;
   }
 
-  .pc-session {
-    animation: pc-session-cycle 7s ease-in-out infinite;
-  }
-
   .pc-session__box {
-    fill: rgba(6, 26, 18, 0.2);
+    fill: rgb(6 26 18 / 20%);
     stroke: var(--world-accent-secondary, #22d3ee);
     stroke-width: 1;
     stroke-dasharray: 5 5;
   }
 
+  .pc-session__variant {
+    display: none;
+  }
+
+  [data-pc-state='active'] .pc-session__variant--active,
+  [data-pc-state='ended'] .pc-session__variant--ended {
+    display: inline;
+  }
+
+  [data-pc-state='ended'] .pc-session__box {
+    stroke-dasharray: 2 5;
+    opacity: 0.62;
+  }
+
+  [data-pc-state='ended'] .pc-session-link,
+  [data-pc-state='ended'] .pc-session-packet {
+    opacity: 0.12;
+    animation-play-state: paused;
+  }
+
+  .pc-session__title,
+  .pc-session__sub {
+    font-family: var(--font-mono, monospace);
+    text-anchor: middle;
+  }
+
   .pc-session__title {
     fill: var(--world-accent-secondary, #22d3ee);
-    font-family: var(--font-mono, monospace);
     font-size: 11px;
     letter-spacing: 0.12em;
-    text-anchor: middle;
   }
 
   .pc-session__sub {
     fill: var(--color-text-muted, #9fb8ad);
-    font-family: var(--font-mono, monospace);
     font-size: 10px;
     letter-spacing: 0.1em;
-    text-anchor: middle;
-  }
-
-  @keyframes pc-session-cycle {
-    0%,
-    55% {
-      opacity: 0.9;
-      transform: translateY(0);
-    }
-    80% {
-      opacity: 0.15;
-      transform: translateY(6px);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(10px);
-    }
   }
 
   .pc-runtime__track {
-    fill: rgba(6, 26, 18, 0.5);
-    stroke: rgba(52, 211, 153, 0.25);
+    fill: rgb(6 26 18 / 50%);
+    stroke: rgb(52 211 153 / 25%);
     stroke-width: 1;
   }
 
@@ -316,8 +359,8 @@
   }
 
   .pc-runtime__inner {
-    fill: rgba(4, 18, 12, 0.85);
-    stroke: rgba(52, 211, 153, 0.35);
+    fill: rgb(4 18 12 / 85%);
+    stroke: rgb(52 211 153 / 35%);
     stroke-width: 1;
   }
 
@@ -338,19 +381,66 @@
     font-size: 9px;
   }
 
+  .pc-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    align-items: center;
+    margin: -0.7rem 0 0.4rem;
+  }
+
+  .pc-controls[hidden] {
+    display: none;
+  }
+
+  .pc-controls button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--world-border-accent, #34d399);
+    background: color-mix(in srgb, var(--world-accent, #34d399) 10%, transparent);
+    color: var(--color-text, #f7f5ff);
+    font: 400 0.82rem/1.2 var(--font-mono, monospace);
+    cursor: pointer;
+    transition:
+      background-color var(--motion-duration-fast, 140ms) var(--motion-ease-standard, ease),
+      border-color var(--motion-duration-fast, 140ms) var(--motion-ease-standard, ease);
+  }
+
+  .pc-controls button:hover {
+    border-color: var(--world-accent-strong, #6ee7b7);
+    background: color-mix(in srgb, var(--world-accent, #34d399) 20%, transparent);
+  }
+
+  .pc-controls button:focus-visible {
+    outline: 2px solid var(--color-focus, #1cefff);
+    outline-offset: 3px;
+  }
+
+  .pc-controls__status {
+    flex: 1 1 16rem;
+    margin: 0;
+    color: var(--color-text-muted, #b9b2d8);
+    font-size: 0.78rem;
+  }
+
+  .pc-caption {
+    margin-top: 0.25rem;
+    color: var(--color-text-faint, #8f88b4);
+    font-size: 0.72rem;
+    line-height: 1.55;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .pc-link,
     .pc-packet,
-    .pc-session,
+    .pc-session-link,
+    .pc-session-packet,
     .pc-runtime__dash,
-    .pc-core--k .pc-core__ring,
-    .pc-core--c .pc-core__ring,
-    .pc-core--p .pc-core__ring {
-      animation: none;
+    .pc-core__ring {
+      animation: none !important;
     }
 
-    /* Deterministic static frame — frozen animation state can differ per
-    environment and would break cross-run visual goldens. */
     .pc-link {
       stroke-dashoffset: 0;
       opacity: 0.65;
@@ -360,25 +450,35 @@
       transform: rotate(0deg);
     }
 
-    .pc-core--k .pc-core__ring,
-    .pc-core--c .pc-core__ring,
-    .pc-core--p .pc-core__ring {
+    .pc-core__ring {
       stroke-opacity: 0.8;
     }
 
-    .pc-packet {
+    .pc-packet,
+    .pc-session-packet {
       display: none;
     }
   }
 
   @media (forced-colors: active) {
-    .pc-core__ring {
+    .pc-core__ring,
+    .pc-session__box {
       stroke: CanvasText;
     }
 
     .pc-core__glyph,
-    .pc-runtime__title {
+    .pc-runtime__title,
+    .pc-session__title,
+    .pc-core__label,
+    .pc-runtime__sub,
+    .pc-session__sub {
       fill: CanvasText;
+    }
+
+    .pc-controls button {
+      border: 1px solid ButtonText;
+      color: ButtonText;
+      background: ButtonFace;
     }
   }
 </style>
