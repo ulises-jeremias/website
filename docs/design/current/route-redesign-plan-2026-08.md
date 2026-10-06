@@ -166,5 +166,6 @@ responsive asset pipeline in `docs/design/current/social-assets.md`. Its 640px
 WebP is 45 KiB, the 440px WebP is 24 KiB, and the 192px thumbnail is 5.9 KiB.
 
 The V route's compact provenance note changes the VTL capture bounds by one
-CSS pixel in Chromium. The desktop and mobile flow goldens record the unchanged
-diagram and explanatory states.
+CSS pixel in Chromium. The desktop, mobile forward-pass, mobile reverse-pass,
+and mobile reduced-motion goldens were re-captured and inspected; the diagram
+and states are unchanged.
