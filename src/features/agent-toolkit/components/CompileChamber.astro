@@ -1,0 +1,578 @@
+---
+/** A route-specific, user-started illustration of Agent Toolkit distribution. */
+import { capabilityNodes, distributionTargets } from '../data/index.js';
+
+const selectedTarget = distributionTargets[0];
+---
+
+<section class="atk-compile" aria-labelledby="atk-compile-title" data-atk-compile>
+  <header class="atk-compile__header">
+    <p class="atk-compile__eyebrow">Profile compiler · illustrative trace</p>
+    <h2 id="atk-compile-title">One catalog. Native landings.</h2>
+    <p>Choose an assistant profile, then watch one capability source route into its native shape.</p>
+  </header>
+
+  <div class="atk-compile__flow" data-compile-flow>
+    <div class="atk-compile__source" role="group" aria-label="Capability catalog source">
+      <p class="atk-compile__port-label">Canonical catalog</p>
+      <ul>
+        {capabilityNodes.map((node) => (
+          <li data-compile-source={node.id} style={`--source-accent: ${node.color}`}>
+            <span class="atk-compile__source-dot" aria-hidden="true"></span>
+            <span>{node.title}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="atk-compile__processor" data-compile-core role="img" aria-label="Profile compiler">
+      <span class="atk-compile__processor-ring" aria-hidden="true"></span>
+      <span class="atk-compile__processor-face">
+        <span class="atk-compile__processor-mark" aria-hidden="true">
+          ATK
+        </span>
+        <span class="atk-compile__processor-label">
+          Profile
+          <br />
+          compiler
+        </span>
+        <span class="atk-compile__processor-pins" aria-hidden="true"></span>
+      </span>
+    </div>
+
+    <div class="atk-compile__destination">
+      <p class="atk-compile__port-label">
+        Native profiles <span>{distributionTargets.length}</span>
+      </p>
+      <div class="atk-compile__targets" role="group" aria-label="Choose an assistant profile">
+        {distributionTargets.map((target, index) => (
+          <button
+            type="button"
+            class:list={['atk-compile__target', { 'is-selected': index === 0 }]}
+            aria-pressed={index === 0 ? 'true' : 'false'}
+            aria-label={`Select ${target.label} profile`}
+            aria-controls="atk-compile-output"
+            data-compile-target={target.id}
+            data-profile-path={target.path}
+            disabled
+          >
+            <span class="atk-compile__target-led" aria-hidden="true"></span>
+            <span>{target.label}</span>
+          </button>
+        ))}
+      </div>
+      {selectedTarget ? (
+        <p class="atk-compile__output" id="atk-compile-output">
+          <span>Profile surface</span>
+          <code data-compile-path>{selectedTarget.path}</code>
+        </p>
+      ) : null}
+    </div>
+
+    <div class="atk-compile__packets" aria-hidden="true">
+      {capabilityNodes.map((node) => (
+        <span class="atk-compile__packet" data-compile-packet={node.id}></span>
+      ))}
+    </div>
+  </div>
+
+  <footer class="atk-compile__footer">
+    <button class="atk-compile__run" type="button" data-compile-run disabled>
+      <span aria-hidden="true">▶</span>
+      <span>Trace a distribution pass</span>
+    </button>
+    <span class="atk-compile__truth">Symbolic route · no install is running</span>
+  </footer>
+  <p class="visually-hidden" role="status" aria-atomic="true" data-compile-status></p>
+
+  <noscript>
+    <p class="atk-compile__noscript">
+      Static path: capability catalog → profile compiler → {selectedTarget?.label ?? 'native assistant profiles'}. The
+      profile list and native paths are available in the distribution index below.
+    </p>
+  </noscript>
+</section>
+
+<style>
+  .atk-compile {
+    --compile-cyan: var(--nest-cyan, #1cefff);
+    --compile-violet: var(--nest-violet, #a05cff);
+    --compile-magenta: var(--nest-magenta, #ff38d1);
+    position: relative;
+    min-inline-size: 0;
+    padding: clamp(0.8rem, 1.4vw, 1.15rem);
+    border: 1px solid color-mix(in srgb, var(--compile-cyan) 35%, transparent);
+    border-inline-start: 2px solid var(--compile-cyan);
+    background:
+      linear-gradient(140deg, color-mix(in srgb, var(--compile-violet) 13%, transparent), transparent 52%),
+      color-mix(in srgb, var(--nest-midnight-950, #040212) 93%, transparent);
+    box-shadow: inset 0 1px color-mix(in srgb, var(--nest-paper, #f8f4ff) 8%, transparent);
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .atk-compile__header {
+    display: grid;
+    gap: 0.38rem;
+  }
+
+  .atk-compile__eyebrow,
+  .atk-compile__port-label,
+  .atk-compile__output > span {
+    margin: 0;
+    color: var(--compile-cyan);
+    font: 0.64rem/1.45 var(--font-mono, ui-monospace, monospace);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .atk-compile__header h2 {
+    margin: 0;
+    color: var(--nest-paper, #f8f4ff);
+    font: clamp(1rem, 1.45vw, 1.2rem)/1.25 var(--font-display, Orbitron, ui-sans-serif);
+    letter-spacing: 0.02em;
+  }
+
+  .atk-compile__header > p:last-child {
+    max-inline-size: 46ch;
+    margin: 0;
+    color: var(--color-text-muted, #aaa0c2);
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .atk-compile__flow {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(5.2rem, 0.68fr) minmax(4.5rem, 0.55fr) minmax(8.2rem, 1.5fr);
+    gap: clamp(0.4rem, 1vw, 0.8rem);
+    align-items: center;
+    min-inline-size: 0;
+    margin-block: 0.75rem;
+    padding-block: 0.55rem;
+    perspective: 720px;
+  }
+
+  .atk-compile__source,
+  .atk-compile__destination {
+    position: relative;
+    z-index: 1;
+    min-inline-size: 0;
+  }
+
+  .atk-compile__port-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.25rem;
+    margin-block-end: 0.42rem;
+    color: color-mix(in srgb, var(--nest-paper, #f8f4ff) 76%, var(--compile-cyan));
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+  }
+
+  .atk-compile__port-label > span {
+    color: var(--compile-cyan);
+  }
+
+  .atk-compile__source ul,
+  .atk-compile__targets {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .atk-compile__source li,
+  .atk-compile__target {
+    display: flex;
+    align-items: center;
+    gap: 0.36rem;
+    min-inline-size: 0;
+    padding: 0.28rem 0.34rem;
+    border: 1px solid color-mix(in srgb, var(--source-accent, var(--compile-cyan)) 43%, transparent);
+    background: color-mix(in srgb, var(--nest-midnight-900, #050317) 92%, transparent);
+    color: var(--color-text-muted, #c2bad7);
+    font: 0.64rem/1.2 var(--font-mono, ui-monospace, monospace);
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+
+  .atk-compile__source li {
+    min-block-size: 26px;
+  }
+  .atk-compile__source-dot,
+  .atk-compile__target-led {
+    flex: 0 0 5px;
+    inline-size: 5px;
+    block-size: 5px;
+  }
+
+  .atk-compile__source-dot {
+    background: var(--source-accent, var(--compile-cyan));
+  }
+
+  .atk-compile__processor {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-inline-size: 0;
+    min-block-size: 8.6rem;
+    transform-style: preserve-3d;
+  }
+
+  .atk-compile__processor-ring {
+    position: absolute;
+    inline-size: 5.6rem;
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--compile-magenta) 57%, transparent);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 0.4rem color-mix(in srgb, var(--compile-violet) 7%, transparent),
+      0 0 1.4rem color-mix(in srgb, var(--compile-violet) 23%, transparent);
+    transform: rotateX(68deg) rotateZ(-22deg);
+  }
+
+  .atk-compile__processor-face {
+    position: relative;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.22rem;
+    inline-size: 4.45rem;
+    min-block-size: 5.2rem;
+    border: 1px solid color-mix(in srgb, var(--compile-cyan) 78%, white 8%);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--compile-violet) 55%, transparent), transparent 53%),
+      var(--nest-midnight-900, #050317);
+    box-shadow:
+      0.32rem 0.3rem 0 color-mix(in srgb, var(--compile-violet) 28%, var(--nest-midnight-950, #040212)),
+      0.56rem 0.55rem 0 color-mix(in srgb, var(--compile-cyan) 18%, transparent),
+      0 0 1.2rem color-mix(in srgb, var(--compile-cyan) 16%, transparent);
+    transform: rotateY(-16deg) rotateX(5deg) translateZ(12px);
+  }
+
+  .atk-compile__processor-mark {
+    color: var(--compile-magenta);
+    font: 800 0.66rem var(--font-display, Orbitron, ui-sans-serif);
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 0.55rem color-mix(in srgb, var(--compile-magenta) 70%, transparent);
+  }
+
+  .atk-compile__processor-label {
+    color: var(--nest-paper, #f8f4ff);
+    font: 0.55rem/1.25 var(--font-mono, ui-monospace, monospace);
+    text-align: center;
+  }
+
+  .atk-compile__processor-pins {
+    inline-size: 2.3rem;
+    block-size: 3px;
+    background: repeating-linear-gradient(90deg, var(--compile-cyan) 0 3px, transparent 3px 7px);
+    opacity: 0.72;
+  }
+
+  .atk-compile__targets {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .atk-compile__target {
+    min-block-size: 44px;
+    border-color: color-mix(in srgb, var(--compile-cyan) 32%, transparent);
+    font-size: 0.62rem;
+    cursor: pointer;
+  }
+
+  .atk-compile__target-led {
+    background: #544969;
+  }
+
+  .atk-compile__target[aria-pressed='true'] {
+    border-color: var(--compile-cyan);
+    background: color-mix(in srgb, var(--compile-cyan) 10%, var(--nest-midnight-950, #040212));
+    color: var(--nest-paper, #f8f4ff);
+    box-shadow:
+      inset 2px 0 var(--compile-cyan),
+      0 0 0.65rem color-mix(in srgb, var(--compile-cyan) 15%, transparent);
+  }
+
+  .atk-compile__target[aria-pressed='true'] .atk-compile__target-led {
+    background: var(--compile-cyan);
+    box-shadow: 0 0 8px var(--compile-cyan);
+  }
+
+  .atk-compile__output {
+    display: grid;
+    gap: 0.22rem;
+    min-inline-size: 0;
+    margin: 0.52rem 0 0;
+    padding: 0.43rem 0.5rem;
+    border-inline-start: 2px solid var(--compile-magenta);
+    background: color-mix(in srgb, var(--compile-violet) 10%, transparent);
+  }
+
+  .atk-compile__output > span {
+    color: var(--compile-magenta);
+    font-size: 0.59rem;
+  }
+  .atk-compile__output code {
+    color: var(--nest-paper, #f8f4ff);
+    font: 0.64rem/1.3 var(--font-mono, ui-monospace, monospace);
+    overflow-wrap: anywhere;
+  }
+
+  .atk-compile__packets {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .atk-compile__packet {
+    position: absolute;
+    inset: 0 auto auto 0;
+    inline-size: 7px;
+    block-size: 7px;
+    border: 1px solid white;
+    background: var(--compile-cyan);
+    box-shadow: 0 0 0.65rem var(--compile-cyan);
+    opacity: 0;
+  }
+  .atk-compile__flow.is-compiling .atk-compile__processor-face {
+    border-color: var(--nest-paper, #f8f4ff);
+    box-shadow:
+      0 0 1.4rem color-mix(in srgb, var(--compile-cyan) 65%, transparent),
+      0.32rem 0.3rem 0 color-mix(in srgb, var(--compile-violet) 28%, var(--nest-midnight-950, #040212));
+  }
+  .atk-compile__flow.is-routed .atk-compile__target.is-selected {
+    box-shadow:
+      inset 2px 0 var(--compile-cyan),
+      0 0 0 1px color-mix(in srgb, var(--compile-cyan) 46%, transparent),
+      0 0 1rem color-mix(in srgb, var(--compile-cyan) 24%, transparent);
+  }
+
+  .atk-compile__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 0.8rem;
+    padding-block-start: 0.6rem;
+    border-block-start: 1px solid color-mix(in srgb, var(--compile-cyan) 24%, transparent);
+  }
+  .atk-compile__run {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.46rem;
+    min-block-size: 44px;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--compile-magenta) 70%, transparent);
+    background: color-mix(in srgb, var(--compile-magenta) 12%, var(--nest-midnight-950, #040212));
+    color: var(--nest-paper, #f8f4ff);
+    font: 0.7rem var(--font-mono, ui-monospace, monospace);
+    letter-spacing: 0.035em;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  }
+  .atk-compile__run:hover:not(:disabled) {
+    border-color: var(--compile-magenta);
+    background: color-mix(in srgb, var(--compile-magenta) 24%, var(--nest-midnight-950, #040212));
+  }
+  .atk-compile__run:disabled {
+    cursor: default;
+    opacity: 0.9;
+  }
+  .atk-compile__truth {
+    color: var(--color-text-faint, #8f84a7);
+    font: 0.62rem/1.35 var(--font-mono, ui-monospace, monospace);
+  }
+  @media (width < 620px) {
+    .atk-compile {
+      padding: 0.75rem;
+    }
+    .atk-compile__flow {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.62rem;
+    }
+    .atk-compile__source ul {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .atk-compile__processor {
+      min-block-size: 4.7rem;
+    }
+    .atk-compile__processor-ring {
+      inline-size: 3.8rem;
+    }
+    .atk-compile__processor-face {
+      inline-size: 5rem;
+      min-block-size: 4rem;
+      gap: 0.08rem;
+    }
+    .atk-compile__processor-mark {
+      font-size: 0.58rem;
+    }
+    .atk-compile__processor-label {
+      font-size: 0.5rem;
+    }
+    .atk-compile__processor-pins {
+      display: none;
+    }
+    .atk-compile__source li {
+      min-block-size: 32px;
+    }
+    .atk-compile__footer {
+      align-items: stretch;
+    }
+    .atk-compile__run {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .atk-compile__source li,
+    .atk-compile__target,
+    .atk-compile__processor-face,
+    .atk-compile__run {
+      border: 1px solid ButtonText;
+    }
+    .atk-compile__target[aria-pressed='true'] {
+      outline: 2px solid Highlight;
+    }
+  }
+</style>
+
+<script>
+  function initCompileChamber(root: HTMLElement) {
+    const flow = root.querySelector<HTMLElement>('[data-compile-flow]');
+    const sources = Array.from(root.querySelectorAll<HTMLElement>('[data-compile-source]'));
+    const packets = Array.from(root.querySelectorAll<HTMLElement>('[data-compile-packet]'));
+    const core = root.querySelector<HTMLElement>('[data-compile-core]');
+    const targets = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-compile-target]'));
+    const output = root.querySelector<HTMLElement>('[data-compile-path]');
+    const run = root.querySelector<HTMLButtonElement>('[data-compile-run]');
+    const status = root.querySelector<HTMLElement>('[data-compile-status]');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let activeAnimations: Animation[] = [];
+    let finishTimer = 0;
+
+    if (!flow || !core || !run || !output || !status || targets.length === 0) return;
+
+    const selectedTarget = () => targets.find((target) => target.getAttribute('aria-pressed') === 'true');
+    const cancelTrace = () => {
+      window.clearTimeout(finishTimer);
+      activeAnimations.forEach((animation) => animation.cancel());
+      core.getAnimations().forEach((animation) => animation.cancel());
+      activeAnimations = [];
+      flow.classList.remove('is-compiling');
+      packets.forEach((packet) => {
+        packet.style.opacity = '0';
+        packet.style.transform = '';
+      });
+    };
+
+    const setTarget = (target: HTMLButtonElement, announce = true) => {
+      cancelTrace();
+      targets.forEach((item) => {
+        const selected = item === target;
+        item.setAttribute('aria-pressed', String(selected));
+        item.classList.toggle('is-selected', selected);
+      });
+      const details = target.dataset.compileTarget;
+      output.textContent = target.dataset.profilePath ?? '';
+      if (announce) status.textContent = `${target.innerText.trim()} profile selected. Native output path updated.`;
+      flow.classList.remove('is-routed');
+      if (details) flow.dataset.selectedProfile = details;
+    };
+
+    targets.forEach((target) => {
+      const profile = target.dataset.compileTarget;
+      const path = target.getAttribute('data-profile-path');
+      if (profile && path) target.dataset.profilePath = path;
+      target.addEventListener('click', () => setTarget(target));
+    });
+
+    const playTrace = () => {
+      cancelTrace();
+      const target = selectedTarget();
+      if (!target) return;
+      if (reduceMotion.matches) {
+        flow.classList.add('is-routed');
+        status.textContent = `Static distribution path: one catalog adapted for ${target.innerText.trim()}. Reduced motion is enabled.`;
+        return;
+      }
+
+      const flowRect = flow.getBoundingClientRect();
+      const coreRect = core.getBoundingClientRect();
+      const endRect = target.getBoundingClientRect();
+      const point = (rect: DOMRect) => ({
+        x: rect.left - flowRect.left + rect.width / 2 - 3.5,
+        y: rect.top - flowRect.top + rect.height / 2 - 3.5,
+      });
+      const corePoint = point(coreRect);
+      const targetPoint = point(endRect);
+      flow.classList.add('is-compiling');
+      status.textContent = `Tracing capability distribution to ${target.innerText.trim()}. Illustrative only; no installation is running.`;
+
+      activeAnimations = sources
+        .map((source, index) => {
+          const start = point(source.getBoundingClientRect());
+          const packet = packets[index];
+          if (!packet) return null;
+          const keyframes = [
+            { transform: `translate3d(${start.x}px, ${start.y}px, 0) scale(0.55)`, opacity: 0 },
+            { transform: `translate3d(${start.x}px, ${start.y}px, 0) scale(0.9)`, opacity: 1, offset: 0.12 },
+            { transform: `translate3d(${corePoint.x}px, ${corePoint.y}px, 0) scale(1)`, opacity: 1, offset: 0.52 },
+            { transform: `translate3d(${targetPoint.x}px, ${targetPoint.y}px, 0) scale(0.65)`, opacity: 0.88 },
+          ];
+          return packet.animate(keyframes, {
+            duration: 920,
+            delay: index * 105,
+            easing: 'cubic-bezier(0.22, 0.78, 0.22, 1)',
+            fill: 'forwards',
+          });
+        })
+        .filter((animation): animation is Animation => animation !== null);
+
+      const corePulse = core.animate(
+        [
+          { transform: 'scale(1)', filter: 'brightness(1)' },
+          { transform: 'scale(1.06)', filter: 'brightness(1.8)' },
+          { transform: 'scale(1)', filter: 'brightness(1)' },
+        ],
+        { duration: 620, easing: 'ease-out' },
+      );
+      activeAnimations.push(corePulse);
+
+      finishTimer = window.setTimeout(() => {
+        flow.classList.remove('is-compiling');
+        flow.classList.add('is-routed');
+        status.textContent = `Distribution trace complete for ${target.innerText.trim()}. This was an illustration; no installation was launched.`;
+      }, 1550);
+    };
+
+    targets.forEach((target) => {
+      target.disabled = false;
+      target.setAttribute('aria-pressed', 'false');
+      target.classList.remove('is-selected');
+    });
+    const initial = targets[0]!;
+    initial.setAttribute('aria-pressed', 'true');
+    initial.classList.add('is-selected');
+    output.textContent = initial.dataset.profilePath ?? '';
+    run.disabled = false;
+    run.addEventListener('click', playTrace);
+
+    reduceMotion.addEventListener('change', (event) => {
+      if (!event.matches) return;
+      cancelTrace();
+      flow.classList.add('is-routed');
+      const target = selectedTarget();
+      status.textContent = `Static distribution path for ${target?.innerText.trim() ?? 'the selected profile'}. Reduced motion is enabled.`;
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelTrace();
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-atk-compile]').forEach(initCompileChamber);
+</script>
