@@ -52,7 +52,7 @@ const cards = [
     title: 'CREATE\nAWESOME',
     subtitle: 'Node · Python · V · Rust application scaffolds',
     accent: '#ff9a62',
-    art: 'island-scaffold.webp',
+    art: 'island-assembly-workshop.webp',
   },
   {
     id: 'community',

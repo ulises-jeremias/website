@@ -85,3 +85,9 @@ fallback.
 
 - Replaced the Agent Toolkit atlas island's generic robot with a first-party capability-distribution diorama; regenerated its responsive WebP, PNG fallback, featured thumbnail, and Agent Toolkit social card.
 - Added `pnpm assets:island-art` to reproduce the authored source's padded responsive variants with the repository's existing ImageMagick toolchain.
+
+## 2026-10-06 update — Create Awesome island
+
+- Replaced the legacy rocket-launch island with an original assembly-workshop diorama: cyan template modules and magenta add-ons converge on a completed orange application artifact.
+- The source illustration was generated for this site with OpenAI image generation, using the former first-party island only as a composition reference. No external artwork, brand marks, or stock imagery is included.
+- Stored the source at `src/features/home/assets/island-assembly-workshop.png`; `pnpm assets:island-art`, `pnpm assets:featured`, and `pnpm assets:social` produce the production variants, Work thumbnail, and Create Awesome social card.
