@@ -336,6 +336,7 @@ const profilePageJsonLd = {
     if (hasMatchingStops) {
       let currentStage: string | undefined;
       let scheduledFrame: number | undefined;
+      const pathStops = path.querySelector<HTMLOListElement>('.about-path__stops');
 
       const updateCurrentStage = () => {
         scheduledFrame = undefined;
@@ -348,27 +349,41 @@ const profilePageJsonLd = {
           nextStage = station.id;
         }
 
-        if (nextStage === currentStage) return;
+        const activeNode = nextStage
+          ? stops.get(nextStage)?.querySelector<HTMLElement>('.about-path__node')
+          : undefined;
+        let progress = '0px';
+        if (pathStops && activeNode) {
+          const nodeBounds = activeNode.getBoundingClientRect();
+          const listBounds = pathStops.getBoundingClientRect();
+          progress = `${Math.max(0, nodeBounds.top + nodeBounds.height / 2 - listBounds.top)}px`;
+        }
+
+        const stageChanged = nextStage !== currentStage;
         currentStage = nextStage;
 
-        for (const station of stations) {
-          if (station.id === currentStage) {
-            station.dataset.current = 'true';
-          } else {
-            delete station.dataset.current;
+        if (stageChanged) {
+          for (const station of stations) {
+            if (station.id === currentStage) {
+              station.dataset.current = 'true';
+            } else {
+              delete station.dataset.current;
+            }
+          }
+
+          for (const [stage, stop] of stops) {
+            const link = stop.querySelector('a');
+            if (stage === currentStage) {
+              stop.dataset.current = 'true';
+              link?.setAttribute('aria-current', 'step');
+            } else {
+              delete stop.dataset.current;
+              link?.removeAttribute('aria-current');
+            }
           }
         }
 
-        for (const [stage, stop] of stops) {
-          const link = stop.querySelector('a');
-          if (stage === currentStage) {
-            stop.dataset.current = 'true';
-            link?.setAttribute('aria-current', 'step');
-          } else {
-            delete stop.dataset.current;
-            link?.removeAttribute('aria-current');
-          }
-        }
+        pathStops?.style.setProperty('--path-progress', progress);
       };
 
       const scheduleUpdate = () => {
