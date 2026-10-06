@@ -114,20 +114,20 @@
     },
     "/agent-toolkit/": {
       "mobile": {
-        "total": 124587,
-        "document": 17021,
+        "total": 128074,
+        "document": 18953,
         "script": 2861,
-        "style": 16331,
+        "style": 17886,
         "image": 3802,
         "font": 84572,
         "other": 0,
         "requests": 12
       },
       "desktop": {
-        "total": 124587,
-        "document": 17021,
+        "total": 128074,
+        "document": 18953,
         "script": 2861,
-        "style": 16331,
+        "style": 17886,
         "image": 3802,
         "font": 84572,
         "other": 0,

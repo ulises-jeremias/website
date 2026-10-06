@@ -1,5 +1,6 @@
 ---
 import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
+import CompileChamber from './CompileChamber.astro';
 import {
   capabilityNodes,
   distributionTargets,
@@ -18,23 +19,26 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
 
 <section class="atk-nexus" aria-labelledby="atk-nexus-title" data-atk-nexus>
   <header class="atk-nexus__hero">
-    <p class="atk-nexus__eyebrow">Agent Operations Room</p>
-    <h1 id="atk-nexus-title">Agent Toolkit</h1>
-    <p class="atk-nexus__problem">
-      Rebuilding skills, agents, and context for every coding assistant wastes the work each time you switch tools.
-    </p>
-    <p class="atk-nexus__lede">
-      Agent Toolkit compiles that workflow once — skills, agents, loops, and MCP templates — and installs it into the
-      coding assistants you already use: Claude Code, Cursor, Codex, Copilot, Gemini CLI, OpenCode, and more.
-    </p>
-    <FlagshipProvenance entryId="agent-toolkit" />
-    <div class="atk-nexus__hero-rail" aria-label="Toolkit distribution model">
-      <span>CAPABILITY PLANE</span>
-      <span aria-hidden="true">→</span>
-      <span>RUNTIME PLANE</span>
-      <span aria-hidden="true">→</span>
-      <span>EVERY MAJOR ASSISTANT</span>
+    <div class="atk-nexus__hero-copy">
+      <p class="atk-nexus__eyebrow">Agent Operations Room</p>
+      <h1 id="atk-nexus-title">Agent Toolkit</h1>
+      <p class="atk-nexus__problem">
+        Rebuilding skills, agents, and context for every coding assistant wastes the work each time you switch tools.
+      </p>
+      <p class="atk-nexus__lede">
+        Agent Toolkit compiles that workflow once — skills, agents, loops, and MCP templates — and installs it into the
+        coding assistants you already use: Claude Code, Cursor, Codex, Copilot, Gemini CLI, OpenCode, and more.
+      </p>
+      <FlagshipProvenance entryId="agent-toolkit" />
+      <div class="atk-nexus__hero-rail" aria-label="Toolkit distribution model">
+        <span>CAPABILITY PLANE</span>
+        <span aria-hidden="true">→</span>
+        <span>RUNTIME PLANE</span>
+        <span aria-hidden="true">→</span>
+        <span>EVERY MAJOR ASSISTANT</span>
+      </div>
     </div>
+    <CompileChamber />
   </header>
 
   <div class="atk-nexus__stage">
@@ -237,13 +241,21 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
 
   .atk-nexus__hero {
     display: grid;
-    justify-items: start;
-    max-inline-size: 56rem;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
+    gap: clamp(1rem, 2.5vw, 2rem);
+    align-items: center;
+    max-inline-size: none;
     margin-bottom: 1.5rem;
-    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(0.75rem, 3vw, 2rem);
+    padding: clamp(1rem, 2.4vw, 2rem) clamp(0.75rem, 2vw, 1.5rem);
     border-block: 1px solid color-mix(in srgb, var(--nest-violet) 32%, transparent);
     border-inline-start: 2px solid var(--nest-violet);
     background: linear-gradient(90deg, color-mix(in srgb, var(--nest-violet) 8%, transparent), transparent 68%);
+  }
+
+  .atk-nexus__hero-copy {
+    display: grid;
+    justify-items: start;
+    min-inline-size: 0;
   }
 
   .atk-nexus__eyebrow {
@@ -700,6 +712,10 @@ const agentVisualIds = inventory.agentIds.filter((id) => id in personaVisuals).s
   }
 
   @media (width < 900px) {
+    .atk-nexus__hero {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .atk-nexus__stage {
       grid-template-columns: 1fr;
     }
