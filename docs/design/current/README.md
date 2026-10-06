@@ -26,7 +26,7 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Current production baseline: `main@78d68221a577f1b0c76c95e1cf5daf544153a99a` (PRs #462, #464, #467, and #468).
+- Current production baseline: `main@8f1d056bde19c917a18d7d21bcbbf5d5dc8ffbae` (PRs #462, #464, and #467–#471).
 - The route redesign, accessibility navigation correction, production deployment,
   and automated release checks are complete on this baseline. Portfolio release
   evidence is tracked in issue #405; manual assistive-technology validation
@@ -46,9 +46,10 @@ trace through Hornero OS's actual manifest. The Hornero OS trace now announces
 each pinned, local, or future manifest entry to assistive technology, animates
 the active row, and holds the final reserved-slot state long enough to read.
 Both interactions keep a complete static fallback and respect reduced motion.
-At `main@78d6822`, build, tests, type-check, lint,
-browser quality (531 Playwright tests plus Lighthouse CI), deployment smoke, and
-the route budgets pass. Other goldens remain unchanged.
+PR #469 refreshes this current-production record; PR #470 adds an optional
+Agentic stack relationship trace. At `main@8f1d056`, build, tests, type-check,
+lint, browser quality (533 Playwright tests plus Lighthouse CI), deployment
+smoke, and route budgets pass. Other goldens remain unchanged.
 
 ## Historical documents
 
