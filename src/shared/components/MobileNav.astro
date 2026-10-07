@@ -314,7 +314,7 @@ const { items, githubHref, emailHref } = Astro.props as Props;
 
   .mobile-nav__eyebrow {
     margin: 0 0 var(--space-1);
-    color: var(--nest-magenta);
+    color: var(--header-world-accent, var(--nest-magenta));
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     letter-spacing: var(--tracking-wider);
@@ -363,7 +363,7 @@ const { items, githubHref, emailHref } = Astro.props as Props;
   }
 
   .mobile-nav__link.is-active {
-    border-inline-start-color: var(--nest-magenta);
+    border-inline-start-color: var(--header-world-accent, var(--nest-magenta));
   }
 
   .mobile-nav__index {

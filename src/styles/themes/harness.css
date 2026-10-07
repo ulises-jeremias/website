@@ -5,7 +5,7 @@
 
 [data-section='harness'],
 [data-theme='harness'] {
-  --world-accent: #34d399;
+  --world-accent: var(--nest-mint);
   --world-accent-strong: #6ee7b7;
   --world-accent-secondary: var(--nest-cyan);
   --world-accent-tertiary: var(--nest-violet);
