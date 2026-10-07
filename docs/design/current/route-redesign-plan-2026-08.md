@@ -281,3 +281,27 @@ stylesheet, and 13 requests. The route remains within its existing total,
 document, style, image, font, and request limits. Its script budget is 2 KiB to
 cover the measured 1,040-byte asset with 1 KiB headroom; only `/hornero-os/`
 uses this additional route-local JavaScript.
+
+## Community workshop signal map — 2026-10-07
+
+The `/community/` plaza now reads as a small shared fabrication floor instead
+of a set of floating rounded boxes. Five clipped, isometric project benches
+connect to one Discord signal hub; each bench uses a subject-specific glyph,
+and the floor label explains the real participation path from conversation to
+project work to a durable GitHub trail. Selecting a project station illuminates
+its neighborhood and sends a brief Web Animations API pulse along the matching
+connector. This is user-triggered explanatory motion, not live activity.
+
+Mobile uses a separate vertical circuit composition so station labels retain
+their shape and reading order. The route keeps its complete static station
+index and no-JavaScript behavior. Reduced-motion mode preserves the selected
+route highlight and skips the traveling pulse. The browser checks cover the
+static fallback, keyboard activation, animated desktop/mobile routes, reduced
+motion, and 320px reflow.
+
+The route grows from 92,253 to 94,385 compressed bytes (+2,132): the semantic
+document adds 1,295 bytes and route styles add 837 bytes. The existing 3,802-byte
+image payload, 62,740-byte font payload, zero script requests, and 10 total
+requests are unchanged. The `/community/` document, stylesheet, and total caps
+now use the repository's 10% rounded-up KiB headroom policy for this intentionally
+dual-composition map; every other route limit is unchanged.

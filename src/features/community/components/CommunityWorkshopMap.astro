@@ -1,0 +1,412 @@
+---
+---
+
+<svg
+  class="cm-plaza__svg cm-plaza__svg--desktop"
+  viewBox="0 0 840 400"
+  role="img"
+  aria-label="A shared digital workshop connects five project neighborhoods to one Discord and their GitHub trails."
+>
+  <defs>
+    <linearGradient id="cm-bench-top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#28122b"></stop>
+      <stop offset="1" stop-color="#10142b"></stop>
+    </linearGradient>
+    <linearGradient id="cm-bench-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9a4d" stop-opacity="0.72"></stop>
+      <stop offset="1" stop-color="#ff42d0" stop-opacity="0.12"></stop>
+    </linearGradient>
+    <pattern id="cm-bench-grid" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="skewX(-28)">
+      <path d="M24 0H0V24" fill="none" stroke="#f98e87" stroke-opacity="0.12" stroke-width="0.7"></path>
+    </pattern>
+    <filter id="cm-bench-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"></feGaussianBlur>
+      <feMerge>
+        <feMergeNode in="blur"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <path class="cm-plaza__floor" d="M72 245 420 66 768 245 420 360Z"></path>
+  <path class="cm-plaza__floor-grid" d="M72 245 420 66 768 245 420 360Z" fill="url(#cm-bench-grid)"></path>
+  <path class="cm-plaza__floor-edge" d="M72 245 420 360 768 245"></path>
+  <path class="cm-plaza__floor-edge cm-plaza__floor-edge--back" d="M72 245 420 66 768 245"></path>
+
+  <g class="cm-plaza__routes" fill="none" stroke-linecap="square">
+    <path class="cm-plaza__route" data-cm-route="dx" d="M420 204 190 126"></path>
+    <path class="cm-plaza__route" data-cm-route="agents" d="M420 204 420 112"></path>
+    <path class="cm-plaza__route" data-cm-route="create" d="M420 204 650 126"></path>
+    <path class="cm-plaza__route" data-cm-route="v" d="M420 204 260 286"></path>
+    <path class="cm-plaza__route" data-cm-route="incubating" d="M420 204 580 286"></path>
+  </g>
+
+  <g class="cm-plaza__station" data-cm-cluster="dx" transform="translate(190 120)">
+    <path class="cm-plaza__station-shadow" d="m-91 10 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-face" d="m-91 0 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-top" d="m-91 0 91-45 91 45-91 45Z"></path>
+    <path class="cm-plaza__icon-line" d="M-20-10h40v25h-40zM-12-2h24M-12 5h16"></path>
+    <text y="76" text-anchor="middle">
+      HORNEROCONFIG
+    </text>
+  </g>
+  <g class="cm-plaza__station" data-cm-cluster="agents" transform="translate(420 105)">
+    <path class="cm-plaza__station-shadow" d="m-91 10 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-face" d="m-91 0 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-top" d="m-91 0 91-45 91 45-91 45Z"></path>
+    <circle class="cm-plaza__icon-node" cx="-15" cy="-3" r="8"></circle>
+    <circle class="cm-plaza__icon-node" cx="15" cy="-3" r="8"></circle>
+    <path class="cm-plaza__icon-line" d="M-8-3H8M0-3v18"></path>
+    <text y="-57" text-anchor="middle">
+      AGENTIC SYSTEMS
+    </text>
+  </g>
+  <g class="cm-plaza__station" data-cm-cluster="create" transform="translate(650 120)">
+    <path class="cm-plaza__station-shadow" d="m-91 10 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-face" d="m-91 0 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-top" d="m-91 0 91-45 91 45-91 45Z"></path>
+    <path class="cm-plaza__icon-line" d="m-20-5 20-11 20 11-20 11zM-20 4 0 15 20 4M0 0v15"></path>
+    <text y="76" text-anchor="middle">
+      CREATE AWESOME
+    </text>
+  </g>
+  <g class="cm-plaza__station" data-cm-cluster="v" transform="translate(260 280)">
+    <path class="cm-plaza__station-shadow" d="m-91 10 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-face" d="m-91 0 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-top" d="m-91 0 91-45 91 45-91 45Z"></path>
+    <path class="cm-plaza__icon-line" d="M-23 12v-18l12 10 11-20 11 18 12-14"></path>
+    <text y="60" text-anchor="middle">
+      V ECOSYSTEM
+    </text>
+  </g>
+  <g class="cm-plaza__station" data-cm-cluster="incubating" transform="translate(580 280)">
+    <path class="cm-plaza__station-shadow" d="m-91 10 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-face" d="m-91 0 91 45 91-45-91-45Z"></path>
+    <path class="cm-plaza__station-top" d="m-91 0 91-45 91 45-91 45Z"></path>
+    <path class="cm-plaza__icon-line" d="M-21-12h42v27h-42zM-13-4h26M-13 3h18"></path>
+    <text y="60" text-anchor="middle">
+      BLUEPRINT HORIZON
+    </text>
+  </g>
+
+  <g class="cm-plaza__hub" data-cm-hub transform="translate(420 205)" filter="url(#cm-bench-glow)">
+    <path d="m-84 0 84-42 84 42-84 42Z"></path>
+    <path class="cm-plaza__hub-inset" d="m-54 0 54-27 54 27-54 27Z"></path>
+    <path class="cm-plaza__signal-icon" d="M-18-2a18 18 0 0 1 36 0M-12-2a12 12 0 0 1 24 0M-5-2a5 5 0 0 1 10 0"></path>
+    <circle class="cm-plaza__hub-dot" cy="7" r="2.7"></circle>
+  </g>
+  <text class="cm-plaza__hub-label" x="420" y="264" text-anchor="middle">
+    SHARED DISCORD
+  </text>
+  <text class="cm-plaza__map-note" x="420" y="382" text-anchor="middle">
+    CONVERSATION → PROJECT → DURABLE GITHUB TRAIL
+  </text>
+</svg>
+
+<svg
+  class="cm-plaza__svg cm-plaza__svg--mobile"
+  viewBox="0 0 360 520"
+  role="img"
+  aria-label="A shared Discord workshop routes into five project neighborhoods, then back to a durable GitHub trail."
+>
+  <defs>
+    <pattern id="cm-mobile-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="#f98e87" stroke-opacity="0.1" stroke-width="0.7"></path>
+    </pattern>
+  </defs>
+  <path class="cm-plaza__mobile-ground" d="M26 24h308v472H26z" fill="url(#cm-mobile-grid)"></path>
+  <path class="cm-plaza__route cm-plaza__route--mobile" data-cm-route="dx" d="M180 88v54"></path>
+  <path class="cm-plaza__route cm-plaza__route--mobile" data-cm-route="agents" d="M180 190v28"></path>
+  <path class="cm-plaza__route cm-plaza__route--mobile" data-cm-route="create" d="M180 266v28"></path>
+  <path class="cm-plaza__route cm-plaza__route--mobile" data-cm-route="v" d="M180 342v28"></path>
+  <path class="cm-plaza__route cm-plaza__route--mobile" data-cm-route="incubating" d="M180 418v28"></path>
+  <path class="cm-plaza__route cm-plaza__route--mobile cm-plaza__route--trail" d="M180 494v7"></path>
+  <g class="cm-plaza__mobile-discord" data-cm-hub>
+    <path d="M84 36h192v52H84z"></path>
+    <path
+      class="cm-plaza__mobile-signal"
+      d="M155 57a25 25 0 0 1 50 0M164 57a16 16 0 0 1 32 0M174 57a6 6 0 0 1 12 0"
+    ></path>
+    <text x="180" y="77" text-anchor="middle">
+      SHARED DISCORD
+    </text>
+  </g>
+  <g class="cm-plaza__mobile-stop" data-cm-cluster="dx" transform="translate(180 142)">
+    <path d="M-62 0h88l18 24-18 24h-88l-18-24Z"></path>
+    <text y="4" text-anchor="middle">
+      HORNEROCONFIG
+    </text>
+  </g>
+  <g class="cm-plaza__mobile-stop" data-cm-cluster="agents" transform="translate(180 218)">
+    <path d="M-62 0h88l18 24-18 24h-88l-18-24Z"></path>
+    <text y="4" text-anchor="middle">
+      AGENTIC SYSTEMS
+    </text>
+  </g>
+  <g class="cm-plaza__mobile-stop" data-cm-cluster="create" transform="translate(180 294)">
+    <path d="M-62 0h88l18 24-18 24h-88l-18-24Z"></path>
+    <text y="4" text-anchor="middle">
+      CREATE AWESOME
+    </text>
+  </g>
+  <g class="cm-plaza__mobile-stop" data-cm-cluster="v" transform="translate(180 370)">
+    <path d="M-62 0h88l18 24-18 24h-88l-18-24Z"></path>
+    <text y="4" text-anchor="middle">
+      V ECOSYSTEM
+    </text>
+  </g>
+  <g
+    class="cm-plaza__mobile-stop cm-plaza__mobile-stop--horizon"
+    data-cm-cluster="incubating"
+    transform="translate(180 446)"
+  >
+    <path d="M-62 0h88l18 24-18 24h-88l-18-24Z"></path>
+    <text y="4" text-anchor="middle">
+      BLUEPRINT HORIZON
+    </text>
+  </g>
+  <text class="cm-plaza__mobile-footer" x="180" y="506" text-anchor="middle">
+    GITHUB KEEPS THE TRAIL
+  </text>
+</svg>
+
+<style>
+  .cm-plaza__svg {
+    display: block;
+    width: 100%;
+    max-width: 52rem;
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .cm-plaza__svg--mobile {
+    display: none;
+  }
+
+  .cm-plaza__floor {
+    fill: url(#cm-bench-top);
+    stroke: #ff9a4d;
+    stroke-opacity: 0.4;
+    stroke-width: 1.2;
+  }
+
+  .cm-plaza__floor-grid {
+    opacity: 0.8;
+  }
+
+  .cm-plaza__floor-edge {
+    fill: none;
+    stroke: url(#cm-bench-edge);
+    stroke-width: 2;
+  }
+
+  .cm-plaza__floor-edge--back {
+    stroke-opacity: 0.5;
+    stroke-width: 1;
+  }
+
+  .cm-plaza__route {
+    stroke: #74e7f0;
+    stroke-opacity: 0.28;
+    stroke-width: 2;
+    stroke-dasharray: 4 8;
+    transition:
+      stroke-opacity 180ms ease,
+      stroke-width 180ms ease;
+  }
+
+  .cm-plaza__route.is-lit {
+    stroke: #ff9a4d;
+    stroke-opacity: 0.95;
+    stroke-width: 2.7;
+  }
+
+  .cm-plaza__station {
+    opacity: 0.74;
+    transition:
+      opacity 180ms ease,
+      filter 180ms ease;
+  }
+
+  .cm-plaza__station.is-lit {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px #ff9a4d88);
+  }
+
+  .cm-plaza__station-shadow {
+    fill: #070515;
+    stroke: #ef597f;
+    stroke-opacity: 0.32;
+  }
+
+  .cm-plaza__station-face {
+    fill: #120d24;
+    stroke: #ff9a4d;
+    stroke-opacity: 0.58;
+    stroke-width: 1.2;
+  }
+
+  .cm-plaza__station-top {
+    fill: #21132a;
+    stroke: #ffb46c;
+    stroke-opacity: 0.75;
+    stroke-width: 1;
+  }
+
+  .cm-plaza__station text,
+  .cm-plaza__mobile-stop text {
+    fill: #f8d7c1;
+    font: 700 10px var(--font-mono, monospace);
+    letter-spacing: 1px;
+  }
+
+  .cm-plaza__icon-line,
+  .cm-plaza__icon-node {
+    fill: none;
+    stroke: #ffb46c;
+    stroke-width: 1.8;
+    stroke-linecap: square;
+    stroke-linejoin: bevel;
+  }
+
+  .cm-plaza__icon-node {
+    fill: #21132a;
+    stroke: #c9a5ff;
+  }
+
+  .cm-plaza__hub > path:first-child {
+    fill: #111226;
+    stroke: #63edf3;
+    stroke-width: 1.6;
+  }
+
+  .cm-plaza__hub.is-lit > path:first-child,
+  .cm-plaza__mobile-discord.is-lit > path:first-child {
+    stroke: #ff9a4d;
+    stroke-width: 2;
+  }
+
+  .cm-plaza__hub-inset {
+    fill: #1a1c37;
+    stroke: #ff5dc8;
+    stroke-width: 1;
+  }
+
+  .cm-plaza__signal-icon {
+    fill: none;
+    stroke: #71f6f1;
+    stroke-width: 2.5;
+    stroke-linecap: square;
+  }
+
+  .cm-plaza__hub-dot {
+    fill: #ff9a4d;
+  }
+
+  .cm-plaza__hub-label,
+  .cm-plaza__map-note,
+  .cm-plaza__mobile-footer {
+    fill: #b9b2d8;
+    font: 700 9px var(--font-mono, monospace);
+    letter-spacing: 1.8px;
+  }
+
+  .cm-plaza__hub-label {
+    fill: #78f3f5;
+    font-size: 10px;
+  }
+
+  .cm-plaza__map-note {
+    fill: #b9a6c8;
+    font-size: 8px;
+    letter-spacing: 1.3px;
+  }
+
+  .cm-plaza__mobile-ground {
+    fill: #0d0a1c;
+    stroke: #ff9a4d;
+    stroke-opacity: 0.36;
+  }
+
+  .cm-plaza__route--mobile {
+    stroke: #78f3f5;
+    stroke-opacity: 0.35;
+    stroke-width: 2;
+    stroke-dasharray: 4 8;
+  }
+
+  .cm-plaza__route--mobile.is-lit {
+    stroke: #ff9a4d;
+    stroke-opacity: 1;
+    stroke-width: 2.5;
+  }
+
+  .cm-plaza__route--trail {
+    stroke: #c58cff;
+    stroke-dasharray: 2 5;
+  }
+
+  .cm-plaza__mobile-discord > path:first-child {
+    fill: #17172f;
+    stroke: #70f0ed;
+    stroke-width: 1.4;
+  }
+
+  .cm-plaza__mobile-discord text {
+    fill: #78f3f5;
+    font: 700 10px var(--font-mono, monospace);
+    letter-spacing: 1.3px;
+  }
+
+  .cm-plaza__mobile-signal {
+    fill: none;
+    stroke: #ff9a4d;
+    stroke-width: 1.5;
+  }
+
+  .cm-plaza__mobile-stop {
+    opacity: 0.74;
+    transition:
+      opacity 180ms ease,
+      filter 180ms ease;
+  }
+
+  .cm-plaza__mobile-stop.is-lit {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px #ff9a4d88);
+  }
+
+  .cm-plaza__mobile-stop > path {
+    fill: #1a1025;
+    stroke: #ff9a4d;
+    stroke-opacity: 0.72;
+  }
+
+  .cm-plaza__mobile-stop--horizon > path {
+    stroke: #c58cff;
+    stroke-dasharray: 4 3;
+  }
+
+  .cm-plaza__mobile-footer {
+    fill: #ffb46c;
+  }
+
+  @media (width <= 620px) {
+    .cm-plaza__svg--desktop {
+      display: none;
+    }
+
+    .cm-plaza__svg--mobile {
+      display: block;
+      max-width: 24rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cm-plaza__route,
+    .cm-plaza__station,
+    .cm-plaza__mobile-stop {
+      transition: none;
+    }
+  }
+</style>

@@ -202,20 +202,20 @@
     },
     "/community/": {
       "mobile": {
-        "total": 92253,
-        "document": 11991,
+        "total": 94385,
+        "document": 13286,
         "script": 0,
-        "style": 13720,
+        "style": 14557,
         "image": 3802,
         "font": 62740,
         "other": 0,
         "requests": 10
       },
       "desktop": {
-        "total": 92253,
-        "document": 11991,
+        "total": 94385,
+        "document": 13286,
         "script": 0,
-        "style": 13720,
+        "style": 14557,
         "image": 3802,
         "font": 62740,
         "other": 0,

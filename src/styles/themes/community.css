@@ -15,7 +15,7 @@
   --world-accent-strong: var(--nest-sunset-orange);
   --world-accent-secondary: var(--nest-magenta);
   --world-accent-tertiary: var(--nest-cyan);
-  --theme-illustration: 'workshop boards, labeled issues, review trails';
-  --theme-shape: 'rounded cards, board chips, workshop callouts';
+  --theme-illustration: 'isometric fabrication floor, project benches, shared signal hub';
+  --theme-shape: 'clipped workbenches, signal paths, workshop callouts';
   --theme-texture: 'faint workshop grid over a midnight surface';
 }

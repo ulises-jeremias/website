@@ -26,8 +26,8 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Current production baseline: `main@ea56b2a0d6d4a023e0d3dd1cbc42a46da28d4975`
-  (PR #500, on top of the portfolio and route work in PRs #462–#499).
+- Current production baseline: `main@043ebb6355111c54be9d7c63b5d83dbd1487fba4`
+  (PR #501, on top of the route and interaction work in PRs #462–#500).
 - This revision is deployed to production. Build, lint, type-check, tests,
   route budgets, Lighthouse, browser quality, Todo Checker, and deployment smoke
   pass. Portfolio release evidence remains tracked in #405; manual
@@ -46,9 +46,10 @@ compressed Create Awesome artwork, and PRs #498–#499 stabilized generated-data
 checks. PR #500 turns Hornero OS's
 actual manifest into a user-triggered assembly trace. Pinned and local entries
 dock into the composition; installer and ISO slots remain visibly reserved.
-The route retains its static fallback and reduced-motion behavior.
+The route retains its static fallback and reduced-motion behavior. PR #501
+refreshed this authority index against the deployed `main@043ebb63` state.
 
-At `main@ea56b2a`, all 575 Playwright cases pass along with Lighthouse, build,
+At `main@043ebb63`, all 575 Playwright cases pass along with Lighthouse, build,
 lint, type-check, unit tests, route budgets, Todo Checker, and deployment
 smoke. The production deployment reports this exact revision. The focused
 production check also confirms `/hornero-os/` links to `https://horneroos.com`;
