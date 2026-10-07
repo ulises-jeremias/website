@@ -1,6 +1,31 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Agentic Developer Stack system map', () => {
+  for (const viewport of [
+    { name: 'desktop', width: 1440, height: 1000, capture: true },
+    { name: 'tablet', width: 1024, height: 900, capture: true },
+    { name: 'mobile', width: 390, height: 844, capture: false },
+  ]) {
+    test(`keeps the opening and system map composed at ${viewport.name}`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto('/agentic');
+
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      await expect(page.locator('.agentic-page__lead')).toBeVisible();
+      await expect(page.getByRole('figure', { name: 'One capability plane, two optional extensions' })).toBeVisible();
+      await page.evaluate(async () => {
+        window.scrollTo(0, 0);
+        await document.fonts.ready;
+      });
+      if (viewport.capture) {
+        await expect(page.locator('.agentic-page__masthead')).toHaveScreenshot(
+          `agentic-stack-intro-${viewport.name}.png`,
+        );
+      }
+    });
+  }
+
   test('shows three distinct projects and their optional relationships on desktop', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 1440, height: 1100 });
