@@ -19,11 +19,28 @@ test('Hornero OS traces the real manifest stages on request', async ({ page }, t
   const traceButton = manifest.locator('[data-hos-trace]');
   await expect(traceButton).toBeVisible();
   await expect(traceButton).toHaveText('Trace manifest assembly');
+  await expect(traceButton).toHaveAttribute('aria-controls', 'hos-manifest-slots');
+  await expect(manifest.locator('#hos-manifest-slots')).toHaveCount(1);
   await traceButton.click();
   await expect(manifest).toHaveAttribute('data-trace-state', 'running');
   await expect(manifest.locator('.hos-yaml__slot.is-current')).toHaveCount(1);
   await expect(manifest.locator('.hos-yaml__slot--pinned').first()).toHaveClass(/is-current/);
   await expect(manifest.locator('[data-hos-trace-status]')).toContainText('shell: pinned 3658e1b');
+  await expect
+    .poll(() =>
+      manifest
+        .locator('.hos-yaml__slot--pinned')
+        .first()
+        .evaluate((slot) =>
+          slot.getAnimations().some((animation) => {
+            const matrix = new DOMMatrix(getComputedStyle(slot).transform);
+            return (
+              animation.playState === 'running' && animation.effect?.getTiming().duration === 620 && matrix.m41 < 0
+            );
+          }),
+        ),
+    )
+    .toBe(true);
   await expect
     .poll(() =>
       manifest
@@ -87,6 +104,49 @@ test('Hornero OS keeps the manifest trace still with reduced motion', async ({ p
         .evaluate((slot) => slot.getAnimations().length),
     )
     .toBe(0);
+});
+
+test('Hornero OS manifest stays keyboard-usable at 320px in forced colors', async ({ page }) => {
+  await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.goto('/hornero-os');
+
+  const manifest = page.locator('.hos-yaml');
+  const traceButton = page.getByRole('button', { name: 'Trace manifest assembly' });
+  await traceButton.focus();
+  await expect(traceButton).toBeFocused();
+  expect(await page.evaluate(() => window.matchMedia('(forced-colors: active)').matches)).toBe(true);
+  await expect(traceButton).toHaveCSS('outline-style', 'solid');
+  await page.keyboard.press('Enter');
+
+  await expect(manifest).toHaveAttribute('data-trace-state', 'complete');
+  await expect(manifest.locator('.hos-yaml__slot.is-current')).toHaveCount(5);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(
+    true,
+  );
+
+  await manifest.locator('[data-hos-trace]').scrollIntoViewIfNeeded();
+  await expect(page).toHaveScreenshot('hornero-os-manifest-forced-colors-320.png');
+});
+
+test('Hornero OS manifest assembly has reviewed desktop and mobile states', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/hornero-os');
+  await page.getByRole('button', { name: 'Trace manifest assembly' }).click();
+
+  const manifest = page.locator('.hos-yaml');
+  await expect(manifest).toHaveAttribute('data-trace-state', 'complete');
+  await manifest.evaluate((figure) => {
+    window.scrollTo({ top: figure.getBoundingClientRect().top + window.scrollY - 96, behavior: 'instant' });
+  });
+  await expect(page).toHaveScreenshot('hornero-os-manifest-complete-desktop.png');
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await manifest.evaluate((figure) => {
+    window.scrollTo({ top: figure.getBoundingClientRect().top + window.scrollY - 96, behavior: 'instant' });
+  });
+  await expect(page).toHaveScreenshot('hornero-os-manifest-complete-mobile.png');
 });
 
 test('Hornero OS still exposes the full manifest without JavaScript', async ({ browser }) => {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T05:10:06Z",
+  "generatedAt": "2026-10-07T08:03:14.754Z",
   "method": "Fresh browser context per route and viewport; text resources gzip level 9; already-compressed assets use source bytes.",
   "routes": {
     "/": {
@@ -290,24 +290,24 @@
     },
     "/hornero-os/": {
       "mobile": {
-        "total": 105710,
-        "document": 11256,
-        "script": 0,
-        "style": 13937,
+        "total": 106492,
+        "document": 10716,
+        "script": 1040,
+        "style": 14219,
         "image": 17853,
         "font": 62664,
         "other": 0,
-        "requests": 12
+        "requests": 13
       },
       "desktop": {
-        "total": 134702,
-        "document": 11256,
-        "script": 0,
-        "style": 13937,
+        "total": 135484,
+        "document": 10716,
+        "script": 1040,
+        "style": 14219,
         "image": 46845,
         "font": 62664,
         "other": 0,
-        "requests": 12
+        "requests": 13
       }
     },
     "/sponsor/": {
