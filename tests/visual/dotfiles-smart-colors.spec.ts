@@ -5,6 +5,7 @@ test('Smart Colors traces each real wallpaper path on request', async ({ page },
 
   const flow = page.locator('.df-color-flow');
   const source = flow.locator('[data-df-flow-source]');
+  const signal = flow.locator('[data-df-flow-signal]');
   const live = flow.locator('[data-df-flow-route="live"]');
   const fallback = flow.locator('[data-df-flow-route="fallback"]');
   const status = flow.locator('[data-df-flow-status]');
@@ -18,8 +19,19 @@ test('Smart Colors traces each real wallpaper path on request', async ({ page },
   await expect(flow).toHaveAttribute('data-trace-state', 'running');
   await expect(status).toHaveText('Wallpaper selected with horneroctl.');
   await expect(source).toHaveClass(/is-active/);
+  const signalFrames = await signal.evaluate((element) => {
+    const animation = element.getAnimations()[0];
+    const effect = animation?.effect;
+    return effect instanceof KeyframeEffect ? effect.getKeyframes().map((frame) => frame.transform) : [];
+  });
+  expect(signalFrames).toHaveLength(4);
+  expect(signalFrames[0]).not.toBe(signalFrames[2]);
+  await expect
+    .poll(() => signal.evaluate((element) => element.getAnimations()[0]?.effect?.getTiming().duration))
+    .toBe(700);
   await expect.poll(() => live.evaluate((route) => route.getAnimations().length)).toBeGreaterThan(0);
   await expect(live).toHaveClass(/is-complete/, { timeout: 3000 });
+  await expect(signal).toBeHidden();
   await expect(live.locator('[data-df-flow-output]')).toHaveClass(/is-active/);
   await expect(status).toContainText('Both branches read the same wallpaper state.');
   await expect(fallback).not.toHaveClass(/is-active|is-complete/);
@@ -44,6 +56,7 @@ test('Smart Colors completes immediately when reduced motion is enabled', async 
   await expect(flow).toHaveAttribute('data-trace-state', 'complete');
   await expect(live).toHaveClass(/is-complete/);
   await expect.poll(() => live.evaluate((route) => route.getAnimations().length)).toBe(0);
+  await expect(flow.locator('[data-df-flow-signal]')).toBeHidden();
 });
 
 test('Smart Colors finishes its active trace if reduced motion becomes enabled', async ({ page }) => {
@@ -58,6 +71,7 @@ test('Smart Colors finishes its active trace if reduced motion becomes enabled',
   await expect(flow).toHaveAttribute('data-trace-state', 'complete');
   await expect(fallback).toHaveClass(/is-complete/);
   await expect.poll(() => fallback.evaluate((route) => route.getAnimations().length)).toBe(0);
+  await expect(flow.locator('[data-df-flow-signal]')).toBeHidden();
 });
 
 test('Smart Colors trace controls remain usable at 320px', async ({ page }) => {

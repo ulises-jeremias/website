@@ -148,3 +148,13 @@ normalization, Harness became a first-class world.
   `src/features/agent-toolkit/data/inventory.snapshot.json`
   (v1.22.3, commit `b3ea86a`, 2026-08-25). Refresh with
   `AGENT_TOOLKIT_ROOT=<checkout> python3 scripts/sync-agent-toolkit-inventory.py`.
+
+## Addendum — HorneroConfig Smart Colors trace (2026-10-07)
+
+The Smart Colors illustration keeps both documented shell paths visible. A
+visitor can trace either path on demand: a single signal travels from the
+wallpaper source to the selected Quickshell or fallback output, then the route
+and resulting artifact become active. This is an illustrative explanation; it
+does not change the visitor's desktop or run a command. Reduced motion skips
+the travel and completes the selected path immediately, while no-JavaScript
+content stays complete.
