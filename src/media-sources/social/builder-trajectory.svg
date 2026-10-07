@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <path d="M51 256 99 218l37 9 31-51 40-11 36-53 34-23" stroke="#B993FF" stroke-width="4"/>
-    <path d="M51 256 99 218l37 9 31-51 40-11 36-53 34-23" stroke="#24E7F2" stroke-opacity=".25" stroke-width="14"/>
-    <circle cx="51" cy="256" r="12" fill="#17102C" stroke="#FF4FD8" stroke-width="4"/>
-    <circle cx="99" cy="218" r="9" fill="#17102C" stroke="#24E7F2" stroke-width="3"/>
-    <circle cx="136" cy="227" r="9" fill="#17102C" stroke="#FF4FD8" stroke-width="3"/>
-    <circle cx="167" cy="176" r="9" fill="#17102C" stroke="#24E7F2" stroke-width="3"/>
-    <circle cx="207" cy="165" r="9" fill="#17102C" stroke="#FF4FD8" stroke-width="3"/>
-    <circle cx="243" cy="112" r="9" fill="#17102C" stroke="#24E7F2" stroke-width="3"/>
-    <path d="m267 80 9-23 9 17 19 2-15 12 4 19-17-10-16 10 4-19-15-12 19-2Z" fill="#F5B64E" fill-opacity=".16" stroke="#F5B64E" stroke-width="3"/>
-    <path d="M45 282h226M72 292h173" stroke="#B993FF" stroke-opacity=".38" stroke-width="2" stroke-dasharray="4 9"/>
-    <path d="M53 225v-35h27v35m27-25v-52h27v52m27-65V89h27v65m26-9v-62h27v62" stroke="#9C72FF" stroke-opacity=".34" stroke-width="2"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 320 320"><g stroke-linecap="round" stroke-linejoin="round"><path stroke="#B993FF" stroke-width="4" d="M51 256 99 218l37 9 31-51 40-11 36-53 34-23"/><path stroke="#24E7F2" stroke-opacity=".25" stroke-width="14" d="M51 256 99 218l37 9 31-51 40-11 36-53 34-23"/><circle cx="51" cy="256" r="12" fill="#17102C" stroke="#FF4FD8" stroke-width="4"/><circle cx="99" cy="218" r="9" fill="#17102C" stroke="#24E7F2" stroke-width="3"/><circle cx="136" cy="227" r="9" fill="#17102C" stroke="#FF4FD8" stroke-width="3"/><circle cx="167" cy="176" r="9" fill="#17102C" stroke="#24E7F2" stroke-width="3"/><circle cx="207" cy="165" r="9" fill="#17102C" stroke="#FF4FD8" stroke-width="3"/><circle cx="243" cy="112" r="9" fill="#17102C" stroke="#24E7F2" stroke-width="3"/><path fill="#F5B64E" fill-opacity=".16" stroke="#F5B64E" stroke-width="3" d="m267 80 9-23 9 17 19 2-15 12 4 19-17-10-16 10 4-19-15-12 19-2Z"/><path stroke="#B993FF" stroke-dasharray="4 9" stroke-opacity=".38" stroke-width="2" d="M45 282h226M72 292h173"/><path stroke="#9C72FF" stroke-opacity=".34" stroke-width="2" d="M53 225v-35h27v35m27-25v-52h27v52m27-65V89h27v65m26-9v-62h27v62"/></g></svg>

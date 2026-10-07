@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-labelledby="faviconTitle">
-  <title id="faviconTitle">Digital Nest</title>
-  <rect width="32" height="32" rx="6" fill="#050317"/>
-  <path
-    d="M16 6.5c-1.1 0-2.1.55-2.7 1.4L7.2 18.2c-.95 1.55-.15 3.55 1.75 4V24c0 1.55 1.25 2.8 2.8 2.8h8.5c1.55 0 2.8-1.25 2.8-2.8v-1.8c1.9-.45 2.7-2.45 1.75-4l-6.1-10.3C18.1 7.05 17.1 6.5 16 6.5Z"
-    stroke="#ff42d0"
-    stroke-width="2.2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <circle cx="16" cy="14.5" r="1.8" fill="#1cefff"/>
-  <circle cx="11.2" cy="22.8" r="1.8" fill="#a05cff"/>
-  <circle cx="20.8" cy="22.8" r="1.8" fill="#ff9a4d"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-labelledby="faviconTitle" viewBox="0 0 32 32"><title id="faviconTitle">Digital Nest</title><rect width="32" height="32" fill="#050317" rx="6"/><path stroke="#ff42d0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M16 6.5c-1.1 0-2.1.55-2.7 1.4L7.2 18.2c-.95 1.55-.15 3.55 1.75 4V24c0 1.55 1.25 2.8 2.8 2.8h8.5c1.55 0 2.8-1.25 2.8-2.8v-1.8c1.9-.45 2.7-2.45 1.75-4l-6.1-10.3C18.1 7.05 17.1 6.5 16 6.5Z"/><circle cx="16" cy="14.5" r="1.8" fill="#1cefff"/><circle cx="11.2" cy="22.8" r="1.8" fill="#a05cff"/><circle cx="20.8" cy="22.8" r="1.8" fill="#ff9a4d"/></svg>
