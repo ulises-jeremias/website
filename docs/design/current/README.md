@@ -71,14 +71,24 @@ station map, kinetic homepage portals and world docking plates, the interactive
 404 route finder, Smart Colors signal trace, and the Field Notes desk visual
 refinement. Their reviewed snapshots are maintained alongside the route tests.
 
-Current `main` is deployed to production. Build, lint, type-check,
-tests, Browser Quality (route budgets, Lighthouse, and the full browser
-matrix), Todo Checker, and deployment smoke passed on this exact revision;
-MegaLinter passed on PR #510 and is intentionally skipped for main push events.
-Production checks return 200 for all 15 public routes, `/sitemap.xml`,
-`/robots.txt`, and `/rss.xml`, and confirm `/hornero-os/` links to
-`https://horneroos.com`. A nonexistent route serves the custom 404. Visual
-goldens change only for the route-specific designs reviewed in each PR.
+PRs #511–#517 continue the route-specific pass: About gains its systems orbit,
+Agentic opens on the stack map, the shared navigation gains world-aware active
+states and a compact route rail, ImgBot reduces committed image payloads, and
+Home turns its four Featured Work areas into responsive atlas portals above
+the layered island platforms. The new Home captures cover desktop, mobile,
+320px reflow, and reduced motion; the platform illustration remains static
+when reduced motion is requested.
+
+Current production is `main@61338c7c` (PR #517). Build, lint, type-check,
+unit tests, Browser Quality (route budgets, Lighthouse, and the full browser
+matrix), Todo Checker, and Deployment Smoke passed on this exact revision.
+MegaLinter passed on PR #517 and is intentionally skipped for main push events.
+Production Smoke verified all 15 public routes, `/sitemap.xml`, `/robots.txt`,
+`/rss.xml`, the site manifest, representative assets, metadata, canonical
+origins, security headers, and asset caching. The Hornero OS CTA is locked to
+`https://horneroos.com` by its route test. A nonexistent route serves the
+custom 404. Visual goldens change only for route-specific designs reviewed in
+each PR.
 
 ## Historical documents
 
