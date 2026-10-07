@@ -158,3 +158,12 @@ and resulting artifact become active. This is an illustrative explanation; it
 does not change the visitor's desktop or run a command. Reduced motion skips
 the travel and completes the selected path immediately, while no-JavaScript
 content stays complete.
+
+## Addendum — Project atlas docking platforms (2026-10-07)
+
+Each floating island now sits over an original inline isometric docking plate.
+The world accent colors the surface, grid, ring, and signal path, so the plate
+reinforces the world-to-world map instead of reading as a repeated CSS ellipse.
+The signal trace is ambient decoration only, has no behavioral meaning, and
+stops under reduced motion; the decorative SVG stays hidden from assistive
+technology.

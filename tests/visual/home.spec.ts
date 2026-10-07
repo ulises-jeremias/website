@@ -2,6 +2,28 @@ import { expect, test } from '@playwright/test';
 import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
 
 test.describe('homepage visual coverage', () => {
+  test('atlas worlds use colored, decorative docking diagrams with reduced-motion support', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/');
+
+    const docks = page.locator('.atlas-world__dock');
+    await expect(docks).toHaveCount(10);
+    for (const dock of await docks.all()) {
+      await expect(dock).toHaveAttribute('aria-hidden', 'true');
+      await expect(dock).not.toHaveAttribute('tabindex');
+      await expect(dock.locator('.atlas-world__dock-surface')).toBeAttached();
+    }
+
+    const selectedDock = docks.first();
+    await expect(selectedDock.locator('.atlas-world__dock-signal')).toHaveCSS('animation-name', 'atlas-dock-signal');
+    await page.locator('.atlas-world').first().focus();
+    await expect.poll(() => selectedDock.evaluate((dock) => getComputedStyle(dock).opacity)).toBe('1');
+
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(selectedDock.locator('.atlas-world__dock-signal')).toHaveCSS('animation-name', 'none');
+    await expect(selectedDock).toBeVisible();
+  });
+
   test('atlas responsive image descriptors match the intrinsic WebP widths', async ({ page }) => {
     await page.goto('/');
 
