@@ -69,6 +69,83 @@ test.describe('homepage visual coverage', () => {
     );
   });
 
+  test('featured worlds answer interaction with their own system motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/');
+
+    const signatures = [
+      { area: 'agentic', transform: 'matrix(1, 0, 0, 1, 0, 0)' },
+      { area: 'hornero', transform: 'matrix(1, 0, 0, 1, 0, -4)' },
+      { area: 'v-ecosystem', transform: 'matrix(1, 0, 0, 1.12, 0, 0)' },
+      { area: 'create-awesome', transform: 'matrix(1, 0, 0, 1, 5, 0)' },
+    ];
+
+    for (const signature of signatures) {
+      const card = page.locator(`.featured-areas__card[data-area="${signature.area}"]`);
+      await card.locator('.featured-areas__title a').focus();
+      await expect(card.locator('.featured-areas__signal')).toHaveCSS('transform', signature.transform);
+      await expect(card.locator('.featured-areas__signal')).toHaveCSS('transition-property', /transform/);
+    }
+  });
+
+  test('featured worlds keep their complete, still visual response when reduced motion is enabled', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/');
+
+    const card = page.locator('.featured-areas__card[data-area="create-awesome"]');
+    const link = card.locator('.featured-areas__title a');
+    await link.focus();
+
+    await expect(card.locator('.featured-areas__signal')).toHaveCSS('transition-duration', '0s');
+    await expect(card).toHaveCSS('transform', 'none');
+    await expect(card.locator('.featured-areas__art picture img')).toBeVisible();
+    await expect(link).toBeFocused();
+  });
+
+  test('featured worlds recompose at 320px and keep every project link touch-sized', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 320, height: 844 });
+    await page.goto('/');
+
+    const cards = page.locator('.featured-areas__card');
+    await expect(cards).toHaveCount(4);
+    await cards.first().scrollIntoViewIfNeeded();
+
+    const measurements = await page.evaluate(() => ({
+      pageOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+      links: [...document.querySelectorAll('.featured-areas__card a')].map((link) => {
+        const rect = link.getBoundingClientRect();
+        return { label: link.textContent?.trim(), width: rect.width, height: rect.height };
+      }),
+      cardsFit: [...document.querySelectorAll('.featured-areas__card')].every(
+        (card) => card.scrollWidth <= card.clientWidth + 1,
+      ),
+    }));
+
+    expect(measurements.pageOverflow).toBe(false);
+    expect(measurements.cardsFit).toBe(true);
+    expect(measurements.links.filter(({ width, height }) => width < 44 || height < 44)).toEqual([]);
+  });
+
+  test('featured portals keep their route-specific composition at desktop and mobile sizes', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
+    for (const viewport of [
+      { width: 1440, height: 1000, snapshot: 'home-featured-portals-desktop.png' },
+      { width: 390, height: 844, snapshot: 'home-featured-portals-mobile.png' },
+    ]) {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.goto('/');
+      const featured = page.locator('.featured-areas');
+      await featured.scrollIntoViewIfNeeded();
+      await expect(featured).toHaveScreenshot(viewport.snapshot, { animations: 'disabled' });
+    }
+  });
+
   test('desktop atlas composition', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize({ width: 1440, height: 1100 });
