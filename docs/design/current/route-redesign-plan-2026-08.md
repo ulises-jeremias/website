@@ -321,3 +321,13 @@ line. When reduced motion is preferred, the selected configuration appears as
 a complete, still assembled parcel with the app stage selected; the four-stage
 explanation and generated command remain visible. Without JavaScript, the
 server-rendered family index and base commands remain complete.
+
+## V lab selection signal — 2026-10-07
+
+Selecting VSL, VTL, or RxV now lights its matching station in the ecosystem
+map. The enlarged node and its short connector pulse reinforce which area is
+open while the station selector and live status continue to carry the readable
+selection. Compiler, CI, and catalog stations do not illuminate unrelated map
+areas. Reduced-motion mode keeps the selected node visibly distinct without
+transitions, and the map's caption still states that grouping lines are not
+dependency edges.
