@@ -185,3 +185,11 @@ On narrow screens the map keeps its portrait composition and touch targets
 remain at least 44 CSS pixels. Trace drawing and orbital drift stop completely
 under reduced motion; the same route map and links remain in static HTML with
 JavaScript disabled.
+
+## Addendum — Agentic stack opening (2026-10-07)
+
+The `/agentic` introduction now places the value proposition and system
+summary side by side on wide screens, bringing the three-project relationship
+map closer to the first fold. At narrower widths the original reading order
+remains: headline, explanation, map. The opening is covered by desktop and
+mobile visual captures.
