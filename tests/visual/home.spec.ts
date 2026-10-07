@@ -146,10 +146,15 @@ test.describe('homepage visual coverage', () => {
       cardsFit: [...document.querySelectorAll('.featured-areas__card')].every(
         (card) => card.scrollWidth <= card.clientWidth + 1,
       ),
+      artFitsSquare: [...document.querySelectorAll('.featured-areas__art')].every((art) => {
+        const rect = art.getBoundingClientRect();
+        return Math.abs(rect.width - rect.height) <= 1;
+      }),
     }));
 
     expect(measurements.pageOverflow).toBe(false);
     expect(measurements.cardsFit).toBe(true);
+    expect(measurements.artFitsSquare).toBe(true);
     expect(measurements.links.filter(({ width, height }) => width < 44 || height < 44)).toEqual([]);
   });
 
