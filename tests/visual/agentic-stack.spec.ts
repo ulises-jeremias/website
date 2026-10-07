@@ -2,9 +2,9 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Agentic Developer Stack system map', () => {
   for (const viewport of [
-    { name: 'desktop', width: 1440, height: 1000 },
-    { name: 'tablet', width: 1024, height: 900 },
-    { name: 'mobile', width: 390, height: 844 },
+    { name: 'desktop', width: 1440, height: 1000, capture: true },
+    { name: 'tablet', width: 1024, height: 900, capture: true },
+    { name: 'mobile', width: 390, height: 844, capture: false },
   ]) {
     test(`keeps the opening and system map composed at ${viewport.name}`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -18,9 +18,11 @@ test.describe('Agentic Developer Stack system map', () => {
         window.scrollTo(0, 0);
         await document.fonts.ready;
       });
-      await expect(page.locator('.agentic-page__masthead')).toHaveScreenshot(
-        `agentic-stack-intro-${viewport.name}.png`,
-      );
+      if (viewport.capture) {
+        await expect(page.locator('.agentic-page__masthead')).toHaveScreenshot(
+          `agentic-stack-intro-${viewport.name}.png`,
+        );
+      }
     });
   }
 

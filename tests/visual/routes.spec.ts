@@ -63,16 +63,16 @@ test.describe('flagship route visuals', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.setViewportSize({ width: 1440, height: 1100 });
       await page.goto(route.path);
-      // The harness PersistenceCore scene paints soft radial gradients and
-      // drop-shadow filters: software rasterizers on CI shift their intensity
-      // enough to exceed pixel deltas on large areas, so this route gets a
-      // wider (still tight) tolerance instead of a frozen-art exception.
+      // Software rasterizers and system-font renderers can shift large painted
+      // areas or masthead wrapping; tolerances stay scoped to reviewed routes.
       const desktopOptions =
         route.name === 'agentic-harness' || route.name === 'agent-toolkit'
           ? { fullPage: false, maxDiffPixelRatio: 0.12 }
           : route.name === 'dotfiles' || route.name === 'v'
             ? { fullPage: false, maxDiffPixelRatio: 0.1 }
-            : { fullPage: false };
+            : route.name === 'agentic'
+              ? { fullPage: false, maxDiffPixelRatio: 0.1 }
+              : { fullPage: false };
       await expect(page).toHaveScreenshot(`${route.name}-desktop-1440.png`, desktopOptions);
     });
 

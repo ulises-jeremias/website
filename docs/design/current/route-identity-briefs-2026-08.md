@@ -191,5 +191,6 @@ JavaScript disabled.
 The `/agentic` introduction now places the value proposition and system
 summary side by side on wide screens, bringing the three-project relationship
 map closer to the first fold. At narrower widths the original reading order
-remains: headline, explanation, map. The opening is covered by desktop and
-mobile visual captures.
+remains: headline, explanation, map. The opening has desktop/tablet visual
+captures at reduced motion; mobile structure is checked at 390px and by the
+existing 320px no-JavaScript test.
