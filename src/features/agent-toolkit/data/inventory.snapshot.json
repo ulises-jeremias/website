@@ -10,10 +10,10 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "687ab38",
-  "commitFull": "687ab3800c10c7ddf490a958f638213c4b7ae1a2",
-  "verifiedAt": "2026-10-05",
-  "version": "1.41.0",
+  "commit": "9627da8",
+  "commitFull": "9627da8f530132688c9b83a9042ac38337bc61c8",
+  "verifiedAt": "2026-10-07",
+  "version": "1.42.0",
   "counts": {
     "skills": 105,
     "agents": 18,
