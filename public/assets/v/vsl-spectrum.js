@@ -32,30 +32,41 @@
   }
 
   function init(root) {
+    /** @type {HTMLElement | null} */
     const controls = root.querySelector('[data-vsl-controls]');
+    /** @type {HTMLInputElement | null} */
     const frequencyInput = root.querySelector('[data-vsl-frequency]');
+    /** @type {HTMLOutputElement | null} */
     const frequencyReadout = root.querySelector('[data-vsl-frequency-readout]');
+    /** @type {SVGPolylineElement | null} */
     const signal = root.querySelector('[data-vsl-signal]');
+    /** @type {SVGPathElement | null} */
     const bins = root.querySelector('[data-vsl-bins]');
+    /** @type {SVGPathElement | null} */
     const peaksPath = root.querySelector('[data-vsl-peaks]');
+    /** @type {HTMLElement | null} */
     const equation = root.querySelector('[data-vsl-equation]');
+    /** @type {HTMLElement | null} */
     const summary = root.querySelector('[data-vsl-summary]');
+    /** @type {SVGDescElement | null} */
     const description = root.querySelector('[data-vsl-description]');
+    /** @type {HTMLElement | null} */
     const status = root.querySelector('[data-v-scene-live]');
+    /** @type {HTMLButtonElement | null} */
     const runButton = root.querySelector('[data-vsl-run]');
 
     if (
-      !(controls instanceof HTMLElement) ||
-      !(frequencyInput instanceof HTMLInputElement) ||
-      !(frequencyReadout instanceof HTMLOutputElement) ||
-      !(signal instanceof SVGPolylineElement) ||
-      !(bins instanceof SVGPathElement) ||
-      !(peaksPath instanceof SVGPathElement) ||
-      !(equation instanceof HTMLElement) ||
-      !(summary instanceof HTMLElement) ||
-      !(description instanceof SVGDescElement) ||
-      !(status instanceof HTMLElement) ||
-      !(runButton instanceof HTMLButtonElement)
+      !controls ||
+      !frequencyInput ||
+      !frequencyReadout ||
+      !signal ||
+      !bins ||
+      !peaksPath ||
+      !equation ||
+      !summary ||
+      !description ||
+      !status ||
+      !runButton
     ) {
       return;
     }
@@ -112,7 +123,7 @@
     const animateTransform = async () => {
       const { peaks } = render();
       const currentRun = run;
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         status.textContent = `DFT complete · dominant bins ${peaks.join(' and ')}.`;
         return;
       }
