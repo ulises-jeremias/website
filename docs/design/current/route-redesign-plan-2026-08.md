@@ -226,3 +226,34 @@ floating-world metaphor clearer while keeping each existing first-party island
 illustration in focus. The platform is CSS-only, uses no new image or script,
 and keeps its slow rotation disabled under reduced motion. Desktop and mobile
 Create Awesome captures record the updated atlas surface.
+
+## VSL frequency instrument — 2026-10-07
+
+The VSL station replaces its static matrix-to-plot beat with an interactive
+signal analyzer. A fundamental-frequency control recomputes a deterministic
+64-sample signal and its direct DFT in the browser, and a user-triggered trace
+follows the signal into the resulting bins. The interface labels this as a
+browser-side math model and does not imply that VSL itself runs in the page.
+The complete initial plot remains static HTML/SVG for no-JavaScript users;
+reduced-motion skips autonomous movement and renders the completed state
+immediately. On narrow screens the plot keeps readable annotation in an
+internally scrollable viewport, with a visible scroll cue and keyboard access.
+The browser interaction is a standalone first-party asset so executable code
+does not inflate the route's HTML document payload.
+
+The mobile V laboratory previously hid every station SVG below 620px. That rule
+now excludes the VSL analyzer so this station's primary instrument remains
+visible while the compact fallback behavior for other legacy diagrams stays
+unchanged. Focused browser coverage checks frequency changes, animated and
+reduced-motion runs, 320px reflow, no-JavaScript fallback, and desktop/mobile
+visual baselines.
+
+The measured `/v/` route increases from 152,066 to 156,534 bytes (+4,468): the
+HTML document grows 1,599 bytes for the controls and instrument, the route's
+script payload grows 2,084 bytes for the DFT interaction, styles grow 785 bytes,
+and one first-party script request is added. The overall route remains 20,697
+bytes below its existing 177,231-byte ceiling. To retain a clear margin around
+the new measured payload, the route ceilings move to 19,456 document bytes,
+4,096 script bytes, 17,408 stylesheet bytes, and 15 requests. Other route
+limits remain unchanged; the baseline records the exact mobile and desktop
+measurements.

@@ -127,21 +127,21 @@
     "/v/": {
       "mobile": {
         "total": 177231,
-        "document": 17408,
-        "script": 2048,
-        "style": 16384,
+        "document": 19456,
+        "script": 4096,
+        "style": 17408,
         "image": 86016,
         "font": 69632,
-        "requests": 14
+        "requests": 15
       },
       "desktop": {
         "total": 177231,
-        "document": 17408,
-        "script": 2048,
-        "style": 16384,
+        "document": 19456,
+        "script": 4096,
+        "style": 17408,
         "image": 86016,
         "font": 69632,
-        "requests": 14
+        "requests": 15
       }
     },
     "/create-awesome/": {
