@@ -48,7 +48,7 @@ actual manifest into a user-triggered assembly trace. Pinned and local entries
 dock into the composition; installer and ISO slots remain visibly reserved.
 The route retains its static fallback and reduced-motion behavior. PR #501
 refreshed this authority index against the deployed `main@043ebb63` state. PR
-#502 reshaped Community as an isometric workshop with a distinct mobile circuit,
+# 502 reshaped Community as an isometric workshop with a distinct mobile circuit,
 keyboard-selectable project stations, and reduced-motion-aware route pulses.
 
 At `main@352b855c`, all 575 Playwright cases pass along with Lighthouse, build,
