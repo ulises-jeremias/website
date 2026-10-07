@@ -24,6 +24,8 @@ import { verifiedFacts } from '../data/index.js';
     </button>
   </div>
 
+  <span class="df-color-flow__signal" data-df-flow-signal aria-hidden="true" hidden></span>
+
   <p class="visually-hidden" role="status" aria-atomic="true" data-df-flow-status></p>
 
   <div class="df-color-flow__source" data-df-flow-source>
@@ -98,18 +100,23 @@ import { verifiedFacts } from '../data/index.js';
   document.querySelectorAll<HTMLElement>('.df-color-flow').forEach((flow) => {
     const controls = flow.querySelector<HTMLElement>('[data-df-flow-controls]');
     const source = flow.querySelector<HTMLElement>('[data-df-flow-source]');
+    const signal = flow.querySelector<HTMLElement>('[data-df-flow-signal]');
     const status = flow.querySelector<HTMLElement>('[data-df-flow-status]');
     const buttons = Array.from(flow.querySelectorAll<HTMLButtonElement>('[data-df-flow]'));
     const routes = Array.from(flow.querySelectorAll<HTMLElement>('[data-df-flow-route]'));
-    if (!controls || !source || !status || buttons.length !== 2 || routes.length !== 2) return;
+    if (!controls || !source || !signal || !status || buttons.length !== 2 || routes.length !== 2) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let timer: number | undefined;
     let activePath: keyof typeof routeCopy | undefined;
+    let signalAnimation: Animation | undefined;
 
     const reset = () => {
       if (timer !== undefined) window.clearTimeout(timer);
       timer = undefined;
+      signalAnimation?.cancel();
+      signalAnimation = undefined;
+      signal.hidden = true;
       activePath = undefined;
       flow.dataset.traceState = 'idle';
       source.classList.remove('is-active');
@@ -145,6 +152,31 @@ import { verifiedFacts } from '../data/index.js';
         return;
       }
 
+      const flowRect = flow.getBoundingClientRect();
+      const sourceRect = source.getBoundingClientRect();
+      const output = route.querySelector<HTMLElement>('[data-df-flow-output]');
+      if (!output) return;
+      const outputRect = output.getBoundingClientRect();
+      const startX = sourceRect.left + sourceRect.width / 2 - flowRect.left;
+      const startY = sourceRect.top + sourceRect.height / 2 - flowRect.top;
+      const endX = outputRect.left + outputRect.width / 2 - flowRect.left;
+      const endY = outputRect.top + outputRect.height / 2 - flowRect.top;
+
+      signal.hidden = false;
+      signalAnimation = signal.animate(
+        [
+          { transform: `translate(${startX}px, ${startY}px) scale(0.65)`, opacity: 0 },
+          { offset: 0.12, transform: `translate(${startX}px, ${startY}px) scale(1)`, opacity: 1 },
+          { offset: 0.82, transform: `translate(${endX}px, ${endY}px) scale(0.85)`, opacity: 1 },
+          { transform: `translate(${endX}px, ${endY}px) scale(0.2)`, opacity: 0 },
+        ],
+        { duration: 700, easing: 'cubic-bezier(0.45, 0, 0.55, 1)' },
+      );
+      signalAnimation.onfinish = () => {
+        signal.hidden = true;
+        signalAnimation = undefined;
+      };
+
       timer = window.setTimeout(() => {
         route.classList.add('is-active');
         status.textContent = path.route;
@@ -164,6 +196,9 @@ import { verifiedFacts } from '../data/index.js';
       if (!route) return;
       if (timer !== undefined) window.clearTimeout(timer);
       timer = undefined;
+      signalAnimation?.cancel();
+      signalAnimation = undefined;
+      signal.hidden = true;
       source.classList.add('is-active');
       route.classList.add('is-active');
       route.querySelector('[data-df-flow-output]')?.classList.add('is-active');
@@ -236,6 +271,25 @@ import { verifiedFacts } from '../data/index.js';
       border-color var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out),
       box-shadow var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out),
       background-color var(--motion-duration-slow, 180ms) var(--motion-ease-out, ease-out);
+  }
+
+  .df-color-flow__signal {
+    position: absolute;
+    z-index: 2;
+    inset: 0 auto auto 0;
+    width: 0.72rem;
+    height: 0.72rem;
+    border: 1px solid #fff3df;
+    border-radius: 50%;
+    background: var(--flow-accent);
+    box-shadow:
+      0 0 0.5rem var(--flow-accent),
+      0 0 1.1rem color-mix(in srgb, var(--flow-accent) 58%, transparent);
+    pointer-events: none;
+  }
+
+  .df-color-flow__signal[hidden] {
+    display: none;
   }
 
   .df-color-flow__source.is-active,
@@ -452,6 +506,10 @@ import { verifiedFacts } from '../data/index.js';
     .df-color-flow__route,
     .df-color-flow__output {
       transition: none;
+    }
+
+    .df-color-flow__signal {
+      display: none;
     }
 
     .df-color-flow__route.is-active::before {
