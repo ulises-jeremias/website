@@ -22,6 +22,13 @@ module.exports = {
       },
     },
     {
+      files: 'src/features/hornero-os/scripts/*.js',
+      options: {
+        semi: false,
+        trailingComma: 'none',
+      },
+    },
+    {
       files: '*.astro',
       options: {
         parser: 'astro',
