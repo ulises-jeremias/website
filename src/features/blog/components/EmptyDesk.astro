@@ -48,10 +48,10 @@
         ~/digital-nest
       </text>
       <text x="192" y="178" class="ed-terminal__line ed-terminal__cmd">
-        $ notes draft --topic "shipped work"
+        $ notes new --topic
       </text>
       <text x="192" y="196" class="ed-terminal__line ed-terminal__dim">
-        waiting for the first entry…
+        waiting for first entry…
       </text>
       <rect x="192" y="206" width="9" height="14" class="ed-terminal__cursor"></rect>
       <text x="206" y="218" class="ed-terminal__line ed-terminal__dim">
@@ -66,7 +66,7 @@
       <line x1="420" y1="206" x2="468" y2="206" class="ed-pad__line"></line>
       <line x1="420" y1="218" x2="474" y2="218" class="ed-pad__line"></line>
       <text x="420" y="236" class="ed-pad__label">
-        next entry…
+        next field note
       </text>
     </g>
 
@@ -86,7 +86,7 @@
 <style>
   .empty-desk {
     max-width: 34rem;
-    margin-block-end: 1.25rem;
+    margin: 0;
   }
 
   .empty-desk svg {
@@ -114,7 +114,8 @@
   }
 
   .ed-lamp__bulb {
-    fill: #e9d5ff;
+    fill: #fff3d6;
+    filter: drop-shadow(0 0 5px #ff42d0);
     animation: ed-lamp-breathe 6s ease-in-out infinite;
   }
 
@@ -129,14 +130,14 @@
   }
 
   .ed-terminal__frame {
-    fill: rgba(5, 3, 23, 0.88);
-    stroke: var(--blog-border, rgba(255, 66, 208, 0.25));
-    stroke-width: 1.2;
+    fill: rgba(5, 3, 23, 0.94);
+    stroke: color-mix(in srgb, var(--blog-accent-soft, #ff42d0) 65%, var(--blog-accent, #1cefff));
+    stroke-width: 1.6;
   }
 
   .ed-terminal__divider {
-    stroke: var(--blog-border, rgba(255, 66, 208, 0.25));
-    stroke-width: 1;
+    stroke: color-mix(in srgb, var(--blog-accent-soft, #ff42d0) 65%, var(--blog-accent, #1cefff));
+    stroke-width: 1.2;
   }
 
   .ed-terminal__dot--r {
@@ -154,7 +155,7 @@
   .ed-terminal__line {
     fill: var(--color-text-muted, #b9c4d4);
     font-family: var(--font-mono, monospace);
-    font-size: 9.5px;
+    font-size: 12px;
   }
 
   .ed-terminal__cmd {
@@ -191,9 +192,9 @@
   }
 
   .ed-pad__label {
-    fill: var(--color-text-faint, #8b93a5);
+    fill: var(--blog-accent, #1cefff);
     font-family: var(--font-mono, monospace);
-    font-size: 9px;
+    font-size: 10.5px;
     letter-spacing: 0.06em;
   }
 
