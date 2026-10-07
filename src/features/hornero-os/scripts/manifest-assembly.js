@@ -1,4 +1,4 @@
-(() => {
+;(() => {
   const manifest = document.querySelector('.hos-yaml')
   const traceButton = manifest?.querySelector('[data-hos-trace]')
   const status = manifest?.querySelector('[data-hos-trace-status]')
