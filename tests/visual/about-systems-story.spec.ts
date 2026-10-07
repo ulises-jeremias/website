@@ -1,6 +1,58 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('About systems-builder story', () => {
+  for (const viewport of [
+    { name: 'desktop', width: 1440, height: 900 },
+    { name: 'mobile', width: 390, height: 844 },
+  ]) {
+    test(`shows the interactive systems orbit on ${viewport.name}`, async ({ page }) => {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto('/about');
+
+      const orbit = page.locator('.about-orbit');
+      const nodes = orbit.locator('a.about-orbit__station');
+      await expect(orbit.getByText('A builder’s systems orbit')).toBeVisible();
+      await expect(nodes).toHaveCount(5);
+      await expect
+        .poll(() => nodes.evaluateAll((items) => items.map((item) => item.getAttribute('aria-label'))))
+        .toEqual([
+          'Developer tooling: jump to this part of the build trajectory',
+          'V + scientific computing: jump to this part of the build trajectory',
+          'App composition: jump to this part of the build trajectory',
+          'Linux systems: jump to this part of the build trajectory',
+          'Agentic workflows: jump to this part of the build trajectory',
+        ]);
+
+      const firstNode = nodes.first();
+      const bounds = await firstNode.boundingBox();
+      expect(bounds?.height).toBeGreaterThanOrEqual(44);
+      await expect(orbit.locator('.about-orbit__trace').first()).toHaveCSS('stroke-dashoffset', '0px');
+      await expect(orbit.locator('.about-orbit__halo')).toHaveCSS('animation-name', 'none');
+      await expect(page.locator('body')).not.toHaveCSS('overflow-x', 'scroll');
+      await expect(orbit).toHaveScreenshot(`about-systems-orbit-${viewport.name}.png`, {
+        animations: 'disabled',
+      });
+    });
+  }
+
+  test('animates the orbital trace and links each station to its story', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/about');
+
+    const orbit = page.locator('.about-orbit');
+    await expect(orbit.locator('.about-orbit__trace').first()).toHaveCSS('animation-name', 'about-orbit-trace');
+    await expect(orbit.locator('.about-orbit__halo')).toHaveCSS('animation-name', 'about-orbit-rotate');
+    const linuxStop = orbit.getByRole('link', { name: /Linux systems:/ });
+    await linuxStop.focus();
+    await expect(linuxStop).toBeFocused();
+    await expect(linuxStop).toHaveAttribute('href', '#trajectory-linux');
+    await linuxStop.click();
+    await expect(page).toHaveURL(/#trajectory-linux$/);
+    await expect(page.locator('#trajectory-linux')).toBeInViewport();
+  });
+
   for (const width of [320, 390, 768, 1024, 1440]) {
     test(`keeps the identity and five-stage path readable at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
@@ -9,6 +61,11 @@ test.describe('About systems-builder story', () => {
 
       await expect(page.getByRole('heading', { level: 1, name: 'Ulises Jeremias' })).toBeVisible();
       await expect(page.getByText('Solutions Architect @ NaNLABS · open-source builder')).toBeVisible();
+
+      const orbitNodes = page.locator('.about-orbit__station');
+      await expect(orbitNodes).toHaveCount(5);
+      const orbitNode = await orbitNodes.first().boundingBox();
+      expect(orbitNode?.height).toBeGreaterThanOrEqual(44);
 
       const path = page.getByTestId('about-build-path');
       const stops = path.locator('ol > li');
@@ -62,7 +119,7 @@ test.describe('About systems-builder story', () => {
     await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
     await page.goto('/about');
 
-    const link = page.getByRole('link', { name: 'Developer tooling' });
+    const link = page.getByTestId('about-build-path').getByRole('link', { name: 'Developer tooling' });
     await link.focus();
     const outline = await link.evaluate((element) => {
       const style = getComputedStyle(element);
@@ -71,6 +128,14 @@ test.describe('About systems-builder story', () => {
 
     expect(outline.style).not.toBe('none');
     expect(outline.width).toBeGreaterThanOrEqual(2);
+    const orbitLink = page.locator('.about-orbit__station').first();
+    await orbitLink.focus();
+    const orbitOutline = await orbitLink.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return { style: style.outlineStyle, width: Number.parseFloat(style.outlineWidth) };
+    });
+    expect(orbitOutline.style).not.toBe('none');
+    expect(orbitOutline.width).toBeGreaterThanOrEqual(2);
     await expect(page.getByTestId('about-trajectory').locator(':scope > li')).toHaveCount(5);
   });
 
@@ -209,6 +274,7 @@ test.describe('About systems-builder story', () => {
     const path = page.getByTestId('about-build-path');
     await expect(path.getByRole('link')).toHaveCount(5);
     await expect(path.locator('[aria-current="step"]')).toHaveCount(0);
+    await expect(page.locator('.about-orbit__station')).toHaveCount(5);
     await expect(page.getByTestId('about-trajectory').locator(':scope > li')).toHaveCount(5);
 
     await context.close();

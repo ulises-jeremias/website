@@ -26,8 +26,8 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Current production baseline: `main@352b855c4f8fb960f5b0cbb4ee1913f540e5054d`
-  (PR #502, on top of the route and interaction work in PRs #462–#501).
+- Current production baseline: the latest successful deployment of `main`;
+  exact revision and release checks are recorded in issue #405.
 - This revision is deployed to production. Build, lint, type-check, tests,
   route budgets, Lighthouse, browser quality, Todo Checker, and deployment smoke
   pass. Portfolio release evidence remains tracked in #405; manual
@@ -52,13 +52,22 @@ request 502 reshaped Community as an isometric workshop with a distinct mobile
 circuit, keyboard-selectable project stations, and reduced-motion-aware route
 pulses.
 
-At `main@352b855c`, all 575 Playwright cases pass along with Lighthouse, build,
-lint, type-check, unit tests, route budgets, Todo Checker, and deployment
-smoke. The production deployment reports this exact revision. The focused
-production checks return 200 for all public routes, `/sitemap.xml`,
+At the historical `main@352b855c` Community release, 575 Playwright cases
+passed along with Lighthouse, build, lint, type-check, unit tests, route
+budgets, Todo Checker, and deployment smoke. PRs #503–#510 have since extended
+the current route experience with the Create Awesome assembly sequence, V lab
+station map, kinetic homepage portals and world docking plates, the interactive
+404 route finder, Smart Colors signal trace, and the Field Notes desk visual
+refinement. Their reviewed snapshots are maintained alongside the route tests.
+
+Current `main` is deployed to production. Build, lint, type-check,
+tests, Browser Quality (route budgets, Lighthouse, and the full browser
+matrix), Todo Checker, and deployment smoke passed on this exact revision;
+MegaLinter passed on PR #510 and is intentionally skipped for main push events.
+Production checks return 200 for all 15 public routes, `/sitemap.xml`,
 `/robots.txt`, and `/rss.xml`, and confirm `/hornero-os/` links to
-`https://horneroos.com`. Other routes retain their existing visual goldens
-unless a route-specific change above updates them.
+`https://horneroos.com`. A nonexistent route serves the custom 404. Visual
+goldens change only for the route-specific designs reviewed in each PR.
 
 ## Historical documents
 

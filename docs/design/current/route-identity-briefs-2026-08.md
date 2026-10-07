@@ -175,3 +175,13 @@ but gives the illustration enough desktop width for those details to read as
 a scene instead of a small icon. Shorter terminal copy fits the drawing,
 clearer screen and sheet lines support the editorial hierarchy, and the two
 columns return to a stacked composition below the tablet breakpoint.
+
+## Addendum — About systems orbit (2026-10-07)
+
+The builder-profile hero now maps the five established stages around a shared
+developer-experience workbench. Colored traces connect each stage to the
+central principle, and station links jump to the corresponding narrative below.
+On narrow screens the map keeps its portrait composition and touch targets
+remain at least 44 CSS pixels. Trace drawing and orbital drift stop completely
+under reduced motion; the same route map and links remain in static HTML with
+JavaScript disabled.

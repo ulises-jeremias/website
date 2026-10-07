@@ -1,0 +1,344 @@
+---
+type OrbitStage = {
+  id: string;
+  mapLabel: string;
+  mapShort: string;
+  tone: string;
+};
+
+type Props = {
+  stages: OrbitStage[];
+};
+
+const { stages } = Astro.props;
+const positions = [
+  { x: 8, y: 12, side: 'left' },
+  { x: 262, y: 12, side: 'right' },
+  { x: 262, y: 186, side: 'right' },
+  { x: 262, y: 358, side: 'right' },
+  { x: 8, y: 358, side: 'left' },
+] as const;
+const traces = [
+  'M 138 50 L 172 166',
+  'M 262 50 L 228 166',
+  'M 262 224 L 240 228',
+  'M 262 396 L 228 290',
+  'M 138 396 L 172 290',
+];
+---
+
+<figure class="about-orbit" aria-labelledby="about-orbit-title">
+  <figcaption class="about-orbit__caption">
+    <span id="about-orbit-title">A builder’s systems orbit</span>
+    <span>five disciplines · one shared thread</span>
+  </figcaption>
+  <svg class="about-orbit__svg" viewBox="0 0 400 450" aria-labelledby="about-orbit-svg-title about-orbit-svg-desc">
+    <title id="about-orbit-svg-title">Five connected systems-building disciplines</title>
+    <desc id="about-orbit-svg-desc">
+      Developer tooling, V and scientific computing, application composition, Linux systems, and agentic workflows orbit
+      a shared developer-experience workbench. Each station links to its section below.
+    </desc>
+    <defs>
+      <pattern id="about-orbit-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+        <path d="M 20 0 L 0 0 0 20" class="about-orbit__grid" />
+      </pattern>
+      <radialGradient id="about-orbit-core">
+        <stop offset="0" stop-color="#ff42d0" stop-opacity="0.18" />
+        <stop offset="1" stop-color="#a05cff" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+
+    <rect x="1" y="1" width="398" height="448" class="about-orbit__plate" />
+    <rect x="2" y="2" width="396" height="446" fill="url(#about-orbit-grid)" aria-hidden="true" />
+    <path d="M 200 28 V 422" class="about-orbit__axis" />
+    <path d="M 18 228 H 382" class="about-orbit__axis" />
+
+    {stages.map((stage, index) => (
+      <path d={traces[index]} class="about-orbit__trace" data-tone={stage.tone} style={`--trace-order: ${index}`} />
+    ))}
+
+    <circle cx="200" cy="228" r="91" class="about-orbit__halo" />
+    <circle cx="200" cy="228" r="61" class="about-orbit__orbit about-orbit__orbit--outer" />
+    <circle cx="200" cy="228" r="48" class="about-orbit__orbit about-orbit__orbit--inner" />
+    <circle cx="200" cy="228" r="40" fill="url(#about-orbit-core)" class="about-orbit__core-glow" />
+    <path d="M 183 209 H 217 L 226 218 V 238 L 217 247 H 183 L 174 238 V 218 Z" class="about-orbit__core" />
+    <text x="200" y="224" class="about-orbit__core-label" text-anchor="middle">
+      DEVELOPER
+    </text>
+    <text x="200" y="237" class="about-orbit__core-label" text-anchor="middle">
+      EXPERIENCE
+    </text>
+
+    {stages.map((stage, index) => {
+      const position = positions[index]!;
+      return (
+        <a
+          href={`#trajectory-${stage.id}`}
+          class="about-orbit__station"
+          data-tone={stage.tone}
+          data-side={position.side}
+          aria-label={`${stage.mapLabel}: jump to this part of the build trajectory`}
+        >
+          <rect x={position.x} y={position.y} width="130" height="76" class="about-orbit__station-frame" />
+          <path d={`M ${position.x + 12} ${position.y + 17} l 5 -5 5 5 -5 5 Z`} class="about-orbit__station-node" />
+          <text x={position.x + 30} y={position.y + 21} class="about-orbit__station-index">
+            {String(index + 1).padStart(2, '0')}
+          </text>
+          <text x={position.x + 12} y={position.y + 44} class="about-orbit__station-label">
+            {stage.mapShort}
+          </text>
+        </a>
+      );
+    })}
+    <text x="12" y="447" class="about-orbit__annotation">
+      WORKBENCH / LA PLATA
+    </text>
+    <text x="388" y="447" text-anchor="end" class="about-orbit__annotation">
+      SYSTEMS MAP · 05
+    </text>
+  </svg>
+  <p class="about-orbit__note">Different domains, connected by one principle: make every layer easier to work with.</p>
+</figure>
+
+<style>
+  .about-orbit {
+    --orbit-line: color-mix(in srgb, var(--nest-violet) 35%, transparent);
+    inline-size: min(100%, 34rem);
+    min-inline-size: 0;
+    justify-self: center;
+    margin: 0;
+    padding: 0.8rem;
+    border: 1px solid var(--orbit-line);
+    background:
+      radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--nest-violet) 12%, transparent), transparent 56%),
+      color-mix(in srgb, var(--nest-midnight-900) 88%, transparent);
+    clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 1rem 100%, 0 calc(100% - 1rem));
+  }
+
+  .about-orbit__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.35rem 1rem;
+    padding: 0.25rem 0.35rem 0.7rem;
+    color: var(--about-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.11em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .about-orbit__caption span:last-child {
+    color: var(--about-soft);
+    font-size: 0.58rem;
+  }
+
+  .about-orbit__svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    overflow: visible;
+  }
+
+  .about-orbit__plate {
+    fill: color-mix(in srgb, var(--nest-midnight-950) 80%, transparent);
+    stroke: color-mix(in srgb, var(--nest-violet) 26%, transparent);
+  }
+
+  .about-orbit__grid,
+  .about-orbit__axis {
+    fill: none;
+    stroke: color-mix(in srgb, var(--nest-blue) 14%, transparent);
+    stroke-width: 0.7;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .about-orbit__axis {
+    stroke-dasharray: 1 7;
+    stroke-width: 0.9;
+  }
+
+  .about-orbit__trace {
+    fill: none;
+    stroke: var(--orbit-accent, var(--nest-cyan));
+    stroke-width: 1.8;
+    stroke-linecap: square;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    opacity: 0.8;
+    vector-effect: non-scaling-stroke;
+    animation: about-orbit-trace 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) calc(180ms + var(--trace-order) * 130ms)
+      forwards;
+  }
+
+  .about-orbit__trace[data-tone='cyan'],
+  .about-orbit__station[data-tone='cyan'] {
+    --orbit-accent: var(--nest-cyan);
+  }
+  .about-orbit__trace[data-tone='blue'],
+  .about-orbit__station[data-tone='blue'] {
+    --orbit-accent: var(--nest-blue);
+  }
+  .about-orbit__trace[data-tone='orange'],
+  .about-orbit__station[data-tone='orange'] {
+    --orbit-accent: var(--nest-sunset-orange);
+  }
+  .about-orbit__trace[data-tone='pink'],
+  .about-orbit__station[data-tone='pink'] {
+    --orbit-accent: var(--nest-pink);
+  }
+  .about-orbit__trace[data-tone='magenta'],
+  .about-orbit__station[data-tone='magenta'] {
+    --orbit-accent: var(--nest-magenta);
+  }
+
+  .about-orbit__halo {
+    fill: color-mix(in srgb, var(--nest-violet) 5%, transparent);
+    stroke: color-mix(in srgb, var(--nest-violet) 35%, transparent);
+    stroke-dasharray: 1 5;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: about-orbit-rotate 42s linear infinite;
+  }
+
+  .about-orbit__orbit {
+    fill: none;
+    stroke: color-mix(in srgb, var(--nest-cyan) 43%, transparent);
+    stroke-width: 0.8;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .about-orbit__orbit--outer {
+    stroke-dasharray: 1 5;
+    animation: about-orbit-rotate 28s linear infinite reverse;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .about-orbit__orbit--inner {
+    stroke: color-mix(in srgb, var(--nest-magenta) 40%, transparent);
+    stroke-dasharray: 14 8 2 8;
+  }
+
+  .about-orbit__core-glow {
+    opacity: 0.65;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: about-orbit-breathe 5.5s ease-in-out infinite;
+  }
+
+  .about-orbit__core {
+    fill: color-mix(in srgb, var(--nest-midnight-900) 95%, transparent);
+    stroke: color-mix(in srgb, var(--nest-pink) 82%, var(--nest-cyan));
+    stroke-width: 1.1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .about-orbit__core-label {
+    fill: var(--nest-paper);
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  .about-orbit__station {
+    --orbit-accent: var(--nest-cyan);
+    color: var(--orbit-accent);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .about-orbit__station-frame {
+    fill: color-mix(in srgb, var(--nest-midnight-900) 94%, transparent);
+    stroke: color-mix(in srgb, var(--orbit-accent) 57%, transparent);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    transition:
+      fill 180ms ease,
+      stroke-width 180ms ease,
+      filter 180ms ease;
+  }
+
+  .about-orbit__station-node {
+    fill: color-mix(in srgb, var(--orbit-accent) 28%, transparent);
+    stroke: var(--orbit-accent);
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .about-orbit__station-index {
+    fill: var(--about-soft);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .about-orbit__station-label {
+    fill: var(--nest-paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.025em;
+  }
+
+  .about-orbit__station:hover .about-orbit__station-frame,
+  .about-orbit__station:focus-visible .about-orbit__station-frame {
+    fill: color-mix(in srgb, var(--orbit-accent) 13%, var(--nest-midnight-900));
+    stroke: var(--orbit-accent);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--orbit-accent) 62%, transparent));
+  }
+
+  .about-orbit__station:focus-visible .about-orbit__station-frame {
+    stroke: CanvasText;
+  }
+
+  .about-orbit__annotation {
+    fill: var(--about-soft);
+    font-family: var(--font-mono);
+    font-size: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  .about-orbit__note {
+    margin: 0.5rem 0.3rem 0;
+    color: var(--about-muted);
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  @keyframes about-orbit-trace {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes about-orbit-rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes about-orbit-breathe {
+    50% {
+      opacity: 1;
+      transform: scale(1.12);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-orbit__trace {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+
+    .about-orbit__halo,
+    .about-orbit__orbit--outer,
+    .about-orbit__core-glow {
+      animation: none;
+    }
+  }
+</style>
