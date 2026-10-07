@@ -14,13 +14,6 @@ module.exports = {
       },
     },
     {
-      files: 'public/assets/v/*.js',
-      options: {
-        semi: false,
-        trailingComma: 'none',
-      },
-    },
-    {
       files: 'src/features/agentic-harness/scripts/*.js',
       options: {
         semi: false,

@@ -1,4 +1,4 @@
-;(() => {
+{
   const SAMPLE_COUNT = 64
 
   function sampleSignal (frequency) {
@@ -172,4 +172,4 @@
   }
 
   document.querySelectorAll('[data-v-scene="vsl"]').forEach(init)
-})()
+}
