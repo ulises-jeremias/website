@@ -26,30 +26,35 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Current production baseline: `main@8f1d056bde19c917a18d7d21bcbbf5d5dc8ffbae` (PRs #462, #464, and #467–#471).
-- The route redesign, accessibility navigation correction, production deployment,
-  and automated release checks are complete on this baseline. Portfolio release
-  evidence is tracked in issue #405; manual assistive-technology validation
-  remains tracked separately in #295.
+- Current production baseline: `main@ea56b2a0d6d4a023e0d3dd1cbc42a46da28d4975`
+  (PR #500, on top of the portfolio and route work in PRs #462–#499).
+- This revision is deployed to production. Build, lint, type-check, tests,
+  route budgets, Lighthouse, browser quality, Todo Checker, and deployment smoke
+  pass. Portfolio release evidence remains tracked in #405; manual
+  assistive-technology validation remains tracked separately in #295.
 
 The maintained snapshots are the regression authority. Captures under dated
 `docs/design/` directories are historical evidence and are not rewritten by
 normal Playwright runs.
 
-The 2026-10-05 refresh in PR #462 updates the Agent Toolkit, Agentic, Hornero OS,
-and Sponsor mobile goldens. Their previous CI baselines no longer matched the
-current Linux browser renders; the captures were reviewed at 390px and preserve
-the intended route hierarchy and readable wrapping. PR #464 then updated the
-navigation accessible name and V repository-link target. PR #467 adds the
-manifest-driven Create Awesome composition sequence; PR #468 adds an on-demand
-trace through Hornero OS's actual manifest. The Hornero OS trace now announces
-each pinned, local, or future manifest entry to assistive technology, animates
-the active row, and holds the final reserved-slot state long enough to read.
-Both interactions keep a complete static fallback and respect reduced motion.
-PR #469 refreshes this current-production record; PR #470 adds an optional
-Agentic stack relationship trace. At `main@8f1d056`, build, tests, type-check,
-lint, browser quality (533 Playwright tests plus Lighthouse CI), deployment
-smoke, and route budgets pass. Other goldens remain unchanged.
+PRs #462–#471 established the current route baselines and portfolio-first
+hierarchy. PRs #473–#494 then added route-specific interactions and visual work
+for HorneroConfig, Sponsor, About, Agent Toolkit, Agentic Workstation, Create
+Awesome, V, and the homepage atlas. PR #494 updated the atlas's responsive
+fallbacks; PR #495 added the VSL signal analyzer. PRs #496–#497 restored and
+compressed Create Awesome artwork, and PRs #498–#499 stabilized generated-data
+checks. PR #500 turns Hornero OS's
+actual manifest into a user-triggered assembly trace. Pinned and local entries
+dock into the composition; installer and ISO slots remain visibly reserved.
+The route retains its static fallback and reduced-motion behavior.
+
+At `main@ea56b2a`, all 575 Playwright cases pass along with Lighthouse, build,
+lint, type-check, unit tests, route budgets, Todo Checker, and deployment
+smoke. The production deployment reports this exact revision. The focused
+production check also confirms `/hornero-os/` links to `https://horneroos.com`;
+`/sitemap.xml`, `/robots.txt`, and `/rss.xml` return 200. Other routes retain
+their existing visual goldens unless a route-specific change above updates
+them.
 
 ## Historical documents
 
