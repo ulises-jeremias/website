@@ -42,7 +42,11 @@ state, while hover keeps the shared cyan signal. Routes with a distinct shell
 identity set `--header-accent` on the section layout; otherwise the shell
 inherits `--world-accent`. The body mirrors the route theme and explicit shell
 accent so the portaled mobile drawer retains the same world identity. Home and
-Sponsor keep the Nest brand accent.
+Sponsor keep the Nest brand accent. On compact viewports, the primary route rail
+gives every link a 44×44 CSS-pixel target and repeats the active world color as
+a short rule, so route identity is visible without relying on
+color alone. The header row compresses to the same touch-height before the rail,
+keeping this more usable navigation shorter than the previous two-row shell.
 
 PRs #462–#471 established the current route baselines and portfolio-first
 hierarchy. PRs #473–#494 then added route-specific interactions and visual work

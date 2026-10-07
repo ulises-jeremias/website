@@ -99,6 +99,34 @@ test('primary navigation active state uses the current world accent', async ({ p
   expect(accents.size).toBe(routes.length);
 });
 
+test('compact navigation has touch-sized links and a world-color active rail', async ({ page }) => {
+  for (const width of [320, 360, 390, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/create-awesome');
+
+    const navigation = page.getByRole('navigation', { name: 'Primary (compact)' });
+    await expect(navigation).toBeVisible();
+
+    const targets = await navigation.getByRole('link').evaluateAll((links) =>
+      links.map((link) => {
+        const bounds = link.getBoundingClientRect();
+        return { width: bounds.width, height: bounds.height };
+      }),
+    );
+    expect(targets.length).toBeGreaterThan(0);
+    expect(targets.every(({ width: targetWidth, height }) => targetWidth >= 44 && height >= 44)).toBe(true);
+
+    const activeLink = navigation.locator('a[aria-current="page"]');
+    await expect(activeLink).toHaveCount(1);
+    const activeColors = await activeLink.evaluate((link) => {
+      const style = getComputedStyle(link);
+      return { color: style.color, indicator: style.borderBlockEndColor, thickness: style.borderBlockEndWidth };
+    });
+    expect(activeColors.indicator).toBe(activeColors.color);
+    expect(activeColors.thickness).toBe('2px');
+  }
+});
+
 test.describe('Main content landmark', () => {
   for (const route of PRIMARY_ROUTES) {
     test(`page has exactly one <main id="main-content"> on ${route}`, async ({ page }) => {
