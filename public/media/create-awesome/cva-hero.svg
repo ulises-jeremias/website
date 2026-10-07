@@ -1,6 +1,6 @@
 <svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Create Vlang App</title>
-  <desc id="desc">Create Vlang App brand hero banner  V logomark with scaffolding workflow panels.</desc>
+  <desc id="desc">Create Vlang App brand hero banner â€” V logomark with scaffolding workflow panels.</desc>
   <defs>
     <linearGradient id="repo-bg" x1="0" y1="0" x2="1280" y2="640" gradientUnits="userSpaceOnUse">
       <stop stop-color="#0f172a"/>
@@ -74,7 +74,7 @@
     <!-- Main copy -->
     <text x="184" y="324" fill="#F8FAFC" font-size="44" font-weight="900" letter-spacing="-1.2">Scaffold V projects.</text>
     <text x="184" y="376" fill="#E2E8F0" font-size="44" font-weight="900" letter-spacing="-1.2">Compose templates.</text>
-    <text x="184" y="424" fill="#94A3B8" font-size="22" font-weight="500">CLI · core engine · templates · extensions.</text>
+    <text x="184" y="424" fill="#94A3B8" font-size="22" font-weight="500">CLI Â· core engine Â· templates Â· extensions.</text>
   </g>
 
   <!-- Terminal command -->
