@@ -288,7 +288,7 @@
       "mobile": {
         "total": 112640,
         "document": 11264,
-        "script": 0,
+        "script": 2048,
         "style": 15360,
         "image": 20480,
         "font": 69632,
@@ -297,7 +297,7 @@
       "desktop": {
         "total": 145408,
         "document": 11264,
-        "script": 0,
+        "script": 2048,
         "style": 15360,
         "image": 52224,
         "font": 69632,

@@ -12,6 +12,7 @@ import FlagshipProvenance from '@/shared/components/FlagshipProvenance.astro';
 import SupportNote from '@/shared/components/SupportNote.astro';
 import HorneroExtractionBridge from '@/shared/components/HorneroExtractionBridge.astro';
 import { horneroRepositoryUrls, horneroSystemRepositories } from '@/data/hornero-transition.js';
+import manifestAssemblyUrl from '../scripts/manifest-assembly.js?url&no-inline';
 import {
   componentStateLabels,
   familyComparison,
@@ -117,7 +118,7 @@ const statusLabel: Record<string, string> = {
       <p class="hos-yaml__line" aria-hidden="true">
         <span class="hos-yaml__key">components:</span>
       </p>
-      <ul class="hos-yaml__slots">
+      <ul class="hos-yaml__slots" id="hos-manifest-slots">
         {manifestSlots.map((slot) => (
           <li class={`hos-yaml__slot hos-yaml__slot--${slot.status}`}>
             <a href={slot.href} target="_blank" rel="noopener noreferrer">
@@ -131,7 +132,7 @@ const statusLabel: Record<string, string> = {
       </ul>
       <div class="hos-yaml__trace">
         <p class="sr-only" data-hos-trace-status role="status"></p>
-        <button class="hos-yaml__trace-button" type="button" data-hos-trace hidden>
+        <button class="hos-yaml__trace-button" type="button" data-hos-trace aria-controls="hos-manifest-slots" hidden>
           Trace manifest assembly
         </button>
       </div>
@@ -244,65 +245,7 @@ const statusLabel: Record<string, string> = {
   </nav>
 </div>
 
-<script is:inline>
-  (() => {
-    const manifest = document.querySelector('.hos-yaml');
-    const traceButton = manifest?.querySelector('[data-hos-trace]');
-    const status = manifest?.querySelector('[data-hos-trace-status]');
-    const steps = [...(manifest?.querySelectorAll('.hos-yaml__slot') || [])];
-    if (!manifest || !traceButton || !status || steps.length === 0) return;
-
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let timer;
-
-    traceButton.hidden = false;
-
-    const finishTrace = () => {
-      steps.forEach((step) => step.classList.add('is-current'));
-      manifest.dataset.traceState = 'complete';
-      status.textContent = 'Manifest trace complete. Installer and ISO slots remain reserved for future work.';
-    };
-
-    const stopTrace = () => {
-      window.clearInterval(timer);
-      window.clearTimeout(timer);
-      steps.forEach((step) => step.classList.remove('is-current'));
-    };
-
-    traceButton.addEventListener('click', () => {
-      stopTrace();
-      manifest.dataset.traceState = 'running';
-
-      if (reducedMotion.matches) {
-        finishTrace();
-        return;
-      }
-
-      let index = 0;
-      const showStep = () => {
-        const step = steps[index++];
-        step.classList.add('is-current');
-        const name = step.querySelector('.hos-yaml__key')?.textContent?.slice(0, -1);
-        const state = step.querySelector('.hos-yaml__status')?.textContent;
-        const value = step.querySelector('.hos-yaml__value')?.textContent;
-        status.textContent = `${name}: ${state} ${value}`;
-
-        if (index === steps.length) {
-          window.clearInterval(timer);
-          timer = window.setTimeout(finishTrace, 700);
-        }
-      };
-      showStep();
-      timer = window.setInterval(showStep, 700);
-    });
-
-    reducedMotion.addEventListener('change', () => {
-      if (!reducedMotion.matches || manifest.dataset.traceState !== 'running') return;
-      stopTrace();
-      finishTrace();
-    });
-  })();
-</script>
+<script is:inline src={manifestAssemblyUrl} defer></script>
 
 <style>
   .hos {
@@ -491,6 +434,7 @@ const statusLabel: Record<string, string> = {
   }
 
   .hos-yaml {
+    --hos-pin: var(--nest-cyan);
     margin: 0;
     padding: 1.1rem 1.25rem;
     border: 1px solid color-mix(in srgb, var(--hos-clay) 45%, transparent);
@@ -526,18 +470,37 @@ const statusLabel: Record<string, string> = {
   }
 
   .hos-yaml__slots {
+    display: grid;
+    gap: 0.42rem;
     margin: 0;
-    padding: 0 0 0 1.25rem;
+    padding: 0;
     list-style: none;
+    perspective: 48rem;
   }
 
   .hos-yaml__slot a {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0 0.6rem;
-    padding-block: 0.2rem;
+    min-block-size: var(--touch-min, 2.75rem);
+    padding: 0.35rem 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--hos-clay) 33%, transparent);
+    border-inline-start: 3px solid var(--hos-pin);
+    background:
+      linear-gradient(112deg, color-mix(in srgb, var(--hos-clay) 12%, transparent), transparent 72%),
+      color-mix(in srgb, var(--hos-adobe) 80%, var(--nest-midnight-950));
+    box-shadow:
+      3px 3px 0 color-mix(in srgb, var(--hos-clay) 35%, var(--hos-adobe)),
+      5px 5px 0 color-mix(in srgb, var(--hos-clay) 12%, transparent);
     color: var(--nest-paper);
     text-decoration: none;
+    transform: translate3d(0, 0, 0);
+    transition:
+      border-color var(--motion-duration-slow) var(--motion-ease-out),
+      background-color var(--motion-duration-slow) var(--motion-ease-out),
+      box-shadow var(--motion-duration-slow) var(--motion-ease-out),
+      transform var(--motion-duration-slow) var(--motion-ease-out);
   }
 
   .hos-yaml__slot a:hover .hos-yaml__key,
@@ -546,7 +509,11 @@ const statusLabel: Record<string, string> = {
   }
 
   .hos-yaml__status {
-    color: var(--nest-cyan);
+    color: var(--hos-pin);
+  }
+
+  .hos-yaml__slot--local {
+    --hos-pin: var(--hos-amber);
   }
 
   .hos-yaml__slot--future .hos-yaml__status,
@@ -565,21 +532,48 @@ const statusLabel: Record<string, string> = {
   }
 
   .hos-yaml__slot {
-    border-inline-start: 2px solid transparent;
-    transition:
-      background-color var(--motion-duration-slow) var(--motion-ease-out),
-      border-color var(--motion-duration-slow) var(--motion-ease-out),
-      transform var(--motion-duration-slow) var(--motion-ease-out);
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .hos-yaml__slot--future a {
+    --hos-pin: var(--color-text-faint);
+    border-style: dashed;
+    border-inline-start-width: 1px;
+    background:
+      repeating-linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--nest-paper) 2%, transparent) 0 5px,
+        transparent 5px 10px
+      ),
+      color-mix(in srgb, var(--nest-midnight-950) 95%, transparent);
+    box-shadow: none;
+  }
+
+  .hos-yaml__slot:not(.hos-yaml__slot--future) a:hover,
+  .hos-yaml__slot:not(.hos-yaml__slot--future) a:focus-visible {
+    border-color: var(--hos-amber);
+    box-shadow:
+      3px 3px 0 color-mix(in srgb, var(--hos-clay) 35%, var(--hos-adobe)),
+      0 0 1rem color-mix(in srgb, var(--hos-clay) 22%, transparent);
   }
 
   .hos-yaml__slot.is-current {
-    border-inline-start-color: var(--hos-amber);
-    background: color-mix(in srgb, var(--hos-clay) 12%, transparent);
-    transform: translateX(0.3rem);
+    transform: translate3d(0.25rem, -0.1rem, 1.25rem);
   }
 
   .hos-yaml__slot.is-current a {
+    border-color: var(--hos-amber);
+    box-shadow:
+      4px 5px 0 color-mix(in srgb, var(--hos-clay) 55%, var(--hos-adobe)),
+      0 0 1rem color-mix(in srgb, var(--hos-amber) 28%, transparent);
     color: var(--nest-paper);
+  }
+
+  .hos-yaml__slot--future.is-current a {
+    border-color: var(--hos-amber);
+    border-style: dashed;
+    box-shadow: inset 0 0 1rem color-mix(in srgb, var(--hos-amber) 8%, transparent);
   }
 
   .hos-yaml__trace {
@@ -606,6 +600,13 @@ const statusLabel: Record<string, string> = {
   .hos-yaml__trace-button:focus-visible {
     border-color: var(--hos-amber);
     background: color-mix(in srgb, var(--hos-clay) 24%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hos-yaml__slot,
+    .hos-yaml__slot a {
+      transition: none;
+    }
   }
 
   /* components */

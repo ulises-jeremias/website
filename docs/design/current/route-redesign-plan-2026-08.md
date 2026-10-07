@@ -257,3 +257,27 @@ the new measured payload, the route ceilings move to 19,456 document bytes,
 4,096 script bytes, 17,408 stylesheet bytes, and 15 requests. Other route
 limits remain unchanged; the baseline records the exact mobile and desktop
 measurements.
+
+## Hornero OS manifest assembly — 2026-10-07
+
+The real manifest rows now read as shallow, extruded component plates: pinned
+shell and defaults use the reusable cyan pin, the locally built CLI uses the
+Hornero amber, and the installer/ISO reservations stay hatched and visibly
+empty. The existing user-triggered trace now docks each row with a precise
+Web Animations API tilt-and-settle sequence. It never starts without input or
+implies an installer/ISO exists; the live status announces the exact source
+state. The information remains complete in server HTML, the control appears
+only after the external route script is ready, and reduced motion resolves the
+same action immediately to the completed static composition. Desktop and
+mobile assembled-state captures are maintained in the focused Playwright
+goldens; a 320px forced-colors golden and assertions verify reflow, keyboard
+activation, and the visible system focus outline.
+
+Moving the interaction out of inline HTML puts it under an explicit script
+budget and saves document bytes. Before: mobile and desktop 105,710 / 134,702
+total bytes, 11,256 document, 0 script, 13,937 stylesheet, and 12 requests.
+After: 106,492 / 135,484 total bytes, 10,716 document, 1,040 script, 14,219
+stylesheet, and 13 requests. The route remains within its existing total,
+document, style, image, font, and request limits. Its script budget is 2 KiB to
+cover the measured 1,040-byte asset with 1 KiB headroom; only `/hornero-os/`
+uses this additional route-local JavaScript.
