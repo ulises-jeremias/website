@@ -77,7 +77,7 @@ capture.
 | `/blog/`                | Technical field journal     | Publication contract and readable writing column        |
 | `/projects/`            | Case-study archive          | World pointers transition into an evidence ledger       |
 | `/open-source/`         | Provenance ledger           | Four source-backed lanes distinguish contribution kinds |
-| `/404.html`             | Signal recovery atlas       | Canonical world directory is the recovery action        |
+| `/404.html`             | Signal recovery atlas       | Route finder reacquires one verified destination        |
 
 ## Waves
 
@@ -238,8 +238,26 @@ The complete initial plot remains static HTML/SVG for no-JavaScript users;
 reduced-motion skips autonomous movement and renders the completed state
 immediately. On narrow screens the plot keeps readable annotation in an
 internally scrollable viewport, with a visible scroll cue and keyboard access.
-The browser interaction is a standalone first-party asset so executable code
-does not inflate the route's HTML document payload.
+
+## 404 signal finder — 2026-10-07
+
+The recovery atlas now lets visitors search its canonical route index by
+destination name or path. The search progressively enhances the server-rendered
+directory: without JavaScript the control is hidden and every route stays
+available; with JavaScript, unmatched destinations leave the map, a unique
+result is highlighted, and Enter opens that route. The live status names the
+acquired destination and reports empty or ambiguous scans.
+
+The route has its own motion language: focusing the finder starts a fine cyan
+scanner sweep, and a unique match docks into view with a short Web Animations
+API arrival. No animation starts from typing until one destination remains.
+Both effects stop under `prefers-reduced-motion`; the exact-match state and
+keyboard route action remain available. The control stays at least 48px tall,
+and the recovery atlas reflows at 320px.
+
+Astro embeds the small route-local module in the existing HTML response, so
+the interaction adds no network request. The built `/404.html` remains within
+its existing document and total-transfer budgets; no route limit was raised.
 
 The mobile V laboratory previously hid every station SVG below 620px. That rule
 now excludes the VSL analyzer so this station's primary instrument remains
