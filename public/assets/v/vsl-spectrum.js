@@ -1,14 +1,14 @@
 ;(() => {
   const SAMPLE_COUNT = 64
 
-  function sampleSignal(frequency) {
+  function sampleSignal (frequency) {
     return Array.from({ length: SAMPLE_COUNT }, (_, sample) => {
       const phase = (2 * Math.PI * frequency * sample) / SAMPLE_COUNT
       return Math.sin(phase) + 0.45 * Math.sin(2 * phase + Math.PI / 4)
     })
   }
 
-  function spectrumOf(samples) {
+  function spectrumOf (samples) {
     const lastBin = Math.floor(samples.length / 2)
     return Array.from({ length: lastBin + 1 }, (_, bin) => {
       let real = 0
@@ -23,7 +23,7 @@
     })
   }
 
-  function dominantBins(spectrum) {
+  function dominantBins (spectrum) {
     return [...spectrum]
       .sort((left, right) => right.magnitude - left.magnitude)
       .slice(0, 2)
@@ -31,7 +31,7 @@
       .sort((left, right) => left - right)
   }
 
-  function init(root) {
+  function init (root) {
     /** @type {HTMLElement | null} */
     const controls = root.querySelector('[data-vsl-controls]')
     /** @type {HTMLInputElement | null} */
