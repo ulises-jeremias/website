@@ -108,6 +108,7 @@ noindexed
 nombre
 noopener
 nord
+Nyquist
 noreferrer
 noscript
 Noto

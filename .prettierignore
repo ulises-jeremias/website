@@ -6,6 +6,8 @@ pnpm-lock.yaml
 package-lock.json
 yarn.lock
 *.lock
+# MegaLinter's JavaScript Standard linter formats this standalone browser asset.
+public/assets/v/vsl-spectrum.js
 .cspell-words.txt
 scripts/data/create-awesome/pinned/**
 src/features/create-awesome/data/generated/compatibility.json

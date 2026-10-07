@@ -1,55 +1,155 @@
 ---
-/** VSL station — matrix → plot teaching beat (no invented benchmarks). */
+/** VSL station — inspect a sampled signal and its discrete Fourier transform. */
 import SceneEvidence from './SceneEvidence.astro';
+import { calculateSpectrum, dominantSpectrumBins, sampleSignal, VSL_SAMPLE_COUNT } from '../../services/spectrum.js';
+
+const initialFrequency = 5;
+const signal = sampleSignal(initialFrequency);
+const spectrum = calculateSpectrum(signal);
+const peaks = dominantSpectrumBins(spectrum);
+const signalPoints = signal
+  .map(
+    (sample, index) => `${(72 + (index / (VSL_SAMPLE_COUNT - 1)) * 576).toFixed(2)},${(119 - sample * 34).toFixed(2)}`,
+  )
+  .join(' ');
+const binSlot = 576 / spectrum.length;
+const formatBinPath = (bins: typeof spectrum) =>
+  bins
+    .map(({ bin, magnitude }) => {
+      const height = Math.max(0.8, magnitude * 58);
+      const x = 72 + bin * binSlot + binSlot / 2;
+      return `M${x.toFixed(2)} 314v-${height.toFixed(2)}`;
+    })
+    .join(' ');
+const mutedBins = spectrum.filter(({ magnitude }) => magnitude <= 0.05);
+const peakBins = spectrum.filter(({ magnitude }) => magnitude > 0.05);
 ---
 
-<div class="v-scene" data-v-scene="vsl">
+<div class="v-scene vsl-instrument" data-v-scene="vsl">
   <h2 class="v-scene__title" id="v-scene-vsl-title">
     VSL
   </h2>
-  <p class="v-scene__note">Pure-V numerics by default. Advance the matrix → plot conveyor.</p>
-  <div class="v-scene__controls" role="group" aria-label="VSL demo steps">
-    <button type="button" data-vsl-step="matrix" aria-pressed="true" disabled>
-      Matrix
-    </button>
-    <button type="button" data-vsl-step="plot" aria-pressed="false" disabled>
-      Plot
+  <p class="v-scene__note">
+    Shape a sampled signal, then inspect its frequency bins. This browser model demonstrates the math; it does not run
+    VSL.
+  </p>
+
+  <div class="vsl-instrument__controls" data-vsl-controls hidden>
+    <label class="vsl-instrument__frequency" for="vsl-frequency">
+      <span>Fundamental</span>
+      <output data-vsl-frequency-readout for="vsl-frequency">
+        {initialFrequency} cycles / window
+      </output>
+    </label>
+    <input
+      id="vsl-frequency"
+      data-vsl-frequency
+      type="range"
+      min="2"
+      max="12"
+      step="1"
+      value={initialFrequency}
+      aria-describedby="vsl-frequency-help"
+      disabled
+    />
+    <span id="vsl-frequency-help" class="vsl-instrument__help">
+      The second tone follows at 2× frequency · 64 samples per window
+    </span>
+    <button class="vsl-instrument__run" type="button" data-vsl-run disabled>
+      Run DFT
     </button>
   </div>
-  <svg
-    class="v-scene__svg"
-    viewBox="0 0 560 240"
-    role="img"
-    aria-labelledby="v-scene-vsl-title"
-    aria-describedby="v-scene-vsl-description"
+
+  <figure
+    class="vsl-instrument__figure"
+    tabindex="0"
+    aria-label="Scrollable signal analyzer plot; scroll horizontally to inspect the frequency bins on a small screen"
   >
-    <desc id="v-scene-vsl-description">A four-by-four matrix feeds a separate plot stage from left to right.</desc>
-    <rect width="560" height="240" fill="#0f2a44" rx="8"></rect>
-    <g data-vsl-panel="matrix" class="is-active">
-      {Array.from({ length: 4 }, (_, row) =>
-        Array.from({ length: 4 }, (_, col) => (
-          <rect x={80 + col * 36} y={60 + row * 36} width="28" height="28" rx="2" fill="#1e4d6b" stroke="#5b9bd5" />
-        )),
-      )}
-      <text x="140" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">
-        matrix
-      </text>
-    </g>
-    <g data-vsl-panel="plot">
-      <polyline
-        points="320,180 360,120 400,140 440,80 480,100"
-        fill="none"
-        stroke="#38bdf8"
-        stroke-width="2"
-      ></polyline>
-      <text x="400" y="220" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="monospace">
-        plot
-      </text>
-    </g>
-  </svg>
-  <p class="v-scene__live" data-v-scene-live aria-live="polite">
-    Matrix stage — values ready for a plot.
+    <svg
+      class="vsl-instrument__plot"
+      viewBox="0 0 720 372"
+      role="img"
+      aria-labelledby="vsl-plot-title vsl-plot-description"
+    >
+      <title id="vsl-plot-title">VSL signal and discrete Fourier transform</title>
+      <desc id="vsl-plot-description" data-vsl-description>
+        A synthetic 64-sample signal combines a 5-cycle fundamental with a 10-cycle harmonic. Its discrete Fourier
+        transform has peaks at bins 5 and 10.
+      </desc>
+      <rect class="vsl-instrument__plate" width="720" height="372" rx="8"></rect>
+      <path class="vsl-instrument__circuit" d="M26 193H694" aria-hidden="true"></path>
+
+      <g aria-hidden="true">
+        <text class="vsl-instrument__eyebrow" x="34" y="27">
+          SIGNAL ANALYZER / 01
+        </text>
+        <text class="vsl-instrument__heading" x="34" y="56">
+          Time domain · 64 samples
+        </text>
+        <text class="vsl-instrument__axis-label" x="36" y="90">
+          +1
+        </text>
+        <text class="vsl-instrument__axis-label" x="47" y="123">
+          0
+        </text>
+        <text class="vsl-instrument__axis-label" x="36" y="157">
+          −1
+        </text>
+        <line class="vsl-instrument__grid" x1="72" y1="85" x2="648" y2="85"></line>
+        <line class="vsl-instrument__axis" x1="72" y1="119" x2="648" y2="119"></line>
+        <line class="vsl-instrument__grid" x1="72" y1="153" x2="648" y2="153"></line>
+        <text class="vsl-instrument__heading" x="34" y="222">
+          Frequency domain · DFT
+        </text>
+        <text class="vsl-instrument__unit" x="648" y="222" text-anchor="end">
+          AMPLITUDE
+        </text>
+        <line class="vsl-instrument__grid" x1="72" y1="252" x2="648" y2="252"></line>
+        <line class="vsl-instrument__grid" x1="72" y1="282" x2="648" y2="282"></line>
+        <line class="vsl-instrument__axis" x1="72" y1="314" x2="648" y2="314"></line>
+        <text class="vsl-instrument__axis-label" x="72" y="337">
+          0
+        </text>
+        <text class="vsl-instrument__axis-label" x="212" y="337">
+          8
+        </text>
+        <text class="vsl-instrument__axis-label" x="356" y="337">
+          16
+        </text>
+        <text class="vsl-instrument__axis-label" x="500" y="337">
+          24
+        </text>
+        <text class="vsl-instrument__axis-label" x="648" y="337" text-anchor="end">
+          32
+        </text>
+        <text class="vsl-instrument__unit" x="648" y="355" text-anchor="end">
+          FREQUENCY BIN
+        </text>
+      </g>
+
+      <polyline class="vsl-instrument__signal" data-vsl-signal points={signalPoints}></polyline>
+      <g class="vsl-instrument__bins" aria-hidden="true">
+        <path class="vsl-instrument__bin" data-vsl-bins d={formatBinPath(mutedBins)}></path>
+        <path class="vsl-instrument__bin is-peak" data-vsl-peaks d={formatBinPath(peakBins)}></path>
+      </g>
+    </svg>
+    <figcaption class="vsl-instrument__caption">
+      <span data-vsl-equation>x[n] = sin(2π · 5n/64) + 0.45 sin(2π · 10n/64 + π/4)</span>
+      <span class="vsl-instrument__readout" data-vsl-summary>
+        {VSL_SAMPLE_COUNT} samples · dominant bins {peaks.join(' and ')}
+      </span>
+    </figcaption>
+  </figure>
+  <p class="vsl-instrument__scroll-hint">Small screen · scroll the plot horizontally to inspect every frequency bin.</p>
+
+  <p class="v-scene__live vsl-instrument__status" data-v-scene-live role="status" aria-atomic="true">
+    Static preview · {VSL_SAMPLE_COUNT} samples · peaks at bins {peaks.join(' and ')}.
   </p>
+  <p class="vsl-instrument__fallback" data-vsl-fallback>
+    The static plot above shows a 5-cycle fundamental and its 10-cycle harmonic. Enable JavaScript to change the
+    frequency and run the transform.
+  </p>
+
   <SceneEvidence
     caption="Rendered by VSL · MIT · v install vsl"
     logo={{
@@ -81,34 +181,14 @@ import SceneEvidence from './SceneEvidence.astro';
   />
 </div>
 
-<script>
-  function init(root: HTMLElement) {
-    const live = root.querySelector<HTMLElement>('[data-v-scene-live]');
-    const setStep = (step: string) => {
-      root.querySelectorAll<HTMLButtonElement>('[data-vsl-step]').forEach((b) => {
-        b.setAttribute('aria-pressed', b.dataset.vslStep === step ? 'true' : 'false');
-      });
-      root.querySelectorAll<SVGGElement>('[data-vsl-panel]').forEach((p) => {
-        p.classList.toggle('is-active', p.dataset.vslPanel === step);
-      });
-      if (live) {
-        live.textContent =
-          step === 'plot' ? 'Plot stage — same data, visualized.' : 'Matrix stage — values ready for a plot.';
-      }
-    };
-    root.querySelectorAll<HTMLButtonElement>('[data-vsl-step]').forEach((b) => {
-      b.addEventListener('click', () => setStep(b.dataset.vslStep || 'matrix'));
-      b.disabled = false;
-    });
-  }
-  document.querySelectorAll<HTMLElement>('[data-v-scene="vsl"]').forEach(init);
-</script>
+<script is:inline type="module" src="/assets/v/vsl-spectrum.js"></script>
 
 <style>
   .v-scene {
     display: grid;
     gap: 0.5rem;
   }
+
   .v-scene__title {
     margin: 0;
     font-size: 1rem;
@@ -116,41 +196,259 @@ import SceneEvidence from './SceneEvidence.astro';
     text-transform: uppercase;
     color: var(--world-accent, #5b9bd5);
   }
+
   .v-scene__note,
   .v-scene__live {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.85rem;
+    line-height: 1.55;
   }
-  .v-scene__controls {
+
+  .vsl-instrument__controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.25rem 0.75rem;
+    padding: 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--world-accent, #5b9bd5) 30%, transparent);
+    background: linear-gradient(105deg, rgba(7, 23, 42, 0.95), rgba(11, 20, 39, 0.76));
+  }
+
+  .vsl-instrument__controls[hidden] {
+    display: none;
+  }
+
+  .vsl-instrument__controls:not([hidden]) {
+    display: grid;
+  }
+
+  .vsl-instrument__frequency {
     display: flex;
-    gap: 0.4rem;
-  }
-  .v-scene__controls button {
-    min-height: 44px;
-    padding: 0.35rem 0.75rem;
-    border: 1px solid var(--color-border);
-    background: transparent;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
     color: var(--color-text);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font: 700 0.72rem/1.4 var(--font-mono, ui-monospace, monospace);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .vsl-instrument__frequency output {
+    color: #7dd3fc;
+    font-size: 0.68rem;
+    text-align: end;
+  }
+
+  .vsl-instrument__controls input[type='range'] {
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    accent-color: #38bdf8;
+  }
+
+  .vsl-instrument__help {
+    color: var(--color-text-faint);
+    font: 0.62rem/1.45 var(--font-mono, ui-monospace, monospace);
+  }
+
+  .vsl-instrument__run {
+    min-width: 7.5rem;
+    min-height: 44px;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    color: var(--color-text);
+    font: 700 0.68rem/1.3 var(--font-mono, ui-monospace, monospace);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
   }
-  .v-scene__controls button[aria-pressed='true'] {
-    border-color: var(--world-accent, #5b9bd5);
-    color: var(--nest-paper, #f8fafc);
+
+  .vsl-instrument__run:hover {
+    background: rgba(56, 189, 248, 0.22);
   }
-  .v-scene__svg {
+
+  .vsl-instrument__run:focus-visible,
+  .vsl-instrument__controls input:focus-visible {
+    outline: 2px solid #f472b6;
+    outline-offset: 3px;
+  }
+
+  .vsl-instrument__run:disabled,
+  .vsl-instrument__controls input:disabled {
+    cursor: not-allowed;
+  }
+
+  .vsl-instrument__figure {
+    min-width: 0;
+    margin: 0;
+    overflow-x: auto;
+    border: 1px solid rgba(91, 155, 213, 0.35);
+    background: #071322;
+  }
+
+  .vsl-instrument__figure:focus-visible {
+    outline: 2px solid #f472b6;
+    outline-offset: 3px;
+  }
+
+  .vsl-instrument__plot {
+    display: block;
     width: 100%;
     height: auto;
-    display: block;
+    background: #071322;
   }
-  .v-scene__svg [data-vsl-panel] {
-    opacity: 0.25;
+
+  .vsl-instrument__plate {
+    fill: #071322;
   }
-  .v-scene__svg [data-vsl-panel].is-active {
+
+  .vsl-instrument__circuit {
+    fill: none;
+    stroke: rgba(91, 155, 213, 0.18);
+    stroke-dasharray: 2 8;
+  }
+
+  .vsl-instrument__eyebrow,
+  .vsl-instrument__unit,
+  .vsl-instrument__axis-label {
+    fill: #8bb8e0;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .vsl-instrument__heading {
+    fill: #e6f0fb;
+    font: 700 12px var(--font-mono, ui-monospace, monospace);
+  }
+
+  .vsl-instrument__unit {
+    fill: #718aa5;
+    font-size: 8px;
+  }
+
+  .vsl-instrument__axis-label {
+    fill: #718aa5;
+    font-size: 8px;
+  }
+
+  .vsl-instrument__grid,
+  .vsl-instrument__axis {
+    stroke: rgba(139, 184, 224, 0.13);
+    stroke-width: 1;
+  }
+
+  .vsl-instrument__axis {
+    stroke: rgba(139, 184, 224, 0.34);
+  }
+
+  .vsl-instrument__signal {
+    fill: none;
+    stroke: #38bdf8;
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.4));
+  }
+
+  .vsl-instrument__bin {
+    fill: none;
+    stroke: #7c3aed;
+    stroke-width: 8;
+    stroke-linecap: round;
+    opacity: 0.58;
+    transform-box: fill-box;
+    transform-origin: center bottom;
+  }
+
+  .vsl-instrument__bin.is-peak {
+    stroke: #f472b6;
     opacity: 1;
+  }
+
+  .vsl-instrument__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.35rem 0.8rem;
+    padding: 0.55rem 0.7rem;
+    border-top: 1px solid rgba(91, 155, 213, 0.22);
+    color: #cbdcf0;
+    font: 0.65rem/1.5 var(--font-mono, ui-monospace, monospace);
+    overflow-wrap: anywhere;
+  }
+
+  .vsl-instrument__readout {
+    color: #f9a8d4;
+  }
+
+  .vsl-instrument__fallback {
+    margin: 0;
+    color: var(--color-text-faint);
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+
+  .vsl-instrument__scroll-hint {
+    display: none;
+    margin: 0;
+    color: var(--color-text-faint);
+    font: 0.68rem/1.5 var(--font-mono, ui-monospace, monospace);
+  }
+
+  [data-vsl-controls]:not([hidden]) ~ .vsl-instrument__fallback {
+    display: none;
+  }
+
+  .vsl-instrument__status:empty {
+    display: none;
+  }
+
+  .vsl-instrument__status {
+    min-height: 1.35em;
+  }
+
+  .vsl-instrument .scene-evidence {
+    margin-top: 0.45rem;
+  }
+
+  @media (max-width: 480px) {
+    .vsl-instrument__scroll-hint {
+      display: block;
+    }
+
+    .vsl-instrument__plot {
+      min-width: 448px;
+    }
+
+    .vsl-instrument__controls {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.15rem;
+    }
+
+    .vsl-instrument__run {
+      grid-column: 1;
+      grid-row: auto;
+      margin-top: 0.35rem;
+    }
+
+    .vsl-instrument__caption {
+      display: grid;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .vsl-instrument__run:focus-visible,
+    .vsl-instrument__controls input:focus-visible,
+    .vsl-instrument__figure:focus-visible {
+      outline: 2px solid Highlight;
+    }
+
+    .vsl-instrument__run {
+      border: 1px solid ButtonText;
+      color: ButtonText;
+    }
   }
 </style>

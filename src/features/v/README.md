@@ -15,7 +15,9 @@ v/
 │   ├── VTLDiagram.astro          # SVG: autograd forward/backward graph + code + modules
 │   ├── RxVDiagram.astro          # SVG: source→filter→map→reduce→subscriber + thread row
 │   ├── SetupVDiagram.astro       # SVG: 5-stage GH Action pipeline + outputs + runners
-│   └── scenes/                   # station-specific computational lab scenes
+│   ├── scenes/VSLScene.astro     # responsive signal + DFT spectrum instrument
+│   ├── scenes/                   # remaining station-specific lab scenes
+│   └── services/spectrum.ts      # deterministic signal and direct DFT model
 ├── data/
 │   └── index.ts                  # vProjects, vSections, backends, modules, operators, pipeline, licenses, meta
 ├── types/
@@ -31,6 +33,8 @@ v/
 - **Diagrams**: pure SVG `role="img"` + `<title>`/`<desc>` + per-node `tabindex="0"` + `role="listitem"` + `aria-label`, dashed arrows for dependency / backward flow, `prefers-reduced-motion` disables transitions, fallback chips/tables as CSS grids.
 - **Sections**: data-driven `vSections` for overview; each diagram has paired explanatory cards with code snippets (monospace on dark #0f2a44).
 - **Verification**: `VComputationalLab` renders the visible license list and Veasel policy note from `licenseEntries`; the station inspector keeps project details discoverable without disclosure controls.
+- **VSL station**: the static SVG plots a truthful 64-sample synthetic signal and direct DFT at build time; JavaScript adds a fundamental-frequency control and user-triggered trace. It is explicitly an illustrative browser model, not an execution of VSL. The plot scrolls horizontally on narrow screens, and `prefers-reduced-motion` skips the trace.
+- **VSL browser asset**: `/assets/v/vsl-spectrum.js` is a small standalone first-party asset so its runtime stays out of the HTML document budget; the service tests and browser interaction tests cover the same sample and peak behavior.
 
 ## Usage
 

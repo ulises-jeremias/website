@@ -696,7 +696,7 @@ const stationsJson = JSON.stringify(stations);
       min-height: 0;
     }
 
-    .v-lab__panel :global(svg) {
+    .v-lab__panel :global(svg:not(.vsl-instrument__plot)) {
       display: none;
     }
   }
