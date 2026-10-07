@@ -86,6 +86,14 @@ test('primary navigation active state uses the current world accent', async ({ p
 
     expect(activeColor).toBe(shellAccent);
     accents.add(activeColor);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('[data-mobile-trigger]').click();
+    const mobileActiveLink = page.locator('.mobile-nav__link[aria-current="page"]');
+    await expect(mobileActiveLink).toHaveCount(1);
+    await expect
+      .poll(() => mobileActiveLink.evaluate((element) => getComputedStyle(element).borderInlineStartColor))
+      .toBe(activeColor);
   }
 
   expect(accents.size).toBe(routes.length);

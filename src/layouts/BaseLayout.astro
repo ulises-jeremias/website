@@ -14,6 +14,8 @@ import '../styles/index.css';
  * @property {string} [ogImageAlt]
  * @property {boolean} [noIndex]
  * @property {string} [world]
+ * @property {string} [theme]
+ * @property {string} [headerAccent]
  * @property {'website' | 'article' | 'profile'} [type]
  * @property {string} [ogType]
  * @property {string} [themeColor]
@@ -29,6 +31,8 @@ const {
   ogImageAlt,
   noIndex,
   world,
+  theme,
+  headerAccent,
   type,
   ogType,
   themeColor,
@@ -74,7 +78,7 @@ const mergedJsonLd = [...seo.jsonLd.filter((node) => !pageTypes.has(node['@type'
     {mergedJsonLd.length > 0 && <JsonLd data={mergedJsonLd} />}
     <slot name="head" />
   </head>
-  <body>
+  <body data-theme={theme} style={headerAccent ? `--header-world-accent: ${headerAccent}` : undefined}>
     <slot />
     <script src="../shared/scripts/scroll-reveal.ts"></script>
   </body>

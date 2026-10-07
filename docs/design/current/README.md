@@ -40,7 +40,9 @@ normal Playwright runs.
 The shared header uses each route's world accent for its active navigation
 state, while hover keeps the shared cyan signal. Routes with a distinct shell
 identity set `--header-accent` on the section layout; otherwise the shell
-inherits `--world-accent`. Home and Sponsor keep the Nest brand accent.
+inherits `--world-accent`. The body mirrors the route theme and explicit shell
+accent so the portaled mobile drawer retains the same world identity. Home and
+Sponsor keep the Nest brand accent.
 
 PRs #462–#471 established the current route baselines and portfolio-first
 hierarchy. PRs #473–#494 then added route-specific interactions and visual work
