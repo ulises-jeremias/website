@@ -331,3 +331,14 @@ selection. Compiler, CI, and catalog stations do not illuminate unrelated map
 areas. Reduced-motion mode keeps the selected node visibly distinct without
 transitions, and the map's caption still states that grouping lines are not
 dependency edges.
+
+## Homepage featured-world portals — 2026-10-07
+
+The four professional portfolio areas now read as distinct, clipped system
+portals rather than rounded sibling cards. Their small atlas islands sit over
+route-specific instrument traces: capability handoffs, desktop layers, a
+computational waveform, and a template-to-application line. Hover or keyboard
+focus activates a short, subject-specific animation; the motion never runs on
+its own. At narrow widths the art and copy form a compact side-by-side route
+entry, and every primary/member link keeps a touch-sized target. Reduced-motion
+mode retains the art, selected focus, and contrast response without movement.

@@ -17,6 +17,13 @@ const accentTokens = {
   cyan: 'var(--nest-cyan)',
   orange: 'var(--nest-sunset-orange)',
 } as const;
+
+const signalMotion = {
+  agentic: 'scale(1)',
+  hornero: 'translateY(-4px)',
+  'v-ecosystem': 'scaleY(1.12)',
+  'create-awesome': 'translateX(5px)',
+} as const;
 ---
 
 <section class="featured-areas" data-reveal aria-labelledby="featured-areas-title">
@@ -31,24 +38,48 @@ const accentTokens = {
   <ol class="featured-areas__grid">
     {featuredAreas.map((area, index) => (
       <li class="featured-areas__item" style={`--world-color: ${accentTokens[area.accent]}`}>
-        <article class="featured-areas__card" aria-labelledby={`featured-${area.id}-title`}>
-          <span class="featured-areas__art clip-corner-sm" aria-hidden="true">
+        <article class="featured-areas__card" data-area={area.id} aria-labelledby={`featured-${area.id}-title`}>
+          <span class="featured-areas__art" data-world={area.id} aria-hidden="true">
+            <span class="featured-areas__signal" style={`--signal-active-transform: ${signalMotion[area.id]}`}>
+              {area.id === 'agentic' ? (
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 22 50 50 88 22M50 50v36" />
+                  <circle cx="12" cy="22" r="4" />
+                  <circle cx="88" cy="22" r="4" />
+                  <circle cx="50" cy="86" r="4" />
+                </svg>
+              ) : area.id === 'hornero' ? (
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="m50 12 36 20-36 20-36-20 36-20Zm-36 36 36 20 36-20M14 64l36 20 36-20" />
+                </svg>
+              ) : area.id === 'v-ecosystem' ? (
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M8 52 20 40l12 25 13-40 13 38 12-21 12 17 10-25" />
+                  <path d="M8 78h84" stroke-dasharray="2 5" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M8 27h84M8 73h84M36 27v46" stroke-dasharray="3 4" />
+                  <path d="m28 50 8-8 8 8-8 8-8-8Zm31 0h23m-8-8 8 8-8 8" />
+                </svg>
+              )}
+            </span>
             <picture>
               <source
                 type="image/webp"
                 srcset={`/assets/nest/${area.island}-192.webp 192w, /assets/nest/${area.island}.webp 640w`}
-                sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
+                sizes="(max-width: 480px) 64px, (max-width: 900px) 88px, 128px"
               />
               <source
                 type="image/png"
                 srcset={`/assets/${area.island}-220.png 220w, /assets/${area.island}-440.png 440w`}
-                sizes="(max-width: 480px) 64px, (max-width: 768px) 72px, 96px"
+                sizes="(max-width: 480px) 64px, (max-width: 900px) 88px, 128px"
               />
               <img
                 class="art-fade"
                 src={`/assets/${area.island}-220.png`}
-                width="96"
-                height="96"
+                width="128"
+                height="128"
                 alt=""
                 loading={index === 0 ? 'eager' : 'lazy'}
                 decoding="async"
@@ -116,32 +147,49 @@ const accentTokens = {
 
   .featured-areas__card {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.9rem;
-    align-items: start;
-    block-size: 100%;
-    padding: 1rem 1.1rem;
-    border: 1px solid color-mix(in srgb, var(--world-color) 32%, transparent);
-    border-radius: 10px;
-    background: color-mix(in srgb, var(--world-color) 6%, transparent);
-    transition:
-      border-color 160ms ease,
-      background 160ms ease;
+    grid-template-columns: clamp(6rem, 9vw, 8.5rem) minmax(0, 1fr);
+    gap: clamp(0.85rem, 1.7vw, 1.4rem);
+    align-items: center;
+    padding: clamp(1rem, 1.6vw, 1.35rem);
+    background: #08051a;
   }
 
-  .featured-areas__card:hover,
-  .featured-areas__card:focus-within {
-    border-color: var(--world-color);
-    background: color-mix(in srgb, var(--world-color) 11%, transparent);
+  .featured-areas__art {
+    position: relative;
+    display: grid;
+    aspect-ratio: 1;
+    place-items: center;
+    isolation: isolate;
+    overflow: hidden;
+    background: #040212;
+    clip-path: polygon(0 10%, 10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
   }
 
-  .featured-areas__art img {
-    inline-size: clamp(64px, 9vw, 96px);
-    block-size: auto;
+  .featured-areas__signal {
+    position: absolute;
+    z-index: 0;
+    inset: 15%;
+    transform: scale(0.88);
+    transition: transform 180ms ease;
+  }
+
+  .featured-areas__signal svg {
+    inline-size: 100%;
+    color: var(--world-color);
   }
 
   .featured-areas__art picture {
+    z-index: 1;
+    inline-size: 100%;
+  }
+
+  .featured-areas__art img {
     display: block;
+    inline-size: 100%;
+  }
+
+  .featured-areas__card:is(:hover, :focus-within) .featured-areas__signal {
+    transform: var(--signal-active-transform);
   }
 
   .featured-areas__body {
@@ -153,7 +201,6 @@ const accentTokens = {
     font-size: 0.64rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    text-transform: uppercase;
     color: var(--world-color);
   }
 
@@ -163,19 +210,18 @@ const accentTokens = {
   }
 
   .featured-areas__title a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+    min-block-size: var(--touch-min, 2.75rem);
     color: var(--color-text, var(--nest-paper));
-    text-decoration: none;
   }
 
   .featured-areas__title a::after {
-    content: ' →';
+    flex: none;
+    content: '→';
     color: var(--world-color);
-  }
-
-  .featured-areas__title a:hover,
-  .featured-areas__title a:focus-visible {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
   }
 
   .featured-areas__proposition {
@@ -188,7 +234,6 @@ const accentTokens = {
   .featured-areas__members {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 0.9rem;
     margin: 0.2rem 0 0;
     padding: 0;
     list-style: none;
@@ -198,9 +243,16 @@ const accentTokens = {
   .featured-areas__members a {
     display: inline-flex;
     align-items: center;
-    min-block-size: 1.75rem;
+    justify-content: center;
+    min-inline-size: var(--touch-min, 2.75rem);
+    min-block-size: var(--touch-min, 2.75rem);
+    padding-inline: 0.35rem;
     color: var(--world-color);
     text-underline-offset: 0.2em;
+  }
+
+  .featured-areas__members a:is(:hover, :focus-visible) {
+    color: var(--nest-paper, #f7f5ff);
   }
 
   .featured-areas__badge {
@@ -210,7 +262,6 @@ const accentTokens = {
     border-radius: 3px;
     color: var(--color-text-faint, var(--nest-text-faint));
     font-family: var(--font-mono, monospace);
-    font-size: 0.62rem;
     text-transform: uppercase;
   }
 
@@ -229,11 +280,19 @@ const accentTokens = {
 
   @media (max-width: 480px) {
     .featured-areas__card {
-      grid-template-columns: 1fr;
+      grid-template-columns: clamp(3.5rem, 18vw, 4.5rem) minmax(0, 1fr);
+      gap: 0.75rem;
+      padding: 0.8rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-areas * {
+      transition: none;
     }
 
-    .featured-areas__art img {
-      inline-size: 64px;
+    .featured-areas__signal {
+      transition: none;
     }
   }
 </style>
