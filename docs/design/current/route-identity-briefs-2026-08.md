@@ -167,3 +167,11 @@ reinforces the world-to-world map instead of reading as a repeated CSS ellipse.
 The signal trace is ambient decoration only, has no behavioral meaning, and
 stops under reduced motion; the decorative SVG stays hidden from assistive
 technology.
+
+## Addendum — Field Notes publication desk (2026-10-07)
+
+The honest no-posts state keeps its terminal, lamp, mug, and next-note sheet,
+but gives the illustration enough desktop width for those details to read as
+a scene instead of a small icon. Shorter terminal copy fits the drawing,
+clearer screen and sheet lines support the editorial hierarchy, and the two
+columns return to a stacked composition below the tablet breakpoint.
