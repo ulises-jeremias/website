@@ -47,9 +47,10 @@ checks. PR #500 turns Hornero OS's
 actual manifest into a user-triggered assembly trace. Pinned and local entries
 dock into the composition; installer and ISO slots remain visibly reserved.
 The route retains its static fallback and reduced-motion behavior. PR #501
-refreshed this authority index against the deployed `main@043ebb63` state. PR
-# 502 reshaped Community as an isometric workshop with a distinct mobile circuit,
-keyboard-selectable project stations, and reduced-motion-aware route pulses.
+refreshed this authority index against the deployed `main@043ebb63` state. Pull
+request 502 reshaped Community as an isometric workshop with a distinct mobile
+circuit, keyboard-selectable project stations, and reduced-motion-aware route
+pulses.
 
 At `main@352b855c`, all 575 Playwright cases pass along with Lighthouse, build,
 lint, type-check, unit tests, route budgets, Todo Checker, and deployment
