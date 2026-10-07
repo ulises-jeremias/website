@@ -21,6 +21,8 @@
   --nest-cyan: #1cefff;
   --nest-sunset-orange: #ff9a4d;
   --nest-sunset-pink: #ff658f;
+  --nest-amber: #f2b749;
+  --nest-mint: #34d399;
 
   /* Compatibility primitives retained for existing route themes. */
   --color-warm-paper: #f7f0e6;

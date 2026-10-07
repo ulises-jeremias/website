@@ -109,6 +109,7 @@ const emailHref = `mailto:${profile.contact.email}`;
 <style>
   .site-header {
     --header-bg: color-mix(in srgb, var(--nest-midnight-950) 94%, transparent);
+    --header-world-accent: var(--header-accent, var(--world-accent, var(--nest-magenta)));
     position: sticky;
     inset-block-start: 0;
     z-index: 60;
@@ -186,10 +187,10 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   .site-header__compact-nav a.is-active {
-    color: var(--nest-magenta);
+    color: var(--header-world-accent);
     text-shadow:
-      0 0 8px color-mix(in srgb, var(--nest-magenta) 55%, transparent),
-      0 0 18px color-mix(in srgb, var(--nest-magenta) 30%, transparent);
+      0 0 8px color-mix(in srgb, var(--header-world-accent) 55%, transparent),
+      0 0 18px color-mix(in srgb, var(--header-world-accent) 30%, transparent);
   }
 
   .site-header__brand {
@@ -278,8 +279,8 @@ const emailHref = `mailto:${profile.contact.email}`;
     inset-inline: 50%;
     inset-block-end: 0.2rem;
     block-size: 2px;
-    background: linear-gradient(90deg, var(--nest-magenta), var(--nest-cyan));
-    box-shadow: 0 0 0.75rem color-mix(in srgb, var(--nest-magenta) 55%, transparent);
+    background: linear-gradient(90deg, var(--header-world-accent), var(--nest-cyan));
+    box-shadow: 0 0 0.75rem color-mix(in srgb, var(--header-world-accent) 55%, transparent);
     transition: inset-inline var(--motion-duration-base) var(--motion-ease-emphasized);
   }
 
@@ -294,15 +295,15 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   .site-header__link.is-active {
-    color: var(--nest-magenta);
+    color: var(--header-world-accent);
     text-shadow:
-      0 0 8px color-mix(in srgb, var(--nest-magenta) 55%, transparent),
-      0 0 18px color-mix(in srgb, var(--nest-magenta) 30%, transparent);
+      0 0 8px color-mix(in srgb, var(--header-world-accent) 55%, transparent),
+      0 0 18px color-mix(in srgb, var(--header-world-accent) 30%, transparent);
   }
 
   .site-header__link.is-active::after {
-    background: var(--nest-magenta);
-    box-shadow: 0 0 10px 2px var(--nest-magenta);
+    background: var(--header-world-accent);
+    box-shadow: 0 0 10px 2px var(--header-world-accent);
   }
 
   .site-header__link--cta {

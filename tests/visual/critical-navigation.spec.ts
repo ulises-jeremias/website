@@ -63,6 +63,42 @@ test.describe('Desktop navigation landmark', () => {
   }
 });
 
+test('primary navigation active state uses the current world accent', async ({ page }) => {
+  const routes = ['/dotfiles', '/create-awesome', '/v', '/hornero-os', '/about', '/open-source'];
+  const accents = new Set<string>();
+
+  for (const route of routes) {
+    await page.goto(route);
+    const activeLink = page.locator('.site-header__desktop-nav a[aria-current="page"]');
+    await expect(activeLink).toHaveCount(1);
+
+    const [activeColor, shellAccent] = await Promise.all([
+      activeLink.evaluate((element) => getComputedStyle(element).color),
+      page.locator('.site-header').evaluate((element) => {
+        const probe = document.createElement('span');
+        probe.style.color = 'var(--header-world-accent)';
+        element.append(probe);
+        const color = getComputedStyle(probe).color;
+        probe.remove();
+        return color;
+      }),
+    ]);
+
+    expect(activeColor).toBe(shellAccent);
+    accents.add(activeColor);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('[data-mobile-trigger]').click();
+    const mobileActiveLink = page.locator('.mobile-nav__link[aria-current="page"]');
+    await expect(mobileActiveLink).toHaveCount(1);
+    await expect
+      .poll(() => mobileActiveLink.evaluate((element) => getComputedStyle(element).borderInlineStartColor))
+      .toBe(activeColor);
+  }
+
+  expect(accents.size).toBe(routes.length);
+});
+
 test.describe('Main content landmark', () => {
   for (const route of PRIMARY_ROUTES) {
     test(`page has exactly one <main id="main-content"> on ${route}`, async ({ page }) => {

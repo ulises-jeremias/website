@@ -88,11 +88,11 @@ const { items, githubHref, emailHref } = Astro.props as Props;
     const closeButton = root.querySelector<HTMLButtonElement>('[data-mobile-close]');
     if (!trigger || !drawer || !backdrop || !closeButton) return;
 
-    const navTrigger = trigger;
-    const navDrawer = drawer;
-    const navBackdrop = backdrop;
-    const navCloseButton = closeButton;
-    document.body.append(navBackdrop, navDrawer);
+    const button = trigger;
+    const panel = drawer;
+    const shade = backdrop;
+    const close = closeButton;
+    document.body.append(shade, panel);
     root.setAttribute('data-mobile-nav-ready', '');
     const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
     let previousFocus: HTMLElement | null = null;
@@ -102,15 +102,15 @@ const { items, githubHref, emailHref } = Astro.props as Props;
 
     const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const focusableElements = () =>
-      Array.from(navDrawer.querySelectorAll<HTMLElement>(focusableSelector)).filter((element) => !element.hidden);
+      Array.from(panel.querySelectorAll<HTMLElement>(focusableSelector)).filter((element) => !element.hidden);
 
     function isolateBackground() {
       backgroundStates = Array.from(document.body.children)
         .filter(
           (element): element is HTMLElement =>
             element instanceof HTMLElement &&
-            element !== navDrawer &&
-            element !== navBackdrop &&
+            element !== panel &&
+            element !== shade &&
             !['SCRIPT', 'STYLE', 'LINK'].includes(element.tagName),
         )
         .map((element) => ({
@@ -137,33 +137,33 @@ const { items, githubHref, emailHref } = Astro.props as Props;
     function openNavigation() {
       window.clearTimeout(hideTimer);
       previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      navDrawer.hidden = false;
-      navBackdrop.hidden = false;
-      navBackdrop.removeAttribute('aria-hidden');
-      navTrigger.setAttribute('aria-expanded', 'true');
-      navCloseButton.focus();
+      panel.hidden = false;
+      shade.hidden = false;
+      shade.removeAttribute('aria-hidden');
+      button.setAttribute('aria-expanded', 'true');
+      close.focus();
       isolateBackground();
       document.documentElement.classList.add('mobile-nav-open');
       requestAnimationFrame(() => {
-        navDrawer.classList.add('is-open');
-        navBackdrop.classList.add('is-open');
+        panel.classList.add('is-open');
+        shade.classList.add('is-open');
       });
       document.addEventListener('keydown', handleKeydown);
     }
 
     function finishClose() {
-      navDrawer.hidden = true;
-      navBackdrop.hidden = true;
-      navBackdrop.setAttribute('aria-hidden', 'true');
+      panel.hidden = true;
+      shade.hidden = true;
+      shade.setAttribute('aria-hidden', 'true');
       restoreBackground();
-      if (restoreFocusAfterClose) (previousFocus ?? navTrigger).focus();
+      if (restoreFocusAfterClose) (previousFocus ?? button).focus();
       previousFocus = null;
     }
 
     function closeNavigation({ restoreFocus = true } = {}) {
-      navDrawer.classList.remove('is-open');
-      navBackdrop.classList.remove('is-open');
-      navTrigger.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('is-open');
+      shade.classList.remove('is-open');
+      button.setAttribute('aria-expanded', 'false');
       document.documentElement.classList.remove('mobile-nav-open');
       document.removeEventListener('keydown', handleKeydown);
       restoreFocusAfterClose = restoreFocus;
@@ -192,20 +192,19 @@ const { items, githubHref, emailHref } = Astro.props as Props;
       }
     }
 
-    navTrigger.addEventListener('click', () => {
-      if (navTrigger.getAttribute('aria-expanded') === 'true') closeNavigation();
+    button.addEventListener('click', () => {
+      if (button.getAttribute('aria-expanded') === 'true') closeNavigation();
       else openNavigation();
     });
-    navCloseButton.addEventListener('click', () => closeNavigation());
-    navBackdrop.addEventListener('click', () => closeNavigation());
-    navDrawer.addEventListener('click', (event) => {
+    close.addEventListener('click', () => closeNavigation());
+    shade.addEventListener('click', () => closeNavigation());
+    panel.addEventListener('click', (event) => {
       const link = event.target instanceof Element ? event.target.closest('a') : null;
       if (link?.getAttribute('href')?.startsWith('/')) closeNavigation({ restoreFocus: false });
     });
 
     window.matchMedia('(min-width: 860px)').addEventListener('change', (event) => {
-      if (event.matches && navTrigger.getAttribute('aria-expanded') === 'true')
-        closeNavigation({ restoreFocus: false });
+      if (event.matches && button.getAttribute('aria-expanded') === 'true') closeNavigation({ restoreFocus: false });
     });
   }
 
@@ -314,7 +313,7 @@ const { items, githubHref, emailHref } = Astro.props as Props;
 
   .mobile-nav__eyebrow {
     margin: 0 0 var(--space-1);
-    color: var(--nest-magenta);
+    color: var(--header-world-accent, var(--nest-magenta));
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     letter-spacing: var(--tracking-wider);
@@ -363,7 +362,8 @@ const { items, githubHref, emailHref } = Astro.props as Props;
   }
 
   .mobile-nav__link.is-active {
-    border-inline-start-color: var(--nest-magenta);
+    color: var(--header-world-accent, var(--world-accent, var(--nest-magenta)));
+    border-inline-start-color: currentColor;
   }
 
   .mobile-nav__index {
