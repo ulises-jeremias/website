@@ -34,4 +34,48 @@ test('Community enables the station inspector after enhancement initializes', as
   for (const control of await root.locator('[data-visual-node]').all()) await expect(control).not.toBeDisabled();
   await root.locator('[data-visual-node="agent-toolkit"]').click();
   await expect(root.locator('[data-cm-status]')).toHaveText(/Station selected: Agent Toolkit/);
+  await expect(root.locator('.cm-plaza__station[data-cm-cluster="agents"]')).toHaveClass(/is-lit/);
+  const desktopRoute = root.locator('.cm-plaza__svg--desktop [data-cm-route="agents"]');
+  await expect(desktopRoute).toHaveClass(/is-lit/);
+  await expect.poll(async () => desktopRoute.evaluate((path) => path.getAnimations()[0]?.playState)).toBe('running');
+  await expect
+    .poll(async () => desktopRoute.evaluate((path) => path.getAnimations()[0]?.currentTime as number))
+    .toBeLessThan(1_240);
+  await expect
+    .poll(async () => desktopRoute.evaluate((path) => Number.parseFloat(getComputedStyle(path).strokeDashoffset)))
+    .not.toBe(0);
+});
+
+test('Community station signal animates only on the visible map and respects reduced motion', async ({ page }) => {
+  const root = page.locator('[data-testid="community-plaza"]');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/community/');
+
+  await expect(root.locator('.cm-plaza__svg--mobile')).toBeVisible();
+  await expect(root.locator('.cm-plaza__svg--desktop')).toBeHidden();
+  const [discordBox, horneroBox] = await Promise.all([
+    root.locator('.cm-plaza__nodes [data-visual-node="discord"]').boundingBox(),
+    root.locator('.cm-plaza__nodes [data-visual-node="horneroconfig"]').boundingBox(),
+  ]);
+  expect(discordBox?.height).toBeGreaterThanOrEqual(44);
+  expect(horneroBox?.height).toBeGreaterThanOrEqual(44);
+  expect(Math.abs((discordBox?.y ?? 0) - (horneroBox?.y ?? 0))).toBeLessThanOrEqual(1);
+  const mobileRoute = root.locator('.cm-plaza__svg--mobile [data-cm-route="agents"]');
+  const toolkit = root.locator('[data-visual-node="agent-toolkit"]');
+  await toolkit.focus();
+  await toolkit.press('Enter');
+  await expect(mobileRoute).toHaveClass(/is-lit/);
+  await expect.poll(async () => mobileRoute.evaluate((path) => path.getAnimations().length)).toBe(1);
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await root.locator('[data-visual-node="create-awesome-node"]').click();
+  await expect(root.locator('.cm-plaza__svg--mobile [data-cm-route="create"]')).toHaveClass(/is-lit/);
+  await expect
+    .poll(async () =>
+      root.locator('.cm-plaza__svg--mobile [data-cm-route="create"]').evaluate((path) => path.getAnimations().length),
+    )
+    .toBe(0);
+
+  await page.setViewportSize({ width: 320, height: 700 });
+  await expect.poll(async () => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });

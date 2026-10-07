@@ -166,19 +166,19 @@
     },
     "/community/": {
       "mobile": {
-        "total": 98304,
-        "document": 12288,
+        "total": 104448,
+        "document": 15360,
         "script": 0,
-        "style": 14336,
+        "style": 16384,
         "image": 5120,
         "font": 69632,
         "requests": 12
       },
       "desktop": {
-        "total": 98304,
-        "document": 12288,
+        "total": 104448,
+        "document": 15360,
         "script": 0,
-        "style": 14336,
+        "style": 16384,
         "image": 5120,
         "font": 69632,
         "requests": 12
