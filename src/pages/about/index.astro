@@ -1,5 +1,6 @@
 ---
 import SectionLayout from '@/layouts/SectionLayout.astro';
+import AboutSystemsOrbit from '@/features/about/components/AboutSystemsOrbit.astro';
 import './about.css';
 import { getRouteMeta, getCanonicalUrl } from '@/data/routes';
 import { profile } from '@/data/profile';
@@ -13,6 +14,7 @@ type TrajectoryStage = {
   tone: string;
   period: string;
   mapLabel: string;
+  mapShort: string;
   heading: string;
   body: string;
   links: { href: string; label: string }[];
@@ -24,6 +26,7 @@ const trajectory: TrajectoryStage[] = [
     tone: 'cyan',
     period: 'Foundations',
     mapLabel: 'Developer tooling',
+    mapShort: 'DEV TOOLING',
     heading: 'Developer tools begin at the workbench',
     body: 'I started with command-line tools, automation, and a Linux desktop I kept rebuilding by hand. That practice shaped a lasting focus: developer experience is part of the product, not an afterthought.',
     links: [],
@@ -33,6 +36,7 @@ const trajectory: TrajectoryStage[] = [
     tone: 'blue',
     period: 'Since 2019',
     mapLabel: 'V + scientific computing',
+    mapShort: 'V + SCIENCE',
     heading: 'Give a language a working ecosystem',
     body: 'I started VSL, the V Scientific Library, in 2019 and still lead it. I maintain VTL for tensors and autograd, built setup-v for CI and RxV for reactive streams, and contribute to the V compiler.',
     links: [{ href: '/v', label: 'Explore the V ecosystem' }],
@@ -42,6 +46,7 @@ const trajectory: TrajectoryStage[] = [
     tone: 'orange',
     period: 'Since 2020',
     mapLabel: 'App composition',
+    mapShort: 'APP COMPOSE',
     heading: 'Compose applications from parts',
     body: 'Create Awesome Node App began in 2020 as a way to combine a template with extensions instead of copying starters. Python, V, and Rust siblings now share that model; Recoil DevTools remains maintained for apps that still use Recoil.',
     links: [{ href: '/create-awesome', label: 'Explore Create Awesome' }],
@@ -51,6 +56,7 @@ const trajectory: TrajectoryStage[] = [
     tone: 'pink',
     period: 'HorneroConfig → Hornero OS',
     mapLabel: 'Linux systems',
+    mapShort: 'LINUX SYSTEMS',
     heading: 'Make the working environment reproducible',
     body: 'HorneroConfig grew from its X11 roots into a Hyprland and Quickshell desktop managed with chezmoi. Generic parts of that configuration informed Hornero OS, an early-stage Arch-based desktop OS that is not installable yet.',
     links: [
@@ -63,6 +69,7 @@ const trajectory: TrajectoryStage[] = [
     tone: 'magenta',
     period: 'Now',
     mapLabel: 'Agentic workflows',
+    mapShort: 'AGENTIC FLOW',
     heading: 'Carry the systems model into agentic work',
     body: 'Agent Toolkit makes skills, agents, and loops portable across coding assistants. Agentic Workstation provisions the machine; Agentic Harness keeps workspace context between sessions.',
     links: [
@@ -155,6 +162,7 @@ const profilePageJsonLd = {
             <a href="/open-source">Trace the open-source work</a>
           </nav>
         </div>
+        <AboutSystemsOrbit stages={trajectory} />
       </header>
 
       <section class="about-trajectory" aria-labelledby="about-trajectory-title">

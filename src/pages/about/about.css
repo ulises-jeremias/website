@@ -24,6 +24,17 @@
   border-block-end: 1px solid var(--about-line);
 }
 
+@media (min-width: 70rem) {
+  .about-hero {
+    grid-template-columns: minmax(0, 0.92fr) minmax(25rem, 1.08fr);
+    align-items: center;
+  }
+
+  .about-hero__identity {
+    max-inline-size: 38rem;
+  }
+}
+
 .about-page__kicker {
   margin: 0 0 0.7rem;
   color: var(--about-cyan);
