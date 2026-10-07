@@ -26,8 +26,8 @@ exploration.
   through issues #392–#405.
 - Visual-first route pass: approved by the product owner in commit `4b2171a`
   and merged through PR #325 as `be8ac60`.
-- Current production baseline: `main@043ebb6355111c54be9d7c63b5d83dbd1487fba4`
-  (PR #501, on top of the route and interaction work in PRs #462–#500).
+- Current production baseline: `main@352b855c4f8fb960f5b0cbb4ee1913f540e5054d`
+  (PR #502, on top of the route and interaction work in PRs #462–#501).
 - This revision is deployed to production. Build, lint, type-check, tests,
   route budgets, Lighthouse, browser quality, Todo Checker, and deployment smoke
   pass. Portfolio release evidence remains tracked in #405; manual
@@ -47,15 +47,17 @@ checks. PR #500 turns Hornero OS's
 actual manifest into a user-triggered assembly trace. Pinned and local entries
 dock into the composition; installer and ISO slots remain visibly reserved.
 The route retains its static fallback and reduced-motion behavior. PR #501
-refreshed this authority index against the deployed `main@043ebb63` state.
+refreshed this authority index against the deployed `main@043ebb63` state. PR
+#502 reshaped Community as an isometric workshop with a distinct mobile circuit,
+keyboard-selectable project stations, and reduced-motion-aware route pulses.
 
-At `main@043ebb63`, all 575 Playwright cases pass along with Lighthouse, build,
+At `main@352b855c`, all 575 Playwright cases pass along with Lighthouse, build,
 lint, type-check, unit tests, route budgets, Todo Checker, and deployment
 smoke. The production deployment reports this exact revision. The focused
-production check also confirms `/hornero-os/` links to `https://horneroos.com`;
-`/sitemap.xml`, `/robots.txt`, and `/rss.xml` return 200. Other routes retain
-their existing visual goldens unless a route-specific change above updates
-them.
+production checks return 200 for all public routes, `/sitemap.xml`,
+`/robots.txt`, and `/rss.xml`, and confirm `/hornero-os/` links to
+`https://horneroos.com`. Other routes retain their existing visual goldens
+unless a route-specific change above updates them.
 
 ## Historical documents
 
