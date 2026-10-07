@@ -4,16 +4,22 @@ CI is **required** on `main` — every PR must pass before merge. Setup mirrors 
 
 ## Workflows (`.github/workflows/`)
 
-| Workflow              | Trigger                  | Purpose                                               |
-| --------------------- | ------------------------ | ----------------------------------------------------- |
-| `build.yml`           | push/PR to `main`        | `pnpm build` (Astro static)                           |
-| `lint.yml`            | push/PR to `main`        | `pnpm lint` + `pnpm format:check`                     |
-| `type-check.yml`      | push/PR to `main`        | `pnpm type-check` (`astro check`)                     |
-| `tests.yml`           | push/PR to `main`        | `pnpm test:coverage` + Codecov upload                 |
-| `browser-quality.yml` | push/PR to `main`        | Route budgets, Chromium goldens, Firefox/WebKit smoke |
-| `mega-linter.yml`     | PR to `main` (non-draft) | MegaLinter (JS flavor) — reads `.mega-linter.yml`     |
-| `pr-review.yml`       | PR to `main` (non-draft) | Danger.js — PR hygiene (see `dangerfile.ts`)          |
-| `todo.yml`            | push to `main`           | `todo-to-issue` — converts TODOs to issues            |
+| Workflow                            | Trigger                  | Purpose                                                                               |
+| ----------------------------------- | ------------------------ | ------------------------------------------------------------------------------------- |
+| `build.yml`                         | push/PR to `main`        | `pnpm build` (Astro static)                                                           |
+| `lint.yml`                          | push/PR to `main`        | `pnpm lint` + `pnpm format:check`                                                     |
+| `type-check.yml`                    | push/PR to `main`        | `pnpm type-check` (`astro check`)                                                     |
+| `tests.yml`                         | push/PR to `main`        | `pnpm test:coverage` + Codecov upload                                                 |
+| `browser-quality.yml`               | push/PR to `main`        | Route budgets, Chromium goldens, Firefox/WebKit smoke                                 |
+| `mega-linter.yml`                   | PR to `main` (non-draft) | MegaLinter (JS flavor) — reads `.mega-linter.yml`                                     |
+| `pr-review.yml`                     | PR to `main` (non-draft) | Danger.js — PR hygiene (see `dangerfile.ts`)                                          |
+| `agent-toolkit-inventory-drift.yml` | weekday schedule/manual  | Refreshes the pinned Toolkit inventory and opens a reviewed PR when upstream changes. |
+| `todo.yml`                          | push to `main`           | `todo-to-issue` — converts TODOs to issues                                            |
+
+The inventory-drift job grants write permissions only to the job that pushes
+the generated branch and opens its PR. GitHub can hold checks from a PR created
+with `GITHUB_TOKEN` for maintainer approval before they run; see the
+[`GITHUB_TOKEN` event behavior](https://docs.github.com/en/actions/concepts/security/github_token#when-github_token-triggers-workflow-runs).
 
 Node workflows use `pnpm/action-setup@v6` + `actions/setup-node@v7` with
 `node-version-file: .node-version` and `cache: 'pnpm'`, plus

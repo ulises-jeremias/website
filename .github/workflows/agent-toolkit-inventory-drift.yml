@@ -17,6 +17,9 @@ jobs:
     name: Detect Agent Toolkit inventory drift
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout website
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -86,13 +89,28 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           branch="chore/agent-toolkit-inventory-drift"
           stamp="$(date -u +%Y-%m-%d)"
-          git checkout -b "$branch"
-          git add src/features/agent-toolkit/data/inventory.snapshot.json
-          git commit -m "chore(data): refresh Agent Toolkit inventory snapshot ($stamp)"
-          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/${branch}"
-
-          # Reuse an existing open drift PR instead of stacking branches.
+          remote="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          snapshot="$(mktemp)"
+          cp src/features/agent-toolkit/data/inventory.snapshot.json "$snapshot"
           existing="$(gh pr list --state open --head "$branch" --json number --jq '.[0].number' || true)"
+
+          git fetch "$remote" refs/heads/main:refs/remotes/origin/main
+          if [ -n "$existing" ]; then
+            git checkout -- src/features/agent-toolkit/data/inventory.snapshot.json
+            git fetch "$remote" "refs/heads/${branch}:refs/remotes/origin/${branch}"
+            git checkout -B "$branch" "refs/remotes/origin/${branch}"
+            git merge --no-edit refs/remotes/origin/main
+            cp "$snapshot" src/features/agent-toolkit/data/inventory.snapshot.json
+          else
+            git checkout -b "$branch"
+          fi
+
+          git add src/features/agent-toolkit/data/inventory.snapshot.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(data): refresh Agent Toolkit inventory snapshot ($stamp)"
+          fi
+          git push "$remote" "HEAD:refs/heads/${branch}"
+
           body="$(mktemp)"
           cat > "$body" <<EOF
           ## Generated data refresh
@@ -105,13 +123,12 @@ jobs:
           - Source version: $(python3 -c "import json;print(json.load(open('src/features/agent-toolkit/data/inventory.snapshot.json'))['version'])")
 
           Review the diff, confirm the claims render correctly (\`/agent-toolkit\`), and merge.
-          CI on this PR validates the generated data. Do not edit the snapshot by hand.
+          CI on this PR validates the generated data. GitHub may require a maintainer to approve checks for this automated PR before they start. Do not edit the snapshot by hand.
           EOF
 
           if [ -n "$existing" ]; then
-            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-              --force "HEAD:refs/heads/${branch}"
-            echo "Updated existing PR #$existing"
+            gh pr edit "$existing" --body-file "$body"
+            echo "Updated existing PR #$existing without replacing its commits"
           else
             gh pr create \
               --title "chore(data): refresh Agent Toolkit inventory snapshot ($stamp)" \
