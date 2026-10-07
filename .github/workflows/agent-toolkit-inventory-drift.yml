@@ -83,6 +83,10 @@ jobs:
         if: steps.drift.outputs.drift == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          # The full PR checks validate this generated commit. Local hooks run
+          # the site's type-check from a checkout that also contains the
+          # upstream Agent Toolkit repository, so they are not valid here.
+          HUSKY: '0'
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"

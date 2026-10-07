@@ -10,8 +10,8 @@
     "plugins/",
     "mcp/registry/"
   ],
-  "commit": "9627da8",
-  "commitFull": "9627da8f530132688c9b83a9042ac38337bc61c8",
+  "commit": "d2693ed",
+  "commitFull": "d2693edb7a41b5c1e93cb07084cb1151db677fec",
   "verifiedAt": "2026-10-07",
   "version": "1.42.0",
   "counts": {
