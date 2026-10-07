@@ -123,10 +123,6 @@ const lineModules = [
           d="M70 110 H650"
           style="--vf-flow-accent: var(--nest-sunset-orange, #fb923c)"
         ></path>
-        <g class="ca-world__package" data-ca-package aria-hidden="true">
-          <circle class="ca-world__package-halo" cx="70" cy="110" r="12"></circle>
-          <rect class="ca-world__package-core" x="65" y="105" width="10" height="10"></rect>
-        </g>
         {lineModules.map((mod, index) => {
           const x = 70 + index * 180;
           return (
@@ -141,6 +137,26 @@ const lineModules = [
             </g>
           );
         })}
+        <path class="ca-world__package-output" d="M610 160v10" aria-hidden="true"></path>
+        <g class="ca-world__package" data-ca-package data-ca-package-stage="runtime" aria-hidden="true">
+          <circle class="ca-world__package-halo" cx="70" cy="110" r="25"></circle>
+          <path class="ca-world__package-body" d="M51 101 70 91l19 10v19l-19 10-19-10z"></path>
+          <path class="ca-world__package-seam" d="m51 101 19 10 19-10M70 111v19"></path>
+          <g class="ca-world__package-layer ca-world__package-layer--template" data-ca-package-layer="template">
+            <path d="m62 98 8-4 8 4v8l-8 4-8-4z"></path>
+          </g>
+          <g class="ca-world__package-layer ca-world__package-layer--addons" data-ca-package-layer="addons">
+            <path d="m48 109 6-3 6 3v7l-6 3-6-3z"></path>
+            <path d="m80 116 6-3 6 3v7l-6 3-6-3z"></path>
+            <path d="m78 94 6-3 6 3v7l-6 3-6-3z"></path>
+          </g>
+          <text class="ca-world__package-runtime" data-ca-package-runtime x="70" y="118" text-anchor="middle">
+            NODE
+          </text>
+          <text class="ca-world__package-addon-count" data-ca-package-addon-count x="70" y="126" text-anchor="middle">
+            0 ADDONS
+          </text>
+        </g>
       </svg>
 
       <ol class="ca-world__flow-index" aria-label="Composition stages">
@@ -523,6 +539,15 @@ const lineModules = [
           world.querySelector(`[data-ca-module-value="${stage}"]`)?.replaceChildren(compact);
           world.querySelector(`[data-ca-flow-value="${stage}"]`)?.replaceChildren(value);
         });
+
+        const runtime = station.label.toUpperCase();
+        const addonCount = Array.isArray(state.addons)
+          ? state.addons.length
+          : panel?.querySelectorAll('[data-ca-addon]:checked').length || 0;
+        world.querySelector('[data-ca-package-runtime]')?.replaceChildren(runtime);
+        world
+          .querySelector('[data-ca-package-addon-count]')
+          ?.replaceChildren(`${addonCount} ${addonCount === 1 ? 'ADDON' : 'ADDONS'}`);
       };
 
       const stopAssembly = () => {
@@ -530,14 +555,30 @@ const lineModules = [
         timers.forEach((timer) => window.clearTimeout(timer));
         timers = [];
         packageGroup?.getAnimations().forEach((animation) => animation.cancel());
+        packageGroup?.querySelectorAll('*').forEach((element) => {
+          element.getAnimations().forEach((animation) => animation.cancel());
+        });
         world.removeAttribute('data-ca-animating');
+        packageGroup?.removeAttribute('data-ca-package-static');
+        packageGroup?.removeAttribute('transform');
         modules.forEach((module) => module.classList.remove('is-current'));
         steps.forEach((step) => step.classList.remove('is-current'));
       };
 
+      const setPackageStage = (stage) => packageGroup?.setAttribute('data-ca-package-stage', stage);
+
       const showRuntime = () => {
+        setPackageStage('runtime');
         modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === 'runtime'));
         steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === 'runtime'));
+      };
+
+      const showCompleteComposition = () => {
+        setPackageStage('app');
+        packageGroup?.setAttribute('transform', 'translate(540 75)');
+        packageGroup?.setAttribute('data-ca-package-static', 'true');
+        modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === 'app'));
+        steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === 'app'));
       };
 
       const runAssembly = (state) => {
@@ -546,26 +587,25 @@ const lineModules = [
 
         stopAssembly();
         if (motionPreference.matches || !packageGroup || !belt) {
-          showRuntime();
+          showCompleteComposition();
           return;
         }
 
         const currentAnimation = animationId;
         const station = stations.find((candidate) => candidate.id === state.family);
-        const svgWidth = belt.ownerSVGElement?.getBoundingClientRect().width || 0;
+        const diagramWidth = belt.ownerSVGElement?.getBoundingClientRect().width || 0;
         world.dataset.caAnimating = 'true';
         packageGroup.style.setProperty('--ca-package-accent', station?.accent || 'var(--nest-sunset-orange)');
 
-        if (svgWidth > 0) {
-          const distance = 540 * (svgWidth / 720);
+        if (diagramWidth > 0) {
           packageGroup.animate(
             [
-              { transform: 'translateX(0px)', opacity: 0 },
+              { transform: 'translateX(0px)', opacity: 0, offset: 0 },
               { transform: 'translateX(0px)', opacity: 1, offset: 0.08 },
-              { transform: `translateX(${distance}px)`, opacity: 1, offset: 0.9 },
-              { transform: `translateX(${distance}px)`, opacity: 0 },
+              { transform: 'translate(540px, 75px)', opacity: 1, offset: 0.9 },
+              { transform: 'translate(540px, 75px)', opacity: 1, offset: 1 },
             ],
-            { duration: 1600, easing: 'linear', fill: 'forwards' },
+            { duration: 1800, easing: 'cubic-bezier(0.42, 0, 0.2, 1)', fill: 'forwards' },
           );
         }
 
@@ -573,8 +613,30 @@ const lineModules = [
           timers.push(
             window.setTimeout(() => {
               if (currentAnimation !== animationId) return;
+              setPackageStage(stage);
               modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === stage));
               steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === stage));
+
+              const arrivingModule = world.querySelector(`[data-module="${stage}"] .ca-world__module-disk`);
+              arrivingModule?.animate(
+                [
+                  { transform: 'scale(0.88)', filter: 'brightness(1)' },
+                  { transform: 'scale(1.14)', filter: 'brightness(1.4)', offset: 0.55 },
+                  { transform: 'scale(1.08)', filter: 'brightness(1.18)' },
+                ],
+                { duration: 380, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
+              );
+
+              const layer = packageGroup.querySelector(`[data-ca-package-layer="${stage}"]`);
+              if (layer) {
+                layer.animate(
+                  [
+                    { opacity: 0, transform: 'translateY(-5px) scale(0.72)' },
+                    { opacity: 1, transform: 'translateY(0) scale(1)' },
+                  ],
+                  { duration: 320, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
+                );
+              }
             }, index * 520),
           );
         });
@@ -583,9 +645,10 @@ const lineModules = [
           window.setTimeout(() => {
             if (currentAnimation !== animationId) return;
             world.removeAttribute('data-ca-animating');
+            setPackageStage('app');
             modules.forEach((module) => module.classList.toggle('is-current', module.dataset.module === 'app'));
             steps.forEach((step) => step.classList.toggle('is-current', step.dataset.caStep === 'app'));
-          }, 1700),
+          }, 1820),
         );
       };
 
@@ -595,7 +658,7 @@ const lineModules = [
       motionPreference.addEventListener('change', () => {
         if (motionPreference.matches) {
           stopAssembly();
-          showRuntime();
+          showCompleteComposition();
         }
       });
 
@@ -1105,16 +1168,77 @@ const lineModules = [
     pointer-events: none;
   }
 
+  .ca-world__package[data-ca-package-static='true'] {
+    opacity: 1;
+  }
+
   .ca-world__package-halo {
-    fill: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 22%, transparent);
-    stroke: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 72%, transparent);
+    fill: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 13%, transparent);
+    stroke: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 45%, transparent);
+    stroke-width: 0.75;
+  }
+
+  .ca-world__package-output {
+    fill: none;
+    stroke: color-mix(in srgb, var(--nest-violet) 82%, var(--nest-cyan));
+    stroke-dasharray: 2 2;
     stroke-width: 1;
   }
 
-  .ca-world__package-core {
-    fill: var(--ca-package-accent, var(--nest-sunset-orange));
-    stroke: var(--nest-paper);
-    stroke-width: 1;
+  .ca-world__package-body {
+    fill: color-mix(in srgb, var(--ca-package-accent, var(--nest-sunset-orange)) 22%, #090428);
+    stroke: var(--ca-package-accent, var(--nest-sunset-orange));
+    stroke-width: 1.25;
+    stroke-linejoin: bevel;
+  }
+
+  .ca-world__package-seam {
+    fill: none;
+    stroke: color-mix(in srgb, var(--nest-paper) 66%, var(--ca-package-accent, var(--nest-sunset-orange)));
+    stroke-width: 0.65;
+  }
+
+  .ca-world__package-layer {
+    opacity: 0;
+    transform: translateY(4px) scale(0.72);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .ca-world__package[data-ca-package-stage='template'] [data-ca-package-layer='template'],
+  .ca-world__package[data-ca-package-stage='addons'] [data-ca-package-layer='template'],
+  .ca-world__package[data-ca-package-stage='addons'] [data-ca-package-layer='addons'],
+  .ca-world__package[data-ca-package-stage='app'] [data-ca-package-layer] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .ca-world__package-layer--template path {
+    fill: color-mix(in srgb, var(--nest-cyan) 40%, #08172a);
+    stroke: var(--nest-cyan);
+    stroke-width: 0.9;
+    stroke-linejoin: bevel;
+  }
+
+  .ca-world__package-layer--addons path {
+    fill: color-mix(in srgb, var(--nest-magenta) 38%, #190622);
+    stroke: var(--nest-pink);
+    stroke-width: 0.8;
+    stroke-linejoin: bevel;
+  }
+
+  .ca-world__package-runtime,
+  .ca-world__package-addon-count {
+    fill: var(--nest-paper);
+    font-family: var(--font-display, sans-serif);
+    font-size: 4px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .ca-world__package-addon-count {
+    fill: var(--nest-cyan);
+    font-size: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1123,7 +1247,8 @@ const lineModules = [
     }
 
     .ca-world__module-disk,
-    .ca-world__flow-index li {
+    .ca-world__flow-index li,
+    .ca-world__package-layer {
       transition: none;
     }
   }

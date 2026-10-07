@@ -305,3 +305,19 @@ image payload, 62,740-byte font payload, zero script requests, and 10 total
 requests are unchanged. The `/community/` document, stylesheet, and total caps
 now use the repository's 10% rounded-up KiB headroom policy for this intentionally
 dual-composition map; every other route limit is unchanged.
+
+## Create Awesome package assembly — 2026-10-07
+
+The line now carries a real project parcel instead of a single glowing dot.
+Runtime selection sets its family accent and label; the chosen template docks
+into its chassis, compatible addons attach as magenta modules, and the finished
+composition reaches the app station. Web Animations API motion gives each
+station a short arrival pulse while the parcel travels the line. Only actual
+user composition changes start the sequence; it is never autoplay telemetry.
+
+The parcel and the visible stage index share the same runtime → template →
+addons → app state. On narrow layouts the stage index replaces the horizontal
+line. When reduced motion is preferred, the selected configuration appears as
+a complete, still assembled parcel with the app stage selected; the four-stage
+explanation and generated command remain visible. Without JavaScript, the
+server-rendered family index and base commands remain complete.
