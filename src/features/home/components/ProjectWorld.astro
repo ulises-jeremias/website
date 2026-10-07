@@ -42,6 +42,14 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
 
   <span class="atlas-world__platform" aria-hidden="true">
     <span class="atlas-world__glow"></span>
+    <svg class="atlas-world__dock" viewBox="0 0 320 112" aria-hidden="true">
+      <ellipse class="atlas-world__dock-shadow" cx="160" cy="91" rx="125" ry="13" />
+      <path class="atlas-world__dock-side" d="m33 48 127 35 127-35-14 18-113 32L47 66z" />
+      <path class="atlas-world__dock-surface" d="m33 48 127-35 127 35-127 37z" />
+      <path class="atlas-world__dock-grid" d="m68 38 92 27 92-27m-146-10 54 16 54-16m-54-11v67m-42-54v41m84-41v41" />
+      <path class="atlas-world__dock-ring" d="M72 50c17-20 159-20 176 0s-61 32-88 32-105-12-88-32Z" />
+      <path class="atlas-world__dock-signal" d="m46 52 112 33 111-33" />
+    </svg>
     <picture class="atlas-world__visual">
       <source type="image/webp" srcset={`${islandSrcSm} ${islandSmallWidth}w, ${islandSrc} 640w`} sizes={islandSizes} />
       <source type="image/png" srcset={islandPngSrcSet} sizes={islandSizes} />
