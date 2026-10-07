@@ -189,6 +189,7 @@ test.describe('PR 1 correctness baseline', () => {
     await selectRadio(page, '[data-ca-station="rust"]');
     await expect(page.locator('[data-ca-module-value="runtime"]')).toHaveText('Rust');
     await expect(page.locator('[data-ca-flow-value="runtime"]')).toHaveText('Rust');
+    await expect(packageParcel).toHaveAttribute('data-ca-package-stage', 'runtime');
     await expect
       .poll(async () => (await packageParcel.boundingBox())?.x ?? initialParcelX)
       .toBeGreaterThan(initialParcelX + 40);
@@ -196,9 +197,19 @@ test.describe('PR 1 correctness baseline', () => {
     const rustPanel = page.locator('[data-ca-panel="rust"]');
     await rustPanel.locator('[data-ca-template]').selectOption({ index: 1 });
     const selectedTemplate = await rustPanel.locator('[data-ca-template]').inputValue();
+    await expect(packageParcel).toHaveAttribute('data-ca-package-stage', 'template');
+    await expect
+      .poll(() =>
+        packageParcel
+          .locator('[data-ca-package-layer="template"]')
+          .evaluate((layer) => getComputedStyle(layer).opacity),
+      )
+      .toBe('1');
     await rustPanel.locator('[data-ca-addon]:not(:disabled)').first().check();
     await expect(page.locator('[data-ca-flow-value="addons"]')).toHaveText('1 selected');
     await expect(world).toHaveAttribute('data-ca-animating', 'true');
+    await expect(packageParcel).toHaveAttribute('data-ca-package-stage', 'addons');
+    await expect(packageParcel.locator('[data-ca-package-addon-count]')).toHaveText('1 ADDON');
     await expect
       .poll(() =>
         packageParcel.evaluate(
@@ -207,6 +218,26 @@ test.describe('PR 1 correctness baseline', () => {
       )
       .toBeGreaterThan(0);
     await expect(page.locator('[data-ca-step="app"]')).toHaveClass(/is-current/, { timeout: 3000 });
+    await expect(packageParcel).toHaveAttribute('data-ca-package-stage', 'app');
+    await expect(packageParcel.locator('[data-ca-package-layer="template"]')).toHaveCSS('opacity', '1');
+    await expect(packageParcel.locator('[data-ca-package-layer="addons"]')).toHaveCSS('opacity', '1');
+    await expect(world).not.toHaveAttribute('data-ca-animating', 'true');
+    const [finishedParcel, appStation] = await Promise.all([
+      packageParcel.boundingBox(),
+      world.locator('[data-module="app"] .ca-world__module-disk').boundingBox(),
+    ]);
+    expect(finishedParcel).not.toBeNull();
+    expect(appStation).not.toBeNull();
+    expect(
+      Math.abs(
+        (finishedParcel?.x ?? 0) +
+          (finishedParcel?.width ?? 0) / 2 -
+          ((appStation?.x ?? 0) + (appStation?.width ?? 0) / 2),
+      ),
+    ).toBeLessThan(2);
+    expect((finishedParcel?.y ?? 0) + (finishedParcel?.height ?? 0) / 2).toBeGreaterThan(
+      (appStation?.y ?? 0) + (appStation?.height ?? 0) / 2 + 50,
+    );
     await expect(page.locator('[data-ca-module-value="template"]')).toHaveText(selectedTemplate);
   });
 
@@ -219,6 +250,20 @@ test.describe('PR 1 correctness baseline', () => {
     await expect(page.locator('[data-ca-module-value="runtime"]')).toHaveText('Python');
     await expect(page.locator('[data-ca-flow-value="runtime"]')).toHaveText('Python');
     await expect(page.locator('[data-ca-world]')).not.toHaveAttribute('data-ca-animating', 'true');
+    await expect(page.locator('[data-ca-package]')).toHaveAttribute('data-ca-package-stage', 'app');
+    await expect(page.locator('[data-ca-package]')).toHaveAttribute('data-ca-package-static', 'true');
+    const [parcel, appStation] = await Promise.all([
+      page.locator('[data-ca-package]').boundingBox(),
+      page.locator('[data-module="app"] .ca-world__module-disk').boundingBox(),
+    ]);
+    expect(parcel).not.toBeNull();
+    expect(appStation).not.toBeNull();
+    expect(
+      Math.abs((parcel?.x ?? 0) + (parcel?.width ?? 0) / 2 - ((appStation?.x ?? 0) + (appStation?.width ?? 0) / 2)),
+    ).toBeLessThan(2);
+    expect((parcel?.y ?? 0) + (parcel?.height ?? 0) / 2).toBeGreaterThan(
+      (appStation?.y ?? 0) + (appStation?.height ?? 0) / 2 + 50,
+    );
     await expect
       .poll(() =>
         page
