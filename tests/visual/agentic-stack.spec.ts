@@ -4,6 +4,8 @@ test.describe('Agentic Developer Stack system map', () => {
   for (const viewport of [
     { name: 'desktop', width: 1440, height: 1000, capture: true },
     { name: 'tablet', width: 1024, height: 900, capture: true },
+    // System-font wrapping differs across local and CI Chromium; the full
+    // mobile route snapshot already covers the composed page with tolerance.
     { name: 'mobile', width: 390, height: 844, capture: false },
   ]) {
     test(`keeps the opening and system map composed at ${viewport.name}`, async ({ page }) => {
