@@ -79,37 +79,6 @@
   --theme-id: 'community';
 }
 
-/* The shared shell carries each route's accent without changing its layout. */
-[data-theme='about'] {
-  --header-accent: var(--nest-violet);
-  --header-accent-secondary: var(--nest-cyan);
-}
-
-[data-theme='agentic'] {
-  --header-accent: var(--nest-cyan);
-  --header-accent-secondary: var(--nest-violet);
-}
-
-[data-theme='hornero-os'] {
-  --header-accent: var(--nest-amber);
-  --header-accent-secondary: var(--nest-sunset-orange);
-}
-
-[data-theme='open-source'] {
-  --header-accent: var(--nest-mint);
-  --header-accent-secondary: var(--nest-cyan);
-}
-
-[data-theme='projects'] {
-  --header-accent: var(--nest-cyan);
-  --header-accent-secondary: var(--nest-violet);
-}
-
-[data-theme='blog'] {
-  --header-accent: var(--nest-blue);
-  --header-accent-secondary: var(--nest-cyan);
-}
-
 .theme-tint {
   background: var(--theme-surface-tint);
   border-block: 1px solid var(--theme-border-accent);

@@ -38,10 +38,9 @@ The maintained snapshots are the regression authority. Captures under dated
 normal Playwright runs.
 
 The shared header uses each route's world accent for its active navigation
-state and its secondary world accent for hover. Routes with a distinct shell
-identity define `--header-accent` and `--header-accent-secondary`; otherwise the
-shell inherits `--world-accent` tokens. Home and Sponsor keep the Nest brand
-accent.
+state, while hover keeps the shared cyan signal. Routes with a distinct shell
+identity set `--header-accent` on the section layout; otherwise the shell
+inherits `--world-accent`. Home and Sponsor keep the Nest brand accent.
 
 PRs #462–#471 established the current route baselines and portfolio-first
 hierarchy. PRs #473–#494 then added route-specific interactions and visual work

@@ -29,6 +29,7 @@ export interface Props {
   description?: string;
   world?: string;
   theme?: string;
+  headerAccent?: string;
   hero?: HeroProps;
   currentPath?: string;
   canonical?: string;
@@ -47,6 +48,7 @@ const {
   description,
   world,
   theme,
+  headerAccent,
   hero,
   currentPath,
   canonical,
@@ -62,6 +64,7 @@ const pagePath = currentPath ?? Astro.url.pathname;
 const canonicalUrl = canonical ?? getCanonicalUrl(pagePath);
 const themeAttr = theme ?? world ?? 'home';
 const seoType = ogType === 'article' || ogType === 'profile' ? ogType : 'website';
+const shellStyle = headerAccent ? `--header-accent: ${headerAccent}` : undefined;
 ---
 
 <BaseLayout
@@ -81,6 +84,7 @@ const seoType = ogType === 'article' || ogType === 'profile' ? ogType : 'website
     data-world={world}
     data-theme={themeAttr}
     data-path={pagePath}
+    style={shellStyle}
   >
     <SiteHeader currentPath={pagePath} transparent={immersive} />
 

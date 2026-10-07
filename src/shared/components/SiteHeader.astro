@@ -110,7 +110,6 @@ const emailHref = `mailto:${profile.contact.email}`;
   .site-header {
     --header-bg: color-mix(in srgb, var(--nest-midnight-950) 94%, transparent);
     --header-world-accent: var(--header-accent, var(--world-accent, var(--nest-magenta)));
-    --header-world-accent-secondary: var(--header-accent-secondary, var(--world-accent-secondary, var(--nest-cyan)));
     position: sticky;
     inset-block-start: 0;
     z-index: 60;
@@ -184,7 +183,7 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   .site-header__compact-nav a:hover {
-    color: var(--header-world-accent-secondary);
+    color: var(--nest-cyan);
   }
 
   .site-header__compact-nav a.is-active {
@@ -280,7 +279,7 @@ const emailHref = `mailto:${profile.contact.email}`;
     inset-inline: 50%;
     inset-block-end: 0.2rem;
     block-size: 2px;
-    background: linear-gradient(90deg, var(--header-world-accent), var(--header-world-accent-secondary));
+    background: linear-gradient(90deg, var(--header-world-accent), var(--nest-cyan));
     box-shadow: 0 0 0.75rem color-mix(in srgb, var(--header-world-accent) 55%, transparent);
     transition: inset-inline var(--motion-duration-base) var(--motion-ease-emphasized);
   }
