@@ -96,6 +96,13 @@ test.describe('PR5 V source-fidelity route', () => {
       await expect(page.locator('[data-v-inspector-link]')).toHaveText(
         `Open ${new URL(fact.href).pathname.slice(1)} ↗`,
       );
+      const selectedMapStations = page.locator('.v-lab__map-station.is-current');
+      if (stationId === 'vsl' || stationId === 'vtl' || stationId === 'rxv') {
+        await expect(selectedMapStations).toHaveCount(1);
+        await expect(selectedMapStations).toHaveAttribute('data-v-map-station', stationId);
+      } else {
+        await expect(selectedMapStations).toHaveCount(0);
+      }
     }
 
     const licenses = page.locator('.v-lab__licenses');
@@ -115,6 +122,39 @@ test.describe('PR5 V source-fidelity route', () => {
     await expect(provenance).toContainText('scale belongs to the ecosystem, not to personal ownership');
     await page.setViewportSize({ width: 390, height: 844 });
     await expect(page.locator('.flagship-provenance__role > [aria-hidden="true"]')).toBeHidden();
+  });
+
+  test('lights the matching map station and preserves a still selected state for reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/v#vsl');
+
+    const scienceStation = page.locator('[data-v-map-station="vsl"]');
+    await expect(scienceStation).toHaveClass(/is-current/);
+    await expect(page.locator('.v-lab__map-station.is-current')).toHaveCount(1);
+    await expect
+      .poll(() => scienceStation.locator('circle').evaluate((circle) => getComputedStyle(circle).transform))
+      .toBe('none');
+    await expect.poll(() => scienceStation.evaluate((station) => station.getAnimations().length)).toBe(0);
+
+    await page.locator('[data-v-station="vtl"]').click();
+    await expect(page.locator('[data-v-map-station="vsl"]')).not.toHaveClass(/is-current/);
+    await expect(page.locator('[data-v-map-station="vtl"]')).toHaveClass(/is-current/);
+    await expect(page.locator('[data-v-station-status]')).toContainText('VTL');
+  });
+
+  test('animates the selected project node as concise map feedback', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1100 });
+    await page.goto('/v');
+    await page.locator('[data-v-station="vsl"]').click();
+
+    const selectedNode = page.locator('[data-v-map-station="vsl"] circle');
+    await expect(selectedNode).toHaveCSS('animation-name', 'v-lab-node-arrive');
+    await expect
+      .poll(() =>
+        selectedNode.evaluate((node) => node.getAnimations().some((animation) => animation.playState === 'running')),
+      )
+      .toBe(true);
   });
 
   test('uses the canonical Awesome V destination in the Projects ledger', async ({ page }) => {

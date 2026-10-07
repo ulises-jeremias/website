@@ -60,15 +60,15 @@ const stationsJson = JSON.stringify(stations);
             reactive streams. The lines group projects in one ecosystem and do not indicate dependencies.
           </desc>
           <path d="M58 35H422" fill="none" stroke="var(--v-map-line, #40506d)" stroke-width="1"></path>
-          <g class="v-lab__map-station v-lab__map-station--science">
+          <g class="v-lab__map-station v-lab__map-station--science" data-v-map-station="vsl" aria-hidden="true">
             <circle cx="80" cy="35" r="7"></circle>
             <path d="M80 44V62"></path>
           </g>
-          <g class="v-lab__map-station v-lab__map-station--tensor">
+          <g class="v-lab__map-station v-lab__map-station--tensor" data-v-map-station="vtl" aria-hidden="true">
             <circle cx="240" cy="35" r="7"></circle>
             <path d="M240 44V62"></path>
           </g>
-          <g class="v-lab__map-station v-lab__map-station--reactive">
+          <g class="v-lab__map-station v-lab__map-station--reactive" data-v-map-station="rxv" aria-hidden="true">
             <circle cx="400" cy="35" r="7"></circle>
             <path d="M400 44V62"></path>
           </g>
@@ -371,12 +371,53 @@ const stationsJson = JSON.stringify(stations);
     fill: var(--nest-midnight-950, #040212);
     stroke: currentColor;
     stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      fill 180ms ease,
+      stroke-width 180ms ease,
+      transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   .v-lab__map-station path {
     fill: none;
     stroke: currentColor;
     stroke-width: 1;
+    transition:
+      opacity 180ms ease,
+      stroke-width 180ms ease;
+  }
+
+  .v-lab__map-station.is-current circle {
+    fill: color-mix(in srgb, currentColor 40%, var(--nest-midnight-950, #040212));
+    stroke-width: 2.6;
+    transform: scale(1.18);
+    animation: v-lab-node-arrive 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .v-lab__map-station.is-current path {
+    stroke-width: 1.5;
+  }
+
+  .v-lab__map-station.is-current {
+    filter: drop-shadow(0 0 5px color-mix(in srgb, currentColor 68%, transparent));
+  }
+
+  @keyframes v-lab-node-arrive {
+    0% {
+      transform: scale(0.78);
+      filter: brightness(0.85);
+    }
+
+    58% {
+      transform: scale(1.32);
+      filter: brightness(1.5);
+    }
+
+    100% {
+      transform: scale(1.18);
+      filter: brightness(1);
+    }
   }
 
   .v-lab__map-station--science {
@@ -389,6 +430,18 @@ const stationsJson = JSON.stringify(stations);
 
   .v-lab__map-station--reactive {
     color: var(--nest-sunset-orange, #ff9a4d);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v-lab__map-station circle,
+    .v-lab__map-station path {
+      transition: none;
+    }
+
+    .v-lab__map-station.is-current circle {
+      transform: none;
+      animation: none;
+    }
   }
 
   .v-lab__ecosystem-map figcaption {
@@ -840,6 +893,9 @@ const stationsJson = JSON.stringify(stations);
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.vPanel !== id;
         if (!panel.hidden) loadSceneEvidence(panel);
+      });
+      root.querySelectorAll('[data-v-map-station]').forEach((node) => {
+        node.classList.toggle('is-current', node.dataset.vMapStation === id);
       });
 
       if (titleEl) titleEl.textContent = station.title;
