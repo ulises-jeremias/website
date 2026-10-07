@@ -64,6 +64,13 @@
 
     query.addEventListener('input', updateAtlas);
     query.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && query.value) {
+        event.preventDefault();
+        query.value = '';
+        updateAtlas();
+        return;
+      }
+
       if (event.key !== 'Enter') return;
 
       const match = entries.find((entry) => !entry.hidden && entry.dataset.exactMatch === 'true');

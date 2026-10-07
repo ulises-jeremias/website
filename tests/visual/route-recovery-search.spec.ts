@@ -72,7 +72,8 @@ test.describe('404 signal finder', () => {
     await expect(page.locator('[data-route-empty]')).toBeVisible();
     await expect(entries.filter({ visible: true })).toHaveCount(0);
 
-    await query.fill('');
+    await query.press('Escape');
+    await expect(query).toHaveValue('');
     await expect(status).toHaveText(`Search is ready for ${originalCount} verified destinations.`);
     await expect(page.locator('[data-route-empty]')).toBeHidden();
     await expect(entries.filter({ visible: true })).toHaveCount(originalCount);
