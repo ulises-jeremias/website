@@ -92,32 +92,55 @@ const itemListJsonLd = hasPosts
           <EmptyDesk />
           <div class="blog-empty__copy">
             <h2>No posts published yet.</h2>
-            <p>
-              Entries land here only when there is something verified to write up — agent orchestration patterns from
-              Agent Toolkit, how Hornero OS composes its desktop, and V scientific-computing engineering. No filler
-              posts.
-            </p>
-            <p class="blog-empty__elsewhere">
-              Until then, the work itself is documented in <a href="/projects">the project ledger</a> and the{' '}
-              <a href="/open-source">open-source evidence trail</a>, and discussed in{' '}
-              <a href="/community">the community workshop</a>.
-            </p>
+            <p>Field Notes are written after something ships and its sources are checked. No filler posts.</p>
+            <details class="blog-path">
+              <summary>Trace the publication path</summary>
+              <div class="blog-path__body">
+                <p class="blog-path__eyebrow">Editorial path · explanatory, not live</p>
+                <div class="blog-path__track" aria-hidden="true">
+                  <span></span>
+                </div>
+                <ol class="blog-path__steps">
+                  <li>
+                    <span class="blog-path__index" aria-hidden="true">
+                      01
+                    </span>
+                    <strong>Work ships</strong>
+                    <span>A real system is ready to learn from.</span>
+                  </li>
+                  <li>
+                    <span class="blog-path__index" aria-hidden="true">
+                      02
+                    </span>
+                    <strong>Sources check out</strong>
+                    <span>Claims and examples have evidence.</span>
+                  </li>
+                  <li>
+                    <span class="blog-path__index" aria-hidden="true">
+                      03
+                    </span>
+                    <strong>A note lands</strong>
+                    <span>The write-up joins Field Notes.</span>
+                  </li>
+                </ol>
+              </div>
+            </details>
             <p class="blog-empty__elsewhere">
               <a href="/rss.xml">Subscribe to the RSS feed</a> to get the first entry when it ships.
             </p>
-            <aside class="blog-empty__routes" aria-label="Read current work elsewhere">
-              <p class="blog-empty__routes-title">Read the current work</p>
+            <aside class="blog-empty__routes" aria-label="Explore current work elsewhere">
+              <p class="blog-empty__routes-title">Explore the current work</p>
               <ul>
                 <li>
-                  <a href="/projects">01 · Project ledger</a>
+                  <a href="/projects">Project ledger</a>
                   <span>systems and outcomes</span>
                 </li>
                 <li>
-                  <a href="/open-source">02 · Open-source evidence</a>
+                  <a href="/open-source">Open-source evidence</a>
                   <span>contributions and provenance</span>
                 </li>
                 <li>
-                  <a href="/community">03 · Community workshop</a>
+                  <a href="/community">Community workshop</a>
                   <span>questions and coordination</span>
                 </li>
               </ul>
