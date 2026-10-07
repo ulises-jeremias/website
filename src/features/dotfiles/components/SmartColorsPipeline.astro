@@ -154,11 +154,13 @@ import { verifiedFacts } from '../data/index.js';
 
       const flowRect = flow.getBoundingClientRect();
       const sourceRect = source.getBoundingClientRect();
-      const routeRect = route.getBoundingClientRect();
+      const output = route.querySelector<HTMLElement>('[data-df-flow-output]');
+      if (!output) return;
+      const outputRect = output.getBoundingClientRect();
       const startX = sourceRect.left + sourceRect.width / 2 - flowRect.left;
       const startY = sourceRect.top + sourceRect.height / 2 - flowRect.top;
-      const endX = routeRect.left + Math.min(24, routeRect.width / 2) - flowRect.left;
-      const endY = routeRect.top + Math.min(24, routeRect.height / 2) - flowRect.top;
+      const endX = outputRect.left + outputRect.width / 2 - flowRect.left;
+      const endY = outputRect.top + outputRect.height / 2 - flowRect.top;
 
       signal.hidden = false;
       signalAnimation = signal.animate(

@@ -26,10 +26,24 @@ test('Smart Colors traces each real wallpaper path on request', async ({ page },
   });
   expect(signalFrames).toHaveLength(4);
   expect(signalFrames[0]).not.toBe(signalFrames[2]);
+  const expectedEnd = await flow.evaluate((figure) => {
+    const output = figure.querySelector('[data-df-flow-route="live"] [data-df-flow-output]');
+    if (!output) throw new Error('Live route output is missing');
+    const flowRect = figure.getBoundingClientRect();
+    const outputRect = output.getBoundingClientRect();
+    return [
+      outputRect.left + outputRect.width / 2 - flowRect.left,
+      outputRect.top + outputRect.height / 2 - flowRect.top,
+    ];
+  });
+  const actualEnd = [...String(signalFrames[3] ?? '').matchAll(/-?\d+(?:\.\d+)?/g)].map(([value]) => Number(value));
+  expect(actualEnd).toHaveLength(3);
+  expect(actualEnd[0]).toBeCloseTo(expectedEnd[0], 2);
+  expect(actualEnd[1]).toBeCloseTo(expectedEnd[1], 2);
+  expect(actualEnd[2]).toBe(0.2);
   await expect
     .poll(() => signal.evaluate((element) => element.getAnimations()[0]?.effect?.getTiming().duration))
     .toBe(700);
-  await expect.poll(() => live.evaluate((route) => route.getAnimations().length)).toBeGreaterThan(0);
   await expect(live).toHaveClass(/is-complete/, { timeout: 3000 });
   await expect(signal).toBeHidden();
   await expect(live.locator('[data-df-flow-output]')).toHaveClass(/is-active/);
