@@ -24,6 +24,29 @@ test.describe('homepage visual coverage', () => {
     await expect(selectedDock).toBeVisible();
   });
 
+  test('a project world has a layered platform with a static reduced-motion fallback', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/');
+
+    const world = page.locator('.atlas-world[data-world-id="toolkit"]');
+    const dock = world.locator('.atlas-world__dock');
+    await expect(dock.locator('.atlas-world__dock-surface')).toHaveCount(1);
+    await expect(dock.locator('.atlas-world__dock-side')).toHaveCount(1);
+    await expect(dock.locator('.atlas-world__dock-ring')).toHaveCount(4);
+    await expect(dock.locator('.atlas-world__dock-signal')).toHaveCSS('animation-name', 'none');
+    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit.png');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit-mobile.png');
+
+    await page.setViewportSize({ width: 320, height: 844 });
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))
+      .toBe(true);
+    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit-320.png');
+  });
+
   test('atlas responsive image descriptors match the intrinsic WebP widths', async ({ page }) => {
     await page.goto('/');
 
@@ -146,10 +169,15 @@ test.describe('homepage visual coverage', () => {
       cardsFit: [...document.querySelectorAll('.featured-areas__card')].every(
         (card) => card.scrollWidth <= card.clientWidth + 1,
       ),
+      artFitsSquare: [...document.querySelectorAll('.featured-areas__art')].every((art) => {
+        const rect = art.getBoundingClientRect();
+        return Math.abs(rect.width - rect.height) <= 1;
+      }),
     }));
 
     expect(measurements.pageOverflow).toBe(false);
     expect(measurements.cardsFit).toBe(true);
+    expect(measurements.artFitsSquare).toBe(true);
     expect(measurements.links.filter(({ width, height }) => width < 44 || height < 44)).toEqual([]);
   });
 
