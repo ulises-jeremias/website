@@ -43,12 +43,18 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
   <span class="atlas-world__platform" aria-hidden="true">
     <span class="atlas-world__glow"></span>
     <svg class="atlas-world__dock" viewBox="0 0 320 112" aria-hidden="true">
-      <ellipse class="atlas-world__dock-shadow" cx="160" cy="91" rx="125" ry="13" />
-      <path class="atlas-world__dock-side" d="m33 48 127 35 127-35-14 18-113 32L47 66z" />
-      <path class="atlas-world__dock-surface" d="m33 48 127-35 127 35-127 37z" />
-      <path class="atlas-world__dock-grid" d="m68 38 92 27 92-27m-146-10 54 16 54-16m-54-11v67m-42-54v41m84-41v41" />
-      <path class="atlas-world__dock-ring" d="M72 50c17-20 159-20 176 0s-61 32-88 32-105-12-88-32Z" />
-      <path class="atlas-world__dock-signal" d="m46 52 112 33 111-33" />
+      <ellipse class="atlas-world__dock-shadow" cx="160" cy="94" rx="124" ry="9" />
+      <path class="atlas-world__dock-side" d="m22 47 138 39 138-39-12 18-126 36L34 65z" />
+      <path class="atlas-world__dock-surface" d="m22 47 138-38 138 38-138 39z" />
+      <path
+        class="atlas-world__dock-grid"
+        d="m47 46 113 32 113-32m-91-12 91 25M67 34l93 27 93-27m-93-25v77M94 26v52m132-52v52"
+      />
+      <path class="atlas-world__dock-ring" d="m66 47 94-26 94 26-94 27z" />
+      <path class="atlas-world__dock-ring" d="m98 47 62-17 62 17-62 17z" />
+      <path class="atlas-world__dock-signal" d="m34 50 126 36 126-36" />
+      <circle class="atlas-world__dock-ring" cx="49" cy="48" r="3" />
+      <circle class="atlas-world__dock-ring" cx="271" cy="48" r="3" />
     </svg>
     <picture class="atlas-world__visual">
       <source type="image/webp" srcset={`${islandSrcSm} ${islandSmallWidth}w, ${islandSrc} 640w`} sizes={islandSizes} />
