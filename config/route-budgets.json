@@ -187,7 +187,7 @@
     "/blog/": {
       "mobile": {
         "total": 67584,
-        "document": 7168,
+        "document": 8192,
         "script": 0,
         "style": 13312,
         "image": 5120,
@@ -196,7 +196,7 @@
       },
       "desktop": {
         "total": 67584,
-        "document": 7168,
+        "document": 8192,
         "script": 0,
         "style": 13312,
         "image": 5120,

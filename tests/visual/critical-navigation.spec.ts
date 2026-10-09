@@ -159,14 +159,30 @@ for (const viewport of [
   });
 }
 
-test('reduced motion keeps cross-route active signal still', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/projects/');
+for (const viewport of [
+  { name: 'desktop', width: 1440, height: 900 },
+  { name: 'mobile', width: 390, height: 844 },
+]) {
+  test(`reduced motion skips document and active-link transitions on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.addInitScript(() => {
+      window.addEventListener('pageswap', (event) => {
+        window.sessionStorage.setItem('__routeSignalTransition', String(Boolean(event.viewTransition)));
+      });
+    });
+    await page.goto('/projects/');
 
-  const activeLink = page.locator('.site-header__desktop-nav a[aria-current="page"]');
-  await expect(activeLink).toHaveCount(1);
-  await expect.poll(() => activeLink.evaluate((link) => getComputedStyle(link).viewTransitionName)).toBe('none');
-});
+    const navigationSelector = viewport.width >= 860 ? '.site-header__desktop-nav' : '.site-header__compact-nav';
+    const activeLink = page.locator(`${navigationSelector} a[aria-current="page"]`);
+    await expect(activeLink).toHaveCount(1);
+    await expect.poll(() => activeLink.evaluate((link) => getComputedStyle(link).viewTransitionName)).toBe('none');
+
+    await page.locator(`${navigationSelector} a[href="/open-source"]`).click();
+    await expect(page).toHaveURL(/\/open-source\/?$/);
+    await expect.poll(() => page.evaluate(() => sessionStorage.getItem('__routeSignalTransition'))).toBe('false');
+  });
+}
 
 test.describe('Main content landmark', () => {
   for (const route of PRIMARY_ROUTES) {

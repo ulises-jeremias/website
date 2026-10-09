@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-09T05:47:01.078Z",
+  "generatedAt": "2026-10-09T06:12:08.504Z",
   "method": "Fresh browser context per route and viewport; text resources gzip level 9; already-compressed assets use source bytes.",
   "routes": {
     "/": {
       "mobile": {
         "total": 149156,
-        "document": 12269,
+        "document": 12270,
         "script": 0,
-        "style": 16429,
+        "style": 16428,
         "image": 73226,
         "font": 47232,
         "other": 0,
@@ -15,9 +15,9 @@
       },
       "desktop": {
         "total": 308996,
-        "document": 12269,
+        "document": 12270,
         "script": 0,
-        "style": 16429,
+        "style": 16428,
         "image": 233066,
         "font": 47232,
         "other": 0,
@@ -26,20 +26,20 @@
     },
     "/about/": {
       "mobile": {
-        "total": 69436,
+        "total": 69435,
         "document": 10016,
         "script": 0,
-        "style": 14786,
+        "style": 14785,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 69436,
+        "total": 69435,
         "document": 10016,
         "script": 0,
-        "style": 14786,
+        "style": 14785,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -48,20 +48,20 @@
     },
     "/agentic/": {
       "mobile": {
-        "total": 65788,
+        "total": 65787,
         "document": 8490,
         "script": 0,
-        "style": 12664,
+        "style": 12663,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 65788,
+        "total": 65787,
         "document": 8490,
         "script": 0,
-        "style": 12664,
+        "style": 12663,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -70,20 +70,20 @@
     },
     "/dotfiles/": {
       "mobile": {
-        "total": 100307,
+        "total": 100306,
         "document": 15903,
         "script": 0,
-        "style": 17938,
+        "style": 17937,
         "image": 3802,
         "font": 62664,
         "other": 0,
         "requests": 11
       },
       "desktop": {
-        "total": 215113,
+        "total": 215112,
         "document": 15903,
         "script": 0,
-        "style": 17938,
+        "style": 17937,
         "image": 118608,
         "font": 62664,
         "other": 0,
@@ -92,20 +92,20 @@
     },
     "/agentic-workstation/": {
       "mobile": {
-        "total": 118257,
+        "total": 118256,
         "document": 12271,
         "script": 2410,
-        "style": 15202,
+        "style": 15201,
         "image": 3802,
         "font": 84572,
         "other": 0,
         "requests": 13
       },
       "desktop": {
-        "total": 118257,
+        "total": 118256,
         "document": 12271,
         "script": 2410,
-        "style": 15202,
+        "style": 15201,
         "image": 3802,
         "font": 84572,
         "other": 0,
@@ -114,20 +114,20 @@
     },
     "/agent-toolkit/": {
       "mobile": {
-        "total": 128238,
+        "total": 128237,
         "document": 18997,
         "script": 2861,
-        "style": 18006,
+        "style": 18005,
         "image": 3802,
         "font": 84572,
         "other": 0,
         "requests": 12
       },
       "desktop": {
-        "total": 128238,
+        "total": 128237,
         "document": 18997,
         "script": 2861,
-        "style": 18006,
+        "style": 18005,
         "image": 3802,
         "font": 84572,
         "other": 0,
@@ -137,9 +137,9 @@
     "/agentic-harness/": {
       "mobile": {
         "total": 120695,
-        "document": 11144,
+        "document": 11145,
         "script": 889,
-        "style": 13700,
+        "style": 13699,
         "image": 3802,
         "font": 91160,
         "other": 0,
@@ -147,9 +147,9 @@
       },
       "desktop": {
         "total": 120695,
-        "document": 11144,
+        "document": 11145,
         "script": 889,
-        "style": 13700,
+        "style": 13699,
         "image": 3802,
         "font": 91160,
         "other": 0,
@@ -158,20 +158,20 @@
     },
     "/v/": {
       "mobile": {
-        "total": 156846,
-        "document": 18217,
+        "total": 156844,
+        "document": 18216,
         "script": 3615,
-        "style": 16603,
+        "style": 16602,
         "image": 55747,
         "font": 62664,
         "other": 0,
         "requests": 15
       },
       "desktop": {
-        "total": 156846,
-        "document": 18217,
+        "total": 156844,
+        "document": 18216,
         "script": 3615,
-        "style": 16603,
+        "style": 16602,
         "image": 55747,
         "font": 62664,
         "other": 0,
@@ -180,42 +180,42 @@
     },
     "/create-awesome/": {
       "mobile": {
-        "total": 113589,
+        "total": 113588,
         "document": 30505,
         "script": 0,
-        "style": 16618,
+        "style": 16617,
         "image": 3802,
         "font": 62664,
         "other": 0,
         "requests": 10
       },
       "desktop": {
-        "total": 113589,
+        "total": 120634,
         "document": 30505,
         "script": 0,
-        "style": 16618,
-        "image": 3802,
+        "style": 16617,
+        "image": 10848,
         "font": 62664,
         "other": 0,
-        "requests": 10
+        "requests": 14
       }
     },
     "/community/": {
       "mobile": {
-        "total": 94523,
+        "total": 94522,
         "document": 13302,
         "script": 0,
-        "style": 14679,
+        "style": 14678,
         "image": 3802,
         "font": 62740,
         "other": 0,
         "requests": 10
       },
       "desktop": {
-        "total": 94523,
+        "total": 94522,
         "document": 13302,
         "script": 0,
-        "style": 14679,
+        "style": 14678,
         "image": 3802,
         "font": 62740,
         "other": 0,
@@ -225,9 +225,9 @@
     "/blog/": {
       "mobile": {
         "total": 65008,
-        "document": 7168,
+        "document": 7169,
         "script": 0,
-        "style": 13206,
+        "style": 13205,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -235,9 +235,9 @@
       },
       "desktop": {
         "total": 65008,
-        "document": 7168,
+        "document": 7169,
         "script": 0,
-        "style": 13206,
+        "style": 13205,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -246,20 +246,20 @@
     },
     "/projects/": {
       "mobile": {
-        "total": 124448,
+        "total": 124447,
         "document": 12046,
         "script": 0,
-        "style": 13748,
+        "style": 13747,
         "image": 29374,
         "font": 69280,
         "other": 0,
         "requests": 15
       },
       "desktop": {
-        "total": 129538,
+        "total": 129537,
         "document": 12046,
         "script": 0,
-        "style": 13748,
+        "style": 13747,
         "image": 34464,
         "font": 69280,
         "other": 0,
@@ -268,20 +268,20 @@
     },
     "/open-source/": {
       "mobile": {
-        "total": 66830,
-        "document": 7829,
+        "total": 66832,
+        "document": 7832,
         "script": 1585,
-        "style": 12782,
+        "style": 12781,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 9
       },
       "desktop": {
-        "total": 66830,
-        "document": 7829,
+        "total": 66832,
+        "document": 7832,
         "script": 1585,
-        "style": 12782,
+        "style": 12781,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -290,20 +290,20 @@
     },
     "/hornero-os/": {
       "mobile": {
-        "total": 106620,
+        "total": 106619,
         "document": 10750,
         "script": 1034,
-        "style": 14339,
+        "style": 14338,
         "image": 17833,
         "font": 62664,
         "other": 0,
         "requests": 13
       },
       "desktop": {
-        "total": 135612,
+        "total": 135611,
         "document": 10750,
         "script": 1034,
-        "style": 14339,
+        "style": 14338,
         "image": 46825,
         "font": 62664,
         "other": 0,
@@ -313,9 +313,9 @@
     "/sponsor/": {
       "mobile": {
         "total": 70713,
-        "document": 12276,
+        "document": 12277,
         "script": 0,
-        "style": 13803,
+        "style": 13802,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -323,9 +323,9 @@
       },
       "desktop": {
         "total": 70713,
-        "document": 12276,
+        "document": 12277,
         "script": 0,
-        "style": 13803,
+        "style": 13802,
         "image": 3802,
         "font": 40832,
         "other": 0,
@@ -334,20 +334,20 @@
     },
     "/404.html": {
       "mobile": {
-        "total": 63817,
+        "total": 63816,
         "document": 6987,
         "script": 0,
-        "style": 12196,
+        "style": 12195,
         "image": 3802,
         "font": 40832,
         "other": 0,
         "requests": 8
       },
       "desktop": {
-        "total": 63817,
+        "total": 63816,
         "document": 6987,
         "script": 0,
-        "style": 12196,
+        "style": 12195,
         "image": 3802,
         "font": 40832,
         "other": 0,
