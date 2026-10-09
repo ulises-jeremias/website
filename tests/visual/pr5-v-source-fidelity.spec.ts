@@ -157,6 +157,82 @@ test.describe('PR5 V source-fidelity route', () => {
       .toBe(true);
   });
 
+  test('traces the documented VTL → VSL → V foundation path on request', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1100 });
+    await page.goto('/v');
+
+    const instrument = page.locator('[data-v-architecture]');
+    const traceButton = instrument.locator('[data-v-architecture-run]');
+    const topology = instrument.locator('[data-v-architecture-topology]');
+
+    await expect(instrument).toContainText('VTL builds on VSL');
+    await expect(instrument).toContainText("VSL's default path is pure V");
+    await expect(traceButton).toBeVisible();
+    await traceButton.click();
+    await expect(topology).toHaveAttribute('data-tracing', 'true');
+    await expect
+      .poll(() =>
+        topology
+          .locator('.v-lab__topology-node')
+          .first()
+          .evaluate((node) => node.getAnimations().some((animation) => animation.playState === 'running')),
+      )
+      .toBe(true);
+    await expect(instrument.locator('[data-v-architecture-status]')).toContainText('Tracing VTL');
+    await expect(instrument.locator('[data-v-architecture-status]')).toContainText('Trace complete', {
+      timeout: 3000,
+    });
+    await expect(topology).not.toHaveAttribute('data-tracing', 'true');
+    await capture(page, 'v-foundation-instrument-desktop.png');
+    const rxvLink = instrument.locator('[data-v-quick-station="rxv"]');
+    await rxvLink.click();
+    await expect(rxvLink).toHaveAttribute('aria-current', 'location');
+    await expect(page.locator('[data-v-station="rxv"]')).toHaveAttribute('aria-selected', 'true');
+    await expect(page).toHaveURL(/#rxv$/);
+  });
+
+  test('keeps the foundation path legible on mobile and still under reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
+    for (const width of [320, 390, 768]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto('/v');
+
+      const instrument = page.locator('[data-v-architecture]');
+      const traceButton = instrument.locator('[data-v-architecture-run]');
+      const topology = instrument.locator('[data-v-architecture-topology]');
+
+      await expect(instrument).toContainText('VTL builds on VSL');
+      await expect(instrument.locator('.v-lab__topology-node')).toHaveCount(3);
+      await expect
+        .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))
+        .toBe(true);
+      if (width <= 390) await capture(page, `v-foundation-instrument-${width}.png`);
+      await traceButton.click();
+      await expect(instrument.locator('[data-v-architecture-status]')).toContainText('Motion is disabled');
+      await expect(topology).not.toHaveAttribute('data-tracing', 'true');
+      await expect.poll(() => topology.evaluate((element) => element.getAnimations().length)).toBe(0);
+    }
+  });
+
+  test('keeps the relationship readable when JavaScript is unavailable', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto('/v');
+
+    const instrument = page.locator('[data-v-architecture]');
+    await expect(instrument).toContainText('VTL builds on VSL');
+    await expect(instrument).toContainText("VSL's default path is pure V");
+    await expect(instrument.locator('.v-lab__topology-node')).toHaveCount(3);
+    await expect(instrument.locator('[data-v-architecture-run]')).toBeHidden();
+    await expect(instrument.locator('[data-v-quick-station="rxv"]')).toHaveAttribute('href', '#rxv');
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))
+      .toBe(true);
+
+    await context.close();
+  });
+
   test('uses the canonical Awesome V destination in the Projects ledger', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/projects');
