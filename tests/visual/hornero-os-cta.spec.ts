@@ -151,8 +151,8 @@ test('Hornero OS manifest stays keyboard-usable at 320px in forced colors', asyn
     true,
   );
 
-  await manifest.locator('[data-hos-trace]').scrollIntoViewIfNeeded();
-  await expect(page).toHaveScreenshot('hornero-os-manifest-forced-colors-320.png');
+  await manifest.scrollIntoViewIfNeeded();
+  await expect(manifest).toHaveScreenshot('hornero-os-manifest-forced-colors-320.png');
 });
 
 test('Hornero OS manifest assembly has reviewed desktop and mobile states', async ({ page }) => {
