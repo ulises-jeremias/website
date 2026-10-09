@@ -35,7 +35,6 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
   style={`--world-color: ${accentTokens[world.accent]}`}
   data-world-id={world.id}
   data-related-worlds={world.relatedWorlds.join(' ')}
-  aria-label={`${world.number} — ${world.title}: ${world.description}`}
 >
   <span class:list={['atlas-world__plate', plateFrame, 'clip-corner-sm']}>
     <span class="atlas-world__number">{world.number}</span>
