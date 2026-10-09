@@ -99,7 +99,7 @@ test('primary navigation active state uses the current world accent', async ({ p
   expect(accents.size).toBe(routes.length);
 });
 
-test('compact navigation has touch-sized links and a world-color active rail', async ({ page }) => {
+test('compact navigation has touch-sized links and a world-color active signal', async ({ page }) => {
   for (const width of [320, 360, 390, 768]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto('/create-awesome');
@@ -125,6 +125,47 @@ test('compact navigation has touch-sized links and a world-color active rail', a
     expect(activeColors.indicator).toBe(activeColors.color);
     expect(activeColors.thickness).toBe('2px');
   }
+});
+
+for (const viewport of [
+  { name: 'desktop', width: 1440, height: 900 },
+  { name: 'mobile', width: 390, height: 844 },
+]) {
+  test(`carries the active world signal between documents on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.addInitScript(() => {
+      window.addEventListener('pageswap', (event) => {
+        window.sessionStorage.setItem('__routeSignalTransition', String(Boolean(event.viewTransition)));
+      });
+    });
+    await page.goto('/projects/');
+
+    const activeSelector =
+      viewport.width >= 860
+        ? '.site-header__desktop-nav a[aria-current="page"]'
+        : '.site-header__compact-nav a[aria-current="page"]';
+    const sourceSignal = page.locator(activeSelector);
+    await expect(sourceSignal).toHaveCount(1);
+    await expect.poll(() => sourceSignal.evaluate((link) => getComputedStyle(link).viewTransitionName)).toBe('route');
+
+    const destination = page.locator(
+      `${viewport.width >= 860 ? '.site-header__desktop-nav' : '.site-header__compact-nav'} a[href="/open-source"]`,
+    );
+    await destination.click();
+    await expect(page).toHaveURL(/\/open-source\/?$/);
+    await expect(page.locator(activeSelector)).toHaveAttribute('aria-current', 'page');
+    await expect.poll(() => page.evaluate(() => sessionStorage.getItem('__routeSignalTransition'))).toBe('true');
+  });
+}
+
+test('reduced motion keeps cross-route active signal still', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/projects/');
+
+  const activeLink = page.locator('.site-header__desktop-nav a[aria-current="page"]');
+  await expect(activeLink).toHaveCount(1);
+  await expect.poll(() => activeLink.evaluate((link) => getComputedStyle(link).viewTransitionName)).toBe('none');
 });
 
 test.describe('Main content landmark', () => {

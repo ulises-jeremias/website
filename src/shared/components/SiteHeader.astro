@@ -184,12 +184,8 @@ const emailHref = `mailto:${profile.contact.email}`;
     text-decoration: none;
   }
 
-  .site-header__compact-nav a:hover {
+  .site-header__compact-nav a:is(:hover, .is-active) {
     color: var(--nest-cyan);
-  }
-
-  .site-header__compact-nav a:hover,
-  .site-header__compact-nav a.is-active {
     border-block-end-color: currentColor;
   }
 

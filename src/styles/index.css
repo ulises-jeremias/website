@@ -13,6 +13,16 @@
 @import './textures.css';
 @import './themes/index.css';
 
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-header a[aria-current='page'] {
+    view-transition-name: route;
+  }
+}
+
 html {
   color-scheme: dark;
   background: var(--color-bg);
