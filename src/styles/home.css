@@ -465,25 +465,31 @@
 
 .hero-portals__item:has(.hero-portals__link:hover) .hero-portals__icon,
 .hero-portals__item:has(.hero-portals__link:focus-visible) .hero-portals__icon,
-body:has(.hero-focus__link[data-area='agentic']:hover) .hero-portals__link[data-area='agentic'] .hero-portals__icon,
-body:has(.hero-focus__link[data-area='agentic']:focus-visible)
+body:has(.hero-focus__link[data-area='agentic']:is(:hover, :focus-visible))
   .hero-portals__link[data-area='agentic']
   .hero-portals__icon,
-body:has(.hero-focus__link[data-area='hornero']:hover) .hero-portals__link[data-area='hornero'] .hero-portals__icon,
-body:has(.hero-focus__link[data-area='hornero']:focus-visible)
+body:has(.hero-focus__link[data-area='hornero']:is(:hover, :focus-visible))
   .hero-portals__link[data-area='hornero']
+  .hero-portals__icon,
+body:has(.hero-focus__link[data-area='v-ecosystem']:is(:hover, :focus-visible))
+  .hero-portals__link[data-area='v-ecosystem']
+  .hero-portals__icon,
+body:has(.hero-focus__link[data-area='create-awesome']:is(:hover, :focus-visible))
+  .hero-portals__link[data-area='create-awesome']
   .hero-portals__icon {
   transform: translateY(-2px);
   border-color: var(--portal-accent);
   box-shadow: 0 0 1.1rem color-mix(in srgb, var(--portal-accent) 36%, transparent);
 }
 
-body:has(.hero-portals__link[data-area='agentic']:hover) .hero-focus__item:has(.hero-focus__link[data-area='agentic']),
-body:has(.hero-portals__link[data-area='agentic']:focus-visible)
+body:has(.hero-portals__link[data-area='agentic']:is(:hover, :focus-visible))
   .hero-focus__item:has(.hero-focus__link[data-area='agentic']),
-body:has(.hero-portals__link[data-area='hornero']:hover) .hero-focus__item:has(.hero-focus__link[data-area='hornero']),
-body:has(.hero-portals__link[data-area='hornero']:focus-visible)
-  .hero-focus__item:has(.hero-focus__link[data-area='hornero']) {
+body:has(.hero-portals__link[data-area='hornero']:is(:hover, :focus-visible))
+  .hero-focus__item:has(.hero-focus__link[data-area='hornero']),
+body:has(.hero-portals__link[data-area='v-ecosystem']:is(:hover, :focus-visible))
+  .hero-focus__item:has(.hero-focus__link[data-area='v-ecosystem']),
+body:has(.hero-portals__link[data-area='create-awesome']:is(:hover, :focus-visible))
+  .hero-focus__item:has(.hero-focus__link[data-area='create-awesome']) {
   background: color-mix(in srgb, var(--focus-accent) 11%, transparent);
   border-inline-start-color: var(--focus-accent);
 }
