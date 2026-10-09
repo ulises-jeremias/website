@@ -112,12 +112,6 @@
   }
 }
 
-@keyframes atlas-dock-signal {
-  to {
-    stroke-dashoffset: -48;
-  }
-}
-
 @keyframes atlas-city-shimmer {
   0%,
   100% {
@@ -607,10 +601,6 @@
     animation: atlas-glow-breathe 5s ease-in-out infinite;
   }
 
-  .atlas-world__dock-signal {
-    animation: atlas-dock-signal 4.8s linear infinite;
-  }
-
   .atlas-world--city .atlas-world__island {
     animation: atlas-city-shimmer 6s ease-in-out infinite;
   }
@@ -705,12 +695,10 @@
   position: absolute;
   z-index: 0;
   inset-inline-start: 50%;
-  inset-block-end: 2%;
+  inset-block-end: 0;
+  display: block;
   inline-size: 126%;
-  block-size: 42%;
-  overflow: visible;
-  color: var(--world-color);
-  opacity: 0.7;
+  opacity: 0.88;
   transform: translateX(-50%);
   transition:
     opacity var(--motion-duration-fast) var(--motion-ease-out),
@@ -718,44 +706,10 @@
   pointer-events: none;
 }
 
-.atlas-world__dock-shadow {
-  fill: color-mix(in srgb, var(--world-color) 15%, transparent);
-  filter: blur(4px);
-}
-
-.atlas-world__dock-side {
-  fill: color-mix(in srgb, var(--nest-void) 78%, var(--world-color) 22%);
-  stroke: color-mix(in srgb, var(--world-color) 62%, transparent);
-  stroke-width: 1.2;
-}
-
-.atlas-world__dock-surface {
-  fill: color-mix(in srgb, var(--nest-void) 84%, var(--world-color) 16%);
-  stroke: color-mix(in srgb, var(--world-color) 75%, var(--nest-paper) 25%);
-  stroke-width: 1.4;
-}
-
-.atlas-world__dock-grid {
-  fill: none;
-  stroke: color-mix(in srgb, var(--world-color) 42%, transparent);
-  stroke-width: 0.8;
-  opacity: 0.6;
-}
-
-.atlas-world__dock-ring {
-  fill: color-mix(in srgb, var(--world-color) 7%, transparent);
-  stroke: color-mix(in srgb, var(--world-color) 88%, white 12%);
-  stroke-width: 1.2;
-  filter: drop-shadow(0 0 3px var(--world-color));
-}
-
-.atlas-world__dock-signal {
-  fill: none;
-  stroke: var(--nest-paper);
-  stroke-width: 1.2;
-  stroke-dasharray: 1 11;
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 3px var(--world-color));
+.atlas-world__dock-image {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
 }
 
 .atlas-world__glow {
@@ -770,7 +724,7 @@
     transparent 72%
   );
   filter: blur(10px);
-  opacity: 0.85;
+  opacity: 0.58;
   pointer-events: none;
 }
 
@@ -829,7 +783,8 @@
 .atlas-world:hover .atlas-world__dock,
 .atlas-world:focus-visible .atlas-world__dock {
   opacity: 1;
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--world-color) 38%, transparent));
+  filter: drop-shadow(0 0 9px color-mix(in srgb, var(--world-color) 30%, transparent));
+  transform: translate(-50%, -0.15rem) scale(1.015);
 }
 
 .atlas-world:hover .atlas-world__title,
@@ -1225,7 +1180,6 @@
   .synthwave-environment__plate,
   .atlas-world,
   .atlas-world__glow,
-  .atlas-world__dock-signal,
   .atlas-world--city .atlas-world__island,
   .project-atlas__stage::after {
     animation: none !important;
