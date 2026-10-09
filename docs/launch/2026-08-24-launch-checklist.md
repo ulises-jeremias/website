@@ -35,6 +35,36 @@ profile-fact, and owner review items below remain open under issue #405. The
 current manual test matrix is maintained in
 [`../design/current/uiux-manual-qa-checklist.md`](../design/current/uiux-manual-qa-checklist.md).
 
+## Current Verification Addendum — 2026-10-09
+
+The latest protected revision is `main@5f8736c5a27974e87b1692872dfab1a6d37bbf53`,
+which includes [PR #521](https://github.com/ulises-jeremias/website/pull/521),
+a source-backed refresh of the Agent Toolkit inventory snapshot. The upstream
+source commit is recorded in the snapshot; its version and inventory counts did
+not change.
+
+For this revision, Build ([run 37884002250](https://github.com/ulises-jeremias/website/actions/runs/37884002250)),
+Run tests ([37884002274](https://github.com/ulises-jeremias/website/actions/runs/37884002274)),
+Lint ([37884002285](https://github.com/ulises-jeremias/website/actions/runs/37884002285)),
+Typecheck ([37884002228](https://github.com/ulises-jeremias/website/actions/runs/37884002228)),
+Todo Checker ([37884002233](https://github.com/ulises-jeremias/website/actions/runs/37884002233)),
+Browser Quality ([37884002269](https://github.com/ulises-jeremias/website/actions/runs/37884002269)),
+and Production Deployment smoke ([37884028290](https://github.com/ulises-jeremias/website/actions/runs/37884028290))
+passed. Browser Quality completed route budgets, Lighthouse CI, and the full
+browser suite. Deployment smoke passed 21/21 checks against production.
+MegaLinter ([37884002279](https://github.com/ulises-jeremias/website/actions/runs/37884002279))
+was skipped by its workflow condition and is not counted as a pass.
+
+The run's reviewed desktop and mobile route captures are available as the
+[`browser-quality-1` artifact](https://github.com/ulises-jeremias/website/actions/runs/37884002269).
+Production returned HTTP 200 for `/` and `/hornero-os/`; the deployment smoke
+also checked the canonical host, routes, metadata, and representative assets.
+The official Hornero OS project destination remains `https://horneroos.com`.
+
+This update records automated evidence only. It does not close the manual
+NVDA/Firefox, VoiceOver/Safari, TalkBack/Chrome, zoom, contrast, licensing,
+profile-fact, or owner visual/content review items tracked by issue #405.
+
 ## Release Scope
 
 The launch candidate contains the completed route redesign waves A-E for:
