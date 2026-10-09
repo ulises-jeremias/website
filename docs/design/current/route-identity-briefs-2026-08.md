@@ -196,3 +196,15 @@ captures at reduced motion; mobile structure is checked at 390px and by the
 existing 320px no-JavaScript test. Pixel snapshots are limited to desktop and
 tablet mastheads because system-font wrapping differs between local and CI
 Chromium; the full mobile route retains its own reviewed screenshot.
+
+## Addendum — Agentic adoption paths (2026-10-09)
+
+The interactive system map lets visitors trace four truthful starting points:
+Toolkit alone, a provisioned machine with Toolkit, Toolkit with persistent
+Harness context, or the complete three-project setup. A trace highlights only
+the selected stations and supported relationships, so animation does not
+suggest that every project depends on every other one. The static diagram and
+its relationship copy remain available without JavaScript; with reduced motion
+the chosen path appears immediately without autonomous movement. Playwright
+checks the four routes, keyboard activation, reduced motion, no-JavaScript
+fallback, and reflow at 320, 360, and 390 pixels.
