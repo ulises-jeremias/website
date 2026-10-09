@@ -63,7 +63,7 @@
     "ajv-draft-04": "^1.0.0",
     "astro": "^7.3.5",
     "axe-core": "^4.14.0",
-    "chrome-launcher": "^1.2.1",
+    "chrome-launcher": "^1.2.2",
     "cspell": "^10.3.4",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
