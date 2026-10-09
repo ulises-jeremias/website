@@ -87,6 +87,15 @@ the chosen stations and their real connections illuminate. Both behaviors keep
 their static HTML story, and both have focused responsive and reduced-motion
 coverage.
 
+The homepage hero now includes a dated Current Focus beacon derived directly
+from canonical portfolio entries. It names Agent Toolkit's active desktop
+workspace work and Hornero OS's still non-installable composition preview,
+links each to its product route, and cross-highlights the corresponding atlas
+area on hover or keyboard focus. It remains useful in static HTML, reflows at
+320px, keeps 44px link targets, and stops all beacon animation under reduced
+motion. These claims were checked against upstream project sources on
+2026-10-09; refresh the dated entries when the work changes.
+
 The baseline before the atlas docking-art follow-up was production
 `main@d415c4e7` (2026-10-09). It included the VTL foundation path (PR #525),
 the full-history fix for inventory refreshes (PR #528), and the refreshed

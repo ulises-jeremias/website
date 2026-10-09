@@ -1,7 +1,8 @@
 ---
 import { profile } from '@/data/profile.js';
-import { heroKeywords, terminalQuote } from '../data/index.js';
+import { heroKeywords } from '../data/index.js';
 import HeroPortals from './HeroPortals.astro';
+import CurrentFocus from './CurrentFocus.astro';
 import SynthwaveEnvironment from './SynthwaveEnvironment.astro';
 
 const [firstName, ...restName] = profile.displayName.split(' ');
@@ -81,15 +82,7 @@ const keywordRows = [heroKeywords.slice(0, 3), heroKeywords.slice(3)] as const;
 
     <div class="hero__atlas-slot">
       <HeroPortals />
-      <blockquote class="hero__quote neon-frame clip-corner">
-        <span class="hero__quote-prompt" aria-hidden="true">
-          &gt;
-        </span>
-        {terminalQuote}
-        <footer class="hero__quote-footer" aria-hidden="true">
-          —
-        </footer>
-      </blockquote>
+      <CurrentFocus />
     </div>
   </div>
 </section>

@@ -120,6 +120,64 @@ test.describe('homepage visual coverage', () => {
     );
   });
 
+  test('current focus is factual, linked, touch-sized, and cross-highlights its atlas portals', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/');
+
+    const focus = page.getByRole('region', { name: 'Current focus' });
+    await expect(focus).toBeVisible();
+    const toolkit = focus.getByRole('link', {
+      name: /Agent Toolkit.*Agentic Developer Stack.*Desktop workspace and session history/,
+    });
+    const hornero = focus.getByRole('link', {
+      name: /Hornero OS.*Hornero Linux Desktop.*Composition preview; no installable image yet/,
+    });
+    await expect(toolkit).toHaveAttribute('href', '/agent-toolkit');
+    await expect(hornero).toHaveAttribute('href', '/hornero-os');
+    await expect(toolkit.locator('time')).toHaveAttribute('datetime', '2026-10-09');
+
+    const toolkitArea = page.locator('.hero-portals__link[data-area="agentic"]');
+    const toolkitIcon = toolkitArea.locator('.hero-portals__icon');
+    const before = await toolkitIcon.evaluate((element) => getComputedStyle(element).borderColor);
+    await toolkit.focus();
+    await expect(toolkit).toBeFocused();
+    await expect.poll(() => toolkitIcon.evaluate((element) => getComputedStyle(element).borderColor)).not.toBe(before);
+    await expect
+      .poll(() => toolkit.locator('..').evaluate((element) => getComputedStyle(element).backgroundColor))
+      .not.toBe('rgba(0, 0, 0, 0)');
+
+    await page.setViewportSize({ width: 320, height: 844 });
+    await expect(focus).toBeVisible();
+    const dimensions = await page.evaluate(() => ({
+      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+      targets: [...document.querySelectorAll('.hero-focus__link')].map((link) => {
+        const rect = link.getBoundingClientRect();
+        return { width: rect.width, height: rect.height };
+      }),
+    }));
+    expect(dimensions.overflow).toBe(false);
+    expect(dimensions.targets.every(({ width, height }) => width >= 44 && height >= 44)).toBe(true);
+
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await expect(page.locator('.hero-focus__beacon')).toHaveCSS('animation-name', 'focus-beacon');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(page.locator('.hero-focus__beacon')).toHaveCSS('animation-name', 'none');
+  });
+
+  test('current focus remains readable and navigable without JavaScript', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto('/');
+
+    const focus = page.getByRole('region', { name: 'Current focus' });
+    await expect(focus).toBeVisible();
+    await expect(focus.getByRole('link', { name: /Agent Toolkit/ })).toHaveAttribute('href', '/agent-toolkit');
+    await expect(focus.getByRole('link', { name: /Hornero OS/ })).toHaveAttribute('href', '/hornero-os');
+
+    await context.close();
+  });
+
   test('featured worlds answer interaction with their own system motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.setViewportSize({ width: 1440, height: 1000 });
@@ -310,7 +368,7 @@ test.describe('homepage visual coverage', () => {
     });
   });
 
-  test('mobile: hero quote stays in the hero; atlas renders later as secondary exploration (#403)', async ({
+  test('mobile: current focus stays in the hero; atlas renders later as secondary exploration (#403)', async ({
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });

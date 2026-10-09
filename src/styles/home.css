@@ -333,31 +333,182 @@
   min-block-size: min(68vh, 40rem);
 }
 
-.hero__quote {
+.hero-focus {
+  --focus-accent: var(--nest-cyan);
   position: relative;
   z-index: 4;
-  max-inline-size: 15rem;
-  width: 15rem;
-  margin: 0 0 var(--space-8) auto;
-  padding: 0.85rem;
-  font-size: 0.6875rem;
-  line-height: 1.55;
-  color: color-mix(in srgb, var(--nest-paper) 85%, transparent);
+  inline-size: min(100%, 25rem);
+  margin: 1rem 0 var(--space-8) auto;
+  padding: 0.9rem 1rem 0.75rem;
+  color: color-mix(in srgb, var(--nest-paper) 91%, transparent);
+  background: color-mix(in srgb, var(--nest-midnight-950) 86%, transparent);
+  border-color: color-mix(in srgb, var(--focus-accent) 43%, transparent);
+  box-shadow: 0 0 1.5rem color-mix(in srgb, var(--focus-accent) 10%, transparent);
 }
 
-.hero__quote-prompt,
-.hero__quote-footer {
-  color: var(--nest-magenta);
+.hero-focus__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block-end: 0.55rem;
+  border-block-end: 1px solid color-mix(in srgb, var(--focus-accent) 23%, transparent);
 }
 
-.hero__quote-footer {
-  margin-block-start: 0.5rem;
+.hero-focus__header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  color: var(--nest-paper);
+  font: 600 0.72rem/1.3 var(--font-mono);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
-@media (width >= 1024px) {
-  .hero__quote {
-    position: relative;
-    margin: 1rem 0 0 auto;
+.hero-focus__beacon,
+.hero-focus__signal {
+  flex: 0 0 auto;
+  inline-size: 0.48rem;
+  block-size: 0.48rem;
+  border: 1px solid var(--focus-accent);
+  background: var(--focus-accent);
+  box-shadow: 0 0 0.75rem color-mix(in srgb, var(--focus-accent) 68%, transparent);
+}
+
+.hero-focus__stamp,
+.hero-focus__meta {
+  color: var(--color-text-faint);
+  font: 0.6rem/1.4 var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.hero-focus__list {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.4rem 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+.hero-focus__item {
+  --focus-accent: var(--nest-cyan);
+  border-inline-start: 2px solid color-mix(in srgb, var(--focus-accent) 42%, transparent);
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-ease-out),
+    border-color var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.hero-focus__link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-block-size: var(--touch-min);
+  padding: 0.45rem 0.55rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero-focus__signal {
+  inline-size: 0.38rem;
+  block-size: 0.38rem;
+  color: var(--focus-accent);
+}
+
+.hero-focus__copy {
+  display: grid;
+  gap: 0.08rem;
+  min-inline-size: 0;
+  flex: 1;
+}
+
+.hero-focus__project {
+  color: var(--nest-paper);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.hero-focus__area,
+.hero-focus__detail {
+  font-size: 0.65rem;
+  line-height: 1.45;
+}
+
+.hero-focus__area {
+  color: var(--focus-accent);
+}
+.hero-focus__detail {
+  color: color-mix(in srgb, var(--nest-paper) 72%, transparent);
+}
+
+.hero-focus__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.hero-focus__item:has(.hero-focus__link:hover),
+.hero-focus__item:has(.hero-focus__link:focus-visible) {
+  background: color-mix(in srgb, var(--focus-accent) 11%, transparent);
+  border-inline-start-color: var(--focus-accent);
+}
+
+.hero-focus__link:focus-visible {
+  outline: 2px solid var(--focus-accent);
+  outline-offset: -2px;
+}
+
+.hero-portals__item[data-current-focus='true'] .hero-portals__icon {
+  border-color: color-mix(in srgb, var(--portal-accent) 66%, transparent);
+}
+
+.hero-portals__item:has(.hero-portals__link:hover) .hero-portals__icon,
+.hero-portals__item:has(.hero-portals__link:focus-visible) .hero-portals__icon,
+body:has(.hero-focus__link[data-area='agentic']:hover) .hero-portals__link[data-area='agentic'] .hero-portals__icon,
+body:has(.hero-focus__link[data-area='agentic']:focus-visible)
+  .hero-portals__link[data-area='agentic']
+  .hero-portals__icon,
+body:has(.hero-focus__link[data-area='hornero']:hover) .hero-portals__link[data-area='hornero'] .hero-portals__icon,
+body:has(.hero-focus__link[data-area='hornero']:focus-visible)
+  .hero-portals__link[data-area='hornero']
+  .hero-portals__icon {
+  transform: translateY(-2px);
+  border-color: var(--portal-accent);
+  box-shadow: 0 0 1.1rem color-mix(in srgb, var(--portal-accent) 36%, transparent);
+}
+
+body:has(.hero-portals__link[data-area='agentic']:hover) .hero-focus__item:has(.hero-focus__link[data-area='agentic']),
+body:has(.hero-portals__link[data-area='agentic']:focus-visible)
+  .hero-focus__item:has(.hero-focus__link[data-area='agentic']),
+body:has(.hero-portals__link[data-area='hornero']:hover) .hero-focus__item:has(.hero-focus__link[data-area='hornero']),
+body:has(.hero-portals__link[data-area='hornero']:focus-visible)
+  .hero-focus__item:has(.hero-focus__link[data-area='hornero']) {
+  background: color-mix(in srgb, var(--focus-accent) 11%, transparent);
+  border-inline-start-color: var(--focus-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-focus__beacon,
+  .hero-focus__signal,
+  .hero-portals__item[data-current-focus='true'] .hero-portals__icon {
+    animation: focus-beacon 6s ease-in-out infinite;
+  }
+
+  .hero-focus__item:nth-child(2) .hero-focus__signal {
+    animation-delay: -2.7s;
+  }
+}
+
+@keyframes focus-beacon {
+  0%,
+  100% {
+    opacity: 0.78;
+    filter: brightness(0.9);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.22);
   }
 }
 
@@ -1111,10 +1262,9 @@
     font-size: clamp(2.6rem, 9.5vw, 3.6rem);
   }
 
-  .hero__quote {
+  .hero-focus {
     margin-inline: auto;
-    width: auto;
-    max-inline-size: 15rem;
+    inline-size: 100%;
   }
 
   .hero__nest-divider {
@@ -1178,6 +1328,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .synthwave-environment__plate,
+  .hero-focus__beacon,
+  .hero-focus__signal,
+  .hero-portals__item[data-current-focus='true'] .hero-portals__icon,
   .atlas-world,
   .atlas-world__glow,
   .atlas-world--city .atlas-world__island,
@@ -1191,7 +1344,8 @@
 
   .atlas-world:hover,
   .atlas-world:focus-visible,
-  .hero__cta--primary:hover {
+  .hero__cta--primary:hover,
+  .hero-portals__icon {
     transform: none;
   }
 

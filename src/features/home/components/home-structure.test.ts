@@ -81,10 +81,36 @@ describe('Synthwave Systems Atlas homepage', () => {
 
     expect(hero).toContain("from '@/data/profile");
     expect(hero).toContain('heroKeywords');
-    expect(hero).toContain('terminalQuote');
+    expect(hero).toContain('<CurrentFocus />');
     expect(hero).toContain('<SynthwaveEnvironment');
     expect(hero).toMatch(/hero__name/);
     expect(hero).not.toMatch(/avatar\.png|placeholder-user/i);
+  });
+
+  it('derives the dated homepage focus beacon from canonical portfolio entries', async () => {
+    const component = await readSource('features/home/components/CurrentFocus.astro');
+    const data = await readSource('features/home/data/index.ts');
+    const { getHomepageCurrentFocus } = await import('@/data/portfolio');
+
+    expect(data).toContain('getHomepageCurrentFocus()');
+    expect(component).toContain('currentFocus.map');
+    expect(component).toContain('<time datetime={item.verifiedAt}>');
+    expect(getHomepageCurrentFocus()).toEqual([
+      expect.objectContaining({
+        id: 'agent-toolkit',
+        path: '/agent-toolkit',
+        area: 'agentic',
+        text: 'Desktop workspace and session history',
+        verifiedAt: '2026-10-09',
+      }),
+      expect.objectContaining({
+        id: 'hornero-os',
+        path: '/hornero-os',
+        area: 'hornero',
+        text: 'Composition preview; no installable image yet',
+        verifiedAt: '2026-10-09',
+      }),
+    ]);
   });
 
   it('leads with developer-tooling positioning before Digital Nest exploration (#395)', async () => {

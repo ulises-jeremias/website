@@ -1,4 +1,4 @@
-import { getHomepagePortfolioAreas } from '@/data/portfolio.js';
+import { getHomepageCurrentFocus, getHomepagePortfolioAreas } from '@/data/portfolio.js';
 import { profile } from '@/data/profile.js';
 import { worldsByPriority } from '@/data/project-worlds.js';
 import { inventoryStrip } from '@/features/agent-toolkit/data/inventory.js';
@@ -39,13 +39,6 @@ export const heroKeywords = [
   'App Scaffolding',
   'Open Source',
 ] as const;
-
-/**
- * Terminal line in the hero: what is being built right now (verified against
- * the repositories on 2026-09-30) — not invented telemetry.
- */
-export const terminalQuote =
-  'now building: the Agent Toolkit desktop app and local API, and Hornero OS development previews.';
 
 export const nestStatus: NestStatusItem[] = [
   {
@@ -112,6 +105,11 @@ const featuredAreaVisuals: Record<FeaturedArea['id'], { accent: FeaturedArea['ac
   'v-ecosystem': { accent: 'blue', island: 'island-v' },
   'create-awesome': { accent: 'orange', island: 'island-assembly-workshop' },
 };
+
+export const currentFocus = getHomepageCurrentFocus().map((item) => ({
+  ...item,
+  accent: featuredAreaVisuals[item.area].accent,
+}));
 
 export const featuredAreas: FeaturedArea[] = getHomepagePortfolioAreas().map((area) => {
   const visual = featuredAreaVisuals[area.id];

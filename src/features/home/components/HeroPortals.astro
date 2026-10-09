@@ -1,5 +1,5 @@
 ---
-import { featuredAreas } from '../data/index.js';
+import { currentFocus, featuredAreas } from '../data/index.js';
 import Icon from '@/shared/components/Icon.astro';
 import type { PortfolioArea } from '@/data/portfolio.js';
 import type { IconName } from '@/shared/components/Icon.astro';
@@ -19,6 +19,8 @@ const portalIcons = {
   'v-ecosystem': 'lattice',
   'create-awesome': 'modules',
 } satisfies Record<PortfolioArea, IconName>;
+
+const currentFocusAreas = new Set<string>(currentFocus.map((item) => item.area));
 ---
 
 <nav class="hero-portals" aria-label="Featured work">
@@ -28,8 +30,12 @@ const portalIcons = {
   </p>
   <ol class="hero-portals__list">
     {featuredAreas.map((area) => (
-      <li class="hero-portals__item" style={`--portal-accent: ${accentTokens[area.accent]}`}>
-        <a class="hero-portals__link" href={area.path}>
+      <li
+        class="hero-portals__item"
+        data-current-focus={currentFocusAreas.has(area.id) ? 'true' : undefined}
+        style={`--portal-accent: ${accentTokens[area.accent]}`}
+      >
+        <a class="hero-portals__link" href={area.path} data-area={area.id}>
           <span class="hero-portals__icon" aria-hidden="true">
             <Icon name={portalIcons[area.id]} size={20} />
           </span>
