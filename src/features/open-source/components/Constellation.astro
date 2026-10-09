@@ -6,6 +6,7 @@ import {
   getConstellationNodes,
   getEvidenceLastUpdated,
 } from '@/data/open-source/index.js';
+import evidenceLaneTraceUrl from '../scripts/evidence-lane-trace.js?url&no-inline';
 
 const nodes = getConstellationNodes();
 const lastUpdated = getEvidenceLastUpdated();
@@ -73,13 +74,15 @@ const evidenceLanes = kindLegend.map((entry) => ({
       </ul>
     </div>
     <div class="constellation__map" aria-label="Contribution evidence map">
-      <p class="constellation__map-label">Source-backed records · one marker per subject</p>
+      <p class="constellation__map-label">Source-backed records · select a lane to trace its evidence</p>
       <ul class="constellation__lanes">
         {evidenceLanes.map((lane) => (
           <li class:list={['constellation__lane', `constellation__lane--${lane.kind}`]}>
             <a
               class="constellation__lane-link"
               href={`#evidence-${lane.kind}`}
+              data-evidence-trace-link
+              data-record-kind={lane.kind}
               aria-label={`View ${lane.records.length} ${lane.label.toLowerCase()} evidence records`}
             >
               <span class="constellation__lane-label">{lane.label}</span>
@@ -98,11 +101,17 @@ const evidenceLanes = kindLegend.map((entry) => ({
     </div>
   </div>
 
+  <p class="constellation__trace-status" role="status" aria-live="polite" aria-atomic="true" data-evidence-trace-status>
+    Trace ready · select a lane to follow its evidence.
+  </p>
+
   <p class="constellation__meta">
     Evidence refreshed <time datetime={lastUpdated}>{formatEvidenceDate(lastUpdated)}</time> · exact records follow
     below.
   </p>
 </section>
+
+<script is:inline src={evidenceLaneTraceUrl} defer></script>
 
 <style>
   .constellation {
@@ -428,5 +437,16 @@ const evidenceLanes = kindLegend.map((entry) => ({
     font-family: var(--font-mono);
     font-size: 0.72rem;
     color: var(--color-text-faint);
+  }
+
+  .constellation__trace-status {
+    min-height: 1.25rem;
+    margin: 0.7rem 0 0;
+    padding-inline-start: 0.75rem;
+    border-inline-start: 2px solid var(--nest-cyan);
+    color: var(--nest-cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.025em;
   }
 </style>
