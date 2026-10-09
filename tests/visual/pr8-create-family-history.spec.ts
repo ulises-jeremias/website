@@ -213,6 +213,15 @@ test.describe('PR8 enhanced family restoration', () => {
     await expect
       .poll(() => stages.evaluate((list) => getComputedStyle(list).gridTemplateColumns.split(' ').length))
       .toBe(1);
+    const railAlignment = await stages.evaluate((list) => {
+      const listRect = list.getBoundingClientRect();
+      const badgeRect = list.querySelector('.ca-world__flow-number')!.getBoundingClientRect();
+      return {
+        rail: Number.parseFloat(getComputedStyle(list).backgroundPositionX),
+        badgeCenter: badgeRect.left + badgeRect.width / 2 - listRect.left,
+      };
+    });
+    expect(Math.abs(railAlignment.rail - railAlignment.badgeCenter)).toBeLessThan(1);
 
     await page.getByRole('combobox', { name: 'Runtime' }).selectOption('rust');
     await expect(stages.locator('[data-ca-step="app"]')).toHaveClass(/is-current/, { timeout: 4000 });
