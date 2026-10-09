@@ -402,4 +402,6 @@ live status reports the same relationship. The adjacent RxV, setup-v, and
 Awesome V links identify parallel project roles and continue to work as native
 fragment links without JavaScript. The mobile composition turns the path into a
 vertical sequence at 560px and below. The route remains within the existing
-delivery budgets.
+delivery budgets. The station's reviewed Chromium VTL golden was refreshed
+from 569px to 570px; its contents match apart from the additional blank bottom
+pixel in the locator capture.
