@@ -19,7 +19,10 @@ const fallbackRoot = path.join(root, 'public', 'assets');
 const magick = process.env.MAGICK ?? 'magick';
 // The generated source has scattered low-opacity pixels outside this measured
 // opaque island silhouette. Crop those away before adding consistent padding.
-const sourceCrops = { 'island-agent': '1197x1132+31+72' };
+const sourceCrops = {
+  'island-agent': '1197x1132+31+72',
+  'island-atlas-dock': '1400x700+68+260',
+};
 const sources = readdirSync(sourceRoot)
   .filter((file) => /^island-.+\.png$/.test(file))
   .sort();
@@ -27,10 +30,19 @@ const sources = readdirSync(sourceRoot)
 for (const source of sources) {
   const base = path.basename(source, '.png');
   const input = path.join(sourceRoot, source);
-  for (const [suffix, size, quality] of [
-    ['', 640, 86],
-    ['-sm', 440, 84],
-  ]) {
+  const isDock = base === 'island-atlas-dock';
+  const extent = isDock ? '1400x700' : '1800x1800';
+  const variants = isDock
+    ? [
+        ['', 640, 320, 86],
+        ['-sm', 440, 220, 84],
+      ]
+    : [
+        ['', 640, 640, 86],
+        ['-sm', 440, 440, 84],
+      ];
+
+  for (const [suffix, width, height, quality] of variants) {
     const output = path.join(outputRoot, `${base}${suffix}.webp`);
     const result = spawnSync(
       magick,
@@ -42,9 +54,9 @@ for (const source of sources) {
         '-background',
         'none',
         '-extent',
-        '1800x1800',
+        extent,
         '-resize',
-        `${size}x${size}`,
+        `${width}x${height}`,
         '-strip',
         '-define',
         'webp:method=6',
@@ -63,8 +75,8 @@ for (const source of sources) {
     console.log(`island-art: wrote ${path.relative(root, output)}`);
   }
 
-  for (const size of [220, 440]) {
-    const fallback = path.join(fallbackRoot, `${base}-${size}.png`);
+  for (const [width, height] of [220, 440].map((size) => [size, isDock ? size / 2 : size])) {
+    const fallback = path.join(fallbackRoot, `${base}-${width}.png`);
     const result = spawnSync(
       magick,
       [
@@ -75,9 +87,9 @@ for (const source of sources) {
         '-background',
         'none',
         '-extent',
-        '1800x1800',
+        extent,
         '-resize',
-        `${size}x${size}`,
+        `${width}x${height}`,
         '-strip',
         '-define',
         'png:compression-level=9',
