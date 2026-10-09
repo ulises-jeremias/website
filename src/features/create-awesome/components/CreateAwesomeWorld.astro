@@ -551,6 +551,7 @@ const lineModules = [
         world
           .querySelector('[data-ca-package-addon-count]')
           ?.replaceChildren(`${addonCount} ${addonCount === 1 ? 'ADDON' : 'ADDONS'}`);
+        // Fixed attachment sockets keep the package readable; the adjacent label retains the exact total.
         world.querySelectorAll('[data-ca-addon-tile]').forEach((tile, index) => {
           tile.toggleAttribute('data-selected', index < addonCount);
         });
