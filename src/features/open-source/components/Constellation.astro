@@ -83,7 +83,6 @@ const evidenceLanes = kindLegend.map((entry) => ({
               href={`#evidence-${lane.kind}`}
               data-evidence-trace-link
               data-record-kind={lane.kind}
-              aria-label={`View ${lane.records.length} ${lane.label.toLowerCase()} evidence records`}
             >
               <span class="constellation__lane-label">{lane.label}</span>
               <span class="constellation__lane-track" aria-hidden="true">

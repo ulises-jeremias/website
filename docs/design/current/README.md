@@ -75,20 +75,23 @@ PRs #511–#517 continue the route-specific pass: About gains its systems orbit,
 Agentic opens on the stack map, the shared navigation gains world-aware active
 states and a compact route rail, ImgBot reduces committed image payloads, and
 Home turns its four Featured Work areas into responsive atlas portals above
-the layered island platforms. The new Home captures cover desktop, mobile,
+the illustrated island platforms. The Home captures cover desktop, mobile,
 320px reflow, and reduced motion; the platform illustration remains static
 when reduced motion is requested.
 
-Current production is `main@4407e0cf` (PR #523), including the Open Source
-evidence trace. Build, lint, type-check, unit tests, Browser Quality (route
-budgets, Lighthouse, and the full browser matrix), Todo Checker, and Deployment
-Smoke passed on this revision. MegaLinter passed on PR #523 and is intentionally
-skipped for main push events. Production Smoke verified all 26 assertions,
-covering public routes, sitemap, robots, RSS, metadata, canonical origins,
-representative assets, security headers, and caching. The Hornero OS CTA is
-locked to `https://horneroos.com`, and a nonexistent route serves the custom 404. PR #524 carries the active world signal between documents with native View
-Transitions, while reduced-motion users keep still navigation. Its browser
-regressions and route-byte measurements are recorded with the change.
+The baseline before the atlas docking-art follow-up was production
+`main@d415c4e7` (2026-10-09). It included the VTL foundation path (PR #525),
+the full-history fix for inventory refreshes (PR #528), and the refreshed
+Agent Toolkit inventory (PR #527). Build, lint, type-check, tests, Browser
+Quality, Todo Checker, deployment smoke, and the post-merge inventory-drift
+check passed on that baseline. MegaLinter passed on PR #527 and is intentionally
+skipped for main push events. Production Smoke verified 26 assertions covering
+public routes, metadata, canonical origins, sitemap, robots, RSS, representative
+assets, security headers, and caching. The Hornero OS CTA is locked to
+`https://horneroos.com`, and a nonexistent route serves the custom 404. PR #524
+carries the active world signal between documents with native View Transitions,
+while reduced-motion users keep still navigation. Its browser regressions and
+route-byte measurements are recorded with the change.
 
 ## Historical documents
 
