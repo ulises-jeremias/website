@@ -8,14 +8,14 @@ test('Create Awesome island art stays consistent across the homepage and Work ma
   await page.goto('/');
 
   const atlasWorld = page.locator('.atlas-world[data-world-id="create-awesome"]');
-  const atlasSource = atlasWorld.locator('source[type="image/webp"]');
+  const atlasSource = atlasWorld.locator('.atlas-world__visual source[type="image/webp"]');
   await expect(atlasSource).toHaveAttribute('srcset', new RegExp(`${asset}-sm\\.webp`));
-  await expect(atlasWorld.locator('source[type="image/png"]')).toHaveAttribute(
+  await expect(atlasWorld.locator('.atlas-world__visual source[type="image/png"]')).toHaveAttribute(
     'srcset',
     `/assets/${asset}-220.png 220w, /assets/${asset}-440.png 440w`,
   );
-  await expect(atlasWorld.locator('img')).toHaveAttribute('src', `/assets/${asset}-220.png`);
-  await atlasWorld.locator('img').evaluate((image: HTMLImageElement) => image.decode());
+  await expect(atlasWorld.locator('.atlas-world__visual img')).toHaveAttribute('src', `/assets/${asset}-220.png`);
+  await atlasWorld.locator('.atlas-world__visual img').evaluate((image: HTMLImageElement) => image.decode());
   await expect(atlasWorld).toHaveScreenshot('create-awesome-island-atlas-desktop.png');
 
   const featuredCard = page.locator('[aria-labelledby="featured-create-awesome-title"]');
@@ -51,13 +51,13 @@ test('PNG island fallback selects the matching physical resolution', async ({ br
 
     const world = page.locator('.atlas-world[data-world-id="create-awesome"]');
     await world.scrollIntoViewIfNeeded();
-    await world.locator('source[type="image/webp"]').evaluate((source) => {
+    await world.locator('.atlas-world__visual source[type="image/webp"]').evaluate((source) => {
       source.setAttribute('type', 'image/x-unsupported-webp');
     });
 
     const expectedWidth = deviceScaleFactor === 1 ? 220 : 440;
     await expect
-      .poll(() => world.locator('img').evaluate((image: HTMLImageElement) => image.currentSrc))
+      .poll(() => world.locator('.atlas-world__visual img').evaluate((image: HTMLImageElement) => image.currentSrc))
       .toContain(`${asset}-${expectedWidth}.png`);
     await page.close();
   }

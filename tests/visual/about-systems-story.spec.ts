@@ -14,15 +14,10 @@ test.describe('About systems-builder story', () => {
       const nodes = orbit.locator('a.about-orbit__station');
       await expect(orbit.getByText('A builder’s systems orbit')).toBeVisible();
       await expect(nodes).toHaveCount(5);
-      await expect
-        .poll(() => nodes.evaluateAll((items) => items.map((item) => item.getAttribute('aria-label'))))
-        .toEqual([
-          'Developer tooling: jump to this part of the build trajectory',
-          'V + scientific computing: jump to this part of the build trajectory',
-          'App composition: jump to this part of the build trajectory',
-          'Linux systems: jump to this part of the build trajectory',
-          'Agentic workflows: jump to this part of the build trajectory',
-        ]);
+      expect(await nodes.evaluateAll((items) => items.every((item) => !item.hasAttribute('aria-label')))).toBe(true);
+      for (const name of ['DEV TOOLING', 'V + SCIENCE', 'APP COMPOSE', 'LINUX SYSTEMS', 'AGENTIC FLOW']) {
+        await expect(orbit.getByRole('link', { name })).toBeVisible();
+      }
 
       const firstNode = nodes.first();
       const bounds = await firstNode.boundingBox();
@@ -44,7 +39,7 @@ test.describe('About systems-builder story', () => {
     const orbit = page.locator('.about-orbit');
     await expect(orbit.locator('.about-orbit__trace').first()).toHaveCSS('animation-name', 'about-orbit-trace');
     await expect(orbit.locator('.about-orbit__halo')).toHaveCSS('animation-name', 'about-orbit-rotate');
-    const linuxStop = orbit.getByRole('link', { name: /Linux systems:/ });
+    const linuxStop = orbit.getByRole('link', { name: 'LINUX SYSTEMS' });
     await linuxStop.focus();
     await expect(linuxStop).toBeFocused();
     await expect(linuxStop).toHaveAttribute('href', '#trajectory-linux');

@@ -35,10 +35,14 @@ const outDir = path.join(root, 'public', 'assets');
 
 const checkOnly = process.argv.includes('--check');
 const regenerate = process.argv.includes('--regenerate');
-const fallbackSizesFor = (webp) => (webp.startsWith('logo-nest.') ? [256] : [220, 440]);
-const fallbackPathFor = (webp, size) => {
+const fallbackDimensionsFor = (webp) => {
+  if (webp.startsWith('logo-nest.')) return [[256, 256]];
+  const isDock = path.basename(webp, '.webp') === 'island-atlas-dock';
+  return [220, 440].map((width) => [width, isDock ? width / 2 : width]);
+};
+const fallbackPathFor = (webp, width) => {
   const base = path.basename(webp, '.webp');
-  return path.join(outDir, `${base}${webp.startsWith('logo-nest.') ? '' : `-${size}`}.png`);
+  return path.join(outDir, `${base}${webp.startsWith('logo-nest.') ? '' : `-${width}`}.png`);
 };
 
 const webpFiles = (await readdir(nestDir)).filter(
@@ -47,20 +51,20 @@ const webpFiles = (await readdir(nestDir)).filter(
 const missing = [];
 const invalidDimensions = [];
 for (const webp of webpFiles) {
-  for (const size of fallbackSizesFor(webp)) {
+  for (const [size, expectedHeight] of fallbackDimensionsFor(webp)) {
     const outPath = fallbackPathFor(webp, size);
     try {
       await access(outPath, constants.F_OK);
       const png = await readFile(outPath);
       const width = png.readUInt32BE(16);
       const height = png.readUInt32BE(20);
-      const hasInvalidDimensions = width !== size || height !== size;
-      if (regenerate) missing.push({ webp, outPath, size });
+      const hasInvalidDimensions = width !== size || height !== expectedHeight;
+      if (regenerate) missing.push({ webp, outPath, size, height: expectedHeight });
       if (checkOnly && hasInvalidDimensions) {
-        invalidDimensions.push({ outPath, width, height, size });
+        invalidDimensions.push({ outPath, width, height, size, expectedHeight });
       }
     } catch {
-      missing.push({ webp, outPath, size });
+      missing.push({ webp, outPath, size, height: expectedHeight });
     }
   }
 }
@@ -74,7 +78,7 @@ if (checkOnly) {
     heroFallbackMissing = true;
   }
 
-  const fallbackCount = webpFiles.reduce((count, webp) => count + fallbackSizesFor(webp).length, 0);
+  const fallbackCount = webpFiles.reduce((count, webp) => count + fallbackDimensionsFor(webp).length, 0);
   if (missing.length === 0 && invalidDimensions.length === 0 && !heroFallbackMissing) {
     console.log(`island-pngs: all ${fallbackCount} PNG variants and hero JPEG present`);
     process.exit(0);
@@ -85,7 +89,7 @@ if (checkOnly) {
   for (const m of missing) console.error(`  - ${path.relative(root, m.outPath)}`);
   for (const image of invalidDimensions) {
     console.error(
-      `  - ${path.relative(root, image.outPath)} (${image.width}x${image.height}; expected ${image.size}x${image.size})`,
+      `  - ${path.relative(root, image.outPath)} (${image.width}x${image.height}; expected ${image.size}x${image.expectedHeight})`,
     );
   }
   if (heroFallbackMissing) console.error(`  - ${path.relative(root, heroFallback)}`);
@@ -109,20 +113,20 @@ const shimPath = path.join(nestDir, '__island-pngs__.html');
 await writeFile(shimPath, '<!doctype html><title>island-pngs</title>');
 await page.goto(`file://${shimPath}`, { waitUntil: 'load' });
 
-for (const { webp, outPath, size } of missing) {
+for (const { webp, outPath, size, height } of missing) {
   const b64 = await page.evaluate(
-    async ({ src, size }) => {
+    async ({ src, size, height }) => {
       const img = new Image();
       img.src = src;
       await img.decode();
       const canvas = document.createElement('canvas');
       canvas.width = size;
-      canvas.height = size;
+      canvas.height = height;
       const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, size, size);
+      ctx.drawImage(img, 0, 0, size, height);
       return canvas.toDataURL('image/png');
     },
-    { src: webp, size },
+    { src: webp, size, height },
   );
   const bytes = Buffer.from(b64.replace(/^data:image\/png;base64,/, ''), 'base64');
   await writeFile(outPath, bytes);
