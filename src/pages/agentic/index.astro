@@ -29,6 +29,20 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
   { label: 'Agentic Workstation', href: '/agentic-workstation', note: 'boot sequence, profiles, health' },
   { label: 'Agentic Harness', href: '/agentic-harness', note: 'workspace anatomy, packs, ownership' },
 ];
+
+const tracePathStations: Record<string, string[]> = {
+  'capabilities-only': ['platform'],
+  'reproducible-machine': ['machine', 'platform'],
+  'persistent-context': ['platform', 'workspace'],
+  'full-stack': ['machine', 'platform', 'workspace'],
+};
+
+const tracePathLabels: Record<string, string> = {
+  'capabilities-only': 'Toolkit alone',
+  'reproducible-machine': 'Provision a machine',
+  'persistent-context': 'Add persistent context',
+  'full-stack': 'Use all three',
+};
 ---
 
 <SectionLayout
@@ -56,7 +70,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           One capability plane, two optional extensions
         </h2>
         <div class="agentic-map__stations">
-          <article class="agentic-map__station agentic-map__station--machine">
+          <article class="agentic-map__station agentic-map__station--machine" data-agentic-station="machine">
             <p class="agentic-map__layer">HOST · MACHINE</p>
             <h3>
               <a href="/agentic-workstation">Agentic Workstation</a>
@@ -67,13 +81,17 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
             </p>
             <p class="agentic-map__boundary">Can install Toolkit. Does not define its capabilities.</p>
           </article>
-          <div class="agentic-map__link agentic-map__link--install" aria-label="Workstation can install Agent Toolkit">
+          <div
+            class="agentic-map__link agentic-map__link--install"
+            data-agentic-edge="machine-platform"
+            aria-label="Workstation can install Agent Toolkit"
+          >
             <span>can install</span>
             <span class="agentic-map__arrow" aria-hidden="true">
               →
             </span>
           </div>
-          <article class="agentic-map__station agentic-map__station--platform">
+          <article class="agentic-map__station agentic-map__station--platform" data-agentic-station="platform">
             <p class="agentic-map__layer">CAPABILITIES · RUNTIME</p>
             <h3>
               <a href="/agent-toolkit">Agent Toolkit</a>
@@ -90,6 +108,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           </article>
           <div
             class="agentic-map__link agentic-map__link--context"
+            data-agentic-edge="platform-workspace"
             aria-label="Harness uses Toolkit and keeps persistent workspace context"
           >
             <span>uses runtime</span>
@@ -97,7 +116,7 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
               →
             </span>
           </div>
-          <article class="agentic-map__station agentic-map__station--workspace">
+          <article class="agentic-map__station agentic-map__station--workspace" data-agentic-station="workspace">
             <p class="agentic-map__layer">CONTEXT · WORKSPACE</p>
             <h3>
               <a href="/agentic-harness">Agentic Harness</a>
@@ -113,10 +132,22 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
           The links show supported ways the projects work together, not setup requirements. Use Toolkit alone, provision
           a machine with Workstation, or add Harness when persistent context helps.
         </figcaption>
-        <div class="agentic-map__trace">
-          <button class="agentic-map__trace-button" type="button" data-agentic-trace hidden>
-            Trace a workflow
-          </button>
+        <div class="agentic-map__trace" data-agentic-trace hidden>
+          <p class="agentic-map__trace-label">Trace an adoption path</p>
+          <div class="agentic-map__trace-options" role="group" aria-label="Choose an optional stack path">
+            {ADOPTION_PATHS.map((path) => (
+              <button
+                class="agentic-map__trace-button"
+                type="button"
+                data-agentic-path={path.id}
+                data-agentic-stations={tracePathStations[path.id]?.join(' ')}
+                data-agentic-description={`${path.need}. ${path.detail}`}
+                aria-pressed="false"
+              >
+                {tracePathLabels[path.id] ?? path.need}
+              </button>
+            ))}
+          </div>
           <p data-agentic-trace-status role="status" aria-live="polite" aria-atomic="true"></p>
         </div>
       </figure>
@@ -183,51 +214,81 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
 <script is:inline>
   (() => {
     const map = document.querySelector('.agentic-map');
-    const button = map?.querySelector('[data-agentic-trace]');
+    const trace = map?.querySelector('[data-agentic-trace]');
     const status = map?.querySelector('[data-agentic-trace-status]');
-    const stations = [...(map?.querySelectorAll('.agentic-map__station') || [])];
-    const links = [...(map?.querySelectorAll('.agentic-map__link') || [])];
-    if (!map || !button || !status || stations.length !== 3 || links.length !== 2) return;
+    const stations = [...(map?.querySelectorAll('[data-agentic-station]') || [])];
+    const edges = [...(map?.querySelectorAll('[data-agentic-edge]') || [])];
+    const buttons = [...(map?.querySelectorAll('[data-agentic-path]') || [])];
+    if (!map || !trace || !status || stations.length !== 3 || edges.length !== 2 || buttons.length !== 4) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let timer;
-    button.hidden = false;
+    let activePath;
+    let traceSequence = 0;
+    trace.hidden = false;
 
-    const finish = () => {
-      [...stations, ...links].forEach((part) => part.classList.add('is-current'));
-      map.dataset.traceState = 'complete';
-      status.textContent = 'Map complete. Start with one project; extensions remain optional.';
+    const clear = () => {
+      [...stations, ...edges].forEach((part) => part.classList.remove('is-current'));
     };
 
-    button.addEventListener('click', () => {
-      window.clearInterval(timer);
-      window.clearTimeout(timer);
-      [...stations, ...links].forEach((part) => part.classList.remove('is-current'));
-      button.textContent = 'Replay system map';
-      map.dataset.traceState = 'running';
-      if (reducedMotion.matches) return finish();
+    const pathEdges = (pathStations) => {
+      return edges.filter((edge) => {
+        const [from, to] = edge.dataset.agenticEdge.split('-');
+        return pathStations.includes(from) && pathStations.includes(to);
+      });
+    };
 
-      let index = 0;
-      const showStep = () => {
-        const station = stations[index];
-        station.classList.add('is-current');
-        if (index) links[index - 1].classList.add('is-current');
-        status.textContent = `${station.querySelector('.agentic-map__layer')?.textContent.trim()}: ${station.querySelector('.agentic-map__boundary')?.textContent.trim()}`;
-        index += 1;
-        if (index === stations.length) {
-          window.clearInterval(timer);
-          timer = window.setTimeout(finish, 850);
-        }
-      };
-      showStep();
-      timer = window.setInterval(showStep, 850);
-    });
+    const finish = (button, sequence) => {
+      if (sequence !== traceSequence) return;
+      const pathStations = button.dataset.agenticStations.split(' ');
+      clear();
+      stations
+        .filter((station) => pathStations.includes(station.dataset.agenticStation))
+        .forEach((station) => station.classList.add('is-current'));
+      pathEdges(pathStations).forEach((edge) => edge.classList.add('is-current'));
+      map.dataset.traceState = 'complete';
+      map.dataset.activePath = button.dataset.agenticPath;
+      status.textContent = `${button.dataset.agenticDescription} The highlighted path is complete; other projects remain optional.`;
+    };
+
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const sequence = ++traceSequence;
+        window.clearInterval(timer);
+        window.clearTimeout(timer);
+        activePath = button;
+        buttons.forEach((option) => option.setAttribute('aria-pressed', String(option === button)));
+        clear();
+        map.dataset.traceState = 'running';
+        if (reducedMotion.matches) return finish(button, sequence);
+
+        const pathStations = button.dataset.agenticStations.split(' ');
+        const usedEdges = pathEdges(pathStations);
+        let index = 0;
+        const showStep = () => {
+          if (sequence !== traceSequence) return;
+          const stationId = pathStations[index];
+          const station = stations.find((item) => item.dataset.agenticStation === stationId);
+          if (!station) return;
+          station.classList.add('is-current');
+          if (index) usedEdges[index - 1]?.classList.add('is-current');
+          status.textContent = `${button.dataset.agenticDescription} Current station: ${station.querySelector('.agentic-map__layer')?.textContent.trim()}.`;
+          index += 1;
+          if (index === pathStations.length) {
+            window.clearInterval(timer);
+            timer = window.setTimeout(() => finish(button, sequence), 850);
+          }
+        };
+        timer = window.setInterval(showStep, 850);
+        showStep();
+      }),
+    );
 
     reducedMotion.addEventListener('change', () => {
-      if (!reducedMotion.matches || map.dataset.traceState !== 'running') return;
+      if (!reducedMotion.matches || map.dataset.traceState !== 'running' || !activePath) return;
       window.clearInterval(timer);
       window.clearTimeout(timer);
-      finish();
+      finish(activePath, traceSequence);
     });
   })();
 </script>
@@ -472,11 +533,23 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
   }
 
   .agentic-map__trace {
+    display: grid;
+    gap: 0.6rem;
+    margin-block-start: 1rem;
+  }
+
+  .agentic-map__trace-label {
+    margin: 0;
+    color: var(--color-text-faint);
+    font: 400 0.7rem var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .agentic-map__trace-options {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1rem;
-    margin-block-start: 1rem;
+    gap: 0.5rem;
   }
 
   .agentic-map__trace-button {
@@ -493,6 +566,12 @@ const detailRoutes: Array<{ label: string; href: string; note: string }> = [
   .agentic-map__trace-button:focus-visible {
     border-color: var(--nest-cyan);
     background: color-mix(in srgb, var(--nest-cyan) 20%, var(--nest-midnight-950));
+  }
+
+  .agentic-map__trace-button[aria-pressed='true'] {
+    border-color: var(--nest-lime, #d5ff4f);
+    background: color-mix(in srgb, var(--nest-cyan) 22%, var(--nest-midnight-950));
+    box-shadow: inset 0 -2px var(--nest-lime, #d5ff4f);
   }
 
   .agentic-map__trace [role='status'] {

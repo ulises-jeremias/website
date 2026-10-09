@@ -79,6 +79,14 @@ the illustrated island platforms. The Home captures cover desktop, mobile,
 320px reflow, and reduced motion; the platform illustration remains static
 when reduced motion is requested.
 
+Work's four professional areas now form connected atlas stations: a continuous
+route rail on wide screens and a vertical path with art-first reflow on narrow
+screens (PR #540). The Agentic map's optional adoption paths are selectable
+(Toolkit alone, Workstation + Toolkit, Toolkit + Harness, or all three); only
+the chosen stations and their real connections illuminate. Both behaviors keep
+their static HTML story, and both have focused responsive and reduced-motion
+coverage.
+
 The baseline before the atlas docking-art follow-up was production
 `main@d415c4e7` (2026-10-09). It included the VTL foundation path (PR #525),
 the full-history fix for inventory refreshes (PR #528), and the refreshed

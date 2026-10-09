@@ -58,7 +58,7 @@ test.describe('Agentic Developer Stack system map', () => {
     await page.goto('/agentic');
 
     const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
-    await expect(map.getByRole('button', { name: 'Trace a workflow' })).toBeHidden();
+    await expect(map.locator('[data-agentic-trace]')).toBeHidden();
     const stations = map.getByRole('article');
     await expect(stations).toHaveCount(3);
     await expect(map.getByText('can install', { exact: true })).toBeVisible();
@@ -79,7 +79,7 @@ test.describe('Agentic Developer Stack system map', () => {
     await context.close();
   });
 
-  test('traces the real optional relationships on request', async ({ page }) => {
+  test('traces the selected full-stack adoption path without implying every project is required', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto('/agentic');
 
@@ -88,7 +88,7 @@ test.describe('Agentic Developer Stack system map', () => {
     const links = map.locator('.agentic-map__link');
     const status = map.locator('[data-agentic-trace-status]');
 
-    const traceButton = map.getByRole('button', { name: 'Trace a workflow' });
+    const traceButton = map.getByRole('button', { name: 'Use all three' });
     await traceButton.focus();
     await expect(traceButton).toBeFocused();
     await traceButton.press('Enter');
@@ -101,17 +101,71 @@ test.describe('Agentic Developer Stack system map', () => {
     await expect(map).toHaveAttribute('data-trace-state', 'complete', { timeout: 3000 });
     await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(3);
     await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(2);
-    await expect(status).toContainText('extensions remain optional');
+    await expect(status).toContainText('The highlighted path is complete; other projects remain optional.');
+    await expect(traceButton).toHaveAttribute('aria-pressed', 'true');
   });
 
-  test('keeps the system map static with reduced motion', async ({ page }) => {
+  test('shows only the selected stations and relationships with reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/agentic');
 
     const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
-    await map.getByRole('button', { name: 'Trace a workflow' }).click();
+    const stations = map.locator('.agentic-map__station.is-current');
+    const edges = map.locator('.agentic-map__link.is-current');
+
+    await map.getByRole('button', { name: 'Toolkit alone' }).click();
     await expect(map).toHaveAttribute('data-trace-state', 'complete');
-    await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(3);
-    await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(2);
+    await expect(stations).toHaveCount(1);
+    await expect(stations.first()).toHaveAttribute('data-agentic-station', 'platform');
+    await expect(edges).toHaveCount(0);
+
+    const machinePath = map.getByRole('button', { name: 'Provision a machine' });
+    await machinePath.click();
+    await expect(stations).toHaveCount(2);
+    await expect(edges).toHaveCount(1);
+    await expect(map).toHaveAttribute('data-active-path', 'reproducible-machine');
+
+    const persistentPath = map.getByRole('button', { name: 'Add persistent context' });
+    await persistentPath.click();
+    await expect(stations).toHaveCount(2);
+    await expect(edges).toHaveCount(1);
+    await expect(map).toHaveAttribute('data-active-path', 'persistent-context');
+    await expect(persistentPath).toHaveAttribute('aria-pressed', 'true');
+    await expect(map.getByRole('button', { name: 'Toolkit alone' })).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('cancels a single-station trace when another path is selected quickly', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/agentic');
+
+    const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
+    const toolkitAlone = map.getByRole('button', { name: 'Toolkit alone' });
+    await toolkitAlone.click();
+    await expect(map).toHaveAttribute('data-trace-state', 'running');
+
+    const persistentContext = map.getByRole('button', { name: 'Add persistent context' });
+    await persistentContext.click();
+    await expect(map).toHaveAttribute('data-active-path', 'persistent-context', { timeout: 3000 });
+    await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(2);
+    await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(1);
+    await expect(persistentContext).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('keeps adoption path controls usable without horizontal overflow on narrow screens', async ({ page }) => {
+    for (const width of [320, 360, 390]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto('/agentic');
+
+      const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
+      const options = map.getByRole('group', { name: 'Choose an optional stack path' });
+      await expect(options.getByRole('button')).toHaveCount(4);
+      await expect(options.getByRole('button').first()).toHaveCSS('min-height', '44px');
+      await options.getByRole('button', { name: 'Toolkit alone' }).click();
+      await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(1);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth),
+      ).toBe(true);
+    }
   });
 });
