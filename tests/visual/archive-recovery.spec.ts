@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Archive and recovery routes', () => {
-  for (const width of [320, 390]) {
+  for (const width of [320, 360, 390]) {
     test(`keeps archive reading and recovery paths usable at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 844 });
       await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -15,6 +15,21 @@ test.describe('Archive and recovery routes', () => {
       await expect(page.locator('[data-testid="work-tiers"]')).toContainText('Recoil DevTools');
       await expect(page.locator('.work-tiers__plate')).toHaveCount(4);
       await expect(page.locator('.work-tiers__plate').first()).toBeVisible();
+      await expect(page.locator('.work-tiers__featured-grid')).toHaveAttribute(
+        'aria-label',
+        'Four flagship work areas',
+      );
+      const atlasRail = await page.locator('.work-tiers__featured-grid').evaluate((list) => {
+        const rail = getComputedStyle(list, '::before');
+        return { width: Number.parseFloat(rail.width), height: Number.parseFloat(rail.height) };
+      });
+      expect(atlasRail.width).toBeLessThanOrEqual(2);
+      expect(atlasRail.height).toBeGreaterThan(100);
+      const firstAreaCopyWidth = await page
+        .locator('.work-tiers__plate-main')
+        .first()
+        .evaluate((copy) => copy.getBoundingClientRect().width);
+      expect(firstAreaCopyWidth).toBeGreaterThan(width < 380 ? 200 : 150);
       await expect(page.locator('.archipelago__header')).toContainText('Explore project worlds');
       expect(
         await page.evaluate(() => {
@@ -117,6 +132,26 @@ test('keeps evidence lane navigation native when JavaScript is disabled', async 
   await expect(page).toHaveURL(/#evidence-org$/);
   await expect(page.locator('#evidence-org')).toBeInViewport();
   await context.close();
+});
+
+test('connects the four flagship work areas on wide screens', async ({ page }) => {
+  for (const width of [768, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/projects/');
+
+    const areas = page.locator('.work-tiers__featured-grid');
+    await expect(areas.locator('.work-tiers__plate')).toHaveCount(4);
+    const rail = await areas.evaluate((list) => {
+      const style = getComputedStyle(list, '::before');
+      return { width: Number.parseFloat(style.width), height: Number.parseFloat(style.height) };
+    });
+    expect(rail.width).toBeGreaterThan(100);
+    expect(rail.height).toBeLessThanOrEqual(2);
+    expect(
+      await page.evaluate(() => Math.max(document.body.scrollWidth, document.documentElement.scrollWidth)),
+    ).toBeLessThanOrEqual(width);
+  }
 });
 
 for (const viewport of [
