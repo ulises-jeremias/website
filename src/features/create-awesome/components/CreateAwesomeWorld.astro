@@ -146,9 +146,12 @@ const lineModules = [
             <path d="m62 98 8-4 8 4v8l-8 4-8-4z"></path>
           </g>
           <g class="ca-world__package-layer ca-world__package-layer--addons" data-ca-package-layer="addons">
-            <path d="m48 109 6-3 6 3v7l-6 3-6-3z"></path>
-            <path d="m80 116 6-3 6 3v7l-6 3-6-3z"></path>
-            <path d="m78 94 6-3 6 3v7l-6 3-6-3z"></path>
+            <path data-ca-addon-tile d="m47 110 5-3 5 3v6l-5 3-5-3z"></path>
+            <path data-ca-addon-tile d="m58 117 5-3 5 3v6l-5 3-5-3z"></path>
+            <path data-ca-addon-tile d="m70 119 5-3 5 3v6l-5 3-5-3z"></path>
+            <path data-ca-addon-tile d="m81 112 5-3 5 3v6l-5 3-5-3z"></path>
+            <path data-ca-addon-tile d="m49 97 5-3 5 3v6l-5 3-5-3z"></path>
+            <path data-ca-addon-tile d="m81 96 5-3 5 3v6l-5 3-5-3z"></path>
           </g>
           <text class="ca-world__package-runtime" data-ca-package-runtime x="70" y="118" text-anchor="middle">
             NODE
@@ -548,6 +551,10 @@ const lineModules = [
         world
           .querySelector('[data-ca-package-addon-count]')
           ?.replaceChildren(`${addonCount} ${addonCount === 1 ? 'ADDON' : 'ADDONS'}`);
+        // Fixed attachment sockets keep the package readable; the adjacent label retains the exact total.
+        world.querySelectorAll('[data-ca-addon-tile]').forEach((tile, index) => {
+          tile.toggleAttribute('data-selected', index < addonCount);
+        });
       };
 
       const stopAssembly = () => {
@@ -942,6 +949,20 @@ const lineModules = [
     display: block;
   }
 
+  .ca-world__line .vf-flow {
+    stroke-dasharray: 8 12;
+  }
+
+  .ca-world[data-ca-animating='true'] .ca-world__line .vf-flow {
+    animation: ca-conveyor-signal 900ms linear infinite;
+  }
+
+  @keyframes ca-conveyor-signal {
+    to {
+      stroke-dashoffset: -40;
+    }
+  }
+
   .ca-world__module-disk {
     fill: color-mix(in srgb, var(--nest-midnight-950, #020617) 70%, transparent);
     stroke: color-mix(in srgb, var(--ca-module-accent, var(--color-border)) 55%, transparent);
@@ -1282,6 +1303,23 @@ const lineModules = [
     stroke-linejoin: bevel;
   }
 
+  .ca-world__package-layer--addons [data-ca-addon-tile] {
+    opacity: 0.12;
+    transform: scale(0.72);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      opacity 220ms ease,
+      transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      filter 220ms ease;
+  }
+
+  .ca-world__package-layer--addons [data-ca-addon-tile][data-selected] {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px color-mix(in srgb, var(--nest-pink) 52%, transparent));
+  }
+
   .ca-world__package-runtime,
   .ca-world__package-addon-count {
     fill: var(--nest-paper);
@@ -1303,8 +1341,13 @@ const lineModules = [
 
     .ca-world__module-disk,
     .ca-world__flow-index li,
-    .ca-world__package-layer {
+    .ca-world__package-layer,
+    .ca-world__package-layer--addons [data-ca-addon-tile] {
       transition: none;
+    }
+
+    .ca-world[data-ca-animating='true'] .ca-world__line .vf-flow {
+      animation: none;
     }
   }
 </style>

@@ -93,6 +93,13 @@ carries the active world signal between documents with native View Transitions,
 while reduced-motion users keep still navigation. Its browser regressions and
 route-byte measurements are recorded with the change.
 
+Create Awesome's assembly package now lights attachment sockets for selected
+addons (up to six illustrated sockets; the adjacent label shows the exact
+selected total). Its
+conveyor signal runs only during a composition update; reduced-motion mode
+keeps the completed package still. The SVG remains visual reinforcement for
+the native composer and its text stage index.
+
 ## Historical documents
 
 - `docs/design/tokens.md` is the superseded warm/light token proposal.
