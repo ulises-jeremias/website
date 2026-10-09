@@ -58,9 +58,9 @@ const areaArt: Record<string, { src: string; code: string }> = {
       </div>
       <p>Start with an area, then follow its component projects.</p>
     </header>
-    <ul class="work-tiers__featured-grid" aria-label="Four flagship work areas">
+    <ul class="work-tiers__featured-grid" aria-label="Four flagship work areas" data-work-atlas>
       {featured.map((area, areaIndex) => (
-        <li class="work-tiers__plate" data-area={area.id}>
+        <li class="work-tiers__plate" data-area={area.id} style={`--order: ${areaIndex}`}>
           <div class="work-tiers__plate-art" aria-hidden="true">
             <span>{areaArt[area.id].code}</span>
             <img
@@ -169,6 +169,32 @@ const areaArt: Record<string, { src: string; code: string }> = {
     </section>
   )}
 </div>
+
+<script is:inline>
+  (() => {
+    const atlas = document.querySelector('[data-work-atlas]');
+    if (
+      !atlas ||
+      !('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
+    const activate = () => {
+      atlas.setAttribute('data-atlas', '');
+      observer.disconnect();
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) activate();
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(atlas);
+  })();
+</script>
 
 <style>
   .work-tiers {
@@ -328,6 +354,22 @@ const areaArt: Record<string, { src: string; code: string }> = {
     transition:
       background-color 180ms ease,
       box-shadow 180ms ease;
+  }
+
+  .work-tiers__featured-grid[data-atlas] .work-tiers__plate::before {
+    animation: pop 420ms ease;
+    animation-delay: calc(var(--order) * 150ms + 380ms);
+  }
+
+  @keyframes pop {
+    0%,
+    100% {
+      scale: 1;
+    }
+
+    50% {
+      scale: 1.2;
+    }
   }
 
   .work-tiers__plate[data-area='hornero'] {
@@ -498,14 +540,6 @@ const areaArt: Record<string, { src: string; code: string }> = {
 
   .work-tiers__row {
     border-radius: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .work-tiers__plate,
-    .work-tiers__plate::before,
-    .work-tiers__plate-art img {
-      transition: none;
-    }
   }
 
   @media (width < 760px) {
