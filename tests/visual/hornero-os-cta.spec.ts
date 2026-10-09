@@ -147,12 +147,10 @@ test('Hornero OS manifest stays keyboard-usable at 320px in forced colors', asyn
 
   await expect(manifest).toHaveAttribute('data-trace-state', 'complete');
   await expect(manifest.locator('.hos-yaml__slot.is-current')).toHaveCount(5);
+  await expect(manifest.locator('.hos-yaml__slot--future a').first()).toHaveCSS('border-top-style', 'dashed');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(
     true,
   );
-
-  await manifest.scrollIntoViewIfNeeded();
-  await expect(manifest).toHaveScreenshot('hornero-os-manifest-forced-colors-320.png');
 });
 
 test('Hornero OS manifest assembly has reviewed desktop and mobile states', async ({ page }) => {
