@@ -7,10 +7,11 @@ const fallbackFiles = readdirSync(assetsDirectory).filter((name) => /^island-.+-
 
 describe('responsive island PNG fallbacks', () => {
   it('provides 220px and 440px variants for every island', () => {
-    expect(fallbackFiles).toHaveLength(24);
+    expect(fallbackFiles).toHaveLength(26);
 
     const islandNames = new Set(fallbackFiles.map((name) => name.replace(/-(?:220|440)\.png$/, '')));
-    expect(islandNames.size).toBe(12);
+    expect(islandNames.size).toBe(13);
+    expect(islandNames.has('island-atlas-dock')).toBe(true);
 
     for (const island of islandNames) {
       for (const size of [220, 440]) {
@@ -19,7 +20,7 @@ describe('responsive island PNG fallbacks', () => {
 
         expect(png.subarray(0, 8)).toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
         expect(png.readUInt32BE(16), name).toBe(size);
-        expect(png.readUInt32BE(20), name).toBe(size);
+        expect(png.readUInt32BE(20), name).toBe(island === 'island-atlas-dock' ? size / 2 : size);
       }
     }
   });
