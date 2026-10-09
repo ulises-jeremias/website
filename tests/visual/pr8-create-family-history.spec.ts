@@ -228,6 +228,35 @@ test.describe('PR8 enhanced family restoration', () => {
     await expect(page.locator('[data-ca-package]')).toHaveAttribute('data-ca-package-stage', 'app');
   });
 
+  test('assembles only the addon modules selected in the composer', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/create-awesome');
+
+    const addons = page.locator('[data-ca-panel="node"] [data-ca-addon]');
+    const compatibleAddons = await addons.evaluateAll((inputs) => {
+      const all = inputs as HTMLInputElement[];
+      return all.flatMap((input, index) => {
+        if (input.disabled) return [];
+        const conflicts = JSON.parse(input.dataset.incompatibleAddons || '[]') as string[];
+        const pair = all.findIndex(
+          (other, otherIndex) =>
+            otherIndex > index &&
+            !other.disabled &&
+            !conflicts.includes(other.value) &&
+            !(JSON.parse(other.dataset.incompatibleAddons || '[]') as string[]).includes(input.value),
+        );
+        return pair < 0 ? [] : [[index, pair]];
+      })[0];
+    });
+    expect(compatibleAddons).toBeTruthy();
+    await addons.nth(compatibleAddons![0]).check();
+    await addons.nth(compatibleAddons![1]).check();
+
+    await expect(page.locator('[data-ca-package-addon-count]')).toHaveText('2 ADDONS');
+    await expect(page.locator('[data-ca-package-layer="addons"] [data-selected]')).toHaveCount(2);
+    await expect(page.locator('[data-ca-package]')).toHaveAttribute('data-ca-package-stage', 'app');
+  });
+
   test('opens on the assembly line and keeps a direct path into the composer', async ({ page }) => {
     for (const viewport of [responsiveViewports[1], responsiveViewports[4]]) {
       await page.setViewportSize(viewport);
