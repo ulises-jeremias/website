@@ -255,6 +255,8 @@ test.describe('homepage visual coverage', () => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto('/');
       const featured = page.locator('.featured-areas');
+      // Keep the sticky shell from entering the element capture after scrollIntoView.
+      await page.addStyleTag({ content: '.site-header { position: absolute !important; }' });
       await featured.scrollIntoViewIfNeeded();
       await expect(featured).toHaveScreenshot(viewport.snapshot, { animations: 'disabled' });
     }
