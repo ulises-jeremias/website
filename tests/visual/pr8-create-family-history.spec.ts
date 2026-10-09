@@ -202,6 +202,32 @@ test.describe('PR8 static Create Awesome targets', () => {
 });
 
 test.describe('PR8 enhanced family restoration', () => {
+  test('turns the mobile composition stages into a connected, active assembly route', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/create-awesome');
+
+    const stages = page.locator('.ca-world__flow-index');
+    await expect(stages.locator('[data-ca-step="runtime"]')).toHaveClass(/is-current/);
+    await expect(stages.locator('[data-ca-step]')).toHaveCount(4);
+    await expect
+      .poll(() => stages.evaluate((list) => getComputedStyle(list).gridTemplateColumns.split(' ').length))
+      .toBe(1);
+    const railAlignment = await stages.evaluate((list) => {
+      const listRect = list.getBoundingClientRect();
+      const badgeRect = list.querySelector('.ca-world__flow-number')!.getBoundingClientRect();
+      return {
+        rail: Number.parseFloat(getComputedStyle(list).backgroundPositionX),
+        badgeCenter: badgeRect.left + badgeRect.width / 2 - listRect.left,
+      };
+    });
+    expect(Math.abs(railAlignment.rail - railAlignment.badgeCenter)).toBeLessThan(1);
+
+    await page.getByRole('combobox', { name: 'Runtime' }).selectOption('rust');
+    await expect(stages.locator('[data-ca-step="app"]')).toHaveClass(/is-current/, { timeout: 4000 });
+    await expect(page.locator('[data-ca-package]')).toHaveAttribute('data-ca-package-stage', 'app');
+  });
+
   test('opens on the assembly line and keeps a direct path into the composer', async ({ page }) => {
     for (const viewport of [responsiveViewports[1], responsiveViewports[4]]) {
       await page.setViewportSize(viewport);
