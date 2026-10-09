@@ -129,6 +129,9 @@ describe('Synthwave Systems Atlas homepage', () => {
     expect(world).toContain('/assets/nest/');
     expect(world).toContain('art-fade');
     expect(world).toContain('atlas-world__island');
+    expect(world).toContain('atlas-world__dock');
+    expect(world).toContain('island-atlas-dock-sm.webp');
+    expect(world).not.toContain('atlas-world__dock-signal');
   });
 
   it('includes the factual responsibility topology with a structured fallback', async () => {
