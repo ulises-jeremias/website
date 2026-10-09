@@ -1,0 +1,41 @@
+---
+import { currentFocus } from '../data/index.js';
+
+const accentTokens = {
+  magenta: 'var(--nest-magenta)',
+  pink: 'var(--nest-pink)',
+  violet: 'var(--nest-violet)',
+  blue: 'var(--nest-blue)',
+  cyan: 'var(--nest-cyan)',
+  orange: 'var(--nest-sunset-orange)',
+} as const;
+---
+
+<section class="hero-focus neon-frame clip-corner" aria-labelledby="hero-focus-title">
+  <header class="hero-focus__header">
+    <h2 id="hero-focus-title">
+      <span class="hero-focus__beacon" aria-hidden="true"></span>
+      Current focus
+    </h2>
+    <span class="hero-focus__stamp">Verified work</span>
+  </header>
+
+  <ul class="hero-focus__list">
+    {currentFocus.map((item) => (
+      <li class="hero-focus__item" style={`--focus-accent: ${accentTokens[item.accent]}`}>
+        <a class="hero-focus__link" href={item.path} data-area={item.area}>
+          <span class="hero-focus__signal" aria-hidden="true"></span>
+          <span class="hero-focus__copy">
+            <strong class="hero-focus__project">{item.title}</strong>
+            <span class="hero-focus__area">{item.areaTitle}</span>
+            <span class="hero-focus__detail">{item.text}</span>
+          </span>
+          <span class="hero-focus__meta">
+            <time datetime={item.verifiedAt}>{item.verifiedAt}</time>
+            <span aria-hidden="true">↗</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

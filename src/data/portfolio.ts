@@ -120,6 +120,13 @@ export const portfolioEntrySchema = z
     relationship: portfolioRelationshipSchema,
     /** One-sentence responsibility-first description. */
     description: z.string().min(1),
+    /** Short, dated product focus surfaced by the homepage activity beacon. */
+    currentFocus: z
+      .object({
+        text: z.string().min(1),
+        verifiedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'ISO date required'),
+      })
+      .optional(),
     /** External project scale (e.g. V stars) shown as context, not a metric. */
     externalContext: z.string().optional(),
     /** Distribution channels (npm, PyPI, AUR, Homebrew, etc.). */
@@ -296,6 +303,10 @@ const rawPortfolioEntries = [
     repositoryOwner: 'ulises-jeremias',
     repositorySlug: 'agent-toolkit',
     timeLens: 'current',
+    currentFocus: {
+      text: 'Desktop workspace and session history',
+      verifiedAt: '2026-10-09',
+    },
     relationship: 'component-product',
     description:
       'Portable skills, agents, loops, and MCP templates for many coding assistants, plus the native CLI, local API, and desktop app that run them.',
@@ -308,8 +319,8 @@ const rawPortfolioEntries = [
       },
       {
         kind: 'channel-freshness',
-        text: 'Upstream source is at v1.41.0; installers and package channels can publish on separate schedules.',
-        verifiedAt: '2026-10-04',
+        text: 'Upstream source is at v1.43.0; installers and package channels can publish on separate schedules.',
+        verifiedAt: '2026-10-09',
       },
     ],
     evidence: {
@@ -429,6 +440,10 @@ const rawPortfolioEntries = [
     repositoryOwner: 'HorneroOS',
     repositorySlug: 'hornero',
     timeLens: 'current',
+    currentFocus: {
+      text: 'Composition preview; no installable image yet',
+      verifiedAt: '2026-10-09',
+    },
     relationship: 'component-product',
     description:
       'An early-stage Arch-based Wayland desktop OS composed from separate shell, config, CLI, and greeter repositories. Development previews only — not installable yet.',
@@ -821,6 +836,41 @@ export interface HomepagePortfolioArea {
   memberLinks: Array<{ title: string; path: string; maturity?: PortfolioMaturity }>;
   /** Contextual proof summary from member proofLines (non-volatile kinds). */
   proof?: string;
+}
+
+export interface HomepageCurrentFocus {
+  id: string;
+  title: string;
+  path: string;
+  area: PortfolioArea;
+  areaTitle: string;
+  text: string;
+  verifiedAt: string;
+}
+
+/**
+ * Product-level current work for the homepage beacon, derived from the
+ * portfolio entries so its labels and destinations stay canonical.
+ */
+export function getHomepageCurrentFocus(): HomepageCurrentFocus[] {
+  return portfolioEntries.flatMap((entry) => {
+    if (!entry.currentFocus) return [];
+
+    const area = getPortfolioAreaById(entry.area);
+    if (!area?.memberIds.includes(entry.id)) return [];
+
+    return [
+      {
+        id: entry.id,
+        title: entry.title,
+        path: entry.path,
+        area: entry.area,
+        areaTitle: area.title,
+        text: entry.currentFocus.text,
+        verifiedAt: entry.currentFocus.verifiedAt,
+      },
+    ];
+  });
 }
 
 /**
