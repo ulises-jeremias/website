@@ -324,6 +324,26 @@ requests are unchanged. The `/community/` document, stylesheet, and total caps
 now use the repository's 10% rounded-up KiB headroom policy for this intentionally
 dual-composition map; every other route limit is unchanged.
 
+## World navigation signal — 2026-10-09
+
+Same-origin document navigation now opts into the browser's native View
+Transition API. The active header link receives one shared transition name, so
+the route signal travels between its desktop and compact navigation positions
+while the browser keeps normal document navigation. Reduced-motion users do not
+receive either the active-link transition name or the document-transition
+opt-in, so the browser skips its default document cross-fade too. Browsers
+without cross-document View Transitions continue to navigate normally. The
+feature adds no JavaScript, cloned DOM, or scroll handling.
+
+The fresh route baseline records a 47-byte gzip increase in Home's stylesheet
+to 16,428 bytes. Home delivery rises by the same 47 bytes, to 149,156 bytes on
+mobile and 308,996 bytes on desktop. The `/blog/` HTML reference grows by 3
+bytes and its stylesheet by 47 bytes; total delivery is 50 bytes higher at
+65,008 bytes. Scripts, images, and request counts do not change. Home's former
+16 KiB style cap was exceeded by 44 bytes, and Blog's former 7 KiB document cap
+by 1 byte, so both limits now follow the documented 10% rounded-up KiB policy:
+18 KiB for Home styles and 8 KiB for Blog documents.
+
 ## Create Awesome package assembly — 2026-10-07
 
 The line now carries a real project parcel instead of a single glowing dot.

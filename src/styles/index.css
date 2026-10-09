@@ -13,6 +13,17 @@
 @import './textures.css';
 @import './themes/index.css';
 
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  /* Let the browser move the active route signal without animating reduced-motion documents. */
+  .site-header a[aria-current='page'] {
+    view-transition-name: route;
+  }
+}
+
 html {
   color-scheme: dark;
   background: var(--color-bg);

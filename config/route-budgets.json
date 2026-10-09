@@ -9,7 +9,7 @@
         "total": 395264,
         "document": 12288,
         "script": 0,
-        "style": 16384,
+        "style": 18432,
         "image": 292864,
         "font": 76800,
         "requests": 23
@@ -18,7 +18,7 @@
         "total": 456704,
         "document": 12288,
         "script": 0,
-        "style": 16384,
+        "style": 18432,
         "image": 354304,
         "font": 76800,
         "requests": 23
@@ -187,7 +187,7 @@
     "/blog/": {
       "mobile": {
         "total": 67584,
-        "document": 7168,
+        "document": 8192,
         "script": 0,
         "style": 13312,
         "image": 5120,
@@ -196,7 +196,7 @@
       },
       "desktop": {
         "total": 67584,
-        "document": 7168,
+        "document": 8192,
         "script": 0,
         "style": 13312,
         "image": 5120,
