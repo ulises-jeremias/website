@@ -224,6 +224,7 @@ const tracePathLabels: Record<string, string> = {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let timer;
     let activePath;
+    let traceSequence = 0;
     trace.hidden = false;
 
     const clear = () => {
@@ -237,7 +238,8 @@ const tracePathLabels: Record<string, string> = {
       });
     };
 
-    const finish = (button) => {
+    const finish = (button, sequence) => {
+      if (sequence !== traceSequence) return;
       const pathStations = button.dataset.agenticStations.split(' ');
       clear();
       stations
@@ -251,18 +253,20 @@ const tracePathLabels: Record<string, string> = {
 
     buttons.forEach((button) =>
       button.addEventListener('click', () => {
+        const sequence = ++traceSequence;
         window.clearInterval(timer);
         window.clearTimeout(timer);
         activePath = button;
         buttons.forEach((option) => option.setAttribute('aria-pressed', String(option === button)));
         clear();
         map.dataset.traceState = 'running';
-        if (reducedMotion.matches) return finish(button);
+        if (reducedMotion.matches) return finish(button, sequence);
 
         const pathStations = button.dataset.agenticStations.split(' ');
         const usedEdges = pathEdges(pathStations);
         let index = 0;
         const showStep = () => {
+          if (sequence !== traceSequence) return;
           const stationId = pathStations[index];
           const station = stations.find((item) => item.dataset.agenticStation === stationId);
           if (!station) return;
@@ -272,11 +276,11 @@ const tracePathLabels: Record<string, string> = {
           index += 1;
           if (index === pathStations.length) {
             window.clearInterval(timer);
-            timer = window.setTimeout(() => finish(button), 850);
+            timer = window.setTimeout(() => finish(button, sequence), 850);
           }
         };
-        showStep();
         timer = window.setInterval(showStep, 850);
+        showStep();
       }),
     );
 
@@ -284,7 +288,7 @@ const tracePathLabels: Record<string, string> = {
       if (!reducedMotion.matches || map.dataset.traceState !== 'running' || !activePath) return;
       window.clearInterval(timer);
       window.clearTimeout(timer);
-      finish(activePath);
+      finish(activePath, traceSequence);
     });
   })();
 </script>

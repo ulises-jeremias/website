@@ -134,6 +134,23 @@ test.describe('Agentic Developer Stack system map', () => {
     await expect(map.getByRole('button', { name: 'Toolkit alone' })).toHaveAttribute('aria-pressed', 'false');
   });
 
+  test('cancels a single-station trace when another path is selected quickly', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/agentic');
+
+    const map = page.getByRole('figure', { name: 'One capability plane, two optional extensions' });
+    const toolkitAlone = map.getByRole('button', { name: 'Toolkit alone' });
+    await toolkitAlone.click();
+    await expect(map).toHaveAttribute('data-trace-state', 'running');
+
+    const persistentContext = map.getByRole('button', { name: 'Add persistent context' });
+    await persistentContext.click();
+    await expect(map).toHaveAttribute('data-active-path', 'persistent-context', { timeout: 3000 });
+    await expect(map.locator('.agentic-map__station.is-current')).toHaveCount(2);
+    await expect(map.locator('.agentic-map__link.is-current')).toHaveCount(1);
+    await expect(persistentContext).toHaveAttribute('aria-pressed', 'true');
+  });
+
   test('keeps adoption path controls usable without horizontal overflow on narrow screens', async ({ page }) => {
     for (const width of [320, 360, 390]) {
       await page.setViewportSize({ width, height: 844 });
