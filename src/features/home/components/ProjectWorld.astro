@@ -21,6 +21,9 @@ const islandSrc = `/assets/nest/${world.island}.webp`;
 const islandSrcSm = `/assets/nest/${world.island}-sm.webp`;
 const islandPngSrcSet = `/assets/${world.island}-220.png 220w, /assets/${world.island}-440.png 440w`;
 const islandPng = `/assets/${world.island}-220.png`;
+const dockSrc = '/assets/nest/island-atlas-dock.webp';
+const dockSrcSm = '/assets/nest/island-atlas-dock-sm.webp';
+const dockSizes = '(max-width: 640px) 192px, (max-width: 1024px) 216px, 240px';
 const islandSmallWidth = world.island === 'island-harness' ? 320 : 440;
 const islandSizes = '(max-width: 640px) 160px, (max-width: 1024px) 180px, 200px';
 const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-frame-accent' : 'neon-frame';
@@ -32,7 +35,6 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
   style={`--world-color: ${accentTokens[world.accent]}`}
   data-world-id={world.id}
   data-related-worlds={world.relatedWorlds.join(' ')}
-  aria-label={`${world.number} — ${world.title}: ${world.description}`}
 >
   <span class:list={['atlas-world__plate', plateFrame, 'clip-corner-sm']}>
     <span class="atlas-world__number">{world.number}</span>
@@ -42,20 +44,23 @@ const plateFrame = world.accent === 'cyan' || world.accent === 'blue' ? 'neon-fr
 
   <span class="atlas-world__platform" aria-hidden="true">
     <span class="atlas-world__glow"></span>
-    <svg class="atlas-world__dock" viewBox="0 0 320 112" aria-hidden="true">
-      <ellipse class="atlas-world__dock-shadow" cx="160" cy="94" rx="124" ry="9" />
-      <path class="atlas-world__dock-side" d="m22 47 138 39 138-39-12 18-126 36L34 65z" />
-      <path class="atlas-world__dock-surface" d="m22 47 138-38 138 38-138 39z" />
-      <path
-        class="atlas-world__dock-grid"
-        d="m47 46 113 32 113-32m-91-12 91 25M67 34l93 27 93-27m-93-25v77M94 26v52m132-52v52"
+    <picture class="atlas-world__dock">
+      <source type="image/webp" srcset={`${dockSrcSm} 440w, ${dockSrc} 640w`} sizes={dockSizes} />
+      <source
+        type="image/png"
+        srcset="/assets/island-atlas-dock-220.png 220w, /assets/island-atlas-dock-440.png 440w"
+        sizes={dockSizes}
       />
-      <path class="atlas-world__dock-ring" d="m66 47 94-26 94 26-94 27z" />
-      <path class="atlas-world__dock-ring" d="m98 47 62-17 62 17-62 17z" />
-      <path class="atlas-world__dock-signal" d="m34 50 126 36 126-36" />
-      <circle class="atlas-world__dock-ring" cx="49" cy="48" r="3" />
-      <circle class="atlas-world__dock-ring" cx="271" cy="48" r="3" />
-    </svg>
+      <img
+        class="atlas-world__dock-image"
+        src="/assets/island-atlas-dock-220.png"
+        width="220"
+        height="110"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
     <picture class="atlas-world__visual">
       <source type="image/webp" srcset={`${islandSrcSm} ${islandSmallWidth}w, ${islandSrc} 640w`} sizes={islandSizes} />
       <source type="image/png" srcset={islandPngSrcSet} sizes={islandSizes} />

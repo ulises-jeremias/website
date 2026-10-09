@@ -159,14 +159,14 @@ does not change the visitor's desktop or run a command. Reduced motion skips
 the travel and completes the selected path immediately, while no-JavaScript
 content stays complete.
 
-## Addendum — Project atlas docking platforms (2026-10-07)
+## Addendum — Project atlas docking platform art (2026-10-09)
 
-Each floating island now sits over an original inline isometric docking plate.
-The world accent colors the surface, grid, ring, and signal path, so the plate
-reinforces the world-to-world map instead of reading as a repeated CSS ellipse.
-The signal trace is ambient decoration only, has no behavioral meaning, and
-stops under reduced motion; the decorative SVG stays hidden from assistive
-technology.
+The floating project islands now dock over an original pixel-art miniature
+platform rather than a thin inline SVG wireframe. It echoes the beveled,
+neon-lit surfaces in the first-party island scenes while staying behind their
+terrain. The decorative image is WebP-first, has responsive PNG fallbacks, and
+remains static under reduced motion; its link is still named by the world title
+and description.
 
 ## Addendum — Field Notes publication desk (2026-10-07)
 
