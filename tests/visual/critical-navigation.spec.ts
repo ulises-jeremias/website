@@ -124,6 +124,12 @@ test('compact navigation has touch-sized links and a world-color active signal',
     });
     expect(activeColors.indicator).toBe(activeColors.color);
     expect(activeColors.thickness).toBe('2px');
+
+    const routeStrip = await navigation.locator('ul').evaluate((list) => ({
+      clientWidth: list.clientWidth,
+      scrollWidth: list.scrollWidth,
+    }));
+    expect(routeStrip.scrollWidth).toBeLessThanOrEqual(routeStrip.clientWidth);
   }
 });
 
