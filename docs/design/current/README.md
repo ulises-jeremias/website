@@ -79,16 +79,16 @@ the layered island platforms. The new Home captures cover desktop, mobile,
 320px reflow, and reduced motion; the platform illustration remains static
 when reduced motion is requested.
 
-Current production is `main@61338c7c` (PR #517). Build, lint, type-check,
-unit tests, Browser Quality (route budgets, Lighthouse, and the full browser
-matrix), Todo Checker, and Deployment Smoke passed on this exact revision.
-MegaLinter passed on PR #517 and is intentionally skipped for main push events.
-Production Smoke verified all 15 public routes, `/sitemap.xml`, `/robots.txt`,
-`/rss.xml`, the site manifest, representative assets, metadata, canonical
-origins, security headers, and asset caching. The Hornero OS CTA is locked to
-`https://horneroos.com` by its route test. A nonexistent route serves the
-custom 404. Visual goldens change only for route-specific designs reviewed in
-each PR.
+Current production is `main@4407e0cf` (PR #523), including the Open Source
+evidence trace. Build, lint, type-check, unit tests, Browser Quality (route
+budgets, Lighthouse, and the full browser matrix), Todo Checker, and Deployment
+Smoke passed on this revision. MegaLinter passed on PR #523 and is intentionally
+skipped for main push events. Production Smoke verified all 26 assertions,
+covering public routes, sitemap, robots, RSS, metadata, canonical origins,
+representative assets, security headers, and caching. The Hornero OS CTA is
+locked to `https://horneroos.com`, and a nonexistent route serves the custom 404. PR #524 carries the active world signal between documents with native View
+Transitions, while reduced-motion users keep still navigation. Its browser
+regressions and route-byte measurements are recorded with the change.
 
 ## Historical documents
 

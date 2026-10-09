@@ -18,6 +18,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Let the browser move the active route signal without animating reduced-motion documents. */
   .site-header a[aria-current='page'] {
     view-transition-name: route;
   }
