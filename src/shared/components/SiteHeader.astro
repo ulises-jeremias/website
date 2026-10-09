@@ -169,7 +169,6 @@ const emailHref = `mailto:${profile.contact.email}`;
     gap: 1rem;
     margin: 0;
     list-style: none;
-    overflow-x: auto;
   }
 
   .site-header__compact-nav a {
@@ -398,6 +397,10 @@ const emailHref = `mailto:${profile.contact.email}`;
   }
 
   @media (width < 430px) {
+    .site-header__compact-nav ul {
+      gap: 4px;
+    }
+
     .site-header__identity span {
       display: none;
     }
