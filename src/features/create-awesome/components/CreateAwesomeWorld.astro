@@ -1126,7 +1126,62 @@ const lineModules = [
     }
 
     .ca-world__flow-index {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      --ca-step-rail: color-mix(in srgb, var(--nest-cyan) 36%, transparent);
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      margin-top: 0.25rem;
+      padding: 0.25rem 0 0.25rem 0.15rem;
+      border: 0;
+      background: linear-gradient(var(--ca-step-rail), var(--ca-step-rail)) 1.12rem 0 / 1px 100% no-repeat;
+    }
+
+    .ca-world__flow-index li {
+      grid-template-columns: 2.1rem minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 0.7rem;
+      row-gap: 0.12rem;
+      align-items: center;
+      padding: 0.48rem 0.5rem;
+      border: 1px solid transparent;
+      transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+    }
+
+    .ca-world__flow-number {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      display: grid;
+      place-items: center;
+      width: 1.85rem;
+      aspect-ratio: 1;
+      border: 1px solid color-mix(in srgb, var(--nest-cyan) 52%, transparent);
+      background: var(--nest-midnight-950);
+      color: var(--nest-cyan);
+      clip-path: polygon(18% 0, 100% 0, 100% 82%, 82% 100%, 0 100%, 0 18%);
+    }
+
+    .ca-world__flow-index strong,
+    .ca-world__flow-index small {
+      grid-column: 2;
+    }
+
+    .ca-world__flow-index li.is-current {
+      border-color: color-mix(in srgb, var(--nest-sunset-orange) 48%, transparent);
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--nest-sunset-orange) 11%, transparent),
+        transparent 78%
+      );
+      transform: none;
+    }
+
+    .ca-world__flow-index li.is-current .ca-world__flow-number {
+      border-color: var(--nest-sunset-orange);
+      background: color-mix(in srgb, var(--nest-sunset-orange) 22%, var(--nest-midnight-950));
+      color: var(--nest-paper);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--nest-sunset-orange) 12%, transparent);
     }
   }
 
