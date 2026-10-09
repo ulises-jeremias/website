@@ -106,6 +106,32 @@ test('Hornero OS keeps the manifest trace still with reduced motion', async ({ p
     .toBe(0);
 });
 
+test('Hornero OS keeps future manifest bays still during assembly', async ({ page }) => {
+  await page.goto('/hornero-os');
+
+  const manifest = page.locator('.hos-yaml');
+  const futureSlots = manifest.locator('.hos-yaml__slot--future');
+  await page.getByRole('button', { name: 'Trace manifest assembly' }).click();
+
+  for (const [index, name] of ['installer', 'iso'].entries()) {
+    const slot = futureSlots.nth(index);
+    await expect(manifest.locator('[data-hos-trace-status]')).toContainText(`${name}: future slot reserved`, {
+      timeout: 4500,
+    });
+    await expect(slot).toHaveClass(/is-current/);
+    await expect
+      .poll(() =>
+        slot.evaluate((element) => ({
+          transform: getComputedStyle(element).transform,
+          animations: element.getAnimations().length,
+        })),
+      )
+      .toEqual({ transform: 'none', animations: 0 });
+  }
+
+  await expect(manifest).toHaveAttribute('data-trace-state', 'complete');
+});
+
 test('Hornero OS manifest stays keyboard-usable at 320px in forced colors', async ({ page }) => {
   await page.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 320, height: 720 });
