@@ -108,6 +108,11 @@ conveyor signal runs only during a composition update; reduced-motion mode
 keeps the completed package still. The SVG remains visual reinforcement for
 the native composer and its text stage index.
 
+Hornero OS's manifest trace docks only pinned and local entries. Installer and
+ISO remain dashed, unmoving reservation bays; the preview has no installer
+approach selected and no image built. Reduced-motion mode presents the same
+manifest status without autonomous movement.
+
 ## Historical documents
 
 - `docs/design/tokens.md` is the superseded warm/light token proposal.

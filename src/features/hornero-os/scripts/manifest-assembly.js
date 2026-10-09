@@ -69,7 +69,7 @@
       if (!step) return
 
       step.classList.add('is-current')
-      dockStep(step)
+      if (!step.classList.contains('hos-yaml__slot--future')) dockStep(step)
 
       const name = step.querySelector('.hos-yaml__key')?.textContent?.slice(0, -1)
       const state = step.querySelector('.hos-yaml__status')?.textContent
