@@ -48,6 +48,67 @@ const stationsJson = JSON.stringify(stations);
         autograd, reactive streams, CI tooling, and the community catalog. Each station pairs a working diagram with the
         verified role, repository, and license behind it.
       </p>
+    </div>
+    <aside class="v-lab__architecture" aria-labelledby="v-architecture-title" data-v-architecture>
+      <div class="v-lab__architecture-head">
+        <p class="v-lab__architecture-kicker">One documented foundation path</p>
+        <button type="button" class="v-lab__trace-button" data-v-architecture-run hidden>
+          Trace the dependency
+        </button>
+      </div>
+      <h2 id="v-architecture-title">VTL builds on VSL</h2>
+      <p class="v-lab__architecture-lede">
+        A tensor and autograd library builds on VSL's scientific computing. VSL's default path is pure V.
+      </p>
+      <div class="v-lab__topology" data-v-architecture-topology>
+        <div class="v-lab__topology-node" style="--trace-order: 0">
+          <span class="v-lab__node-index">01 · MODEL</span>
+          <strong>VTL</strong>
+          <small>Tensors · autograd</small>
+        </div>
+        <div class="v-lab__topology-edge" style="--trace-order: 0" aria-label="VTL builds on VSL">
+          <span>builds on</span>
+          <i aria-hidden="true"></i>
+        </div>
+        <div class="v-lab__topology-node" style="--trace-order: 1">
+          <span class="v-lab__node-index">02 · MATH</span>
+          <strong>VSL</strong>
+          <small>Scientific computing</small>
+        </div>
+        <div class="v-lab__topology-edge" style="--trace-order: 1" aria-label="VSL defaults to pure V">
+          <span>pure-V default</span>
+          <i aria-hidden="true"></i>
+        </div>
+        <div class="v-lab__topology-node" style="--trace-order: 2">
+          <span class="v-lab__node-index">03 · LANGUAGE</span>
+          <strong>V</strong>
+          <small>Compiler · stdlib</small>
+        </div>
+      </div>
+      <div class="v-lab__sideband" role="group" aria-label="Parallel V project stations">
+        <p>
+          Parallel stations <span>separate project roles</span>
+        </p>
+        <div class="v-lab__sideband-list">
+          <a href="#rxv" data-v-quick-station="rxv">
+            <strong>RxV</strong>
+            <small>Reactive streams</small>
+          </a>
+          <a href="#setup-v" data-v-quick-station="setup-v">
+            <strong>setup-v</strong>
+            <small>CI installation</small>
+          </a>
+          <a href="#awesome-v" data-v-quick-station="awesome-v">
+            <strong>Awesome V</strong>
+            <small>Community catalog</small>
+          </a>
+        </div>
+      </div>
+      <p class="v-lab__architecture-note" data-v-architecture-status aria-live="polite">
+        Architecture sketch · source-backed relationships, not live telemetry.
+      </p>
+    </aside>
+    <div class="v-lab__header-evidence">
       <FlagshipProvenance
         entryId="v"
         note="Vlang projects are maintained by Ulises, not owned personally; scale belongs to the ecosystem, not one repository."
@@ -89,23 +150,6 @@ const stationsJson = JSON.stringify(stations);
         </figcaption>
       </figure>
     </div>
-    <aside class="v-lab__header-readout" aria-label="V lab readout">
-      <p class="v-lab__readout-kicker">Bench readout</p>
-      <dl>
-        <div>
-          <dt>Stations</dt>
-          <dd>{stations.length}</dd>
-        </div>
-        <div>
-          <dt>Evidence</dt>
-          <dd>repo + license</dd>
-        </div>
-        <div>
-          <dt>Primary output</dt>
-          <dd>source-backed notes</dd>
-        </div>
-      </dl>
-    </aside>
   </header>
 
   <nav class="v-lab__index" aria-label="Lab stations">
@@ -278,55 +322,300 @@ const stationsJson = JSON.stringify(stations);
 
   @media (min-width: 820px) {
     .v-lab__header {
-      grid-template-columns: minmax(0, 1.4fr) minmax(15rem, 0.65fr);
-      align-items: end;
+      grid-template-columns: minmax(0, 1.05fr) minmax(21rem, 0.95fr);
+      grid-template-areas:
+        'copy instrument'
+        'evidence instrument';
+      align-items: start;
+      column-gap: clamp(1rem, 3vw, 2.5rem);
+    }
+
+    .v-lab__header-copy {
+      grid-area: copy;
+    }
+
+    .v-lab__architecture {
+      grid-area: instrument;
+    }
+
+    .v-lab__header-evidence {
+      grid-area: evidence;
     }
   }
 
-  .v-lab__header-readout {
-    padding: 0.85rem 1rem;
-    border: 1px solid color-mix(in srgb, var(--nest-sunset-orange) 38%, transparent);
-    background: color-mix(in srgb, var(--nest-midnight-950) 78%, transparent);
+  .v-lab__header-evidence {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
   }
 
-  .v-lab__readout-kicker {
-    margin: 0 0 0.7rem;
-    color: var(--nest-sunset-orange);
+  .v-lab__architecture {
+    min-inline-size: 0;
+    padding: clamp(1rem, 2vw, 1.4rem);
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 40%, transparent);
+    border-inline-start: 2px solid var(--nest-cyan);
+    background: color-mix(in srgb, var(--nest-midnight-950) 82%, transparent);
+  }
+
+  .v-lab__architecture-kicker,
+  .v-lab__node-index {
+    margin: 0;
+    color: var(--nest-cyan);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
-  .v-lab__header-readout dl {
-    display: grid;
-    gap: 0.45rem;
-    margin: 0;
+  .v-lab__architecture h2 {
+    margin: 0.7rem 0 0;
+    font-size: clamp(1.1rem, 1.8vw, 1.4rem);
   }
 
-  .v-lab__header-readout dl div {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding-top: 0.4rem;
-    border-top: 1px solid color-mix(in srgb, var(--nest-blue) 24%, transparent);
+  .v-lab__architecture-lede {
+    margin: 0.45rem 0 1.15rem;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
   }
 
-  .v-lab__header-readout dt,
-  .v-lab__header-readout dd {
-    margin: 0;
+  .v-lab__trace-button {
+    min-block-size: 2.75rem;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--nest-cyan) 56%, transparent);
+    color: var(--nest-paper);
+    background: color-mix(in srgb, var(--nest-cyan) 9%, var(--nest-midnight-950));
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
+    cursor: pointer;
+    clip-path: var(--clip-corner-sm);
   }
 
-  .v-lab__header-readout dt {
+  .v-lab__trace-button:focus-visible {
+    outline: 2px solid var(--nest-paper);
+  }
+
+  .v-lab__trace-button[hidden] {
+    display: none;
+  }
+
+  .v-lab__topology {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.75rem 0;
+    border-block: 1px solid color-mix(in srgb, var(--nest-cyan) 22%, transparent);
+  }
+
+  .v-lab__topology-node {
+    display: grid;
+    min-inline-size: 0;
+    min-block-size: 6rem;
+    align-content: center;
+    gap: 0.28rem;
+    padding: 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--nest-blue) 40%, transparent);
+  }
+
+  .v-lab__topology-node strong {
+    color: var(--nest-paper);
+    font-family: var(--font-display, var(--font-mono));
+    font-size: clamp(0.95rem, 1.7vw, 1.2rem);
+    letter-spacing: 0.04em;
+  }
+
+  .v-lab__topology-node small {
+    color: var(--color-text-muted);
+    font-size: 0.68rem;
+  }
+
+  .v-lab__node-index {
+    font-size: 0.56rem;
+  }
+
+  .v-lab__topology-edge {
+    display: grid;
+    justify-items: center;
+    gap: 0.45rem;
+    color: var(--nest-sunset-orange);
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+  }
+
+  .v-lab__topology-edge i {
+    display: block;
+    inline-size: 1.6rem;
+    block-size: 1px;
+    background: var(--nest-sunset-orange);
+  }
+
+  .v-lab__topology-edge i::after {
+    float: right;
+    inline-size: 0.32rem;
+    block-size: 0.32rem;
+    margin-block-start: -0.13rem;
+    border-block-start: 1px solid var(--nest-sunset-orange);
+    border-inline-end: 1px solid var(--nest-sunset-orange);
+    content: '';
+    transform: rotate(45deg);
+  }
+
+  .v-lab__topology[data-tracing='true'] .v-lab__topology-node {
+    animation: v-topology-arrive 420ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--trace-order) * 380ms) both;
+  }
+
+  .v-lab__topology[data-tracing='true'] .v-lab__topology-edge i {
+    animation: v-topology-flow 380ms ease-out calc(180ms + var(--trace-order) * 380ms) both;
+  }
+
+  @keyframes v-topology-arrive {
+    0% {
+      border-color: color-mix(in srgb, var(--nest-cyan) 25%, transparent);
+      transform: translateY(0.2rem);
+    }
+
+    65% {
+      transform: translateY(-0.2rem);
+    }
+
+    100% {
+      border-color: color-mix(in srgb, var(--nest-cyan) 72%, transparent);
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes v-topology-flow {
+    from {
+      scale: 0 1;
+    }
+
+    to {
+      scale: 1 1;
+    }
+  }
+
+  .v-lab__architecture-note {
+    margin: 0.7rem 0 0;
     color: var(--color-text-faint);
-    text-transform: uppercase;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
   }
 
-  .v-lab__header-readout dd {
-    color: var(--nest-cyan);
-    text-align: right;
+  .v-lab__sideband {
+    margin-block-start: 0.8rem;
+    padding-block-start: 0.7rem;
+    border-block-start: 1px solid color-mix(in srgb, var(--nest-violet) 32%, transparent);
+  }
+
+  .v-lab__sideband > p {
+    margin: 0 0 0.5rem;
+    color: var(--nest-paper);
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+  }
+
+  .v-lab__sideband > p span {
+    color: var(--color-text-faint);
+  }
+
+  .v-lab__sideband-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .v-lab__sideband-list a {
+    display: grid;
+    align-content: center;
+    gap: 0.15rem;
+    min-inline-size: 0;
+    min-block-size: 2.75rem;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--nest-violet) 40%, transparent);
+    color: var(--nest-paper);
+  }
+
+  .v-lab__sideband-list a:is(:hover, :focus-visible),
+  .v-lab__sideband-list a[aria-current='location'] {
+    border-color: var(--nest-violet);
+  }
+
+  .v-lab__sideband-list a:focus-visible {
+    outline: 2px solid var(--nest-paper);
+    outline-offset: 3px;
+  }
+
+  .v-lab__sideband-list strong {
+    font-family: var(--font-mono);
+    font-size: 0.69rem;
+    font-weight: 500;
+  }
+
+  .v-lab__sideband-list small {
+    color: var(--color-text-muted);
+    font-size: 0.6rem;
+  }
+
+  @media (max-width: 560px) {
+    .v-lab__topology {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.35rem;
+    }
+
+    .v-lab__topology-node {
+      min-block-size: 4.5rem;
+      grid-template-columns: 5.2rem minmax(0, 1fr);
+      column-gap: 0.55rem;
+    }
+
+    .v-lab__node-index {
+      grid-row: span 2;
+      align-self: center;
+    }
+
+    .v-lab__topology-node strong,
+    .v-lab__topology-node small {
+      grid-column: 2;
+    }
+
+    .v-lab__topology-edge {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+      justify-items: center;
+      padding-block: 0.1rem;
+    }
+
+    .v-lab__topology-edge i {
+      inline-size: 1px;
+      block-size: 0.75rem;
+    }
+
+    .v-lab__topology-edge i::after {
+      float: none;
+      display: block;
+      inline-size: 0.32rem;
+      block-size: 0.32rem;
+      margin: 0.55rem 0 0 -0.13rem;
+      transform: rotate(135deg);
+    }
+
+    .v-lab__sideband-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .v-lab__sideband-list a {
+      grid-template-columns: minmax(5rem, auto) minmax(0, 1fr);
+      align-items: center;
+      gap: 0.65rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .v-lab__topology[data-tracing='true'] .v-lab__topology-node,
+    .v-lab__topology[data-tracing='true'] .v-lab__topology-edge i {
+      animation: none;
+    }
   }
 
   .v-lab__eyebrow {
@@ -820,6 +1109,9 @@ const stationsJson = JSON.stringify(stations);
     const contributingEl = root.querySelector('[data-v-inspector-contributing]');
     const issuesEl = root.querySelector('[data-v-inspector-issues]');
     const statusEl = root.querySelector('[data-v-station-status]');
+    const traceButton = root.querySelector('[data-v-architecture-run]');
+    const topology = root.querySelector('[data-v-architecture-topology]');
+    const architectureStatus = root.querySelector('[data-v-architecture-status]');
     const tabs = [...root.querySelectorAll('[data-v-station]')];
     const panels = [...root.querySelectorAll('[data-v-panel]')];
     const stationIds = new Set(stations.map((station) => station.id));
@@ -893,6 +1185,10 @@ const stationsJson = JSON.stringify(stations);
       panels.forEach((panel) => {
         panel.hidden = panel.dataset.vPanel !== id;
         if (!panel.hidden) loadSceneEvidence(panel);
+      });
+      root.querySelectorAll('[data-v-quick-station]').forEach((button) => {
+        if (button.dataset.vQuickStation === id) button.setAttribute('aria-current', 'location');
+        else button.removeAttribute('aria-current');
       });
       root.querySelectorAll('[data-v-map-station]').forEach((node) => {
         node.classList.toggle('is-current', node.dataset.vMapStation === id);
@@ -994,6 +1290,19 @@ const stationsJson = JSON.stringify(stations);
         );
       });
 
+      root.querySelectorAll('[data-v-quick-station]').forEach((button) => {
+        const id = button.dataset.vQuickStation || '';
+        if (!stationIds.has(id)) return;
+        button.addEventListener(
+          'click',
+          (event) => {
+            event.preventDefault();
+            selectFromUser(id);
+          },
+          { signal: controller.signal },
+        );
+      });
+
       panels.forEach((panel) => {
         panel.setAttribute('role', 'tabpanel');
         panel.setAttribute('aria-labelledby', `v-station-${panel.id}`);
@@ -1005,6 +1314,31 @@ const stationsJson = JSON.stringify(stations);
       const requested = hashStation();
       const initialStation = stationIds.has(requested) ? requested : firstStation.id;
       if (!select(initialStation)) throw new Error('Unable to select the initial V station.');
+
+      if (traceButton && topology && architectureStatus) {
+        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+        let traceTimer = 0;
+        traceButton.addEventListener(
+          'click',
+          () => {
+            window.clearTimeout(traceTimer);
+            topology.removeAttribute('data-tracing');
+            if (reducedMotion.matches) {
+              architectureStatus.textContent =
+                'VTL builds on VSL; VSL defaults to pure V. Motion is disabled by your system preference.';
+              return;
+            }
+            topology.setAttribute('data-tracing', 'true');
+            architectureStatus.textContent = 'Tracing VTL → VSL → V: tensors, scientific computing, language.';
+            traceTimer = window.setTimeout(() => {
+              topology.removeAttribute('data-tracing');
+              architectureStatus.textContent = 'Trace complete · VTL is backed by VSL, whose default path is pure V.';
+            }, 1600);
+          },
+          { signal: controller.signal },
+        );
+        traceButton.hidden = false;
+      }
 
       selector.hidden = false;
       root.setAttribute('data-v-enhanced', 'true');

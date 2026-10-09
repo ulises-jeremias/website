@@ -391,3 +391,17 @@ JavaScript adds only the sequential marker and row motion plus a concise live
 announcement. Reduced motion keeps the jump and full ledger static. The
 animation explains the displayed grouping and source trail; it does not imply
 live repository activity.
+
+## V computational foundation trace — 2026-10-09
+
+The V lab header now explains the verified VTL → VSL → V foundation as a
+compact computational instrument. The path is static and labeled as a
+source-backed architecture sketch, not telemetry. A user-triggered trace
+animates the nodes and connectors; reduced-motion keeps it still while the
+live status reports the same relationship. The adjacent RxV, setup-v, and
+Awesome V links identify parallel project roles and continue to work as native
+fragment links without JavaScript. The mobile composition turns the path into a
+vertical sequence at 560px and below. The route remains within the existing
+delivery budgets. The station's reviewed Chromium VTL golden was refreshed
+from 569px to 570px; its contents match apart from the additional blank bottom
+pixel in the locator capture.
