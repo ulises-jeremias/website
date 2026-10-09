@@ -44,6 +44,12 @@ test.describe('Archive and recovery routes', () => {
           await lane.click();
         }
         await expect(group).toBeInViewport();
+        await expect(group).not.toHaveAttribute('data-tracing', 'true');
+        expect(
+          await group.evaluate((target) =>
+            [...target.querySelectorAll<HTMLElement>('*')].some((element) => element.getAnimations().length > 0),
+          ),
+        ).toBe(false);
         const headerHeight = await page
           .locator('.site-header')
           .evaluate((header) => header.getBoundingClientRect().height);
@@ -58,6 +64,59 @@ test.describe('Archive and recovery routes', () => {
       await expect(page.locator('.lost-world__atlas-link code').first()).toBeVisible();
     });
   }
+});
+
+test('traces the selected evidence lane into its ledger rows on request', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/open-source/');
+
+  const lane = page.locator('.constellation__lane-link[href="#evidence-maintained"]');
+  const group = page.locator('#evidence-maintained');
+  const status = page.locator('[data-evidence-trace-status]');
+  await lane.click();
+
+  await expect(page).not.toHaveURL(/#evidence-maintained$/);
+  await expect
+    .poll(() =>
+      lane
+        .locator('.constellation__lane-marker')
+        .evaluateAll((markers) =>
+          markers.some((marker) => marker.getAnimations().some((animation) => animation.playState === 'running')),
+        ),
+    )
+    .toBe(true);
+  await expect(page).toHaveURL(/#evidence-maintained$/);
+  await expect(group).toBeInViewport();
+  await expect(status).toHaveText('Tracing 3 maintained records into the evidence ledger.');
+  await expect(group).toBeFocused();
+  await expect(group).toHaveAttribute('data-tracing', 'true');
+  await expect
+    .poll(() =>
+      group
+        .locator('[data-evidence-trace-row]')
+        .evaluateAll(
+          (rows) =>
+            rows.filter((row) => row.getAnimations().some((animation) => animation.playState === 'running')).length,
+        ),
+    )
+    .toBeGreaterThan(0);
+});
+
+test('keeps evidence lane navigation native when JavaScript is disabled', async ({ browser }) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 390, height: 844 },
+    reducedMotion: 'reduce',
+  });
+  const page = await context.newPage();
+
+  await page.goto('/open-source/');
+  await page.locator('.constellation__lane-link[href="#evidence-org"]').click();
+
+  await expect(page).toHaveURL(/#evidence-org$/);
+  await expect(page.locator('#evidence-org')).toBeInViewport();
+  await context.close();
 });
 
 for (const viewport of [

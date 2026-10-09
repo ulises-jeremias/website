@@ -360,3 +360,14 @@ focus activates a short, subject-specific animation; the motion never runs on
 its own. At narrow widths the art and copy form a compact side-by-side route
 entry, and every primary/member link keeps a touch-sized target. Reduced-motion
 mode retains the art, selected focus, and contrast response without movement.
+
+## Open Source evidence trace — 2026-10-09
+
+Selecting an ownership lane now pulses its existing source-backed markers in
+place, follows them down to the matching evidence group, and sweeps its rows in
+one by one with the lane's own accent. The URL keeps the same fragment target;
+the native link still jumps directly to the records with JavaScript disabled.
+JavaScript adds only the sequential marker and row motion plus a concise live
+announcement. Reduced motion keeps the jump and full ledger static. The
+animation explains the displayed grouping and source trail; it does not imply
+live repository activity.
