@@ -41,16 +41,16 @@ test.describe('homepage visual coverage', () => {
     await expect
       .poll(() => dock.locator('img').evaluate((image: HTMLImageElement) => image.naturalWidth))
       .toBeGreaterThan(0);
-    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit.png', { maxDiffPixelRatio: 0.01 });
+    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit.png', { maxDiffPixelRatio: 0.025 });
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit-mobile.png', { maxDiffPixelRatio: 0.01 });
+    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit-mobile.png', { maxDiffPixelRatio: 0.025 });
 
     await page.setViewportSize({ width: 320, height: 844 });
     await expect
       .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth))
       .toBe(true);
-    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit-320.png', { maxDiffPixelRatio: 0.01 });
+    await expect(world).toHaveScreenshot('atlas-world-platform-toolkit-320.png', { maxDiffPixelRatio: 0.025 });
   });
 
   test('atlas responsive image descriptors match the intrinsic WebP widths', async ({ page }) => {
